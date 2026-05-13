@@ -4,7 +4,7 @@
 // Created          : 06-01-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -327,7 +327,7 @@ public static class HttpRequestExtensions
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, [DisallowNull] JsonTypeInfo<T> typeInfo, out T? value)
 	{
 		request = request.ArgumentNotNull();

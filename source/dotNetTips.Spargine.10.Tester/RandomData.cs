@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -117,9 +117,29 @@ public static class RandomData
 	};
 
 	/// <summary>
+	/// A lazy-loaded read-only collection of countries.
+	/// </summary>
+	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = CountryRepository.GetCountries().ToReadOnlyCollection().ToLazy();
+
+	/// <summary>
+	/// A lazy-loaded array of domain extensions.
+	/// </summary>
+	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
+
+	/// <summary>
 	/// Cached composite format for the "type not supported by method" error message.
 	/// </summary>
 	private static readonly CompositeFormat _errorTypeNotSupportedByMethod = CompositeFormat.Parse(Resources.ErrorTypeNotSupportedByMethod);
+
+	/// <summary>
+	/// A lazy-loaded array of first names.
+	/// </summary>
+	private static readonly Lazy<string[]> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
+
+	/// <summary>
+	/// A lazy-loaded array of last names.
+	/// </summary>
+	private static readonly Lazy<string[]> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
 
 	/// <summary>
 	/// Pre-built flat arrays for O(1) direct-indexed random selection of country/state/city.
@@ -1757,7 +1777,7 @@ public static class RandomData
 	/// The comma-separated <see cref="Country.PhoneCode"/> string is split once and cached in <see cref="_phoneCodeCache"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetPhoneCode), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetPhoneCode(Country? country)
 	{
 		if (country is null)
@@ -1824,26 +1844,6 @@ public static class RandomData
 		string Phone,
 		string PostalCode,
 		string StateName);
-
-	/// <summary>
-	/// A lazy-loaded read-only collection of countries.
-	/// </summary>
-	private static readonly Lazy<ReadOnlyCollection<Country>> _countries = CountryRepository.GetCountries().ToReadOnlyCollection().ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded array of domain extensions.
-	/// </summary>
-	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded array of first names.
-	/// </summary>
-	private static readonly Lazy<string[]> _firstNames = Resources.FirstNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
-
-	/// <summary>
-	/// A lazy-loaded array of last names.
-	/// </summary>
-	private static readonly Lazy<string[]> _lastNames = Resources.LastNames.Split(Core.ControlChars.Comma, StringSplitOptions.TrimEntries).ToLazy();
 
 
 }

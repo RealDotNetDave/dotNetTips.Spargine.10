@@ -284,6 +284,26 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	public override string ToString() => this._ulid;
 
 	/// <summary>
+	/// Decodes a Base32 character and accumulates its 5-bit value into the bit buffer.
+	/// </summary>
+	/// <param name="c">The Base32 character to decode.</param>
+	/// <param name="bitBuffer">The bit buffer to accumulate into; updated after the operation.</param>
+	/// <param name="bitsInBuffer">The number of bits currently in the buffer; updated after the operation.</param>
+	/// <exception cref="ArgumentException">Thrown if <paramref name="c"/> is not a valid Base32 character.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AccumulateBits), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AccumulateBits(char c, ref ulong bitBuffer, ref int bitsInBuffer)
+	{
+		if (!Base32CharToValue.TryGetValue(c, out var value))
+		{
+			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(c));
+		}
+
+		bitBuffer = (bitBuffer << 5) | (uint)value;
+		bitsInBuffer += 5;
+	}
+
+	/// <summary>
 	/// Encodes a byte span into a Base32 encoded character span using Crockford's Base32 alphabet.
 	/// </summary>
 	/// <remarks>
@@ -296,7 +316,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="charIndex">The starting index in the character span where encoding begins.</param>
 	/// <param name="length">The number of characters to encode.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EncodeBase32), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void EncodeBase32(ReadOnlySpan<byte> bytes, Span<char> chars, int charIndex, int length)
 	{
 		var byteIndex = 0;
@@ -343,26 +363,6 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 
 	/// <summary>
-	/// Decodes a Base32 character and accumulates its 5-bit value into the bit buffer.
-	/// </summary>
-	/// <param name="c">The Base32 character to decode.</param>
-	/// <param name="bitBuffer">The bit buffer to accumulate into; updated after the operation.</param>
-	/// <param name="bitsInBuffer">The number of bits currently in the buffer; updated after the operation.</param>
-	/// <exception cref="ArgumentException">Thrown if <paramref name="c"/> is not a valid Base32 character.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AccumulateBits), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void AccumulateBits(char c, ref ulong bitBuffer, ref int bitsInBuffer)
-	{
-		if (!Base32CharToValue.TryGetValue(c, out var value))
-		{
-			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(c));
-		}
-
-		bitBuffer = (bitBuffer << 5) | (uint)value;
-		bitsInBuffer += 5;
-	}
-
-	/// <summary>
 	/// Reads the next 5-bit value from two overlapping bytes in the byte span.
 	/// </summary>
 	/// <param name="bytes">The byte span to read from.</param>
@@ -370,7 +370,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
 	/// <returns>A 5-bit integer value extracted from two overlapping bytes.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ReadDualByte), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ReadDualByte), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int ReadDualByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
 	{
 		const int Mask = 0x1F;
@@ -390,7 +390,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="bitIndex">The current bit offset within the byte; updated after the read.</param>
 	/// <returns>A 5-bit integer value extracted from a single byte.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ReadSingleByte), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ReadSingleByte), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int ReadSingleByte(ReadOnlySpan<byte> bytes, ref int byteIndex, ref int bitIndex)
 	{
 		const int Mask = 0x1F;

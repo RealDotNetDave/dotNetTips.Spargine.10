@@ -354,7 +354,7 @@ public static class JsonSerialization
 	/// source-generated <see cref="JsonTypeInfo{T}"/> instead of runtime reflection.
 	/// All directories and subdirectories in the specified path are created if they do not already exist.
 	/// </remarks>
-	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
 	public static void SerializeToFile<T>([DisallowNull] T obj, [DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		obj = obj.ArgumentNotNull();

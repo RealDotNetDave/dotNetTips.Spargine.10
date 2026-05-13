@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -525,7 +525,7 @@ public static class HttpClientExtensions
 	///     MyJsonContext.Default.MyItemResponse);
 	/// </code>
 	/// </example>
-	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, [DisallowNull] JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
