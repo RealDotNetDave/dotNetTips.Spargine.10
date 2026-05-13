@@ -4,7 +4,7 @@
 // Created          : 02-10-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="InvalidValueException.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -83,7 +83,7 @@ public sealed class InvalidValueException<TValue> : Exception
 	/// </summary>
 	/// <returns>A string that represents the current exception.</returns>
 	[return: NotNull]
-	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override string ToString()
 	{
 		var valueText = this.Value?.ToString() ?? string.Empty;
