@@ -4,7 +4,7 @@
 // Created          : 02-14-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-13-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -301,11 +301,9 @@ public static class ListExtensions
 				ExceptionThrower.ThrowArgumentException(Resources.CollectionIsEmpty, nameof(list));
 			}
 
-			var isPowerOfTwo = (count & (count - 1)) == 0;
-
 			int indexWrap;
 
-			if (isPowerOfTwo)
+			if ((count & (count - 1)) == 0)
 			{
 				var mask = count - 1;
 				indexWrap = index & mask;

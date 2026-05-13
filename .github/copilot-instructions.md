@@ -56,6 +56,89 @@ Do NOT consider the task done until all six steps pass. Keep iterating until the
   - Fill in the `checkId` parameter (e.g., `"IL2026"`, `"IL2070"`) on all `[UnconditionalSuppressMessage]` attributes.
 
 ---
+## **1.2. Trim-Safe Code Requirements (MANDATORY)**
+
+**This library is trim-compatible. All code MUST be trim-safe by default.**
+
+### **Core Principle**
+- **AVOID reflection whenever possible.** Prefer compile-time solutions (source generators, static methods, known types).
+- **If reflection is unavoidable**, annotate properly and ensure the trimmer can preserve required members.
+
+### **Trim-Safe Patterns (PREFER THESE)**
+- Use **generic constraints** with known types instead of `typeof()` or `GetType()` on unknown types.
+- Use **source generators** instead of runtime reflection (e.g., `System.Text.Json` source gen, `Regex` source gen).
+- Use **compile-time known types** and direct method calls instead of `Activator.CreateInstance()` or `MethodInfo.Invoke()`.
+- Use **static methods** or **delegates** instead of dynamically discovering and invoking methods.
+- For serialization, prefer `System.Text.Json` with source generators over reflection-based serializers.
+- For collections, use concrete types (`List<T>`, `T[]`) instead of `IEnumerable<T>` when possible to avoid LINQ reflection.
+
+### **Trim-Unsafe Patterns (AVOID OR ANNOTATE)**
+- **`Assembly.GetTypes()`**, `Assembly.GetExportedTypes()` — requires all types in the assembly to be preserved.
+  - If unavoidable: add `[RequiresUnreferencedCode("Enumerates all types in assembly via Assembly.GetTypes().")]`.
+- **`Type.GetProperties()`**, `Type.GetMethods()`, `Type.GetFields()` without constraints — may require entire type graphs.
+  - If unavoidable: add `[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]` (or the specific member types needed) to the `Type` parameter or generic constraint.
+- **`Activator.CreateInstance(Type)`** — requires preserving constructors.
+  - Prefer: `new T()` with `where T : new()` constraint, or source-generated factory methods.
+  - If unavoidable: add `[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]`.
+- **`MethodInfo.Invoke()`**, `PropertyInfo.GetValue()`/`SetValue()` — requires preserving members.
+  - Prefer: compile-time delegates or expression trees compiled once.
+  - If unavoidable: annotate the source of the `MethodInfo`/`PropertyInfo` with `[DynamicallyAccessedMembers(...)]`.
+- **LINQ to Objects over `IEnumerable<T>` from reflection** — may trigger trim warnings.
+  - Prefer: materialize to `T[]` or `List<T>` first, or use direct iteration.
+- **JSON/XML serializers without source generation** — `XmlSerializer`, `BinaryFormatter`, older JSON libraries.
+  - Prefer: `System.Text.Json` with `[JsonSerializable]` source generator.
+  - If unavoidable: add `[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]`.
+
+### **Annotation Strategy (When Reflection Is Required)**
+1. **Method-level**: Add `[RequiresUnreferencedCode("...")]` with a specific, descriptive message.
+2. **Parameter/Generic-level**: Add `[DynamicallyAccessedMembers(...)]` to the `Type` parameter or generic type parameter.
+3. **Suppression**: Only use `[UnconditionalSuppressMessage]` when you have verified the code is trim-safe despite the warning (e.g., you know the types are preserved elsewhere). **Always** provide a meaningful `Justification`.
+
+### **Trim Warning Enforcement**
+- **Zero trim warnings** must be introduced by new code.
+- Run the build and check for `IL2026`, `IL2060-IL2099` warnings after writing or modifying code.
+- If a trim warning appears, **first try to eliminate it** by refactoring to a trim-safe pattern.
+- Only if refactoring is impractical, add the appropriate attributes (`[RequiresUnreferencedCode]`, `[DynamicallyAccessedMembers]`, or justified `[UnconditionalSuppressMessage]`).
+
+### **Examples**
+
+#### ❌ Trim-Unsafe (avoid)
+```csharp
+public void ProcessType(Type type)
+{
+    var properties = type.GetProperties(); // IL2070: requires all properties preserved
+    foreach (var prop in properties)
+    {
+        var value = prop.GetValue(instance); // may fail when trimmed
+    }
+}
+```
+
+#### ✅ Trim-Safe (annotated)
+```csharp
+public void ProcessType([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type)
+{
+    var properties = type.GetProperties(); // trimmer preserves public properties
+    foreach (var prop in properties)
+    {
+        var value = prop.GetValue(instance);
+    }
+}
+```
+
+#### ✅ Trim-Safe (refactored to avoid reflection)
+```csharp
+public void ProcessType<T>(T instance) where T : IHasProperties
+{
+    var properties = instance.GetPropertiesViaInterface(); // compile-time known
+    foreach (var prop in properties)
+    {
+        var value = prop.Value; // no reflection
+    }
+}
+```
+
+---
 ## **1.1. Spargine `[Information]` Attribute Rules**
 - The `[Information]` attribute must be the last one if there are multiple attributes.
 - The **first parameter** of `[Information]` must always be the description string. Use `nameof()` to reference the method name whenever possible (e.g., `[Information(nameof(MyMethod), ...)]`). For class-level attributes where `nameof()` is not applicable, provide a meaningful description string.
