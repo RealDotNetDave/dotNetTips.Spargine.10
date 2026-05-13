@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Tester</AssemblyTitle>
-    <AssemblyVersion>2026.10.5.6</AssemblyVersion>
+    <AssemblyVersion>2026.10.5.7</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -19,7 +19,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.5.6</FileVersion>
+    <FileVersion>2026.10.5.7</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -48,7 +48,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Tester</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.5.6</Version>
+    <Version>2026.10.5.7</Version>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
@@ -114,10 +114,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.7" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.203" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.8" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
     <PackageReference Include="OpenTelemetry.Api" Version="1.15.3" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.7" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.8" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
