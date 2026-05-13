@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260510-142502
+## DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260512-184536

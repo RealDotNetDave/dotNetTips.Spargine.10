@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark-20260512-170945</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark-20260512-170945</th></tr>
+<tr>
+<th>MoveFile .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark.MoveFile()
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rdx,[rax+138]
+mov       rax,[rbp+10]
+mov       rcx,[rax+148]
+mov       r8d,1
+mov       r9d,1
+call      qword ptr [7FFBEC64E790]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+DotNetTips.Spargine.IO.FileHelper.MoveFile(System.IO.FileInfo, System.IO.FileInfo, Boolean, Int32)
+push      rbp
+sub       rsp,0A0
+lea       rbp,[rsp+0A0]
+xor       eax,eax
+mov       [rbp-78],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-70],ymm4
+vmovdqa   xmmword ptr [rbp-50],xmm4
+mov       [rbp-40],rax
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       [rbp+20],r8d
+mov       [rbp+28],r9d
+mov       dword ptr [rbp-68],3E8
+		file = file.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,1E7AE420B50
+mov       [rsp+20],rax
+mov       rdx,[rbp+10]
+mov       rcx,7FFBEC68F4A8
+xor       r8d,r8d
+mov       r9,1E7AE410008
+call      qword ptr [7FFBEC5BF930]
+mov       [rbp+10],rax
+		destinationFile = destinationFile.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,1E7AE420B70
+mov       [rsp+20],rax
+mov       rdx,[rbp+18]
+mov       rcx,7FFBEC68F4A8
+xor       r8d,r8d
+mov       r9,1E7AE410008
+call      qword ptr [7FFBEC5BF930]
+mov       [rbp+18],rax
+		retryCount = retryCount.EnsureMinimum(1);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       ecx,[rbp+28]
+mov       edx,1
+call      qword ptr [7FFBEC6448E8]
+mov       [rbp+28],eax
+		ValidateFileCreateDestinationDirectory(file, destinationFile.Directory!);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp+18]
+cmp       [rcx],ecx
+call      qword ptr [7FFBEC64E7C0]
+mov       [rbp-70],rax
+mov       rdx,[rbp-70]
+mov       rcx,[rbp+10]
+call      qword ptr [7FFBEC64E7D8]
+		for (var retryIndex = 0; retryIndex < retryCount; retryIndex++)
+		     ^^^^^^^^^^^^^^^^^^
+xor       eax,eax
+mov       [rbp-3C],eax
+jmp       near ptr 00007FFBEC0BF5E7
+			if (TryMoveFileOnce(file.FullName, destinationFile.FullName, replaceExisting))
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,[rbp+10]
+mov       [rbp-50],rax
+mov       rcx,[rbp-50]
+mov       rdx,7FFBEC68F5F0
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-50]
+mov       rax,[rbp-50]
+mov       rax,[rax]
+mov       rax,[rax+40]
+call      qword ptr [rax+30]
+mov       [rbp-48],rax
+mov       rax,[rbp+18]
+mov       [rbp-58],rax
+mov       rcx,[rbp-58]
+mov       rdx,7FFBEC68F6F8
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-58]
+mov       rax,[rbp-58]
+mov       rax,[rax]
+mov       rax,[rax+40]
+call      qword ptr [rax+30]
+mov       [rbp-78],rax
+mov       rdx,[rbp-78]
+movzx     r8d,byte ptr [rbp+20]
+mov       rcx,[rbp-48]
+call      qword ptr [7FFBEC64E7F0]
+test      eax,eax
+je        short 00007FFBEC0BF5BA
+mov       rcx,7FFBEC68F800
+call      CORINFO_HELP_COUNTPROFILE32
+				destinationFile.Refresh();
+				^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rcx,[rbp+18]
+cmp       [rcx],ecx
+call      qword ptr [7FFBEC64E808]
+				return destinationFile.Exists;
+				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       rax,[rbp+18]
+mov       [rbp-60],rax
+mov       rcx,[rbp-60]
+mov       rdx,7FFBEC68F808
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-60]
+mov       rax,[rbp-60]
+mov       rax,[rax]
+mov       rax,[rax+48]
+call      qword ptr [rax]
+nop
+add       rsp,0A0
+pop       rbp
+ret
+mov       rcx,7FFBEC68F910
+call      CORINFO_HELP_COUNTPROFILE32
+			Thread.Sleep((retryIndex + 1) * 10);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mov       eax,[rbp-3C]
+add       eax,1
+jo        short 00007FFBEC0BF629
+imul      ecx,eax,0A
+jo        short 00007FFBEC0BF629
+call      qword ptr [7FFBEC247738]
+mov       eax,[rbp-3C]
+add       eax,1
+jo        short 00007FFBEC0BF629
+mov       [rbp-3C],eax
+mov       eax,[rbp-68]
+dec       eax
+mov       [rbp-68],eax
+cmp       dword ptr [rbp-68],0
+jg        short 00007FFBEC0BF603
+lea       rcx,[rbp-68]
+mov       edx,6F
+call      CORINFO_HELP_PATCHPOINT
+mov       eax,[rbp-3C]
+cmp       eax,[rbp+28]
+jl        near ptr 00007FFBEC0BF4F0
+mov       rcx,7FFBEC68F914
+call      CORINFO_HELP_COUNTPROFILE32
+		return false;
+		^^^^^^^^^^^^^
+xor       eax,eax
+add       rsp,0A0
+pop       rbp
+ret
+call      CORINFO_HELP_OVERFLOW
+int       3
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

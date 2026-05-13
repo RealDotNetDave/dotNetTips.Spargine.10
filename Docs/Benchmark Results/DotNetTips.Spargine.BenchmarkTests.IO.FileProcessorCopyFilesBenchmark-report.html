@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorCopyFilesBenchmark-20260510-141414</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorCopyFilesBenchmark-20260512-171137</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -16,8 +16,8 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
@@ -26,8 +26,8 @@ InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO
 <table>
 <thead><tr><th>Method             </th><th>Mean      </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Min       </th><th>Q1        </th><th>Median    </th><th>Q3        </th><th>Max       </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CopyFiles</td><td>123,900,016.7 ns</td><td>1,607,012.4 ns</td><td>1,503,200.4 ns</td><td>388,124.7 ns</td><td>122,119,550.0 ns</td><td>122,704,400.0 ns</td><td>123,781,850.0 ns</td><td>124,873,700.0 ns</td><td>126,984,150.0 ns</td><td>8.071</td><td>-194,054.8 ns</td><td>15.00</td><td>1.961</td><td>2.000</td><td>0.5473</td><td>1</td><td>*</td><td>No</td><td>-</td><td>20.22 MB</td>
-</tr><tr><td>CopyFilesWithOriginalPath</td><td>123,157,214.3 ns</td><td>1,641,499.0 ns</td><td>1,455,146.1 ns</td><td>388,904.2 ns</td><td>120,856,100.0 ns</td><td>122,256,950.0 ns</td><td>123,054,800.0 ns</td><td>123,885,025.0 ns</td><td>126,312,700.0 ns</td><td>8.120</td><td>-194,445.1 ns</td><td>14.00</td><td>2.447</td><td>2.000</td><td>0.3252</td><td>1</td><td>*</td><td>No</td><td>-</td><td>20.51 MB</td>
+</thead><tbody><tr><td>CopyFiles</td><td>127,177,136.7 ns</td><td>1,397,875.4 ns</td><td>1,307,573.5 ns</td><td>337,614.0 ns</td><td>125,131,050.0 ns</td><td>126,121,950.0 ns</td><td>126,982,650.0 ns</td><td>128,452,450.0 ns</td><td>128,948,350.0 ns</td><td>7.863</td><td>-168,799.5 ns</td><td>15.00</td><td>1.432</td><td>2.000</td><td>0.0462</td><td>1</td><td>*</td><td>No</td><td>-</td><td>20.23 MB</td>
+</tr><tr><td>CopyFilesWithOriginalPath</td><td>124,669,100.0 ns</td><td>1,829,320.6 ns</td><td>1,621,645.1 ns</td><td>433,402.9 ns</td><td>121,683,500.0 ns</td><td>123,698,650.0 ns</td><td>124,533,300.0 ns</td><td>125,279,875.0 ns</td><td>127,583,500.0 ns</td><td>8.021</td><td>-216,694.4 ns</td><td>14.00</td><td>2.291</td><td>2.000</td><td>0.2217</td><td>1</td><td>*</td><td>No</td><td>-</td><td>20.7 MB</td>
 </tr></tbody></table>
 </body>
 </html>

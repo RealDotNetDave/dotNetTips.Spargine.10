@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperUnGZipAsyncBenchmark-20260510-135258</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperUnGZipAsyncBenchmark-20260512-171040</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -16,8 +16,8 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
@@ -26,7 +26,7 @@ InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO
 <table>
 <thead><tr><th>Method</th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min     </th><th>Q1      </th><th>Median  </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>UnGZipAsync</td><td>1,177,891.2 ns</td><td>22,578.6 ns</td><td>59,084.1 ns</td><td>6,605.8 ns</td><td>1,029,300.0 ns</td><td>1,143,775.0 ns</td><td>1,178,200.0 ns</td><td>1,211,975.0 ns</td><td>1,381,200.0 ns</td><td>849.0</td><td>-3,262.9 ns</td><td>80.00</td><td>4.217</td><td>2.000</td><td>0.3461</td><td>1</td><td>*</td><td>No</td><td>-</td><td>296 B</td><td>83.59 KB</td>
+</thead><tbody><tr><td>UnGZipAsync</td><td>1,270,657.1 ns</td><td>42,259.8 ns</td><td>118,501.1 ns</td><td>12,422.3 ns</td><td>1,045,300.0 ns</td><td>1,177,350.0 ns</td><td>1,271,100.0 ns</td><td>1,326,250.0 ns</td><td>1,595,400.0 ns</td><td>787.0</td><td>-6,165.6 ns</td><td>91.00</td><td>3.262</td><td>3.385</td><td>0.6386</td><td>1</td><td>*</td><td>No</td><td>-</td><td>298 B</td><td>83.63 KB</td>
 </tr></tbody></table>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDeleteFilesBenchmark-20260510-135206</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDeleteFilesBenchmark-20260512-170852</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -16,8 +16,8 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
@@ -26,7 +26,7 @@ InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO
 <table>
 <thead><tr><th>Method</th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>DeleteFiles</td><td>39,017,616.7 ns</td><td>749,407.4 ns</td><td>801,857.6 ns</td><td>188,999.6 ns</td><td>37,908,200.0 ns</td><td>38,470,075.0 ns</td><td>38,860,850.0 ns</td><td>39,390,625.0 ns</td><td>40,673,200.0 ns</td><td>25.63</td><td>-94,490.8 ns</td><td>18.00</td><td>2.319</td><td>2.000</td><td>0.5591</td><td>1</td><td>*</td><td>No</td><td>-</td><td>4.13 KB</td>
+</thead><tbody><tr><td>DeleteFiles</td><td>39,303,981.8 ns</td><td>783,057.2 ns</td><td>961,664.7 ns</td><td>205,027.6 ns</td><td>37,475,400.0 ns</td><td>38,495,575.0 ns</td><td>39,270,750.0 ns</td><td>40,043,350.0 ns</td><td>41,171,100.0 ns</td><td>25.44</td><td>-102,502.8 ns</td><td>22.00</td><td>1.985</td><td>2.000</td><td>0.0396</td><td>1</td><td>*</td><td>No</td><td>-</td><td>4.13 KB</td>
 </tr></tbody></table>
 </body>
 </html>

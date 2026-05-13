@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorDeleteFoldersBenchmark-20260512-171340</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.203
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method </th><th>Mean    </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>DeleteFolders</td><td>2,754,773.2 ns</td><td>179,643.5 ns</td><td>521,178.3 ns</td><td>52,917.6 ns</td><td>2,498,800.0 ns</td><td>2,234,000.0 ns</td><td>2,358,400.0 ns</td><td>3,113,500.0 ns</td><td>4,297,000.0 ns</td><td>363.0</td><td>-26,410.3 ns</td><td>97.00</td><td>3.218</td><td>2.269</td><td>1.123</td><td>1</td><td>*</td><td>No</td><td>-</td><td>16.12 KB</td>
+</tr></tbody></table>
+</body>
+</html>
