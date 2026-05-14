@@ -912,7 +912,7 @@ public static class EnumerableExtensions
 		{
 			if (collection is IList<T> list)
 			{
-				return new Collection<T>(list);
+				return new Collection<T>([.. list]);
 			}
 
 			if (collection is ICollection<T> col)

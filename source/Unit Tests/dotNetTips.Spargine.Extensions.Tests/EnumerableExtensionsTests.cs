@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-14-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -5227,6 +5227,51 @@ public class EnumerableExtensionsTests
 		var result = people.ToBlockingCollection();
 
 		Assert.HasCount(Count, result);
+	}
+
+	[TestMethod]
+	public void ToCollection_IsMutable_CanAddItem()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+		result.Add(99);
+
+		// Assert
+		Assert.HasCount(4, result);
+		Assert.IsTrue(result.Contains(99));
+	}
+
+	[TestMethod]
+	public void ToCollection_IsMutable_CanModifyItem()
+	{
+		// Arrange
+		var numbers = new int[] { 10, 20, 30 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+		result[0] = 99;
+
+		// Assert
+		Assert.AreEqual(99, result[0]);
+	}
+
+	[TestMethod]
+	public void ToCollection_IsMutable_CanRemoveItem()
+	{
+		// Arrange
+		var numbers = new int[] { 1, 2, 3 };
+
+		// Act
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+		var removed = result.Remove(2);
+
+		// Assert
+		Assert.IsTrue(removed);
+		Assert.HasCount(2, result);
+		Assert.IsFalse(result.Contains(2));
 	}
 
 	[TestMethod]
