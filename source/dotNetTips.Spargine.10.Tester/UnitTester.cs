@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-14-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,6 @@ namespace DotNetTips.Spargine.Tester;
 /// Initializes a new instance of the <see cref="UnitTester"/> class.
 /// </remarks>
 /// <param name="outputDirectory">The directory where output files will be saved. Defaults to the current directory if not specified.</param>
-[ExcludeFromCodeCoverage]
 [DebuggerStepThrough]
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineUnitTester")]
 public abstract class UnitTester(string? outputDirectory = null)
