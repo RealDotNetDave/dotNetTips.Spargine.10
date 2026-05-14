@@ -121,11 +121,11 @@ public static class InformationAttributeDocGenerator
 		// Add document for class-level member first
 		MemberInfo? classInfo = null;
 
-		for (var memberIndex = 0; memberIndex < members.Count; memberIndex++)
+		foreach (var member in members)
 		{
-			if (members[memberIndex].MemberType == MemberTypes.TypeInfo)
+			if (member.MemberType == MemberTypes.TypeInfo)
 			{
-				classInfo = members[memberIndex];
+				classInfo = member;
 				break;
 			}
 		}
@@ -268,7 +268,10 @@ public static class InformationAttributeDocGenerator
 	/// <param name="type">The type for which to get the display name.</param>
 	/// <returns>A string representing the display name of the type.</returns>
 	[RequiresUnreferencedCode("Formats type names using reflection metadata that may be removed in trimmed apps.")]
-	private static string GetTypeName(Type type) => TypeHelper.GetTypeDisplayName(type, includeGenericParameterNames: true);
+	private static string GetTypeName(Type type)
+	{
+		return TypeHelper.GetTypeDisplayName(type, includeGenericParameterNames: true);
+	}
 
 	/// <summary>
 	/// Checks if the specified type or any of its members have the InformationAttribute.
