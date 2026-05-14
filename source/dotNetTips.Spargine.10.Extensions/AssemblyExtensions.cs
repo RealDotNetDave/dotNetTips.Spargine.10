@@ -181,35 +181,3 @@ public static class AssemblyExtensions
 		}
 	}
 }
-
-/// <summary>
-/// Internal helper providing assembly type-loading utilities for <see cref="AssemblyExtensions"/>.
-/// </summary>
-internal static class AssemblyExtensionsHelper
-{
-	/// <summary>
-	/// Attempts to retrieve all types defined in the specified assembly, gracefully handling partial load failures.
-	/// </summary>
-	/// <param name="assembly">The assembly from which to load types. Must not be <c>null</c>.</param>
-	/// <returns>
-	/// An array of <see cref="Type"/> objects defined in <paramref name="assembly"/>.
-	/// If a <see cref="ReflectionTypeLoadException"/> occurs, returns only the types that were successfully loaded,
-	/// filtering out any <c>null</c> entries.
-	/// </returns>
-	[RequiresUnreferencedCode("Uses Assembly.GetTypes() which requires runtime type discovery.")]
-	internal static Type[] GetLoadableTypes(Assembly assembly)
-	{
-		assembly = assembly.ArgumentNotNull();
-
-		try
-		{
-			return assembly.GetTypes();
-		}
-		catch (ReflectionTypeLoadException ex)
-		{
-			return [.. ex.Types
-				.Where(static type => type is not null)
-				.Cast<Type>()];
-		}
-	}
-}

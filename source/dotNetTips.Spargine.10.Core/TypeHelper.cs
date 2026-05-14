@@ -1566,7 +1566,7 @@ public static class TypeHelper
 		var ns = type.Namespace;
 
 		return ns is not null
-			&& (ns == "System" || ns.StartsWith("System.", StringComparison.Ordinal))
+			&& (string.Equals(ns, "System", StringComparison.Ordinal) || ns.StartsWith("System.", StringComparison.Ordinal))
 			&& type.Assembly == typeof(object).Assembly;
 	}
 

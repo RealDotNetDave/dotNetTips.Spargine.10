@@ -216,7 +216,7 @@ public static class BarcodeGenerator
 	/// </summary>
 	private static bool ValidateBarcodeFields(Dictionary<string, string> fields)
 	{
-		if (!fields.TryGetValue(V, out var v) || v != "1")
+		if (!fields.TryGetValue(V, out var v) || !string.Equals(v, "1", StringComparison.Ordinal))
 		{
 			return false;
 		}
@@ -269,127 +269,6 @@ public static class BarcodeGenerator
 		}
 
 		return false;
-	}
-}
-
-internal static class Crockford32
-{
-	// Alphabet: 0..9 A..Z without I, L, O, U
-	private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-
-	private static readonly sbyte[] Map = BuildMap();
-
-	public static byte[] Decode(string text)
-	{
-		if (string.IsNullOrWhiteSpace(text))
-		{
-			return [];
-		}
-
-		Span<char> norm = stackalloc char[text.Length];
-		var n = NormalizeChars(text, norm);
-
-		int buffer = 0, bitsLeft = 0;
-		var bytes = new List<byte>((int)Math.Floor(n * 5 / 8.0));
-
-		for (var i = 0; i < n; i++)
-		{
-			var c = norm[i];
-			var v = (c < 128) ? Map[c] : -1;
-			if (v < 0)
-			{
-				throw new FormatException($"Invalid Base32 character '{c}'.");
-			}
-
-			buffer = (buffer << 5) | v;
-			bitsLeft += 5;
-
-			if (bitsLeft >= 8)
-			{
-				bytes.Add((byte)((buffer >> (bitsLeft - 8)) & 0xFF));
-				bitsLeft -= 8;
-			}
-		}
-
-		return [.. bytes];
-	}
-
-	public static string Encode(ReadOnlySpan<byte> data)
-	{
-		if (data.Length == 0)
-		{
-			return string.Empty;
-		}
-
-		var sb = new StringBuilder((int)Math.Ceiling(data.Length * 8 / 5.0));
-		int buffer = 0, bitsLeft = 0;
-		foreach (var b in data)
-		{
-			buffer = (buffer << 8) | b;
-			bitsLeft += 8;
-			while (bitsLeft >= 5)
-			{
-				var index = (buffer >> (bitsLeft - 5)) & 31;
-				_ = sb.Append(Alphabet[index]);
-				bitsLeft -= 5;
-			}
-		}
-		if (bitsLeft > 0)
-		{
-			var index = (buffer << (5 - bitsLeft)) & 31;
-			_ = sb.Append(Alphabet[index]);
-		}
-		return sb.ToString();
-	}
-
-	private static sbyte[] BuildMap()
-	{
-		var map = Enumerable.Repeat<sbyte>(-1, 128).ToArray();
-		for (var i = 0; i < Alphabet.Length; i++)
-		{
-			map[Alphabet[i]] = (sbyte)i;
-		}
-		// Ambiguity aliases
-		map['I'] = map['1'] = map['L'] = map['1'];
-		map['O'] = map['0'] = map['0'];
-		// Lowercase support
-		for (var c = 'a'; c <= 'z'; c++)
-		{
-			var up = char.ToUpperInvariant(c);
-			if (up < 128 && map[up] >= 0)
-			{
-				map[c] = map[up];
-			}
-		}
-		return map;
-	}
-
-	private static int NormalizeChars(string text, Span<char> norm)
-	{
-		var n = 0;
-
-		foreach (var ch in text)
-		{
-			if (ch is '-' or ' ')
-			{
-				continue;
-			}
-
-			var c = char.ToUpperInvariant(ch);
-
-			if (c is 'I' or 'L')
-			{
-				c = '1';
-			}
-			else if (c == 'O')
-			{
-				c = '0';
-			}
-
-			norm[n++] = c;
-		}
-
-		return n;
 	}
 }
 
