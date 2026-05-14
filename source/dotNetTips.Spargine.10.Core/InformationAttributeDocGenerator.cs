@@ -4,7 +4,7 @@
 // Created          : 11-16-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-14-2026
 // ***********************************************************************
 // <copyright file="InformationAttributeDocGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -180,9 +180,9 @@ public static class InformationAttributeDocGenerator
 				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Author:** {info.Author}");
 			}
 
-			if (info.CreatedOn != DateTimeOffset.MinValue)
+			if (info.CreatedOn.HasValue)
 			{
-				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **CreatedOn:** {info.CreatedOn?.ToString("d", CultureInfo.CurrentCulture)}");
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **CreatedOn:** {info.CreatedOn.Value.ToString("d", CultureInfo.CurrentCulture)}");
 			}
 
 			if (info.Description.HasValue())
@@ -200,9 +200,9 @@ public static class InformationAttributeDocGenerator
 				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified By:** {info.ModifiedBy}");
 			}
 
-			if (info.ModifiedOn != DateTimeOffset.MinValue)
+			if (info.ModifiedOn.HasValue)
 			{
-				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified On:** {info.ModifiedOn?.ToString("d", CultureInfo.CurrentCulture)}");
+				_ = sb.AppendLine(CultureInfo.CurrentCulture, $"* **Modified On:** {info.ModifiedOn.Value.ToString("d", CultureInfo.CurrentCulture)}");
 			}
 
 			if (info.Tags.CheckIsNotEmpty())

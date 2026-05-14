@@ -8,9 +8,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Read
-* **Modified On:** 
 
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateOnly value, System.Text.Json.JsonSerializerOptions options)
 
@@ -18,9 +16,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Write
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Data.Converters.IsoDateTimeOffsetConverter
@@ -31,9 +27,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** Read
-* **Modified On:** 
 
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, System.Text.Json.JsonSerializerOptions options)
 
@@ -41,9 +35,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** Write
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Data.Converters.RegionConverter
@@ -54,9 +46,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** Write
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Data.Converters.TimeOnlyConverter
@@ -67,9 +57,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Read
-* **Modified On:** 
 
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.TimeOnly value, System.Text.Json.JsonSerializerOptions options)
 
@@ -77,9 +65,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Write
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Data.CountryRepository
@@ -94,7 +80,6 @@
 * **CreatedOn:** 3/24/2023
 * **Description:** GetCountries
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Data.Models.Country GetCountry(DotNetTips.Spargine.Tester.Data.CountryName countryName)
 
@@ -106,7 +91,6 @@
 * **CreatedOn:** 12/14/2023
 * **Description:** GetCountry
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Data.Models.Country GetCountry(System.String countryNameOrIso)
 
@@ -119,7 +103,6 @@
 * **Description:** GetCountry
 * **Documentation:** https://bit.ly/SpargineTester
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Extensions.PersonExtensions
@@ -133,9 +116,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** get_Age
-* **Modified On:** 
 
 ### System.String FullName { get; set; }
 
@@ -143,9 +124,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** get_FullName
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.Common.ICoordinate
@@ -162,9 +141,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address1
-* **Modified On:** 
 
 ### System.String Address2 { get; set; }
 
@@ -172,9 +149,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address2
-* **Modified On:** 
 
 ### System.String City { get; set; }
 
@@ -182,9 +157,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** City
-* **Modified On:** 
 
 ### System.String Country { get; set; }
 
@@ -192,9 +165,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Country
-* **Modified On:** 
 
 ### System.String CountyProvince { get; set; }
 
@@ -202,9 +173,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CountyProvince
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -212,9 +181,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Address op_Implicit(DotNetTips.Spargine.Tester.Models.ValueTypes.Address& address)
 
@@ -222,9 +189,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Address op_Implicit(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& address)
 
@@ -232,9 +197,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -242,9 +205,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### System.String PostalCode { get; set; }
 
@@ -252,9 +213,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PostalCode
-* **Modified On:** 
 
 ### System.String State { get; set; }
 
@@ -262,9 +221,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** State
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Address ToAddress(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& address)
 
@@ -272,9 +229,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToAddress
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -282,9 +237,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord
@@ -295,9 +248,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddressRecord
-* **Modified On:** 
 
 ### System.String Address1 { get; set; }
 
@@ -305,9 +256,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address1
-* **Modified On:** 
 
 ### System.String Address2 { get; set; }
 
@@ -315,9 +264,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address2
-* **Modified On:** 
 
 ### System.String City { get; set; }
 
@@ -325,9 +272,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** City
-* **Modified On:** 
 
 ### System.Int32 CompareTo(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& other)
 
@@ -335,9 +280,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.String Country { get; set; }
 
@@ -345,9 +288,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Country
-* **Modified On:** 
 
 ### System.String CountyProvince { get; set; }
 
@@ -355,9 +296,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CountyProvince
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& other)
 
@@ -365,9 +304,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -375,9 +312,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThan(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& right)
 
@@ -385,9 +320,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThanOrEqual(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& right)
 
@@ -395,9 +328,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_LessThan(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& right)
 
@@ -405,9 +336,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_LessThanOrEqual(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& right)
 
@@ -415,9 +344,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -425,9 +352,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### System.String PostalCode { get; set; }
 
@@ -435,9 +360,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PostalCode
-* **Modified On:** 
 
 ### System.String State { get; set; }
 
@@ -445,9 +368,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** State
-* **Modified On:** 
 
 ### System.Int32 System.IComparable.CompareTo(System.Object obj)
 
@@ -455,9 +376,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord ToAddress(DotNetTips.Spargine.Tester.Models.RefTypes.Address& address)
 
@@ -465,9 +384,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToAddress
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord ToAddress(DotNetTips.Spargine.Tester.Models.ValueTypes.Address& address)
 
@@ -475,9 +392,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToAddress
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -485,9 +400,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonComparerByIdThenLastName
@@ -504,9 +417,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Compare
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonEqualityComparerByEmail
@@ -517,9 +428,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Comparers.PersonRecordEqualityComparerByEmail
@@ -530,9 +439,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Coordinate
@@ -543,9 +450,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.Int32 CompareTo(DotNetTips.Spargine.Tester.Models.RefTypes.Coordinate other)
 
@@ -553,9 +458,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.RefTypes.Coordinate other)
 
@@ -563,9 +466,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Boolean Equals(System.Object obj)
 
@@ -573,9 +474,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -583,9 +482,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetHashCode
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -593,9 +490,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 ### System.Int32 X { get; set; }
 
@@ -603,9 +498,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** X
-* **Modified On:** 
 
 ### System.Int32 Y { get; set; }
 
@@ -613,9 +506,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Y
-* **Modified On:** 
 
 ### System.Int32 Z { get; set; }
 
@@ -623,9 +514,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Z
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.Person
@@ -636,9 +525,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IPerson
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.Address> Addresses { get; set; }
 
@@ -646,9 +533,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Addresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.Address> AddressesSerialization { get; set; }
 
@@ -656,9 +541,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddressesSerialization
-* **Modified On:** 
 
 ### System.Nullable<System.DateTimeOffset> BornOn { get; set; }
 
@@ -666,9 +549,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** BornOn
-* **Modified On:** 
 
 ### System.String CellPhone { get; set; }
 
@@ -676,9 +557,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CellPhone
-* **Modified On:** 
 
 ### System.String Email { get; set; }
 
@@ -686,9 +565,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Email
-* **Modified On:** 
 
 ### System.String FirstName { get; set; }
 
@@ -696,9 +573,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FirstName
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -706,9 +581,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### System.String LastName { get; set; }
 
@@ -716,9 +589,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LastName
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Person op_Implicit(DotNetTips.Spargine.Tester.Models.ValueTypes.Person& person)
 
@@ -726,9 +597,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Person op_Implicit(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& person)
 
@@ -736,9 +605,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -746,9 +613,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.ValueTypes.Person& person)
 
@@ -756,9 +621,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPerson
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& person)
 
@@ -766,9 +629,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPerson
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -776,9 +637,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord
@@ -789,9 +648,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PersonRecord
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord> Addresses { get; set; }
 
@@ -799,9 +656,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Addresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord> AddressesSerialization { get; set; }
 
@@ -809,9 +664,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddressesSerialization
-* **Modified On:** 
 
 ### System.Nullable<System.DateTimeOffset> BornOn { get; set; }
 
@@ -819,9 +672,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** BornOn
-* **Modified On:** 
 
 ### System.String CellPhone { get; set; }
 
@@ -829,9 +680,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CellPhone
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord Create(System.String id, System.String email, System.String firstName, System.String lastName, System.Nullable<System.DateTimeOffset> bornOn, System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord> addresses, System.String cellPhone, System.String phone)
 
@@ -839,9 +688,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Create
-* **Modified On:** 
 
 ### System.String Email { get; set; }
 
@@ -849,9 +696,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Email
-* **Modified On:** 
 
 ### System.String FirstName { get; set; }
 
@@ -859,9 +704,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FirstName
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -869,9 +712,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### System.String LastName { get; set; }
 
@@ -879,9 +720,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LastName
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThan(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& right)
 
@@ -889,9 +728,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThanOrEqual(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& right)
 
@@ -899,9 +736,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord op_Implicit(DotNetTips.Spargine.Tester.Models.RefTypes.Person& person)
 
@@ -909,9 +744,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord op_Implicit(DotNetTips.Spargine.Tester.Models.ValueTypes.Person& person)
 
@@ -919,9 +752,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** op_Implicit
-* **Modified On:** 
 
 ### System.Boolean op_LessThan(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& right)
 
@@ -929,9 +760,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_LessThanOrEqual(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& left, DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& right)
 
@@ -939,9 +768,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -949,9 +776,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### System.Int32 System.IComparable.CompareTo(System.Object obj)
 
@@ -959,9 +784,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord ToPersonRecord(DotNetTips.Spargine.Tester.Models.RefTypes.Person& person)
 
@@ -969,9 +792,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPersonRecord
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord ToPersonRecord(DotNetTips.Spargine.Tester.Models.ValueTypes.Person& person)
 
@@ -979,9 +800,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPersonRecord
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -989,9 +808,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts.PersonRecordJsonSerializerContext
@@ -1008,9 +825,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address
-* **Modified On:** 
 
 ### System.String Address1 { get; set; }
 
@@ -1018,9 +833,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address1
-* **Modified On:** 
 
 ### System.String Address2 { get; set; }
 
@@ -1028,9 +841,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Address2
-* **Modified On:** 
 
 ### System.String City { get; set; }
 
@@ -1038,9 +849,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** City
-* **Modified On:** 
 
 ### System.String Country { get; set; }
 
@@ -1048,9 +857,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Country
-* **Modified On:** 
 
 ### System.String CountyProvince { get; set; }
 
@@ -1058,9 +865,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CountyProvince
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -1068,9 +873,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -1078,9 +881,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### System.String PostalCode { get; set; }
 
@@ -1088,9 +889,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PostalCode
-* **Modified On:** 
 
 ### System.String State { get; set; }
 
@@ -1098,9 +897,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** State
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.ValueTypes.Address ToAddress(DotNetTips.Spargine.Tester.Models.RefTypes.AddressRecord& address)
 
@@ -1108,9 +905,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToAddress
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -1118,9 +913,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonComparerByIdThenLastName
@@ -1134,9 +927,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Compare
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonComparerByLastNameThenFirstName
@@ -1147,9 +938,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Compare
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
@@ -1160,9 +949,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparerByEmail
@@ -1173,9 +960,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate
@@ -1186,9 +971,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.Int32 CompareTo(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate other)
 
@@ -1196,9 +979,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.Boolean Equals(System.Object obj)
 
@@ -1206,9 +987,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate other)
 
@@ -1216,9 +995,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -1226,9 +1003,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetHashCode
-* **Modified On:** 
 
 ### System.Boolean op_Equality(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate cord1, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate cord2)
 
@@ -1236,9 +1011,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThan(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate left, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate right)
 
@@ -1246,9 +1019,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThanOrEqual(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate left, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate right)
 
@@ -1256,9 +1027,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_Inequality(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate cord1, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate cord2)
 
@@ -1266,9 +1035,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_LessThan(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate left, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate right)
 
@@ -1276,9 +1043,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean op_LessThanOrEqual(DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate left, DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate right)
 
@@ -1286,9 +1051,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -1296,9 +1059,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 ### System.Int32 X { get; set; }
 
@@ -1306,9 +1067,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** X
-* **Modified On:** 
 
 ### System.Int32 Y { get; set; }
 
@@ -1316,9 +1075,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Y
-* **Modified On:** 
 
 ### System.Int32 Z { get; set; }
 
@@ -1326,9 +1083,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Z
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.Person
@@ -1339,9 +1094,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Person
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address> Addresses { get; set; }
 
@@ -1349,9 +1102,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Addresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.Collection<DotNetTips.Spargine.Tester.Models.ValueTypes.Address> AddressesSerialization { get; set; }
 
@@ -1359,9 +1110,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddressesSerialization
-* **Modified On:** 
 
 ### System.Nullable<System.DateTimeOffset> BornOn { get; set; }
 
@@ -1369,9 +1118,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** BornOn
-* **Modified On:** 
 
 ### System.String CellPhone { get; set; }
 
@@ -1379,9 +1126,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CellPhone
-* **Modified On:** 
 
 ### System.String Email { get; set; }
 
@@ -1389,9 +1134,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Email
-* **Modified On:** 
 
 ### System.String FirstName { get; set; }
 
@@ -1399,9 +1142,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FirstName
-* **Modified On:** 
 
 ### System.String Id { get; set; }
 
@@ -1409,9 +1150,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Id
-* **Modified On:** 
 
 ### System.String LastName { get; set; }
 
@@ -1419,9 +1158,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LastName
-* **Modified On:** 
 
 ### System.String Phone { get; set; }
 
@@ -1429,9 +1166,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Phone
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.ValueTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord& person)
 
@@ -1439,9 +1174,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPerson
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.ValueTypes.Person ToPerson(DotNetTips.Spargine.Tester.Models.RefTypes.Person& person)
 
@@ -1449,9 +1182,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToPerson
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -1459,9 +1190,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.Models.ValueTypes.SerializerContexts.PersonValJsonSerializerContext
@@ -1475,9 +1204,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PersonData
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.PersonName
@@ -1488,9 +1215,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PersonName
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.PersonName (System.String firstName, System.String lastName)
 
@@ -1498,9 +1223,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PersonName
-* **Modified On:** 
 
 ### System.String FirstName { get; set; }
 
@@ -1508,9 +1231,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FirstName
-* **Modified On:** 
 
 ### System.String LastName { get; set; }
 
@@ -1518,9 +1239,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LastName
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.RandomCreditCardNumberGenerator
@@ -1531,9 +1250,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCreditCardNumber
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetCreditCardNumbers(System.Int32 count)
 
@@ -1541,9 +1258,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCreditCardNumbers
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.RandomData
@@ -1554,9 +1269,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** AppendPostalCodeFormatChar
-* **Modified On:** 
 
 ### System.Void ApplyCityReplacement(System.Text.StringBuilder sb, System.String format, DotNetTips.Spargine.Tester.Data.Models.City city)
 
@@ -1564,9 +1277,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** ApplyCityReplacement
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.RandomData.AddressComponents BuildAddressComponents(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
@@ -1574,9 +1285,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** BuildAddressComponents
-* **Modified On:** 
 
 ### System.ValueTuple<System.Int32[], System.Int32> ComputeWordLengths(System.Int32 count, System.Int32 minLength, System.Int32 maxLength)
 
@@ -1584,9 +1293,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** ComputeWordLengths
-* **Modified On:** 
 
 ### System.Void FillPostalCodeFromFormat(System.Text.StringBuilder sb, System.String format)
 
@@ -1594,9 +1301,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** FillPostalCodeFromFormat
-* **Modified On:** 
 
 ### System.Void FillWordChars(System.Span<System.Char> chars, System.ReadOnlySpan<System.Byte> randomBytes, System.Char minCharacter, System.Int32 range)
 
@@ -1604,9 +1309,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** FillWordChars
-* **Modified On:** 
 
 ### T GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
@@ -1618,7 +1321,6 @@
 * **CreatedOn:** 6/4/2025
 * **Description:** GenerateAddress
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GenerateAddressCollection(System.Int32& count, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
@@ -1630,7 +1332,6 @@
 * **CreatedOn:** 6/1/2025
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GenerateAddressCollection(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 count, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
@@ -1642,7 +1343,6 @@
 * **CreatedOn:** 12/4/2023
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateByteArray(System.Int32 count)
 
@@ -1654,7 +1354,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateByteArray
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Char GenerateCharacter()
 
@@ -1666,7 +1365,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Char GenerateCharacter(System.Char minValue, System.Char maxValue)
 
@@ -1678,7 +1376,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GenerateCoordinate()
 
@@ -1690,7 +1387,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCoordinate
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GenerateCoordinateCollection(System.Int32 count)
 
@@ -1702,7 +1398,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCoordinateCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateCreditCard()
 
@@ -1714,7 +1409,6 @@
 * **CreatedOn:** 3/13/2023
 * **Description:** GenerateCreditCard
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GenerateCreditCards(System.Int32 count)
 
@@ -1726,7 +1420,6 @@
 * **CreatedOn:** 3/13/2023
 * **Description:** GenerateCreditCard
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Decimal GenerateDecimal(System.Decimal& minValue, System.Decimal& maxValue, System.Int32 decimalPlaces)
 
@@ -1738,7 +1431,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateDecimal
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateDomainExtension()
 
@@ -1750,7 +1442,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateDomainExtension
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateEmailAddress()
 
@@ -1762,7 +1453,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateEmailAddress
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateFile(System.String fileName, System.Int32 fileLength)
 
@@ -1774,7 +1464,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateFile
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.ValueTuple<System.String, System.Collections.ObjectModel.ReadOnlyCollection<System.String>> GenerateFiles(System.Int32 count, System.Int32 fileLength, System.String fileExtension)
 
@@ -1786,7 +1475,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateFiles
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GenerateFiles(System.String path, System.Int32 count, System.Int32 fileLength)
 
@@ -1798,7 +1486,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateFiles
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateFirstName()
 
@@ -1810,7 +1497,6 @@
 * **CreatedOn:** 3/11/2023
 * **Description:** GenerateFirstName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 GenerateInteger(System.Int32& min, System.Int32 max)
 
@@ -1822,7 +1508,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateInteger
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateKey()
 
@@ -1834,7 +1519,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateLastName()
 
@@ -1846,7 +1530,6 @@
 * **CreatedOn:** 3/11/2023
 * **Description:** GenerateLastName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateNonZeroByteArray(System.Int32 count)
 
@@ -1858,7 +1541,6 @@
 * **CreatedOn:** 10/21/2025
 * **Description:** GenerateNonZeroByteArray
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateNumber(System.Int32 length)
 
@@ -1870,7 +1552,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateNumber
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
@@ -1882,7 +1563,6 @@
 * **CreatedOn:** 6/4/2025
 * **Description:** GeneratePerson
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.PersonName GeneratePersonNameInternal()
 
@@ -1890,9 +1570,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GeneratePersonNameInternal
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.PersonName> GeneratePersonNames(System.Int32 count)
 
@@ -1904,7 +1582,6 @@
 * **CreatedOn:** 12/15/2023
 * **Description:** GeneratePersonNames
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord GeneratePersonRecord(System.Int32 addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
@@ -1912,9 +1589,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GeneratePersonRecord
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.Models.RefTypes.PersonRecord> GeneratePersonRecordCollection(System.Int32 count)
 
@@ -1926,7 +1601,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRecordCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.RefTypes.Person GeneratePersonRef(System.Int32 addressCount, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
@@ -1938,7 +1612,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRef
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person> GeneratePersonRefCollection(System.Int32 count)
 
@@ -1950,7 +1623,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonRefCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Models.ValueTypes.Person GeneratePersonVal(System.Int32 addressCount, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
@@ -1962,7 +1634,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonVal
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Tester.Models.ValueTypes.Person> GeneratePersonValCollection(System.Int32 count)
 
@@ -1974,7 +1645,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePersonValCollection
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GeneratePhoneNumber(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Boolean includeCountryCode)
 
@@ -1986,7 +1656,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePhoneNumber
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GeneratePhoneNumber(DotNetTips.Spargine.Tester.Data.CountryName countryName, System.Boolean includeCountryCode)
 
@@ -1998,7 +1667,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GeneratePhoneNumber
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateRandomFileName(System.Int32 fileNameLength, System.String extension)
 
@@ -2010,7 +1678,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateRandomFileName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateRandomFileName(System.String path, System.Int32 fileNameLength, System.String extension)
 
@@ -2022,7 +1689,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateRandomFileName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.ValueTuple<DotNetTips.Spargine.Tester.Data.Models.Country, DotNetTips.Spargine.Tester.Data.Models.State, DotNetTips.Spargine.Tester.Data.Models.City> GenerateRandomLocationData()
 
@@ -2030,9 +1696,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GenerateRandomLocationData
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.PersonData GenerateRandomPersonData()
 
@@ -2040,9 +1704,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GenerateRandomPersonData
-* **Modified On:** 
 
 ### System.ValueTuple<System.String, System.String> GenerateRandomPersonName()
 
@@ -2050,9 +1712,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GenerateRandomLocationData
-* **Modified On:** 
 
 ### System.String GenerateRelativeUrl()
 
@@ -2064,7 +1724,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateRelativeUrl
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateTempFile(System.Int32 fileLength)
 
@@ -2076,7 +1735,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateTempFile
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateUrl()
 
@@ -2088,7 +1746,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrl
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateUrlFragment()
 
@@ -2100,7 +1757,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlFragment
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateUrlHostName()
 
@@ -2112,7 +1768,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateUrlHostNameNoProtocol()
 
@@ -2124,7 +1779,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostNameNoProtocol
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateUrlHostNameNoSubDomain()
 
@@ -2136,7 +1790,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateUrlHostNameNoSubDomain
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateWord(System.Int32 length)
 
@@ -2148,7 +1801,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateWord(System.Int32 minLength, System.Int32 maxLength)
 
@@ -2160,7 +1812,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateWord(System.Int32 length, System.Char minCharacter, System.Char maxCharacter)
 
@@ -2172,7 +1823,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateWord(System.Int32 minLength, System.Int32 maxLength, System.Char minCharacter, System.Char maxCharacter)
 
@@ -2184,7 +1834,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWord
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GenerateWords(System.Int32 count, System.Int32 minLength, System.Int32 maxLength)
 
@@ -2196,7 +1845,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateWords
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Tester.Data.Models.City GetCityFromState(DotNetTips.Spargine.Tester.Data.Models.State state)
 
@@ -2204,9 +1852,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetCityFromState
-* **Modified On:** 
 
 ### System.String GetCityName(DotNetTips.Spargine.Tester.Data.Models.City city)
 
@@ -2214,9 +1860,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetCityName
-* **Modified On:** 
 
 ### System.Int32 GetCountryPhoneLength(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
@@ -2224,9 +1868,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetCountryPhoneLength
-* **Modified On:** 
 
 ### System.String GetPhoneCode(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
@@ -2234,9 +1876,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetPhoneCode
-* **Modified On:** 
 
 ### System.String GetPhoneCodeString(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
@@ -2244,9 +1884,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetPhoneCodeString
-* **Modified On:** 
 
 ### System.String GetStateName(DotNetTips.Spargine.Tester.Data.Models.State state)
 
@@ -2254,9 +1892,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetStateName
-* **Modified On:** 
 
 ### System.String LongTestString { get; set; }
 
@@ -2268,7 +1904,6 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** LongTestString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.ValueTuple<DotNetTips.Spargine.Tester.Data.Models.State, DotNetTips.Spargine.Tester.Data.Models.City> PickStateAndCity(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
@@ -2276,9 +1911,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** PickStateAndCity
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Tester.UnitTester
@@ -2289,9 +1922,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CleanupOutputDirectory
-* **Modified On:** 
 
 ### System.TimeSpan MeasureAction(System.Action action, System.Boolean printResult, System.String methodName)
 
@@ -2299,9 +1930,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** MeasureAction
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.TimeSpan> MeasureActionAsync(System.Func<System.Threading.Tasks.Task> asyncAction, System.Boolean printResult, System.String methodName)
 
@@ -2309,9 +1938,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** MeasureActionAsync
-* **Modified On:** 
 
 ### System.String OutputDirectory { get; set; }
 
@@ -2319,9 +1946,7 @@
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** OutputDirectory
-* **Modified On:** 
 
 ### System.Void PrintToDebug(System.String input, System.String methodName)
 
@@ -2329,9 +1954,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PrintToDebug
-* **Modified On:** 
 
 ### System.Void PrintToDebug(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2339,9 +1962,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PrintToDebug
-* **Modified On:** 
 
 ### System.Void PrintToDebug(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2349,9 +1970,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PrintToDebug
-* **Modified On:** 
 
 ### System.String SaveAsJsonToFile(T input, System.String methodName)
 
@@ -2359,9 +1978,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveAsJsonToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(System.String input, System.String methodName)
 
@@ -2369,9 +1986,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(System.String input, System.IO.DirectoryInfo directory, System.String methodName)
 
@@ -2379,9 +1994,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2389,9 +2002,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2399,9 +2010,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
@@ -2409,9 +2018,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
@@ -2419,9 +2026,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFile
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.String> SaveToFileAsync(System.String input, System.String methodName)
 
@@ -2429,9 +2034,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFileAsync
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2439,9 +2042,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFileAsync
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
@@ -2449,9 +2050,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFileAsync
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
@@ -2459,9 +2058,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SaveToFileAsync
-* **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/14/2026 12:45:15 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/14/2026 2:01:54 PM UTC**

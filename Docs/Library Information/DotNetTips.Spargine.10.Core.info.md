@@ -11,9 +11,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AppInfo
-* **Modified On:** 
 
 ### System.Void ChangeCulture(System.String cultureName)
 
@@ -21,9 +19,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void ChangeCulture(System.Globalization.CultureInfo culture)
 
@@ -31,9 +27,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void ChangeUICulture(System.String cultureName)
 
@@ -41,9 +35,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void ClearAppState()
 
@@ -51,9 +43,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ClearAppState
-* **Modified On:** 
 
 ### System.Globalization.CultureInfo CurrentCulture { get; set; }
 
@@ -61,9 +51,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 CurrentThreadId { get; set; }
 
@@ -75,7 +63,6 @@
 * **CreatedOn:** 1/20/2024
 * **Description:** CurrentThreadId
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Globalization.CultureInfo CurrentUICulture { get; set; }
 
@@ -83,9 +70,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String ExecutingFolder()
 
@@ -97,7 +82,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ExecutingFolder
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String FrameworkDescription { get; set; }
 
@@ -105,9 +89,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String GenerateDiagnosticReport()
 
@@ -115,9 +97,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GenerateDiagnosticReport
-* **Modified On:** 
 
 ### System.Object GetAppState(System.String key, System.Object defaultValue)
 
@@ -125,9 +105,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAppState
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> GetCommandLineArguments()
 
@@ -135,9 +113,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCommandLineArguments
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetCultureNames(System.Globalization.CultureTypes cultureType)
 
@@ -145,9 +121,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCultureNames
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> GetEnvironmentVariables()
 
@@ -155,9 +129,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String GetLocalizedString(System.Resources.ResourceManager resourceManager, System.String key, System.String cultureName)
 
@@ -165,9 +137,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetLocalizedString
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.ProcessorInformation GetProcessorInformation()
 
@@ -179,7 +149,6 @@
 * **CreatedOn:** 3/20/2023
 * **Description:** GetProcessorInformation
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Globalization.CultureInfo InstalledUICulture { get; set; }
 
@@ -187,9 +156,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsRunning()
 
@@ -197,9 +164,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsRunningFromAspNet()
 
@@ -207,9 +172,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsUserAdministrator()
 
@@ -217,9 +180,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Kill()
 
@@ -227,9 +188,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 MaxDegreeOfParallelism()
 
@@ -237,9 +196,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** MaxDegreeOfParallelism
-* **Modified On:** 
 
 ### System.Runtime.InteropServices.Architecture OSArchitecture { get; set; }
 
@@ -247,9 +204,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String OSDescription { get; set; }
 
@@ -257,9 +212,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Runtime.InteropServices.Architecture ProcessArchitecture { get; set; }
 
@@ -267,9 +220,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 ProcessId { get; set; }
 
@@ -277,9 +228,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String ProcessName { get; set; }
 
@@ -291,7 +240,6 @@
 * **CreatedOn:** 7/26/2024
 * **Description:** ProcessName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ProcessPath { get; set; }
 
@@ -303,7 +251,6 @@
 * **CreatedOn:** 1/20/2024
 * **Description:** GetProcessorInformation
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void RebootComputer()
 
@@ -311,9 +258,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> ReferencedAssemblies()
 
@@ -321,9 +266,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean RemoveAppState(System.String key)
 
@@ -331,9 +274,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RemoveAppState
-* **Modified On:** 
 
 ### System.Void RunAsAdministrator()
 
@@ -341,9 +282,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Untestable
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void SetAppState(System.String key, System.Object value)
 
@@ -351,9 +290,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SetAppState
-* **Modified On:** 
 
 ### System.String StackTrace { get; set; }
 
@@ -361,9 +298,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int64 WorkingSet { get; set; }
 
@@ -371,9 +306,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.AppInfo
@@ -393,9 +326,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DoesAssemblyReference
-* **Modified On:** 
 
 ### System.Boolean DoesTypeExistInAssembly(System.IO.FileInfo assemblyFile, System.String typeName)
 
@@ -403,9 +334,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DoesTypeExistInAssembly
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.IO.FileInfo> FindAssembliesFromDirectory(System.IO.DirectoryInfo directory)
 
@@ -413,9 +342,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FindAssembliesFromDirectory
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> FindTypesImplementing(System.IO.FileInfo file, System.Collections.ObjectModel.ReadOnlyCollection<System.Type> types)
 
@@ -423,9 +350,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FindTypesImplementing
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Attribute> GetAssemblyCustomAttributes(System.IO.FileInfo assemblyFile)
 
@@ -433,9 +358,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAssemblyCustomAttributes
-* **Modified On:** 
 
 ### System.Reflection.MethodInfo GetAssemblyEntryPoint(System.IO.FileInfo assemblyFile)
 
@@ -443,9 +366,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAssemblyEntryPoint
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String, System.String>> GetAssemblyMetadata(System.IO.FileInfo assemblyFile)
 
@@ -453,9 +374,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAssemblyMetadata
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetAssemblyPublicTypes(System.IO.FileInfo assemblyFile)
 
@@ -463,9 +382,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAssemblyPublicTypes
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetAssemblyTypes(System.IO.FileInfo assemblyFile)
 
@@ -477,7 +394,6 @@
 * **CreatedOn:** 4/9/2025
 * **Description:** GetAssemblyTypes
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.AssemblyName> GetDependentAssemblies(System.IO.FileInfo assemblyFile)
 
@@ -485,9 +401,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetDependentAssemblies
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetMethodsInType(System.IO.FileInfo assemblyFile, System.String typeName)
 
@@ -495,9 +409,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetMethodsInType
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.IO.FileInfo> GetNetSdkDllFiles(System.String version)
 
@@ -509,7 +421,6 @@
 * **CreatedOn:** 4/9/2025
 * **Description:** GetNetSdkDllFiles
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsDotNetAssembly(System.IO.FileInfo file)
 
@@ -522,7 +433,6 @@
 * **Description:** Original code by GÉRALD BARRÉ
 * **Documentation:** https://bit.ly/SpargineAug2024
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsDotNetAssembly(System.IO.Stream& stream)
 
@@ -534,7 +444,6 @@
 * **CreatedOn:** 5/20/2024
 * **Description:** IsDotNetAssembly
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void UnloadAssembly(System.IO.FileInfo assemblyFile)
 
@@ -542,9 +451,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** UnloadAssembly
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.BenchmarkStatus
@@ -565,7 +472,6 @@
 * **CreatedOn:** 1/16/2021
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItem(System.String key, T item, System.TimeSpan timeout)
 
@@ -577,7 +483,6 @@
 * **CreatedOn:** 6/12/2024
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItem(System.String key, T item, System.DateTimeOffset timeout)
 
@@ -589,7 +494,6 @@
 * **CreatedOn:** 6/12/2024
 * **Description:** AddCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task AddCacheItemAsync(System.String key, T item, System.Threading.CancellationToken cancellationToken)
 
@@ -601,7 +505,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task AddCacheItemAsync(System.String key, T item, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken)
 
@@ -613,7 +516,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task AddCacheItemAsync(System.String key, T item, System.DateTimeOffset timeout, System.Threading.CancellationToken cancellationToken)
 
@@ -625,7 +527,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemBatch(T items)
 
@@ -637,7 +538,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemBatch
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithCallback(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.PostEvictionDelegate postEvictionCallback)
 
@@ -649,7 +549,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithCallback
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithChangeToken(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Primitives.IChangeToken changeToken)
 
@@ -661,7 +560,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithChangeToken
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithCombinedExpiration(System.String key, T item, System.TimeSpan slidingExpiration, System.TimeSpan absoluteExpiration)
 
@@ -673,7 +571,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithCombinedExpiration
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithDependency(System.String key, T item, System.TimeSpan timeout, System.Threading.CancellationTokenSource dependencyTokenSource)
 
@@ -685,7 +582,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithDependency
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithPriority(System.String key, T item, System.TimeSpan timeout, Microsoft.Extensions.Caching.Memory.CacheItemPriority priority)
 
@@ -697,7 +593,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithPriority
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithSize(System.String key, T item, System.TimeSpan timeout, System.Int64 size)
 
@@ -709,7 +604,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithSize
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddCacheItemWithSlidingExpiration(System.String key, T item, System.TimeSpan slidingExpiration)
 
@@ -721,7 +615,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddCacheItemWithSlidingExpiration
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### Microsoft.Extensions.Caching.Memory.MemoryCache Cache { get; set; }
 
@@ -733,7 +626,6 @@
 * **CreatedOn:** 1/16/2021
 * **Description:** Cache
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -745,7 +637,6 @@
 * **CreatedOn:** 6/12/2024
 * **Description:** Clear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void Compact(System.Double percentage)
 
@@ -757,7 +648,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** Compact
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean ContainsKey(System.String key)
 
@@ -769,7 +659,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** ContainsKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 Count { get; set; }
 
@@ -781,7 +670,6 @@
 * **CreatedOn:** 1/16/2021
 * **Description:** Count
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.CancellationTokenSource CreateCacheDependency(System.String dependencyKey)
 
@@ -793,7 +681,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** CreateCacheDependency
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### Microsoft.Extensions.Caching.Memory.MemoryCache CreateCacheWithLimit(System.Nullable<System.Int64> sizeLimit)
 
@@ -805,7 +692,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** CreateCacheWithLimit
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.String> GetAllKeys()
 
@@ -817,7 +703,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** GetAllKeys
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetCacheItem(System.String key)
 
@@ -829,7 +714,6 @@
 * **CreatedOn:** 1/16/2021
 * **Description:** GetCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetCacheItemAsync(System.String key, System.Threading.CancellationToken cancellationToken)
 
@@ -841,7 +725,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** GetCacheItemAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
@@ -853,7 +736,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** GetCacheItemBatch
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Cache.CacheStatistics GetCacheStatistics()
 
@@ -865,7 +747,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** GetCacheStatistics
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetOrCreateAsync(System.String key, T factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
 
@@ -873,9 +754,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetOrCreateAsync
-* **Modified On:** 
 
 ### T GetOrCreateAsync(System.String key, T factory, System.DateTimeOffset absoluteExpiration, System.Threading.CancellationToken cancellationToken)
 
@@ -887,7 +766,6 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** GetOrCreateAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Cache.InMemoryCache Instance { get; set; }
 
@@ -899,7 +777,6 @@
 * **CreatedOn:** 1/16/2021
 * **Description:** Instance
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean InvalidateDependentCacheItems(System.String dependencyKey)
 
@@ -911,7 +788,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** InvalidateDependentCacheItems
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean PeekCacheItem(System.String key, T value)
 
@@ -923,7 +799,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** PeekCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean RefreshCacheItem(System.String key, System.TimeSpan newTimeout)
 
@@ -935,7 +810,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** RefreshCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean RemoveCacheItem(System.String key)
 
@@ -947,7 +821,6 @@
 * **CreatedOn:** 1/20/2025
 * **Description:** RemoveCacheItem
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 RemoveCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
@@ -959,7 +832,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** RemoveCacheItemBatch
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void ResetStatistics()
 
@@ -971,7 +843,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** ResetStatistics
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryGetValue(System.String key, T value)
 
@@ -979,9 +850,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryGetValue
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.CollectionRandomizer<T>
@@ -996,7 +865,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** Count
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 CurrentIndex { get; set; }
 
@@ -1008,7 +876,6 @@
 * **CreatedOn:** 6/25/2025
 * **Description:** CurrentIndex
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetEnumerator()
 
@@ -1020,7 +887,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** GetEnumerator
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T GetNext()
 
@@ -1032,7 +898,6 @@
 * **CreatedOn:** 4/21/2021
 * **Description:** GetNext
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean HasRemainingItems { get; set; }
 
@@ -1044,7 +909,6 @@
 * **CreatedOn:** 4/21/2021
 * **Description:** HasRemainingItems
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T PeekNext()
 
@@ -1056,7 +920,6 @@
 * **CreatedOn:** 6/25/2025
 * **Description:** PeekNext
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Double PercentageComplete { get; set; }
 
@@ -1068,7 +931,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** PercentageComplete
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void Reset()
 
@@ -1080,7 +942,6 @@
 * **CreatedOn:** 6/25/2025
 * **Description:** Reset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean SkipNext()
 
@@ -1092,7 +953,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** SkipNext
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ToArray()
 
@@ -1104,7 +964,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** ToArray
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue>
@@ -1115,9 +974,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue)
 
@@ -1125,9 +982,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T comparer)
 
@@ -1135,9 +990,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey)
 
@@ -1145,9 +998,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T dictionary, T defaultValue)
 
@@ -1155,9 +1006,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T dictionary, T onMissingKey)
 
@@ -1165,9 +1014,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T keyValuePairs, T defaultValue)
 
@@ -1175,9 +1022,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T keyValuePairs, T onMissingKey)
 
@@ -1185,9 +1030,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, T comparer)
 
@@ -1195,9 +1038,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, T comparer)
 
@@ -1205,9 +1046,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, System.Int32 capacity)
 
@@ -1215,9 +1054,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, System.Int32 capacity)
 
@@ -1225,9 +1062,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T AddOrUpdate(T key, T addValue, T updateValueFactory)
 
@@ -1235,9 +1070,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T AsDictionary(T keyValuePairs)
 
@@ -1245,9 +1078,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -1255,9 +1086,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean ContainsValue(T value, T comparer)
 
@@ -1265,9 +1094,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T DefaultValue { get; set; }
 
@@ -1275,9 +1102,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T GetOrAdd(T key, T value)
 
@@ -1285,9 +1110,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T GetOrAdd(T key, T valueFactory)
 
@@ -1295,9 +1118,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T GetValueOrDefault(T key)
 
@@ -1305,9 +1126,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T Item { get; set; }
 
@@ -1315,9 +1134,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T OnMissingKeyFactory { get; set; }
 
@@ -1325,9 +1142,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToImmutableDictionary()
 
@@ -1335,9 +1150,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToReadOnlyDictionary()
 
@@ -1345,9 +1158,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T key, T value)
 
@@ -1355,9 +1166,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean TryUpdate(T key, T newValue, T comparisonValue)
 
@@ -1365,9 +1174,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>
@@ -1382,7 +1189,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T collection)
 
@@ -1394,7 +1200,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T comparer)
 
@@ -1406,7 +1211,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32 concurrencyLevel, System.Int32 capacity)
 
@@ -1418,7 +1222,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T collection, T comparer)
 
@@ -1430,7 +1233,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, T collection, T comparer)
 
@@ -1442,7 +1244,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, System.Int32 capacity, T comparer)
 
@@ -1454,7 +1255,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void Add(T item)
 
@@ -1466,7 +1266,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Add
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddNewLocks(System.Object[] locks, System.Int64 startIndex)
 
@@ -1474,9 +1273,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddNewLocks
-* **Modified On:** 
 
 ### System.Int32 AddRange(T items)
 
@@ -1488,7 +1285,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** AddRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -1500,7 +1296,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Clear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 ComputeApproxCount(T tables)
 
@@ -1508,9 +1303,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputeApproxCount
-* **Modified On:** 
 
 ### System.Int32 ComputeBudget(System.Boolean maximizeTableSize, System.Int32 bucketCount, System.Int32 lockCount)
 
@@ -1518,9 +1311,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputeBudget
-* **Modified On:** 
 
 ### System.Int32 ComputeCountUnderLock()
 
@@ -1528,9 +1319,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputeCountUnderLock
-* **Modified On:** 
 
 ### System.ValueTuple<System.Int32, System.Boolean> ComputeNewLength(T tables)
 
@@ -1538,9 +1327,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputeNewLength
-* **Modified On:** 
 
 ### System.Boolean Contains(T item)
 
@@ -1552,7 +1339,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Contains
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void CopyTo(T array, System.Int32 arrayIndex)
 
@@ -1564,7 +1350,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** CopyTo
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 Count { get; set; }
 
@@ -1576,7 +1361,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Count
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Object[] CreateExpandedLocks(T tables)
 
@@ -1584,9 +1368,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CreateExpandedLocks
-* **Modified On:** 
 
 ### System.Object[] CreateLockObjects(System.Int32 count)
 
@@ -1594,9 +1376,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CreateLockObjects
-* **Modified On:** 
 
 ### System.Int32 FindNextValidLength(System.Int32 candidate)
 
@@ -1604,9 +1384,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FindNextValidLength
-* **Modified On:** 
 
 ### T GetEnumerator()
 
@@ -1618,7 +1396,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** GetEnumerator
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsDivisibleBy3Or5Or7(System.Int32 n)
 
@@ -1626,9 +1403,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsDivisibleBy3Or5Or7
-* **Modified On:** 
 
 ### System.Boolean IsEmpty { get; set; }
 
@@ -1640,7 +1415,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** IsEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean NodeMatches(T node, T item, System.Int32 hashCode)
 
@@ -1648,9 +1422,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** NodeMatches
-* **Modified On:** 
 
 ### System.Void RehashBuckets(T tables, T newBuckets, System.Int32[] newCountPerLock, System.Object[] newLocks)
 
@@ -1658,9 +1430,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RehashBuckets
-* **Modified On:** 
 
 ### System.Boolean Remove(T item)
 
@@ -1672,7 +1442,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Remove
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean RemoveNodeFromBucket(T tables, T item, System.Int32 hashCode, System.Int32 bucketNo, System.Int32 lockNo)
 
@@ -1680,9 +1449,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RemoveNodeFromBucket
-* **Modified On:** 
 
 ### System.Boolean ShouldIncreaseBudgetOnly(T tables)
 
@@ -1690,9 +1457,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ShouldIncreaseBudgetOnly
-* **Modified On:** 
 
 ### T System.Collections.Generic.IEnumerable<T>.GetEnumerator()
 
@@ -1704,7 +1469,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** Add
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ToArray()
 
@@ -1716,7 +1480,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** ToArray
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item)
 
@@ -1728,7 +1491,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** TryAdd
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryAddNonNull(T item)
 
@@ -1736,9 +1498,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAddNonNull
-* **Modified On:** 
 
 ### System.Boolean TryComputeDoublePlusOne(System.Int32 currentLength, System.Int32 maxLength, System.Int32& newLength)
 
@@ -1746,9 +1506,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryComputeDoublePlusOne
-* **Modified On:** 
 
 ### System.Boolean TryFindInBucket(T start, T item, System.Int32 hashCode, T foundItem)
 
@@ -1756,9 +1514,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryFindInBucket
-* **Modified On:** 
 
 ### System.Boolean TryPeek(T equalValue, T actualValue)
 
@@ -1770,7 +1526,6 @@
 * **CreatedOn:** 12/30/2025
 * **Description:** TryPeek
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryRemove(T item)
 
@@ -1782,7 +1537,6 @@
 * **CreatedOn:** 7/28/2021
 * **Description:** TryRemove
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T>
@@ -1793,9 +1547,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DistinctBlockingCollection
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T> (System.Int32& boundedCapacity)
 
@@ -1803,9 +1555,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DistinctBlockingCollection
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T> (T collection)
 
@@ -1813,9 +1563,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DistinctBlockingCollection
-* **Modified On:** 
 
 ### System.Void Add(T item, System.Threading.CancellationToken cancellationToken)
 
@@ -1823,9 +1571,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Add
-* **Modified On:** 
 
 ### System.Int32 AddRange(T items, System.Threading.CancellationToken cancellationToken)
 
@@ -1833,9 +1579,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddRange
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -1843,9 +1587,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Clear
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T> Clone()
 
@@ -1853,9 +1595,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Clone
-* **Modified On:** 
 
 ### System.Boolean Contains(T item)
 
@@ -1863,9 +1603,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Contains
-* **Modified On:** 
 
 ### System.Boolean ContainsAny(T items)
 
@@ -1873,9 +1611,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsAny
-* **Modified On:** 
 
 ### System.Boolean IsNotInCollection(T item)
 
@@ -1883,9 +1619,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** IsNotInCollection
-* **Modified On:** 
 
 ### System.Boolean IsReadOnly { get; set; }
 
@@ -1893,9 +1627,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsReadOnly
-* **Modified On:** 
 
 ### System.Boolean Remove(T item)
 
@@ -1903,9 +1635,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Remove
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item)
 
@@ -1913,9 +1643,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAdd
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item, System.Int32 millisecondsTimeout)
 
@@ -1923,9 +1651,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAdd
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item, System.TimeSpan timeout)
 
@@ -1933,9 +1659,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAdd
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
 
@@ -1943,9 +1667,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAdd
-* **Modified On:** 
 
 ### System.Int32 TryAddRange(T items, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
 
@@ -1953,9 +1675,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryAddRange
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T>
@@ -1966,9 +1686,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T collection)
 
@@ -1976,9 +1694,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T comparer)
 
@@ -1986,9 +1702,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Add(T item)
 
@@ -1996,9 +1710,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 AddRange(T items)
 
@@ -2006,9 +1718,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddRange
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -2016,9 +1726,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Contains(T item)
 
@@ -2026,9 +1734,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean ContainsAny(T items)
 
@@ -2036,9 +1742,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsAny
-* **Modified On:** 
 
 ### System.Void CopyTo(T array, System.Int32 arrayIndex)
 
@@ -2046,9 +1750,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 Count { get; set; }
 
@@ -2056,9 +1758,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T GetEnumerator()
 
@@ -2066,9 +1766,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsEmpty { get; set; }
 
@@ -2076,9 +1774,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsEmpty
-* **Modified On:** 
 
 ### System.Boolean IsReadOnly { get; set; }
 
@@ -2086,9 +1782,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void ReconstructBagWithout(T item)
 
@@ -2096,9 +1790,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Remove(T item)
 
@@ -2106,9 +1798,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 RemoveRange(T items)
 
@@ -2116,9 +1806,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RemoveRange
-* **Modified On:** 
 
 ### T ToArray()
 
@@ -2126,9 +1814,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToArray
-* **Modified On:** 
 
 ### T ToFrozenSet()
 
@@ -2136,9 +1822,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToFrozenSet
-* **Modified On:** 
 
 ### T ToList()
 
@@ -2146,9 +1830,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToList
-* **Modified On:** 
 
 ### System.Boolean TryAdd(T item)
 
@@ -2156,9 +1838,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean TryGetValue(T equalValue, T actualValue)
 
@@ -2166,9 +1846,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryGetValue
-* **Modified On:** 
 
 ### System.Boolean TryPeek(T equalValue, T actualValue)
 
@@ -2176,9 +1854,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryPeek
-* **Modified On:** 
 
 ### System.Boolean TryTake(T result)
 
@@ -2186,9 +1862,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T>
@@ -2199,9 +1873,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T comparer)
 
@@ -2209,9 +1881,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T collection)
 
@@ -2219,9 +1889,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (System.Int32 capacity)
 
@@ -2229,9 +1897,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T collection, T comparer)
 
@@ -2239,9 +1905,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (System.Int32 capacity, T comparer)
 
@@ -2249,9 +1913,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Add(T item)
 
@@ -2259,9 +1921,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void AddRange(T items)
 
@@ -2269,9 +1929,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T AsReadOnlySpan()
 
@@ -2279,9 +1937,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -2289,9 +1945,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T GetEnumerator()
 
@@ -2299,9 +1953,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Remove(T item)
 
@@ -2309,9 +1961,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void RemoveAt(System.Int32 index)
 
@@ -2319,9 +1969,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void SortCollectionCore()
 
@@ -2329,9 +1977,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToArray()
 
@@ -2339,9 +1985,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToImmutableList()
 
@@ -2349,9 +1993,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToList()
 
@@ -2359,9 +2001,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T>
@@ -2372,9 +2012,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T comparer)
 
@@ -2382,9 +2020,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T collection)
 
@@ -2392,9 +2028,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T collection, T comparer)
 
@@ -2402,9 +2036,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Add(T item)
 
@@ -2412,9 +2044,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void AddRange(T items)
 
@@ -2422,9 +2052,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -2432,9 +2060,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T Comparer { get; set; }
 
@@ -2442,9 +2068,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Contains(T item)
 
@@ -2452,9 +2076,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void CopyTo(T array)
 
@@ -2462,9 +2084,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void CopyTo(T array, System.Int32 arrayIndex)
 
@@ -2472,9 +2092,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void CopyTo(T array, System.Int32 arrayIndex, System.Int32 count)
 
@@ -2482,9 +2100,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 Count { get; set; }
 
@@ -2492,9 +2108,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 EnsureCapacity(System.Int32 capacity)
 
@@ -2502,9 +2116,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void ExceptWith(T other)
 
@@ -2512,9 +2124,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T FindAll(T match)
 
@@ -2522,9 +2132,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T FirstOrDefault()
 
@@ -2532,9 +2140,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void IntersectWith(T other)
 
@@ -2542,9 +2148,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsProperSubsetOf(T other)
 
@@ -2552,9 +2156,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsProperSupersetOf(T other)
 
@@ -2562,9 +2164,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsReadOnly { get; set; }
 
@@ -2572,9 +2172,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsSubsetOf(T other)
 
@@ -2582,9 +2180,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsSupersetOf(T other)
 
@@ -2592,9 +2188,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T LastOrDefault()
 
@@ -2602,9 +2196,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Overlaps(T other)
 
@@ -2612,9 +2204,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Remove(T item)
 
@@ -2622,9 +2212,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 RemoveRange(T items)
 
@@ -2632,9 +2220,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 RemoveWhere(T match)
 
@@ -2642,9 +2228,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void Reset(T items)
 
@@ -2652,9 +2236,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean SetEquals(T other)
 
@@ -2662,9 +2244,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void SymmetricExceptWith(T other)
 
@@ -2672,9 +2252,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void System.Collections.Generic.ICollection<T>.Add(T item)
 
@@ -2682,9 +2260,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToArray()
 
@@ -2692,9 +2268,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T ToList()
 
@@ -2702,9 +2276,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void TrimExcess()
 
@@ -2712,9 +2284,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean TryGetValue(T equalValue, T actualValue)
 
@@ -2722,9 +2292,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Void UnionWith(T other)
 
@@ -2732,9 +2300,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Collections.Generic.OrdinalStringComparer
@@ -2748,9 +2314,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputerCulture
-* **Modified On:** 
 
 ### System.String ComputerUICulture { get; set; }
 
@@ -2758,9 +2322,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ComputerUICulture
-* **Modified On:** 
 
 ### System.Int32 CurrentManagedThreadId { get; set; }
 
@@ -2768,9 +2330,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CurrentManagedThreadId
-* **Modified On:** 
 
 ### System.String CurrentStackTrace { get; set; }
 
@@ -2778,9 +2338,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CurrentStackTrace
-* **Modified On:** 
 
 ### System.Int32 CurrentSystemTickCount { get; set; }
 
@@ -2788,9 +2346,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CurrentSystemTickCount
-* **Modified On:** 
 
 ### System.String CurrentWorkingDirectory { get; set; }
 
@@ -2798,9 +2354,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CurrentWorkingDirectory
-* **Modified On:** 
 
 ### System.String DiskUsage { get; set; }
 
@@ -2808,9 +2362,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DiskUsage
-* **Modified On:** 
 
 ### System.String FrameworkDescription { get; set; }
 
@@ -2818,9 +2370,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FrameworkDescription
-* **Modified On:** 
 
 ### System.Version FrameworkVersion { get; set; }
 
@@ -2828,9 +2378,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FrameworkVersion
-* **Modified On:** 
 
 ### System.TimeSpan GetCpuUsagePrivilegedTime { get; set; }
 
@@ -2838,9 +2386,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCpuUsagePrivilegedTime
-* **Modified On:** 
 
 ### System.TimeSpan GetCpuUsageTotalTime { get; set; }
 
@@ -2848,9 +2394,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCpuUsageTotalTime
-* **Modified On:** 
 
 ### System.TimeSpan GetCpuUsageUserTime { get; set; }
 
@@ -2858,9 +2402,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetCpuUsageUserTime
-* **Modified On:** 
 
 ### System.Boolean HasShutdownStarted { get; set; }
 
@@ -2868,9 +2410,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasShutdownStarted
-* **Modified On:** 
 
 ### System.String IPAddress { get; set; }
 
@@ -2878,9 +2418,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IPAddress
-* **Modified On:** 
 
 ### System.Boolean Is64BitOperatingSystem { get; set; }
 
@@ -2888,9 +2426,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Is64BitOperatingSystem
-* **Modified On:** 
 
 ### System.Boolean Is64BitProcess { get; set; }
 
@@ -2898,9 +2434,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Is64BitProcess
-* **Modified On:** 
 
 ### System.Boolean IsNetworkAvailable { get; set; }
 
@@ -2908,9 +2442,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsNetworkAvailable
-* **Modified On:** 
 
 ### System.Boolean IsUserInteractive { get; set; }
 
@@ -2918,9 +2450,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsUserInteractive
-* **Modified On:** 
 
 ### System.String LogicalDrives { get; set; }
 
@@ -2928,9 +2458,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LogicalDrives
-* **Modified On:** 
 
 ### System.String MachineName { get; set; }
 
@@ -2938,9 +2466,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** MachineName
-* **Modified On:** 
 
 ### System.String OSArchitecture { get; set; }
 
@@ -2948,9 +2474,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** OSArchitecture
-* **Modified On:** 
 
 ### System.String OSDescription { get; set; }
 
@@ -2958,9 +2482,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** OSDescription
-* **Modified On:** 
 
 ### System.Int32 OSMemoryPageSize { get; set; }
 
@@ -2968,9 +2490,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** OSMemoryPageSize
-* **Modified On:** 
 
 ### System.Int64 PhysicalMemoryInUse { get; set; }
 
@@ -2978,9 +2498,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** PhysicalMemoryInUse
-* **Modified On:** 
 
 ### System.Runtime.InteropServices.Architecture ProcessArchitecture { get; set; }
 
@@ -2988,9 +2506,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ProcessArchitecture
-* **Modified On:** 
 
 ### System.Int32 ProcessorCount { get; set; }
 
@@ -2998,9 +2514,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ProcessorCount
-* **Modified On:** 
 
 ### System.String SystemDirectory { get; set; }
 
@@ -3008,9 +2522,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SystemDirectory
-* **Modified On:** 
 
 ### System.Int32 SystemPageSize { get; set; }
 
@@ -3018,9 +2530,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SystemPageSize
-* **Modified On:** 
 
 ### System.Int32 TickCount { get; set; }
 
@@ -3028,9 +2538,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TickCount
-* **Modified On:** 
 
 ### System.Int64 TickCount64 { get; set; }
 
@@ -3038,9 +2546,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TickCount64
-* **Modified On:** 
 
 ### System.String ToJson()
 
@@ -3048,9 +2554,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToJson
-* **Modified On:** 
 
 ### System.TimeSpan Uptime { get; set; }
 
@@ -3058,9 +2562,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Uptime
-* **Modified On:** 
 
 ### System.String UserDomainName { get; set; }
 
@@ -3068,9 +2570,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** UserDomainName
-* **Modified On:** 
 
 ### System.String UserName { get; set; }
 
@@ -3078,9 +2578,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** UserName
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Config<T>
@@ -3091,9 +2589,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Config
-* **Modified On:** 
 
 ### System.Boolean Load()
 
@@ -3101,9 +2597,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Load
-* **Modified On:** 
 
 ### System.Boolean Save()
 
@@ -3111,9 +2605,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Save
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.ControlChars
@@ -3131,7 +2623,6 @@
 * **CreatedOn:** 9/1/2025
 * **Description:** GetCountryPhonePostalInfo
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Data.Models.CountryPhonePostalInfo GetCountryPhonePostalInfo(System.String countryNameOrIso)
 
@@ -3143,7 +2634,6 @@
 * **CreatedOn:** 9/1/2025
 * **Description:** GetCountryPhonePostalInfo
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean ValidatePhoneNumber(System.String countryNameOrIso, System.String phoneNumber, System.Boolean validateCountryCode)
 
@@ -3151,9 +2641,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ValidatePhoneNumber
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Data.PostalCodeState ValidatePostalCode(System.String countryNameOrIso, System.String postalCode)
 
@@ -3161,9 +2649,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ValidatePostalCode
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.DateTimeFormat
@@ -3174,9 +2660,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String DisplayName { get; set; }
 
@@ -3184,9 +2668,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DisplayName
-* **Modified On:** 
 
 ### System.Int32 Value { get; set; }
 
@@ -3194,9 +2676,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Value
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Devices.Clock
@@ -3211,7 +2691,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** CurrentDayOfWeek
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 CurrentDayOfYear { get; set; }
 
@@ -3223,7 +2702,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** CurrentDayOfYear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 CurrentQuarter { get; set; }
 
@@ -3235,7 +2713,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** CurrentQuarter
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DayOfWeek CurrentUtcDayOfWeek { get; set; }
 
@@ -3247,7 +2724,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** CurrentUtcDayOfWeek
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 CurrentUtcQuarter { get; set; }
 
@@ -3259,7 +2735,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** CurrentUtcQuarter
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 DaysInCurrentMonth { get; set; }
 
@@ -3271,7 +2746,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** DaysInCurrentMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 DaysInCurrentUtcMonth { get; set; }
 
@@ -3283,7 +2757,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** DaysInCurrentUtcMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 DaysInMonth(System.Int32& year, System.Int32& month)
 
@@ -3295,7 +2768,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** DaysInMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 DaysRemainingInMonth { get; set; }
 
@@ -3307,7 +2779,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** DaysRemainingInMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 DaysRemainingInYear { get; set; }
 
@@ -3319,7 +2790,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** DaysRemainingInYear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset FirstDayOfCurrentMonth { get; set; }
 
@@ -3331,7 +2801,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** FirstDayOfCurrentMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsCurrentUtcYearLeapYear { get; set; }
 
@@ -3343,7 +2812,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** IsCurrentUtcYearLeapYear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsCurrentYearLeapYear { get; set; }
 
@@ -3355,7 +2823,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** IsCurrentYearLeapYear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsLeapYear(System.Int32& year)
 
@@ -3367,7 +2834,6 @@
 * **CreatedOn:** 11/14/2024
 * **Description:** IsLeapYear
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsWeekday { get; set; }
 
@@ -3379,7 +2845,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** IsWeekday
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsWeekend { get; set; }
 
@@ -3391,7 +2856,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** IsWeekend
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset LastDayOfCurrentMonth { get; set; }
 
@@ -3403,7 +2867,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** LastDayOfCurrentMonth
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset LocalTime { get; set; }
 
@@ -3415,7 +2878,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** LocalTime
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan LocalUtcOffset { get; set; }
 
@@ -3427,7 +2889,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** LocalUtcOffset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset StartOfToday { get; set; }
 
@@ -3439,7 +2900,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** StartOfToday
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 TickCount { get; set; }
 
@@ -3451,7 +2911,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** TickCount
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 TickCount64 { get; set; }
 
@@ -3463,7 +2922,6 @@
 * **CreatedOn:** 11/14/2024
 * **Description:** TickCount64
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 UnixTimestamp { get; set; }
 
@@ -3475,7 +2933,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** UnixTimestamp
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 UnixTimestampMilliseconds { get; set; }
 
@@ -3487,7 +2944,6 @@
 * **CreatedOn:** 2/13/2026
 * **Description:** UnixTimestampMilliseconds
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset UtcTime { get; set; }
 
@@ -3499,7 +2955,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** UtcTime
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Diagnostics.DiagnosticEntry
@@ -3510,9 +2965,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Elapsed
-* **Modified On:** 
 
 ### System.Boolean Equals(System.Object obj)
 
@@ -3520,9 +2973,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.Diagnostics.DiagnosticEntry other)
 
@@ -3530,9 +2981,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -3540,9 +2989,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetHashCode
-* **Modified On:** 
 
 ### System.String Message { get; set; }
 
@@ -3550,9 +2997,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Message
-* **Modified On:** 
 
 ### System.DateTimeOffset Timestamp { get; set; }
 
@@ -3560,9 +3005,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Timestamp
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -3570,9 +3013,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Diagnostics.ElapsedEventArgs
@@ -3587,7 +3028,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** Elapsed
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch
@@ -3602,7 +3042,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** PerformanceStopwatch
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch (System.String title)
 
@@ -3614,7 +3053,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** PerformanceStopwatch
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void AddDiagnosticEntry(System.String message)
 
@@ -3626,7 +3064,6 @@
 * **CreatedOn:** 5/9/2025
 * **Description:** AddDiagnosticEntry
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Nullable<System.TimeSpan> AlertThreshold { get; set; }
 
@@ -3638,7 +3075,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** AlertThreshold
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void ClearDiagnostics()
 
@@ -3650,7 +3086,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** ClearDiagnostics
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void ClearLaps()
 
@@ -3662,7 +3097,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** ClearLaps
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Diagnostics.DiagnosticEntry> Diagnostics { get; set; }
 
@@ -3674,7 +3108,6 @@
 * **CreatedOn:** 1/18/2023
 * **Description:** Diagnostics
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ExportToJson()
 
@@ -3686,7 +3119,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** ExportToJson
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetDiagnosticMessages()
 
@@ -3698,7 +3130,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** GetDiagnosticMessages
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan GetElapsedTime(System.Int64 startingTimestamp)
 
@@ -3710,7 +3141,6 @@
 * **CreatedOn:** 2/17/2026
 * **Description:** GetElapsedTime
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan GetElapsedTime(System.Int64 startingTimestamp, System.Int64 endingTimestamp)
 
@@ -3722,7 +3152,6 @@
 * **CreatedOn:** 2/17/2026
 * **Description:** GetElapsedTime
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.TimeSpan> GetLaps()
 
@@ -3734,7 +3163,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** GetLaps
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GetSummaryReport()
 
@@ -3746,7 +3174,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** GetSummaryReport
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 GetTimeStamp()
 
@@ -3758,7 +3185,6 @@
 * **CreatedOn:** 2/17/2026
 * **Description:** GetTimestamp
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GetTotalTimeString()
 
@@ -3770,7 +3196,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** GetTotalTimeString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsThresholdExceeded { get; set; }
 
@@ -3782,7 +3207,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** IsThresholdExceeded
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message)
 
@@ -3794,7 +3218,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** LogMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void RecordLap()
 
@@ -3806,7 +3229,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** RecordLap
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### event EventHandler`1 ResetCompleted
 
@@ -3818,7 +3240,6 @@
 * **CreatedOn:** 11/11/2025
 * **Description:** Reset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch StartNew(System.String title)
 
@@ -3830,7 +3251,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** StartNew
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch StartNewWithAlertThreshold(System.Nullable<System.TimeSpan> alertThreshold, System.String title)
 
@@ -3842,7 +3262,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** StartNewWithAlertThreshold
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch StartNewWithTelemetry(Microsoft.ApplicationInsights.TelemetryClient telemetry, System.String operationName, System.Nullable<System.TimeSpan> alertThreshold, System.String message, System.Collections.Generic.IDictionary<System.String, System.String> properties)
 
@@ -3854,7 +3273,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** StartNewWithTelemetry
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### event EventHandler`1 StopCompleted
 
@@ -3866,7 +3284,6 @@
 * **CreatedOn:** 11/11/2025
 * **Description:** StopCompleted
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean StopIfThresholdExceeded()
 
@@ -3878,7 +3295,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** StopIfThresholdExceeded
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan StopReset()
 
@@ -3890,7 +3306,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** StopReset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan StopReset(Microsoft.Extensions.Logging.ILogger logger, System.String message)
 
@@ -3902,7 +3317,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** StopReset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan StopRestart()
 
@@ -3914,7 +3328,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** StopReset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeSpan StopRestart(Microsoft.Extensions.Logging.ILogger logger, System.String message)
 
@@ -3926,7 +3339,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** StopReset
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### event EventHandler`1 ThresholdExceeded
 
@@ -3938,7 +3350,6 @@
 * **CreatedOn:** 11/11/2025
 * **Description:** ThresholdExceeded
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Title { get; set; }
 
@@ -3950,7 +3361,6 @@
 * **CreatedOn:** 11/11/2020
 * **Description:** Title
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -3962,7 +3372,6 @@
 * **CreatedOn:** 1/18/2023
 * **Description:** ToString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void TrackTelemetry(Microsoft.ApplicationInsights.TelemetryClient telemetry, System.String operationName, System.String message, System.Collections.Generic.IDictionary<System.String, System.String> properties)
 
@@ -3974,7 +3383,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** TrackTelemetry
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch WithTelemetry(Microsoft.ApplicationInsights.TelemetryClient telemetry, System.String operationName, System.String message, System.Collections.Generic.IDictionary<System.String, System.String> properties)
 
@@ -3986,7 +3394,6 @@
 * **CreatedOn:** 5/8/2025
 * **Description:** WithTelemetry
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.DisplayNameOptions
@@ -3997,9 +3404,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.DisplayNameOptions other)
 
@@ -4007,9 +3412,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -4017,9 +3420,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -4027,9 +3428,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Enumeration
@@ -4040,9 +3439,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Enumeration
-* **Modified On:** 
 
 ### System.Int32 AbsoluteDifference(DotNetTips.Spargine.Core.Enumeration firstValue, DotNetTips.Spargine.Core.Enumeration secondValue)
 
@@ -4050,9 +3447,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AbsoluteDifference
-* **Modified On:** 
 
 ### System.Int32 CompareTo(System.Object obj)
 
@@ -4060,9 +3455,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String DisplayName { get; set; }
 
@@ -4070,9 +3463,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DisplayName
-* **Modified On:** 
 
 ### T FromDisplayName(System.String displayName)
 
@@ -4080,9 +3471,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromDisplayName
-* **Modified On:** 
 
 ### T FromValue(System.Int32 value)
 
@@ -4090,9 +3479,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromValue
-* **Modified On:** 
 
 ### T GetAll()
 
@@ -4100,9 +3487,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAll
-* **Modified On:** 
 
 ### System.Boolean TryFromDisplayName(System.String displayName, T result)
 
@@ -4110,9 +3495,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryFromDisplayName
-* **Modified On:** 
 
 ### System.Boolean TryFromValue(System.Int32 value, T result)
 
@@ -4120,9 +3503,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryFromValue
-* **Modified On:** 
 
 ### System.Int32 Value { get; set; }
 
@@ -4130,9 +3511,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Value
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.EnumHelper
@@ -4143,9 +3522,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetDescription
-* **Modified On:** 
 
 ### System.String GetDescription(T input)
 
@@ -4153,9 +3530,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetDescription
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.EnumValue> GetItems(System.Boolean fixNames)
 
@@ -4167,7 +3542,6 @@
 * **CreatedOn:** 1/1/2020
 * **Description:** GetItems
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryParse(System.String name, T result)
 
@@ -4175,9 +3549,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryParse
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.EnumValue
@@ -4188,9 +3560,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.EnvironmentKey
@@ -4204,9 +3574,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ClearLoggedState
-* **Modified On:** 
 
 ### System.Boolean ContainsAggregateException(System.Exception exception)
 
@@ -4214,9 +3582,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsAggregateException
-* **Modified On:** 
 
 ### System.Boolean ContainsExceptionOfType(System.Exception exception)
 
@@ -4224,9 +3590,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsExceptionOfType
-* **Modified On:** 
 
 ### System.Boolean ContainsMessage(System.Exception exception, System.String message)
 
@@ -4234,9 +3598,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsMessage
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData(System.Exception exception)
 
@@ -4244,9 +3606,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ExtractData
-* **Modified On:** 
 
 ### System.String FormatForDisplay(System.Exception exception)
 
@@ -4254,9 +3614,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FormatForDisplay
-* **Modified On:** 
 
 ### T FromHierarchy(T source, T accumulatorFunction)
 
@@ -4264,9 +3622,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromHierarchy
-* **Modified On:** 
 
 ### T FromHierarchy(T source, T nextItem, T canContinuePredicate)
 
@@ -4274,9 +3630,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromHierarchy
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyList<System.Exception> GetAllInnerExceptions(System.Exception exception)
 
@@ -4284,9 +3638,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllInnerExceptions
-* **Modified On:** 
 
 ### System.String GetAllMessages(System.Exception exception, System.Char delimiter)
 
@@ -4294,10 +3646,8 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllMessages
 * **Documentation:** https://bit.ly/SpargineAug2024
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyList<System.ValueTuple<System.String, System.String>> GetAllMessagesWithStackTrace(System.Exception exception)
 
@@ -4310,7 +3660,6 @@
 * **Description:** GetAllMessagesWithStackTrace
 * **Documentation:** https://bit.ly/SpargineAug2024
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Object> GetMetadata(System.Exception exception)
 
@@ -4318,9 +3667,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetMetadata
-* **Modified On:** 
 
 ### System.Boolean IsCritical(System.Exception exception)
 
@@ -4332,7 +3679,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsFatal(System.Exception exception)
 
@@ -4344,7 +3690,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsLogged(System.Exception ex)
 
@@ -4352,9 +3697,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsLogged
-* **Modified On:** 
 
 ### System.Boolean IsSecurityOrCritical(System.Exception exception)
 
@@ -4366,7 +3709,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogException(System.Exception exception, Microsoft.Extensions.Logging.ILogger logger, Microsoft.Extensions.Logging.LogLevel logLevel)
 
@@ -4374,9 +3716,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LogException
-* **Modified On:** 
 
 ### System.Void SetIsLogged(System.Exception ex)
 
@@ -4384,9 +3724,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SetIsLogged
-* **Modified On:** 
 
 ### System.String ToJson(System.Exception exception)
 
@@ -4394,9 +3732,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToJson
-* **Modified On:** 
 
 ### T TraverseFor(System.Exception exception)
 
@@ -4404,9 +3740,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TraverseFor
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.ExceptionExtensions.<G>$6A188C7A03CB85FC44DF3FD030EA0664
@@ -4417,9 +3751,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsAggregateException
-* **Modified On:** 
 
 ### System.Boolean ContainsExceptionOfType()
 
@@ -4427,9 +3759,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsExceptionOfType
-* **Modified On:** 
 
 ### System.Boolean ContainsMessage(System.String message)
 
@@ -4437,9 +3767,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ContainsMessage
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.Object, System.Object> ExtractData()
 
@@ -4447,9 +3775,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ExtractData
-* **Modified On:** 
 
 ### System.String FormatForDisplay()
 
@@ -4457,9 +3783,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FormatForDisplay
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyList<System.Exception> GetAllInnerExceptions()
 
@@ -4467,9 +3791,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllInnerExceptions
-* **Modified On:** 
 
 ### System.String GetAllMessages(System.Char delimiter)
 
@@ -4477,10 +3799,8 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllMessages
 * **Documentation:** https://bit.ly/SpargineAug2024
-* **Modified On:** 
 
 ### System.Collections.Generic.IReadOnlyList<System.ValueTuple<System.String, System.String>> GetAllMessagesWithStackTrace()
 
@@ -4493,7 +3813,6 @@
 * **Description:** GetAllMessagesWithStackTrace
 * **Documentation:** https://bit.ly/SpargineAug2024
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Object> GetMetadata()
 
@@ -4501,9 +3820,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetMetadata
-* **Modified On:** 
 
 ### System.Boolean IsCritical()
 
@@ -4515,7 +3832,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsFatal()
 
@@ -4527,7 +3843,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsSecurityOrCritical()
 
@@ -4539,7 +3854,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogException(Microsoft.Extensions.Logging.ILogger logger, Microsoft.Extensions.Logging.LogLevel logLevel)
 
@@ -4547,9 +3861,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LogException
-* **Modified On:** 
 
 ### System.String ToJson()
 
@@ -4557,9 +3869,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToJson
-* **Modified On:** 
 
 ### T TraverseFor()
 
@@ -4567,9 +3877,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TraverseFor
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.ExceptionExtensions.<G>$A9422F7DB89A57DD264BF6B8B5E1AB6D<$T0>
@@ -4580,9 +3888,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromHierarchy
-* **Modified On:** 
 
 ### T FromHierarchy(T nextItem, T canContinuePredicate)
 
@@ -4590,9 +3896,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromHierarchy
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.ExceptionThrower
@@ -4603,9 +3907,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CreateFileNotFoundException
-* **Modified On:** 
 
 ### System.IO.FileNotFoundException CreateFileNotFoundException(System.String message, System.String fileName)
 
@@ -4613,9 +3915,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CreateFileNotFoundException
-* **Modified On:** 
 
 ### System.IO.FileNotFoundException CreateFileNotFoundException(System.String message, System.String fileName, System.Exception ex)
 
@@ -4623,9 +3923,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CreateFileNotFoundException
-* **Modified On:** 
 
 ### System.String DefaultIfNull(System.String value, System.String defaultValue)
 
@@ -4633,9 +3931,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DefaultIfNull
-* **Modified On:** 
 
 ### System.Void ThrowArgumentException(System.String message, System.String paramName)
 
@@ -4643,9 +3939,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Optimized ThrowArgumentException method for better performance and clarity.
-* **Modified On:** 
 
 ### System.Void ThrowArgumentException(System.String message, System.Exception innerException)
 
@@ -4653,9 +3947,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Optimized ThrowArgumentException method for better performance and clarity.
-* **Modified On:** 
 
 ### System.Void ThrowArgumentInvalidException(System.String message, System.String paramName)
 
@@ -4663,9 +3955,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentInvalidException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentInvalidException(System.String message, System.String paramName, System.Exception innerException)
 
@@ -4673,9 +3963,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentInvalidException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentNullException(System.String paramName)
 
@@ -4683,9 +3971,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentNullException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentNullException(System.String message, System.String paramName)
 
@@ -4693,9 +3979,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentNullException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentNullException(System.String message, System.Exception innerException)
 
@@ -4703,9 +3987,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentNullException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentOutOfRangeException(System.String paramName)
 
@@ -4713,9 +3995,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentOutOfRangeException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentOutOfRangeException(System.String message, System.String paramName)
 
@@ -4723,9 +4003,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentOutOfRangeException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentOutOfRangeException(System.String message, System.Exception innerException)
 
@@ -4733,9 +4011,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentOutOfRangeException
-* **Modified On:** 
 
 ### System.Void ThrowArgumentReadOnlyException(System.String message, System.String paramName)
 
@@ -4743,9 +4019,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowArgumentReadOnlyException
-* **Modified On:** 
 
 ### System.Void ThrowDirectoryNotFoundException(System.String message, System.IO.DirectoryInfo directory)
 
@@ -4753,9 +4027,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowDirectoryNotFoundException
-* **Modified On:** 
 
 ### System.Void ThrowDirectoryNotFoundException(System.String message, System.Exception innerException)
 
@@ -4763,9 +4035,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowDirectoryNotFoundException
-* **Modified On:** 
 
 ### System.Void ThrowFileNotFoundException(System.String message, System.Exception innerException)
 
@@ -4773,9 +4043,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowFileNotFoundException
-* **Modified On:** 
 
 ### System.Void ThrowFileNotFoundException(System.String message, System.String fileName)
 
@@ -4783,9 +4051,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowFileNotFoundException
-* **Modified On:** 
 
 ### System.Void ThrowFileNotFoundException(System.String message, System.String fileName, System.Exception innerException)
 
@@ -4793,9 +4059,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowFileNotFoundException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidCastException(System.String message, System.String paramName)
 
@@ -4803,9 +4067,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidCastException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidCastException(System.String message, System.Exception innerException)
 
@@ -4813,9 +4075,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidCastException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidEnumTypeException(System.String message)
 
@@ -4823,9 +4083,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidEnumTypeException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidEnumTypeException(System.String message, System.Exception innerException)
 
@@ -4833,9 +4091,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidEnumTypeException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidOperationException(System.String message)
 
@@ -4843,9 +4099,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** From .NET Core source.
-* **Modified On:** 
 
 ### System.Void ThrowInvalidOperationException(System.String message, System.Exception innerException)
 
@@ -4853,9 +4107,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** From .NET Core source.
-* **Modified On:** 
 
 ### System.Void ThrowInvalidValueException(System.String message, T value)
 
@@ -4863,9 +4115,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidValueException
-* **Modified On:** 
 
 ### System.Void ThrowInvalidValueException(System.String message, T value, System.Exception innerException)
 
@@ -4873,9 +4123,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowInvalidValueException
-* **Modified On:** 
 
 ### System.Void ThrowIOException(System.String message)
 
@@ -4883,9 +4131,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowIOException
-* **Modified On:** 
 
 ### System.Void ThrowIOException(System.String message, System.Exception innerException)
 
@@ -4893,9 +4139,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowIOException
-* **Modified On:** 
 
 ### System.Void ThrowJsonException(System.String message)
 
@@ -4903,9 +4147,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowJsonException
-* **Modified On:** 
 
 ### System.Void ThrowJsonException(System.String message, System.Exception innerException)
 
@@ -4913,9 +4155,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowJsonException
-* **Modified On:** 
 
 ### System.Void ThrowMessageNotQueuedException(System.String message)
 
@@ -4923,9 +4163,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowMessageNotQueuedException
-* **Modified On:** 
 
 ### System.Void ThrowMessageNotQueuedException(System.String message, System.Exception innerException)
 
@@ -4933,9 +4171,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowMessageNotQueuedException
-* **Modified On:** 
 
 ### System.Void ThrowMessageNotQueuedException(System.String message, System.String messageId)
 
@@ -4943,9 +4179,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowMessageNotQueuedException
-* **Modified On:** 
 
 ### System.Void ThrowMessageNotQueuedException(System.String message, System.String messageId, System.Exception innerException)
 
@@ -4953,9 +4187,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowMessageNotQueuedException
-* **Modified On:** 
 
 ### System.Void ThrowNetworkConnectionException(System.String message)
 
@@ -4963,9 +4195,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowNetworkConnectionException
-* **Modified On:** 
 
 ### System.Void ThrowNetworkConnectionException(System.String message, System.Exception innerException)
 
@@ -4973,9 +4203,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowNetworkConnectionException
-* **Modified On:** 
 
 ### System.Void ThrowNetworkConnectionException(System.String message, System.Net.NetworkInformation.NetworkInterface connection)
 
@@ -4983,9 +4211,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ThrowNetworkConnectionException
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.ExecutionHelper
@@ -4996,9 +4222,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ProgressiveRetry
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<DotNetTips.Spargine.Core.SimpleResult<System.Int32>> ProgressiveRetryAsync(System.Func<System.Threading.Tasks.Task> function, System.Byte retryCount, System.Int32 retryWaitMilliseconds, Microsoft.Extensions.Logging.ILogger logger, System.Threading.CancellationToken cancellationToken)
 
@@ -5006,9 +4230,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ProgressiveRetryAsync
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.FastStringBuilder
@@ -5023,7 +4245,6 @@
 * **CreatedOn:** 3/7/2025
 * **Description:** BytesToString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String BytesToString(System.ReadOnlySpan`1[[System.Byte, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& bytes)
 
@@ -5035,7 +4256,6 @@
 * **CreatedOn:** 2/18/2021
 * **Description:** BytesToString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Combine(System.Boolean& addLineFeed, System.ReadOnlySpan<System.String> args)
 
@@ -5047,7 +4267,6 @@
 * **CreatedOn:** 12/23/2022
 * **Description:** Combine
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String CombineWithSpace(System.ReadOnlySpan<System.String> args)
 
@@ -5059,7 +4278,6 @@
 * **CreatedOn:** 3/6/2025
 * **Description:** CombineWithSpace
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Concat(System.Char delimiter, System.Boolean& addLineFeed, System.ReadOnlySpan<System.String> args)
 
@@ -5071,7 +4289,6 @@
 * **CreatedOn:** 2/19/2021
 * **Description:** Concat
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Concat(System.String delimiter, System.Boolean& addLineFeed, System.Collections.ObjectModel.ReadOnlyCollection<System.String> args)
 
@@ -5083,7 +4300,6 @@
 * **CreatedOn:** 2/19/2021
 * **Description:** Concat
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Format(System.String format, System.String[] args)
 
@@ -5095,7 +4311,6 @@
 * **CreatedOn:** 3/4/2025
 * **Description:** Format
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Join(System.Collections.Generic.IEnumerable<System.String> values, System.Char delimiter)
 
@@ -5107,7 +4322,6 @@
 * **CreatedOn:** 3/4/2025
 * **Description:** Join
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Join(System.Collections.Generic.IEnumerable<System.String> values, System.String& delimiter)
 
@@ -5119,7 +4333,6 @@
 * **CreatedOn:** 3/4/2025
 * **Description:** Join
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String PerformAction(System.Action`1[[System.Text.StringBuilder, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& action)
 
@@ -5131,7 +4344,6 @@
 * **CreatedOn:** 12/23/2022
 * **Description:** PerformAction
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String PerformAction(System.Int32& capacity, System.Action`1[[System.Text.StringBuilder, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& action)
 
@@ -5143,7 +4355,6 @@
 * **CreatedOn:** 11/26/2025
 * **Description:** PerformAction
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Remove(System.String input, System.String toRemove)
 
@@ -5155,7 +4366,6 @@
 * **CreatedOn:** 3/5/2025
 * **Description:** Remove
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ToDelimitedString(T collection, System.Char delimiter)
 
@@ -5167,7 +4377,6 @@
 * **CreatedOn:** 1/1/2021
 * **Description:** ToDelimitedString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.HtmlElement
@@ -5181,9 +4390,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean IsTransient { get; set; }
 
@@ -5191,9 +4398,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.InformationAttribute
@@ -5211,7 +4416,6 @@
 * **CreatedOn:** 11/18/2024
 * **Description:** GenerateMarkdownDocumentForAssembly
 * **Modified By:** David McCarter
-* **Modified On:** 
 * **Version:** 2
 
 ### System.String GenerateMarkdownDocumentForAssembly(System.Reflection.Assembly assembly, System.String path)
@@ -5224,7 +4428,6 @@
 * **CreatedOn:** 11/18/2024
 * **Description:** GenerateMarkdownDocumentForAssembly
 * **Modified By:** David McCarter
-* **Modified On:** 
 * **Version:** 2
 
 *****
@@ -5236,9 +4439,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** AppendRepeatedCharsLine
-* **Modified On:** 
 
 ### System.Int32 EnsureMinimum(System.Int32 value, System.Int32 minValue)
 
@@ -5246,9 +4447,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** EnsureMinimum
-* **Modified On:** 
 
 ### System.Boolean IsEnumerable(System.Type type)
 
@@ -5256,9 +4455,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsEnumerable
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> PropertiesToDictionary(System.Object obj, System.String memberName, System.Boolean ignoreNulls)
 
@@ -5270,7 +4467,6 @@
 * **CreatedOn:** 11/19/2020
 * **Description:** Original code by: Diego De Vita
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.InvalidEnumTypeException
@@ -5284,9 +4480,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.KeyGenerator
@@ -5301,7 +4495,6 @@
 * **CreatedOn:** 8/18/2025
 * **Description:** GenerateCustomKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateKey()
 
@@ -5313,7 +4506,6 @@
 * **CreatedOn:** 5/30/2021
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateKey(System.String prefix)
 
@@ -5325,7 +4517,6 @@
 * **CreatedOn:** 5/30/2021
 * **Description:** GenerateKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateSortableKey()
 
@@ -5337,7 +4528,6 @@
 * **CreatedOn:** 5/7/2025
 * **Description:** GenerateSortableKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateSortableKey(System.String prefix)
 
@@ -5349,7 +4539,6 @@
 * **CreatedOn:** 5/7/2025
 * **Description:** GenerateSortableKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateTimeStamp()
 
@@ -5357,9 +4546,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** GenerateTimeStamp
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.LineSplitEntry
@@ -5370,9 +4557,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Deconstruct
-* **Modified On:** 
 
 ### System.ReadOnlySpan<System.Char> Line { get; set; }
 
@@ -5380,9 +4565,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Line
-* **Modified On:** 
 
 ### System.ReadOnlySpan<System.Char> op_Implicit(DotNetTips.Spargine.Core.LineSplitEntry entry)
 
@@ -5390,9 +4573,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.ReadOnlySpan<System.Char> Separator { get; set; }
 
@@ -5400,9 +4581,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Separator
-* **Modified On:** 
 
 ### System.ReadOnlySpan<System.Char> ToReadOnlySpan(DotNetTips.Spargine.Core.LineSplitEntry entry)
 
@@ -5410,9 +4589,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToReadOnlySpan
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.LineSplitEnumerator
@@ -5423,9 +4600,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Logging.FastLoggerExtensions
@@ -5440,7 +4615,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogCriticalMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogDebugMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.String methodName)
 
@@ -5452,7 +4626,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogDebugMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogErrorMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.String methodName)
 
@@ -5464,7 +4637,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogErrorMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogExceptionMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.Exception exception, System.String methodName)
 
@@ -5476,7 +4648,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogExceptionMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogInformationMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.String methodName)
 
@@ -5488,7 +4659,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogInformationMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogStoredProcedureError(Microsoft.Extensions.Logging.ILogger logger, System.String storedProcedure, System.Exception exception, System.String methodName)
 
@@ -5500,7 +4670,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogStoredProcedureError
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogStoredProcedureNoRecordsFound(Microsoft.Extensions.Logging.ILogger logger, System.String storedProcedure, System.String methodName)
 
@@ -5512,7 +4681,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogStoredProcedureNoRecordsFound
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogTraceMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.String methodName)
 
@@ -5524,7 +4692,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogTraceMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogWarningMessage(Microsoft.Extensions.Logging.ILogger logger, System.String message, System.String methodName)
 
@@ -5536,7 +4703,6 @@
 * **CreatedOn:** 2/27/2023
 * **Description:** LogWarningMessage
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Logging.LoggingHelper
@@ -5551,7 +4717,6 @@
 * **CreatedOn:** 7/13/2024
 * **Description:** LogAppDomainEvents
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogAppDomainFirstChanceException(Microsoft.Extensions.Logging.ILogger logger)
 
@@ -5563,7 +4728,6 @@
 * **CreatedOn:** 10/19/2021
 * **Description:** LogAppDomainFirstChanceException
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogAppDomainUnhandledException(Microsoft.Extensions.Logging.ILogger logger)
 
@@ -5575,7 +4739,6 @@
 * **CreatedOn:** 7/13/2024
 * **Description:** LogAppDomainUnhandledException
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogApplicationInformation(Microsoft.Extensions.Logging.ILogger logger)
 
@@ -5587,7 +4750,6 @@
 * **CreatedOn:** 11/3/2020
 * **Description:** LogApplicationInformation
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void LogComputerInformation(Microsoft.Extensions.Logging.ILogger logger)
 
@@ -5599,7 +4761,6 @@
 * **CreatedOn:** 11/4/2020
 * **Description:** LogComputerInformation
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> RetrieveAllExceptionMessages(System.Exception exception)
 
@@ -5607,9 +4768,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RetrieveAllExceptionMessages
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Exception> RetrieveAllExceptions(System.Exception exception)
 
@@ -5617,9 +4776,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** RetrieveAllExceptions
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.MessageNotQueuedException
@@ -5645,9 +4802,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetDnsServerAddresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetGatewayAddresses()
 
@@ -5655,9 +4810,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetGatewayAddresses
-* **Modified On:** 
 
 ### System.String GetHostName()
 
@@ -5665,9 +4818,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetHostName
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetLocalIPAddresses(System.Nullable<System.Net.Sockets.AddressFamily> addressFamily)
 
@@ -5675,9 +4826,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetLocalIPAddresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.NetworkInformation.PhysicalAddress> GetMacAddresses()
 
@@ -5685,9 +4834,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetMacAddresses
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.NetworkInformation.NetworkInterface> GetNetworkConnections()
 
@@ -5695,9 +4842,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkConnections
-* **Modified On:** 
 
 ### System.String GetNetworkConnectionsReport(System.Boolean includeIPProperties)
 
@@ -5705,9 +4850,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkConnectionsReport
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int64>> GetNetworkSpeeds()
 
@@ -5715,9 +4858,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkSpeeds
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Net.NetworkInformation.IPv4InterfaceStatistics>> GetNetworkStatistics(System.Nullable<System.Net.NetworkInformation.NetworkInterfaceType> interfaceType)
 
@@ -5725,9 +4866,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkStatistics
-* **Modified On:** 
 
 ### System.Net.NetworkInformation.NetworkInterface GetPrimaryNetworkInterface()
 
@@ -5735,9 +4874,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetPrimaryNetworkInterface
-* **Modified On:** 
 
 ### System.Boolean IsConnectedToBluetooth()
 
@@ -5745,9 +4882,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkConnections
-* **Modified On:** 
 
 ### System.Boolean IsConnectedToEthernet()
 
@@ -5755,9 +4890,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsConnectedToEthernet
-* **Modified On:** 
 
 ### System.Boolean IsConnectedToNetwork()
 
@@ -5765,9 +4898,7 @@
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNetworkConnections
-* **Modified On:** 
 
 ### System.Boolean IsConnectedToWiFi()
 
@@ -5775,9 +4906,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsConnectedToWiFi
-* **Modified On:** 
 
 ### System.Boolean IsIPv6Supported()
 
@@ -5785,9 +4914,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsIPv6Supported
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.NetworkConnectionException
@@ -5807,9 +4934,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.ProcessorInformation other)
 
@@ -5817,9 +4942,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -5827,9 +4950,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** GetHashCode
-* **Modified On:** 
 
 ### System.Boolean op_Equality(DotNetTips.Spargine.Core.ProcessorInformation left, DotNetTips.Spargine.Core.ProcessorInformation right)
 
@@ -5837,9 +4958,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** ==
-* **Modified On:** 
 
 ### System.Boolean op_Inequality(DotNetTips.Spargine.Core.ProcessorInformation left, DotNetTips.Spargine.Core.ProcessorInformation right)
 
@@ -5847,9 +4966,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** !=
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Queues.ChannelQueue<T>
@@ -5864,7 +4981,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Queues.ChannelQueue<T> (System.Nullable<System.TimeSpan> cancellationTimeout)
 
@@ -5876,7 +4992,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Queues.ChannelQueue<T> (System.Int32& capacity)
 
@@ -5888,7 +5003,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Queues.ChannelQueue<T> (System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& capacity, System.Nullable<System.TimeSpan> cancellationTimeout)
 
@@ -5900,7 +5014,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Queues.ChannelQueue<T> (System.Threading.Channels.BoundedChannelOptions options, System.Nullable<System.TimeSpan> cancellationTimeout)
 
@@ -5912,7 +5025,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ChannelQueue
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean Acknowledge(System.String idempotencyKey)
 
@@ -5924,7 +5036,6 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** Acknowledge
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void CleanupExpiredKeys()
 
@@ -5932,9 +5043,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CleanupExpiredKeys
-* **Modified On:** 
 
 ### System.Void Clear()
 
@@ -5942,9 +5051,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Clear
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task Completion { get; set; }
 
@@ -5952,9 +5059,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Completion
-* **Modified On:** 
 
 ### System.Int32 Count { get; set; }
 
@@ -5966,7 +5071,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** Count
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsCompleted { get; set; }
 
@@ -5974,9 +5078,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsCompleted
-* **Modified On:** 
 
 ### T ListenAsync(System.Threading.CancellationToken cancellationToken)
 
@@ -5988,7 +5090,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ListenAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean Lock()
 
@@ -6000,7 +5101,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** Lock
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ReadAsync(System.Threading.CancellationToken cancellationToken)
 
@@ -6012,7 +5112,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ReadAsync(T keyResolver, System.Threading.CancellationToken cancellationToken)
 
@@ -6024,7 +5123,6 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean TryPeek(T item)
 
@@ -6032,9 +5130,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryPeek
-* **Modified On:** 
 
 ### System.Boolean TryRead(T item)
 
@@ -6042,9 +5138,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryRead
-* **Modified On:** 
 
 ### System.Boolean TryWrite(T item)
 
@@ -6052,9 +5146,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryWrite
-* **Modified On:** 
 
 ### System.Boolean TryWriteOnce(T item, System.String idempotencyKey, System.Nullable<System.TimeSpan> dedupeWindow)
 
@@ -6066,7 +5158,6 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** TryWriteOnce
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task WriteAsync(T item, System.Threading.CancellationToken cancellationToken)
 
@@ -6078,7 +5169,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** WriteAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task WriteAsync(T items, System.Boolean lockQueue, System.Threading.CancellationToken cancellationToken)
 
@@ -6090,7 +5180,6 @@
 * **CreatedOn:** 7/26/2021
 * **Description:** WriteAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Threading.Tasks.Task<System.Boolean> WriteOnceAsync(T item, System.String idempotencyKey, System.Nullable<System.TimeSpan> dedupeWindow, System.Threading.CancellationToken cancellationToken)
 
@@ -6102,7 +5191,6 @@
 * **CreatedOn:** 8/10/2025
 * **Description:** WriteOnceAsync
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.RegularExpressions.RegexProcessor
@@ -6117,7 +5205,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** ContainsFirstLastName
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean ContainsWord(System.String input)
 
@@ -6129,7 +5216,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** ContainsWord
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ExtractVersion(System.String input)
 
@@ -6141,7 +5227,6 @@
 * **CreatedOn:** 4/9/2025
 * **Description:** ExtractVersion
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GetNumbers(System.String input)
 
@@ -6149,9 +5234,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetNumbers
-* **Modified On:** 
 
 ### System.Boolean IsCreditCardNumber(System.String input)
 
@@ -6163,7 +5246,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsCreditCardNumber
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsCurrencyCode(System.String input)
 
@@ -6175,7 +5257,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsCurrencyCode
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsEmailAddress(System.String input)
 
@@ -6187,7 +5268,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsEmailAddress
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsGuid(System.String input)
 
@@ -6199,7 +5279,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsGuid
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsIPv4Address(System.String input)
 
@@ -6211,7 +5290,6 @@
 * **CreatedOn:** 10/10/2023
 * **Description:** IsIPv4Address
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsIPv6Address(System.String input)
 
@@ -6223,7 +5301,6 @@
 * **CreatedOn:** 10/10/2023
 * **Description:** IsIPv6Address
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsISBN(System.String input)
 
@@ -6235,7 +5312,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsISBN
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsMACAddress(System.String input)
 
@@ -6247,7 +5323,6 @@
 * **CreatedOn:** 9/28/2023
 * **Description:** IsMACAddress
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsOneToSevenAlpha(System.String input)
 
@@ -6255,9 +5330,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsOneToSevenAlpha
-* **Modified On:** 
 
 ### System.Boolean IsScientific(System.String input)
 
@@ -6265,9 +5338,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsScientific
-* **Modified On:** 
 
 ### System.Boolean IsSHA1Hash(System.String input)
 
@@ -6279,7 +5350,6 @@
 * **CreatedOn:** 9/28/2023
 * **Description:** IsSHA1Hash
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsUrl(System.String input)
 
@@ -6291,7 +5361,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** IsUrl
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsUrlDomainAddress(System.String input)
 
@@ -6303,7 +5372,6 @@
 * **CreatedOn:** 9/28/2023
 * **Description:** IsUrlDomainAddress
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsValidString(System.String input)
 
@@ -6315,7 +5383,6 @@
 * **CreatedOn:** 9/28/2023
 * **Description:** IsValidString
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String RemoveHtml(System.String input, System.String replacement)
 
@@ -6327,7 +5394,6 @@
 * **CreatedOn:** 8/1/2024
 * **Description:** RemoveHtml
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String RemoveSpecialChar(System.String input, System.String& replacement)
 
@@ -6339,7 +5405,6 @@
 * **CreatedOn:** 8/1/2024
 * **Description:** RemoveSpecialChar
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ReplaceCrLf(System.String input, System.String& replacement)
 
@@ -6351,7 +5416,6 @@
 * **CreatedOn:** 9/28/2023
 * **Description:** ReplaceCrLf
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ReplaceSpaces(System.String input, System.String& replacement)
 
@@ -6363,7 +5427,6 @@
 * **CreatedOn:** 3/16/2023
 * **Description:** ReplaceSpaces
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Security.BarcodeGenerator
@@ -6378,7 +5441,6 @@
 * **CreatedOn:** 4/1/2026
 * **Description:** BuildHmacBarcode
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean ValidateHmacBarcode(System.String barcode, System.Collections.Generic.IReadOnlyDictionary<System.String, System.Byte[]> keysByKid, System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& fields, System.Int32 macLenBytes, System.Nullable<System.TimeSpan> maxSkew, System.Nullable<System.TimeSpan> pastExpiryGrace)
 
@@ -6390,7 +5452,6 @@
 * **CreatedOn:** 4/1/2026
 * **Description:** ValidateHmacBarcode
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Security.EncryptionHelper
@@ -6405,7 +5466,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** AesDecrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String AesEncrypt(System.String plainText, System.Byte[] key, System.Byte[] iv)
 
@@ -6417,7 +5477,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** AesEncrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String AesGcmDecrypt(System.String base64Payload, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
@@ -6429,7 +5488,6 @@
 * **CreatedOn:** 8/14/2025
 * **Description:** AesGcmDecrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String AesGcmEncrypt(System.String plainText, System.Byte[] key, System.ReadOnlySpan<System.Byte> aad)
 
@@ -6441,7 +5499,6 @@
 * **CreatedOn:** 8/14/2025
 * **Description:** AesGcmEncrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateAesGcmKey()
 
@@ -6453,7 +5510,6 @@
 * **CreatedOn:** 8/14/2025
 * **Description:** GenerateAesGcmKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateAesIV()
 
@@ -6465,7 +5521,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** GenerateAesIV
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte[] GenerateAesKey()
 
@@ -6477,7 +5532,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** GenerateAesKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GenerateRandomKey()
 
@@ -6489,7 +5543,6 @@
 * **CreatedOn:** 5/30/2021
 * **Description:** GenerateRandomKey
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String SimpleSHA256Decrypt(System.String cipherText, System.String key)
 
@@ -6501,7 +5554,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** SimpleSHA256Decrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String SimpleSHA256Encrypt(System.String plainText, System.String key)
 
@@ -6513,7 +5565,6 @@
 * **CreatedOn:** 7/19/2021
 * **Description:** SimpleSHA256Encrypt
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Security.PasswordVerificationResult VerifySHA256HashedPassword(System.String hashedPassword, System.String password)
 
@@ -6525,7 +5576,6 @@
 * **CreatedOn:** 10/13/2021
 * **Description:** VerifySHA256HashedPassword
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Security.PasswordGenerator
@@ -6540,7 +5590,6 @@
 * **CreatedOn:** 11/12/2024
 * **Description:** GeneratePassword
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Security.PasswordHasher
@@ -6555,7 +5604,6 @@
 * **CreatedOn:** 5/14/2025
 * **Description:** HashPassword
 * **Modified By:** David McCarter
-* **Modified On:** 
 * **Tags:** PBKDF2, SHA256, SHA3256, SHA3384, SHA3512, Shake128, Shake256, Argon2
 
 ### DotNetTips.Spargine.Core.Security.PasswordVerificationResult VerifyHashedPassword(System.String hashedPassword, System.String password, DotNetTips.Spargine.Core.Security.HashAlgorithmType algorithmType)
@@ -6568,7 +5616,6 @@
 * **CreatedOn:** 5/14/2025
 * **Description:** VerifyHashedPassword
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Serialization.JsonSerialization
@@ -6579,9 +5626,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Deserialize
-* **Modified On:** 
 
 ### T Deserialize(System.String json, T typeInfo)
 
@@ -6589,9 +5634,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Deserialize
-* **Modified On:** 
 
 ### T DeserializeFromFile(System.IO.FileInfo file)
 
@@ -6599,9 +5642,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DeserializeFromFile
-* **Modified On:** 
 
 ### System.Boolean JsonEqual(System.String actual, System.String expected)
 
@@ -6613,7 +5654,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T LoadCollectionFromJson(System.String json, System.Int32 count)
 
@@ -6621,9 +5661,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
-* **Modified On:** 
 
 ### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count)
 
@@ -6631,9 +5669,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
-* **Modified On:** 
 
 ### T LoadCollectionFromJson(System.String json, System.Int32 count, T typeInfo)
 
@@ -6641,9 +5677,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
-* **Modified On:** 
 
 ### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count, T typeInfo)
 
@@ -6651,9 +5685,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** LoadCollectionFromJson
-* **Modified On:** 
 
 ### System.String Serialize(System.Object obj)
 
@@ -6665,7 +5697,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** Serialize
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String Serialize(System.Object obj, System.Text.Json.JsonSerializerOptions options)
 
@@ -6673,9 +5704,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Serialize
-* **Modified On:** 
 
 ### System.String Serialize(T obj, T typeInfo)
 
@@ -6683,9 +5712,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Serialize
-* **Modified On:** 
 
 ### System.Void SerializeToFile(T obj, System.IO.FileInfo file, T typeInfo)
 
@@ -6693,9 +5720,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SerializeToFile
-* **Modified On:** 
 
 ### System.Void SerializeToFile(System.Object obj, System.IO.FileInfo file, System.Text.Json.JsonSerializerOptions options)
 
@@ -6703,9 +5728,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SerializeToFile
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Serialization.XmlSerialization
@@ -6716,9 +5739,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Deserialize
-* **Modified On:** 
 
 ### T DeserializeFromFile(System.IO.FileInfo file)
 
@@ -6726,9 +5747,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DeserializeFromFile
-* **Modified On:** 
 
 ### System.String Serialize(System.Object obj)
 
@@ -6736,9 +5755,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Serialize
-* **Modified On:** 
 
 ### System.Void SerializeToFile(System.Object obj, System.IO.FileInfo file)
 
@@ -6746,9 +5763,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SerializeToFile
-* **Modified On:** 
 
 ### System.Xml.Linq.XDocument StringToXDocument(System.String input)
 
@@ -6760,7 +5775,6 @@
 * **CreatedOn:** 9/9/2020
 * **Description:** StringToXDocument
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Xml.Linq.XDocument StringToXDocument(System.String input, System.Xml.XmlResolver resolver)
 
@@ -6772,7 +5786,6 @@
 * **CreatedOn:** 9/9/2020
 * **Description:** StringToXDocument
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.SimpleResult
@@ -6783,9 +5796,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SimpleResult
-* **Modified On:** 
 
 ### T FromValue(T value)
 
@@ -6793,9 +5804,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SimpleResult
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.SimpleResult<T>
@@ -6806,9 +5815,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SimpleResult
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.SimpleResult<T> (System.Exception error, Microsoft.Extensions.Logging.ILogger logger)
 
@@ -6816,9 +5823,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SimpleResult
-* **Modified On:** 
 
 ### System.Void AddException(System.Exception error)
 
@@ -6826,9 +5831,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddException
-* **Modified On:** 
 
 ### System.Void AddMessage(System.String message)
 
@@ -6836,9 +5839,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** AddMessage
-* **Modified On:** 
 
 ### T Bind(T binder)
 
@@ -6846,9 +5847,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Bind
-* **Modified On:** 
 
 ### System.Void Deconstruct(T value, System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Exception, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& errors)
 
@@ -6856,9 +5855,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Deconstruct
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Exception> Errors { get; set; }
 
@@ -6866,9 +5863,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Errors
-* **Modified On:** 
 
 ### T FromResult(DotNetTips.Spargine.Core.SimpleResult`1& result)
 
@@ -6876,9 +5871,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromResult
-* **Modified On:** 
 
 ### System.String GetErrorMessages()
 
@@ -6886,9 +5879,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetErrorMessages
-* **Modified On:** 
 
 ### System.Boolean HasErrors { get; set; }
 
@@ -6896,9 +5887,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasErrors
-* **Modified On:** 
 
 ### System.Boolean IsFailure { get; set; }
 
@@ -6906,9 +5895,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** IsFailure
-* **Modified On:** 
 
 ### System.Boolean IsSuccess { get; set; }
 
@@ -6916,9 +5903,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** IsSuccess
-* **Modified On:** 
 
 ### T Map(T mapper)
 
@@ -6926,9 +5911,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Map
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> Messages { get; set; }
 
@@ -6936,9 +5919,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Messages
-* **Modified On:** 
 
 ### T Or(T defaultValue)
 
@@ -6946,9 +5927,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Or
-* **Modified On:** 
 
 ### T OrDefault()
 
@@ -6956,9 +5935,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** OrDefault
-* **Modified On:** 
 
 ### System.Void SetValue(T value)
 
@@ -6966,9 +5943,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** SetValue
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.ResultStatus Status { get; set; }
 
@@ -6976,9 +5951,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Status
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -6986,9 +5959,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 ### System.Boolean TryGet(T value)
 
@@ -6996,9 +5967,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryGet
-* **Modified On:** 
 
 ### T Value { get; set; }
 
@@ -7006,9 +5975,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Value
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Singleton<T>
@@ -7030,7 +5997,6 @@
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T RunSync(T taskFunction)
 
@@ -7043,7 +6009,6 @@
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T RunSync(T taskFunction, System.Threading.CancellationToken cancellationToken, System.Threading.Tasks.TaskCreationOptions taskCreation, System.Threading.Tasks.TaskContinuationOptions taskContinuation, System.Threading.Tasks.TaskScheduler taskScheduler)
 
@@ -7056,7 +6021,6 @@
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Void RunSync(System.Func<System.Threading.Tasks.Task> taskFunction, System.Threading.CancellationToken cancellationToken, System.Threading.Tasks.TaskCreationOptions taskCreation, System.Threading.Tasks.TaskContinuationOptions taskContinuation, System.Threading.Tasks.TaskScheduler taskScheduler)
 
@@ -7069,7 +6033,6 @@
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.TypeHelper
@@ -7084,7 +6047,6 @@
 * **CreatedOn:** 11/6/2023
 * **Description:** BuiltInTypeNames
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> BuiltInTypes { get; set; }
 
@@ -7096,7 +6058,6 @@
 * **CreatedOn:** 11/6/2023
 * **Description:** BuiltInTypes
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T Create()
 
@@ -7104,9 +6065,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T Create(System.Object[] paramArray)
 
@@ -7114,9 +6073,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Boolean DoesObjectEqualInstance(System.Object& value, System.Object& instance)
 
@@ -7124,9 +6081,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> FindDerivedTypes(System.Type baseType, System.Boolean classOnly)
 
@@ -7134,9 +6089,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> FindDerivedTypes(System.AppDomain currentDomain, System.Type baseType, System.Boolean classOnly)
 
@@ -7144,9 +6097,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> FindDerivedTypes(System.IO.DirectoryInfo path, System.IO.SearchOption fileSearchType, System.Type baseType, System.Boolean classOnly)
 
@@ -7154,9 +6105,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T FromJson(System.String json)
 
@@ -7164,9 +6113,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromJson
-* **Modified On:** 
 
 ### T FromJson(System.String json, T typeInfo)
 
@@ -7174,9 +6121,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromJson
-* **Modified On:** 
 
 ### T FromJsonFile(System.IO.FileInfo file)
 
@@ -7184,9 +6129,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** FromJsonFile
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllAbstractMethods(System.Type type)
 
@@ -7194,9 +6137,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllAbstractMethods
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo> GetAllConstructors(System.Type type)
 
@@ -7204,9 +6145,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllConstructors
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllDeclaredFields(System.Type type)
 
@@ -7218,7 +6157,6 @@
 * **CreatedOn:** 7/30/2020
 * **Description:** GetAllDeclaredFields
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo> GetAllDeclaredMethods(System.Type type)
 
@@ -7230,7 +6168,6 @@
 * **CreatedOn:** 7/30/2020
 * **Description:** Original Code .NET Core source.
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo> GetAllFields(System.Type type)
 
@@ -7238,9 +6175,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllFields
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllGenericMethods(System.Type type)
 
@@ -7252,7 +6187,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** GetAllGenericMethods
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo> GetAllMethods(System.Type type)
 
@@ -7264,7 +6198,6 @@
 * **CreatedOn:** 7/15/2020
 * **Description:** GetAllMethods
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo> GetAllProperties(System.Type type)
 
@@ -7272,9 +6205,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllProperties
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllPublicMethods(System.Type type)
 
@@ -7282,9 +6213,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllPublicMethods
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MethodInfo> GetAllStaticMethods(System.Type type)
 
@@ -7292,9 +6221,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAllStaticMethods
-* **Modified On:** 
 
 ### T GetAttribute(System.Reflection.FieldInfo fieldInfo)
 
@@ -7302,9 +6229,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAttribute
-* **Modified On:** 
 
 ### T GetAttribute(System.Type type)
 
@@ -7312,9 +6237,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAttribute
-* **Modified On:** 
 
 ### T GetAttribute(System.Reflection.MethodInfo methodInfo)
 
@@ -7322,9 +6245,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAttribute
-* **Modified On:** 
 
 ### T GetAttribute(System.Reflection.PropertyInfo propertyInfo)
 
@@ -7332,9 +6253,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetAttribute
-* **Modified On:** 
 
 ### T GetDefault()
 
@@ -7342,9 +6261,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Type[] GetGenericArguments(System.Type type)
 
@@ -7352,9 +6269,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetGenericArguments
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces(System.Object input)
 
@@ -7362,9 +6277,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetImplementedInterfaces
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetImplementedInterfaces(System.Object input, System.Collections.Generic.IReadOnlyCollection<System.String> interfaceNames)
 
@@ -7372,9 +6285,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetImplementedInterfaces
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Type> GetImplementedInterfaceTypes(System.Object input)
 
@@ -7382,9 +6293,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetImplementedInterfaceTypes
-* **Modified On:** 
 
 ### System.Int32 GetInstanceHashCode(System.Object instance)
 
@@ -7392,9 +6301,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo> GetMembersWithAttribute(System.Type type)
 
@@ -7402,9 +6309,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetMembersWithAttribute
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String, System.String>> GetPropertyValues(T input)
 
@@ -7416,7 +6321,6 @@
 * **CreatedOn:** 11/3/2020
 * **Description:** GetPropertyValues
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String GetTypeDisplayName(System.Object& item, System.Boolean fullName)
 
@@ -7424,9 +6328,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetTypeDisplayName
-* **Modified On:** 
 
 ### System.String GetTypeDisplayName(System.Type type, DotNetTips.Spargine.Core.DisplayNameOptions& options)
 
@@ -7434,9 +6336,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### System.String GetTypeDisplayName(System.Type type, System.Boolean fullName, System.Boolean includeGenericParameterNames, System.Boolean includeGenericParameters, System.Char nestedTypeDelimiter)
 
@@ -7444,9 +6344,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetTypeDisplayName
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Reflection.MemberInfo> GetTypeMembersWithAttribute(System.Type type)
 
@@ -7454,9 +6352,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetTypeMembersWithAttribute
-* **Modified On:** 
 
 ### System.Boolean HasAttribute(System.Reflection.MethodInfo methodInfo)
 
@@ -7464,9 +6360,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasAttribute
-* **Modified On:** 
 
 ### System.Boolean HasBaseClass(System.Type type, System.Type baseClass)
 
@@ -7474,9 +6368,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasBaseClass
-* **Modified On:** 
 
 ### System.Boolean HasMethod(System.Type type, System.String methodName, System.Reflection.BindingFlags bindingFlags)
 
@@ -7484,9 +6376,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasMethod
-* **Modified On:** 
 
 ### System.Boolean HasParameterlessConstructor(System.Type type)
 
@@ -7494,9 +6384,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasParameterlessConstructor
-* **Modified On:** 
 
 ### System.Boolean HasProperty(System.Type type, System.String propertyName)
 
@@ -7504,9 +6392,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** HasProperty
-* **Modified On:** 
 
 ### System.Boolean ImplementsInterface(System.Type type, System.Type interfaceType)
 
@@ -7514,9 +6400,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ImplementsInterface
-* **Modified On:** 
 
 ### System.Boolean IsAssignableTo(System.Type type, System.Type targetType)
 
@@ -7524,9 +6408,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsAssignableTo
-* **Modified On:** 
 
 ### System.Boolean IsBuiltinType(System.Type& type)
 
@@ -7538,7 +6420,6 @@
 * **CreatedOn:** 11/6/2023
 * **Description:** IsBuiltinType
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsClosedGeneric(System.Type type)
 
@@ -7546,9 +6427,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsClosedGeneric
-* **Modified On:** 
 
 ### System.Boolean IsEnumerable(System.Type type)
 
@@ -7556,9 +6435,7 @@
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsEnumerable
-* **Modified On:** 
 
 ### System.Boolean IsNullable(System.Type type)
 
@@ -7566,9 +6443,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsNullable
-* **Modified On:** 
 
 ### System.Boolean IsOpenGeneric(System.Type type)
 
@@ -7576,9 +6451,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsOpenGeneric
-* **Modified On:** 
 
 ### System.Boolean IsStatic(System.Reflection.PropertyInfo property)
 
@@ -7586,9 +6459,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** IsStatic
-* **Modified On:** 
 
 ### System.Collections.Generic.IEnumerable<System.Type> LoadDerivedTypes(System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo> types, System.Type baseType, System.Boolean classOnly)
 
@@ -7596,9 +6467,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 ### T Max(T obj1, T obj2)
 
@@ -7606,9 +6475,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Max
-* **Modified On:** 
 
 ### T Min(T obj1, T obj2)
 
@@ -7616,9 +6483,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Min
-* **Modified On:** 
 
 ### System.Void ProcessGenericType(System.Text.StringBuilder builder, System.Type type, System.Type[] genericArguments, System.Int32 length, DotNetTips.Spargine.Core.DisplayNameOptions options)
 
@@ -7626,9 +6491,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ProcessGenericType
-* **Modified On:** 
 
 ### System.Void ProcessType(System.Text.StringBuilder& builder, System.Type& type, DotNetTips.Spargine.Core.DisplayNameOptions& options)
 
@@ -7636,9 +6499,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Modified By:** UNKNOWN
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Ulid
@@ -7649,9 +6510,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Ulid
-* **Modified On:** 
 
 ### System.Void AccumulateBits(System.Char c, System.UInt64& bitBuffer, System.Int32& bitsInBuffer)
 
@@ -7659,9 +6518,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** AccumulateBits
-* **Modified On:** 
 
 ### System.Int32 CompareTo(DotNetTips.Spargine.Core.Ulid other)
 
@@ -7669,9 +6526,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** CompareTo
-* **Modified On:** 
 
 ### System.Void EncodeBase32(System.ReadOnlySpan<System.Byte> bytes, System.Span<System.Char> chars, System.Int32 charIndex, System.Int32 length)
 
@@ -7679,9 +6534,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** EncodeBase32
-* **Modified On:** 
 
 ### System.Boolean Equals(DotNetTips.Spargine.Core.Ulid other)
 
@@ -7689,9 +6542,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Boolean Equals(System.Object obj)
 
@@ -7699,9 +6550,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Equals
-* **Modified On:** 
 
 ### System.Byte[] GenerateRandomBytes()
 
@@ -7709,9 +6558,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** GenerateRandomBytes
-* **Modified On:** 
 
 ### System.Byte[] GenerateTimeStamp()
 
@@ -7719,9 +6566,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** None
-* **CreatedOn:** 
 * **Description:** GenerateTimeStamp
-* **Modified On:** 
 
 ### System.Int32 GetHashCode()
 
@@ -7729,9 +6574,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetHashCode
-* **Modified On:** 
 
 ### System.DateTimeOffset GetTimeStamp()
 
@@ -7739,9 +6582,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** GetTimeStamp
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Ulid NewUlid()
 
@@ -7749,9 +6590,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** NewUlid
-* **Modified On:** 
 
 ### System.Boolean op_Equality(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7759,9 +6598,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ==
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThan(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7769,9 +6606,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** >
-* **Modified On:** 
 
 ### System.Boolean op_GreaterThanOrEqual(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7779,9 +6614,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** >=
-* **Modified On:** 
 
 ### System.Boolean op_Inequality(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7789,9 +6622,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** !=
-* **Modified On:** 
 
 ### System.Boolean op_LessThan(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7799,9 +6630,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** <
-* **Modified On:** 
 
 ### System.Boolean op_LessThanOrEqual(DotNetTips.Spargine.Core.Ulid left, DotNetTips.Spargine.Core.Ulid right)
 
@@ -7809,9 +6638,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** <=
-* **Modified On:** 
 
 ### DotNetTips.Spargine.Core.Ulid Parse(System.String value)
 
@@ -7819,9 +6646,7 @@
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** Parse
-* **Modified On:** 
 
 ### System.Int32 ReadDualByte(System.ReadOnlySpan<System.Byte> bytes, System.Int32& byteIndex, System.Int32& bitIndex)
 
@@ -7829,9 +6654,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** ReadDualByte
-* **Modified On:** 
 
 ### System.Int32 ReadSingleByte(System.ReadOnlySpan<System.Byte> bytes, System.Int32& byteIndex, System.Int32& bitIndex)
 
@@ -7839,9 +6662,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
-* **CreatedOn:** 
 * **Description:** ReadSingleByte
-* **Modified On:** 
 
 ### System.String ToString()
 
@@ -7849,9 +6670,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** ToString
-* **Modified On:** 
 
 ### System.Boolean TryParse(System.String value, DotNetTips.Spargine.Core.Ulid& ulid)
 
@@ -7859,9 +6678,7 @@
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** TryParse
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.UnhandledExceptionEventInformation
@@ -7882,7 +6699,6 @@
 * **CreatedOn:** 5/25/2025
 * **Description:** ArgumentCountInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentCustom(T input, T predicate, System.String errorMessage, System.String paramName)
 
@@ -7894,7 +6710,6 @@
 * **CreatedOn:** 5/25/2025
 * **Description:** ArgumentCustom
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentDefined(T input, System.String& errorMessage, System.String paramName)
 
@@ -7906,7 +6721,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentDefined
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.IO.DirectoryInfo ArgumentExists(System.IO.DirectoryInfo input, System.IO.DirectoryInfo defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7918,7 +6732,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.IO.FileInfo ArgumentExists(System.IO.FileInfo input, System.IO.FileInfo defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7930,7 +6743,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Byte ArgumentInRange(System.Byte input, System.Byte& min, System.Byte& max, System.String errorMessage, System.String paramName)
 
@@ -7942,7 +6754,6 @@
 * **CreatedOn:** 1/29/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTime ArgumentInRange(System.DateTime input, System.DateTime& min, System.DateTime& max, System.Nullable`1[[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7954,7 +6765,6 @@
 * **CreatedOn:** 1/21/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateTimeOffset ArgumentInRange(System.DateTimeOffset input, System.DateTimeOffset& min, System.DateTimeOffset& max, System.Nullable`1[[System.DateTimeOffset, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7966,7 +6776,6 @@
 * **CreatedOn:** 1/21/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int32 ArgumentInRange(System.Int32 input, System.Int32 min, System.Int32 max, System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7978,7 +6787,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Double ArgumentInRange(System.Double input, System.Double& min, System.Double& max, System.Nullable`1[[System.Double, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -7990,7 +6798,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Int64 ArgumentInRange(System.Int64 input, System.Int64& min, System.Int64& max, System.Nullable`1[[System.Int64, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8002,7 +6809,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Decimal ArgumentInRange(System.Decimal input, System.Decimal& min, System.Decimal& max, System.Nullable`1[[System.Decimal, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8014,7 +6820,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.DateOnly ArgumentInRange(System.DateOnly input, System.DateOnly& min, System.DateOnly& max, System.Nullable`1[[System.DateOnly, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8026,7 +6831,6 @@
 * **CreatedOn:** 2/15/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.TimeOnly ArgumentInRange(System.TimeOnly input, System.TimeOnly& min, System.TimeOnly& max, System.Nullable`1[[System.TimeOnly, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8038,7 +6842,6 @@
 * **CreatedOn:** 2/15/2022
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ArgumentInRange(System.String input, System.Int32 min, System.Int32 max, System.Boolean trim, System.String defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8050,7 +6853,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
 
@@ -8062,7 +6864,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
 
@@ -8074,7 +6875,6 @@
 * **CreatedOn:** 5/25/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
 
@@ -8086,7 +6886,6 @@
 * **CreatedOn:** 5/27/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
 
@@ -8098,7 +6897,6 @@
 * **CreatedOn:** 2/17/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
 
@@ -8110,7 +6908,6 @@
 * **CreatedOn:** 2/4/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentItemsExists(T input, System.Int64& count, System.String errorMessage, System.String paramName)
 
@@ -8122,7 +6919,6 @@
 * **CreatedOn:** 4/4/2022
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ArgumentMatched(System.String input, System.Text.RegularExpressions.Regex match, System.Boolean trim, System.String defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8134,7 +6930,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentMatched
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentMeetsCondition(T input, System.Boolean& condition, T defaultValue)
 
@@ -8146,7 +6941,6 @@
 * **CreatedOn:** 4/4/2022
 * **Description:** ArgumentMeetsCondition
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentMeetsCondition(T input, System.Boolean& condition, System.String errorMessage, System.String paramName)
 
@@ -8158,7 +6952,6 @@
 * **CreatedOn:** 4/4/2022
 * **Description:** ArgumentMeetsCondition
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotEmpty(T input, System.String errorMessage, System.String paramName)
 
@@ -8170,7 +6963,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotEmpty(T input, System.String errorMessage, System.String paramName)
 
@@ -8182,7 +6974,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotNull(T input, System.String errorMessage, System.String paramName)
 
@@ -8194,7 +6985,6 @@
 * **CreatedOn:** 10/24/2023
 * **Description:** ArgumentNotNull
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotNull(T input, T defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8206,7 +6996,6 @@
 * **CreatedOn:** 2/10/2021
 * **Description:** ArgumentNotNull
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Uri ArgumentNotNull(System.Uri input, System.Uri defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8218,7 +7007,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotNull
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Guid ArgumentNotNullOrEmpty(System.Guid input, System.String errorMessage, System.Nullable<System.Guid> defaultValue, System.String paramName)
 
@@ -8230,7 +7018,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotNullOrEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.String ArgumentNotNullOrEmpty(System.String input, System.Boolean trim, System.String defaultValue, System.String errorMessage, System.String paramName)
 
@@ -8242,7 +7029,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentNotNullOrEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotReadOnly(T input, System.String errorMessage, System.String paramName)
 
@@ -8254,7 +7040,6 @@
 * **CreatedOn:** 1/29/2022
 * **Description:** ArgumentNotReadOnly
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### T ArgumentNotReadOnly(T input, System.String errorMessage, System.String paramName)
 
@@ -8266,7 +7051,6 @@
 * **CreatedOn:** 1/28/2022
 * **Description:** ArgumentNotReadOnly
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Type ArgumentTypeEquals(System.Type input, System.Type expectedType, System.String errorMessage, System.String paramName)
 
@@ -8278,7 +7062,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** ArgumentTypeEquals
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckExists(System.IO.FileInfo input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8290,7 +7073,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckExists(System.IO.DirectoryInfo input, System.Boolean& createDirectory, System.Boolean& throwException, System.String errorMessage)
 
@@ -8302,7 +7084,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsCondition(T input, System.Boolean& condition, System.Boolean& throwException, System.String errorMessage)
 
@@ -8314,7 +7095,6 @@
 * **CreatedOn:** 2/10/2021
 * **Description:** CheckIsCondition
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsDefined(System.Enum input, System.Boolean& throwException, System.String& errorMessage)
 
@@ -8326,7 +7106,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsDefined
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.DateTime& input, System.DateTime& lower, System.DateTime& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8338,7 +7117,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.TimeOnly& input, System.TimeOnly& lower, System.TimeOnly& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8350,7 +7128,6 @@
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.DateOnly& input, System.DateOnly& lower, System.DateOnly& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8362,7 +7139,6 @@
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.Int32 input, System.Int32 lower, System.Int32 upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8374,7 +7150,6 @@
 * **CreatedOn:** 2/3/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.Int64& input, System.Int64& lower, System.Int64& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8386,7 +7161,6 @@
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.Double& input, System.Double& lower, System.Double& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8398,7 +7172,6 @@
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.Decimal& input, System.Decimal& lower, System.Decimal& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8410,7 +7183,6 @@
 * **CreatedOn:** 2/14/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsInRange(System.DateTimeOffset& input, System.DateTimeOffset& lower, System.DateTimeOffset& upper, System.Boolean& throwException, System.String errorMessage)
 
@@ -8422,7 +7194,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsNotEmpty(T input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8434,7 +7205,6 @@
 * **CreatedOn:** 6/26/2017
 * **Description:** CheckIsNotEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsNotEmpty(System.Guid input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8446,7 +7216,6 @@
 * **CreatedOn:** 2/2/2022
 * **Description:** CheckIsNotEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsNotNull(T input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8458,7 +7227,6 @@
 * **CreatedOn:** 2/10/2021
 * **Description:** CheckIsNotNull
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckIsNotNullOrEmpty(System.String input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8470,7 +7238,6 @@
 * **CreatedOn:** 8/28/2025
 * **Description:** CheckIsNotNullOrEmpty
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckItemsExists(T input, System.Boolean& throwException, System.String errorMessage)
 
@@ -8482,7 +7249,6 @@
 * **CreatedOn:** 4/14/2022
 * **Description:** CheckItemsExists
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean CheckTypeEquals(System.Type input, System.Type expectedType, System.Boolean& throwException, System.String errorMessage)
 
@@ -8494,7 +7260,6 @@
 * **CreatedOn:** 1/31/2022
 * **Description:** CheckTypeEquals
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
 ## DotNetTips.Spargine.Core.Web.WebHelper
@@ -8505,9 +7270,7 @@
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
-* **CreatedOn:** 
 * **Description:** DownloadStringAsync
-* **Modified On:** 
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> HttpHeaderNames()
 
@@ -8519,7 +7282,6 @@
 * **CreatedOn:** 9/2/2020
 * **Description:** HttpHeaderNames
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 ### System.Boolean IsLocalUri(System.String path, Microsoft.AspNetCore.Http.HttpRequest request)
 
@@ -8531,7 +7293,6 @@
 * **CreatedOn:** 9/12/2020
 * **Description:** IsLocalUri
 * **Modified By:** David McCarter
-* **Modified On:** 
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/14/2026 12:45:14 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/14/2026 2:01:54 PM UTC**
