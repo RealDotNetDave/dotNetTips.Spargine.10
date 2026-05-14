@@ -105,12 +105,12 @@ public static class ConcurrentBagExtensions
 		/// <returns>A <see cref="List{T}"/> containing the elements of the bag.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public List<T> ToList()
 		{
 			bag = bag.ArgumentNotNull();
 
-			return new List<T>(bag);
+			return [.. bag];
 		}
 	}
 }

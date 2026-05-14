@@ -309,9 +309,7 @@ public static partial class ExceptionExtensions
 			var exceptionDetails = new ExceptionJsonInfo(
 				exception.Message,
 				exception.StackTrace,
-				exception.GetAllInnerExceptions()
-					.Select(ex => new ExceptionInnerJsonInfo(ex.Message, ex.StackTrace))
-					.ToArray());
+				[.. exception.GetAllInnerExceptions().Select(ex => new ExceptionInnerJsonInfo(ex.Message, ex.StackTrace))]);
 
 			return JsonSerializer.Serialize(
 				exceptionDetails,

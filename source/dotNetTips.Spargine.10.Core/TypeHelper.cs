@@ -1828,7 +1828,7 @@ public static class TypeHelper
 			}
 		}
 
-		return result.ToArray();
+		return [.. result];
 	}
 
 	/// <summary>
