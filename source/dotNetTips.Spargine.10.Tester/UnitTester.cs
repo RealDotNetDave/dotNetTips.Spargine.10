@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-14-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
@@ -395,7 +395,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="collection"/> or <paramref name="propertySelector"/> is null.</exception>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -403,9 +403,29 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var filePath = Path.Combine(this.OutputDirectory, GenerateFileName(methodName));
 
-		var content = collection
-			.Select(item => item!.PropertiesToString(propertySelector))
-			.ToArray(); // Materialize the content to avoid deferred execution issues.
+		string[] content;
+
+		if (collection is ICollection<T> sized)
+		{
+			content = new string[sized.Count];
+			var index = 0;
+
+			foreach (var item in sized)
+			{
+				content[index++] = item!.PropertiesToString(propertySelector);
+			}
+		}
+		else
+		{
+			var list = new List<string>();
+
+			foreach (var item in collection)
+			{
+				list.Add(item!.PropertiesToString(propertySelector));
+			}
+
+			content = [.. list];
+		}
 
 		File.WriteAllLines(filePath, content);
 
@@ -538,7 +558,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	/// </code>
 	/// </example>
 	[DebuggerStepThrough]
-	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(SaveToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public string SaveToFile<T>([NotNull] IEnumerable<T> collection, [NotNull] Func<PropertyInfo, bool> propertySelector, DirectoryInfo directory, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		collection = collection.ArgumentNotNull();
@@ -547,9 +567,29 @@ public abstract class UnitTester(string? outputDirectory = null)
 
 		var filePath = Path.Combine(directory.FullName, GenerateFileName(methodName));
 
-		var content = collection
-			.Select(item => item!.PropertiesToString(propertySelector))
-			.ToArray(); // Materialize the content to avoid deferred execution issues.
+		string[] content;
+
+		if (collection is ICollection<T> sized)
+		{
+			content = new string[sized.Count];
+			var index = 0;
+
+			foreach (var item in sized)
+			{
+				content[index++] = item!.PropertiesToString(propertySelector);
+			}
+		}
+		else
+		{
+			var list = new List<string>();
+
+			foreach (var item in collection)
+			{
+				list.Add(item!.PropertiesToString(propertySelector));
+			}
+
+			content = [.. list];
+		}
 
 		File.WriteAllLines(filePath, content);
 

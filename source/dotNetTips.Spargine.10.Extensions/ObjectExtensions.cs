@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-14-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -244,6 +244,11 @@ public static class ObjectExtensions
 	[Information(nameof(AddSelectedPropertyValueCore), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void AddSelectedPropertyValueCore(Dictionary<string, string> properties, PropertyInfo property, object obj, string typeName, bool ignoreNulls)
 	{
+		if (!property.CanRead || property.GetIndexParameters().Length > 0)
+		{
+			return;
+		}
+
 		var value = property.GetValue(obj);
 		var propertyName = BuildPropertyName(property.Name, typeName);
 		SetPropertyValue(properties, propertyName, value, ignoreNulls);
@@ -278,7 +283,7 @@ public static class ObjectExtensions
 		var newMemberName = memberName.Length > 0 ? $"{memberName}{ControlChars.Dot}" : string.Empty;
 
 #pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
-		foreach (var property in obj.GetType().GetProperties().Where(static p => p.GetAttribute<JsonIgnoreAttribute>() == null))
+		foreach (var property in obj.GetType().GetProperties().Where(static p => p.GetAttribute<JsonIgnoreAttribute>() == null && p.GetIndexParameters().Length == 0 && p.CanRead))
 #pragma warning restore IL2070
 		{
 			TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
@@ -325,12 +330,36 @@ public static class ObjectExtensions
 
 	/// <summary>Builds a key=value formatted string from a properties dictionary.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildKeyValueString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(BuildKeyValueString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string BuildKeyValueString(IReadOnlyDictionary<string, string> properties, string? header, string sequenceSeparator, char keyValueSeparator)
 	{
-		var result = properties.Aggregate(header, (acc, pair) => FastStringBuilder.Format("{0}{1}{2}{3}{4}", acc!, sequenceSeparator, pair.Key, keyValueSeparator.ToString(), pair.Value));
+		var sb = _stringBuilderPool.Value.Get();
 
-		return result!.StartsWith(sequenceSeparator, StringComparison.CurrentCulture) ? result[sequenceSeparator.Length..] : result;
+		try
+		{
+			if (header is { Length: > 0 })
+			{
+				_ = sb.Append(header);
+			}
+
+			foreach (var pair in properties)
+			{
+				_ = sb.Append(sequenceSeparator);
+				_ = sb.Append(pair.Key);
+				_ = sb.Append(keyValueSeparator);
+				_ = sb.Append(pair.Value);
+			}
+
+			var result = sb.ToString();
+
+			return result.StartsWith(sequenceSeparator, StringComparison.CurrentCulture)
+				? result[sequenceSeparator.Length..]
+				: result;
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>Builds a dot-qualified property name from its simple name and an optional type prefix.</summary>
@@ -344,18 +373,23 @@ public static class ObjectExtensions
 	/// <summary>Builds a dictionary from the properties selected by <paramref name="propertySelector"/>.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate type properties.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static Dictionary<string, string> BuildSelectedPropertiesDictionary(object obj, Func<PropertyInfo, bool> propertySelector, string typeName, bool ignoreNulls)
 	{
-		var properties = new Dictionary<string, string>();
-
 #pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
 		var allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 #pragma warning restore IL2070
 
-		foreach (var property in allProperties.Where(propertySelector))
+		var properties = new Dictionary<string, string>(allProperties.Length);
+
+		for (var propIndex = 0; propIndex < allProperties.Length; propIndex++)
 		{
-			TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
+			var property = allProperties[propIndex];
+
+			if (propertySelector(property))
+			{
+				TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
+			}
 		}
 
 		return properties;
@@ -411,11 +445,20 @@ public static class ObjectExtensions
 
 	/// <summary>Returns a new <see cref="Dictionary{TKey,TValue}"/> with empty-value entries removed.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FilterEmptyPropertiesDict), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(FilterEmptyPropertiesDict), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static Dictionary<string, string> FilterEmptyPropertiesDict(Dictionary<string, string> properties)
 	{
-		return properties.Where(static p => !string.IsNullOrEmpty(p.Value))
-			.ToDictionary(static pair => pair.Key, static pair => pair.Value);
+		var filtered = new Dictionary<string, string>(properties.Count);
+
+		foreach (var kvp in properties)
+		{
+			if (!string.IsNullOrEmpty(kvp.Value))
+			{
+				filtered[kvp.Key] = kvp.Value;
+			}
+		}
+
+		return filtered;
 	}
 
 	/// <summary>Merges source fields-dictionary entries into <paramref name="result"/>, filtering empty values when requested.</summary>
@@ -440,6 +483,11 @@ public static class ObjectExtensions
 	[Information(nameof(MergePropertyValueToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void MergePropertyValueToResult(Dictionary<string, string> result, PropertyInfo property, object obj, string memberPrefix, bool ignoreNulls)
 	{
+		if (!property.CanRead || property.GetIndexParameters().Length > 0)
+		{
+			return;
+		}
+
 		var innerObject = property.GetValue(obj, null);
 
 		if (ShouldSkipNullValue(innerObject, ignoreNulls))
@@ -783,7 +831,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public string PropertiesToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -861,7 +909,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -939,7 +987,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -1066,7 +1114,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available, OptimizationStatus = OptimizationStatus.None)]
+		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
 			obj = obj.ArgumentNotNull();
