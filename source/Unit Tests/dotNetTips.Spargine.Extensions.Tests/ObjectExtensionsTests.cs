@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified On : 05-16-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1121,6 +1121,15 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void Max_WrongType_ThrowsInvalidOperationException()
+	{
+		object obj1 = "not an integer";
+		var obj2 = 10;
+
+		Assert.ThrowsExactly<InvalidOperationException>(() => obj1.Max(obj2));
+	}
+
+	[TestMethod]
 	public void Min_BothAreEqual_ReturnsValue()
 	{
 		// Arrange
@@ -2049,6 +2058,19 @@ public class ObjectExtensionsTests : UnitTester
 
 		Assert.IsNotNull(result);
 		Assert.Contains("[Error:", result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIncludeMemberNameTrue_IncludesQualifiedError()
+	{
+		var testObject = new ObjectWithThrowingProperty();
+		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false, includeMemberName: true);
+
+		Assert.IsNotNull(result);
+		Assert.Contains("[Error:", result);
+		Assert.Contains("ObjectWithThrowingProperty", result);
 	}
 
 	[TestMethod]
