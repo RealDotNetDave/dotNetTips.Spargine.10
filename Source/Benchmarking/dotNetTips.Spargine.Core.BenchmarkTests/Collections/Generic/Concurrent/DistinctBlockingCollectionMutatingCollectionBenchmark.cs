@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-16-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -125,7 +125,7 @@ public class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollec
 	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimeout()
 	{
-		this.Consume(this._people.TryAdd(this.PersonRef01, 10));
+		this.Consume(this._people.TryAdd(this.PersonRef01, 20));
 		this.Consume(this._people.TryAdd(this.PersonRef02, 10));
 
 		this.Consume(this._people);
@@ -135,7 +135,7 @@ public class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollec
 	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimeoutAndCancellationToken()
 	{
-		this.Consume(this._people.TryAdd(this.PersonRef01, 10, CancellationToken.None));
+		this.Consume(this._people.TryAdd(this.PersonRef01, 20, CancellationToken.None));
 		this.Consume(this._people.TryAdd(this.PersonRef02, 10, CancellationToken.None));
 
 		this.Consume(this._people);
@@ -145,7 +145,7 @@ public class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollec
 	[BenchmarkCategory(Categories.Async)]
 	public void TryAddWithTimespan()
 	{
-		this.Consume(this._people.TryAdd(this.PersonRef01, TimeSpan.FromMilliseconds(10)));
+		this.Consume(this._people.TryAdd(this.PersonRef01, TimeSpan.FromMilliseconds(20)));
 		this.Consume(this._people.TryAdd(this.PersonRef02, TimeSpan.FromMilliseconds(10)));
 
 		this.Consume(this._people);
