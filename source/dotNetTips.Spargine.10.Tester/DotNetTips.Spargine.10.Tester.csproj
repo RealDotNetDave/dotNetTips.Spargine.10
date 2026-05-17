@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Tester</AssemblyTitle>
-    <AssemblyVersion>2026.10.5.7</AssemblyVersion>
+    <AssemblyVersion>2026.10.5.8</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -19,7 +19,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.5.7</FileVersion>
+    <FileVersion>2026.10.5.8</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -48,7 +48,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Tester</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.5.7</Version>
+    <Version>2026.10.5.8</Version>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
