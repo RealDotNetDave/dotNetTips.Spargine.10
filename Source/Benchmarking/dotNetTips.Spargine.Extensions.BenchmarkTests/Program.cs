@@ -46,11 +46,9 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(EnumerableExtensionsCollectionBenchmark),
-		//	typeof(ImmutableArrayExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(ObjectExtensionsBenchmark)
+		);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
