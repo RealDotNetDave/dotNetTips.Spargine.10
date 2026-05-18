@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="XmlSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -35,6 +36,17 @@ namespace DotNetTips.Spargine.Core.Serialization;
 [Information(Status = Status.NeedsDocumentation)]
 public static class XmlSerialization
 {
+
+	/// <summary>
+	/// Cached <see cref="XmlReaderSettings"/> for the common null-resolver path used by
+	/// <see cref="StringToXDocument(string)"/>. Reusing this instance avoids allocating a new
+	/// <see cref="XmlReaderSettings"/> object on every call when no custom resolver is needed.
+	/// </summary>
+	private static readonly XmlReaderSettings _safeXmlReaderSettings = new()
+	{
+		DtdProcessing = DtdProcessing.Prohibit,
+		XmlResolver = null
+	};
 	/// <summary>
 	/// Cache of <see cref="XmlSerializer"/> instances keyed by type to avoid costly per-call re-creation.
 	/// </summary>
@@ -78,15 +90,31 @@ public static class XmlSerialization
 	/// <exception cref="FileNotFoundException">Thrown if the specified file does not exist.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[RequiresUnreferencedCode("Uses XmlSerializer via Deserialize<TResult> which requires unreferenced code for type metadata.")]
-	[Information(nameof(DeserializeFromFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
+	[Information(nameof(DeserializeFromFile),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.NotRequired,
+		Status = Status.Available)]
 	public static TResult DeserializeFromFile<TResult>([DisallowNull] FileInfo file) where TResult : new()
 	{
 		file = file.ArgumentNotNull();
 
-		return file.Exists is false
-			? throw ExceptionThrower.CreateFileNotFoundException(Resources.FileNotFoundCannotDeserializeFromXML, file.FullName)
-			: Deserialize<TResult>(File.ReadAllText(file.FullName));
+		if (file.Exists is false)
+		{
+			throw ExceptionThrower.CreateFileNotFoundException(Resources.FileNotFoundCannotDeserializeFromXML, file.FullName);
+		}
+
+		// Stream directly — avoids allocating the entire file as an intermediate string.
+		// XmlReader reads bytes directly from the FileStream.
+		using var stream = file.OpenRead();
+		using var xmlReader = XmlReader.Create(stream);
+
+		var result = GetSerializer(typeof(TResult)).Deserialize(xmlReader);
+
+		return result is null
+			? throw new InvalidOperationException(Resources.DeserializationResultedInANullObject)
+			: (TResult)result;
 	}
 
 	/// <summary>
@@ -98,20 +126,24 @@ public static class XmlSerialization
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(Serialize), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Serialize),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.Completed,
+		Status = Status.Available)]
 	public static string Serialize([DisallowNull] object obj)
 	{
 		obj = obj.ArgumentNotNull();
 
-		using (var writer = new StringWriter())
-		{
-			using (var xmlWriter = XmlWriter.Create(writer))
-			{
-				GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
-			}
+		// Pre-size the StringBuilder to 512 chars to avoid the multiple doubling
+		// reallocations that occur with the default capacity of 16 chars for
+		// typical XML payloads.
+		using var writer = new StringWriter(new StringBuilder(512));
+		using var xmlWriter = XmlWriter.Create(writer);
 
-			return writer.ToString();
-		}
+		GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
+
+		return writer.ToString();
 	}
 
 	/// <summary>
@@ -122,31 +154,25 @@ public static class XmlSerialization
 	/// <exception cref="ArgumentNullException">Thrown if any parameter is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses XmlSerializer which requires unreferenced code for type metadata.")]
-	[Information(nameof(SerializeToFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SerializeToFile),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.Completed,
+		Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file)
 	{
 		obj = obj.ArgumentNotNull();
 		file = file.ArgumentNotNull();
 
-		if (file.Exists)
-		{
-			file.Delete();
-		}
+		// Directory.Create() is already a no-op when the directory exists — no existence
+		// check needed. file.Create() truncates and overwrites any existing file, so the
+		// old Exists+Delete pattern was two unnecessary syscalls.
+		file.Directory?.Create();
 
-		var directoryName = file.DirectoryName!;
+		using var stream = file.Create();
+		using var xmlWriter = XmlWriter.Create(stream);
 
-		if (Directory.Exists(directoryName) is false)
-		{
-			_ = Directory.CreateDirectory(directoryName);
-		}
-
-		using (var writer = new StreamWriter(file.FullName))
-		{
-			using (var xmlWriter = XmlWriter.Create(writer))
-			{
-				GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
-			}
-		}
+		GetSerializer(obj.GetType()).Serialize(xmlWriter, obj);
 	}
 
 	/// <summary>
@@ -172,18 +198,24 @@ public static class XmlSerialization
 	/// <remarks>Uses DtdProcessing.Prohibit to enhance security.</remarks>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StringToXDocument), "David McCarter", "9/9/2020", "9/9/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(StringToXDocument), "David McCarter", "9/9/2020", "9/9/2020",
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.NotRequired,
+		Status = Status.Available)]
 	public static XDocument StringToXDocument([DisallowNull] string input, [AllowNull] XmlResolver resolver)
 	{
-		using (var stringReader = new StringReader(input.ArgumentNotNullOrEmpty()))
-		{
-			var options = new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = resolver };
+		using var stringReader = new StringReader(input.ArgumentNotNullOrEmpty());
 
-			using (var reader = XmlReader.Create(stringReader, options))
-			{
-				return XDocument.Load(reader);
-			}
-		}
+		// Reuse the cached settings for the common null-resolver path to avoid
+		// allocating a new XmlReaderSettings object on every call.
+		var options = resolver is null
+			? _safeXmlReaderSettings
+			: new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = resolver };
+
+		using var reader = XmlReader.Create(stringReader, options);
+
+		return XDocument.Load(reader);
 	}
 
 	/// <summary>

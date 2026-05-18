@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="JsonSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,11 +32,20 @@ public static class JsonSerialization
 {
 	/// <summary>
 	/// Specifies options for JSON serialization and deserialization.
+	/// Frozen via <see cref="JsonSerializerOptions.MakeReadOnly()"/> so the internal reflection
+	/// metadata cache is built once at startup and re-validation is skipped on every call.
 	/// </summary>
 	private static readonly JsonSerializerOptions _options = new()
 	{
 		NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
 	};
+
+	/// <summary>
+	/// Initializes static members of the <see cref="JsonSerialization"/> class.
+	/// Freezes <see cref="_options"/> so that <see cref="System.Text.Json.JsonSerializer"/> builds
+	/// its reflection metadata cache once and skips re-validation on subsequent calls.
+	/// </summary>
+	static JsonSerialization() => _options.MakeReadOnly();
 
 	/// <summary>
 	/// Converts a specified JSON string into its corresponding object representation using the provided <see cref="JsonSerializerOptions"/>.
@@ -88,14 +97,26 @@ public static class JsonSerialization
 	/// <exception cref="FileNotFoundException">Thrown if the specified file does not exist.</exception>
 	[Pure]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(DeserializeFromFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeserializeFromFile),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.NotRequired,
+		Status = Status.Available)]
 	public static TResult DeserializeFromFile<TResult>([DisallowNull] FileInfo file) where TResult : class
 	{
 		file = file.ArgumentNotNull();
 
-		return file.Exists is false
-			? throw ExceptionThrower.CreateFileNotFoundException(Resources.FileNotFoundCannotDeserializeFromJSON, file.FullName)
-			: Deserialize<TResult>(File.ReadAllText(file.FullName));
+		if (file.Exists is false)
+		{
+			throw ExceptionThrower.CreateFileNotFoundException(Resources.FileNotFoundCannotDeserializeFromJSON, file.FullName);
+		}
+
+		// Stream directly — avoids allocating the entire file as an intermediate string.
+		// JsonSerializer reads UTF-8 bytes directly from the stream.
+		using var stream = file.OpenRead();
+
+		return JsonSerializer.Deserialize<TResult>(stream, _options)
+			?? throw new InvalidOperationException($"Failed to deserialize the JSON file to {typeof(TResult)}.");
 	}
 
 	/// <summary>
@@ -354,7 +375,11 @@ public static class JsonSerialization
 	/// source-generated <see cref="JsonTypeInfo{T}"/> instead of runtime reflection.
 	/// All directories and subdirectories in the specified path are created if they do not already exist.
 	/// </remarks>
-	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SerializeToFile),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.Completed,
+		Status = Status.Available)]
 	public static void SerializeToFile<T>([DisallowNull] T obj, [DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	{
 		obj = obj.ArgumentNotNull();
@@ -363,7 +388,10 @@ public static class JsonSerialization
 
 		file.Directory?.Create();
 
-		File.WriteAllText(file.FullName, Serialize(obj, typeInfo));
+		// Serialize directly into the FileStream — eliminates the intermediate string
+		// allocation and the subsequent UTF-8 re-encode that WriteAllText would perform.
+		using var stream = file.Create();
+		JsonSerializer.Serialize(stream, obj, typeInfo);
 	}
 
 	/// <summary>
@@ -378,7 +406,11 @@ public static class JsonSerialization
 	/// Utilizes the configured <see cref="JsonSerializerOptions"/> for serialization.
 	/// </remarks>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(SerializeToFile), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SerializeToFile),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Completed,
+		BenchmarkStatus = BenchmarkStatus.NotRequired,
+		Status = Status.Available)]
 	public static void SerializeToFile([DisallowNull] object obj, [DisallowNull] FileInfo file, JsonSerializerOptions? options = null)
 	{
 		obj = obj.ArgumentNotNull();
@@ -386,7 +418,10 @@ public static class JsonSerialization
 
 		file.Directory?.Create();
 
-		File.WriteAllText(file.FullName, Serialize(obj, options));
+		// Serialize directly into the FileStream — eliminates the intermediate string
+		// allocation and the subsequent UTF-8 re-encode that WriteAllText would perform.
+		using var stream = file.Create();
+		JsonSerializer.Serialize(stream, obj, options ?? _options);
 	}
 
 	/// <summary>
@@ -413,33 +448,35 @@ public static class JsonSerialization
 		switch (valueKind)
 		{
 			case JsonValueKind.Object:
-				var propertyNames = new HashSet<string>();
-
-				using (var expectedEnumerator = expected.EnumerateObject())
 				{
-					foreach (var property in expectedEnumerator)
-					{
-						_ = propertyNames.Add(property.Name);
-					}
-				}
-
-				using (var actualEnumerator = actual.EnumerateObject())
-				{
-					foreach (var property in actualEnumerator)
-					{
-						_ = propertyNames.Add(property.Name);
-					}
-				}
-
-				foreach (var name in propertyNames)
-				{
-					if (!JsonEqual(expected.GetProperty(name), actual.GetProperty(name)))
+					// Fast-reject: different property counts → cannot be equal.
+					// Then enumerate expected once and look up each property in actual via
+					// TryGetProperty — O(n) with no HashSet allocation.
+					// The old approach built a union HashSet and called GetProperty() (linear
+					// scan) for every name → O(n²).
+					if (expected.GetPropertyCount() != actual.GetPropertyCount())
 					{
 						return false;
 					}
+
+					using var expectedProperties = expected.EnumerateObject();
+
+					foreach (var property in expectedProperties)
+					{
+						if (!actual.TryGetProperty(property.Name, out var actualValue))
+						{
+							return false;
+						}
+
+						if (!JsonEqual(property.Value, actualValue))
+						{
+							return false;
+						}
+					}
+
+					return true;
 				}
 
-				return true;
 			case JsonValueKind.Array:
 				using (var expectedEnumerator = expected.EnumerateArray())
 				{
@@ -463,14 +500,25 @@ public static class JsonSerialization
 				}
 
 			case JsonValueKind.String:
-				return string.Equals(expected.GetString(), actual.GetString(), StringComparison.Ordinal);
+				// ValueEquals compares against the internal UTF-8 buffer of expected
+				// without materialising it as a string — only actual.GetString() allocates.
+				return expected.ValueEquals(actual.GetString());
+
 			case JsonValueKind.Number:
+				// Numbers must be compared by raw text because 1.0 and 1 are distinct in JSON.
+				return string.Equals(expected.GetRawText(), actual.GetRawText(), StringComparison.Ordinal);
+
 			case JsonValueKind.True:
 			case JsonValueKind.False:
 			case JsonValueKind.Null:
-				return string.Equals(expected.GetRawText(), actual.GetRawText(), StringComparison.Ordinal);
+				// ValueKind equality is already proven at the top of this method.
+				// Two elements with the same kind of True, False, or Null are definitionally
+				// equal — no GetRawText() allocation needed.
+				return true;
+
 			case JsonValueKind.Undefined:
 				throw new NotSupportedException($"Undefined JsonValueKind: {valueKind}.");
+
 			default:
 				throw new NotSupportedException($"Unexpected JsonValueKind: {valueKind}.");
 		}

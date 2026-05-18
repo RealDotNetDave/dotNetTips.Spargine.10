@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-16-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="RegexProcessor.Methods.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,10 @@ public static partial class RegexProcessor
 	///   <c>true</c> if the input contains a first and last name; otherwise, <c>false</c>.
 	/// </returns>
 	[Information(nameof(ContainsFirstLastName), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool ContainsFirstLastName(string input) => input is null ? false : FirstLastNameRegexSingleLine().IsMatch(input);
+	public static bool ContainsFirstLastName(string input)
+	{
+		return input is null ? false : FirstLastNameRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines if the input contains a specific word.
@@ -66,7 +69,10 @@ public static partial class RegexProcessor
 	/// </example>
 	/// <exception cref="ArgumentNullException">Thrown if the input string is null.</exception>
 	[Information(nameof(ExtractVersion), "David McCarter", "4/9/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static string ExtractVersion(string input) => ExtractVersionRegex().Match(input).Value;
+	public static string ExtractVersion(string input)
+	{
+		return ExtractVersionRegex().Match(input).Value;
+	}
 
 	/// <summary>
 	/// Extracts all numeric characters from the input string.
@@ -124,7 +130,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is an email address; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsEmailAddress), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsEmailAddress(string input) => input is null ? false : EmailAddressRegexSingleLine().IsMatch(input);
+	public static bool IsEmailAddress(string input)
+	{
+		return input is null ? false : EmailAddressRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines whether the input is a valid GUID (Globally Unique Identifier).
@@ -132,7 +141,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a GUID; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsGuid), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsGuid(string input) => input is null ? false : GuidRegexSingleLine().IsMatch(input);
+	public static bool IsGuid(string input)
+	{
+		return input is null ? false : GuidRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Checks if the input is a valid IPv4 address.
@@ -140,7 +152,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a valid IPv4 address; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsIPv4Address), "David McCarter", "10/10/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsIPv4Address(string input) => input is null ? false : IPv4AddressRegex().IsMatch(input);
+	public static bool IsIPv4Address(string input)
+	{
+		return input is null ? false : IPv4AddressRegex().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Checks if the input is a valid IPv6 address.
@@ -148,7 +163,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a valid IPv6 address; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsIPv6Address), "David McCarter", "10/10/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsIPv6Address(string input) => input is null ? false : IPv6AddressRegex().IsMatch(input);
+	public static bool IsIPv6Address(string input)
+	{
+		return input is null ? false : IPv6AddressRegex().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Validates whether the input is an ISBN (International Standard Book Number).
@@ -156,7 +174,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is an ISBN; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsISBN), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsISBN(string input) => input is null ? false : ISBNRegexSingleLine().IsMatch(input);
+	public static bool IsISBN(string input)
+	{
+		return input is null ? false : ISBNRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines if the input is a valid MAC (Media Access Control) address.
@@ -164,7 +185,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a MAC address; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsMACAddress), "David McCarter", "9/28/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsMACAddress(string input) => input is null ? false : MACAddressSingleLine().IsMatch(input);
+	public static bool IsMACAddress(string input)
+	{
+		return input is null ? false : MACAddressSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines if the input string contains only alphabetic characters and has a length between 1 and 7 characters.
@@ -172,7 +196,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input contains only alphabetic characters and has a length between 1 and 7 characters; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsOneToSevenAlpha), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsOneToSevenAlpha(string input) => input is null ? false : OneTo7AlphaRegexSingleLine().IsMatch(input);
+	public static bool IsOneToSevenAlpha(string input)
+	{
+		return input is null ? false : OneTo7AlphaRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines if the input string is in scientific notation.
@@ -180,7 +207,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is in scientific notation; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsScientific), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsScientific(string input) => input is null ? false : ScientificRegexSingleLine().IsMatch(input);
+	public static bool IsScientific(string input)
+	{
+		return input is null ? false : ScientificRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Checks if the input is a valid SHA-1 hash.
@@ -188,7 +218,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a SHA1 hash; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsSHA1Hash), "David McCarter", "9/28/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsSHA1Hash(string input) => input is null ? false : SHA1HashRegexSingleLine().IsMatch(input);
+	public static bool IsSHA1Hash(string input)
+	{
+		return input is null ? false : SHA1HashRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Verifies if the input is a valid URL.
@@ -196,7 +229,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a URL; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsUrl), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsUrl(string input) => input is null ? false : UrlRegexSingleLine().IsMatch(input);
+	public static bool IsUrl(string input)
+	{
+		return input is null ? false : UrlRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Determines whether the input contains a valid URL domain address.
@@ -204,7 +240,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input contains a URL domain address; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsUrlDomainAddress), "David McCarter", "9/28/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsUrlDomainAddress(string input) => input is null ? false : UrlDomainAddressRegexSingleLine().IsMatch(input);
+	public static bool IsUrlDomainAddress(string input)
+	{
+		return input is null ? false : UrlDomainAddressRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Checks whether the input is a valid string based on certain criteria.
@@ -212,7 +251,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a valid string; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsValidString), "David McCarter", "9/28/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsValidString(string input) => input is null ? false : StringRegex().IsMatch(input);
+	public static bool IsValidString(string input)
+	{
+		return input is null ? false : StringRegex().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Removes HTML tags from the input string and replaces them with the specified replacement text.
@@ -221,7 +263,10 @@ public static partial class RegexProcessor
 	/// <param name="replacement">The string to replace HTML tags with. Defaults to an empty string.</param>
 	/// <returns>The modified string with HTML tags replaced by the specified replacement string.</returns>
 	[Information(nameof(RemoveHtml), "David McCarter", "8/1/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string? RemoveHtml(string input, string replacement = ControlChars.EmptyString) => input is null ? input : RemoveHtmlRegex().Replace(input, replacement);
+	public static string? RemoveHtml(string input, string replacement = ControlChars.EmptyString)
+	{
+		return input is null ? input : RemoveHtmlRegex().Replace(input, replacement);
+	}
 
 	/// <summary>
 	/// Removes special characters from the input string, replacing them with the specified replacement text.
@@ -230,7 +275,10 @@ public static partial class RegexProcessor
 	/// <param name="replacement">The string to replace special characters with. Defaults to an empty string.</param>
 	/// <returns>The modified string with special characters replaced by the specified replacement string.</returns>
 	[Information(nameof(RemoveSpecialChar), "David McCarter", "8/1/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string? RemoveSpecialChar(string input, in string replacement = ControlChars.EmptyString) => input is null ? input : RemoveSpecialCharRegex().Replace(input, replacement);
+	public static string? RemoveSpecialChar(string input, in string replacement = ControlChars.EmptyString)
+	{
+		return input is null ? input : RemoveSpecialCharRegex().Replace(input, replacement);
+	}
 
 	/// <summary>
 	/// Replaces carriage return (CR) and line feed (LF) characters in the input string.
@@ -239,7 +287,10 @@ public static partial class RegexProcessor
 	/// <param name="replacement">The replacement string (defaults to "").</param>
 	/// <returns>The modified string.</returns>
 	[Information(nameof(ReplaceCrLf), "David McCarter", "9/28/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string? ReplaceCrLf(string input, in string replacement = ControlChars.EmptyString) => input is null || replacement is null ? input : RemoveCrLfRegex().Replace(input, replacement);
+	public static string? ReplaceCrLf(string input, in string replacement = ControlChars.EmptyString)
+	{
+		return input is null || replacement is null ? input : RemoveCrLfRegex().Replace(input, replacement);
+	}
 
 	/// <summary>
 	/// Replaces spaces in the input string with the specified replacement character.
@@ -248,5 +299,8 @@ public static partial class RegexProcessor
 	/// <param name="replacement">The replacement string (defaults to "_").</param>
 	/// <returns>The modified string.</returns>
 	[Information(nameof(ReplaceSpaces), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static string? ReplaceSpaces(string input, in string replacement = "_") => input is null || replacement is null ? input : SpacesRegex().Replace(input, replacement);
+	public static string? ReplaceSpaces(string input, in string replacement = "_")
+	{
+		return input is null || replacement is null ? input : SpacesRegex().Replace(input, replacement);
+	}
 }
