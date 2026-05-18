@@ -216,7 +216,7 @@ public void ProcessType<T>(T instance) where T : IHasProperties
 ### **General Requirements**
 - The test framework is **MSTest** (`[TestClass]`, `[TestMethod]`). Do not use xUnit or NUnit.  
 - Use **dotNetTips.Spargine.10.Tester** for test data and utilities — specifically **`RandomData`** for generating random test data and **`PersonData`** for person-related data.  
-- Write unit tests for **all public APIs**.
+- Write unit tests for **all public and protected APIs**.
 - If methods are new or modified, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**. **THIS IS MANDATORY!**
     - CRAP score for public and protected methods must be 5 or under.

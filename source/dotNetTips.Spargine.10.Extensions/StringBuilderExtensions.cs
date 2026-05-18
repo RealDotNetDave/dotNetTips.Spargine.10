@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -46,7 +46,9 @@ public static class StringBuilderExtensions
 	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
 	/// <param name="value">The string to scan and append.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static void AppendEscapedValue(StringBuilder sb, string value)
+#pragma warning restore IDE0051
 	{
 		var lastSpecialIndex = 0;
 
@@ -70,37 +72,6 @@ public static class StringBuilderExtensions
 	}
 
 	/// <summary>
-	/// Appends a value to the <see cref="StringBuilder"/> with optional quotes, comma,
-	/// and special-character escaping, delegating the quote/escape logic to
-	/// <see cref="AppendEscapedValue"/> when required.
-	/// </summary>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
-	/// <param name="value">The string value to append.</param>
-	/// <param name="includeQuotes">When <c>true</c>, wraps the value in double quotes and escapes special characters.</param>
-	/// <param name="includeComma">When <c>true</c>, appends the default separator after the value.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
-	private static void AppendFormattedValue(StringBuilder sb, string value, bool includeQuotes, bool includeComma)
-#pragma warning restore IDE0051
-	{
-		if (includeQuotes)
-		{
-			_ = sb.Append(ControlChars.Quote);
-			AppendEscapedValue(sb, value);
-			_ = sb.Append(ControlChars.Quote);
-		}
-		else
-		{
-			_ = sb.Append(value);
-		}
-
-		if (includeComma)
-		{
-			_ = sb.Append(ControlChars.DefaultSeparator);
-		}
-	}
-
-	/// <summary>
 	/// Core loop that iterates <paramref name="values"/>, invokes <paramref name="action"/> for
 	/// each element, appends <paramref name="separator"/> after each, then trims the trailing separator.
 	/// </summary>
@@ -119,38 +90,6 @@ public static class StringBuilderExtensions
 		foreach (var value in values)
 		{
 			action(value);
-			_ = sb.Append(separator);
-			appended = true;
-		}
-
-		if (appended)
-		{
-			sb.Length -= separator.Length;
-		}
-	}
-
-	/// <summary>
-	/// Core loop that iterates <paramref name="values"/>, invokes <paramref name="action"/> for
-	/// each element together with <paramref name="param"/>, appends <paramref name="separator"/>
-	/// after each, then trims the trailing separator.
-	/// </summary>
-	/// <typeparam name="T">Element type.</typeparam>
-	/// <typeparam name="TParam">Type of the additional parameter.</typeparam>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
-	/// <param name="values">The sequence of values to append.</param>
-	/// <param name="separator">The separator to append between values.</param>
-	/// <param name="param">The additional parameter passed to <paramref name="action"/>.</param>
-	/// <param name="action">The action to invoke for each value and the additional parameter.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
-	private static void AppendSeparatedValues<T, TParam>(StringBuilder sb, IEnumerable<T> values, string separator, TParam param, Action<T, TParam> action)
-#pragma warning restore IDE0051
-	{
-		var appended = false;
-
-		foreach (var value in values)
-		{
-			action(value, param);
 			_ = sb.Append(separator);
 			appended = true;
 		}
@@ -232,7 +171,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendBytes), author: "David McCarter", createdOn: "5/26/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendBytes), author: "David McCarter", createdOn: "5/26/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendBytes(byte[] bytes)
 		{
 			if (bytes is null)
@@ -242,10 +181,12 @@ public static class StringBuilderExtensions
 
 			sb = sb.ArgumentNotNull().Append("'0x");
 
-			//FrozenSet and Span is slower.
+			Span<char> hex = stackalloc char[2];
+
 			foreach (var byteItem in bytes)
 			{
-				_ = sb.Append(byteItem.ToString("X2", CultureInfo.InvariantCulture));
+				_ = byteItem.TryFormat(hex, out _, "X2", CultureInfo.InvariantCulture);
+				_ = sb.Append(hex);
 			}
 
 			_ = sb.Append('\'');
@@ -351,17 +292,27 @@ public static class StringBuilderExtensions
 		/// The separator is appended after each value, and removed after the last value.
 		/// </remarks>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), author: "David McCarter", createdOn: "7/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), author: "David McCarter", createdOn: "7/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendValues([DisallowNull] string separator, [DisallowNull] IEnumerable<string> values)
 		{
 			sb = sb.ArgumentNotNull();
 			values = values.ArgumentNotNull();
-			separator ??= string.Empty;
 
-			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
-			sb.AppendValues(separator, values, (value) => sb.Append(value));
+			var appended = false;
+
+			foreach (var value in values)
+			{
+				_ = sb.Append(value);
+				_ = sb.Append(separator);
+				appended = true;
+			}
+
+			if (appended)
+			{
+				sb.Length -= separator.Length;
+			}
 		}
 
 		/// <summary>
@@ -389,17 +340,27 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AppendValues([DisallowNull] string separator, [DisallowNull] params ReadOnlyCollection<string> values)
 		{
 			sb = sb.ArgumentNotNull();
 			values = values.ArgumentNotNull();
-			separator ??= string.Empty;
 
-			// SUGGESTIONS FROM COPILOT SLOWER
 			separator = SetSeparator(separator);
 
-			sb.AppendValues(separator, values, (value) => sb.Append(value));
+			var appended = false;
+
+			foreach (var value in values)
+			{
+				_ = sb.Append(value);
+				_ = sb.Append(separator);
+				appended = true;
+			}
+
+			if (appended)
+			{
+				sb.Length -= separator.Length;
+			}
 		}
 
 		/// <summary>
@@ -424,7 +385,6 @@ public static class StringBuilderExtensions
 		{
 			sb = sb.ArgumentNotNull();
 			joinAction = joinAction.ArgumentNotNull();
-			separator ??= string.Empty;
 
 			if (values is null)
 			{
@@ -467,7 +427,6 @@ public static class StringBuilderExtensions
 			sb = sb.ArgumentNotNull();
 			joinAction = joinAction.ArgumentNotNull();
 			param = param.ArgumentNotNull();
-			separator ??= string.Empty;
 
 			if (values is null)
 			{
@@ -521,7 +480,6 @@ public static class StringBuilderExtensions
 			param1 = param1.ArgumentNotNull();
 			param2 = param2.ArgumentNotNull();
 			joinAction = joinAction.ArgumentNotNull();
-			separator ??= string.Empty;
 
 			if (values is null)
 			{

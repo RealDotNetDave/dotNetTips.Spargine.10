@@ -102,7 +102,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a credit card number; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsCreditCardNumber), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsCreditCardNumber(string input) => input is null ? false : CreditCardRegexSingleLine().IsMatch(input);
+	public static bool IsCreditCardNumber(string input)
+	{
+		return input is null ? false : CreditCardRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Checks whether the input represents a valid currency code.
@@ -110,7 +113,10 @@ public static partial class RegexProcessor
 	/// <param name="input">The input string to check.</param>
 	/// <returns><c>true</c> if the input is a currency code; otherwise, <c>false</c>.</returns>
 	[Information(nameof(IsCurrencyCode), "David McCarter", "3/16/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static bool IsCurrencyCode(string input) => input is null ? false : CurrencyCodeRegexSingleLine().IsMatch(input);
+	public static bool IsCurrencyCode(string input)
+	{
+		return input is null ? false : CurrencyCodeRegexSingleLine().IsMatch(input);
+	}
 
 	/// <summary>
 	/// Validates if the input is a correctly formatted email address.
