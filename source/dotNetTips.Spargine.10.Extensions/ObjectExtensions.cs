@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-17-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -53,17 +53,8 @@ public static class ObjectExtensions
 #pragma warning restore IDE0051
 
 	private static readonly ConcurrentDictionary<Type, FieldInfo[]> _allInstanceFieldsCache = new();
-
-	// Used by HasProperty inside the extension block — analyzer may not see usage across extension blocks, suppress false positive.
-#pragma warning disable IDE0052
-	private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _allInstancePropertiesCache = new();
-#pragma warning restore IDE0052
-
 	private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _allPropertiesCache = new();
-	// Reflection result caches — keyed by Type, populated on first use per type.
-	// PropertyInfo[] and FieldInfo[] are immutable type metadata, so no invalidation is needed.
 	private static readonly FrozenDictionary<Type, string> _builtInTypeNames = TypeHelper.BuiltInTypeNames().ToFrozen();
-	// Factory cache for Activator.CreateInstance replacement — compiled expression lambdas per type.
 	private static readonly ConcurrentDictionary<Type, Func<object>> _instanceFactoryCache = new();
 	private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _publicInstancePropertiesCache = new();
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
@@ -89,7 +80,7 @@ public static class ObjectExtensions
 	/// <param name="obj">The object containing IDisposable fields to be disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("This method uses reflection to enumerate and dispose fields of an IDisposable object.")]
-	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(DisposeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void DisposeFields([AllowNull] this IDisposable obj)
 	{
 		if (obj is null)
@@ -273,7 +264,7 @@ public static class ObjectExtensions
 	/// <summary>Builds a fields dictionary for a complex (non-enumerable, non-built-in) object.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate and read type fields.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildComplexTypeFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(BuildComplexTypeFieldsDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static ReadOnlyDictionary<string, string> BuildComplexTypeFieldsDictionary(string memberName, object obj, Type objectType, bool ignoreEmptyValues)
 	{
 		var result = new Dictionary<string, string>();
@@ -298,7 +289,7 @@ public static class ObjectExtensions
 	/// <summary>Builds a properties dictionary for a complex (non-enumerable, non-built-in) object.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate and read type properties.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildComplexTypePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(BuildComplexTypePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static ReadOnlyDictionary<string, string> BuildComplexTypePropertiesDictionary(string memberName, object obj, bool ignoreNulls)
 	{
 		var result = new Dictionary<string, string>();
@@ -406,7 +397,7 @@ public static class ObjectExtensions
 	/// <summary>Builds a dictionary from the properties selected by <paramref name="propertySelector"/>.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate type properties.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(BuildSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static Dictionary<string, string> BuildSelectedPropertiesDictionary(object obj, Func<PropertyInfo, bool> propertySelector, string typeName, bool ignoreNulls)
 	{
 #pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
@@ -669,7 +660,7 @@ public static class ObjectExtensions
 	/// <summary>Initializes a single field to its default value when it is null and not a value type.</summary>
 	[RequiresUnreferencedCode("Uses Activator.CreateInstance to construct field default values.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryInitializeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(TryInitializeField), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void TryInitializeField(FieldInfo field, object obj)
 	{
 		if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
@@ -891,7 +882,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string PropertiesToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -969,7 +960,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1047,7 +1038,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information("Original code by: Diego De Vita", author: "David McCarter", createdOn: "11/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<string, string> PropertiesToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreNulls = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -1140,7 +1131,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(FieldsToDictionary), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyDictionary<string, string> FieldsToDictionary([DisallowNull] string memberName = ControlChars.EmptyString, bool ignoreEmptyValues = true)
 		{
 			memberName = memberName.ArgumentNotNull();
@@ -1249,7 +1240,7 @@ public static class ObjectExtensions
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(InitializeFields), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void InitializeFields()
 		{
 			obj = obj.ArgumentNotNull();
@@ -1274,30 +1265,13 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(HasProperty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool HasProperty([DisallowNull] string propertyName)
 		{
 			propertyName = propertyName.ArgumentNotNullOrEmpty();
 
-			if (obj is null)
-			{
-				return false;
-			}
-
-#pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
-			var objectType = obj.GetType();
-#pragma warning restore IL2070
-			var properties = _allInstancePropertiesCache.GetOrAdd(objectType, static t => t.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic));
-
-			for (var index = 0; index < properties.Length; index++)
-			{
-				if (string.Equals(properties[index].Name, propertyName, StringComparison.Ordinal))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			// SUGGESTION FROM COPILOT SLOWER
+			return obj?.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic) != null;
 		}
 
 		/// <summary>
@@ -1522,7 +1496,7 @@ public static class ObjectExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(ComputeSha256Hash), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 		public string ComputeSha256Hash<T>([DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			obj = obj.ArgumentNotNull();

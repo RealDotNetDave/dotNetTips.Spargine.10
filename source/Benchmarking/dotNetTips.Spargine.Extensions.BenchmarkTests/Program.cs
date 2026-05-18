@@ -46,11 +46,9 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(EnumerableExtensionsCollectionBenchmark),
-		//	typeof(ImmutableArrayExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(ObjectExtensionsBenchmark)
+		);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
@@ -66,7 +64,7 @@ internal sealed class Program
 		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
 		//);
 
-		// Group 2: E–I - 5 hours, 527 benchmarks
+		// Group 2: E–H - 5 hours, 527 benchmarks
 		BenchmarkHelper.RunBenchmarks(config, true,
 		 typeof(EnumExtensionsBenchmark),
 			typeof(EnumerableExtensionsCollectionBenchmark),
@@ -76,12 +74,12 @@ internal sealed class Program
 			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 			typeof(ExceptionExtensionsBenchmark),
 			typeof(HashSetExtensionsCollectionBenchmark),
-			typeof(HashSetExtensionsMutatingCollectionBenchmark),
-			typeof(ImmutableArrayExtensionsBenchmark)
+			typeof(HashSetExtensionsMutatingCollectionBenchmark)
 		);
 
 		// Group 3: L–T - 5 hours, 444 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
+		//  typeof(ImmutableArrayExtensionsBenchmark),
 		//  typeof(LinqExtensionsBenchmark),
 		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
 		//	typeof(ListExtensionsCollectionBenchmark).
