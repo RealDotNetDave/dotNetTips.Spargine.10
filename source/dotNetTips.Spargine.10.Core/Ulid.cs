@@ -4,7 +4,7 @@
 // Created          : 08-03-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@
 // </summary>
 // ***********************************************************************
 
-using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -31,18 +30,6 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineUlid")]
 public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 {
-	/// <summary>
-	/// The characters used for Base32 encoding.
-	/// </summary>
-	private static readonly char[] Base32Chars = "0123456789ABCDEFGHJKMNPQRSTVWXYZ".ToCharArray();
-
-	/// <summary>
-	/// A dictionary mapping Base32 characters to their integer values for decoding.
-	/// </summary>
-	private static readonly FrozenDictionary<char, int> Base32CharToValue = Base32Chars
-	.Select((c, i) => new { c, i })
-	.ToDictionary(x => x.c, x => x.i)
-	.ToFrozenDictionary();
 
 	/// <summary>
 	/// The string representation of the ULID.
@@ -79,6 +66,18 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 
 		this._ulid = value;
 	}
+
+	/// <summary>
+	/// The characters used for Base32 (Crockford) encoding.
+	/// Stored as a string literal so the data lives in the assembly's read-only segment — zero heap allocation.
+	/// </summary>
+	private static ReadOnlySpan<char> Base32Chars => "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+	/// <summary>
+	/// A 256-element flat lookup array mapping a <see cref="char"/> (cast to int) to its Base32 value (0-31),
+	/// or -1 for invalid characters. Array indexing is O(1) with zero hashing overhead.
+	/// </summary>
+	private static readonly int[] Base32Lookup = CreateBase32Lookup();
 
 	/// <summary>
 	/// Determines whether one <see cref="Ulid"/> is greater than or equal to another.
@@ -251,28 +250,23 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// Extracts the timestamp from the Ulid.
 	/// </summary>
 	/// <returns>The timestamp as a <see cref="DateTimeOffset"/>.</returns>
-	[Information(nameof(GetTimeStamp), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	/// <remarks>
+	/// Uses a single-pass shift-accumulate loop: each of the 10 Base32 characters contributes
+	/// exactly 5 bits, totalling 50 bits, of which the low 48 bits are the millisecond timestamp.
+	/// This eliminates the nested inner loop and the <c>ulong</c> bit-buffer used previously.
+	/// </remarks>
+	[Information(nameof(GetTimeStamp), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public DateTimeOffset GetTimeStamp()
 	{
 		var timestampChars = this._ulid.AsSpan(0, TimestampLength);
-		var bitBuffer = 0UL;
-		var bitsInBuffer = 0;
-		long timestampMilliseconds = 0;
+		var ms = 0L;
 
-		foreach (var c in timestampChars)
+		for (var index = 0; index < TimestampLength; index++)
 		{
-			AccumulateBits(c, ref bitBuffer, ref bitsInBuffer);
-
-			while (bitsInBuffer >= 8)
-			{
-				bitsInBuffer -= 8;
-				var byteValue = (byte)(bitBuffer >> bitsInBuffer);
-				timestampMilliseconds = (timestampMilliseconds << 8) | byteValue;
-				bitBuffer &= (1UL << bitsInBuffer) - 1;
-			}
+			ms = (ms << 5) | (uint)DecodeBase32Char(timestampChars[index]);
 		}
 
-		return DateTimeOffset.FromUnixTimeMilliseconds(timestampMilliseconds);
+		return DateTimeOffset.FromUnixTimeMilliseconds(ms >> 2);
 	}
 
 	/// <summary>
@@ -284,23 +278,44 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	public override string ToString() => this._ulid;
 
 	/// <summary>
-	/// Decodes a Base32 character and accumulates its 5-bit value into the bit buffer.
+	/// Creates the 256-element flat lookup array for Base32 character decoding.
+	/// Invalid characters map to -1.
+	/// </summary>
+	/// <returns>A 256-element array mapping char values to Base32 values.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateBase32Lookup), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int[] CreateBase32Lookup()
+	{
+		var lookup = new int[256];
+		Array.Fill(lookup, -1);
+		var chars = Base32Chars;
+
+		for (var index = 0; index < chars.Length; index++)
+		{
+			lookup[chars[index]] = index;
+		}
+
+		return lookup;
+	}
+
+	/// <summary>
+	/// Decodes a Base32 character to its 5-bit integer value using the flat lookup array.
 	/// </summary>
 	/// <param name="c">The Base32 character to decode.</param>
-	/// <param name="bitBuffer">The bit buffer to accumulate into; updated after the operation.</param>
-	/// <param name="bitsInBuffer">The number of bits currently in the buffer; updated after the operation.</param>
+	/// <returns>The 5-bit integer value (0–31) of the character.</returns>
 	/// <exception cref="ArgumentException">Thrown if <paramref name="c"/> is not a valid Base32 character.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AccumulateBits), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void AccumulateBits(char c, ref ulong bitBuffer, ref int bitsInBuffer)
+	[Information(nameof(DecodeBase32Char), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static int DecodeBase32Char(char c)
 	{
-		if (!Base32CharToValue.TryGetValue(c, out var value))
+		var value = c < 256 ? Base32Lookup[c] : -1;
+
+		if (value < 0)
 		{
 			ExceptionThrower.ThrowArgumentException($"Invalid character '{c}' in ULID.", nameof(c));
 		}
 
-		bitBuffer = (bitBuffer << 5) | (uint)value;
-		bitsInBuffer += 5;
+		return value;
 	}
 
 	/// <summary>
@@ -332,35 +347,6 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 		}
 	}
 
-
-	/// <summary>
-	/// Generates a random byte array for the ULID.
-	/// </summary>
-	/// <remarks>
-	/// This method generates a 10-byte array filled with cryptographically secure random values.
-	/// The random bytes are used as part of the ULID's unique identifier.
-	/// </remarks>
-	/// <returns>A byte array containing 10 random bytes.</returns>
-	[ExcludeFromCodeCoverage]
-	[Information(nameof(GenerateRandomBytes), Status = Status.Available)]
-	private static byte[] GenerateRandomBytes()
-	{
-		var randomBytes = new byte[10];
-		RandomNumberGenerator.Fill(randomBytes);
-		return randomBytes;
-	}
-
-	/// <summary>
-	/// Gets the current timestamp in milliseconds since the Unix epoch.
-	/// </summary>
-	/// <remarks>
-	/// The timestamp is represented as a byte array and is used as the time component of the ULID.
-	/// This ensures that ULIDs are lexicographically sortable based on their creation time.
-	/// </remarks>
-	/// <returns>A byte array representing the current timestamp in milliseconds since the Unix epoch.</returns>
-	[ExcludeFromCodeCoverage]
-	[Information(nameof(GenerateTimeStamp), Status = Status.Available)]
-	private static byte[] GenerateTimeStamp() => BitConverter.GetBytes(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 
 	/// <summary>
 	/// Reads the next 5-bit value from two overlapping bytes in the byte span.
