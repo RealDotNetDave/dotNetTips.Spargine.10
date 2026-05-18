@@ -3,14 +3,15 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
 // <summary>High-performance string utilities for .NET 10. Provides allocation-aware, SIMD-optimized extensions for validation, comparison, hashing, encoding/decoding (Base64), compression (Brotli/Deflate/GZip/ZLib), URL parsing, splitting, and formatting. Methods favor ordinal comparisons, spans, pooled StringBuilder, and guard clauses to ensure deterministic behavior, culture invariance where appropriate, and minimal GC pressure across common string operations.</summary>
 // ***********************************************************************
+using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -41,20 +42,8 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
 public static class StringExtensions
 {
-	/// <summary>
-	/// The URL separator
-	/// </summary>
 	private const string UrlSeparator = "://";
-
-	/// <summary>
-	/// Provides a static instance of the <see cref="ASCIIEncoding"/> class for use throughout the StringExtensions class.
-	/// This encoding is used for operations that require ASCII character encoding.
-	/// </summary>
 	private static readonly ASCIIEncoding _encoding = new();
-
-	/// <summary>
-	/// The string builder pool
-	/// </summary>
 	private static readonly Lazy<ObjectPool<StringBuilder>> _stringBuilderPool =
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
@@ -150,7 +139,7 @@ public static class StringExtensions
 	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
 	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -161,9 +150,12 @@ public static class StringExtensions
 
 		try
 		{
+			Span<char> hex = stackalloc char[2];
+
 			foreach (var hashItem in hash.AsSpan())
 			{
-				_ = sb.Append(hashItem.ToString("x2", CultureInfo.InvariantCulture));
+				_ = hashItem.TryFormat(hex, out _, "x2", CultureInfo.InvariantCulture);
+				_ = sb.Append(hex);
 			}
 
 			return sb.ToString().ToTrimmed()!;
@@ -1464,7 +1456,7 @@ public static class StringExtensions
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[return: NotNull]
-	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string SubstringTrim(this string input, int startIndex, int length)
 	{
 		if (input.IsNullOrEmpty())
@@ -1477,8 +1469,7 @@ public static class StringExtensions
 			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(length));
 		}
 
-		// SUGGESTION FROM COPILOT SLOWER.
-		return input.AsSpan(startIndex, length).ToString().Trim();
+		return input.AsSpan(startIndex, length).Trim().ToString();
 	}
 
 	/// <summary>
@@ -1844,15 +1835,26 @@ public static class StringExtensions
 	/// </remarks>
 	private static byte[] GetHash(string input, HashType hashType)
 	{
-		var inputBytes = Encoding.ASCII.GetBytes(input);
+		var byteCount = Encoding.ASCII.GetByteCount(input);
+		var rentedBuffer = ArrayPool<byte>.Shared.Rent(byteCount);
 
-		return hashType switch
+		try
 		{
-			HashType.SHA256 => SHA256.HashData(inputBytes),
-			HashType.SHA384 => SHA384.HashData(inputBytes),
-			HashType.SHA512 => SHA512.HashData(inputBytes),
-			_ => [],
-		};
+			_ = Encoding.ASCII.GetBytes(input, rentedBuffer);
+			var inputSpan = rentedBuffer.AsSpan(0, byteCount);
+
+			return hashType switch
+			{
+				HashType.SHA256 => SHA256.HashData(inputSpan),
+				HashType.SHA384 => SHA384.HashData(inputSpan),
+				HashType.SHA512 => SHA512.HashData(inputSpan),
+				_ => [],
+			};
+		}
+		finally
+		{
+			ArrayPool<byte>.Shared.Return(rentedBuffer);
+		}
 	}
 
 	/// <summary>
