@@ -148,10 +148,11 @@ public static class StringExtensions
 
 		var sb = _stringBuilderPool.Value.Get().Clear();
 
+		// Allocate hex buffer once outside the loop to avoid repeated stackalloc per iteration
+		Span<char> hex = stackalloc char[2];
+
 		try
 		{
-			Span<char> hex = stackalloc char[2];
-
 			foreach (var hashItem in hash.AsSpan())
 			{
 				_ = hashItem.TryFormat(hex, out _, "x2", CultureInfo.InvariantCulture);
@@ -194,7 +195,7 @@ public static class StringExtensions
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -898,7 +899,7 @@ public static class StringExtensions
 	/// This method uses <see cref="char.IsWhiteSpace(char)"/> to check each character in the string for whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static bool HasWhitespace([DisallowNull] this string input)
 	{
 		if (input is null)
@@ -906,16 +907,16 @@ public static class StringExtensions
 			return false;
 		}
 
-		// SUGGESTION FROM COPILOT SLOWER
+		// Returns true as soon as the first whitespace character is found (early exit)
 		foreach (var inputItem in input)
 		{
-			if (!inputItem.IsAsciiWhitespace)
+			if (char.IsWhiteSpace(inputItem))
 			{
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/// <summary>
@@ -941,7 +942,7 @@ public static class StringExtensions
 	/// // "    Console.WriteLine(\"test\");"
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Indent), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static string Indent([DisallowNull] this string input, in int length, [ConstantExpected] char indentationCharacter)
 	{
 		if (input.CheckIsNotNull() is false || length <= 0)
@@ -954,20 +955,13 @@ public static class StringExtensions
 
 		try
 		{
-			if (length == 0)
-			{
-				_ = sb.Append(input.ArgumentNotNull());
-			}
-
-			for (var charIndex = 1; charIndex <= Math.Abs(length); charIndex++)
+			// length > 0 is guaranteed by the early-exit guard above; no need to re-check
+			for (var charIndex = 0; charIndex < length; charIndex++)
 			{
 				_ = sb.Append(indentationCharacter);
 			}
 
-			if (length > 0)
-			{
-				_ = sb.Append(input);
-			}
+			_ = sb.Append(input);
 
 			return sb.ToString();
 		}
@@ -1591,7 +1585,7 @@ public static class StringExtensions
 	/// <returns>The byte array representation of the Base64 encoded string.</returns>
 	/// <exception cref="FormatException">Thrown when the base64Input string is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static byte[] ToByteArrayFromBase64(this string base64String)
 	{
 		if (string.IsNullOrEmpty(base64String))
@@ -1599,11 +1593,14 @@ public static class StringExtensions
 			return [];
 		}
 
-		var buffer = new Span<byte>(new byte[base64String.CalculateByteArraySize()]);
+		// Correct decoded-size upper bound: every 4 Base64 chars decode to at most 3 bytes.
+		// CalculateByteArraySize() returns the UTF-8 *encoded* length of the string — wrong for this purpose.
+		var decodedMaxSize = base64String.Length / 4 * 3;
+		var buffer = new byte[decodedMaxSize];
 
 		return !Convert.TryFromBase64String(base64String, buffer, out var bytesWritten)
 			? throw new FormatException(Resources.TheInputStringIsNotAValidBase64String)
-			: buffer[..bytesWritten].ToArray();
+			: [.. buffer[..bytesWritten]];
 	}
 
 	/// <summary>
@@ -1791,12 +1788,18 @@ public static class StringExtensions
 	/// </summary>
 	private static string BuildConcatenatedString(string input, ReadOnlyCollection<string> args, string delimiter, bool addLineFeed)
 	{
-		// Calculate exact capacity: input + all args + delimiters
-		var tempArray = new string[args.Count + 1];
-		tempArray[0] = input;
-		args.CopyTo(tempArray, 1);
+		// Compute total length inline — avoids allocating a temporary array just for CalculateTotalLength
+		var totalStringLength = input.Length;
 
-		var totalStringLength = tempArray.CalculateTotalLength();
+		for (int argIndex = 0, argCount = args.Count; argIndex < argCount; argIndex++)
+		{
+			var s = args[argIndex];
+
+			if (s != null)
+			{
+				totalStringLength += s.Length;
+			}
+		}
 
 		// Add space for delimiters or line feeds
 		var delimiterLength = addLineFeed ? Environment.NewLine.Length : delimiter.Length;

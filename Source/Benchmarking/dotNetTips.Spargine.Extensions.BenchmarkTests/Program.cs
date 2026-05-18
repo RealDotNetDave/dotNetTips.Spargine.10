@@ -45,9 +45,9 @@ internal sealed class Program
 		// Run All Tests
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
-		// Temp tests
+		// Temp tests — before/after comparison for 2026-05-18 StringExtensions perf fixes
 		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ObjectExtensionsBenchmark)
+			typeof(StringExtensionsBenchmark)
 		);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks
