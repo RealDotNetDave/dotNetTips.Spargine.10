@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.5.7
+# DotNetTips.Spargine.10.Extensions - 2026.10.5.17
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -5121,7 +5121,7 @@
 ### System.Void AddPropertyError(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.Reflection.PropertyInfo property, System.String typeName, System.Boolean ignoreNulls, System.String errorTypeName)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** AddPropertyError
@@ -5145,7 +5145,7 @@
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildComplexTypeFieldsDictionary(System.String memberName, System.Object obj, System.Type objectType, System.Boolean ignoreEmptyValues)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildComplexTypeFieldsDictionary
@@ -5153,7 +5153,7 @@
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildComplexTypePropertiesDictionary(System.String memberName, System.Object obj, System.Boolean ignoreNulls)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildComplexTypePropertiesDictionary
@@ -5161,7 +5161,7 @@
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildEnumerableFieldsDictionary(System.String memberName, System.Collections.IEnumerable items, System.Boolean ignoreEmptyValues)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildEnumerableFieldsDictionary
@@ -5169,7 +5169,7 @@
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> BuildEnumerablePropertiesDictionary(System.String memberName, System.Collections.IEnumerable items)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildEnumerablePropertiesDictionary
@@ -5185,7 +5185,7 @@
 ### System.String BuildPropertyName(System.String name, System.String typeName)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildPropertyName
@@ -5201,8 +5201,8 @@
 ### System.String ComputeSha256Hash(System.Object obj, T typeInfo)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
@@ -5210,7 +5210,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
@@ -5319,7 +5319,7 @@
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> FilterEmptyProperties(System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> properties)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** FilterEmptyProperties
@@ -5467,7 +5467,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5478,7 +5478,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5489,7 +5489,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/18/2025
@@ -5638,7 +5638,7 @@
 ### System.Void TryInitializeField(System.Reflection.FieldInfo field, System.Object obj)
 
 * **Status:** Available
-* **Optimization Status:** Not Required
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** TryInitializeField
@@ -5681,8 +5681,8 @@
 ### System.String ComputeSha256Hash(T typeInfo)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
@@ -5690,7 +5690,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
@@ -5848,7 +5848,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5859,7 +5859,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/19/2020
@@ -5870,7 +5870,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 12/18/2025
@@ -6455,7 +6455,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6477,7 +6477,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/1/2020
@@ -6488,7 +6488,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6557,7 +6557,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6579,7 +6579,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/1/2020
@@ -6590,7 +6590,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 5/26/2020
@@ -6692,7 +6692,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 10/8/2020
@@ -6702,8 +6702,8 @@
 ### System.String Concat(System.String input, System.String delimiter, System.Boolean addLineFeed, System.Collections.ObjectModel.ReadOnlyCollection<System.String> args)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 9/15/2017
@@ -6938,7 +6938,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -6948,8 +6948,8 @@
 ### System.String Indent(System.String input, System.Int32& length, System.Char indentationCharacter)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** Indent
 
@@ -7185,7 +7185,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -7240,7 +7240,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 4/20/2025
@@ -7868,4 +7868,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/17/2026 11:39:37 AM UTC**
+**Generated by Spargine - dotNetTips.com on 5/18/2026 7:35:29 PM UTC**

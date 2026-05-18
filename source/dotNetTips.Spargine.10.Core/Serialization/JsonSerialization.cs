@@ -37,15 +37,21 @@ public static class JsonSerialization
 	/// </summary>
 	private static readonly JsonSerializerOptions _options = new()
 	{
-		NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
+		NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
 	};
 
 	/// <summary>
 	/// Initializes static members of the <see cref="JsonSerialization"/> class.
-	/// Freezes <see cref="_options"/> so that <see cref="System.Text.Json.JsonSerializer"/> builds
+	/// Freezes <see cref="_options"/> so that <see cref="JsonSerializer"/> builds
 	/// its reflection metadata cache once and skips re-validation on subsequent calls.
 	/// </summary>
-	static JsonSerialization() => _options.MakeReadOnly();
+	[UnconditionalSuppressMessage("Trimming", "IL2026",
+		Justification = "DefaultJsonTypeInfoResolver uses reflection to resolve type metadata at runtime. Callers are already annotated with RequiresUnreferencedCode where necessary.")]
+	static JsonSerialization()
+	{
+		_options.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
+		_options.MakeReadOnly();
+	}
 
 	/// <summary>
 	/// Converts a specified JSON string into its corresponding object representation using the provided <see cref="JsonSerializerOptions"/>.
