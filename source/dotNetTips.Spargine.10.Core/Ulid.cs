@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 08-03-2024
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="Ulid.cs" company="dotNetTips.com - McCarter Consulting">
@@ -95,7 +95,11 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 	[Information(">", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator >(Ulid left, Ulid right) => left.CompareTo(right) > 0;
+	public static bool operator >(Ulid left, Ulid right)
+	{
+		return left.CompareTo(right) > 0;
+
+	}
 
 	/// <summary>
 	/// Determines whether two <see cref="Ulid"/> instances are equal.
@@ -104,7 +108,11 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
 	[Information("==", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator ==(Ulid left, Ulid right) => left.Equals(right);
+	public static bool operator ==(Ulid left, Ulid right)
+	{
+		return left.Equals(right);
+
+	}
 
 	/// <summary>
 	/// Determines whether one <see cref="Ulid"/> is less than or equal to another.
@@ -113,7 +121,11 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 	[Information("<=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <=(Ulid left, Ulid right) => left.CompareTo(right) <= 0;
+	public static bool operator <=(Ulid left, Ulid right)
+	{
+		return left.CompareTo(right) <= 0;
+
+	}
 
 	/// <summary>
 	/// Determines whether one <see cref="Ulid"/> is less than another.
@@ -122,7 +134,11 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 	[Information("<", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator <(Ulid left, Ulid right) => left.CompareTo(right) < 0;
+	public static bool operator <(Ulid left, Ulid right)
+	{
+		return left.CompareTo(right) < 0;
+
+	}
 
 	/// <summary>
 	/// Determines whether two <see cref="Ulid"/> instances are not equal.
@@ -131,7 +147,11 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="right">The second <see cref="Ulid"/> instance.</param>
 	/// <returns><c>true</c> if the ULIDs are not equal; otherwise, <c>false</c>.</returns>
 	[Information("!=", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static bool operator !=(Ulid left, Ulid right) => !left.Equals(right);
+	public static bool operator !=(Ulid left, Ulid right)
+	{
+		return !left.Equals(right);
+
+	}
 
 	/// <summary>
 	/// Generates a new ULID (Universally Unique Lexicographically Sortable Identifier).
@@ -221,7 +241,10 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
 	/// <returns>An integer indicating the relative order of the ULIDs.</returns>
 	[Information(nameof(CompareTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public int CompareTo(Ulid other) => string.Compare(this._ulid, other._ulid, StringComparison.Ordinal);
+	public int CompareTo(Ulid other)
+	{
+		return string.Compare(this._ulid, other._ulid, StringComparison.Ordinal);
+	}
 
 	/// <summary>
 	/// Determines whether this instance is equal to another <see cref="Ulid"/> instance.
@@ -229,7 +252,10 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="other">The other <see cref="Ulid"/> instance to compare to.</param>
 	/// <returns><c>true</c> if the ULIDs are equal; otherwise, <c>false</c>.</returns>
 	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public bool Equals(Ulid other) => string.Equals(this._ulid, other._ulid, StringComparison.Ordinal);
+	public bool Equals(Ulid other)
+	{
+		return string.Equals(this._ulid, other._ulid, StringComparison.Ordinal);
+	}
 
 	/// <summary>
 	/// Determines whether this instance is equal to another object.
@@ -237,14 +263,20 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <param name="obj">The object to compare to.</param>
 	/// <returns><c>true</c> if the object is a <see cref="Ulid"/> and is equal to this instance; otherwise, <c>false</c>.</returns>
 	[Information(nameof(Equals), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override bool Equals(object? obj) => obj is Ulid other && this.Equals(other);
+	public override bool Equals(object? obj)
+	{
+		return obj is Ulid other && this.Equals(other);
+	}
 
 	/// <summary>
 	/// Gets the hash code for this instance.
 	/// </summary>
 	/// <returns>The hash code for this instance.</returns>
 	[Information(nameof(GetHashCode), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override int GetHashCode() => this._ulid.GetHashCode(StringComparison.Ordinal);
+	public override int GetHashCode()
+	{
+		return this._ulid.GetHashCode(StringComparison.Ordinal);
+	}
 
 	/// <summary>
 	/// Extracts the timestamp from the Ulid.
@@ -275,7 +307,10 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// <returns>The string representation of the ULID.</returns>
 	[return: NotNull]
 	[Information(nameof(ToString), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public override string ToString() => this._ulid;
+	public override string ToString()
+	{
+		return this._ulid;
+	}
 
 	/// <summary>
 	/// Creates the 256-element flat lookup array for Base32 character decoding.

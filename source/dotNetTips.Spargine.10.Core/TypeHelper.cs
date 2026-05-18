@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-18-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -108,10 +108,11 @@ public static class TypeHelper
 	/// <summary>
 	/// A read-only collection of built-in .NET types. This collection is used internally to check if a type is a built-in .NET type.
 	/// </summary>
-	private static HashSet<Type>? _builtInTypes;
+	[SuppressMessage("Trimming", "IL2026", Justification = "ComputeBuiltInTypes is already annotated with RequiresUnreferencedCode; callers of BuiltInTypes are also annotated.")]
+	private static readonly Lazy<HashSet<Type>> _lazyBuiltInTypes = new(ComputeBuiltInTypes, LazyThreadSafetyMode.ExecutionAndPublication);
 
 	/// <summary>
-	/// A static field to cache the built-in .NET types.
+	/// A static field to cache the built-in .NET type names.
 	/// </summary>
 	private static Dictionary<Type, string>? _cachedBuiltInTypes;
 
@@ -125,17 +126,7 @@ public static class TypeHelper
 		[return: NotNull]
 		get
 		{
-			if (_builtInTypes == null)
-			{
-				ComputeBuiltInTypes();
-			}
-
-			if (_builtInTypes == null)
-			{
-				return ReadOnlyCollection<Type>.Empty;
-			}
-
-			return field ??= new ReadOnlyCollection<Type>([.. _builtInTypes]);
+			return field ??= new ReadOnlyCollection<Type>([.. _lazyBuiltInTypes.Value]);
 		}
 	}
 
@@ -269,7 +260,8 @@ public static class TypeHelper
 		currentDomain = currentDomain.ArgumentNotNull();
 		baseType = baseType.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[128], $"{nameof(FindDerivedTypes)}.{currentDomain.FriendlyName}.{baseType.MetadataToken}.{(classOnly ? '1' : '0')}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{nameof(FindDerivedTypes)}.{currentDomain.FriendlyName}.{baseType.MetadataToken}.{(classOnly ? '1' : '0')}";
 
 
 		if (_commonCache.TryGetValue<Type[]>(cacheKey, out var cachedTypes))
@@ -416,11 +408,22 @@ public static class TypeHelper
 			return Array.AsReadOnly(cachedMethods!);
 		}
 
-		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsAbstract).ToArray();
+		var declaredMethods = type.GetTypeInfo().DeclaredMethods;
+		var methods = new List<MethodInfo>(8);
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+		foreach (var m in declaredMethods)
+		{
+			if (m.IsAbstract)
+			{
+				methods.Add(m);
+			}
+		}
 
-		return Array.AsReadOnly(methods);
+		var result = methods.ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(result);
 	}
 
 	/// <summary>
@@ -441,6 +444,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllConstructors)}";
 
 		if (_commonCache.TryGetValue<ConstructorInfo[]>(cacheKey, out var cachedConstructors))
@@ -489,7 +493,8 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[128], $"{type.FullName}.{nameof(GetAllDeclaredFields)}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{type.FullName}.{nameof(GetAllDeclaredFields)}";
 
 		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
 		{
@@ -526,6 +531,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllDeclaredMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
@@ -571,6 +577,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllFields)}";
 
 		if (_commonCache.TryGetValue<FieldInfo[]>(cacheKey, out var cachedFields))
@@ -584,16 +591,7 @@ public static class TypeHelper
 		}
 
 		var typeInfo = type.GetTypeInfo();
-		var capacity = 0;
-		var countInfo = typeInfo;
-
-		while (countInfo is not null)
-		{
-			capacity += countInfo.DeclaredFields.Count();
-			countInfo = countInfo.BaseType?.GetTypeInfo();
-		}
-
-		var fields = new List<FieldInfo>(capacity);
+		var fields = new List<FieldInfo>(16);
 
 		while (typeInfo is not null)
 		{
@@ -635,11 +633,22 @@ public static class TypeHelper
 			return Array.AsReadOnly(cachedMethods!);
 		}
 
-		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsGenericMethod).ToArray();
+		var declaredMethods = type.GetTypeInfo().DeclaredMethods;
+		var methods = new List<MethodInfo>(8);
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+		foreach (var m in declaredMethods)
+		{
+			if (m.IsGenericMethod)
+			{
+				methods.Add(m);
+			}
+		}
 
-		return Array.AsReadOnly(methods);
+		var result = methods.ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(result);
 	}
 
 	/// <summary>
@@ -660,6 +669,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
@@ -673,16 +683,7 @@ public static class TypeHelper
 		}
 
 		var typeInfo = type.GetTypeInfo();
-		var capacity = 0;
-		var countInfo = typeInfo;
-
-		while (countInfo is not null)
-		{
-			capacity += countInfo.DeclaredMethods.Count();
-			countInfo = countInfo.BaseType?.GetTypeInfo();
-		}
-
-		var methods = new List<MethodInfo>(capacity);
+		var methods = new List<MethodInfo>(16);
 
 		while (typeInfo is not null)
 		{
@@ -716,6 +717,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllProperties)}";
 
 		if (_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var cachedProperties))
@@ -729,16 +731,7 @@ public static class TypeHelper
 		}
 
 		var typeInfo = type.GetTypeInfo();
-		var capacity = 0;
-		var countInfo = typeInfo;
-
-		while (countInfo is not null)
-		{
-			capacity += countInfo.DeclaredProperties.Count();
-			countInfo = countInfo.BaseType?.GetTypeInfo();
-		}
-
-		var properties = new List<PropertyInfo>(capacity);
+		var properties = new List<PropertyInfo>(16);
 
 		while (typeInfo is not null)
 		{
@@ -772,6 +765,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllPublicMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
@@ -779,11 +773,22 @@ public static class TypeHelper
 			return Array.AsReadOnly(cachedMethods!);
 		}
 
-		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsPublic).ToArray();
+		var declaredMethods = type.GetTypeInfo().DeclaredMethods;
+		var methods = new List<MethodInfo>(16);
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+		foreach (var m in declaredMethods)
+		{
+			if (m.IsPublic)
+			{
+				methods.Add(m);
+			}
+		}
 
-		return Array.AsReadOnly(methods);
+		var result = methods.ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(result);
 	}
 
 	/// <summary>
@@ -804,6 +809,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{type.FullName}.{nameof(GetAllStaticMethods)}";
 
 		if (_commonCache.TryGetValue<MethodInfo[]>(cacheKey, out var cachedMethods))
@@ -811,11 +817,22 @@ public static class TypeHelper
 			return Array.AsReadOnly(cachedMethods!);
 		}
 
-		var methods = type.GetTypeInfo().DeclaredMethods.Where(m => m.IsStatic).ToArray();
+		var declaredMethods = type.GetTypeInfo().DeclaredMethods;
+		var methods = new List<MethodInfo>(8);
 
-		_commonCache.AddCacheItem(cacheKey, methods, TimeSpan.FromMinutes(TimeOutMinutes));
+		foreach (var m in declaredMethods)
+		{
+			if (m.IsStatic)
+			{
+				methods.Add(m);
+			}
+		}
 
-		return Array.AsReadOnly(methods);
+		var result = methods.ToArray();
+
+		_commonCache.AddCacheItem(cacheKey, result, TimeSpan.FromMinutes(TimeOutMinutes));
+
+		return Array.AsReadOnly(result);
 	}
 
 	/// <summary>
@@ -836,14 +853,15 @@ public static class TypeHelper
 	{
 		fieldInfo = fieldInfo.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[512], $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.FieldInfo.{typeof(TAttribute).FullName}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{fieldInfo.DeclaringType?.FullName}.{fieldInfo.Name}.{nameof(GetAttribute)}.FieldInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
 			return cachedAttribute;
 		}
 
-		var attribute = fieldInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var attribute = fieldInfo.GetCustomAttribute<TAttribute>(false);
 
 		if (attribute is not null)
 		{
@@ -877,14 +895,15 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[512], $"{type.FullName}.{nameof(GetAttribute)}.Type.{typeof(TAttribute).FullName}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{type.FullName}.{nameof(GetAttribute)}.Type.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
 			return cachedAttribute;
 		}
 
-		var attribute = type.GetTypeInfo().GetCustomAttributes(typeof(TAttribute), false).OfType<TAttribute>().FirstOrDefault();
+		var attribute = type.GetTypeInfo().GetCustomAttribute<TAttribute>(false);
 
 		if (attribute is not null)
 		{
@@ -918,14 +937,15 @@ public static class TypeHelper
 	{
 		methodInfo = methodInfo.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[512], $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.MethodInfo.{typeof(TAttribute).FullName}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{methodInfo.DeclaringType?.FullName}.{methodInfo.Name}.{nameof(GetAttribute)}.MethodInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
 			return cachedAttribute;
 		}
 
-		var attribute = methodInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var attribute = methodInfo.GetCustomAttribute<TAttribute>(false);
 
 
 		if (attribute is not null)
@@ -983,14 +1003,15 @@ public static class TypeHelper
 	{
 		propertyInfo = propertyInfo.ArgumentNotNull();
 
-		var cacheKey = string.Create(null, stackalloc char[512], $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.PropertyInfo.{typeof(TAttribute).FullName}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{propertyInfo.DeclaringType?.FullName}.{propertyInfo.Name}.{nameof(GetAttribute)}.PropertyInfo.{typeof(TAttribute).FullName}";
 
 		if (_commonCache.TryGetValue<TAttribute>(cacheKey, out var cachedAttribute))
 		{
 			return cachedAttribute;
 		}
 
-		var attribute = propertyInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault() as TAttribute;
+		var attribute = propertyInfo.GetCustomAttribute<TAttribute>(false);
 
 		if (attribute is not null)
 		{
@@ -1084,12 +1105,21 @@ public static class TypeHelper
 		interfaceNames = interfaceNames.ArgumentItemsExists();
 
 #pragma warning disable IL2070 // input.GetType() returns Type without DynamicallyAccessedMembers — method marked RequiresUnreferencedCode
-		var interfaces = input.GetType().GetInterfaces().Select(p => p.Name);
+		var rawInterfaces = input.GetType().GetInterfaces();
 #pragma warning restore IL2070
 
-		var foundInterfaces = interfaces.Intersect(interfaceNames).ToArray();
+		var filter = new HashSet<string>(interfaceNames, StringComparer.Ordinal);
+		var foundInterfaces = new List<string>(filter.Count);
 
-		return Array.AsReadOnly(foundInterfaces);
+		foreach (var iface in rawInterfaces)
+		{
+			if (filter.Contains(iface.Name))
+			{
+				foundInterfaces.Add(iface.Name);
+			}
+		}
+
+		return Array.AsReadOnly(foundInterfaces.ToArray());
 	}
 
 	/// <summary>
@@ -1127,7 +1157,9 @@ public static class TypeHelper
 		instance = instance.ArgumentNotNull();
 
 		var type = instance.GetType();
-		var cacheKey = string.Create(null, stackalloc char[256], $"{type.FullName}.{nameof(GetInstanceHashCode)}");
+
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{type.FullName}.{nameof(GetInstanceHashCode)}";
 
 		// Cache the PropertyInfo array to avoid repeated reflection
 		if (!_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var properties))
@@ -1166,6 +1198,7 @@ public static class TypeHelper
 	{
 		type = type.ArgumentNotNull();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		var cacheKey = $"{nameof(GetMembersWithAttribute)}.{type.FullName}";
 
 		if (_commonCache.TryGetValue<MemberInfo[]>(cacheKey, out var cachedMembers))
@@ -1220,14 +1253,21 @@ public static class TypeHelper
 
 		var type = input!.GetType();
 
-		var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-			.Where(p => p.CanRead)
-			.OrderBy(p => p.Name)
-			.ToArray();
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{type.FullName}.{nameof(GetPropertyValues)}";
 
-		var returnValue = new Dictionary<string, string>(properties.Length);
+		if (!_commonCache.TryGetValue<PropertyInfo[]>(cacheKey, out var properties))
+		{
+			properties = [.. type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Where(p => p.CanRead)
+				.OrderBy(p => p.Name)];
 
-		foreach (var propertyInfo in properties.AsSpan())
+			_commonCache.AddCacheItem(cacheKey, properties, TimeSpan.FromMinutes(TimeOutMinutes));
+		}
+
+		var returnValue = new Dictionary<string, string>(properties!.Length);
+
+		foreach (var propertyInfo in properties!.AsSpan())
 		{
 			if (TryFormatPropertyValue(propertyInfo.GetValue(input), out var formatted))
 			{
@@ -1292,7 +1332,8 @@ public static class TypeHelper
 		type = type.ArgumentNotNull();
 
 		// Create a cache key that uniquely identifies the combination of type and display options
-		var cacheKey = string.Create(null, stackalloc char[512], $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}");
+		// SUGGESTION FROM COPILOT SLOWER
+		var cacheKey = $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
 
 		if (_commonCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
 		{
@@ -1742,6 +1783,7 @@ public static class TypeHelper
 		}
 	}
 
+
 	/// <summary>
 	/// Appends the full-name prefix (namespace or parent type) for a generic type to the builder.
 	/// </summary>
@@ -1833,21 +1875,17 @@ public static class TypeHelper
 
 	/// <summary>
 	/// Computes and initializes the list of built-in .NET types that are considered primitive for the purposes of this utility class.
-	/// This method populates the <see cref="_builtInTypes"/> collection with types that are commonly used and recognized as fundamental types within .NET applications.
+	/// This method populates the <see cref="_lazyBuiltInTypes"/> collection with types that are commonly used and recognized as fundamental types within .NET applications.
 	/// </summary>
-	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	private static void ComputeBuiltInTypes()
+	[RequiresUnreferencedCode("Enumerates all types in loaded assemblies via Assembly.GetTypes().")]
+	private static HashSet<Type> ComputeBuiltInTypes()
 	{
-		// Use a HashSet to store the built-in types for faster lookups
 		var builtInTypes = new HashSet<Type>();
 
-		// Get all the assemblies loaded in the current app domain
 		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-		// Loop through each assembly
 		foreach (var assembly in assemblies)
 		{
-			// Get the types defined in the assembly
 			Type[] types;
 			try
 			{
@@ -1858,20 +1896,16 @@ public static class TypeHelper
 				types = [.. ex.Types.Where(t => t != null)!];
 			}
 
-			// Loop through each type
 			foreach (var type in types)
 			{
-				// Check if the type is a built-in type
 				if (IsBuiltinType(type))
 				{
-					// Add the type to the HashSet
 					_ = builtInTypes.Add(type);
 				}
 			}
 		}
 
-		// Convert the HashSet to a read-only collection
-		_builtInTypes = builtInTypes;
+		return builtInTypes;
 	}
 
 	/// <summary>
@@ -1956,9 +1990,19 @@ public static class TypeHelper
 			}
 
 			var assembly = Assembly.LoadFrom(fileName);
-			var exportedTypes = assembly.ExportedTypes.Where(p => p.BaseType is not null).ToImmutableArray();
+			var baseFullName = baseType.FullName;
+			var hasMatch = false;
 
-			if (!exportedTypes.IsEmpty && exportedTypes.Any(p => string.Equals(p.BaseType?.FullName, baseType.FullName, StringComparison.Ordinal)))
+			foreach (var t in assembly.ExportedTypes)
+			{
+				if (t.BaseType is not null && string.Equals(t.BaseType.FullName, baseFullName, StringComparison.Ordinal))
+				{
+					hasMatch = true;
+					break;
+				}
+			}
+
+			if (hasMatch)
 			{
 				foundTypes.AddRange(LoadDerivedTypes(assembly.DefinedTypes, baseType, classOnly));
 			}
