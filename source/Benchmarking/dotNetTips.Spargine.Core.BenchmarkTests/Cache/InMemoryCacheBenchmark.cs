@@ -28,7 +28,6 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 {
 	private InMemoryCache _cache = default!;
 	private string _cacheId = default!;
-
 	private PersonRecord[] _personRecordArray = default!;
 	private Person[] _personRefArray = default!;
 

@@ -475,6 +475,7 @@ public static class BenchmarkHelper
 	{
 		try
 		{
+			// TODO: Add prefix name to file name. 
 			var timestamp = DateTime.Now;
 			var resultsFileName = $"BenchmarkTimingSummary_{timestamp:yyyyMMdd_HHmmss}.txt";
 			var resultsPath = Path.Combine(config.ArtifactsPath, resultsFileName);

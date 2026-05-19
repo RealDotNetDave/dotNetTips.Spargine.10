@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : DotNetTips.Spargine.Tester.BenchmarkTests
+// Author           : David McCarter
+// Created          : 04-21-2026
+//
+// Last Modified By : David McCarter
+// Last Modified On : 05-19-2026
+// ***********************************************************************
+// <copyright file="GenerateWordOptimizationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Engines;
@@ -9,7 +22,6 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 [BenchmarkCategory(Categories.Strings)]
 [CPUUsageDiagnoser]
 [MemoryDiagnoser]
-[SimpleJob(launchCount: 1, warmupCount: 1, iterationCount: 5)]
 [TailCallDiagnoser]
 public class GenerateWordOptimizationBenchmark : Benchmark
 {
