@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FileHelperUnGZipAsyncBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -17,6 +17,7 @@ using System.IO.Compression;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
@@ -31,6 +32,8 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// gzip file creation from the measured decompression operation.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
+[ThreadingDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileHelperUnGZipAsyncBenchmark : Benchmark

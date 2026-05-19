@@ -15,6 +15,7 @@
 using System;
 using System.IO;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
 
@@ -26,6 +27,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Benchmark tests for all public methods in <see cref="PathHelper"/>.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 public class PathHelperBenchmark : Benchmark
 {

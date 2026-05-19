@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FileProcessorDeleteFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
@@ -29,6 +30,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// file generation from the measured delete operation.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileProcessorDeleteFilesBenchmark : Benchmark

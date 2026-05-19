@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperBenchmark.cs" company="DotNetTips.Spargine.BenchmarkTests">
 //     David McCarter
@@ -16,6 +16,7 @@ using System.IO;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
@@ -29,6 +30,8 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// Benchmark tests for all public methods in <see cref="DirectoryHelper"/>.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
+[ThreadingDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class DirectoryHelperBenchmark : Benchmark

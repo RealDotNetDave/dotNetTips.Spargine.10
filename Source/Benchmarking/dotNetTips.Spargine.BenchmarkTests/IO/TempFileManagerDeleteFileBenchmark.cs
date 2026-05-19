@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-10-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerDeleteFileBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,6 +15,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
 
@@ -29,6 +30,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// accumulation across iterations.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]

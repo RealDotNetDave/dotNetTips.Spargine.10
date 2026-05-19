@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-12-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FileProcessorMoveFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
@@ -36,6 +37,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// to the source so that only a single forward move is measured per iteration.
 /// </summary>
 [MemoryDiagnoser]
+[TailCallDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 public class FileProcessorMoveFilesBenchmark : Benchmark
