@@ -4,7 +4,7 @@
 // Created          : 06-10-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2025
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="UnitTesterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.VSDiagnostics;
@@ -30,7 +31,10 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 /// <summary>
 /// Benchmarks for the three high-priority UnitTester areas.
 /// </summary>
+[BenchmarkCategory(Categories.IO)]
 [CPUUsageDiagnoser]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class UnitTesterBenchmark : Benchmark
 {
 	private static readonly Func<PropertyInfo, bool> _allProps = _ => true;

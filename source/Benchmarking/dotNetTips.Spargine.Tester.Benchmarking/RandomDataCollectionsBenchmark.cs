@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-02-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="RandomDataCollectionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,11 +15,13 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Data.Models;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using Microsoft.VSDiagnostics;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -28,6 +30,10 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 /// <summary>
 /// Class RandomDataCollectionsBenchmark.
 /// </summary>
+[BenchmarkCategory(Categories.Collections)]
+[CPUUsageDiagnoser]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 {
 	private readonly Country DefaultCountry = CountryRepository.GetCountry(CountryName.UnitedStates);

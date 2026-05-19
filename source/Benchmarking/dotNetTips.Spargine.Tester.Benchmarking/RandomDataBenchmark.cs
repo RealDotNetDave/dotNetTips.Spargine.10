@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-27-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,15 +15,21 @@
 using System;
 using System.IO;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using Microsoft.VSDiagnostics;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 
+[BenchmarkCategory(Categories.RealWorld)]
+[CPUUsageDiagnoser]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class RandomDataBenchmark : Benchmark
 {
 

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-17-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="TimeOnlyConverterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -17,13 +17,18 @@ using System.Buffers;
 using System.Text;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Data.Converters;
+using Microsoft.VSDiagnostics;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 
+[CPUUsageDiagnoser]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class TimeOnlyConverterBenchmark : Benchmark
 {
 
