@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20260505-174538</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20260518-171623</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,11 +13,11 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 </code></pre>
@@ -25,9 +25,9 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 <table>
 <thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th>
 </tr>
-</thead><tbody><tr><td>GetHashCode</td><td>5.138 ns</td><td>0.0359 ns</td><td>0.0335 ns</td><td>0.0087 ns</td><td>5.055 ns</td><td>5.122 ns</td><td>5.143 ns</td><td>5.154 ns</td><td>5.196 ns</td><td>194,629,033.3</td><td>7.496 ns</td><td>15.00</td><td>3.434</td><td>2.000</td><td>-0.5979</td><td>2</td><td>*</td><td>No</td><td>457 B</td><td>-</td>
-</tr><tr><td>GetTimeStamp</td><td>211.849 ns</td><td>1.4851 ns</td><td>1.3892 ns</td><td>0.3587 ns</td><td>210.016 ns</td><td>210.713 ns</td><td>211.995 ns</td><td>212.548 ns</td><td>214.264 ns</td><td>4,720,333.8</td><td>7.321 ns</td><td>15.00</td><td>1.647</td><td>2.000</td><td>0.3213</td><td>3</td><td>*</td><td>No</td><td>1,912 B</td><td>-</td>
-</tr><tr><td>NewUlid</td><td>2.080 ns</td><td>0.0392 ns</td><td>0.0347 ns</td><td>0.0093 ns</td><td>2.045 ns</td><td>2.051 ns</td><td>2.069 ns</td><td>2.107 ns</td><td>2.157 ns</td><td>480,883,968.5</td><td>6.995 ns</td><td>14.00</td><td>2.349</td><td>2.000</td><td>0.8382</td><td>1</td><td>*</td><td>No</td><td>179 B</td><td>-</td>
+</thead><tbody><tr><td>GetHashCode</td><td>5.008 ns</td><td>0.0342 ns</td><td>0.0320 ns</td><td>0.0083 ns</td><td>4.935 ns</td><td>5.001 ns</td><td>5.020 ns</td><td>5.025 ns</td><td>5.050 ns</td><td>199,698,965.6</td><td>7.496 ns</td><td>15.00</td><td>2.671</td><td>2.000</td><td>-0.8787</td><td>2</td><td>*</td><td>No</td><td>457 B</td><td>-</td>
+</tr><tr><td>GetTimeStamp</td><td>201.370 ns</td><td>1.4061 ns</td><td>1.2465 ns</td><td>0.3331 ns</td><td>199.692 ns</td><td>200.602 ns</td><td>201.116 ns</td><td>201.886 ns</td><td>203.976 ns</td><td>4,965,971.4</td><td>6.833 ns</td><td>14.00</td><td>2.379</td><td>2.000</td><td>0.5695</td><td>3</td><td>*</td><td>No</td><td>1,796 B</td><td>-</td>
+</tr><tr><td>NewUlid</td><td>2.073 ns</td><td>0.0077 ns</td><td>0.0064 ns</td><td>0.0018 ns</td><td>2.057 ns</td><td>2.072 ns</td><td>2.075 ns</td><td>2.077 ns</td><td>2.078 ns</td><td>482,433,001.4</td><td>6.499 ns</td><td>13.00</td><td>3.607</td><td>2.000</td><td>-1.2604</td><td>1</td><td>*</td><td>No</td><td>179 B</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

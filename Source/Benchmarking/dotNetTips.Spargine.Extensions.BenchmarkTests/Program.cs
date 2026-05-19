@@ -48,7 +48,6 @@ internal sealed class Program
 		// Temp tests
 		BenchmarkHelper.RunBenchmarks(config, true,
 			typeof(ConcurrentBagExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 			typeof(ObjectExtensionsBenchmark),
 			typeof(StringBuilderExtensionsCounterBenchmark),
 			typeof(StringBuilderExtensionsCounterBenchmark),
@@ -69,7 +68,7 @@ internal sealed class Program
 		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
 		//);
 
-		// Group 2: E–H - 
+		// Group 2: E–H - 11 hours, 942 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
 		// typeof(EnumExtensionsBenchmark),
 		//	typeof(EnumerableExtensionsCollectionBenchmark),
@@ -83,22 +82,22 @@ internal sealed class Program
 		//);
 
 		// Group 3: L–T - 
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//  typeof(ImmutableArrayExtensionsBenchmark),
-		//  typeof(LinqExtensionsBenchmark),
-		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
-		//	typeof(ListExtensionsCollectionBenchmark).
-		//  typeof(NumericExtensionsBenchmark),
-		//	typeof(ObjectExtensionsBenchmark),
-		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
-		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
-		//	typeof(ReadOnlySpanExtensionsBenchmark),
-		//	typeof(SortedDictionaryExtensionsBenchmark),
-		//	typeof(SortedSetExtensionsBenchmark),
-		//	typeof(StringBuilderExtensionsCounterBenchmark),
-		//	typeof(StringExtensionsBenchmark),
-		//	typeof(StringExtensionsCounterBenchmark),
-		//	typeof(TypeExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+		  typeof(ImmutableArrayExtensionsBenchmark),
+			typeof(LinqExtensionsBenchmark),
+			typeof(ListExtensionsAddRemoveCollectionBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
+			typeof(NumericExtensionsBenchmark),
+			typeof(ObjectExtensionsBenchmark),
+			typeof(ObservableCollectionExtensionsCollectionBenchmark),
+			typeof(ReadOnlyCollectionExtensionsBenchmark),
+			typeof(ReadOnlySpanExtensionsBenchmark),
+			typeof(SortedDictionaryExtensionsBenchmark),
+			typeof(SortedSetExtensionsBenchmark),
+			typeof(StringBuilderExtensionsCounterBenchmark),
+			typeof(StringExtensionsBenchmark),
+			typeof(StringExtensionsCounterBenchmark),
+			typeof(TypeExtensionsBenchmark)
+		);
 	}
 }
