@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-27-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-28-2023
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ValidatorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -21,12 +21,66 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[MemoryDiagnoser]
 public class ValidatorBenchmark : Benchmark
 {
 
 	private const string TestString = "This IS a Test string.";
 
 	private readonly IEnumerable<Person> _people = RandomData.GeneratePersonRefCollection(100).ToList();
+
+	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
+	[BenchmarkCategory(Categories.Validation)]
+	public void ArgumentDefined()
+	{
+		var value = Status.Available;
+
+		var result = value.ArgumentDefined();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = "Validating Empty/Null String: No Validation")]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
+	public void ArgumentNotNullOrEmpty_NoValidation()
+	{
+		_ = this.ValidateIsNullOrEmpty_Test_NoValidation(TestString);
+	}
+
+	[Benchmark(Description = "Validating Empty/Null String: Validation")]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
+	public void ArgumentNotNullOrEmpty_Validation()
+	{
+		_ = this.ValidateIsNullOrEmpty_Test_Validation(TestString);
+	}
+
+	[Benchmark(Description = "Validating Empty/Null String: Validation + Inlining")]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
+	public void ArgumentNotNullOrEmpty_Validation_Inlining()
+	{
+		_ = this.ValidateIsNullOrEmpty_Test_Validation_Inlining(TestString);
+	}
+
+	[Benchmark(Description = "Validating Collection: No Validation")]
+	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
+	public void CheckItemsExists_NoValidation()
+	{
+		_ = this.ValidateItemsExist_NoValidation(this._people);
+	}
+
+	[Benchmark(Description = "Validating Collection: Validation")]
+	[BenchmarkCategory(Categories.Validation)]
+	public void CheckItemsExists_Validation()
+	{
+		_ = this.ValidateItemsExist_Validation(this._people);
+	}
+
+	[Benchmark(Description = "Validating Collection: Validation + Inlining")]
+	[BenchmarkCategory(Categories.Validation)]
+	public void CheckItemsExists_Validation_Inlining()
+	{
+		_ = this.ValidateItemsExist_Validation_Inlining(this._people);
+	}
 
 	private string ValidateIsNullOrEmpty_Test_NoValidation(string input)
 	{
@@ -82,59 +136,6 @@ public class ValidatorBenchmark : Benchmark
 		this.Consume(input);
 
 		return result;
-	}
-
-	[Benchmark(Description = nameof(Validator.ArgumentDefined))]
-	[BenchmarkCategory(Categories.Validation)]
-	public void ArgumentDefined()
-	{
-		var value = Status.Available;
-
-		var result = value.ArgumentDefined();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = "Validating Empty/Null String: No Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
-	public void ArgumentNotNullOrEmpty_NoValidation()
-	{
-		_ = this.ValidateIsNullOrEmpty_Test_NoValidation(TestString);
-	}
-
-	[Benchmark(Description = "Validating Empty/Null String: Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
-	public void ArgumentNotNullOrEmpty_Validation()
-	{
-		_ = this.ValidateIsNullOrEmpty_Test_Validation(TestString);
-	}
-
-	[Benchmark(Description = "Validating Empty/Null String: Validation + Inlining")]
-	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
-	public void ArgumentNotNullOrEmpty_Validation_Inlining()
-	{
-		_ = this.ValidateIsNullOrEmpty_Test_Validation_Inlining(TestString);
-	}
-
-	[Benchmark(Description = "Validating Collection: No Validation")]
-	[BenchmarkCategory(Categories.Validation, Categories.ForComparison)]
-	public void CheckItemsExists_NoValidation()
-	{
-		_ = this.ValidateItemsExist_NoValidation(this._people);
-	}
-
-	[Benchmark(Description = "Validating Collection: Validation")]
-	[BenchmarkCategory(Categories.Validation)]
-	public void CheckItemsExists_Validation()
-	{
-		_ = this.ValidateItemsExist_Validation(this._people);
-	}
-
-	[Benchmark(Description = "Validating Collection: Validation + Inlining")]
-	[BenchmarkCategory(Categories.Validation)]
-	public void CheckItemsExists_Validation_Inlining()
-	{
-		_ = this.ValidateItemsExist_Validation_Inlining(this._people);
 	}
 
 }

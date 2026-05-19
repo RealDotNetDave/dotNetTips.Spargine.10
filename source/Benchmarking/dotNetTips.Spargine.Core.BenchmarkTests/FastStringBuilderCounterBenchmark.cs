@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-19-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -30,6 +30,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 /// StringBuilderHelper PerfTestRunner.
 /// </summary>
 [BenchmarkCategory(Categories.Strings)]
+[MemoryDiagnoser]
 public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 {
 	private static readonly ObjectPool<StringBuilder> _stringBuilderPool = new DefaultObjectPoolProvider().CreateStringBuilderPool();

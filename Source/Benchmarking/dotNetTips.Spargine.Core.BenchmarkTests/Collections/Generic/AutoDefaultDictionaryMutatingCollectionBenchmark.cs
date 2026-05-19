@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,6 +37,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class AutoDefaultDictionaryMutatingCollectionBenchmark : LargeCollectionBenchmark
 {
 	private ReadOnlyCollection<Person> _peopleUpsertNew = default!;

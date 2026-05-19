@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-26-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-26-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="PasswordHasherBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
@@ -20,6 +21,7 @@ using DotNetTips.Spargine.Core.Security;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
 [NativeMemoryProfiler]
 public class PasswordHasherBenchmark : Benchmark
 {

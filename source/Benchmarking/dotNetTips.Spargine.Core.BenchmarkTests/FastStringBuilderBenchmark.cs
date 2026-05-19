@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-06-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -21,6 +21,7 @@ using DotNetTips.Spargine.Tester;
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Strings)]
+[MemoryDiagnoser]
 public class FastStringBuilderBenchmark : Benchmark
 {
 

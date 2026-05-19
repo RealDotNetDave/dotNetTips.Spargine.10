@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-13-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="FastSortedListRemoveBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,6 +25,8 @@ using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 {
 	private Person _lastPersonRefFastSortedList = default!;

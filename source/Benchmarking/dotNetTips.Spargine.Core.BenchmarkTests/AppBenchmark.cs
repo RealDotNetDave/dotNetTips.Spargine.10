@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-26-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-26-2024
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="AppBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -19,6 +19,7 @@ using DotNetTips.Spargine.Benchmarking;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[MemoryDiagnoser]
 public class AppBenchmark : Benchmark
 {
 	[Benchmark]

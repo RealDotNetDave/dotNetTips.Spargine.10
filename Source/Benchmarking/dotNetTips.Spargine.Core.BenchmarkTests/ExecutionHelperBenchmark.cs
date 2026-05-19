@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-24-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ExecutionHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -22,6 +22,7 @@ using DotNetTips.Spargine.Benchmarking;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class ExecutionHelperBenchmark : Benchmark
 {

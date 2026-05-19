@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-11-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-01-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="CountryPhonePostalInfoRepositoryBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -20,6 +20,7 @@ using DotNetTips.Spargine.Core.Data;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Data;
 
+[MemoryDiagnoser]
 public class CountryPhonePostalInfoRepositoryBenchmark : Benchmark
 {
 

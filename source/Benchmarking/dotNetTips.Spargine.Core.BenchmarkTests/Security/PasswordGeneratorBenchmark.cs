@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-02-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-02-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="PasswordGeneratorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
 
@@ -20,6 +21,8 @@ using DotNetTips.Spargine.Core.Security;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
 [BenchmarkCategory(Categories.Encryption)]
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
+[MemoryDiagnoser]
 public class PasswordGeneratorBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(PasswordGenerator.GeneratePassword))]

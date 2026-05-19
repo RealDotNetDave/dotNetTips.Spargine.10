@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-03-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 10-05-2024
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="RegexProcessorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.RegularExpressions;
 using DotNetTips.Spargine.Tester;
@@ -20,6 +21,8 @@ using DotNetTips.Spargine.Tester;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.RegularExpressions;
 
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
+[MemoryDiagnoser]
 public class RegexProcessorBenchmark : Benchmark
 {
 

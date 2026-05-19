@@ -4,7 +4,7 @@
 // Created          : 02-26-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ObservableListBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,6 +21,8 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class ObservableListBenchmark : LargeCollectionBenchmark
 {
 	private Person[] _personRefItemsToInsert = default!;

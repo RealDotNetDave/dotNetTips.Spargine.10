@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -29,6 +29,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Threading;
 /// Collection type PerfTestRunner.
 /// </summary>
 [BenchmarkCategory(Categories.Async)]
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class ChannelQueueCollectionBenchmark : LargeCollectionBenchmark
 {

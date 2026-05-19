@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EncryptionHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,6 +13,7 @@
 // ***********************************************************************
 
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Security;
@@ -22,6 +23,7 @@ using DotNetTips.Spargine.Core.Security;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
 [BenchmarkCategory(Categories.Encryption)]
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
 [NativeMemoryProfiler]
 public class EncryptionHelperBenchmark : Benchmark
 {

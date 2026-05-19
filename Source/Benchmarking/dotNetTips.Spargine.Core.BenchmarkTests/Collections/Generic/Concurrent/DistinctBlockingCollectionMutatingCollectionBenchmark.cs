@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-08-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollectionMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,6 +36,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Async)]
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class DistinctBlockingCollectionMutatingCollectionBenchmark : LargeCollectionBenchmark
 {

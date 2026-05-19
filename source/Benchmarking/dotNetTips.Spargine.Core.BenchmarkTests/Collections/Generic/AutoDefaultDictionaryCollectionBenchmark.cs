@@ -4,7 +4,7 @@
 // Created          : 02-15-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="AutoDefaultDictionaryCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,6 +22,8 @@ using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class AutoDefaultDictionaryCollectionBenchmark : LargeCollectionBenchmark
 {
 	private AutoDefaultDictionary<string, Person> _personRefAutoDefaultDictionary = default!;

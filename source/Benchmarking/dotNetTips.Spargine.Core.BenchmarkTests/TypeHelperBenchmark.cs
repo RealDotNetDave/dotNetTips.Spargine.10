@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -41,6 +41,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 /// Implements the <see cref="Benchmarking.PerfTestRunner" />
 /// </summary>
 /// <seealso cref="Benchmarking.PerfTestRunner" />
+[MemoryDiagnoser]
 public class TypeHelperBenchmark : Benchmark
 {
 

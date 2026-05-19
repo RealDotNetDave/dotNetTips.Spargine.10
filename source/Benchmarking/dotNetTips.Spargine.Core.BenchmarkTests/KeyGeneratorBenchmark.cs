@@ -1,10 +1,10 @@
 // ***********************************************************************
 // Assembly         : DotNetTips.Spargine.Core.BenchmarkTests
-// Author           : david
+// Author           : David McCarter
 // Created          : 10-03-2024
 //
-// Last Modified By : david
-// Last Modified On : 10-03-2024
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="KeyGeneratorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -18,6 +18,7 @@ using DotNetTips.Spargine.Benchmarking;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[MemoryDiagnoser]
 public class KeyGeneratorBenchmark : Benchmark
 {
 	[Benchmark(Description = nameof(KeyGenerator.GenerateKey))]

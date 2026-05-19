@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="LoggingHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -23,6 +23,8 @@ using Microsoft.Extensions.Logging;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Logging;
 
 [BenchmarkCategory(Categories.Logging)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class LoggingHelperBenchmark : Benchmark
 {
 	private const string MessageTest1 = "TEST EX1.";

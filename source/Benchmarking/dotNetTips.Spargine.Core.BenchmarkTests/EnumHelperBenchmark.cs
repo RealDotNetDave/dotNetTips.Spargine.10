@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -25,6 +25,7 @@ using DotNetTips.Spargine.Tester.Data;
 
 namespace DotNetTips.Spargine.Core.BenchmarkTests;
 
+[MemoryDiagnoser]
 public class EnumHelperBenchmark : Benchmark
 {
 

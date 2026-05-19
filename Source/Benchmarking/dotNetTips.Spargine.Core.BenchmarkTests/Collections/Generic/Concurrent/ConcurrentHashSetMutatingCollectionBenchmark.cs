@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -33,6 +33,7 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Async)]
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class ConcurrentHashSetMutatingCollectionBenchmark : LargeCollectionBenchmark
 {

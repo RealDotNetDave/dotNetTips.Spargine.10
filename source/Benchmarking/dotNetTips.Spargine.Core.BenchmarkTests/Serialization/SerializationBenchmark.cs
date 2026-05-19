@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
@@ -34,6 +35,9 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Serialization;
 /// </summary>
 /// <seealso cref="Benchmark" />
 [BenchmarkCategory(Categories.Serialization)]
+[EventPipeProfiler(EventPipeProfile.CpuSampling)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class SerializationBenchmark : Benchmark
 {
 	private const int Count = 100;

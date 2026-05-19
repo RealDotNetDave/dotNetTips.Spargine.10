@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ObservableListMutatingBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,6 +35,8 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.GenericCollections)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class ObservableListMutatingBenchmark : LargeCollectionBenchmark
 {
 	private ObservableList<Person> _people = default!;
