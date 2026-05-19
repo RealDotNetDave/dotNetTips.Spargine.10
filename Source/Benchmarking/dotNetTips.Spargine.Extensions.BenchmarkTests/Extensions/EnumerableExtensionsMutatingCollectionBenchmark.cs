@@ -4,14 +4,15 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary>
 // Benchmark tests for EnumerableExtensions methods that mutate collections in-place,
-// including FastProcessor (void and transform overloads) and a normal loop comparison.
+// including AddDistinct, AddFirst, AddIf, AddLast, Upsert, FastProcessor (void and transform
+// overloads) and a normal loop comparison.
 // Uses [IterationSetup] to reset the working collections before each iteration.
 // </summary>
 // ***********************************************************************
@@ -21,6 +22,7 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -40,7 +42,40 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 {
 	private Person[] _personRefArray = default!;
 	private IEnumerable<Person> _personRefEnumerable = default!;
+	private IEnumerable<Person> _personRefEnumerableToAdd = default!;
 	private List<Person> _personRefList = default!;
+
+	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
+	public void AddDistinct()
+	{
+		var result = this._personRefEnumerable.AddDistinct(this._personRefEnumerableToAdd);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.AddFirst))]
+	public void AddFirst()
+	{
+		var result = this._personRefEnumerable.AddFirst(this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.AddIf))]
+	public void AddIf()
+	{
+		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.AddLast))]
+	public void AddLast()
+	{
+		var result = this._personRefEnumerable.AddLast(this.PersonRef01);
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Array")]
 	[BenchmarkCategory(Categories.ReferenceType)]
@@ -101,6 +136,10 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this._personRefArray = this.GetPersonRefArray();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefList = [.. this.GetPersonRefArray()];
+
+		var peopleToAdd = this._personRefEnumerable.ToList();
+		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.HalfCount));
+		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 	}
 
 	/// <summary>
@@ -113,6 +152,10 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this._personRefArray = this.GetPersonRefArray();
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefList = [.. this.GetPersonRefArray()];
+
+		var peopleToAdd = this._personRefEnumerable.ToList();
+		peopleToAdd.AddRange(this.GetPersonRefCollectionToInsert().Take(this.HalfCount));
+		this._personRefEnumerableToAdd = peopleToAdd.AsEnumerable();
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - Array")]
@@ -150,6 +193,14 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 			person.Phone = "5555555555";
 			return person;
 		});
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumerableExtensions.Upsert))]
+	public void Upsert()
+	{
+		var result = this._personRefEnumerable.Upsert(this.PersonRef01);
 
 		this.Consume(result);
 	}
