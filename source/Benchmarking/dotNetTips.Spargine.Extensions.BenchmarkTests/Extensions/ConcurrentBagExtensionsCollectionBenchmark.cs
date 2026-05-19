@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-15-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -24,6 +24,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class ConcurrentBagExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {

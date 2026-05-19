@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-07-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCountCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -26,6 +26,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [ThreadingDiagnoser]
 public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBenchmark
 {

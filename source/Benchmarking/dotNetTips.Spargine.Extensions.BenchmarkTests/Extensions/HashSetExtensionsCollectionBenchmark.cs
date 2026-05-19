@@ -4,7 +4,7 @@
 // Created          : 06-10-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -23,6 +23,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [TailCallDiagnoser]
 public class HashSetExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {

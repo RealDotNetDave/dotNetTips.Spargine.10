@@ -4,7 +4,7 @@
 // Created          : 07-25-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-17-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -17,6 +17,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -26,6 +27,9 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// Benchmarks for <see cref="DataReaderExtensions"/>.
 /// </summary>
 [SuppressMessage("Reliability", "CA1001:Types that own disposable fields should be disposable", Justification = "Disposed in Cleanup() via BenchmarkDotNet lifecycle.")]
+[BenchmarkCategory(Categories.IO)]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class DataReaderExtensionsBenchmark : Benchmark
 {
 

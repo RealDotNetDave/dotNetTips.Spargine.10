@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="Categories.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -83,6 +83,11 @@ public static class Categories
 	/// Category for benchmarks involving encryption algorithms.
 	/// </summary>
 	public const string Encryption = "Encryption";
+
+	/// <summary>
+	/// Category for benchmarks that involve exception handling operations.
+	/// </summary>
+	public const string Exceptions = "Exceptions";
 
 	/// <summary>
 	/// Special category for benchmarks that are meant for comparison purposes.

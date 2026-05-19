@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,6 +27,7 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
@@ -75,6 +76,9 @@ public class DisposableFields : IDisposable
 
 }
 
+[BenchmarkCategory(Categories.ReferenceType)]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class ObjectExtensionsBenchmark : Benchmark
 {
 

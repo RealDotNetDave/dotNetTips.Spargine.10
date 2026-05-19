@@ -4,13 +4,12 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-09-2026
+// Last Modified On : 05-12-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// Benchmark Runtime: 00:45 hours
-// Benchmark count: 40 benchmarks.
+// <summary></summary>
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;

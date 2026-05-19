@@ -4,7 +4,7 @@
 // Created          : 09-02-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-05-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="NumericExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -14,9 +14,13 @@
 
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
+[BenchmarkCategory(Categories.Math)]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class NumericExtensionsBenchmark : Benchmark
 {
 

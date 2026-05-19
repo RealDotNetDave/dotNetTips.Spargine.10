@@ -37,6 +37,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [TailCallDiagnoser]
 public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBenchmark
 {

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-03-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -32,6 +32,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="Benchmark" />
 [BenchmarkCategory(Categories.Strings)]
+[MemoryDiagnoser]
 [TailCallDiagnoser]
 public class StringExtensionsBenchmark : Benchmark
 {

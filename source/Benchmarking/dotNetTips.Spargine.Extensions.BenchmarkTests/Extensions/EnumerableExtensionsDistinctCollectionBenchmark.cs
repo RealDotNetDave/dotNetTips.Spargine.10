@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-23-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsDistinctCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,12 +19,15 @@ using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
+[TailCallDiagnoser]
 public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBenchmark
 {
 	private IEnumerable<Person> _personRefEnumerable = default!;

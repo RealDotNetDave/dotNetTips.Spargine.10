@@ -4,7 +4,7 @@
 // Created          : 07-21-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="LinqExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,6 +26,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [TailCallDiagnoser]
 public class LinqExtensionsBenchmark : LargeCollectionBenchmark
 {

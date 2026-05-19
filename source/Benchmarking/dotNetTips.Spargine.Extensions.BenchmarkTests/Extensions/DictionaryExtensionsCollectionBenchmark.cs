@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -30,6 +30,7 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 /// </summary>
 /// <seealso cref="LargeCollectionBenchmark" />
 [BenchmarkCategory(Categories.Collections)]
+[MemoryDiagnoser]
 [TailCallDiagnoser]
 public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
