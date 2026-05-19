@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -62,6 +62,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddDistinct))]
 	public void AddDistinct()
 	{
+		// MOVE TO MUTATING BENCHMARK
 		var result = this._personRefEnumerable.AddDistinct(this._personRefEnumerableToAdd);
 
 		this.Consume(result);
@@ -70,6 +71,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddFirst))]
 	public void AddFirst()
 	{
+		// MOVE TO MUTATING BENCHMARK
 		var result = this._personRefEnumerable.AddFirst(this.PersonRef01);
 
 		this.Consume(result);
@@ -78,6 +80,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddIf))]
 	public void AddIf()
 	{
+		// MOVE TO MUTATING BENCHMARK
 		var result = this._personRefEnumerable.AddIf(this.PersonRef01, true);
 
 		this.Consume(result);
@@ -86,6 +89,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.AddLast))]
 	public void AddLast()
 	{
+		// MOVE TO MUTATING BENCHMARK
 		var result = this._personRefEnumerable.AddLast(this.PersonRef01);
 
 		this.Consume(result);
@@ -700,6 +704,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	[Benchmark(Description = nameof(EnumerableExtensions.Upsert))]
 	public void Upsert()
 	{
+		// MOVE TO MUTATING BENCHMARK
 		var people = this._personRefEnumerable;
 
 		var result = people.Upsert(this.PersonRef01);

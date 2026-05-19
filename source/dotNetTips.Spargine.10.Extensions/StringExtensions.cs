@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -139,7 +139,7 @@ public static class StringExtensions
 	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
 	/// <returns>A string representation of the computed hashType.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -195,7 +195,7 @@ public static class StringExtensions
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Concat), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Concat([DisallowNull] this string input, [ConstantExpected] string delimiter, bool addLineFeed, params ReadOnlyCollection<string> args)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -899,7 +899,7 @@ public static class StringExtensions
 	/// This method uses <see cref="char.IsWhiteSpace(char)"/> to check each character in the string for whitespace.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasWhitespace([DisallowNull] this string input)
 	{
 		if (input is null)
@@ -907,16 +907,16 @@ public static class StringExtensions
 			return false;
 		}
 
-		// Returns true as soon as the first whitespace character is found (early exit)
+		// SUGGESTIONS FROM COPILOT SLOWER
 		foreach (var inputItem in input)
 		{
-			if (char.IsWhiteSpace(inputItem))
+			if (!inputItem.IsAsciiWhitespace)
 			{
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	/// <summary>
@@ -950,18 +950,25 @@ public static class StringExtensions
 			return string.Empty;
 		}
 
-		// SUGGESTIONS FROM COPILOT SLOWER
 		var sb = _stringBuilderPool.Value.Get();
 
+		// SUGGESTION FROM COPILOT SLOWER
 		try
 		{
-			// length > 0 is guaranteed by the early-exit guard above; no need to re-check
-			for (var charIndex = 0; charIndex < length; charIndex++)
+			if (length == 0)
+			{
+				_ = sb.Append(input.ArgumentNotNull());
+			}
+
+			for (var charIndex = 1; charIndex <= Math.Abs(length); charIndex++)
 			{
 				_ = sb.Append(indentationCharacter);
 			}
 
-			_ = sb.Append(input);
+			if (length > 0)
+			{
+				_ = sb.Append(input);
+			}
 
 			return sb.ToString();
 		}
@@ -1450,7 +1457,7 @@ public static class StringExtensions
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[return: NotNull]
-	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SubstringTrim), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string SubstringTrim(this string input, int startIndex, int length)
 	{
 		if (input.IsNullOrEmpty())
@@ -1585,7 +1592,7 @@ public static class StringExtensions
 	/// <returns>The byte array representation of the Base64 encoded string.</returns>
 	/// <exception cref="FormatException">Thrown when the base64Input string is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(ToByteArrayFromBase64), "David McCarter", "4/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] ToByteArrayFromBase64(this string base64String)
 	{
 		if (string.IsNullOrEmpty(base64String))
@@ -1593,14 +1600,12 @@ public static class StringExtensions
 			return [];
 		}
 
-		// Correct decoded-size upper bound: every 4 Base64 chars decode to at most 3 bytes.
-		// CalculateByteArraySize() returns the UTF-8 *encoded* length of the string — wrong for this purpose.
-		var decodedMaxSize = base64String.Length / 4 * 3;
-		var buffer = new byte[decodedMaxSize];
+		// SUGGESTION FROM COPILOT SLOWER
+		var buffer = new Span<byte>(new byte[base64String.CalculateByteArraySize()]);
 
 		return !Convert.TryFromBase64String(base64String, buffer, out var bytesWritten)
 			? throw new FormatException(Resources.TheInputStringIsNotAValidBase64String)
-			: [.. buffer[..bytesWritten]];
+			: buffer[..bytesWritten].ToArray();
 	}
 
 	/// <summary>

@@ -287,7 +287,7 @@ public readonly struct Ulid : IEquatable<Ulid>, IComparable<Ulid>
 	/// exactly 5 bits, totalling 50 bits, of which the low 48 bits are the millisecond timestamp.
 	/// This eliminates the nested inner loop and the <c>ulong</c> bit-buffer used previously.
 	/// </remarks>
-	[Information(nameof(GetTimeStamp), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetTimeStamp), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public DateTimeOffset GetTimeStamp()
 	{
 		var timestampChars = this._ulid.AsSpan(0, TimestampLength);

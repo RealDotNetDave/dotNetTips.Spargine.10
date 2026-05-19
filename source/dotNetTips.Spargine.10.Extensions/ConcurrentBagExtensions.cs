@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-24-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-19-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -105,7 +105,7 @@ public static class ConcurrentBagExtensions
 		/// <returns>A <see cref="List{T}"/> containing the elements of the bag.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public List<T> ToList()
 		{
 			bag = bag.ArgumentNotNull();
