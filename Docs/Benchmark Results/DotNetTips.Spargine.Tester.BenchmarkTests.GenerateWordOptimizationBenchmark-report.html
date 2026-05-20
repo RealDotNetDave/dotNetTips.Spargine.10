@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.GenerateWordOptimizationBenchmark-20260506-165246</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.GenerateWordOptimizationBenchmark-20260519-163717</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,23 +13,21 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-EWDLIM : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Strings  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                               </th><th>Job </th><th>IterationCount</th><th>LaunchCount</th><th>WarmupCount</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Ratio</th><th>MannWhitney(10%)</th><th>RatioSD</th><th>Rank</th><th>LogicalGroup                                                                                         </th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+<thead><tr><th>Method                               </th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Ratio</th><th>MannWhitney(10%)</th><th>Rank</th><th>LogicalGroup                                                            </th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-PSYKRA</td><td>Default</td><td>Default</td><td>Default</td><td>10</td><td>124.2 ns</td><td>1.03 ns</td><td>0.96 ns</td><td>0.25 ns</td><td>122.8 ns</td><td>123.6 ns</td><td>124.1 ns</td><td>124.7 ns</td><td>126.1 ns</td><td>8,050,487.1</td><td>7.376 ns</td><td>15.000</td><td>2.1272</td><td>2.000</td><td>0.4578</td><td>1.00</td><td>Baseline</td><td>0.01</td><td>1</td><td>[Length=10]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>-</td><td>1,186 B</td><td>0.0014</td><td>48 B</td><td>1.00</td>
-</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-EWDLIM</td><td>5</td><td>1</td><td>1</td><td>10</td><td>122.6 ns</td><td>8.38 ns</td><td>2.18 ns</td><td>0.97 ns</td><td>120.1 ns</td><td>120.4 ns</td><td>123.5 ns</td><td>124.1 ns</td><td>124.8 ns</td><td>8,157,945.2</td><td>2.013 ns</td><td>5.000</td><td>0.8074</td><td>2.000</td><td>-0.1948</td><td>1.00</td><td>Baseline</td><td>0.02</td><td>1</td><td>[Length=10]-Job-EWDLIM(EvaluateOverhead=True, Server=True, IterationCount=5, LaunchCount=1, WarmupCount=1)</td><td>Yes</td><td>-</td><td>1,189 B</td><td>0.0014</td><td>48 B</td><td>1.00</td>
-</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-PSYKRA</td><td>Default</td><td>Default</td><td>Default</td><td>100</td><td>514.4 ns</td><td>4.29 ns</td><td>4.01 ns</td><td>1.04 ns</td><td>508.3 ns</td><td>512.5 ns</td><td>513.7 ns</td><td>516.9 ns</td><td>521.9 ns</td><td>1,944,190.1</td><td>6.982 ns</td><td>15.000</td><td>2.0505</td><td>2.000</td><td>0.3843</td><td>1.00</td><td>Baseline</td><td>0.01</td><td>1</td><td>[Length=100]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>-</td><td>1,189 B</td><td>0.0105</td><td>224 B</td><td>1.00</td>
-</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>Job-EWDLIM</td><td>5</td><td>1</td><td>1</td><td>100</td><td>517.2 ns</td><td>11.08 ns</td><td>2.88 ns</td><td>1.29 ns</td><td>513.8 ns</td><td>515.5 ns</td><td>516.7 ns</td><td>518.9 ns</td><td>521.2 ns</td><td>1,933,348.3</td><td>1.857 ns</td><td>5.000</td><td>1.1342</td><td>2.000</td><td>0.1759</td><td>1.00</td><td>Baseline</td><td>0.01</td><td>1</td><td>[Length=100]-Job-EWDLIM(EvaluateOverhead=True, Server=True, IterationCount=5, LaunchCount=1, WarmupCount=1)</td><td>Yes</td><td>-</td><td>1,198 B</td><td>0.0067</td><td>224 B</td><td>1.00</td>
+</thead><tbody><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>10</td><td>122.9 ns</td><td>0.96 ns</td><td>0.75 ns</td><td>0.22 ns</td><td>121.7 ns</td><td>122.4 ns</td><td>122.8 ns</td><td>123.6 ns</td><td>123.9 ns</td><td>8,135,630.2</td><td>5.892 ns</td><td>12.00</td><td>1.494</td><td>2.000</td><td>-0.2156</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=10]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>0.0014</td><td>-</td><td>1,186 B</td><td>48 B</td><td>1.00</td>
+</tr><tr><td>&#39;GenerateWord: MIN AND MAX CHAR (baseline)&#39;</td><td>100</td><td>505.4 ns</td><td>4.61 ns</td><td>4.31 ns</td><td>1.11 ns</td><td>500.5 ns</td><td>502.5 ns</td><td>503.7 ns</td><td>508.1 ns</td><td>513.9 ns</td><td>1,978,571.7</td><td>6.943 ns</td><td>15.00</td><td>2.234</td><td>2.000</td><td>0.6990</td><td>1.00</td><td>Baseline</td><td>1</td><td>[Length=100]-Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</td><td>Yes</td><td>0.0105</td><td>-</td><td>1,198 B</td><td>224 B</td><td>1.00</td>
 </tr></tbody></table>
 </body>
 </html>

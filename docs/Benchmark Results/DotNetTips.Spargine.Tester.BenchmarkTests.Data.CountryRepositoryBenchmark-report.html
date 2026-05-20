@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20260506-183116</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20260519-192355</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,21 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.203
-  [Host]     : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.7 (10.0.7, 10.0.726.21808), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Real World  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th>
+<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Gen0</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>833.49 ns</td><td>4.363 ns</td><td>3.867 ns</td><td>1.034 ns</td><td>826.05 ns</td><td>831.71 ns</td><td>833.37 ns</td><td>835.80 ns</td><td>838.88 ns</td><td>1,199,771.1</td><td>6.483 ns</td><td>14.00</td><td>2.244</td><td>2.000</td><td>-0.4053</td><td>3</td><td>*</td><td>No</td><td>-</td><td>1,759 B</td>
-</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>662.79 ns</td><td>1.983 ns</td><td>1.656 ns</td><td>0.459 ns</td><td>660.19 ns</td><td>661.62 ns</td><td>662.67 ns</td><td>663.46 ns</td><td>666.41 ns</td><td>1,508,777.3</td><td>6.270 ns</td><td>13.00</td><td>2.559</td><td>2.000</td><td>0.4704</td><td>2</td><td>*</td><td>No</td><td>-</td><td>6,277 B</td>
-</tr><tr><td>GetCountries</td><td>18.73 ns</td><td>0.097 ns</td><td>0.091 ns</td><td>0.024 ns</td><td>18.62 ns</td><td>18.66 ns</td><td>18.71 ns</td><td>18.80 ns</td><td>18.91 ns</td><td>53,385,388.3</td><td>7.488 ns</td><td>15.00</td><td>1.697</td><td>2.000</td><td>0.4000</td><td>1</td><td>*</td><td>No</td><td>-</td><td>191 B</td>
+</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>839.59 ns</td><td>6.777 ns</td><td>5.659 ns</td><td>1.570 ns</td><td>832.05 ns</td><td>836.13 ns</td><td>837.71 ns</td><td>842.05 ns</td><td>851.32 ns</td><td>1,191,061.3</td><td>5.715 ns</td><td>13.00</td><td>2.527</td><td>2.000</td><td>0.8165</td><td>3</td><td>*</td><td>No</td><td>1,755 B</td><td>-</td><td>0.0010</td><td>32 B</td>
+</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>651.14 ns</td><td>2.734 ns</td><td>2.283 ns</td><td>0.633 ns</td><td>647.17 ns</td><td>649.76 ns</td><td>651.82 ns</td><td>652.52 ns</td><td>654.58 ns</td><td>1,535,773.1</td><td>6.183 ns</td><td>13.00</td><td>1.863</td><td>2.000</td><td>-0.5121</td><td>2</td><td>*</td><td>No</td><td>6,276 B</td><td>-</td><td>0.0029</td><td>104 B</td>
+</tr><tr><td>GetCountries</td><td>20.01 ns</td><td>0.025 ns</td><td>0.020 ns</td><td>0.006 ns</td><td>19.97 ns</td><td>20.00 ns</td><td>20.01 ns</td><td>20.02 ns</td><td>20.03 ns</td><td>49,980,872.9</td><td>5.997 ns</td><td>12.00</td><td>1.727</td><td>2.000</td><td>-0.5947</td><td>1</td><td>*</td><td>No</td><td>191 B</td><td>-</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>
