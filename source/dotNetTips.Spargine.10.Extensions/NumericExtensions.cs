@@ -985,9 +985,12 @@ public static class NumericExtensions
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ToStringOrEmpty), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
-	public static string ToStringOrEmpty(this int value, int lowerLimit = 100, int upperLimit = 9000, string defaultText = ControlChars.DoubleQuote) => value <= lowerLimit || value > upperLimit
-			? defaultText
-			: value.ToString(CultureInfo.InvariantCulture);
+	public static string ToStringOrEmpty(this int value, int lowerLimit = 100, int upperLimit = 9000, string defaultText = ControlChars.DoubleQuote)
+	{
+		return value <= lowerLimit || value > upperLimit
+					? defaultText
+					: value.ToString(CultureInfo.InvariantCulture);
+	}
 
 	/// <summary>
 	/// Converts the specified integer value to its equivalent in English words.
