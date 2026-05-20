@@ -10,8 +10,8 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: Over 24 hours
-// Benchmark count: 2,379
+// Benchmark Runtime: 30 hours
+// Benchmark count: 2,668
 // Divided into 3 groups to reduce single-run duration.
 // </summary>
 // ***********************************************************************
@@ -81,7 +81,7 @@ internal sealed class Program
 		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
 		//);
 
-		// Group 3: L–T - 
+		// Group 3: L–T - 11 hours, 940 benchmarks
 		BenchmarkHelper.RunBenchmarks(config, true,
 		  typeof(ImmutableArrayExtensionsBenchmark),
 			typeof(LinqExtensionsBenchmark),

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -22,12 +22,12 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 
 namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
@@ -227,6 +227,38 @@ public class ObjectExtensionsBenchmark : Benchmark
 	public void FieldsToDictionary()
 	{
 		var result = this.PersonRef01.FieldsToDictionary("Person");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FieldsToString) + ": Person-ref-Ignore Nulls")]
+	public void FieldsToString01()
+	{
+		var result = this.PersonRef01.FieldsToString(ignoreNulls: true);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FieldsToString) + ": Person-ref-With Nulls")]
+	public void FieldsToString02()
+	{
+		var result = this.PersonRef01.FieldsToString(ignoreNulls: false);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FieldsToString) + ": PersonRecord-Ignore Nulls")]
+	public void FieldsToString03()
+	{
+		var result = this.PersonRecord01.FieldsToString(ignoreNulls: true);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ObjectExtensions.FieldsToString) + ": PersonRecord-With Nulls")]
+	public void FieldsToString04()
+	{
+		var result = this.PersonRecord01.FieldsToString(ignoreNulls: false);
 
 		this.Consume(result);
 	}
