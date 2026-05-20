@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -22,6 +22,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Extensions.Tests;
+
+/// <summary>
+/// Marker interface used to exercise the <see cref="MissingMethodException"/> catch path
+/// in <c>AssemblyExtensions.GetInstances&lt;T&gt;</c>.
+/// </summary>
+internal interface INoDefaultCtor { }
+
+/// <summary>
+/// A concrete, non-abstract, non-generic type that implements <see cref="INoDefaultCtor"/> but
+/// intentionally omits a parameterless constructor so that <see cref="Activator.CreateInstance(Type)"/>
+/// throws a <see cref="MissingMethodException"/>.
+/// </summary>
+internal sealed class NoDefaultCtorImpl : INoDefaultCtor
+{
+	internal NoDefaultCtorImpl(string value) { _ = value; }
+}
 
 [ExcludeFromCodeCoverage]
 [TestClass]
@@ -104,6 +120,16 @@ public class AssemblyExtensionsTests
 
 		Assert.IsNotEmpty(result);
 		Assert.IsTrue(result.All(i => i is AssemblyExtensionsTests));
+	}
+
+	[TestMethod]
+	public void GetInstances_TypeWithNoParameterlessConstructor_SkipsType()
+	{
+		var assembly = Assembly.GetExecutingAssembly();
+
+		var result = assembly.GetInstances<INoDefaultCtor>().ToList();
+
+		Assert.IsEmpty(result);
 	}
 
 	[TestMethod]
