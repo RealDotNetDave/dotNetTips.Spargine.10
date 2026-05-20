@@ -65,7 +65,7 @@ internal static class AssemblyExtensionsHelper
 	/// <param name="type">The candidate type to evaluate.</param>
 	/// <param name="targetType">The target type that the candidate must be assignable to.</param>
 	/// <returns>
-	/// <see langword="true"/> if the type is an interface, abstract, generic, or not assignable from
+	/// <see langword="true"/> if the type is an interface, abstract, generic, or not assignable to
 	/// <paramref name="targetType"/>; otherwise, <see langword="false"/>.
 	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,7 +86,6 @@ internal static class AssemblyExtensionsHelper
 	/// <see langword="false"/> if a <see cref="MissingMethodException"/> is thrown (no parameterless constructor)
 	/// or if the created object cannot be cast to <typeparamref name="T"/>.
 	/// </returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Uses Activator.CreateInstance which requires constructor metadata to be preserved.")]
 	internal static bool TryCreateInstance<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type, [NotNullWhen(true)] out T? instance) where T : class
 	{
