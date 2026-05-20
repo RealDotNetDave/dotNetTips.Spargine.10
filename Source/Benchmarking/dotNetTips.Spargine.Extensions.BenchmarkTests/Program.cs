@@ -55,7 +55,7 @@ internal sealed class Program
 		//);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
+		//BenchmarkHelper.RunBenchmarks(config, true, filePrefix: "Group 1: A–D",
 		// typeof(ArrayExtensionsCollectionBenchmark),
 		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
 		//	typeof(AssemblyExtensionsBenchmark),
@@ -69,7 +69,7 @@ internal sealed class Program
 		//);
 
 		// Group 2: E–H - 11 hours, 942 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
+		//BenchmarkHelper.RunBenchmarks(config, true, filePrefix: "Group 2: E–H",
 		// typeof(EnumExtensionsBenchmark),
 		//	typeof(EnumerableExtensionsCollectionBenchmark),
 		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
@@ -82,7 +82,7 @@ internal sealed class Program
 		//);
 
 		// Group 3: L–T - 11 hours, 940 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, true,
+		BenchmarkHelper.RunBenchmarks(config, saveResults: true, filePrefix: "Group 3: L–T ",
 		  typeof(ImmutableArrayExtensionsBenchmark),
 			typeof(LinqExtensionsBenchmark),
 			typeof(ListExtensionsAddRemoveCollectionBenchmark),

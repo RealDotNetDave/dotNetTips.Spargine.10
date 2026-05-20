@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-01-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -81,7 +81,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// </code>
 /// </example>
 /// <seealso cref="Benchmark"/>
-[Information(description: nameof(BenchmarkHelper), Status = Status.Available, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
+[Information(description: nameof(BenchmarkHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public static class BenchmarkHelper
 {
 	/// <summary>
@@ -158,7 +158,7 @@ public static class BenchmarkHelper
 	/// execute every benchmark that derives from <see cref="Benchmark"/> in the calling assembly.
 	/// It uses <see cref="Assembly.GetCallingAssembly"/> to discover all non-abstract classes
 	/// assignable to <see cref="Benchmark"/> and then delegates execution to the private
-	/// <see cref="Run(IConfig,bool,Type[],Assembly)"/> helper, which handles validation, timing,
+	/// <see cref="Run(IConfig,bool,Type[],Assembly,string)"/> helper, which handles validation, timing,
 	/// logging, and optional result persistence.
 	/// </para>
 	/// <para>
@@ -171,8 +171,8 @@ public static class BenchmarkHelper
 	/// </list>
 	/// <para>
 	/// This overload passes <c>true</c> for the <c>saveResults</c> parameter, which causes
-	/// <see cref="Run(IConfig,bool,Type[],Assembly)"/> to write the aggregated timing summary
-	/// to the BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig,string)"/>,
+	/// <see cref="Run(IConfig,bool,Type[],Assembly,string)"/> to write the aggregated timing summary
+	/// to the BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig,string,string)"/>,
 	/// in addition to logging it to the console.
 	/// </para>
 	/// </remarks>
@@ -212,7 +212,7 @@ public static class BenchmarkHelper
 			return;
 		}
 
-		Run(config, saveResults: true, [.. benchmarkTypes], callingAssembly);
+		Run(config, saveResults: true, [.. benchmarkTypes], callingAssembly, filePrefix: null);
 	}
 
 	/// <summary>
@@ -227,7 +227,7 @@ public static class BenchmarkHelper
 	/// <param name="saveResults">
 	/// When set to <c>true</c>, a consolidated timing summary produced by
 	/// <see cref="PerformanceStopwatch.GetSummaryReport"/> is written to a file in the
-	/// BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig, string)"/>.
+	/// BenchmarkDotNet artifacts directory via <see cref="SaveReportToFile(IConfig, string, string)"/>.
 	/// When <c>false</c>, the summary is only written to the console.
 	/// </param>
 	/// <param name="benchmarks">
@@ -274,13 +274,46 @@ public static class BenchmarkHelper
 	/// <item><description>Any provided type does not inherit from <see cref="Benchmark"/> or is not defined in the calling assembly.</description></item>
 	/// </list>
 	/// </exception>
-	[Information(description: nameof(RunBenchmarks), Status = Status.Updated)]
+	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, bool saveResults, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
 		benchmarks = benchmarks.ArgumentItemsExists();
 
-		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly());
+		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly(), filePrefix: null);
+	}
+
+	/// <summary>
+	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration,
+	/// prepending a custom prefix to the timing summary file name.
+	/// </summary>
+	/// <param name="config">
+	/// The BenchmarkDotNet <see cref="IConfig"/> instance used to run the benchmarks. Must not be <c>null</c>.
+	/// </param>
+	/// <param name="saveResults">
+	/// When <c>true</c>, the timing summary is written to a file in the artifacts directory.
+	/// When <c>false</c>, it is only written to the console.
+	/// </param>
+	/// <param name="filePrefix">
+	/// A prefix string to prepend to the timing summary file name, followed by an underscore
+	/// (e.g., <c>"MyProject"</c> produces <c>MyProject_BenchmarkTimingSummary_…txt</c>).
+	/// Pass <c>null</c> or an empty string to omit the prefix.
+	/// </param>
+	/// <param name="benchmarks">
+	/// One or more benchmark <see cref="Type"/> objects to execute. Each must inherit from
+	/// <see cref="Benchmark"/> and be defined in the calling assembly.
+	/// </param>
+	/// <exception cref="ArgumentException">
+	/// Thrown when <paramref name="benchmarks"/> is <c>null</c> or empty, or any type does not
+	/// inherit from <see cref="Benchmark"/> or is not defined in the calling assembly.
+	/// </exception>
+	[Information(description: nameof(RunBenchmarks), Status = Status.Updated)]
+	public static void RunBenchmarks([DisallowNull] IConfig config, bool saveResults, string? filePrefix, [DisallowNull] params Type[] benchmarks)
+	{
+		config = config.ArgumentNotNull();
+		benchmarks = benchmarks.ArgumentItemsExists();
+
+		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly(), filePrefix);
 	}
 
 	/// <summary>
@@ -293,7 +326,7 @@ public static class BenchmarkHelper
 	/// <param name="saveResults">
 	/// When set to <c>true</c>, a consolidated timing summary generated by
 	/// <see cref="PerformanceStopwatch.GetSummaryReport"/> is persisted to the BenchmarkDotNet
-	/// artifacts directory via <see cref="SaveReportToFile(IConfig, string)"/>. When <c>false</c>,
+	/// artifacts directory via <see cref="SaveReportToFile(IConfig, string, string)"/>. When <c>false</c>,
 	/// the summary is only written to the console.
 	/// </param>
 	/// <param name="benchmarks">
@@ -304,7 +337,7 @@ public static class BenchmarkHelper
 	/// <item><description>Contain one or more methods decorated with <see cref="BenchmarkAttribute"/>.</description></item>
 	/// </list>
 	/// This method assumes <paramref name="benchmarks"/> has already been validated for null/empty
-	/// by the public <see cref="RunBenchmarks(IConfig, bool, Type[])"/> overload.
+	/// by the public <see cref="RunBenchmarks(IConfig, bool, string, Type[])"/> overload.
 	/// </param>
 	/// <param name="callingAssembly">
 	/// The assembly that is considered the owning context for the benchmark types. All entries in
@@ -312,10 +345,14 @@ public static class BenchmarkHelper
 	/// <see cref="ArgumentException"/> is thrown. Using the correct assembly context is critical
 	/// for diagnosers such as <see cref="MemoryDiagnoserAttribute"/> to function properly.
 	/// </param>
+	/// <param name="filePrefix">
+	/// An optional prefix string to prepend to the timing summary file name, followed by an underscore.
+	/// When <c>null</c> or empty, no prefix is applied.
+	/// </param>
 	/// <remarks>
 	/// <para>
 	/// This private helper centralizes the core benchmark execution logic for
-	/// <see cref="RunBenchmarks(IConfig, bool, Type[])"/>:
+	/// <see cref="RunBenchmarks(IConfig, bool, string, Type[])"/>:
 	/// </para>
 	/// <list type="number">
 	/// <item><description>Validates that each benchmark type inherits from <see cref="Benchmark"/> and is defined in <paramref name="callingAssembly"/>.</description></item>
@@ -337,7 +374,7 @@ public static class BenchmarkHelper
 	/// Thrown when one or more types in <paramref name="benchmarks"/> do not inherit from
 	/// <see cref="Benchmark"/> or are not defined in <paramref name="callingAssembly"/>.
 	/// </exception>
-	private static void Run(IConfig config, bool saveResults, Type[] benchmarks, Assembly callingAssembly)
+	private static void Run(IConfig config, bool saveResults, Type[] benchmarks, Assembly callingAssembly, string? filePrefix = null)
 	{
 		try
 		{
@@ -416,7 +453,7 @@ public static class BenchmarkHelper
 
 			if (saveResults)
 			{
-				SaveReportToFile(config, summary);
+				SaveReportToFile(config, summary, filePrefix);
 			}
 
 			PlaySuccessBeep();
@@ -440,6 +477,10 @@ public static class BenchmarkHelper
 	/// <param name="summary">
 	/// The human-readable timing summary generated by <see cref="PerformanceStopwatch.GetSummaryReport"/>.
 	/// This content is written directly to the output file.
+	/// </param>
+	/// <param name="filePrefix">
+	/// An optional prefix string to prepend to the timing summary file name, followed by an underscore.
+	/// When <c>null</c> or empty, no prefix is applied and the file is named using the default pattern.
 	/// </param>
 	/// <remarks>
 	/// <para>
@@ -471,13 +512,15 @@ public static class BenchmarkHelper
 	/// <seealso cref="IConfig.ArtifactsPath"/>
 	/// <seealso cref="ConsoleLogger"/>
 	/// <seealso cref="PerformanceStopwatch.GetSummaryReport"/>
-	private static void SaveReportToFile(IConfig config, string summary)
+	private static void SaveReportToFile(IConfig config, string summary, string? filePrefix = null)
 	{
 		try
 		{
-			// TODO: Add prefix name to file name. 
 			var timestamp = DateTime.Now;
-			var resultsFileName = $"BenchmarkTimingSummary_{timestamp:yyyyMMdd_HHmmss}.txt";
+			var baseFileName = $"BenchmarkTimingSummary_{timestamp:yyyyMMdd_HHmmss}.txt";
+			var resultsFileName = string.IsNullOrWhiteSpace(filePrefix)
+				? baseFileName
+				: $"{filePrefix}_{baseFileName}";
 			var resultsPath = Path.Combine(config.ArtifactsPath, resultsFileName);
 
 			File.WriteAllText(resultsPath, summary);
