@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Tester;
 /// </remarks>
 /// <param name="outputDirectory">The directory where output files will be saved. Defaults to the current directory if not specified.</param>
 [DebuggerStepThrough]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineUnitTester")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineUnitTester")]
 public abstract class UnitTester(string? outputDirectory = null)
 {
 

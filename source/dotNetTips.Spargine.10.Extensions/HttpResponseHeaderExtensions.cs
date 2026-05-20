@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This class simplifies the process of converting <see cref="HttpResponseHeader"/> enumeration values to their corresponding string names.
 /// It is particularly useful for logging, debugging, or any scenario where the string representation of an HTTP response header is needed.
 /// </remarks>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.UpdateDocumentation)]
+[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
 public static class HttpResponseHeaderExtensions
 {
 

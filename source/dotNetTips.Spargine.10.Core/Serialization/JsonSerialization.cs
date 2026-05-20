@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="JsonSerialization.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// Utilizes the System.Text.Json namespace for efficient processing. This class supports custom serialization
 /// options and aims to simplify the use of JSON serialization in .NET applications.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.UpdateDocumentation)]
+[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.Available)]
 public static class JsonSerialization
 {
 	/// <summary>
