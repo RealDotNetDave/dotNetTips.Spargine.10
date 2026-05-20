@@ -4,9 +4,10 @@
 // Created          : 04-21-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-19-2026
+// Last Modified On : 05-20-2026
 // ***********************************************************************
-// <copyright file="GenerateWordOptimizationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
+// <copyright file="GenerateWordOptimizationBenchmark.cs"
+//     company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary></summary>
@@ -27,7 +28,7 @@ public class GenerateWordOptimizationBenchmark : Benchmark
 {
 	private readonly Consumer _consumer = new();
 
-	[Params(10, 100)]
+	[Params(10, 50, 100)]
 	public int Length { get; set; }
 
 	[Benchmark(Baseline = true, Description = nameof(RandomData.GenerateWord) + ": MIN AND MAX CHAR (baseline)")]

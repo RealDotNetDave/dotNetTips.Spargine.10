@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,6 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.Common;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using static BenchmarkDotNet.Attributes.JsonExporterAttribute;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -45,10 +44,12 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// methods for consuming objects, generating random data, and updating test entities. 
 /// It also includes properties for accessing various test data and configurations.
 /// Additional BenchmarkDotNet attributes can be added as needed.[AsciiDocExporter],
-/// [Atlassian], [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [GitHub],
-/// [HardwareCounters], [HtmlExporter], [MemoryDiagnoser], [NamespaceColumn],
-/// [NativeMemoryProfiler], [PlainExporter], [StackOverflow], [TailCallDiagnoser],
-/// [ThreadingDiagnoser]
+/// [Atlassian], [ConcurrencyVisualizerProfiler], [CsvMeasurementsExporter], [Full],
+/// [GitHub], [HardwareCounters], [HtmlExporter], [KurtosisColumn], [LogicalGroupColumn],
+/// [MemoryDiagnoser], [MValueColumn] [NamespaceColumn], [NativeMemoryProfiler],
+/// [PlainExporter], [RankColumn], [SkewnessColumn], [StatisticalTestColumn], [StackOverflow],
+/// [TailCallDiagnoser], [ThreadingDiagnoser]
+/// Note: [MemoryDiagnoser] was removed from base class since it was causing issues with benchmark tests. 
 /// </summary>
 [AllStatisticsColumn]
 [BaselineColumn]
@@ -58,18 +59,11 @@ namespace DotNetTips.Spargine.Benchmarking;
 [DisassemblyDiagnoser(printSource: true, exportGithubMarkdown: true, exportCombinedDisassemblyReport: true, exportDiff: true, exportHtml: true)]
 [EvaluateOverhead]
 [ExceptionDiagnoser]
-[Full]
 [GcServer(true)]
 [InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
-[KurtosisColumn]
-[LogicalGroupColumn]
-[MValueColumn]
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
-[RankColumn]
-[SkewnessColumn]
-[StatisticalTestColumn]
 [StopOnFirstError(true)]
 [Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]
 public abstract class Benchmark
