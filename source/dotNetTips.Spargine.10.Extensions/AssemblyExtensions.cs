@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-07-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-20-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -16,7 +16,6 @@
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Reflection;
@@ -117,7 +116,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("Uses assembly-wide runtime type discovery and Activator.CreateInstance. Types, constructors, or metadata may be removed in trimmed apps.")]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			var types = AssemblyExtensionsHelper.GetLoadableTypes(assembly);
@@ -125,24 +124,12 @@ public static class AssemblyExtensions
 
 			foreach (var type in types)
 			{
-				if (type.IsInterface || type.IsAbstract || type.IsGenericType || !targetType.IsAssignableFrom(type))
+				if (AssemblyExtensionsHelper.ShouldSkipType(type, targetType))
 				{
 					continue;
 				}
 
-				object? instance;
-
-				try
-				{
-					instance = Activator.CreateInstance(type);
-				}
-				catch (MissingMethodException ex)
-				{
-					Trace.WriteLine(ex.Message);
-					continue;
-				}
-
-				if (instance is T typedInstance)
+				if (AssemblyExtensionsHelper.TryCreateInstance<T>(type, out var typedInstance))
 				{
 					yield return typedInstance;
 				}
