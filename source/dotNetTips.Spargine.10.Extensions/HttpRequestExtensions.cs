@@ -4,12 +4,18 @@
 // Created          : 06-01-2018
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods designed for HttpRequest.</summary>
+// <summary>
+// Extension methods for <see cref="Microsoft.AspNetCore.Http.HttpRequest"/> providing request
+// inspection and body-reading utilities. Includes <c>AddRequestId</c>, <c>GetAbsoluteUri</c>,
+// <c>GetBearerToken</c>, <c>GetHeaderValue</c>, <c>GetRawBodyBytesAsync</c>,
+// <c>GetRawBodyStringAsync</c>, <c>HasJsonContentType</c>, <c>IsContentType</c>,
+// and <c>TryGetBody</c> (with reflection-based and trim-safe overloads).
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -28,12 +34,14 @@ using Microsoft.Extensions.Primitives;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="HttpRequest"/> to enhance its functionality.
-/// These methods include retrieving the raw body as a byte array or string, and trying to get the body directly into a specified type.
+/// Provides extension methods for <see cref="HttpRequest"/> that simplify request inspection,
+/// header access, body reading, and JSON deserialization.
 /// </summary>
 /// <remarks>
-/// The extension methods in this class aim to simplify the process of working with the request body of <see cref="HttpRequest"/>.
-/// They provide convenient ways to access the raw body for various purposes such as logging, validation, or further processing.
+/// Body-reading methods (<c>GetRawBodyBytesAsync</c>, <c>GetRawBodyStringAsync</c>) copy the
+/// request body into a managed buffer. <c>TryGetBody</c> offers both a reflection-based overload
+/// (annotated with <see cref="RequiresUnreferencedCodeAttribute"/>) and a trim-safe overload that
+/// accepts <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpRequestExtensions
@@ -140,11 +148,10 @@ public static class HttpRequestExtensions
 	/// Retrieves the raw body as a byte array from the <see cref="HttpRequest" /> body stream.
 	/// Validates that <paramref name="request" /> is not null.
 	/// </summary>
-	/// <param name="request">The request.</param>
+	/// <param name="request">The <see cref="HttpRequest"/> whose body will be read.</param>
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
-	/// <returns>Task&lt;System.Byte[]&gt;.</returns>
+	/// <returns>A <see cref="Task{TResult}"/> whose result is the raw body as a <see cref="byte"/> array.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
-	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[Pure]
 	[Information(nameof(GetRawBodyBytesAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<byte[]> GetRawBodyBytesAsync([DisallowNull] this HttpRequest request, CancellationToken cancellationToken = default)
@@ -160,15 +167,14 @@ public static class HttpRequestExtensions
 	}
 
 	/// <summary>
-	/// Retrieve the raw body as a string from the <see cref="HttpRequest" /> body stream.
-	/// Validates that <paramref name="request" /> and <paramref name="encoding" /> is not null.
+	/// Retrieves the raw body as a string from the <see cref="HttpRequest" /> body stream.
+	/// Validates that <paramref name="request" /> and <paramref name="encoding" /> are not null.
 	/// </summary>
-	/// <param name="request">Request instance to apply to.</param>
-	/// <param name="encoding">Optional - Encoding, defaults to UTF8.</param>
+	/// <param name="request">The <see cref="HttpRequest"/> whose body will be read.</param>
+	/// <param name="encoding">The character encoding to use when reading the body. Defaults to UTF-8 if not specified.</param>
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
-	/// <returns>Task&lt;System.String&gt;.</returns>
+	/// <returns>A <see cref="Task{TResult}"/> whose result is the raw body as a <see cref="string"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> or <paramref name="encoding"/> is null.</exception>
-	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[Pure]
 	[Information(nameof(GetRawBodyStringAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async Task<string> GetRawBodyStringAsync([DisallowNull] this HttpRequest request, [DisallowNull] Encoding encoding, CancellationToken cancellationToken = default)
@@ -223,15 +229,15 @@ public static class HttpRequestExtensions
 	}
 
 	/// <summary>
-	/// Tries the get <see cref="HttpRequest" /> body.
+	/// Tries to deserialize the <see cref="HttpRequest" /> body into an instance of <typeparamref name="T"/>.
 	/// Validates that <paramref name="request" /> is not null.
 	/// </summary>
-	/// <typeparam name="T">Generic type parameter.</typeparam>
-	/// <param name="request">The HTTPRequest object.</param>
-	/// <param name="value">The return value.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	/// <exception cref="ArgumentNullException">request</exception>
-	/// <remarks>Original code by Jerry Nixon</remarks>
+	/// <typeparam name="T">The type to deserialize the request body into.</typeparam>
+	/// <param name="request">The <see cref="HttpRequest"/> whose body will be deserialized.</param>
+	/// <param name="value">When this method returns <see langword="true"/>, contains the deserialized value; otherwise, <c>default</c>.</param>
+	/// <returns><see langword="true"/> if the body was successfully deserialized into a non-null instance of <typeparamref name="T"/>; otherwise, <see langword="false"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	/// <remarks>Original code by Jerry Nixon. For trim-safe deserialization, use the <see cref="JsonTypeInfo{T}"/> overload.</remarks>
 	[Pure]
 	[RequiresUnreferencedCode("JSON deserialization might require types that cannot be statically analyzed. Use the JsonTypeInfo<T> overload in trimmed apps.")]
 	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -261,15 +267,15 @@ public static class HttpRequestExtensions
 	}
 
 	/// <summary>
-	/// Tries the get <see cref="HttpRequest" /> body.
+	/// Tries to read the raw body bytes from the <see cref="HttpRequest" />.
 	/// Validates that <paramref name="request" /> is not null.
 	/// </summary>
-	/// <param name="request">The HTTPRequest object.</param>
-	/// <param name="value">The return value.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	/// <exception cref="ArgumentNullException">request</exception>
-	/// <exception cref="ArgumentException">HttpRequest has no body.</exception>
-	/// <remarks>Original code by Jerry Nixon</remarks>
+	/// <param name="request">The <see cref="HttpRequest"/> whose body will be read.</param>
+	/// <param name="value">When this method returns <see langword="true"/>, contains the raw body as a <see cref="byte"/> array; otherwise, an empty array.</param>
+	/// <returns><see langword="true"/> if the body was successfully read and is non-empty; otherwise, <see langword="false"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
+	/// <exception cref="ArgumentException">Thrown if the <see cref="HttpRequest"/> body is empty.</exception>
+	/// <remarks>Original code by Jerry Nixon.</remarks>
 	[Pure]
 	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody([DisallowNull] this HttpRequest request, out byte[] value)

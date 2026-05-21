@@ -9,7 +9,7 @@
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>High-performance string utilities for .NET 10. Provides allocation-aware, SIMD-optimized extensions for validation, comparison, hashing, encoding/decoding (Base64), compression (Brotli/Deflate/GZip/ZLib), URL parsing, splitting, and formatting. Methods favor ordinal comparisons, spans, pooled StringBuilder, and guard clauses to ensure deterministic behavior, culture invariance where appropriate, and minimal GC pressure across common string operations.</summary>
+// <summary>Provides high-performance extension methods for string operations including validation, hashing, encoding/decoding (Base64), compression (Brotli/Deflate/GZip/ZLib), URL parsing, splitting, and formatting. Methods favor ordinal comparisons, spans, pooled StringBuilder, and guard clauses for minimal GC pressure and culture-invariant behavior.</summary>
 // ***********************************************************************
 using System.Buffers;
 using System.Collections.ObjectModel;
@@ -31,13 +31,14 @@ using Microsoft.Extensions.ObjectPool;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides a collection of static methods for string manipulation and checks, enhancing the built-in string functionality.
+/// Provides high-performance extension methods for <see cref="string"/> operations including validation, hashing,
+/// encoding and decoding (Base64), compression (Brotli, Deflate, GZip, ZLib), URL parsing, splitting, and formatting.
 /// </summary>
 /// <remarks>
-/// The <see cref="StringExtensions"/> class includes methods for various string operations such as computing hashes,
-/// checking for specific content within strings (e.g., email addresses, domain names, GUIDs), converting strings to different formats or encodings,
-/// and performing manipulations like concatenation, extraction, and indentation. These utilities aim to simplify common string handling tasks
-/// in .NET applications.
+/// The <see cref="StringExtensions"/> class includes methods for computing hashes, validating content such as
+/// email addresses, domain names, and GUIDs, converting strings to different formats and encodings,
+/// and performing manipulations like concatenation, extraction, and indentation. Methods favor ordinal comparisons,
+/// spans, pooled <see cref="StringBuilder"/> instances, and guard clauses for minimal GC pressure.
 /// </remarks>
 [Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
 public static class StringExtensions
@@ -133,11 +134,11 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Computes the hashType of the given base64Input string using the specified hashType algorithm.
+	/// Computes the hash of the given input string using the specified hash algorithm.
 	/// </summary>
-	/// <param name="input">The base64Input string to compute the hashType for. Must not be null.</param>
-	/// <param name="hashType">The type of hashType algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
-	/// <returns>A string representation of the computed hashType.</returns>
+	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
+	/// <param name="hashType">The type of hash algorithm to use, specified by the <see cref="HashType"/> enum. Defaults to <see cref="HashType.SHA256"/>.</param>
+	/// <returns>A string representation of the computed hash.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ComputeHash), "David McCarter", "10/8/2020", "1/9/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static string ComputeHash([DisallowNull] this string input, HashType hashType = HashType.SHA256)
@@ -752,13 +753,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Checks if the string has a input (is not null or whitespace).
+	/// Determines whether the specified string has a value (is not <c>null</c> and not empty).
 	/// </summary>
 	/// <param name="input">The string to check.</param>
-	/// <returns><c>true</c> if the string is not null or whitespace; otherwise, <c>false</c>.</returns>
+	/// <returns>
+	/// <c>true</c> if the string is not <c>null</c> and has a length greater than zero; otherwise, <c>false</c>.
+	/// </returns>
 	/// <remarks>
-	/// This method considers a string as having a input if it is not null and contains characters other than whitespace.
-	/// Uses <see cref="string.IsNullOrWhiteSpace(string)"/> internally to check if the string is null or whitespace.
+	/// Uses a pattern match on <see cref="string.Length"/> for an allocation-free, inlined check.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(HasValue), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -1107,7 +1109,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string matches the pattern; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the base64Input string.
+	/// This method uses a regular expression to validate the input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsOneToSevenAlpha), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1122,7 +1124,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is in scientific notation; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the base64Input string.
+	/// This method uses a regular expression to validate the input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsScientific), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1137,7 +1139,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is a valid SHA1 hash type; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the base64Input string.
+	/// This method uses a regular expression to validate the input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsStringSHA1Hash), "David McCarter", "5/31/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1152,7 +1154,7 @@ public static class StringExtensions
 	/// <param name="input">The string to validate.</param>
 	/// <returns><c>true</c> if the string is a valid URL; otherwise, <c>false</c>.</returns>
 	/// <remarks>
-	/// This method uses a regular expression to validate the base64Input string.
+	/// This method uses a regular expression to validate the input string.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(IsUrl), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -1246,15 +1248,15 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the base64Input string into a <see cref="ReadOnlyCollection{String}"/> of strings,
-	/// separated by the specified <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
+	/// Splits the input string into a <see cref="ReadOnlyCollection{String}"/> of strings.
+	/// The <paramref name="options"/> parameter specifies whether to include empty entries.
 	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
 	/// </summary>
 	/// <param name="input">The string to split.</param>
 	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
 	/// <param name="count">The maximum number of substrings to return.</param>
 	/// <param name="delimiter">The character to use as a delimiter. Defaults to <see cref="ControlChars.Comma"/>.</param>
-	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings that has been split from the base64Input string.</returns>
+	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings split from the input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] char delimiter = ControlChars.Comma)
@@ -1267,16 +1269,15 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Splits the base64Input string into a ReadOnlyCollection{string} of strings,
-	/// separated by the specified <paramref name="separator"/>.
-	/// The <paramref name="options"/> parameter specifies whether to include empty array elements in the array returned.
+	/// Splits the input string into a <see cref="ReadOnlyCollection{T}"/> of strings using the specified <paramref name="separator"/>.
+	/// The <paramref name="options"/> parameter specifies whether to include empty entries.
 	/// The <paramref name="count"/> parameter specifies the maximum number of substrings to return.
 	/// </summary>
 	/// <param name="input">The string to split.</param>
 	/// <param name="options">Options for controlling the splitting operation, such as removing empty entries.</param>
 	/// <param name="count">The maximum number of substrings to return.</param>
 	/// <param name="separator">The string to use as a delimiter. Defaults to <see cref="ControlChars.DefaultSeparator"/>.</param>
-	/// <returns>A ReadOnlyCollection{string} of strings that has been split from the base64Input string.</returns>
+	/// <returns>A <see cref="ReadOnlyCollection{T}"/> of strings split from the input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] string separator = ControlChars.DefaultSeparator)
@@ -1321,7 +1322,7 @@ public static class StringExtensions
 	/// </example>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SplitLines), "David McCarter", "6/9/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed)]
+	[Information(nameof(SplitLines), "David McCarter", "6/9/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static LineSplitEnumerator SplitLines([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -1368,7 +1369,7 @@ public static class StringExtensions
 	/// This method performs an ordinal (case-sensitive and culture-insensitive) comparison.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(StartsWithOrdinal), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool StartsWithOrdinal([DisallowNull] this string input, string inputToCompare)
 	{
 		// SUGGESTIONS FROM COPILOT SLOWER
@@ -1385,7 +1386,7 @@ public static class StringExtensions
 	/// This method performs a comparison using <see cref="StringComparison.OrdinalIgnoreCase"/>.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool StartsWithOrdinalIgnoreCase([DisallowNull] this string input, string inputToCompare)
 	{
 		return input?.StartsWith(inputToCompare, StringComparison.OrdinalIgnoreCase) ?? false;
@@ -1484,7 +1485,7 @@ public static class StringExtensions
 	/// <exception cref="ArgumentNullException">Thrown when the base64Input string is null or empty.</exception>
 	/// <exception cref="FormatException">Thrown when the base64Input is not a valid Base64 string.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToBase64Bytes), "David McCarter", "12/30/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToBase64Bytes), "David McCarter", "12/30/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] ToBase64Bytes([DisallowNull] this string input)
 	{
 		input = input.ArgumentNotNullOrEmpty();
@@ -1595,7 +1596,7 @@ public static class StringExtensions
 	/// Optimal: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
 	/// SmallestSize: SmHIZyhh8GNIBZIhDJkMBQzFDHoMyUDRXAYAAAAA//8=
 	/// </example>
-	[Information(nameof(ToDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToDeflateStringAsync), "David McCarter", "9/12/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<string> ToDeflateStringAsync([DisallowNull] this string input, CompressionLevel level = CompressionLevel.Fastest, CancellationToken cancellationToken = default)
 	{
 		input = input.ArgumentNotNull();
@@ -1723,10 +1724,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Verifies the hashed password against the base64Input string using the specified hashing algorithm.
+	/// Verifies the hashed password against the input string using the specified hashing algorithm.
 	/// </summary>
 	/// <param name="hashedPassword">The hashed password to verify. Must not be null.</param>
-	/// <param name="input">The base64Input string to compare against the hashed password. Must not be null.</param>
+	/// <param name="input">The plain-text string to compare against the hashed password. Must not be null.</param>
 	/// <param name="algorithmType">The hashing algorithm to use. Defaults to PBKDF2.</param>
 	/// <returns>A <see cref="PasswordVerificationResult"/> indicating whether the verification succeeded or failed.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

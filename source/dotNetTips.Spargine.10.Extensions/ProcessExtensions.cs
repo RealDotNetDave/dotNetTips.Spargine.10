@@ -4,12 +4,16 @@
 // Created          : 07-15-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ProcessExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for Process.</summary>
+// <summary>
+// Extension methods for <c>Process</c> providing priority management
+// (<c>EnsureHighPriority</c>, <c>EnsureLowPriority</c>, <c>TrySetPriority</c>)
+// and process execution helpers (<c>RunProcessAndIgnoreOutput</c>, <c>RunProcessAndReadOutput</c>).
+// </summary>
 // ***********************************************************************
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -23,23 +27,24 @@ using Microsoft.Extensions.Logging;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="Process"/> class to manipulate process priorities and execute processes with specific configurations.
+/// Provides extension methods for <c>Process</c> covering priority management and process execution.
 /// </summary>
 /// <remarks>
-/// These extension methods include setting process priority, running processes with custom arguments and handling their output, and more.
-/// They are designed to simplify common tasks related to process management in .NET applications.
+/// Includes methods for elevating or lowering process priority (<c>EnsureHighPriority</c>,
+/// <c>EnsureLowPriority</c>, <c>TrySetPriority</c>) and for running an external process with
+/// optional output capture (<c>RunProcessAndIgnoreOutput</c>, <c>RunProcessAndReadOutput</c>).
 /// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class ProcessExtensions
 {
 
 	/// <summary>
-	/// Ensures the high priority.
-	/// Validates that <paramref name="process" /> is not null.
+	/// Sets the priority of <paramref name="process"/> to <c>High</c>.
+	/// Logs an error via <paramref name="logger"/> if the priority cannot be applied.
 	/// </summary>
-	/// <param name="process">The process.</param>
-	/// <param name="logger">The logger.</param>
-	/// <exception cref="ArgumentNullException">process</exception>
+	/// <param name="process">The process whose priority will be raised.</param>
+	/// <param name="logger">Optional logger used to record any failure.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="process"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void EnsureHighPriority([DisallowNull] this Process process, [AllowNull] ILogger logger)
@@ -60,12 +65,12 @@ public static class ProcessExtensions
 	}
 
 	/// <summary>
-	/// Ensures the low priority.
-	/// Validates that <paramref name="process" /> is not null.
+	/// Sets the priority of <paramref name="process"/> to <c>BelowNormal</c>.
+	/// Logs an error via <paramref name="logger"/> if the priority cannot be applied.
 	/// </summary>
-	/// <param name="process">The process.</param>
-	/// <param name="logger">The logger.</param>
-	/// <exception cref="ArgumentNullException">process</exception>
+	/// <param name="process">The process whose priority will be lowered.</param>
+	/// <param name="logger">Optional logger used to record any failure.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="process"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void EnsureLowPriority([DisallowNull] this Process process, [AllowNull] ILogger logger)
@@ -86,14 +91,14 @@ public static class ProcessExtensions
 	}
 
 	/// <summary>
-	/// Runs the process and ignore output.
-	/// Validates that <paramref name="fileName" /> and <paramref name="arguments" /> is not null.
+	/// Starts a process with the given <paramref name="fileName"/> and <paramref name="arguments"/>,
+	/// waits up to <paramref name="timeout"/> for it to finish, and discards any output.
 	/// </summary>
-	/// <param name="fileName">Name of the file.</param>
-	/// <param name="arguments">The arguments.</param>
-	/// <param name="timeout">The timeout.</param>
-	/// <returns>System.Int32.</returns>
-	/// <exception cref="ArgumentException">fileName</exception>
+	/// <param name="fileName">The path to the executable.</param>
+	/// <param name="arguments">The command-line arguments to pass to the process.</param>
+	/// <param name="timeout">The maximum time to wait for the process to exit.</param>
+	/// <returns>The exit code returned by the process.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="fileName"/> or <paramref name="arguments"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int RunProcessAndIgnoreOutput([DisallowNull] this string fileName, [DisallowNull] string arguments, in TimeSpan timeout)
@@ -122,14 +127,17 @@ public static class ProcessExtensions
 	}
 
 	/// <summary>
-	/// Runs the process and read output.
-	/// Validates that <paramref name="fileName" /> and <paramref name="arguments" /> is not null.
+	/// Starts a process with the given <paramref name="fileName"/> and <paramref name="arguments"/>,
+	/// waits up to <paramref name="timeout"/> for it to finish, and captures its standard output.
 	/// </summary>
-	/// <param name="fileName">Name of the file.</param>
-	/// <param name="arguments">The arguments.</param>
-	/// <param name="timeout">The timeout.</param>
-	/// <returns>System.ValueTuple&lt;System.Int32, System.String&gt;.</returns>
-	/// <exception cref="ArgumentException">fileName</exception>
+	/// <param name="fileName">The path to the executable.</param>
+	/// <param name="arguments">The command-line arguments to pass to the process.</param>
+	/// <param name="timeout">The maximum time to wait for the process to exit.</param>
+	/// <returns>
+	/// A tuple of (<c>int exitCode</c>, <c>string output</c>).
+	/// If the process exceeds <paramref name="timeout"/> it is killed and <c>output</c> is an empty string.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="fileName"/> or <paramref name="arguments"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static (int exitCode, string output) RunProcessAndReadOutput([DisallowNull] this string fileName, [DisallowNull] string arguments, in TimeSpan timeout)
@@ -160,14 +168,15 @@ public static class ProcessExtensions
 	}
 
 	/// <summary>
-	/// Tries the set priority.
+	/// Attempts to set the <paramref name="priority"/> of <paramref name="process"/>.
+	/// Logs a failure message via <paramref name="logger"/> if the priority cannot be applied.
 	/// </summary>
-	/// <param name="process">The process.</param>
-	/// <param name="priority">The priority.</param>
-	/// <param name="logger">The logger.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-	/// <exception cref="ArgumentNullException">process or logger error</exception>
-	/// <exception cref="ArgumentOutOfRangeException">priority</exception>
+	/// <param name="process">The process whose priority will be changed.</param>
+	/// <param name="priority">The desired <c>ProcessPriorityClass</c> value.</param>
+	/// <param name="logger">Optional logger used to record any failure.</param>
+	/// <returns><c>true</c> if the priority was set successfully; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="process"/> is <c>null</c>.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="priority"/> is not a defined enum value.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TrySetPriority([DisallowNull] this Process process, ProcessPriorityClass priority, [AllowNull] ILogger logger)

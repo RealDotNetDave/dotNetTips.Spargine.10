@@ -4,12 +4,18 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for DataReader.</summary>
+// <summary>
+// Extension methods for <see cref="System.Data.IDataReader"/> providing data-export utilities.
+// Includes <c>ToCsv</c>, which converts an <see cref="System.Data.IDataReader"/> to a
+// read-only collection of CSV-formatted strings, with optional header row and configurable
+// delimiter. Uses an <see cref="Microsoft.Extensions.ObjectPool.ObjectPool{T}"/> for
+// <see cref="System.Text.StringBuilder"/> instances to minimise allocations.
+// </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Data;
@@ -27,8 +33,11 @@ namespace DotNetTips.Spargine.Extensions;
 /// Provides extension methods for <see cref="IDataReader"/> instances, enhancing functionality with additional utility methods.
 /// </summary>
 /// <remarks>
-/// This class includes methods for converting data readers to other formats, such as CSV, with performance optimizations
-/// such as using a <see cref="ObjectPool{T}"/> for <see cref="StringBuilder"/> instances to reduce memory allocations.
+/// This class includes <c>ToCsv</c> for converting an <see cref="IDataReader"/> to a read-only collection of
+/// CSV-formatted strings. The implementation supports optional header row output and a configurable field delimiter.
+/// An <see cref="ObjectPool{T}"/> for <see cref="StringBuilder"/> instances is used internally to reduce
+/// per-row heap allocations. String fields containing the delimiter or double-quote characters are automatically
+/// escaped according to RFC 4180 conventions.
 /// </remarks>
 [Information(Status = Status.Available)]
 public static class DataReaderExtensions
@@ -41,13 +50,14 @@ public static class DataReaderExtensions
 	new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
-	/// Converts <see cref="IDataReader" /> to CSV format using <see cref="ObjectPool&lt;StringBuilder&gt;" /> to improve performance.
-	/// Validates that <paramref name="dataReader" /> is not null
+	/// Converts an <see cref="IDataReader" /> to a read-only collection of CSV-formatted strings,
+	/// using an <see cref="ObjectPool{T}"/> for <see cref="StringBuilder"/> instances to improve performance.
 	/// </summary>
-	/// <param name="dataReader">The data reader.</param>
-	/// <param name="includeHeaderAsFirstRow">if set to <c>true</c> [include header as first row].</param>
-	/// <param name="delimiter">The delimiter.</param>
-	/// <returns>ReadOnlyCollection&lt;System.String&gt;.</returns>
+	/// <param name="dataReader">The data reader to convert. Must not be null.</param>
+	/// <param name="includeHeaderAsFirstRow">If <c>true</c>, the first row of the output contains column names as the CSV header.</param>
+	/// <param name="delimiter">The field delimiter character. Defaults to <see cref="ControlChars.Comma"/>.</param>
+	/// <returns>A <see cref="ReadOnlyCollection{T}"/> of <see cref="string"/> where each element represents one CSV row.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="dataReader"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]

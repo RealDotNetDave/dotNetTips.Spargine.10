@@ -3,13 +3,21 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods designed for the Object type.</summary>
+// <summary>
+// Extension methods for all objects providing deep cloning (<c>FastClone</c>, <c>FastBinaryClone</c>),
+// SHA-256 hashing (<c>ComputeSha256Hash</c>), JSON serialization/deserialization (<c>ToJson</c>,
+// <c>FromJson</c>, <c>ToJsonFile</c>), property and field inspection (<c>PropertiesToDictionary</c>,
+// <c>PropertiesToString</c>, <c>FieldsToDictionary</c>, <c>FieldsToString</c>), null checks
+// (<c>IsNull</c>, <c>IsNotNull</c>, <c>StripNull</c>), disposal helpers (<c>TryDispose</c>,
+// <c>DisposeFields</c>, <c>DisposeCollection</c>), and general utilities (<c>As</c>, <c>Max</c>,
+// <c>Min</c>, <c>ToLazy</c>, <c>InitializeFields</c>, <c>HasProperty</c>).
+// </summary>
 // ***********************************************************************
 using System.Collections;
 using System.Collections.Concurrent;
@@ -37,13 +45,18 @@ using Microsoft.Extensions.ObjectPool;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides a collection of extension methods for objects, enhancing functionality with additional utility methods for common tasks.
+/// Provides extension methods for all objects, adding utility operations for cloning, hashing,
+/// serialization, reflection-based inspection, and resource management.
 /// </summary>
 /// <remarks>
-/// This class includes methods for deep cloning objects, computing SHA256 hashes, disposing object fields, converting objects to and from JSON,
-/// checking for properties, initializing fields, checking for nullability, converting properties to dictionaries or strings, and more.
-/// These methods are designed to extend the capabilities of all objects and simplify common operations related to serialization,
-/// reflection, and memory management.
+/// Methods are grouped by purpose: deep cloning via JSON or MessagePack (<c>FastClone</c>,
+/// <c>FastBinaryClone</c>), SHA-256 hashing (<c>ComputeSha256Hash</c>), JSON serialization
+/// (<c>ToJson</c>, <c>FromJson</c>, <c>ToJsonFile</c>), reflection-based property and field
+/// inspection (<c>PropertiesToDictionary</c>, <c>PropertiesToString</c>, <c>FieldsToDictionary</c>,
+/// <c>FieldsToString</c>), null and type checks (<c>IsNull</c>, <c>IsNotNull</c>, <c>IsString</c>,
+/// <c>StripNull</c>), disposal (<c>TryDispose</c>, <c>DisposeFields</c>, <c>DisposeCollection</c>),
+/// and general helpers (<c>As</c>, <c>Max</c>, <c>Min</c>, <c>ToLazy</c>, <c>InitializeFields</c>,
+/// <c>HasProperty</c>).
 /// </remarks>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineObjectExtensions")]
 public static class ObjectExtensions
@@ -193,21 +206,19 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// Ensures a non-null string representation of an object. If the object is null, it returns an empty string.
-	/// This is handy when working with string formatting or constructing output that must avoid null values.
+	/// Attempts to dispose the specified <see cref="IDisposable"/> object, silently swallowing any exceptions.
 	/// </summary>
-	/// <param name="obj">The <see cref="IDisposable" /> object to dispose.</param>
+	/// <param name="obj">The <see cref="IDisposable"/> object to dispose.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryDispose), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+	[Information(nameof(TryDispose), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static void TryDispose(this IDisposable obj)
 	{
 		TryDispose(obj.ArgumentNotNull(), false);
 	}
 
 	/// <summary>
-	/// Ensures a non-null string representation of an object. If the object is null, it returns an empty string.
-	/// This is handy when working with string formatting or constructing output that must avoid null values.
-	/// Optionally throws an exception if the disposal fails.
+	/// Attempts to dispose the specified <see cref="IDisposable"/> object.
+	/// Optionally re-throws any exception that occurs during disposal.
 	/// </summary>
 	/// <param name="obj">The <see cref="IDisposable" /> object to dispose.</param>
 	/// <param name="throwException">Specifies whether to throw an exception if the disposal fails.</param>
@@ -563,11 +574,7 @@ public static class ObjectExtensions
 	/// </summary>
 	[RequiresUnreferencedCode("Calls BuildComplexTypePropertiesDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ResolvePropertiesDictionary),
-		UnitTestStatus = UnitTestStatus.NotRequired,
-		OptimizationStatus = OptimizationStatus.NotRequired,
-		BenchmarkStatus = BenchmarkStatus.NotRequired,
-		Status = Status.Available)]
+	[Information(nameof(ResolvePropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static ReadOnlyDictionary<string, string> ResolvePropertiesDictionary(string memberName, object obj, bool ignoreNulls, Type objectType)
 	{
 		return _builtInTypeNames.ContainsKey(objectType)
@@ -960,7 +967,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1165,7 +1172,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Optimize)]
+		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1334,7 +1341,7 @@ public static class ObjectExtensions
 		/// <returns>The hash code for the object.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastHashCode), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastHashCode), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int FastHashCode()
 		{
 			obj = obj.ArgumentNotNull();
@@ -1405,7 +1412,7 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("MessagePack serialization may use runtime type discovery depending on resolver configuration.")]
-		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastBinaryClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastBinaryClone<T>()
 		{
 			obj = obj.ArgumentNotNull();
@@ -1469,7 +1476,7 @@ public static class ObjectExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("MessagePack serialization may use runtime type discovery depending on resolver configuration.")]
-		[Information(nameof(FastBinaryClone), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastBinaryClone), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FastBinaryClone<T>([AllowNull] MessagePackSerializerOptions options = null)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1535,7 +1542,7 @@ public static class ObjectExtensions
 		/// <returns>The object cast to the specified type.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(As), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(As), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T As<T>()
 		{
 			return (T)obj.ArgumentNotNull();

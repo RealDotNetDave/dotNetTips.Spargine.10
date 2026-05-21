@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 01-16-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-27-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods for the ImmutableArray.</summary>
+// <summary>
+// Extension methods for <see cref="System.Collections.Immutable.ImmutableArray{T}"/> providing
+// element-presence checks, count comparisons, and shuffling. Includes <c>IsNotEmpty</c>
+// (with no-arg, predicate, and count overloads) and <c>FastShuffle</c>.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.Immutable;
@@ -25,7 +29,8 @@ namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
 /// Provides extension methods for <see cref="ImmutableArray{T}"/> to enhance usability and functionality.
-/// These methods include checks for item presence, conditional actions, count comparisons, and item shuffling.
+/// Includes presence checks (<c>IsNotEmpty</c>), count comparisons, predicate-based filtering,
+/// and cryptographically random shuffling via <c>FastShuffle</c>.
 /// </summary>
 [Information(Status = Status.NeedsDocumentation)]
 public static class ImmutableArrayExtensions
@@ -45,7 +50,10 @@ public static class ImmutableArrayExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020",
+			UnitTestStatus = UnitTestStatus.Completed,
+			BenchmarkStatus = BenchmarkStatus.Completed,
+			Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
 			return collection.ArgumentNotNull().IsEmpty ? false : collection.Length > 0;
@@ -78,7 +86,7 @@ public static class ImmutableArrayExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(int count)
 		{
 			return collection.Length == count;
@@ -95,7 +103,7 @@ public static class ImmutableArrayExtensions
 		/// If the array does not contain any items, it is returned unchanged.
 		/// </remarks>
 		[Pure]
-		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();

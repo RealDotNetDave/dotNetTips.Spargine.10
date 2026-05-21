@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 07-30-2018
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="GuidExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods tailored for Guid.</summary>
+// <summary>
+// Extension methods for <see cref="System.Guid"/> providing conversion utilities.
+// Currently exposes <c>ToDigits</c>, which converts a <see cref="System.Guid"/> to its
+// 32-character hexadecimal string representation without dashes.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -21,7 +25,9 @@ namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
 /// Provides extension methods for the <see cref="Guid"/> type.
-/// These methods include converting a Guid to a string representation without dashes and checking if a Guid is not empty.
+/// Currently exposes <c>ToDigits</c>, which returns the 32-character hexadecimal string
+/// representation of a <see cref="Guid"/> without dashes, or an empty string when the value
+/// is <see cref="Guid.Empty"/>.
 /// </summary>
 [Information(Status = Status.Available)]
 public static class GuidExtensions

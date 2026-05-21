@@ -4,12 +4,18 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="EnumExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods designed for Enum.</summary>
+// <summary>
+// Extension methods for <see cref="System.Enum"/> that enrich enum usage with description lookup,
+// parsing, item enumeration, flag inspection, and navigation. Includes <c>GetAttribute</c>,
+// <c>GetDescription</c>, <c>GetDisplayName</c>, <c>GetItems</c>, <c>GetSetFlags</c>,
+// <c>FlagCount</c>, <c>Next</c>, <c>Parse</c>, <c>Previous</c>, <c>ToInt32</c>, and <c>ToInt64</c>.
+// Both generic (trim-safe) and non-generic (<see cref="System.Enum"/>-based) overloads are provided.
+// </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +31,11 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="Enum" /> type, enhancing enum functionality with additional utilities such as getting descriptions, parsing, and retrieving items.
+/// Provides extension methods for the <see cref="Enum" /> type that enhance enum functionality
+/// with description lookup, parsing, item enumeration, flag inspection, integer conversion, and
+/// sequential navigation. Generic (trim-safe) overloads are provided alongside non-generic
+/// <see cref="Enum" />-based overloads for scenarios where the concrete enum type is not known at
+/// compile time.
 /// </summary>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static class EnumExtensions

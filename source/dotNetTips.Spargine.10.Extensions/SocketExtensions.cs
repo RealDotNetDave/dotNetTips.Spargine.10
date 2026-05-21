@@ -3,13 +3,18 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for Socket.</summary>
+// <summary>
+// Extension methods for <c>Socket</c> and <c>SocketsHttpConnectionContext</c> providing anonymous port
+// binding (<c>BindToAnonymousPort</c>), buffer and keep-alive configuration (<c>ConfigureBufferSizes</c>,
+// <c>ConfigureKeepAlive</c>, <c>ConfigureLinger</c>), TCP connection helpers (<c>ConnectTcpAsync</c>,
+// <c>TryConnect</c>, <c>TryConnectAsync</c>), and non-blocking mode control (<c>ForceNonBlocking</c>).
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -23,20 +28,20 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="Socket"/> class, enhancing its functionality
-/// with additional utility methods. These methods include binding to an anonymous port, forcing
-/// non-blocking mode, and attempting connections with a timeout.
+/// Provides extension methods for <c>Socket</c> and <c>SocketsHttpConnectionContext</c> covering
+/// anonymous port binding, buffer and keep-alive configuration, TCP connection helpers, and
+/// non-blocking mode control.
 /// </summary>
 [Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.NeedsDocumentation)]
 public static class SocketExtensions
 {
 	/// <summary>
-	/// Binds to an IP address and OS-assigned port. Returns the chosen port.
-	/// Validates that <paramref name="socket" /> and <paramref name="address" /> is not null.
+	/// Binds <paramref name="socket"/> to <paramref name="address"/> on an OS-assigned port and
+	/// returns the chosen port number.
 	/// </summary>
-	/// <param name="socket">The socket.</param>
-	/// <param name="address">The address.</param>
-	/// <returns>System.Int32.</returns>
+	/// <param name="socket">The socket to bind.</param>
+	/// <param name="address">The IP address to bind to.</param>
+	/// <returns>The port number assigned by the OS.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(BindToAnonymousPort), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int BindToAnonymousPort([DisallowNull] this Socket socket, [DisallowNull] IPAddress address)
@@ -50,21 +55,20 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Configures the send and receive buffer sizes for the specified <see cref="Socket"/>.
-	/// Validates that <paramref name="socket"/> is not null and that both buffer sizes are at least 1.
+	/// Configures the send and receive buffer sizes for <paramref name="socket"/>.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to configure.</param>
+	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
 	/// <param name="sendBufferSize">The size, in bytes, of the send buffer. Must be at least 1.</param>
 	/// <param name="receiveBufferSize">The size, in bytes, of the receive buffer. Must be at least 1.</param>
-	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
+	/// <returns>The configured <c>Socket</c> for fluent chaining.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConfigureBufferSizes), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureBufferSizes([DisallowNull] this Socket socket, int sendBufferSize, int receiveBufferSize)
 	{
 		socket = socket.ArgumentNotNull();
-		sendBufferSize = sendBufferSize.EnsureMinimum(1);
-		receiveBufferSize = receiveBufferSize.EnsureMinimum(1);
+		sendBufferSize = sendBufferSize.EnsureMinimum(1); // TODO: What is a good minimum value for this?
+		receiveBufferSize = receiveBufferSize.EnsureMinimum(1); // TODO: What is a good minimum value for this?
 
 		socket.SendBufferSize = sendBufferSize;
 		socket.ReceiveBufferSize = receiveBufferSize;
@@ -73,15 +77,13 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Configures TCP keep-alive on the specified <see cref="Socket"/>. Enables keep-alive and sets
-	/// <see cref="SocketOptionName.TcpKeepAliveTime"/> and <see cref="SocketOptionName.TcpKeepAliveInterval"/>.
-	/// Validates that <paramref name="socket"/> is not null and that time/interval values are at least 1.
+	/// Enables TCP keep-alive on <paramref name="socket"/> and sets the idle time and probe interval.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to configure.</param>
+	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
 	/// <param name="keepAliveTimeSeconds">The idle time, in seconds, before the first keep-alive probe is sent. Must be at least 1.</param>
 	/// <param name="keepAliveIntervalSeconds">The interval, in seconds, between keep-alive probes. Must be at least 1.</param>
-	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
+	/// <returns>The configured <c>Socket</c> for fluent chaining.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConfigureKeepAlive), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureKeepAlive([DisallowNull] this Socket socket, int keepAliveTimeSeconds, int keepAliveIntervalSeconds)
@@ -98,15 +100,14 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Configures the linger state for the specified <see cref="Socket"/>, controlling how the socket
-	/// behaves when data remains to be sent after <see cref="Socket.Close()"/> is called.
-	/// Validates that <paramref name="socket"/> is not null and that <paramref name="lingerTimeSeconds"/> is at least 0.
+	/// Configures the linger state of <paramref name="socket"/>, controlling how it behaves when
+	/// data remains unsent after <c>Close()</c> is called.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to configure.</param>
-	/// <param name="enable">If <c>true</c>, the socket will linger after close; if <c>false</c>, it will close immediately.</param>
-	/// <param name="lingerTimeSeconds">The time, in seconds, to remain open after close when <paramref name="enable"/> is <c>true</c>. Must be at least 0.</param>
-	/// <returns>The configured <see cref="Socket"/> for fluent chaining.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is null.</exception>
+	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
+	/// <param name="enable">If <c>true</c>, the socket lingers after close; if <c>false</c>, it closes immediately.</param>
+	/// <param name="lingerTimeSeconds">The linger duration in seconds when <paramref name="enable"/> is <c>true</c>. Must be at least 0.</param>
+	/// <returns>The configured <c>Socket</c> for fluent chaining.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is <c>null</c>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConfigureLinger), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureLinger([DisallowNull] this Socket socket, bool enable, int lingerTimeSeconds)
@@ -120,11 +121,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Connect TCP as an asynchronous operation.
+	/// Asynchronously establishes a TCP connection using the endpoint from <paramref name="context"/>.
 	/// </summary>
-	/// <param name="context">The context.</param>
-	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-	/// <returns>A <see cref="ValueTask{Stream}"/> that represents the asynchronous operation, which upon completion returns a <see cref="Stream"/> connected to the TCP server.</returns>
+	/// <param name="context">The connection context containing the DNS endpoint to connect to.</param>
+	/// <param name="cancellationToken">A token to cancel the operation.</param>
+	/// <returns>A <c>ValueTask{Stream}</c> that resolves to a <c>Stream</c> connected to the TCP server.</returns>
 	/// <example>
 	/// Here is how you can use the ConnectTcpAsync method:
 	/// <code>
@@ -166,12 +167,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// On non-Windows platforms, once non-blocking is turned on (either explicitly or by performing an async
-	/// operation), always stay in non-blocking mode.
-	/// Validates that <paramref name="socket" /> is not null.
+	/// Forces <paramref name="socket"/> into non-blocking mode. On non-Windows platforms, once
+	/// non-blocking is enabled it remains enabled for the lifetime of the socket.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to modify.</param>
-	/// <param name="force">if set to <c>true</c>, the <paramref name="socket"/> is forced into non-blocking mode.</param>
+	/// <param name="socket">The <c>Socket</c> to modify. Must not be <c>null</c>.</param>
+	/// <param name="force">If <c>true</c>, forces the socket into non-blocking mode.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void ForceNonBlocking([DisallowNull] this Socket socket, bool force)
@@ -182,16 +182,16 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Tries to connect within the provided timeout interval. Useful to speed up "cannot connect" assertions on
-	/// Windows. Validates that <paramref name="socket" /> and <paramref name="remoteEndpoint" /> are not null.
+	/// Attempts to connect <paramref name="socket"/> to <paramref name="remoteEndpoint"/> within
+	/// <paramref name="millisecondsTimeout"/> milliseconds. Only supported on Windows.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to use for the connection attempt.</param>
-	/// <param name="remoteEndpoint">The <see cref="EndPoint"/> to which you want to connect.</param>
-	/// <param name="millisecondsTimeout">The timeout in milliseconds for the connection attempt.</param>
-	/// <returns><c>true</c> if the connection is successful within the timeout period; otherwise, <c>false</c>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is null.</exception>
+	/// <param name="socket">The <c>Socket</c> to use for the connection attempt. Must not be <c>null</c>.</param>
+	/// <param name="remoteEndpoint">The <c>EndPoint</c> to connect to. Must not be <c>null</c>.</param>
+	/// <param name="millisecondsTimeout">The maximum time in milliseconds to wait for the connection. Must be at least 1.</param>
+	/// <returns><c>true</c> if the connection succeeds within the timeout; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is <c>null</c>.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeout"/> is less than 1.</exception>
-	/// <exception cref="PlatformNotSupportedException">Thrown when the operation is not supported on the current platform, specifically non-Windows platforms.</exception>
+	/// <exception cref="PlatformNotSupportedException">Thrown on non-Windows platforms.</exception>
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool TryConnect([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout)
 	{
@@ -229,16 +229,16 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Asynchronously attempts to connect within the provided timeout interval. Unlike <see cref="TryConnect"/>,
-	/// this method works cross-platform and uses modern async APIs with <see cref="CancellationToken"/>-based timeouts.
-	/// Validates that <paramref name="socket"/> and <paramref name="remoteEndpoint"/> are not null.
+	/// Asynchronously attempts to connect <paramref name="socket"/> to <paramref name="remoteEndpoint"/>
+	/// within <paramref name="millisecondsTimeout"/> milliseconds. Unlike <c>TryConnect</c>, this
+	/// method is cross-platform and uses <c>CancellationToken</c>-based timeouts.
 	/// </summary>
-	/// <param name="socket">The <see cref="Socket"/> to use for the connection attempt.</param>
-	/// <param name="remoteEndpoint">The <see cref="EndPoint"/> to which you want to connect.</param>
-	/// <param name="millisecondsTimeout">The timeout in milliseconds for the connection attempt. Must be at least 1.</param>
-	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-	/// <returns><c>true</c> if the connection is successful within the timeout period; otherwise, <c>false</c>.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is null.</exception>
+	/// <param name="socket">The <c>Socket</c> to use for the connection attempt. Must not be <c>null</c>.</param>
+	/// <param name="remoteEndpoint">The <c>EndPoint</c> to connect to. Must not be <c>null</c>.</param>
+	/// <param name="millisecondsTimeout">The maximum time in milliseconds to wait for the connection. Must be at least 1.</param>
+	/// <param name="cancellationToken">A token to cancel the operation.</param>
+	/// <returns><c>true</c> if the connection succeeds within the timeout; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> or <paramref name="remoteEndpoint"/> is <c>null</c>.</exception>
 	[Information(nameof(TryConnectAsync), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static async ValueTask<bool> TryConnectAsync([DisallowNull] this Socket socket, [DisallowNull] EndPoint remoteEndpoint, int millisecondsTimeout, CancellationToken cancellationToken = default)
 	{

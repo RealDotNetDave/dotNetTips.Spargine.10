@@ -4,12 +4,18 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-20-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary>Extensions methods for the Array type.</summary>
+// <summary>
+// Extension methods for arrays (<see cref="T:T[]"/>), providing high-performance utilities for adding, removing,
+// searching, cloning, hashing, iterating, and converting array elements. Includes methods such as AddFirst,
+// AddLast, AddIf, Upsert, RemoveFirst, RemoveLast, IndexOf, LastIndexOf, FastProcessor, FastSelectItems,
+// AreEqual, ToDistinct, ToFrozenSet, AsReadOnlySpan, GenerateHashCode, IsNotEmpty, and byte-specific helpers
+// BytesToString and FastHashData.
+// </summary>
 // ***********************************************************************
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
@@ -48,7 +54,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(BytesToString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, Status = Status.Available)]
+		[Information(nameof(BytesToString), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 		public string BytesToString()
 		{
 			return FastStringBuilder.BytesToString(ref array);
@@ -58,6 +64,7 @@ public static class ArrayExtensions
 		/// Computes a fast SHA256 hash for the given byte array data.
 		/// </summary>
 		/// <returns>A byte array containing the hash value.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -127,7 +134,7 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexOf), "David McCarter", "1/3/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] T item)
 		{
 			array = array.ArgumentNotNull();
@@ -166,7 +173,7 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int LastIndexOf([DisallowNull] T item)
 		{
 			array = array.ArgumentNotNull();
@@ -298,7 +305,7 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "5/30/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			return array.ArgumentNotNull();
@@ -308,6 +315,7 @@ public static class ArrayExtensions
 		/// Clones the specified array.
 		/// </summary>
 		/// <returns>A new array containing all the elements of the original array.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -323,9 +331,10 @@ public static class ArrayExtensions
 		/// Gets the total number of elements in the array.
 		/// </summary>
 		/// <returns>The total number of elements in the array as a long.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastLongCount), "David McCarter", "1/9/2023", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastLongCount), "David McCarter", "1/9/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public long FastLongCount()
 		{
 			return array.ArgumentNotNull().LongLength;
@@ -354,7 +363,7 @@ public static class ArrayExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "11/8/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void FastProcessor([DisallowNull] Action<T> action)
 		{
 			array = array.ArgumentNotNull();
@@ -373,6 +382,7 @@ public static class ArrayExtensions
 		/// Generates a hash code for the entire array.
 		/// </summary>
 		/// <returns>A hash code representing the contents of the array.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -525,7 +535,7 @@ public static class ArrayExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void PerformAction([DisallowNull] Action<T> action)
 		{
 			array = array.ArgumentNotNull();
@@ -591,7 +601,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] ToDistinct(IEqualityComparer<T>? comparer = null)
 		{
 			return [.. array.ArgumentNotNull().Distinct(comparer)];
@@ -609,7 +619,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet(IEqualityComparer<T>? comparer = null)
 		{
 			return FrozenSet.ToFrozenSet(array.ArgumentNotNull(), comparer);
@@ -624,7 +634,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] Upsert([AllowNull] T item)
 		{
 			array = array.ArgumentNotNull();

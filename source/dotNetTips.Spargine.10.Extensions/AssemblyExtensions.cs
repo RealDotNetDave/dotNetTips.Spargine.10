@@ -4,14 +4,16 @@
 // Created          : 01-07-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-20-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
 // <summary>
-// Provides high-performance extension methods for <see cref="Assembly"/> supporting
-// type discovery, interface extraction, and instance creation via reflection.
+// Extension methods for <see cref="System.Reflection.Assembly"/> that enhance reflection-based type discovery and
+// instantiation. Includes methods for retrieving all interfaces (<see cref="AssemblyExtensions"/>), all non-abstract
+// types, all instances of a specified type, and types assignable to a given type. All methods handle
+// <see cref="System.Reflection.ReflectionTypeLoadException"/> gracefully and are trim-annotated.
 // </summary>
 // ***********************************************************************
 

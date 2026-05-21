@@ -3,13 +3,21 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary>Extension methods designed for numbers.</summary>
+// <summary>
+// Extension methods for numeric types including <c>int</c>, <c>long</c>, <c>double</c>,
+// <c>decimal</c>, <c>float</c>, <c>short</c>, <c>sbyte</c>, <c>uint</c>, <c>ulong</c>,
+// and <c>ushort</c>. Covers averaging, byte/file-size formatting, bounds clamping
+// (<c>Decrement</c>, <c>Increment</c>, <c>EnsureMinimum</c>), range checks, interval
+// divisibility, negativity tests, time formatting, Roman numeral conversion, word
+// conversion (<c>ToWords</c>), power-of-two rounding, and <c>NumericFormat</c>-based
+// string formatting.
+// </summary>
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
@@ -26,8 +34,18 @@ using Microsoft.Extensions.ObjectPool;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for numeric types, offering a variety of mathematical and utility operations to enhance the functionality of the basic numeric types in .NET.
+/// Provides extension methods for .NET numeric types that supplement the built-in numeric APIs.
 /// </summary>
+/// <remarks>
+/// Methods are grouped by purpose:
+/// <list type="bullet">
+/// <item><description><b>Arithmetic helpers:</b> <c>Average</c> (for <c>int</c>, <c>long</c>, <c>double</c>, <c>decimal</c>).</description></item>
+/// <item><description><b>Bounds clamping:</b> <c>Decrement</c>, <c>Increment</c>, <c>EnsureMinimum</c>, <c>ToPositiveValue</c>.</description></item>
+/// <item><description><b>Range and parity checks:</b> <c>IsInRange</c>, <c>IsInRangeThrowsException</c>, <c>IsInterval</c>, <c>IsIntervalThrowsException</c>, <c>IsEven</c>, <c>IsNegative</c>.</description></item>
+/// <item><description><b>Formatting:</b> <c>FormatSize</c> (bytes to KB/MB/GB/…), <c>FormatTime</c>, <c>MillisecondsToString</c>, <c>ToFormattedString</c>, <c>ToStringOrEmpty</c>.</description></item>
+/// <item><description><b>Conversion:</b> <c>BytesToMegabytes</c>, <c>RoundToPowerOf2</c>, <c>ToRomanNumeral</c>, <c>ToWords</c>.</description></item>
+/// </list>
+/// </remarks>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNumericExtensions")]
 public static class NumericExtensions
 {

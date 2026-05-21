@@ -4,12 +4,17 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="HashSetExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary>Extension methods for the HashSet type.</summary>
+// <summary>
+// Extension methods for <see cref="System.Collections.Generic.HashSet{T}"/> providing
+// conditional add, upsert, and conversion utilities. Includes <c>AddIf</c>, <c>ToConcurrent</c>,
+// <c>ToImmutable</c>, and <c>Upsert</c>. Obsolete variants (<c>ToConcurrentHashSet</c>,
+// <c>ToImmutableHashSet</c>) are retained with deprecation notices pointing to their replacements.
+// </summary>
 // ***********************************************************************
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -22,8 +27,8 @@ using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="HashSet{T}" /> to enhance its functionality.
-/// These methods include adding items conditionally, converting to concurrent or immutable hash sets, and upserting items.
+/// Provides extension methods for <see cref="HashSet{T}" /> that extend its built-in API
+/// with conditional add, upsert, and conversion operations.
 /// </summary>
 [Information(Status = Status.NeedsDocumentation)]
 public static class HashSetExtensions
@@ -54,7 +59,7 @@ public static class HashSetExtensions
 		/// </list>
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is <c>null</c>.</exception>
-		[Information(nameof(AddIf), "David McCarter", "5/2/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddIf([DisallowNull] T item, bool condition)
 		{
 			collection = collection.ArgumentNotNull();
@@ -94,7 +99,7 @@ public static class HashSetExtensions
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToConcurrent), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToConcurrent), "David McCarter", "1/28/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ConcurrentHashSet<T> ToConcurrent()
 		{
 			return [.. collection.ArgumentNotNull()];
@@ -130,7 +135,7 @@ public static class HashSetExtensions
 		/// <exception cref="ArgumentNullException">Thrown if collection is null.</exception>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToImmutable), "David McCarter", "1/28/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ImmutableHashSet<T> ToImmutable([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			return comparer is null
@@ -144,7 +149,7 @@ public static class HashSetExtensions
 		/// </summary>
 		/// <param name="item">The item to upsert into the hash set.</param>
 		[Pure]
-		[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void Upsert([DisallowNull] T item)
 		{
 			collection = collection.ArgumentNotNull();

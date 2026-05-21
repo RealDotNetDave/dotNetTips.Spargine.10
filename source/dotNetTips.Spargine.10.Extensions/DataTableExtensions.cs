@@ -4,12 +4,17 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DataTableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods for the DataTable type.</summary>
+// <summary>
+// Extension methods for <see cref="System.Data.DataTable"/> and <see cref="object"/> providing
+// data-validation utilities. Includes <c>HasRows</c>, which checks whether a <see cref="System.Data.DataTable"/>
+// contains any rows, and <c>IsDBNull</c>, which determines whether a value is equivalent to
+// <see cref="System.DBNull"/>.
+// </summary>
 // ***********************************************************************
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -21,23 +26,26 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="DataTable"/> type, enhancing its functionality with additional utility methods.
-/// These methods include checking if a DataTable has any rows and if an object is a database null value.
+/// Provides extension methods for <see cref="DataTable"/> and <see cref="object"/> to simplify
+/// common data-validation tasks when working with ADO.NET.
 /// </summary>
 /// <remarks>
-/// The extension methods provided in this class are designed to simplify common operations performed on <see cref="DataTable"/> instances,
-/// such as determining if the table contains any rows or if a particular value is equivalent to a database null. These utilities can help
-/// streamline data handling and validation processes in applications that interact with databases.
+/// Includes <c>HasRows</c> for safely checking whether a <see cref="DataTable"/> is non-null and
+/// contains at least one row, and <c>IsDBNull</c> for testing whether an <see cref="object"/> value
+/// is equivalent to <see cref="DBNull.Value"/>. Both methods are null-safe and designed to reduce
+/// boilerplate in database-access code.
 /// </remarks>
 [Information(Status = Status.Available)]
 public static class DataTableExtensions
 {
 
 	/// <summary>
-	/// Determines whether the specified <see cref="DataTable" /> has rows.
+	/// Determines whether the specified <see cref="DataTable" /> contains any rows.
 	/// </summary>
-	/// <param name="table">The table.</param>
-	/// <returns><c>true</c> if the specified table has rows; otherwise, <c>false</c>.</returns>
+	/// <param name="table">The <see cref="DataTable"/> to check. A <c>null</c> value is handled safely.</param>
+	/// <returns>
+	/// <c>true</c> if <paramref name="table"/> is not null and contains at least one row; otherwise, <c>false</c>.
+	/// </returns>
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(HasRows), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -47,10 +55,13 @@ public static class DataTableExtensions
 	}
 
 	/// <summary>
-	/// Determines whether [is database null] [the specified value].
+	/// Determines whether the specified value is equivalent to <see cref="DBNull"/>.
 	/// </summary>
-	/// <param name="value">The value.</param>
-	/// <returns><c>true</c> if [is database null] [the specified value]; otherwise, <c>false</c>.</returns>
+	/// <param name="value">The value to test. Must not be null.</param>
+	/// <returns>
+	/// <c>true</c> if <paramref name="value"/> equals <see cref="DBNull.Value"/>; otherwise, <c>false</c>.
+	/// </returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
 	[Information(nameof(IsDBNull), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]

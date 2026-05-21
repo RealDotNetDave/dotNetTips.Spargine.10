@@ -3,13 +3,18 @@
 // Author           : David McCarter
 // Created          : 02-24-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-19-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary></summary>
+// <summary>
+// Extension methods for <see cref="System.Collections.Concurrent.ConcurrentBag{T}"/> providing
+// thread-safe bulk operations. Includes <c>AddRange</c> for adding multiple items, <c>RemoveRange</c>
+// for removing a set of items by value (with optional custom equality comparer), and <c>ToList</c>
+// for converting the bag to a <see cref="System.Collections.Generic.List{T}"/>.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.Concurrent;
@@ -22,12 +27,16 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="ConcurrentBag{T}"/>.
+/// Provides extension methods for <see cref="ConcurrentBag{T}"/> that add thread-safe bulk
+/// operations: adding a range of items (<c>AddRange</c>), removing a range of items by value
+/// (<c>RemoveRange</c>), and converting the bag to a <see cref="List{T}"/> (<c>ToList</c>).
 /// </summary>
 [Information(Status = Status.Available)]
 public static class ConcurrentBagExtensions
 {
-	/// <summary></summary>
+	/// <summary>
+	/// Extension methods for <see cref="ConcurrentBag{T}"/> instances.
+	/// </summary>
 	extension<T>([DisallowNull] ConcurrentBag<T> bag)
 	{
 		/// <summary>
@@ -42,7 +51,7 @@ public static class ConcurrentBagExtensions
 		/// </list>
 		/// <see cref="ConcurrentBag{T}.Add"/> is thread-safe and optimized for concurrent operations.
 		/// </remarks>
-		[Information(nameof(AddRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "2/24/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddRange([DisallowNull] in IEnumerable<T> items)
 		{
 			if (items is null)
@@ -69,7 +78,7 @@ public static class ConcurrentBagExtensions
 		/// <returns>A new <see cref="ConcurrentBag{T}"/> with the specified items removed.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveRange), "David McCarter", "2/24/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ConcurrentBag<T> RemoveRange([DisallowNull] IEnumerable<T> items, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -105,7 +114,7 @@ public static class ConcurrentBagExtensions
 		/// <returns>A <see cref="List{T}"/> containing the elements of the bag.</returns>
 		[Pure]
 		[return: NotNull]
-		[Information(nameof(ToList), "David McCarter", "2/24/2025", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToList), "David McCarter", "2/24/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public List<T> ToList()
 		{
 			bag = bag.ArgumentNotNull();

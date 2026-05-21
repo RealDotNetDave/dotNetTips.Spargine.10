@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 05-11-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>StringBuilder Extensions.</summary>
+// <summary>
+// Extension methods for <c>StringBuilder</c> providing key-value pair appending (<c>AppendKeyValue</c>),
+// byte-array appending (<c>AppendBytes</c>), collection appending with custom separators and join
+// actions (<c>AppendValues</c>), and capacity management (<c>ClearSetCapacity</c>, <c>SetCapacity</c>).
+// </summary>
 // ***********************************************************************
 using System.Buffers;
 using System.Collections.ObjectModel;
@@ -24,10 +28,10 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="StringBuilder"/> to enhance and simplify its functionality.
+/// Provides extension methods for <c>StringBuilder</c> to enhance and simplify its functionality.
 /// </summary>
 /// <remarks>
-/// This class includes methods for appending key-value pairs, bytes, and collections with various formatting options.
+/// Includes methods for appending key-value pairs, bytes, and collections with various formatting options.
 /// </remarks>
 [Information(nameof(StringBuilderExtensions), "David McCarter", "5/26/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineStringBuilderExtensions")]
 public static class StringBuilderExtensions
@@ -43,7 +47,7 @@ public static class StringBuilderExtensions
 	/// and appends the content to <paramref name="sb"/>, inserting a backslash escape before
 	/// each occurrence.
 	/// </summary>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="sb">The target <c>StringBuilder</c>.</param>
 	/// <param name="value">The string to scan and append.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 #pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
@@ -76,7 +80,7 @@ public static class StringBuilderExtensions
 	/// each element, appends <paramref name="separator"/> after each, then trims the trailing separator.
 	/// </summary>
 	/// <typeparam name="T">Element type.</typeparam>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="sb">The target <c>StringBuilder</c>.</param>
 	/// <param name="values">The sequence of values to append.</param>
 	/// <param name="separator">The separator to append between values.</param>
 	/// <param name="action">The action to invoke for each value.</param>
@@ -108,7 +112,7 @@ public static class StringBuilderExtensions
 	/// <typeparam name="T">Element type.</typeparam>
 	/// <typeparam name="TParam1">Type of the first additional parameter.</typeparam>
 	/// <typeparam name="TParam2">Type of the second additional parameter.</typeparam>
-	/// <param name="sb">The target <see cref="StringBuilder"/>.</param>
+	/// <param name="sb">The target <c>StringBuilder</c>.</param>
 	/// <param name="values">The sequence of values to append.</param>
 	/// <param name="separator">The separator to append between values.</param>
 	/// <param name="param1">The first additional parameter passed to <paramref name="action"/>.</param>
@@ -135,11 +139,13 @@ public static class StringBuilderExtensions
 	}
 
 	/// <summary>
-	/// Sets the separator.
+	/// Returns <paramref name="separator"/> if it has a value; otherwise returns the default separator.
 	/// </summary>
-	/// <param name="separator">The separator.</param>
-	/// <returns>System.String.</returns>
+	/// <param name="separator">The separator to evaluate.</param>
+	/// <returns>A non-empty separator string.</returns>
+#pragma warning disable IDE0051 // Remove unused private members - called from C# 14 extension block methods
 	private static string SetSeparator(string separator)
+#pragma warning restore IDE0051
 	{
 		if (separator.HasValue() is false)
 		{
@@ -150,15 +156,15 @@ public static class StringBuilderExtensions
 	}
 
 	/// <summary>
-	/// Provides extension methods for <see cref="StringBuilder"/> instances.
+	/// Extension methods for <c>StringBuilder</c> instances.
 	/// </summary>
-	/// <param name="sb">The <see cref="StringBuilder"/> instance to extend.</param>
+	/// <param name="sb">The <c>StringBuilder</c> instance to extend.</param>
 	extension([DisallowNull] StringBuilder sb)
 	{
 		/// <summary>
-		/// Appends the bytes to the <see cref="StringBuilder"/> in hexadecimal format, prefixed with '0x' and enclosed in single quotes.
+		/// Appends the bytes to the <c>StringBuilder</c> in hexadecimal format, prefixed with '0x' and enclosed in single quotes.
 		/// </summary>
-		/// <param name="bytes">The byte array to append. If <c>null</c>, the method returns without modifying the <see cref="StringBuilder"/>.</param>
+		/// <param name="bytes">The byte array to append. If <c>null</c>, the method returns without modifying the <c>StringBuilder</c>.</param>
 		/// <remarks>
 		/// Each byte is formatted as a two-digit uppercase hexadecimal value. The resulting string is wrapped in single quotes and prefixed with '0x'.
 		/// </remarks>
@@ -205,15 +211,14 @@ public static class StringBuilderExtensions
 		/// If set to <c>true</c>, appends a comma separator after the key-value pair for chaining multiple pairs.
 		/// Default is <c>true</c>.
 		/// </param>
-		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance or <paramref name="key"/> is <c>null</c>.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if the <c>StringBuilder</c> instance or <paramref name="key"/> is <c>null</c>.</exception>
 		/// <exception cref="ArgumentException">Thrown if <paramref name="key"/> is empty.</exception>
 		/// <remarks>
-		/// This method formats the output as <c>key=value</c> or <c>key="value"</c> depending on the <paramref name="includeQuotes"/> parameter.
-		/// When <paramref name="includeQuotes"/> is <c>true</c>, special characters within the value (specifically double quotes and backslashes) are automatically
-		/// escaped with a backslash prefix to ensure proper string formatting. The method efficiently handles special character escaping using
-		/// <see cref="SearchValues{T}"/> for optimal performance.
-		/// If <paramref name="includeComma"/> is <c>true</c>, a comma is appended after the key-value pair, making it suitable for constructing
-		/// comma-separated lists of key-value pairs.
+		/// Formats output as <c>key=value</c> or <c>key="value"</c> depending on <paramref name="includeQuotes"/>.
+		/// When <paramref name="includeQuotes"/> is <c>true</c>, special characters (double quotes and backslashes) within
+		/// the value are escaped with a backslash prefix. Uses <c>SearchValues{T}</c> for efficient special-character detection.
+		/// When <paramref name="includeComma"/> is <c>true</c>, a comma is appended, making the output suitable for
+		/// comma-separated key-value lists.
 		/// </remarks>
 		/// <example>
 		/// <code>
@@ -283,13 +288,13 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Appends a collection of values to the <see cref="StringBuilder"/>, separated by the specified separator, using a custom join action.
+		/// Appends a collection of string values to the <c>StringBuilder</c>, separated by <paramref name="separator"/>.
 		/// </summary>
 		/// <param name="separator">The separator to use between values.</param>
-		/// <param name="values">The collection of values to append.</param>
+		/// <param name="values">The collection of string values to append. Must not be <c>null</c>.</param>
 		/// <remarks>
-		/// If <paramref name="values"/> is null, the method returns without modifying the <see cref="StringBuilder"/>.
-		/// The separator is appended after each value, and removed after the last value.
+		/// If <paramref name="values"/> is <c>null</c>, the method returns without modifying the <c>StringBuilder</c>.
+		/// The separator is appended after each value and removed after the last value.
 		/// </remarks>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AppendValues), author: "David McCarter", createdOn: "7/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
@@ -316,20 +321,17 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Appends a collection of string values to the <see cref="StringBuilder"/>, separated by the specified <paramref name="separator"/>.
+		/// Appends a <c>ReadOnlyCollection{string}</c> of values to the <c>StringBuilder</c>, separated by <paramref name="separator"/>.
 		/// </summary>
 		/// <param name="separator">
-		/// The separator to use between values. If <c>null</c> or empty, the method will use the default separator returned by <see cref="SetSeparator(string)"/>.
+		/// The separator to use between values. If <c>null</c> or empty, the default separator is used.
 		/// </param>
-		/// <param name="values">A <see cref="ReadOnlyCollection{T}"/> of string values to append. The collection must not be <c>null</c>.</param>
+		/// <param name="values">The <c>ReadOnlyCollection{string}</c> of values to append. Must not be <c>null</c>.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when the current <see cref="StringBuilder"/> instance or the <paramref name="values"/> parameter is <c>null</c>.
-		/// Parameter validation is performed via extension preconditions.
+		/// Thrown when the <c>StringBuilder</c> instance or <paramref name="values"/> is <c>null</c>.
 		/// </exception>
 		/// <remarks>
-		/// This overload adapts the provided <paramref name="values"/> collection and forwards each value to the generic
-		/// AppendValues overload using an action that appends the value to the builder.
-		/// The <paramref name="separator"/> is normalized by <see cref="SetSeparator(string)"/> before joining.
+		/// The separator is normalized before joining. Each value is appended in sequence with the separator between them.
 		/// </remarks>
 		/// <example>
 		/// <code>
@@ -370,15 +372,7 @@ public static class StringBuilderExtensions
 		/// <param name="separator">The separator to use between values.</param>
 		/// <param name="values">The collection of values to append.</param>
 		/// <param name="joinAction">The action to perform for each value.</param>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> or <paramref name="joinAction"/> is null.</exception>
-		/// <example>
-		/// <code>
-		/// var sb = new StringBuilder();
-		/// var values = new[] { "value1", "value2", "value3" };
-		/// sb.AppendValues(",", values, value => sb.Append(value));
-		/// Console.WriteLine(sb.ToString()); // Output: value1,value2,value3
-		/// </code>
-		/// </example>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> or <paramref name="joinAction"/> is <c>null</c>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] Action<T> joinAction)
@@ -419,7 +413,7 @@ public static class StringBuilderExtensions
 		/// <param name="values">The collection of values to append.</param>
 		/// <param name="param">The additional parameter to pass to the join action.</param>
 		/// <param name="joinAction">The action to perform for each value and the additional parameter.</param>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param"/>, or <paramref name="joinAction"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param"/>, or <paramref name="joinAction"/> is <c>null</c>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T, TParam>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam param, [DisallowNull] Action<T, TParam> joinAction)
@@ -463,7 +457,7 @@ public static class StringBuilderExtensions
 		/// <param name="param1">The first additional parameter to pass to the join action.</param>
 		/// <param name="param2">The second additional parameter to pass to the join action.</param>
 		/// <param name="joinAction">The action to perform for each value and the additional parameters.</param>
-		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param1"/>, <paramref name="param2"/>, or <paramref name="joinAction"/> is null.</exception>
+		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param1"/>, <paramref name="param2"/>, or <paramref name="joinAction"/> is <c>null</c>.</exception>
 		/// <example>
 		/// <code>
 		/// var sb = new StringBuilder();
@@ -505,16 +499,14 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Clears the <see cref="StringBuilder"/> and sets its capacity to the specified value.
+		/// Clears the <c>StringBuilder</c> and sets its capacity to the specified value.
 		/// </summary>
-		/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>. Must be greater than or equal to zero.</param>
-		/// <returns>The same <see cref="StringBuilder"/> instance after clearing its content and setting the new capacity, allowing for method chaining.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance is <c>null</c>.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than zero or less than the current length after clearing.</exception>
+		/// <param name="capacity">The new capacity. Must be greater than or equal to zero.</param>
+		/// <returns>The same <c>StringBuilder</c> instance after clearing and resizing, enabling fluent chaining.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the <c>StringBuilder</c> instance is <c>null</c>.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than zero.</exception>
 		/// <remarks>
-		/// This method first clears all content from the <see cref="StringBuilder"/>, then sets its capacity to the specified value.
-		/// Setting the capacity can help optimize memory usage when you know the approximate size of the content you'll be building.
-		/// The method returns the same <see cref="StringBuilder"/> instance, enabling fluent-style method chaining.
+		/// Clears all content first, then calls <c>EnsureCapacity</c>. Use <c>SetCapacity</c> to resize without clearing content.
 		/// </remarks>
 		/// <example>
 		/// <code>
@@ -537,18 +529,15 @@ public static class StringBuilderExtensions
 		}
 
 		/// <summary>
-		/// Sets the capacity of the <see cref="StringBuilder"/> to the specified value.
+		/// Sets the capacity of the <c>StringBuilder</c> to the specified value without clearing existing content.
 		/// </summary>
-		/// <param name="capacity">The new capacity to set for the <see cref="StringBuilder"/>. Must be greater than or equal to the current <see cref="StringBuilder.Length"/> and less than or equal to <see cref="StringBuilder.MaxCapacity"/>.</param>
-		/// <returns>The same <see cref="StringBuilder"/> instance after setting the new capacity, allowing for method chaining.</returns>
-		/// <exception cref="ArgumentNullException">Thrown if the <see cref="StringBuilder"/> instance is <c>null</c>.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than the current length or greater than the maximum capacity.</exception>
+		/// <param name="capacity">The new capacity. Must be greater than or equal to the current length and not exceed <c>MaxCapacity</c>.</param>
+		/// <returns>The same <c>StringBuilder</c> instance after resizing, enabling fluent chaining.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the <c>StringBuilder</c> instance is <c>null</c>.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="capacity"/> is less than the current length or exceeds <c>MaxCapacity</c>.</exception>
 		/// <remarks>
-		/// This method sets the <see cref="StringBuilder.Capacity"/> property directly without clearing the existing content.
-		/// Unlike <see cref="ClearSetCapacity"/>, this method preserves the current string content in the <see cref="StringBuilder"/>.
-		/// Setting the capacity can help optimize memory usage when you know the approximate size of additional content to be appended.
-		/// The method returns the same <see cref="StringBuilder"/> instance, enabling fluent-style method chaining.
-		/// For best performance, set the capacity before performing multiple append operations to minimize memory reallocations.
+		/// Unlike <c>ClearSetCapacity</c>, this method preserves the current content. Use it to pre-allocate capacity
+		/// before multiple append operations to minimize memory reallocations.
 		/// </remarks>
 		/// <example>
 		/// <code>

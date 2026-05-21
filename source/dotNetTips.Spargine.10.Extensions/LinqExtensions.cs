@@ -3,13 +3,18 @@
 // Author           : David McCarter
 // Created          : 08-18-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-10-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="LinqExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods tailored for LINQ.</summary>
+// <summary>
+// Extension methods for LINQ enabling conditional query composition on both
+// <see cref="System.Linq.IQueryable{T}"/> and <see cref="System.Collections.Generic.IEnumerable{T}"/>.
+// Includes two <c>If</c> overloads that apply a set of transform functions only when a boolean
+// condition is <see langword="true"/>, with optimized fast paths for zero, one, and multiple transforms.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -21,10 +26,16 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for LINQ to enhance its functionality and usability.
-/// These methods include conditional transformations on <see cref="IQueryable{T}"/> and <see cref="IEnumerable{T}"/>,
-/// allowing for more expressive and dynamic query composition.
+/// Provides extension methods for LINQ enabling conditional query composition on
+/// <see cref="IQueryable{T}"/> and <see cref="IEnumerable{T}"/>.
 /// </summary>
+/// <remarks>
+/// Both <c>If</c> overloads accept a boolean condition and a <see langword="params"/> array of
+/// transform functions. When the condition is <see langword="false"/> the original sequence is
+/// returned immediately with no overhead. The <see cref="IEnumerable{T}"/> overload includes
+/// additional fast paths for zero and single transforms to minimize allocation and delegate
+/// invocation cost.
+/// </remarks>
 [Information(nameof(LinqExtensions), "David McCarter", "8/18/20", Status = Status.NeedsDocumentation)]
 public static class LinqExtensions
 {

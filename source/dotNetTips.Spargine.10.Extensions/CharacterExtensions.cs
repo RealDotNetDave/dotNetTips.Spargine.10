@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-21-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,7 +25,13 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="char"/> to determine ASCII character types.
+/// Provides high-performance extension methods for <see cref="char"/> supporting ASCII character
+/// classification and conversion. Includes properties for detecting digits (<c>IsUnicodeDigit</c>),
+/// uppercase letters (<c>IsAsciiUpper</c>), hex digits (<c>IsHexDigit</c>), newlines (<c>IsNewLine</c>),
+/// punctuation (<c>IsAsciiPunctuation</c>), control characters (<c>IsAsciiControl</c>), and whitespace
+/// (<c>IsAsciiWhitespace</c>), along with methods for fast case conversion (<c>ToAsciiUpper</c>,
+/// <c>ToAsciiLower</c>) and digit value extraction (<c>GetDigitValue</c>). All members are aggressively
+/// inlined for optimal throughput in character processing scenarios.
 /// </summary>
 [Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class CharacterExtensions
@@ -123,6 +129,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// The uppercase equivalent of the character if it is a lowercase ASCII letter; otherwise, the original character.
 		/// </value>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information("ToAsciiUpper", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public char ToAsciiUpper()
 		{

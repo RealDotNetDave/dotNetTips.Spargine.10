@@ -4,12 +4,20 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-13-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods tailored for HttpClient.</summary>
+// <summary>
+// Extension methods for <see cref="System.Net.Http.HttpClient"/> providing stream-based, memory-efficient
+// HTTP operations with integrated JSON serialization and deserialization. Includes
+// <c>DeleteAndDeserializeAsync</c>, <c>DownloadToStreamAsync</c>, <c>GetAndDeserializeAsync</c>,
+// <c>GetAndDeserializeFromStreamAsync</c>, <c>GetStreamAsync</c>, <c>HeadersAsync</c>,
+// <c>PatchAndDeserializeAsync</c>, <c>PostAndDeserializeAsync</c>, <c>PostAndEnsureSuccessAsync</c>,
+// and <c>PutAndDeserializeAsync</c>. Both reflection-based and trim-safe source-generated
+// (<see cref="System.Text.Json.Serialization.Metadata.JsonTypeInfo{T}"/>) overloads are provided.
+// </summary>
 // ***********************************************************************
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -28,13 +36,15 @@ using DotNetTips.Spargine.Extensions.Properties;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods tailored for <see cref="HttpClient"/>, enhancing its functionality with additional utility methods.
-/// These methods simplify common tasks such as deserializing JSON responses from HTTP GET requests.
+/// Provides extension methods for <see cref="HttpClient"/> that streamline HTTP operations
+/// with integrated JSON serialization, stream-based responses, and structured error handling.
 /// </summary>
 /// <remarks>
-/// The extension methods within this class aim to reduce boilerplate code and improve readability when working with <see cref="HttpClient"/>.
-/// For example, the <see cref="GetAndDeserializeAsync{T}"/> method streamlines the process of sending a GET request, checking the response status,
-/// reading the response content as a string, and deserializing it into an instance of a type.
+/// All methods use <see cref="HttpCompletionOption.ResponseHeadersRead"/> and stream-based
+/// deserialization where possible to minimize memory allocations. Each method normalizes
+/// cancellation, timeout, and HTTP error conditions into <see cref="InvalidOperationException"/>.
+/// Reflection-based overloads are annotated with <see cref="RequiresUnreferencedCodeAttribute"/>;
+/// trim-safe alternatives accept <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpClientExtensions
@@ -179,7 +189,7 @@ public static class HttpClientExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="options"/> is null.</exception>
-	/// <remarks>Make sure to call .Dispose on Task,</remarks>
+	/// <remarks>This overload reads the entire response into a string before deserializing. For large payloads, prefer <see cref="GetAndDeserializeFromStreamAsync{T}(HttpClient, Uri, JsonSerializerOptions, CancellationToken)"/> which uses stream-based deserialization to minimize allocations.</remarks>
 	[Pure]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
 	[Information("Original code from: https://ardalis.com/keep-tests-short-and-dry-with-extensions", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]

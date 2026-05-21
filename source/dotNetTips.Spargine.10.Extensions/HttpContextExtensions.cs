@@ -3,13 +3,18 @@
 // Author           : David McCarter
 // Created          : 09-04-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="HttpContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for HttpContext.</summary>
+// <summary>
+// Extension methods for <see cref="Microsoft.AspNetCore.Http.HttpContext"/> providing request
+// inspection utilities. Includes <c>GetAbsoluteUri</c>, <c>GetBearerToken</c>,
+// <c>GetRemoteIPAddress</c>, <c>GetRequestHeaderValue</c>, <c>GetUserClaim</c>,
+// and <c>IsAuthenticated</c>.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -24,13 +29,16 @@ using Microsoft.Extensions.Primitives;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="HttpContext"/>, enhancing its functionality with additional utility methods.
-/// These methods include getting the remote IP address of the client, which can be useful for logging, analytics, and security purposes.
+/// Provides extension methods for <see cref="HttpContext"/> that simplify common request
+/// inspection tasks including URI construction, authentication, header access, and claim retrieval.
 /// </summary>
 /// <remarks>
-/// The extension methods in this class are designed to simplify common operations performed on <see cref="HttpContext"/> instances,
-/// making it easier to retrieve information such as the client's IP address. This can be particularly useful in web applications
-/// for tracking user activity or implementing security measures based on IP addresses.
+/// Available utilities: <c>GetAbsoluteUri</c> builds the fully qualified request URI;
+/// <c>GetBearerToken</c> extracts the Bearer token from the Authorization header;
+/// <c>GetRemoteIPAddress</c> returns the client's remote IP address;
+/// <c>GetRequestHeaderValue</c> retrieves a named request header;
+/// <c>GetUserClaim</c> looks up a claim value from the authenticated user;
+/// and <c>IsAuthenticated</c> checks whether the current user is authenticated.
 /// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class HttpContextExtensions
@@ -88,11 +96,12 @@ public static class HttpContextExtensions
 	}
 
 	/// <summary>
-	/// Gets the remote IP address.
+	/// Gets the remote IP address of the connected client.
 	/// Validates that <paramref name="context" /> is not null.
 	/// </summary>
-	/// <param name="context">The context.</param>
-	/// <returns>System.String.</returns>
+	/// <param name="context">The <see cref="HttpContext"/> from which to read the remote IP address.</param>
+	/// <returns>The remote IP address as a <see cref="string"/>, or an empty string if the address is unavailable.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="context"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
 	[Information("Original code from: https://edi.wang/post/2017/10/16/get-client-ip-aspnet-20", "David McCarter", "9/04/2017", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]

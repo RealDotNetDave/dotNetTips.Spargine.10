@@ -3,13 +3,24 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-31-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods for DateTime and DateTimeOffset.</summary>
+// <summary>
+// Extension methods for <see cref="System.DateTime"/>, <see cref="System.DateTimeOffset"/>,
+// <see cref="System.DateOnly"/>, <see cref="System.TimeSpan"/>, and <see cref="int"/> providing
+// date/time arithmetic and formatting utilities. Includes Unix epoch conversions
+// (<c>FromMilliEpochTime</c>, <c>ToMilliEpochTime</c>), day-of-week navigation
+// (<c>GetLastDayOfWeek</c>, <c>GetNextDayOfWeek</c>), ISO 8601 week helpers
+// (<c>GetWeekOfTheYear</c>, <c>GetWeeksInTheYear</c>, <c>GetYear</c>, <c>GetYearStart</c>,
+// <c>GetYearEnd</c>), range checks (<c>IsInRange</c>, <c>IsInRangeThrowsException</c>,
+// <c>Intersects</c>), time-until helpers (<c>TimeUntilNextHour</c>, <c>TimeUntilNextMinute</c>),
+// formatting (<c>ToFormattedString</c>, <c>ToFriendlyDateString</c>), and UTC conversion
+// (<c>LocalTimeFromUtc</c>).
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -22,10 +33,13 @@ using DotNetTips.Spargine.Extensions.Properties;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="DateTime"/>, <see cref="DateTimeOffset"/>, and <see cref="TimeSpan"/> types, enhancing functionality with additional utility methods.
+/// Provides extension methods for <see cref="DateTime"/>, <see cref="DateTimeOffset"/>, <see cref="DateOnly"/>,
+/// <see cref="TimeSpan"/>, and <see cref="int"/> types, enhancing date and time handling with additional utility methods.
 /// </summary>
 /// <remarks>
-/// This class includes methods for converting between Unix epoch time and <see cref="DateTime"/>, finding the next or last day of the week from a given date, checking if a date range intersects with another, and more.
+/// Includes Unix epoch conversions, ISO 8601 week and year helpers, day-of-week navigation,
+/// date-range intersection and validation checks, time-until-next-boundary helpers,
+/// friendly and formatted string output, and UTC offset conversion.
 /// These methods are designed to simplify common date and time operations, making code more readable and efficient.
 /// </remarks>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
@@ -118,10 +132,10 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Returns the ISO 8601 week number of the year for the specified <see cref="DateTime"/>.
+	/// Returns the ISO 8601 week-based year for the specified <see cref="DateTime"/>.
 	/// </summary>
-	/// <param name="input">The <see cref="DateTime"/> to get the week number for.</param>
-	/// <returns>The ISO 8601 week number of the year.</returns>
+	/// <param name="input">The <see cref="DateTime"/> to get the ISO 8601 year for.</param>
+	/// <returns>The ISO 8601 week-based year that contains the specified <see cref="DateTime"/>.</returns>
 	[Pure]
 	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int GetYear(this in DateTime input)
@@ -130,10 +144,10 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Returns the ISO 8601 week number of the year for the specified <see cref="DateOnly"/>.
+	/// Returns the ISO 8601 week-based year for the specified <see cref="DateOnly"/>.
 	/// </summary>
-	/// <param name="input">The <see cref="DateOnly"/> to get the week number for.</param>
-	/// <returns>The ISO 8601 week number of the year.</returns>
+	/// <param name="input">The <see cref="DateOnly"/> to get the ISO 8601 year for.</param>
+	/// <returns>The ISO 8601 week-based year that contains the specified <see cref="DateOnly"/>.</returns>
 	[Pure]
 	[Information(nameof(GetYear), author: "David McCarter", createdOn: "5/13/2025", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int GetYear(this in DateOnly input)
@@ -170,13 +184,14 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Intersects the specified start date.
+	/// Determines whether the date range defined by <paramref name="startDate"/> and <paramref name="endDate"/>
+	/// intersects with the range defined by <paramref name="intersectingStartDate"/> and <paramref name="intersectingEndDate"/>.
 	/// </summary>
-	/// <param name="startDate">The start date.</param>
-	/// <param name="endDate">The end date.</param>
-	/// <param name="intersectingStartDate">The intersecting start date.</param>
-	/// <param name="intersectingEndDate">The intersecting end date.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+	/// <param name="startDate">The start of the primary date range.</param>
+	/// <param name="endDate">The end of the primary date range.</param>
+	/// <param name="intersectingStartDate">The start of the range to test for intersection.</param>
+	/// <param name="intersectingEndDate">The end of the range to test for intersection.</param>
+	/// <returns><c>true</c> if the two date ranges overlap; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[Information(nameof(Intersects), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool Intersects(this in DateTime startDate, in DateTime endDate, in DateTime intersectingStartDate, in DateTime intersectingEndDate)
@@ -185,13 +200,14 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
-	/// Intersects the specified end date.
+	/// Determines whether the date range defined by <paramref name="startDate"/> and <paramref name="endDate"/>
+	/// intersects with the range defined by <paramref name="intersectingStartDate"/> and <paramref name="intersectingEndDate"/>.
 	/// </summary>
-	/// <param name="startDate">The start date.</param>
-	/// <param name="endDate">The end date.</param>
-	/// <param name="intersectingStartDate">The intersecting start date.</param>
-	/// <param name="intersectingEndDate">The intersecting end date.</param>
-	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+	/// <param name="startDate">The start of the primary date range.</param>
+	/// <param name="endDate">The end of the primary date range.</param>
+	/// <param name="intersectingStartDate">The start of the range to test for intersection.</param>
+	/// <param name="intersectingEndDate">The end of the range to test for intersection.</param>
+	/// <returns><c>true</c> if the two date ranges overlap; otherwise, <c>false</c>.</returns>
 	[Pure]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static bool Intersects(this in DateTimeOffset startDate, in DateTimeOffset endDate, in DateTimeOffset intersectingStartDate, in DateTimeOffset intersectingEndDate)
@@ -403,7 +419,7 @@ public static class DateTimeExtensions
 	/// </summary>
 	/// <param name="input">The input.</param>
 	/// <param name="format">The format.</param>
-	/// <returns>System.String.</returns>
+	/// <returns>A <see cref="string"/> containing the <see cref="DateTime"/> formatted according to <paramref name="format"/>.</returns>
 	/// <example>
 	/// FullDateLongTime: Thursday, January 7, 2021 3:36:39 PM
 	/// FullDateShortTime: Thursday, January 7, 2021 3:36 PM
@@ -436,7 +452,7 @@ public static class DateTimeExtensions
 	/// </summary>
 	/// <param name="input">The input.</param>
 	/// <param name="format">The format.</param>
-	/// <returns>System.String.</returns>
+	/// <returns>A <see cref="string"/> containing the <see cref="DateTimeOffset"/> formatted according to <paramref name="format"/>.</returns>
 	/// <example>
 	/// FullDateLongTime: Thursday, January 7, 2021 3:36:39 PM
 	/// FullDateShortTime: Thursday, January 7, 2021 3:36 PM

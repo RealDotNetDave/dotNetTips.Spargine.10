@@ -9,7 +9,7 @@
 // <copyright file="TypeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods for general types.</summary>
+// <summary>Extension methods for Type that support reflection-based discovery of methods, properties, fields, constructors, and attributes.</summary>
 // ***********************************************************************
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -23,9 +23,16 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="Type"/> to enhance and simplify its usage.
+/// Provides extension methods for <see cref="Type"/> that support reflection-based discovery
+/// of methods, properties, fields, constructors, and attributes.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTypeExtension")]
+/// <remarks>
+/// The <see cref="TypeExtensions"/> class includes methods for inspecting types at runtime,
+/// such as retrieving abstract, generic, public, static, or declared members,
+/// checking for base classes, interfaces, properties, and methods,
+/// and determining type characteristics like nullability, open/closed generics, and enumerability.
+/// </remarks>
+[Information(Documentation = "https://bit.ly/SpargineTypeExtension", Status = Status.Available)]
 public static class TypeExtensions
 {
 
@@ -144,7 +151,7 @@ public static class TypeExtensions
 		/// <exception cref="ArgumentNullException">Thrown when the type is null.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllDeclaredFields), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<FieldInfo> GetAllDeclaredFields()
 		{
 			return TypeHelper.GetAllDeclaredFields(type);

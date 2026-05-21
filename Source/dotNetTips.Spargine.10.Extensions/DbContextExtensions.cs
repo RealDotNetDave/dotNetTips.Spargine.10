@@ -4,15 +4,18 @@
 // Created          : 04-13-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DbContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Extension methods for the DbContext type, including HasRecordsAsync,
-// GetRecordCountAsync, AddAndSaveAsync, DeleteAndSaveAsync,
-// ExecuteInTransactionAsync, GetChangedEntities, and HasChanges.
+// Extension methods for <see cref="Microsoft.EntityFrameworkCore.DbContext"/> reducing EF Core boilerplate.
+// Includes <c>AddAndSaveAsync</c> (bulk add + save), <c>DeleteAndSaveAsync</c> (bulk delete + save),
+// <c>ExecuteInTransactionAsync</c> (transaction-scoped execution), <c>GetChangedEntities</c>
+// (change-tracker query by <see cref="Microsoft.EntityFrameworkCore.EntityState"/>),
+// <c>HasChanges</c> (unsaved-change detection), <c>HasRecordsAsync</c> (existence check with optional
+// predicate), and <c>GetRecordCountAsync</c> (row count with optional predicate).
 // </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
@@ -27,12 +30,15 @@ using Microsoft.EntityFrameworkCore;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Extension methods for the <see cref="DbContext"/> type, enhancing its functionality with additional utility methods.
+/// Extension methods for <see cref="DbContext"/> that reduce Entity Framework Core boilerplate
+/// and provide common data-access patterns in a consistent, async-first API.
 /// </summary>
 /// <remarks>
-/// This class provides methods to interact with a <see cref="DbContext"/> in ways that reduce boilerplate code.
-/// Methods include batch add and save, batch delete and save, record existence and count queries,
-/// transaction-scoped execution, change tracker queries, and unsaved changes detection.
+/// Provides methods for batch add and save (<c>AddAndSaveAsync</c>), batch delete and save
+/// (<c>DeleteAndSaveAsync</c>), transaction-scoped execution (<c>ExecuteInTransactionAsync</c>),
+/// change-tracker queries filtered by <see cref="EntityState"/> (<c>GetChangedEntities</c>),
+/// unsaved-change detection (<c>HasChanges</c>), record existence checks with optional predicate
+/// (<c>HasRecordsAsync</c>), and row counts with optional predicate (<c>GetRecordCountAsync</c>).
 /// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class DbContextExtensions

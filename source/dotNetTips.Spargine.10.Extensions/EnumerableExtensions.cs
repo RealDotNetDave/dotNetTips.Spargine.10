@@ -3,13 +3,26 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary>This file contains extension methods for IEnumerable types.</summary>
+// <summary>
+// Extension methods for <see cref="System.Collections.Generic.IEnumerable{T}"/> and
+// <see cref="System.Collections.Generic.IAsyncEnumerable{T}"/> providing high-performance
+// add, query, conversion, and processing utilities. Includes <c>AddDistinct</c>, <c>AddFirst</c>,
+// <c>AddIf</c>, <c>AddLast</c>, <c>ContainsAny</c>, <c>CountAsync</c>, <c>FastAny</c>,
+// <c>FastContains</c>, <c>FastDistinct</c>, <c>FastLongCount</c>, <c>FastProcessor</c>,
+// <c>FastShuffle</c>, <c>FirstOrDefault</c>, <c>FirstOrNull</c>, <c>HasDuplicates</c>,
+// <c>IndexOf</c>, <c>IsEmpty</c>, <c>IsNotEmpty</c>, <c>IsNullOrEmpty</c>, <c>Join</c>,
+// <c>OrderBy</c>, <c>OrderByOrdinal</c>, <c>PageAsync</c>, <c>Partition</c>, <c>PickRandom</c>,
+// <c>RemoveNulls</c>, <c>ReplaceIf</c>, <c>StartsWith</c>, <c>StructuralSequenceEqual</c>,
+// <c>ToBlockingCollection</c>, <c>ToCollection</c>, <c>ToDelimitedString</c>, <c>ToFrozenSet</c>,
+// <c>ToImmutableArray</c>, <c>ToLinkedList</c>, <c>ToListAsync</c>, <c>ToReadOnlyCollection</c>,
+// <c>ToUniqueCollection</c>, <c>Upsert</c>, and more.
+// </summary>
 // ***********************************************************************
 using System.Collections;
 using System.Collections.Concurrent;
@@ -34,8 +47,9 @@ using ControlChars = DotNetTips.Spargine.Core.ControlChars;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides a collection of static methods for querying objects that implement <see cref="IEnumerable{T}"/>.
-/// These extensions add functionality for adding, checking, and manipulating elements within enumerable collections.
+/// Provides high-performance extension methods for <see cref="IEnumerable{T}"/> and <see cref="IAsyncEnumerable{T}"/>
+/// covering add, query, conversion, transformation, and processing operations.
+/// Span-based and collection-type–aware optimizations are applied throughout to minimize allocations.
 /// </summary>
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumerableExtensions")]
 public static class EnumerableExtensions
@@ -293,7 +307,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastContains), "David McCarter", "2/14/2026", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastContains), "David McCarter", "2/14/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool FastContains(T searchItem, [AllowNull] IComparer<T>? comparer = null)
 		{
 			if ((list is null) || (searchItem is null))
@@ -379,7 +393,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PageAsync), "David McCarter", "8/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public async IAsyncEnumerable<List<T>> PageAsync(int pageSize, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -408,12 +422,12 @@ public static class EnumerableExtensions
 	extension<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>([DisallowNull] IEnumerable<T> collection)
 	{
 		/// <summary>
-		/// Returns the first element in the collection that matches the specified condition, or null if no such element is found.
+		/// Returns the first element of the collection that matches the specified predicate, or the default value if no such element is found.
 		/// </summary>
-		/// <param name="accumulatorPredicate">The accumulatorFunction to accumulatorPredicate against the elements of the collection.</param>
-		/// <returns>The first element that matches the condition defined by <paramref name="accumulatorPredicate"/>, or null if no such element is found.</returns>
+		/// <param name="accumulatorPredicate">A function to test each element for a condition. Must not be <c>null</c>.</param>
+		/// <returns>The first element that satisfies <paramref name="accumulatorPredicate"/>, or <c>default</c> if no such element is found.</returns>
 		/// <example>
-		/// This example shows how to use <see cref="FirstOrNull{T}"/> to find the first element in an span of integers that is greater than 10, or null if no such element exists.
+		/// This example shows how to use <see cref="FirstOrNull{T}"/> to find the first element in an array of integers that is greater than 10, or null if no such element exists.
 		/// <code>
 		/// int[] numbers = { 1, 4, 7, 10, 12, 15 };
 		/// int? firstGreaterThanTen = numbers.FirstOrNull(n => n > 10);
@@ -423,7 +437,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FirstOrNull), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FirstOrNull([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -489,13 +503,13 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Finds the otherIndex of the first occurrence of an item in the collection that matches the specified accumulatorFunction.
+		/// Returns the zero-based index of the first occurrence of an element in the collection that satisfies the specified predicate.
 		/// </summary>
-		/// <param name="accumulatorPredicate">The accumulatorFunction to accumulatorPredicate against the elements of the collection.</param>
-		/// <returns>The zero-based otherIndex of the first occurrence of an item that matches the accumulatorFunction within the entire collection, if found; otherwise, -1.</returns>
+		/// <param name="accumulatorPredicate">A function to test each element for a condition. Must not be <c>null</c>.</param>
+		/// <returns>The zero-based index of the first element that satisfies <paramref name="accumulatorPredicate"/>; otherwise, <c>-1</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information("Original code by Simon Painter.", OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information("Original code by Simon Painter.", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] Func<T, bool> accumulatorPredicate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -637,7 +651,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Obsolete("Use EnsureUnique. Will be removed at the end of 2026", false)]
-		[Information(nameof(RemoveDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(RemoveDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> RemoveDuplicates()
 		{
 			return new HashSet<T>(collection);
@@ -900,7 +914,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToBlockingCollection), "David McCarter", "4/13/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(ToBlockingCollection), "David McCarter", "4/13/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public BlockingCollection<T> ToBlockingCollection()
 		{
 			return new BlockingCollection<T>(new ConcurrentQueue<T>(collection));
@@ -973,7 +987,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(ToDelimitedString), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string ToDelimitedString([ConstantExpected] char delimiter = ControlChars.Comma)
 		{
 			if (collection is null || collection.IsEmpty())
@@ -1162,13 +1176,13 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Returns the first element in a sequence that satisfies a specified condition or a default value if no such element is found.
+		/// Returns the first element in a sequence that satisfies a specified condition, or a default value if no such element is found.
 		/// </summary>
-		/// <param name="accumulatorPredicate">A accumulatorFunction to test each element for a condition.</param>
+		/// <param name="accumulatorPredicate">A function to test each element for a condition. Must not be <c>null</c>.</param>
 		/// <param name="alternate">The default value to return if no element satisfies the condition.</param>
-		/// <returns>The first element in the sequence that passes the test in the specified accumulatorFunction accumulatorFunction or <paramref name="alternate"/> if no such element is found.</returns>
+		/// <returns>The first element that passes the test in <paramref name="accumulatorPredicate"/>, or <paramref name="alternate"/> if no such element is found.</returns>
 		/// <example>
-		/// This example shows how to use FirstOrDefault{T}" to find the first element greater than 3 or return -1 if no such element exists.
+		/// This example shows how to use <c>FirstOrDefault</c> to find the first element greater than 3 or return -1 if no such element exists.
 		/// <code>
 		/// int[] numbers = { 1, 2, 3, 4, 5 };
 		/// int result = numbers.FirstOrDefault(n => n > 3, -1);
@@ -1349,8 +1363,8 @@ public static class EnumerableExtensions
 		/// <summary>
 		/// Counts the number of elements in the collection that satisfy a condition.
 		/// </summary>
-		/// <param name="accumulatorPredicate">A accumulatorFunction to test each element for a condition.</param>
-		/// <returns>The number of elements in the collection that satisfy the condition in the accumulatorFunction accumulatorFunction.</returns>
+		/// <param name="accumulatorPredicate">A function to test each element for a condition. Must not be <c>null</c>.</param>
+		/// <returns>The number of elements that satisfy the condition in <paramref name="accumulatorPredicate"/>.</returns>
 		/// <remarks>
 		/// This method is optimized for performance and should be used over <see cref="Enumerable.Count{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>
 		/// when working with large collections or performance-critical code.
@@ -1364,12 +1378,12 @@ public static class EnumerableExtensions
 		}
 
 		/// <summary>
-		/// Determines whether any element of a sequence satisfies a condition.
+		/// Determines whether any element of the sequence satisfies a condition.
 		/// </summary>
-		/// <param name="accumulatorPredicate">A accumulatorFunction to test each element for a condition.</param>
-		/// <returns>true if any elements in the collection sequence pass the test in the specified accumulatorFunction; otherwise, false.</returns>
+		/// <param name="accumulatorPredicate">A function to test each element for a condition. Must not be <c>null</c>.</param>
+		/// <returns><c>true</c> if any elements pass the test in <paramref name="accumulatorPredicate"/>; otherwise, <c>false</c>.</returns>
 		/// <example>
-		/// This example shows how to use <see cref="FastAny{T}"/> to quickly check if any elements in an span satisfy a condition.
+		/// This example shows how to use <see cref="FastAny{T}"/> to quickly check if any elements in an array satisfy a condition.
 		/// <code>
 		/// int[] numbers = { 1, 2, 3 };
 		/// bool hasEvenNumber = numbers.FastAny(n => n % 2 == 0);
@@ -1658,7 +1672,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "This method performs general-purpose random selection (not cryptographic). Random.Shared is appropriate for non-security scenarios like picking random elements from collections.")]
-		[Information(nameof(PickRandom), "David McCarter", "8/26/2020", "9/19/2020", BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(PickRandom), "David McCarter", "8/26/2020", "9/19/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T? PickRandom()
 		{
 			collection = collection.ArgumentNotNull();
@@ -1934,7 +1948,7 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(in int count)
 		{
 			if (collection is null)
@@ -1952,7 +1966,7 @@ public static class EnumerableExtensions
 		/// </summary>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, OptimizationStatus = OptimizationStatus.Completed)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
 			return !collection.IsEmpty();

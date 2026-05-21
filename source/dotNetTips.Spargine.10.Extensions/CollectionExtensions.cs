@@ -10,10 +10,11 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Provides high-performance extension methods for <see cref="ICollection{T}"/>, including conditional addition
-// (<see cref="CollectionExtensions.AddIf"/>), uniqueness-checked insertion (<see cref="CollectionExtensions.AddIfNotExists"/>),
-// bulk addition (<see cref="CollectionExtensions.AddRange"/>), upsert operations (<see cref="CollectionExtensions.Upsert"/>),
-// and zero-copy span conversions (<see cref="CollectionExtensions.AsSpan"/>, <see cref="CollectionExtensions.AsReadOnlySpan"/>).
+// Extension methods for <see cref="System.Collections.Generic.ICollection{T}"/> providing conditional addition
+// (<c>AddIf</c>), uniqueness-checked insertion (<c>AddIfNotExists</c>), bulk addition (<c>AddRange</c>),
+// upsert operations (<c>Upsert</c>), frozen-set conversion (<c>ToFrozenSet</c>), and zero-copy span
+// conversions (<c>AsSpan</c>, <c>AsReadOnlySpan</c>). A generic <c>Upsert</c> overload is also provided
+// for collections whose element type implements <see cref="DotNetTips.Spargine.Core.IDataModel{T, TKey}"/>.
 // </summary>
 // ***********************************************************************
 using System.Collections.Frozen;
@@ -216,7 +217,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			if (collection is null)
@@ -238,7 +239,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
 			collection = collection.ArgumentNotNull();
@@ -262,7 +263,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentNotNull();

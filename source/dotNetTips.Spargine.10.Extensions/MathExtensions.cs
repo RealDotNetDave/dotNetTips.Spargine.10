@@ -4,12 +4,17 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="MathExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods tailored for Math.</summary>
+// <summary>
+// Extension methods for numeric types providing mathematical utilities. Includes <c>Add</c>,
+// <c>Subtract</c>, <c>CalculatePercent</c> (for <c>int</c>, <c>long</c>, <c>double</c>, and
+// <c>TimeSpan</c>), <c>IsPrime</c>, and multiple <c>Round</c> overloads for <c>double</c> and
+// <c>decimal</c> with optional digit count and <c>MidpointRounding</c> mode.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
@@ -20,9 +25,14 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for mathematical operations, enhancing the built-in Math class with additional functionality and utilities.
-/// These methods include operations such as addition, subtraction, rounding, and calculating percentages, as well as determining if a number is prime.
+/// Provides extension methods for numeric types that supplement the built-in <see cref="Math"/> class.
 /// </summary>
+/// <remarks>
+/// Covers arithmetic helpers (<c>Add</c>, <c>Subtract</c>), percentage difference calculations
+/// across <c>int</c>, <c>long</c>, <c>double</c>, and <c>TimeSpan</c>, primality testing
+/// (<c>IsPrime</c>), and a family of <c>Round</c> overloads for <c>double</c> and <c>decimal</c>
+/// that accept an optional digit count and/or a <c>MidpointRounding</c> mode.
+/// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class MathExtensions
 {

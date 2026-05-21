@@ -3,13 +3,19 @@
 // Author           : David McCarter
 // Created          : 07-17-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-05-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="HttpResponseHeaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for HttpResponseHeader.</summary>
+// <summary>
+// Extension methods for <see cref="System.Net.HttpResponseHeader"/> and
+// <see cref="System.Net.Http.Headers.HttpResponseHeaders"/> providing header inspection and
+// manipulation utilities. Includes <c>AddRequestId</c>, <c>GetETagValue</c>,
+// <c>GetHeaderValue</c>, <c>GetName</c>, <c>GetRequestId</c>, <c>HasHeader</c>,
+// and <c>TryGetRetryAfterDelay</c>.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -29,7 +35,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// This class simplifies the process of converting <see cref="HttpResponseHeader"/> enumeration values to their corresponding string names.
 /// It is particularly useful for logging, debugging, or any scenario where the string representation of an HTTP response header is needed.
 /// </remarks>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
+[Information("From .NET Core source.",author: "David McCarter",createdOn: "7/15/2020",UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
 public static class HttpResponseHeaderExtensions
 {
 
@@ -129,10 +135,12 @@ public static class HttpResponseHeaderExtensions
 	}
 
 	/// <summary>
-	/// Gets the <see cref="HttpRequestHeader" /> name.
+	/// Gets the string name of the specified <see cref="HttpResponseHeader"/> enumeration value.
+	/// Validates that <paramref name="header"/> is a defined enum member.
 	/// </summary>
-	/// <param name="header">The header.</param>
-	/// <returns>System.String.</returns>
+	/// <param name="header">The <see cref="HttpResponseHeader"/> whose name to retrieve.</param>
+	/// <returns>The HTTP response header name as a <see cref="string"/> (e.g., <c>"ETag"</c>, <c>"Cache-Control"</c>).</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="header"/> is not a defined enum value.</exception>
 	[Pure]
 	[return: NotNull]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]

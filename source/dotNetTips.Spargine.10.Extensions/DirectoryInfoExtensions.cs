@@ -3,13 +3,17 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-29-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods designed for DirectoryInfo.</summary>
+// <summary>
+// Extension methods for <see cref="System.IO.DirectoryInfo"/> that supplement its built-in API.
+// Currently provides <c>GetSize</c>, which calculates the total byte size of files in a directory
+// using a search pattern and <see cref="System.IO.SearchOption"/>.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -21,11 +25,13 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="DirectoryInfo" /> to enhance and simplify its usage.
+/// Provides extension methods for <see cref="DirectoryInfo" /> that supplement its built-in API.
 /// </summary>
-/// <remarks>This class includes methods for calculating the total size of files within a directory,
-/// and potentially more functionalities that extend <see cref="DirectoryInfo" />.
-/// These methods aim to provide more convenient ways to interact with directories in .NET applications.</remarks>
+/// <remarks>
+/// Currently exposes <c>GetSize</c>, which enumerates files in a directory tree using a configurable
+/// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
+/// safely skipping files that raise <see cref="IOException" />.
+/// </remarks>
 [Information(Status = Status.Available)]
 public static class DirectoryInfoExtensions
 {

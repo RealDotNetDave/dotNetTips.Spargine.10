@@ -4,14 +4,17 @@
 // Created          : 04-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods tailored for ReadOnlyCollection.</summary>
+// <summary>
+// Extension methods for <c>IReadOnlyCollection{T}</c> providing content-based hash code generation
+// (<c>GenerateHashCode</c>), safe index access (<c>TryGetValue</c>, <c>GetValueOrDefault</c>),
+// and item-presence checks (<c>IsNotEmpty</c>).
+// </summary>
 // ***********************************************************************
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
@@ -22,14 +25,14 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="ReadOnlyCollection{T}"/>.
-/// These methods include checks for item presence, generating hash codes, and performing actions on items within the collection.
+/// Provides extension methods for <c>IReadOnlyCollection{T}</c> covering hash code generation,
+/// safe index access, and item-presence checks.
 /// </summary>
 [Information(Status = Status.NeedsDocumentation)]
 public static class ReadOnlyCollectionExtensions
 {
 	/// <summary>
-	/// Extension methods for <see cref="IReadOnlyCollection{T}"/>.
+	/// Extension methods for <c>IReadOnlyCollection{T}</c>.
 	/// </summary>
 	/// <typeparam name="T">The type of elements in the collection.</typeparam>
 	/// <param name="collection">The collection to extend.</param>
@@ -40,11 +43,11 @@ public static class ReadOnlyCollectionExtensions
 		/// Generates a hash code that represents the contents of the current read-only collection.
 		/// </summary>
 		/// <param name="comparer">
-		/// The <see cref="IEqualityComparer{T}"/> used to obtain hash codes for individual items.
-		/// If <c>null</c>, <see cref="EqualityComparer{T}.Default"/> is used.
+		/// The <c>IEqualityComparer{T}</c> used to obtain hash codes for individual items.
+		/// If <c>null</c>, <c>EqualityComparer{T}.Default</c> is used.
 		/// </param>
 		/// <returns>
-		/// An <see cref="int"/> hash code that reflects the sequence and values of the non-<c>null</c> items
+		/// An <c>int</c> hash code that reflects the sequence and values of the non-<c>null</c> items
 		/// in the collection.
 		/// </returns>
 		/// <remarks>
@@ -54,7 +57,7 @@ public static class ReadOnlyCollectionExtensions
 		/// the same hash code, although collisions are still possible.
 		/// </para>
 		/// <para>
-		/// The collection must not be <c>null</c>; otherwise, an <see cref="ArgumentNullException"/> is thrown.
+		/// The collection must not be <c>null</c>; otherwise, an <c>ArgumentNullException</c> is thrown.
 		/// </para>
 		/// </remarks>
 		[Pure]

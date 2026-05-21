@@ -3,16 +3,18 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="DataContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Extension methods for the DataContext type, including HasRecordsAsync,
-// GetRecordCountAsync, InsertCollectionAsync, UpsertCollectionAsync,
-// DeleteCollectionAsync, ExecuteInTransactionAsync, and GetTrackedObjects.
+// Extension methods for <see cref="LinqToDB.DataContext"/> providing async bulk operations and diagnostics.
+// Includes <c>HasRecordsAsync</c> (existence check), <c>GetRecordCountAsync</c> (row count with optional
+// predicate), <c>InsertCollectionAsync</c> (bulk insert), <c>UpsertCollectionAsync</c> (bulk insert-or-replace),
+// <c>DeleteCollectionAsync</c> (bulk delete), <c>ExecuteInTransactionAsync</c> (transaction-scoped execution),
+// and <c>GetTrackedObjects</c> (reflection-based change tracking retrieval).
 // </summary>
 // ***********************************************************************
 using System.Collections;
@@ -30,13 +32,17 @@ using LinqToDB.Async;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Extension methods for the <see cref="DataContext"/> type, enhancing its functionality with additional utility methods.
+/// Extension methods for <see cref="DataContext"/> that add async bulk and diagnostic operations
+/// not supported by the framework by default.
 /// </summary>
 /// <remarks>
-/// This class provides methods to interact with a <see cref="DataContext"/> in ways that are not supported by default.
-/// Methods include batch insert, upsert, and delete operations for collections; record existence and count queries;
-/// transaction-scoped execution; and retrieving tracked objects within a DataContext for debugging or auditing changes.
-/// Note: The use of reflection to access internal properties of DataContext may be subject to change in future versions of the framework.
+/// Provides methods for batch insert (<c>InsertCollectionAsync</c>), upsert (<c>UpsertCollectionAsync</c>),
+/// and delete (<c>DeleteCollectionAsync</c>) operations on entity collections; record existence checks
+/// (<c>HasRecordsAsync</c>) and row counts (<c>GetRecordCountAsync</c>) with optional predicate filtering;
+/// transaction-scoped execution (<c>ExecuteInTransactionAsync</c>); and reflection-based retrieval of
+/// tracked objects within a <see cref="DataContext"/> for debugging or auditing (<c>GetTrackedObjects</c>).
+/// Note: <c>GetTrackedObjects</c> uses reflection to access internal LinqToDB fields and may be subject
+/// to change in future versions of the library.
 /// </remarks>
 [Information(Status = Status.Available)]
 public static class DataContextExtensions

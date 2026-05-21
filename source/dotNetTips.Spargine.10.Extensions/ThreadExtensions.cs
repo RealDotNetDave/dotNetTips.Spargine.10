@@ -9,7 +9,7 @@
 // <copyright file="ThreadExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
-// <summary>Extension methods designed for Thread.</summary>
+// <summary>Extension methods for Thread that support setting priority and timer-free wait mechanisms.</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -21,18 +21,23 @@ using DotNetTips.Spargine.Core.Devices;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="Thread"/> to enhance thread operations.
-/// These methods include setting thread priority and implementing wait mechanisms without the need for timers.
+/// Provides extension methods for <see cref="Thread"/> that support setting priority
+/// and timer-free wait mechanisms.
 /// </summary>
+/// <remarks>
+/// The <see cref="ThreadExtensions"/> class includes methods for safely adjusting thread priority
+/// and performing spin-wait loops without allocating a timer.
+/// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class ThreadExtensions
 {
 
 	/// <summary>
-	/// Tries to set the priority of the specified thread. Validates that <paramref name="thread" /> is not null.
+	/// Tries to set the priority of the specified <see cref="Thread"/>.
+	/// Validates that <paramref name="thread"/> is not null.
 	/// </summary>
-	/// <param name="thread">The thread whose priority is to be set. This parameter cannot be null.</param>
-	/// <param name="priority">The desired <see cref="ThreadPriority"/> for the thread.</param>
+	/// <param name="thread">The <see cref="Thread"/> whose priority is to be set. Cannot be null.</param>
+	/// <param name="priority">The desired <see cref="ThreadPriority"/> for the thread. Defaults to <see cref="ThreadPriority.Normal"/>.</param>
 	/// <returns><c>true</c> if the priority was successfully set; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="thread"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="priority"/> is not a defined <see cref="ThreadPriority"/> value.</exception>
@@ -46,30 +51,30 @@ public static class ThreadExtensions
 	}
 
 	/// <summary>
-	/// Waits for a certain amount of time. Does not use a timer, thus no need to call Dispose.
-	/// Validates that <paramref name="thread" /> is not null.
+	/// Waits for the specified interval without using a timer.
+	/// Validates that <paramref name="thread"/> is not null.
 	/// </summary>
-	/// <param name="thread">The <see cref="Thread"/> to wait on. This parameter cannot be null.</param>
+	/// <param name="thread">The <see cref="Thread"/> to wait on. Cannot be null.</param>
 	/// <param name="interval">The wait interval.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="thread"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WaitUntil), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(WaitUntil), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static void WaitUntil([DisallowNull] this Thread thread, TimeSpan interval)
 	{
 		WaitUntil(thread.ArgumentNotNull(), interval, 0);
 	}
 
 	/// <summary>
-	/// Waits until the specified time interval has passed or the specified number of wait iterations has been completed, whichever comes first.
-	/// This method performs a spin-wait for a specified number of iterations and checks the thread's alive status.
+	/// Waits until the specified interval has elapsed or the spin-wait iterations are exhausted, whichever comes first.
+	/// Validates that <paramref name="thread"/> is not null.
 	/// </summary>
-	/// <param name="thread">The <see cref="Thread"/> to monitor. This parameter cannot be null.</param>
+	/// <param name="thread">The <see cref="Thread"/> to monitor. Cannot be null.</param>
 	/// <param name="interval">The maximum time to wait.</param>
-	/// <param name="waitIterations">The number of iterations to perform a spin-wait. Must be zero or greater.</param>
+	/// <param name="waitIterations">The number of spin-wait iterations to perform. Must be zero or greater.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="thread"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="waitIterations"/> is less than zero.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WaitUntil), OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(WaitUntil), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 	public static void WaitUntil([DisallowNull] this Thread thread, TimeSpan interval, int waitIterations)
 	{
 		thread = thread.ArgumentNotNull();

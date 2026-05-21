@@ -3,13 +3,16 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : GitHub Copilot
-// Last Modified On : 04-23-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ObservableCollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods tailored for ObservableCollection.</summary>
+// <summary>
+// Extension methods for <c>ObservableCollection{T}</c> providing item-presence checks
+// (<c>IsNotEmpty</c>) by count, predicate, or exact-count comparison.
+// </summary>
 // ***********************************************************************
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -22,9 +25,12 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="ObservableCollection{T}"/>.
-/// These methods include checks for item presence, item count, and actions on items within the collection.
+/// Provides extension methods for <c>ObservableCollection{T}</c> covering item-presence
+/// checks by count, predicate, and exact-count comparison.
 /// </summary>
+/// <remarks>
+/// All methods short-circuit on a <c>null</c> collection and return <c>false</c> safely.
+/// </remarks>
 [Information(Status = Status.NeedsDocumentation)]
 public static class ObservableCollectionExtensions
 {
@@ -44,7 +50,7 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty()
 		{
 			return collection is null ? false : collection.Count > 0;
@@ -63,7 +69,7 @@ public static class ObservableCollectionExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(Func<T, bool> actionPredicate)
 		{
 			return collection is null || actionPredicate is null ? false : collection.Any(actionPredicate);
@@ -78,7 +84,7 @@ public static class ObservableCollectionExtensions
 		/// </returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineAug2022")]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(in int count)
 		{
 			return collection is null ? false : collection.FastLongCount() == count;
