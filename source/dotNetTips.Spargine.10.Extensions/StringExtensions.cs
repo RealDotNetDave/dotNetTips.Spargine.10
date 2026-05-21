@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -510,9 +510,7 @@ public static class StringExtensions
 		var path = pathIndex >= 0 ? span[pathIndex..].ToString() : "/";
 
 		// Extract host and port
-		var portIndex = hostAndPort.IndexOf(':');
-		var host = (portIndex >= 0 ? hostAndPort[..portIndex] : hostAndPort).ToString();
-		var port = portIndex >= 0 ? hostAndPort[(portIndex + 1)..].ToString() : "443";
+		var (host, port) = ParseHostAndPort(hostAndPort);
 
 		return (scheme, host, port, path);
 	}
@@ -792,25 +790,7 @@ public static class StringExtensions
 
 		// SUGGESTIONS FROM COPILOT SLOWER
 		// Compute trimmed length without allocating a new string
-		var span = input.AsSpan();
-		var start = 0;
-		var end = span.Length - 1;
-
-		// Trim leading whitespace
-		while (start <= end && char.IsWhiteSpace(span[start]))
-		{
-			start++;
-		}
-
-		// Trim trailing whitespace
-		while (end >= start && char.IsWhiteSpace(span[end]))
-		{
-			end--;
-		}
-
-		var trimmedLength = end - start + 1; // -1 if all whitespace -> becomes 0 via comparison below
-
-		return trimmedLength == length;
+		return ComputeTrimmedLength(input.AsSpan()) == length;
 	}
 
 	/// <summary>
@@ -955,20 +935,12 @@ public static class StringExtensions
 		// SUGGESTION FROM COPILOT SLOWER
 		try
 		{
-			if (length == 0)
-			{
-				_ = sb.Append(input.ArgumentNotNull());
-			}
-
-			for (var charIndex = 1; charIndex <= Math.Abs(length); charIndex++)
+			for (var charIndex = 1; charIndex <= length; charIndex++)
 			{
 				_ = sb.Append(indentationCharacter);
 			}
 
-			if (length > 0)
-			{
-				_ = sb.Append(input);
-			}
+			_ = sb.Append(input);
 
 			return sb.ToString();
 		}
@@ -1884,6 +1856,46 @@ public static class StringExtensions
 		}
 
 		return totalLength;
+	}
+
+	/// <summary>
+	/// Computes the trimmed length of <paramref name="span"/> by counting characters
+	/// after skipping leading and trailing whitespace — without allocating a string.
+	/// </summary>
+	private static int ComputeTrimmedLength(ReadOnlySpan<char> span)
+	{
+		var start = 0;
+		var end = span.Length - 1;
+
+		// Trim leading whitespace
+		while (start <= end && char.IsWhiteSpace(span[start]))
+		{
+			start++;
+		}
+
+		// Trim trailing whitespace
+		while (end >= start && char.IsWhiteSpace(span[end]))
+		{
+			end--;
+		}
+
+		return end - start + 1;
+	}
+
+	/// <summary>
+	/// Parses the host and port from a combined host-and-port span (e.g. "example.com:8080").
+	/// Returns the host as a string and the port as a string ("443" when no port is present).
+	/// </summary>
+	private static (string host, string port) ParseHostAndPort(ReadOnlySpan<char> hostAndPort)
+	{
+		var portIndex = hostAndPort.IndexOf(':');
+
+		if (portIndex >= 0)
+		{
+			return (hostAndPort[..portIndex].ToString(), hostAndPort[(portIndex + 1)..].ToString());
+		}
+
+		return (hostAndPort.ToString(), "443");
 	}
 
 }
