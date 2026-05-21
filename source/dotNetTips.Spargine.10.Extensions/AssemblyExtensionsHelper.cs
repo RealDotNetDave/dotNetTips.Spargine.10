@@ -72,7 +72,7 @@ internal static class AssemblyExtensionsHelper
 	/// When this method returns <c>true</c>, contains the created instance; otherwise <c>null</c>.
 	/// </param>
 	/// <returns><c>true</c> if an instance was successfully created; otherwise <c>false</c>.</returns>
-	[RequiresUnreferencedCode("Uses Activator.CreateInstance which requires the type's constructor to be preserved.")]
+	[RequiresUnreferencedCode("Creates an instance via Activator.CreateInstance(Type), which requires the parameterless constructor of the target type to be preserved by the trimmer.")]
 	internal static bool TryCreateInstance<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type, [NotNullWhen(true)] out T? instance) where T : class
 	{
 		if (type.GetConstructor(Type.EmptyTypes) is null)
