@@ -190,6 +190,9 @@ public static class EnumerableExtensions
 	/// Picks a random element from an <see cref="IList{T}"/>.
 	/// Returns <c>default</c> when the list is empty.
 	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="list">The list to pick from.</param>
+	/// <returns>A randomly selected element, or <c>default</c> if the list is empty.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
 	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
@@ -200,6 +203,9 @@ public static class EnumerableExtensions
 	/// Picks a random element from an <see cref="ICollection{T}"/> by enumerating to a random index.
 	/// Returns <c>default</c> when the collection is empty.
 	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to pick from.</param>
+	/// <returns>A randomly selected element, or <c>default</c> if the collection is empty.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
 	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
