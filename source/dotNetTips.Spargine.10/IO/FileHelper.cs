@@ -826,6 +826,7 @@ public static class FileHelper
 	/// </summary>
 	/// <param name="file">The <see cref="FileInfo"/> to measure, or <c>null</c>.</param>
 	/// <returns>The file's <see cref="FileInfo.Length"/> if it is non-null and exists; otherwise <c>0</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static long ComputeFileSizeContribution(FileInfo? file)
 		=> file is not null && file.Exists ? file.Length : 0L;
 
@@ -859,12 +860,14 @@ public static class FileHelper
 	/// <summary>
 	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Allow"/>.
 	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static bool RuleMatchesPermissionAndAllows(FileSystemAccessRule rule, FileSystemRights permission)
 		=> (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Allow;
 
 	/// <summary>
 	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Deny"/>.
 	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static bool RuleMatchesPermissionAndDenies(FileSystemAccessRule rule, FileSystemRights permission)
 		=> (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Deny;
 
