@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-14-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1298,6 +1298,37 @@ public class EnumerableExtensionsTests
 		var result = people.FastDistinct();
 
 		Assert.HasCount(Count, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_NoArg_NullCollection_ThrowsArgumentNullException()
+	{
+		IEnumerable<int> collection = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => collection.FastLongCount());
+	}
+
+	[TestMethod]
+	public void FastLongCount_NoArg_WithList_ReturnsFastCount()
+	{
+		// List<T> implements ICollection<T> which supports TryGetNonEnumeratedCount.
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+
+		var result = collection.AsEnumerable().FastLongCount();
+
+		Assert.AreEqual(5L, result);
+	}
+
+	[TestMethod]
+	public void FastLongCount_NoArg_WithEnumerable_CountsAll()
+	{
+		// A local iterator method produces an IEnumerable<T> that does not support
+		// TryGetNonEnumeratedCount, exercising the foreach-based fallback path.
+		static IEnumerable<int> LazyRange(int n) { for (var i = 0; i < n; i++) yield return i; }
+
+		var result = LazyRange(Count).FastLongCount();
+
+		Assert.AreEqual((long)Count, result);
 	}
 
 	[TestMethod]
@@ -2945,6 +2976,17 @@ public class EnumerableExtensionsTests
 		Assert.IsTrue(testValue.ToDelimitedString(',').IsNotEmpty());
 		Assert.IsTrue(testValue.ToDelimitedString().IsNotEmpty());
 		Assert.IsTrue(string.Empty.ToDelimitedString().IsEmpty());
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_NullCollection_ReturnsEmptyString()
+	{
+		// Exercises the collection is null branch of the || guard.
+		IEnumerable<char> collection = null;
+
+		var result = collection!.ToDelimitedString();
+
+		Assert.IsTrue(result.IsEmpty());
 	}
 
 	[TestMethod]
