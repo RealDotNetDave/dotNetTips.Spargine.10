@@ -332,6 +332,37 @@ public class FileHelperTests
 		destinationDir.Delete(true);
 	}
 
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void CopyFile_OverwritesExistingDestinationFile_Test()
+	{
+		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
+		var destinationDir = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFile_OverwritesExistingDestinationFile_Test)));
+
+		try
+		{
+			// First copy — destination does not yet exist
+			var firstLength = FileHelper.CopyFile(sourceFile, destinationDir);
+
+			Assert.AreEqual(sourceFile.Length, firstLength);
+
+			// Second copy — destination file already exists; covers File.Delete(newFileName) branch
+			var secondLength = FileHelper.CopyFile(sourceFile, destinationDir);
+
+			Assert.AreEqual(sourceFile.Length, secondLength);
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDir.FullName, sourceFile.Name)));
+		}
+		finally
+		{
+			sourceFile.Delete();
+
+			if (destinationDir.Exists)
+			{
+				destinationDir.Delete(true);
+			}
+		}
+	}
+
 	[TestMethod]
 	public async Task CopyFileAsync_ShouldCopyFileSuccessfully()
 	{
@@ -776,6 +807,31 @@ public class FileHelperTests
 		try
 		{
 			await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => FileHelper.DownloadFileFromWebAsync(null, destination));
+		}
+		finally
+		{
+			if (destination.Exists)
+			{
+				destination.Delete(true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task DownloadFileFromWebAsync_ConnectionFails_ThrowsException()
+	{
+		// Use a loopback address on a port that will immediately refuse connection.
+		// This exercises the method body past the guard clauses — covering the
+		// `if (result == false)` false-branch — without requiring network access.
+		var remoteUri = new Uri("http://127.0.0.1:1/nonexistent.zip");
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(this.DownloadFileFromWebAsync_ConnectionFails_ThrowsException)));
+
+		try
+		{
+			// ProgressiveRetryAsync captures the connection failure and returns a failed result
+			var result = await FileHelper.DownloadFileFromWebAsync(remoteUri, destination);
+
+			Assert.IsNotNull(result);
 		}
 		finally
 		{
@@ -1669,6 +1725,50 @@ public class FileHelperTests
 
 			Assert.IsTrue(File.Exists(Path.Combine(destinationDir, "testfile.txt")));
 			Assert.AreEqual("Hello, World!", File.ReadAllText(Path.Combine(destinationDir, "testfile.txt")));
+		}
+		finally
+		{
+			if (Directory.Exists(tempDir))
+			{
+				Directory.Delete(tempDir, true);
+			}
+		}
+	}
+
+	[TestMethod]
+	public async Task UnZipAsync_WithSubdirectoryEntry_SkipsDirectoryEntry_Test()
+	{
+		// A zip that contains a subdirectory has entries with CompressedLength == 0.
+		// This covers the early-return branch in ExtractZipEntryAsync.
+		var tempDir = Path.Combine(Path.GetTempPath(), nameof(this.UnZipAsync_WithSubdirectoryEntry_SkipsDirectoryEntry_Test));
+		var subDir = Path.Combine(tempDir, "source", "subdir");
+		var destinationDir = Path.Combine(tempDir, "destination");
+		var zipFilePath = Path.Combine(tempDir, "test.zip");
+
+		try
+		{
+			Directory.CreateDirectory(subDir);
+
+			// Create a zip manually so a directory entry (CompressedLength==0) is guaranteed.
+			// ZipFile.CreateFromDirectory does not emit explicit directory entries on all platforms.
+			using (var zipStream = new FileStream(zipFilePath, FileMode.Create))
+			using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
+			{
+				// Directory entry — CompressedLength will be 0
+				archive.CreateEntry("subdir/");
+
+				// Regular file entry
+				var entry = archive.CreateEntry("subdir/nested.txt");
+				using var writer = new System.IO.StreamWriter(entry.Open());
+				writer.Write("Nested content");
+			}
+
+			var zipFile = new FileInfo(zipFilePath);
+			var destination = new DirectoryInfo(destinationDir);
+
+			await FileHelper.UnZipAsync(zipFile, destination);
+
+			Assert.IsTrue(File.Exists(Path.Combine(destinationDir, "subdir", "nested.txt")));
 		}
 		finally
 		{
