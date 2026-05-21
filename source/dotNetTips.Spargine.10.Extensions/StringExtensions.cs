@@ -1862,6 +1862,8 @@ public static class StringExtensions
 	/// Computes the trimmed length of <paramref name="span"/> by counting characters
 	/// after skipping leading and trailing whitespace — without allocating a string.
 	/// </summary>
+	/// <param name="span">The character span to measure.</param>
+	/// <returns>The number of non-whitespace-bounded characters, or a negative value if the span is all whitespace.</returns>
 	private static int ComputeTrimmedLength(ReadOnlySpan<char> span)
 	{
 		var start = 0;
@@ -1886,6 +1888,8 @@ public static class StringExtensions
 	/// Parses the host and port from a combined host-and-port span (e.g. "example.com:8080").
 	/// Returns the host as a string and the port as a string ("443" when no port is present).
 	/// </summary>
+	/// <param name="hostAndPort">The span containing the host, optionally followed by a colon and port number.</param>
+	/// <returns>A tuple of (<c>host</c>, <c>port</c>) where <c>port</c> defaults to "443" when absent.</returns>
 	private static (string host, string port) ParseHostAndPort(ReadOnlySpan<char> hostAndPort)
 	{
 		var portIndex = hostAndPort.IndexOf(':');
