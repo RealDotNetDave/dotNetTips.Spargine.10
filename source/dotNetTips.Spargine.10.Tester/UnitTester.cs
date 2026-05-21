@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Core.Diagnostics;
 using DotNetTips.Spargine.Extensions;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
