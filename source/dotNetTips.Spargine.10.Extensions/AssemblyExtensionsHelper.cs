@@ -50,4 +50,56 @@ internal static class AssemblyExtensionsHelper
 				.Cast<Type>()];
 		}
 	}
+
+	/// <summary>
+	/// Determines whether a type should be skipped during instance discovery.
+	/// A type is skipped when it is abstract, an interface, a generic type definition,
+	/// or not assignable to <paramref name="targetType"/>.
+	/// </summary>
+	/// <param name="type">The candidate type to evaluate.</param>
+	/// <param name="targetType">The target type that the candidate must be assignable to.</param>
+	/// <returns><c>true</c> if the type should be skipped; otherwise <c>false</c>.</returns>
+	internal static bool ShouldSkipType(Type type, Type targetType) =>
+		type.IsAbstract || type.IsInterface || type.IsGenericTypeDefinition || !targetType.IsAssignableFrom(type);
+
+	/// <summary>
+	/// Attempts to create an instance of <paramref name="type"/> as <typeparamref name="T"/>.
+	/// Returns <c>false</c> when the type has no parameterless constructor or instantiation fails.
+	/// </summary>
+	/// <typeparam name="T">The target type to cast the created instance to.</typeparam>
+	/// <param name="type">The concrete type to instantiate.</param>
+	/// <param name="instance">
+	/// When this method returns <c>true</c>, contains the created instance; otherwise <c>null</c>.
+	/// </param>
+	/// <returns><c>true</c> if an instance was successfully created; otherwise <c>false</c>.</returns>
+	[RequiresUnreferencedCode("Uses Activator.CreateInstance which requires the type's constructor to be preserved.")]
+	internal static bool TryCreateInstance<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type, [NotNullWhen(true)] out T? instance) where T : class
+	{
+		if (type.GetConstructor(Type.EmptyTypes) is null)
+		{
+			instance = null;
+			return false;
+		}
+
+		try
+		{
+			instance = Activator.CreateInstance(type) as T;
+			return instance is not null;
+		}
+		catch (MissingMethodException)
+		{
+			instance = null;
+			return false;
+		}
+		catch (MemberAccessException)
+		{
+			instance = null;
+			return false;
+		}
+		catch (TargetInvocationException)
+		{
+			instance = null;
+			return false;
+		}
+	}
 }
