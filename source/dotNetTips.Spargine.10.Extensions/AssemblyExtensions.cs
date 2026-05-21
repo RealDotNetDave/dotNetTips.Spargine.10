@@ -16,6 +16,7 @@
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Reflection;
@@ -124,12 +125,24 @@ public static class AssemblyExtensions
 
 			foreach (var type in types)
 			{
-				if (AssemblyExtensionsHelper.ShouldSkipType(type, targetType))
+				if (type.IsInterface || type.IsAbstract || type.IsGenericType || !targetType.IsAssignableFrom(type))
 				{
 					continue;
 				}
 
-				if (AssemblyExtensionsHelper.TryCreateInstance<T>(type, out var typedInstance))
+				object? instance;
+
+				try
+				{
+					instance = Activator.CreateInstance(type);
+				}
+				catch (MissingMethodException ex)
+				{
+					Trace.WriteLine(ex.Message);
+					continue;
+				}
+
+				if (instance is T typedInstance)
 				{
 					yield return typedInstance;
 				}
