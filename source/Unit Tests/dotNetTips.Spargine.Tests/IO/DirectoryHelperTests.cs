@@ -725,7 +725,7 @@ public class DirectoryHelperTests
 				results.AddRange(fileSet);
 			}
 
-			// Assert: only the root file is found (TopDirectoryOnly behaviour)
+			// Assert: only the root file is found (TopDirectoryOnly behavior)
 			Assert.AreEqual(1, results.Count, "Expected only top-level files when SearchOption is invalid.");
 			Assert.AreEqual("root.txt", results[0].Name);
 		}
