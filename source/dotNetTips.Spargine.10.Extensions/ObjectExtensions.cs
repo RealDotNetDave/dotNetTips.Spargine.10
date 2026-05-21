@@ -1397,7 +1397,7 @@ public static class ObjectExtensions
 		}
 
 		/// <summary>
-		/// Creates a deep clone using binary MessagePack serialization (fastest, requires MessagePack attributes).
+		/// Creates a deep clone using binary MessagePack serialization.
 		/// Use this when cloning performance is critical and types are annotated with MessagePack attributes.
 		/// </summary>
 		/// <typeparam name="T">The type of the object.</typeparam>

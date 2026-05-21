@@ -4,7 +4,7 @@
 // Created          : 02-07-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 01-20-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="WebHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Core.Web;
 /// ensuring best practices like connection reuse are followed. This class is part of the DotNetTips.Spargine.Core library,
 /// aimed at enhancing .NET development productivity.
 /// </remarks>
-[Information("From dotNetTips.Utility", Status = Status.NeedsDocumentation)]
+[Information(nameof(WebHelper), Status = Status.NeedsDocumentation)]
 public static class WebHelper
 {
 
