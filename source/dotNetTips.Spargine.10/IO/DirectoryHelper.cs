@@ -104,16 +104,14 @@ public static class DirectoryHelper
 	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string AppDataFolder()
 	{
-		var userPath = LocalAppData;
-
-		var companyName = Assembly.GetEntryAssembly()?.GetCustomAttributes<AssemblyCompanyAttribute>().FirstOrDefault()?.Company?.Trim();
+		var companyName = GetEntryAssemblyCompanyName();
 
 		if (string.IsNullOrEmpty(companyName))
 		{
 			ExceptionThrower.ThrowInvalidOperationException(Resources.AssemblyCompanyNameAttributeIsNotSet);
 		}
 
-		return Path.Combine(userPath, companyName);
+		return Path.Combine(LocalAppData, companyName);
 	}
 
 	/// <summary>
@@ -138,33 +136,7 @@ public static class DirectoryHelper
 		//OPTIMIZATION FROM COPILOT BREAKS THIS CODE
 		directory = directory.ArgumentExists();
 
-		var accessControl = directory.GetAccessControl();
-		var rules = accessControl.GetAccessRules(true, true, typeof(SecurityIdentifier));
-
-		var allow = false;
-		var deny = false;
-
-		foreach (FileSystemAccessRule rule in rules)
-		{
-			if ((permission & rule.FileSystemRights) != permission)
-			{
-				continue;
-			}
-
-			switch (rule.AccessControlType)
-			{
-				case AccessControlType.Allow:
-					allow = true;
-					break;
-				case AccessControlType.Deny:
-					deny = true;
-					break;
-				default:
-					break;
-			}
-		}
-
-		return allow && !deny;
+		return EvaluatePermission(directory, permission);
 	}
 
 	/// <summary>
@@ -257,7 +229,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+	public static IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
 		searchPattern = searchPattern.ArgumentNotNull();
@@ -267,13 +239,14 @@ public static class DirectoryHelper
 			searchOption = SearchOption.TopDirectoryOnly;
 		}
 
+		return LoadFilesAsyncCore(directories, searchPattern, searchOption, cancellationToken);
+	}
+
+	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
+	{
 		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
 
-		var tasks = directories.Where(directory => directory.CheckExists())
-			.Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))
-			.ToList();
-
-		foreach (var task in tasks)
+		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
 		{
 			yield return await task.ConfigureAwait(false);
 		}
@@ -458,18 +431,7 @@ public static class DirectoryHelper
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
-
-		foreach (var directory in directories)
-		{
-			if (directory.CheckExists())
-			{
-				foreach (var directoryFile in directory.GetFiles(searchPattern, options))
-				{
-					yield return directoryFile;
-				}
-			}
-		}
+		return SafeFileSearchCore(directories, searchPattern, searchOption);
 	}
 
 	/// <summary>
@@ -550,6 +512,75 @@ public static class DirectoryHelper
 		{
 			item.Attributes = FileAttributes.Normal;
 		}
+	}
+
+	/// <summary>
+	/// Builds the list of file-loading tasks for <see cref="LoadFilesAsync"/>, one per existing directory.
+	/// </summary>
+	/// <param name="directories">The directories to scan.</param>
+	/// <param name="searchPattern">The search pattern to match files against.</param>
+	/// <param name="options">The pre-resolved <see cref="EnumerationOptions"/> for the search.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to associate with each spawned task.</param>
+	/// <returns>A list of tasks, each returning an array of <see cref="FileInfo"/> for one directory.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static List<Task<FileInfo[]>> BuildFileLoadTasks(IEnumerable<DirectoryInfo> directories, string searchPattern, EnumerationOptions options, CancellationToken cancellationToken)
+		=> directories.Where(directory => directory.CheckExists())
+			.Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))
+			.ToList();
+
+	/// <summary>
+	/// Evaluates the access rules on <paramref name="directory"/> and returns whether <paramref name="permission"/> is
+	/// granted (allowed and not explicitly denied).
+	/// </summary>
+	/// <param name="directory">The existing directory whose ACL is read.</param>
+	/// <param name="permission">The permission flag to test.</param>
+	/// <returns><c>true</c> if the permission is in at least one Allow rule and in no Deny rules; otherwise <c>false</c>.</returns>
+	[SupportedOSPlatform("windows")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool EvaluatePermission(DirectoryInfo directory, FileSystemRights permission)
+	{
+		var accessControl = directory.GetAccessControl();
+		var rules = accessControl.GetAccessRules(true, true, typeof(SecurityIdentifier));
+
+		var allow = false;
+		var deny = false;
+
+		foreach (FileSystemAccessRule rule in rules)
+		{
+			if ((permission & rule.FileSystemRights) != permission)
+			{
+				continue;
+			}
+
+			allow |= rule.AccessControlType == AccessControlType.Allow;
+			deny |= rule.AccessControlType == AccessControlType.Deny;
+		}
+
+		return allow && !deny;
+	}
+
+	/// <summary>
+	/// Returns the company name from the entry assembly's <see cref="AssemblyCompanyAttribute"/>,
+	/// or <see langword="null"/> when no entry assembly or company attribute is present.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static string? GetEntryAssemblyCompanyName()
+		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company.Trim();
+
+	/// <summary>
+	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
+	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
+	/// that match <paramref name="searchPattern"/>.
+	/// </summary>
+	/// <param name="directories">The already-validated list of directories to search.</param>
+	/// <param name="searchPattern">The already-validated search pattern.</param>
+	/// <param name="searchOption">The already-validated search scope.</param>
+	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption)
+	{
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
+		return directories.Where(d => d.CheckExists()).SelectMany(d => d.GetFiles(searchPattern, options));
 	}
 
 	/// <summary>

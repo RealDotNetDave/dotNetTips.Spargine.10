@@ -701,6 +701,40 @@ public class DirectoryHelperTests
 		}
 	}
 
+	[TestMethod]
+	public async Task LoadFilesAsync_InvalidSearchOption_DefaultsToTopDirectoryOnly()
+	{
+		// Arrange
+		var tempDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		tempDirectory.Create();
+
+		var subDirectory = new DirectoryInfo(Path.Combine(tempDirectory.FullName, "sub"));
+		subDirectory.Create();
+
+		File.WriteAllText(Path.Combine(tempDirectory.FullName, "root.txt"), "root");
+		File.WriteAllText(Path.Combine(subDirectory.FullName, "sub.txt"), "sub");
+
+		var directories = new List<DirectoryInfo> { tempDirectory };
+		var results = new List<FileInfo>();
+
+		try
+		{
+			// Act – pass an out-of-range SearchOption value to trigger the default branch
+			await foreach (var fileSet in DirectoryHelper.LoadFilesAsync(directories, "*.txt", (SearchOption)99))
+			{
+				results.AddRange(fileSet);
+			}
+
+			// Assert: only the root file is found (TopDirectoryOnly behaviour)
+			Assert.AreEqual(1, results.Count, "Expected only top-level files when SearchOption is invalid.");
+			Assert.AreEqual("root.txt", results[0].Name);
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void MoveDirectory_DestinationAlreadyExists_ReturnsFailedResult()
