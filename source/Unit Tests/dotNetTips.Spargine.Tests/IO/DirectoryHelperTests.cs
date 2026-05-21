@@ -719,7 +719,7 @@ public class DirectoryHelperTests
 
 		try
 		{
-			// Act – pass an out-of-range SearchOption value to trigger the default branch
+			// Act - pass an out-of-range SearchOption value to trigger the default branch
 			await foreach (var fileSet in DirectoryHelper.LoadFilesAsync(directories, "*.txt", (SearchOption)99))
 			{
 				results.AddRange(fileSet);

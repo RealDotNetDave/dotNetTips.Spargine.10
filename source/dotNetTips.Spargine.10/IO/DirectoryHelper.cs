@@ -565,7 +565,7 @@ public static class DirectoryHelper
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string? GetEntryAssemblyCompanyName()
-		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company.Trim();
+		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
 
 	/// <summary>
 	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
