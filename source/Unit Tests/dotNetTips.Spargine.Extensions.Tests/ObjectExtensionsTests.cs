@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-16-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -88,6 +88,57 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		object obj = null;
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ComputeSha256Hash());
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_Null_ThrowsArgumentNullException()
+	{
+		object obj = null;
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ComputeSha256Hash(typeInfo));
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ComputeSha256Hash((System.Text.Json.Serialization.Metadata.JsonTypeInfo<Person>)null));
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		object wrongType = 42;
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ComputeSha256Hash(typeInfo));
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_ReturnsHash()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		var result = person.ComputeSha256Hash(typeInfo);
+
+		Assert.IsFalse(string.IsNullOrEmpty(result));
+		Assert.AreEqual(64, result.Length); // SHA256 hex = 64 chars
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_SameObjectProducesSameHash()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		var hash1 = person.ComputeSha256Hash(typeInfo);
+		var hash2 = person.ComputeSha256Hash(typeInfo);
+
+		Assert.AreEqual(hash1, hash2);
 	}
 
 	[TestMethod]
@@ -1803,6 +1854,58 @@ public class ObjectExtensionsTests : UnitTester
 		FileInfo file = null;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file));
+	}
+
+	[TestMethod]
+	public void ToJsonFile_WithTypeInfo_NullFile_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+		FileInfo file = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file, typeInfo));
+	}
+
+	[TestMethod]
+	public void ToJsonFile_WithTypeInfo_NullTypeInfo_ThrowsArgumentNullException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var file = new FileInfo(RandomData.GenerateRandomFileName());
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<Person>)null));
+	}
+
+	[TestMethod]
+	public void ToJsonFile_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
+	{
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+		var file = new FileInfo(RandomData.GenerateRandomFileName());
+		object wrongType = 42;
+
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ToJsonFile(file, typeInfo));
+	}
+
+	[TestMethod]
+	public void ToJsonFile_WithTypeInfo_WritesJsonFile()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+		var fileName = new FileInfo(RandomData.GenerateRandomFileName());
+
+		try
+		{
+			person.ToJsonFile(fileName, typeInfo);
+
+			Assert.IsTrue(fileName.Exists);
+			Assert.IsTrue(fileName.Length > 0);
+		}
+		finally
+		{
+			if (fileName.Exists)
+			{
+				File.Delete(fileName.FullName);
+			}
+		}
 	}
 
 	[TestMethod]
