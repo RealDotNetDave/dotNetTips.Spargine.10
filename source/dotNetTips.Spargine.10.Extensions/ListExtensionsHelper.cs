@@ -15,7 +15,9 @@
 // </summary>
 // ***********************************************************************
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -40,6 +42,10 @@ internal static class ListExtensionsHelper
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static void AddUniqueItems<T>(List<T> list, IEnumerable<T> items, HashSet<T> existingSet)
 	{
+		list = list.ArgumentNotNull();
+		items = items.ArgumentNotNull();
+		existingSet = existingSet.ArgumentNotNull();
+
 		foreach (var item in items)
 		{
 			if (existingSet.Add(item))
@@ -56,10 +62,7 @@ internal static class ListExtensionsHelper
 	/// <param name="index">The raw index, which may be negative or exceed <paramref name="count"/>.</param>
 	/// <param name="count">The number of elements in the list. Must be greater than zero.</param>
 	/// <returns>A non-negative index in the range <c>[0, count)</c>.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">
-	/// This method does not throw; callers are responsible for ensuring <paramref name="count"/> is greater than zero
-	/// before invoking this helper.
-	/// </exception>
+	/// <remarks>Callers must ensure <paramref name="count"/> is greater than zero before invoking this helper.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static int ComputeWrappedIndex(int index, int count)
 	{
@@ -87,7 +90,7 @@ internal static class ListExtensionsHelper
 	/// otherwise, <see langword="false"/>.
 	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static bool EitherIsNull<T>(List<T> a, List<T> b) => a is null || b is null;
+	internal static bool EitherIsNull<T>([NotNullWhen(false)] List<T>? a, [NotNullWhen(false)] List<T>? b) => a is null || b is null;
 
 	/// <summary>
 	/// Checks whether two non-null lists are reference-equal or have differing counts.
