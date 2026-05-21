@@ -333,12 +333,7 @@ public static class ListExtensions
 		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			if (collectionToCheck is null)
-			{
-				return false;
-			}
-
-			if (ListExtensionsHelper.EitherIsNull(list, collectionToCheck))
+			if (collectionToCheck is null || list is null)
 			{
 				return false;
 			}
