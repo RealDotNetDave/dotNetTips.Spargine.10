@@ -34,6 +34,9 @@ internal static class ListExtensionsHelper
 	/// <param name="list">The destination list.</param>
 	/// <param name="items">The candidate items to add.</param>
 	/// <param name="existingSet">A <see cref="HashSet{T}"/> pre-populated from the current list contents.</param>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown if <paramref name="list"/>, <paramref name="items"/>, or <paramref name="existingSet"/> is <see langword="null"/>.
+	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static void AddUniqueItems<T>(List<T> list, IEnumerable<T> items, HashSet<T> existingSet)
 	{
@@ -53,6 +56,10 @@ internal static class ListExtensionsHelper
 	/// <param name="index">The raw index, which may be negative or exceed <paramref name="count"/>.</param>
 	/// <param name="count">The number of elements in the list. Must be greater than zero.</param>
 	/// <returns>A non-negative index in the range <c>[0, count)</c>.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// This method does not throw; callers are responsible for ensuring <paramref name="count"/> is greater than zero
+	/// before invoking this helper.
+	/// </exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static int ComputeWrappedIndex(int index, int count)
 	{
@@ -75,6 +82,10 @@ internal static class ListExtensionsHelper
 	/// <typeparam name="T">The element type.</typeparam>
 	/// <param name="a">The first list.</param>
 	/// <param name="b">The second list.</param>
+	/// <returns>
+	/// <see langword="true"/> if <paramref name="a"/> or <paramref name="b"/> is <see langword="null"/>;
+	/// otherwise, <see langword="false"/>.
+	/// </returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static bool EitherIsNull<T>(List<T> a, List<T> b) => a is null || b is null;
 
