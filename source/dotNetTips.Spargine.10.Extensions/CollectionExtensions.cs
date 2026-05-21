@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-04-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,14 +17,11 @@
 // </summary>
 // ***********************************************************************
 using System.Collections.Frozen;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
-using DotNetTips.Spargine.Extensions.Properties;
-using Microsoft.VisualBasic;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -64,7 +61,7 @@ public static class CollectionExtensions
 	/// This method performs a linear search to find an existing item with the same <c>Id</c>, removes it if found,
 	/// and then adds <paramref name="item"/>. This guarantees at most one item with the same identifier in the collection.
 	/// </remarks>
-	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void Upsert<T, TKey>([DisallowNull] this ICollection<T> collection, [AllowNull] T item) where T : IDataModel<T, TKey> where TKey : notnull
 	{
 		if (item is null)
@@ -74,13 +71,7 @@ public static class CollectionExtensions
 
 		collection = collection.ArgumentNotNull();
 
-		// Find the existing item by ID and remove it if found
-		var existingItem = collection.FirstOrDefault(p => Equals(p.Id, item.Id));
-
-		if (existingItem != null)
-		{
-			_ = collection.Remove(existingItem);
-		}
+		CollectionExtensionsHelper.RemoveItemById<T, TKey>(collection, item);
 
 		collection.Add(item);
 	}
@@ -107,7 +98,7 @@ public static class CollectionExtensions
 		/// // newItem is added to myCollection because condition is true.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public void AddIf([AllowNull] in T item, bool condition)
 		{
 			if (item is null || !condition)
@@ -115,10 +106,7 @@ public static class CollectionExtensions
 				return;
 			}
 
-			if (collection is T[])
-			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
-			}
+			CollectionExtensionsHelper.ThrowIfArray(collection);
 
 			collection.Add(item);
 		}
@@ -146,7 +134,7 @@ public static class CollectionExtensions
 		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AddIfNotExists([AllowNull] T item, IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
@@ -154,26 +142,9 @@ public static class CollectionExtensions
 				return false;
 			}
 
-			if (collection is T[])
-			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
-			}
+			CollectionExtensionsHelper.ThrowIfArray(collection);
 
-			if (collection is HashSet<T> hashSet)
-			{
-				return hashSet.Add(item);
-			}
-
-			var eq = comparer ?? EqualityComparer<T>.Default;
-
-			if (collection.Contains(item, eq))
-			{
-				return false;
-			}
-
-			collection.Add(item);
-
-			return true;
+			return CollectionExtensionsHelper.TryAddIfUnique(collection, item, CollectionExtensionsHelper.ResolveComparer(comparer));
 		}
 
 		/// <summary>
@@ -197,7 +168,7 @@ public static class CollectionExtensions
 		/// // myCollection now contains the unique items from newItems.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -206,37 +177,15 @@ public static class CollectionExtensions
 			}
 
 			ArgumentNullException.ThrowIfNull(collection);
-
-			if (collection is T[])
-			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
-			}
+			CollectionExtensionsHelper.ThrowIfArray(collection);
 
 			if (!ensureUnique)
 			{
-				AddAllItems(collection, items);
+				CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
 				return true;
 			}
 
-			return AddUniqueItems(collection, items, comparer ?? EqualityComparer<T>.Default);
-
-			static void AddAllItems(ICollection<T> col, IEnumerable<T> src)
-			{
-				foreach (var i in src)
-				{ col.Add(i); }
-			}
-
-			static bool AddUniqueItems(ICollection<T> col, IEnumerable<T> src, IEqualityComparer<T> eq)
-			{
-				var added = false;
-				var seen = new HashSet<T>(col, eq);
-				foreach (var i in src)
-				{
-					if (seen.Add(i))
-					{ col.Add(i); added = true; }
-				}
-				return added;
-			}
+			return CollectionExtensionsHelper.AddUniqueItemsToCollection(collection, items, CollectionExtensionsHelper.ResolveComparer(comparer));
 		}
 
 		/// <summary>
@@ -329,7 +278,7 @@ public static class CollectionExtensions
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void Upsert([AllowNull] T item)
 		{
 			if (item is null)
@@ -338,36 +287,8 @@ public static class CollectionExtensions
 			}
 
 			ArgumentNullException.ThrowIfNull(collection);
-
-			if (collection is T[])
-			{
-				ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
-			}
-
-			if (collection is List<T> list)
-			{
-				UpsertIntoList(list, item);
-				return;
-			}
-
-			if (collection is HashSet<T> hashSet)
-			{
-				_ = hashSet.Remove(item);
-				_ = hashSet.Add(item);
-				return;
-			}
-
-			_ = collection.Remove(item);
-			collection.Add(item);
-
-			static void UpsertIntoList(List<T> l, T itm)
-			{
-				var idx = l.IndexOf(itm);
-				if (idx >= 0)
-				{ l[idx] = itm; }
-				else
-				{ l.Add(itm); }
-			}
+			CollectionExtensionsHelper.ThrowIfArray(collection);
+			CollectionExtensionsHelper.DispatchUpsert(collection, item);
 		}
 	}
 }

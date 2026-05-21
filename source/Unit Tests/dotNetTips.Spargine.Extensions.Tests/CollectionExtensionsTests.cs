@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-29-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -71,6 +71,19 @@ public class CollectionExtensionsTests
 		Assert.IsTrue(collection.AddIfNotExists(person));
 		Assert.IsFalse(collection.AddIfNotExists(person));
 		Assert.HasCount(1, collection);
+	}
+
+	[TestMethod]
+	public void AddIfNotExists_NullComparer_UsesDefaultComparer()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var testPerson = RandomData.GeneratePerson<Person>();
+
+		// Exercises TryAddIfUnique with comparer=null (default path) on a List<T>
+		Assert.IsTrue(people.AddIfNotExists(testPerson));
+
+		// Duplicate should return false
+		Assert.IsFalse(people.AddIfNotExists(testPerson));
 	}
 
 	[TestMethod]
