@@ -61,7 +61,7 @@ public static class CollectionExtensions
 	/// This method performs a linear search to find an existing item with the same <c>Id</c>, removes it if found,
 	/// and then adds <paramref name="item"/>. This guarantees at most one item with the same identifier in the collection.
 	/// </remarks>
-	[Information(nameof(Upsert), "David McCarter", "5/2/2021", BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void Upsert<T, TKey>([DisallowNull] this ICollection<T> collection, [AllowNull] T item) where T : IDataModel<T, TKey> where TKey : notnull
 	{
 		if (item is null)
@@ -98,7 +98,7 @@ public static class CollectionExtensions
 		/// // newItem is added to myCollection because condition is true.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddIf([AllowNull] in T item, bool condition)
 		{
 			if (item is null || !condition)

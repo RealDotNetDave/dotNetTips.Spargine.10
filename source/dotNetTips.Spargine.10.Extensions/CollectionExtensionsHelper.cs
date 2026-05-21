@@ -62,6 +62,7 @@ internal static class CollectionExtensionsHelper
 	/// <typeparam name="T">The element type.</typeparam>
 	/// <param name="col">The target collection.</param>
 	/// <param name="src">The source sequence to add.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static void AddAllItemsToCollection<T>(ICollection<T> col, IEnumerable<T> src)
 	{
 		foreach (var item in src)
@@ -78,6 +79,7 @@ internal static class CollectionExtensionsHelper
 	/// <param name="src">The source sequence.</param>
 	/// <param name="comparer">The equality comparer to use; must not be <see langword="null"/>.</param>
 	/// <returns><see langword="true"/> if at least one item was added; otherwise <see langword="false"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static bool AddUniqueItemsToCollection<T>(ICollection<T> col, IEnumerable<T> src, IEqualityComparer<T> comparer)
 	{
 		var added = false;
@@ -104,6 +106,7 @@ internal static class CollectionExtensionsHelper
 	/// <param name="item">The item to add.</param>
 	/// <param name="comparer">The equality comparer to use; must not be <see langword="null"/>.</param>
 	/// <returns><see langword="true"/> if the item was added; <see langword="false"/> if it was already present.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static bool TryAddIfUnique<T>(ICollection<T> collection, T item, IEqualityComparer<T> comparer)
 	{
 		if (collection is HashSet<T> hashSet)
@@ -127,6 +130,7 @@ internal static class CollectionExtensionsHelper
 	/// <typeparam name="TKey">The key type.</typeparam>
 	/// <param name="collection">The collection to search.</param>
 	/// <param name="item">The item whose <c>Id</c> is used as the search key.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static void RemoveItemById<T, TKey>(ICollection<T> collection, T item)
 		where T : IDataModel<T, TKey> where TKey : notnull
 	{
@@ -145,6 +149,7 @@ internal static class CollectionExtensionsHelper
 	/// <typeparam name="T">The element type.</typeparam>
 	/// <param name="collection">The target collection.</param>
 	/// <param name="item">The item to upsert.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static void DispatchUpsert<T>(ICollection<T> collection, T item)
 	{
 		if (collection is List<T> list)

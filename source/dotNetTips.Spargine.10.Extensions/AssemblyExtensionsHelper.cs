@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-14-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-14-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensionsHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,6 +14,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -59,6 +60,7 @@ internal static class AssemblyExtensionsHelper
 	/// <param name="type">The candidate type to evaluate.</param>
 	/// <param name="targetType">The target type that the candidate must be assignable to.</param>
 	/// <returns><c>true</c> if the type should be skipped; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static bool ShouldSkipType(Type type, Type targetType) =>
 		type.IsAbstract || type.IsInterface || type.IsGenericTypeDefinition || !targetType.IsAssignableFrom(type);
 
@@ -72,6 +74,7 @@ internal static class AssemblyExtensionsHelper
 	/// When this method returns <c>true</c>, contains the created instance; otherwise <c>null</c>.
 	/// </param>
 	/// <returns><c>true</c> if an instance was successfully created; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[RequiresUnreferencedCode("Creates an instance via Activator.CreateInstance(Type), which requires the parameterless constructor of the target type to be preserved by the trimmer.")]
 	internal static bool TryCreateInstance<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] Type type, [NotNullWhen(true)] out T? instance) where T : class
 	{
