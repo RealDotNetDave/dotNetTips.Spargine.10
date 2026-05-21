@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-14-2018
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -143,7 +143,7 @@ public static class ListExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), author: "David McCarter", createdOn: "12/22/2026", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void AddRangeIfNotExists([DisallowNull] IEnumerable<T> items, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -156,13 +156,7 @@ public static class ListExtensions
 			var eq = comparer ?? EqualityComparer<T>.Default;
 			var existingItems = new HashSet<T>(list, eq);
 
-			foreach (var item in items)
-			{
-				if (existingItems.Add(item))
-				{
-					list.Add(item);
-				}
-			}
+			ListExtensionsHelper.AddUniqueItems(list, items, existingItems);
 		}
 
 		/// <summary>
@@ -289,7 +283,7 @@ public static class ListExtensions
 		/// <exception cref="ArgumentException">Thrown if the list is empty.</exception>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexAtLooped), author: "David McCarter", createdOn: "7/17/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T IndexAtLooped(in int index)
 		{
 			list = list.ArgumentNotNull();
@@ -301,25 +295,7 @@ public static class ListExtensions
 				ExceptionThrower.ThrowArgumentException(Resources.CollectionIsEmpty, nameof(list));
 			}
 
-			int indexWrap;
-
-			if ((count & (count - 1)) == 0)
-			{
-				var mask = count - 1;
-				indexWrap = index & mask;
-
-				if (index < 0)
-				{
-					indexWrap = (count + (index % count)) & mask;
-				}
-			}
-			else
-			{
-				indexWrap = index % count;
-				indexWrap += (indexWrap >> 31) & count;
-			}
-
-			return list[indexWrap];
+			return list[ListExtensionsHelper.ComputeWrappedIndex(index, count)];
 		}
 
 		/// <summary>
@@ -354,22 +330,17 @@ public static class ListExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsEqualTo), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsEqualTo([DisallowNull] List<T> collectionToCheck, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			if (list is null || collectionToCheck is null)
+			if (collectionToCheck is null || list is null)
 			{
 				return false;
 			}
 
-			if (ReferenceEquals(list, collectionToCheck))
+			if (ListExtensionsHelper.ReferenceOrCountMismatch(list, collectionToCheck, out var sameRef))
 			{
-				return true;
-			}
-
-			if (list.Count != collectionToCheck.Count)
-			{
-				return false;
+				return sameRef;
 			}
 
 			var span1 = CollectionsMarshal.AsSpan(list);
