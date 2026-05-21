@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-08-2026
+// Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -184,6 +184,54 @@ public static class EnumerableExtensions
 		}
 
 		return null;
+	}
+
+	/// <summary>
+	/// Picks a random element from an <see cref="IList{T}"/>.
+	/// Returns <c>default</c> when the list is empty.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="list">The list to pick from.</param>
+	/// <returns>A randomly selected element, or <c>default</c> if the list is empty.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
+	private static T? PickFromList<T>(IList<T> list) =>
+		list.Count == 0 ? default : list[Random.Shared.Next(list.Count)];
+
+	/// <summary>
+	/// Picks a random element from an <see cref="ICollection{T}"/> by enumerating to a random index.
+	/// Returns <c>default</c> when the collection is empty.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to pick from.</param>
+	/// <returns>A randomly selected element, or <c>default</c> if the collection is empty.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
+	private static T? PickFromCollection<T>(ICollection<T> collection)
+	{
+		var count = collection.Count;
+
+		if (count == 0)
+		{
+			return default;
+		}
+
+		var targetIndex = Random.Shared.Next(count);
+		var currentIndex = 0;
+
+		foreach (var item in collection)
+		{
+			if (currentIndex == targetIndex)
+			{
+				return item;
+			}
+
+			currentIndex++;
+		}
+
+		return default;
 	}
 
 	/// <summary>
@@ -521,7 +569,7 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			sortExpression = sortExpression?.Trim() ?? string.Empty;
+			sortExpression = (sortExpression ?? string.Empty).Trim();
 
 			if (string.IsNullOrEmpty(sortExpression))
 			{
@@ -529,23 +577,15 @@ public static class EnumerableExtensions
 			}
 
 			var parts = sortExpression.Split(ControlChars.Space, StringSplitOptions.RemoveEmptyEntries);
-
-			if ((parts.Length == 0) || string.IsNullOrEmpty(parts[0]))
-			{
-				return collection;
-			}
-
 			var property = parts[0];
 			var descending = (parts.Length > 1) && parts[1].Contains("esc", StringComparison.OrdinalIgnoreCase);
 
 			var cacheKey = $"{typeof(T).FullName}.{property}";
-			var accessor = _orderByPropertyCache.GetOrAdd(cacheKey, _ => BuildPropertyAccessor<T>(property));
+			var typedAccessor = (Func<T, object?>)_orderByPropertyCache.GetOrAdd(cacheKey, _ => BuildPropertyAccessor<T>(property));
 
-			return (accessor is not Func<T, object?> typedAccessor)
-				? throw new InvalidOperationException($"Cached delegate for property accessor is not of expected type Func<{typeof(T).Name}, object?>.")
-				: ((IEnumerable<T>)(descending
+			return descending
 				? collection.OrderByDescending(typedAccessor)
-				: collection.OrderBy(typedAccessor)));
+				: collection.OrderBy(typedAccessor);
 		}
 
 		/// <summary>
@@ -1162,7 +1202,6 @@ public static class EnumerableExtensions
 		/// This method provides optimized processing paths for different collection types:
 		/// <list type="bullet">
 		/// <item><description><see cref="List{T}"/> - Uses <see cref="CollectionsMarshal.AsSpan{T}(List{T})"/> for direct memory access without bounds checking.</description></item>
-		/// <item><description>Arrays (<typeparamref name="T"/>[]) - Uses <see cref="MemoryMarshal.GetArrayDataReference{T}(T[])"/> and <see cref="Unsafe.Add{T}(ref T, int)"/> for maximum performance.</description></item>
 		/// <item><description>Other <see cref="IEnumerable{T}"/> types - Uses standard foreach enumeration to avoid allocation overhead.</description></item>
 		/// </list>
 		/// Performance benefits are most significant with large collections (1000+ elements) and lightweight action delegates.
@@ -1192,16 +1231,6 @@ public static class EnumerableExtensions
 				for (var index = 0; index < itemCount; index++)
 				{
 					action(span[index]);
-				}
-			}
-			else if (collection is T[] array)
-			{
-				ref var arrayStart = ref MemoryMarshal.GetArrayDataReference(array);
-				var arrayLength = array.Length;
-
-				for (var index = 0; index < arrayLength; index++)
-				{
-					action(Unsafe.Add(ref arrayStart, index));
 				}
 			}
 			else
@@ -1634,52 +1663,19 @@ public static class EnumerableExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			// Fast path: IList<T> (List, Array, etc.) - O(1) indexed access
 			if (collection is IList<T> list)
 			{
-				if (list.Count == 0)
-				{
-					return default;
-				}
-
-				var randomIndex = Random.Shared.Next(list.Count);
-
-				return list[randomIndex];
+				return PickFromList(list);
 			}
 
-			// Fast path: ICollection<T> - known count, enumerate to random index
 			if (collection is ICollection<T> knownSizeCollection)
 			{
-				var count = knownSizeCollection.Count;
-
-				if (count == 0)
-				{
-					return default;
-				}
-
-				var targetIndex = Random.Shared.Next(count);
-				var currentIndex = 0;
-
-				foreach (var item in knownSizeCollection)
-				{
-					if (currentIndex == targetIndex)
-					{
-						return item;
-					}
-
-					currentIndex++;
-				}
+				return PickFromCollection(knownSizeCollection);
 			}
 
-			// Fallback: Materialize to array, then pick random index
 			var array = collection.ToArray();
 
-			if (array.Length == 0)
-			{
-				return default;
-			}
-
-			return array[Random.Shared.Next(array.Length)];
+			return array.Length == 0 ? default : array[Random.Shared.Next(array.Length)];
 		}
 
 		/// <summary>
@@ -1907,9 +1903,14 @@ public static class EnumerableExtensions
 		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
-			if (collection == null || items == null)
+			if (collection is null)
 			{
-				return collection ?? [];
+				return [];
+			}
+
+			if (items is null)
+			{
+				return collection;
 			}
 
 			var itemsList = items as ICollection<T> ?? [.. items];
