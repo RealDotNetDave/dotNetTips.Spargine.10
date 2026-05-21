@@ -580,6 +580,8 @@ public static class ObjectExtensions
 	[Information(nameof(MergePropertyValueToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void MergePropertyValueToResult(Dictionary<string, string> result, PropertyInfo property, object obj, string memberPrefix, bool ignoreNulls)
 	{
+		// Callers route only readable, non-indexed properties here (via ShouldIncludeProperty).
+		// Any unexpected TargetException is caught by TryMergePropertyToResult's try/catch.
 		var innerObject = property.GetValue(obj, null);
 
 		if (ShouldSkipNullValue(innerObject, ignoreNulls))
