@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTips.Spargine.10", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{74F50B35-6B6E-4BB1-927A-2B33C9B9BB00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTips.Spargine.BenchmarkTests", "Source\Benchmarking\dotNetTips.Spargine.BenchmarkTests\DotNetTips.Spargine.BenchmarkTests.csproj", "{CE2FD97C-A911-2624-1361-4FD57F8260F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTips.Spargine.BenchmarkTests", "source\Benchmarking\dotNetTips.Spargine.BenchmarkTests\DotNetTips.Spargine.BenchmarkTests.csproj", "{CE2FD97C-A911-2624-1361-4FD57F8260F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

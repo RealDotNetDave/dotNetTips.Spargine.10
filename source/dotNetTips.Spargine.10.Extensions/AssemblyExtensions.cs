@@ -110,7 +110,7 @@ public static class AssemblyExtensions
 		/// <remarks>
 		/// This method searches the assembly for non-abstract, non-generic types that are assignable to <typeparamref name="T" />
 		/// and attempts to create an instance of each using <see cref="Activator.CreateInstance(Type)"/>.
-		/// Types that lack a parameterless constructor are skipped and logged via <see cref="Trace.WriteLine(string?)"/>.
+		/// Types that lack a parameterless constructor are skipped.
 		/// If a <see cref="ReflectionTypeLoadException"/> occurs during type discovery, only the successfully loaded types are processed.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when <c>assembly</c> is null.</exception>
