@@ -94,10 +94,7 @@ public static class ObjectExtensions
 #pragma warning restore IL2070
 		var fields = _allInstanceFieldsCache.GetOrAdd(objectType, static t => t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public));
 
-		foreach (var field in fields)
-		{
-			DisposeField(field, obj);
-		}
+		DisposeAllFields(fields, obj);
 	}
 
 	/// <summary>
@@ -261,6 +258,27 @@ public static class ObjectExtensions
 		SetPropertyValue(properties, propertyName, value, ignoreNulls);
 	}
 
+	/// <summary>Appends all key=value pairs from <paramref name="properties"/> to <paramref name="sb"/>, separated by <paramref name="sequenceSeparator"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(AppendPropertiesPairs), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void AppendPropertiesPairs(StringBuilder sb, IReadOnlyDictionary<string, string> properties, string sequenceSeparator, char keyValueSeparator)
+	{
+		var isFirst = true;
+
+		foreach (var pair in properties)
+		{
+			if (!isFirst)
+			{
+				_ = sb.Append(sequenceSeparator);
+			}
+
+			isFirst = false;
+			_ = sb.Append(pair.Key);
+			_ = sb.Append(keyValueSeparator);
+			_ = sb.Append(pair.Value);
+		}
+	}
+
 	/// <summary>Builds a fields dictionary for a complex (non-enumerable, non-built-in) object.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate and read type fields.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -268,20 +286,11 @@ public static class ObjectExtensions
 	private static ReadOnlyDictionary<string, string> BuildComplexTypeFieldsDictionary(string memberName, object obj, Type objectType, bool ignoreEmptyValues)
 	{
 		var result = new Dictionary<string, string>();
-		var newMemberName = memberName.Length > 0 ? string.Concat(memberName, ControlChars.Dot.ToString()) : string.Empty;
 
 		// DON'T USE SPAN HERE
 		var fields = _allInstanceFieldsCache.GetOrAdd(objectType, static t => t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic));
 
-		for (var fieldIndex = 0; fieldIndex < fields.Length; fieldIndex++)
-		{
-			var field = fields[fieldIndex];
-
-			if (!field.IsDefined(typeof(CompilerGeneratedAttribute), false))
-			{
-				TryMergeFieldToResult(result, field, obj, newMemberName, ignoreEmptyValues);
-			}
-		}
+		MergeEligibleFieldsToResult(result, fields, obj, BuildPrefixedMemberName(memberName), ignoreEmptyValues);
 
 		return result.AsReadOnly();
 	}
@@ -293,22 +302,13 @@ public static class ObjectExtensions
 	private static ReadOnlyDictionary<string, string> BuildComplexTypePropertiesDictionary(string memberName, object obj, bool ignoreNulls)
 	{
 		var result = new Dictionary<string, string>();
-		var newMemberName = memberName.Length > 0 ? string.Concat(memberName, ControlChars.Dot.ToString()) : string.Empty;
 
 #pragma warning disable IL2070 // obj.GetType() returns Type without DynamicallyAccessedMembers; caller already marked RequiresUnreferencedCode
 		var objectType = obj.GetType();
 #pragma warning restore IL2070
 		var properties = _allPropertiesCache.GetOrAdd(objectType, static t => t.GetProperties());
 
-		for (var propIndex = 0; propIndex < properties.Length; propIndex++)
-		{
-			var property = properties[propIndex];
-
-			if (property.GetAttribute<JsonIgnoreAttribute>() == null && property.GetIndexParameters().Length == 0 && property.CanRead)
-			{
-				TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
-			}
-		}
+		MergeEligiblePropertiesToResult(result, properties, obj, BuildPrefixedMemberName(memberName), ignoreNulls);
 
 		return result.AsReadOnly();
 	}
@@ -363,20 +363,7 @@ public static class ObjectExtensions
 				_ = sb.Append(header);
 			}
 
-			var isFirst = true;
-
-			foreach (var pair in properties)
-			{
-				if (!isFirst)
-				{
-					_ = sb.Append(sequenceSeparator);
-				}
-
-				isFirst = false;
-				_ = sb.Append(pair.Key);
-				_ = sb.Append(keyValueSeparator);
-				_ = sb.Append(pair.Value);
-			}
+			AppendPropertiesPairs(sb, properties, sequenceSeparator, keyValueSeparator);
 
 			return sb.ToString();
 		}
@@ -394,6 +381,14 @@ public static class ObjectExtensions
 		return string.IsNullOrEmpty(typeName) ? name : string.Concat(typeName, ControlChars.Dot.ToString(), name);
 	}
 
+	/// <summary>Returns a dot-trailing prefix from <paramref name="memberName"/>, or an empty string when the member name is empty.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(BuildPrefixedMemberName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static string BuildPrefixedMemberName(string memberName)
+	{
+		return memberName.Length > 0 ? string.Concat(memberName, ControlChars.Dot.ToString()) : string.Empty;
+	}
+
 	/// <summary>Builds a dictionary from the properties selected by <paramref name="propertySelector"/>.</summary>
 	[RequiresUnreferencedCode("Uses reflection to enumerate type properties.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -407,15 +402,7 @@ public static class ObjectExtensions
 
 		var properties = new Dictionary<string, string>(allProperties.Length);
 
-		for (var propIndex = 0; propIndex < allProperties.Length; propIndex++)
-		{
-			var property = allProperties[propIndex];
-
-			if (propertySelector(property))
-			{
-				TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
-			}
-		}
+		FillSelectedPropertiesDictionary(properties, allProperties, propertySelector, obj, typeName, ignoreNulls);
 
 		return properties;
 	}
@@ -434,6 +421,28 @@ public static class ObjectExtensions
 		else if (fieldValue is IDisposable disposableField)
 		{
 			disposableField.TryDispose();
+		}
+	}
+
+	/// <summary>Disposes each field in <paramref name="fields"/> by delegating to <see cref="DisposeField"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DisposeAllFields), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void DisposeAllFields(FieldInfo[] fields, IDisposable obj)
+	{
+		foreach (var field in fields)
+		{
+			DisposeField(field, obj);
+		}
+	}
+
+	/// <summary>Disposes each item in <paramref name="items"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(DisposeEachItem), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void DisposeEachItem<T>(IEnumerable<T> items) where T : IDisposable
+	{
+		foreach (var item in items)
+		{
+			item?.Dispose();
 		}
 	}
 
@@ -494,6 +503,20 @@ public static class ObjectExtensions
 		return filtered;
 	}
 
+	/// <summary>Iterates <paramref name="allProperties"/> and adds each entry accepted by <paramref name="propertySelector"/> to <paramref name="properties"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FillSelectedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void FillSelectedPropertiesDictionary(Dictionary<string, string> properties, PropertyInfo[] allProperties, Func<PropertyInfo, bool> propertySelector, object obj, string typeName, bool ignoreNulls)
+	{
+		foreach (var property in allProperties)
+		{
+			if (propertySelector(property))
+			{
+				TryAddSelectedPropertyValue(properties, property, obj, typeName, ignoreNulls);
+			}
+		}
+	}
+
 	/// <summary>Merges source fields-dictionary entries into <paramref name="result"/>, filtering empty values when requested.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MergeFieldsDictionaryToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
@@ -510,17 +533,53 @@ public static class ObjectExtensions
 		}
 	}
 
+	/// <summary>Iterates <paramref name="fields"/>, skipping compiler-generated entries, and merges each eligible field into <paramref name="result"/>.</summary>
+	[RequiresUnreferencedCode("Calls TryMergeFieldToResult which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MergeEligibleFieldsToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void MergeEligibleFieldsToResult(Dictionary<string, string> result, FieldInfo[] fields, object obj, string newMemberName, bool ignoreEmptyValues)
+	{
+		foreach (var field in fields)
+		{
+			if (!field.IsDefined(typeof(CompilerGeneratedAttribute), false))
+			{
+				TryMergeFieldToResult(result, field, obj, newMemberName, ignoreEmptyValues);
+			}
+		}
+	}
+
+	/// <summary>Iterates <paramref name="properties"/>, skipping non-eligible entries, and merges each eligible property into <paramref name="result"/>.</summary>
+	[RequiresUnreferencedCode("Calls TryMergePropertyToResult which uses reflection.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MergeEligiblePropertiesToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void MergeEligiblePropertiesToResult(Dictionary<string, string> result, PropertyInfo[] properties, object obj, string newMemberName, bool ignoreNulls)
+	{
+		foreach (var property in properties)
+		{
+			if (ShouldIncludeProperty(property))
+			{
+				TryMergePropertyToResult(result, property, obj, newMemberName, ignoreNulls);
+			}
+		}
+	}
+
+	/// <summary>Copies all entries from <paramref name="source"/> into <paramref name="result"/>.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MergeNestedPropertiesDictionary), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static void MergeNestedPropertiesDictionary(Dictionary<string, string> result, ReadOnlyDictionary<string, string> source)
+	{
+		foreach (var kvp in source)
+		{
+			result[kvp.Key] = kvp.Value;
+		}
+	}
+
 	/// <summary>Reads a property value and merges its nested entries into <paramref name="result"/>.</summary>
 	[RequiresUnreferencedCode("Calls PropertiesToDictionary which uses reflection.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MergePropertyValueToResult), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void MergePropertyValueToResult(Dictionary<string, string> result, PropertyInfo property, object obj, string memberPrefix, bool ignoreNulls)
 	{
-		if (!property.CanRead || property.GetIndexParameters().Length > 0)
-		{
-			return;
-		}
-
 		var innerObject = property.GetValue(obj, null);
 
 		if (ShouldSkipNullValue(innerObject, ignoreNulls))
@@ -530,10 +589,7 @@ public static class ObjectExtensions
 
 		var innerMember = string.Concat(memberPrefix, property.Name);
 
-		foreach (var kvp in innerObject!.PropertiesToDictionary(innerMember, ignoreNulls))
-		{
-			result[kvp.Key] = kvp.Value;
-		}
+		MergeNestedPropertiesDictionary(result, innerObject!.PropertiesToDictionary(innerMember, ignoreNulls));
 	}
 
 
@@ -551,10 +607,7 @@ public static class ObjectExtensions
 			return;
 		}
 
-		foreach (var item in items)
-		{
-			item?.Dispose();
-		}
+		DisposeEachItem(items);
 	}
 
 	/// <summary>
@@ -590,6 +643,32 @@ public static class ObjectExtensions
 		return includeMemberName ? typeName : string.Empty;
 	}
 
+	/// <summary>Retrieves or builds a factory delegate for the default instance of <paramref name="fieldType"/>.</summary>
+	[RequiresUnreferencedCode("Uses Activator.CreateInstance to construct field default values.")]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ResolveOrCreateFieldFactory), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static Func<object> ResolveOrCreateFieldFactory(Type fieldType)
+	{
+		return _instanceFactoryCache.GetOrAdd(fieldType, static t =>
+		{
+			// Prefer a public parameterless constructor compiled to a delegate (50-100x faster than Activator.CreateInstance).
+			// Fall back to Activator.CreateInstance for types that have only non-public constructors
+			// (e.g., singletons, internal types), matching the original behaviour of passing true for nonPublic.
+			var constructor = t.GetConstructor(BindingFlags.Public | BindingFlags.Instance, binder: null, types: Type.EmptyTypes, modifiers: null);
+			if (constructor is not null)
+			{
+				var newExpr = Expression.New(constructor);
+				return Expression.Lambda<Func<object>>(Expression.Convert(newExpr, typeof(object))).Compile();
+			}
+
+			// Non-public constructor fallback — still faster than uncached Activator.CreateInstance
+			// because the delegate itself is compiled and cached.
+#pragma warning disable IL2072 // RequiresUnreferencedCode propagated from caller
+			return () => Activator.CreateInstance(t, nonPublic: true)!;
+#pragma warning restore IL2072
+		});
+	}
+
 	/// <summary>Writes an empty string for a null property when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SetNullPropertyValue), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
@@ -622,6 +701,14 @@ public static class ObjectExtensions
 	private static bool ShouldReturnNullPlaceholder(string memberName, object? obj, bool ignoreNulls)
 	{
 		return memberName.HasValue() && obj is null && ignoreNulls is false;
+	}
+
+	/// <summary>Returns <c>true</c> when <paramref name="property"/> should be included in a properties dictionary.</summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ShouldIncludeProperty), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static bool ShouldIncludeProperty(PropertyInfo property)
+	{
+		return property.GetAttribute<JsonIgnoreAttribute>() == null && property.GetIndexParameters().Length == 0 && property.CanRead;
 	}
 
 	/// <summary>Returns <c>true</c> when an empty-value entry should be skipped.</summary>
@@ -665,26 +752,7 @@ public static class ObjectExtensions
 	{
 		if (field.GetValue(obj) == null && !field.FieldType.IsValueType)
 		{
-			var factory = _instanceFactoryCache.GetOrAdd(field.FieldType, static fieldType =>
-			{
-				// Prefer a public parameterless constructor compiled to a delegate (50-100x faster than Activator.CreateInstance).
-				// Fall back to Activator.CreateInstance for types that have only non-public constructors
-				// (e.g., singletons, internal types), matching the original behaviour of passing true for nonPublic.
-				var constructor = fieldType.GetConstructor(BindingFlags.Public | BindingFlags.Instance, binder: null, types: Type.EmptyTypes, modifiers: null);
-				if (constructor is not null)
-				{
-					var newExpr = Expression.New(constructor);
-					return Expression.Lambda<Func<object>>(Expression.Convert(newExpr, typeof(object))).Compile();
-				}
-
-				// Non-public constructor fallback — still faster than uncached Activator.CreateInstance
-				// because the delegate itself is compiled and cached.
-#pragma warning disable IL2072 // RequiresUnreferencedCode propagated from caller
-				return () => Activator.CreateInstance(fieldType, nonPublic: true)!;
-#pragma warning restore IL2072
-			});
-
-			field.SetValue(obj, factory());
+			field.SetValue(obj, ResolveOrCreateFieldFactory(field.FieldType)());
 		}
 	}
 

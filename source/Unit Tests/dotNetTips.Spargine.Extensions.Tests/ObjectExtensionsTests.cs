@@ -2219,6 +2219,19 @@ public class ObjectExtensionsTests : UnitTester
 		Assert.IsNotNull(result);
 	}
 
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WriteOnlyProperty_IsSkipped()
+	{
+		var obj = new ObjectWithWriteOnlyProperty();
+		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
+
+		var result = obj.PropertiesToString(selector);
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains("WriteOnly", StringComparison.Ordinal));
+		Assert.IsTrue(result.Contains("Readable", StringComparison.Ordinal));
+	}
+
 	private sealed class DisposeTrackingDisposable : IDisposable
 	{
 		public bool IsDisposed { get; private set; }
@@ -2270,6 +2283,16 @@ public class ObjectExtensionsTests : UnitTester
 		{
 			throw new InvalidOperationException("Faulty dispose");
 		}
+	}
+
+	private sealed class ObjectWithWriteOnlyProperty
+	{
+#pragma warning disable IDE0052
+		private string _hidden = string.Empty;
+#pragma warning restore IDE0052
+
+		public string WriteOnly { set => this._hidden = value; }
+		public string Readable { get; set; } = "readable";
 	}
 
 }
