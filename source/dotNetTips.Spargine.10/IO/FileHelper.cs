@@ -886,10 +886,12 @@ public static class FileHelper
 			return;
 		}
 
-		var extractedFilePath = Path.Combine(expandedDirectoryPath, entry.FullName);
+		var rawExtractedFilePath = Path.Combine(expandedDirectoryPath, entry.FullName);
+		var extractedFilePath = Path.GetFullPath(rawExtractedFilePath);
+		var fullExpandedRoot = Path.GetFullPath(fullExpandedPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
 
 		// Sanitize the extracted file path to prevent directory traversal attacks
-		if (!extractedFilePath.StartsWith(fullExpandedPath, StringComparison.OrdinalIgnoreCase))
+		if (!extractedFilePath.StartsWith(fullExpandedRoot, StringComparison.OrdinalIgnoreCase))
 		{
 			ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
 		}
