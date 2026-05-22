@@ -93,7 +93,14 @@ public static class PathHelper
 		return EnsureDirectoryCreated(new DirectoryInfo(Path.Combine(paths)), createIfNotExists);
 	}
 
+	/// <summary>
+	/// Creates the directory represented by <paramref name="di"/> if <paramref name="create"/> is <c>true</c> and the directory does not already exist.
+	/// </summary>
+	/// <param name="di">The <see cref="DirectoryInfo"/> representing the directory to potentially create.</param>
+	/// <param name="create">If <c>true</c>, the directory will be created when it does not exist.</param>
+	/// <returns>The <paramref name="di"/> instance, regardless of whether the directory was created.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EnsureDirectoryCreated), author: "David McCarter", createdOn: "8/10/2020", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static DirectoryInfo EnsureDirectoryCreated(DirectoryInfo di, bool create)
 	{
 		if (create && di.CheckExists() is false)
