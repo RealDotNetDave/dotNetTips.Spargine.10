@@ -386,4 +386,25 @@ public class TempFileManagerTests
 		}
 	}
 
+	[TestMethod]
+	public void DeleteFile_WithMoreThanFiftyManagedFiles_UsesParallelFilter()
+	{
+		// Arrange – 51 files forces _files.Count > 50 inside DeleteFilesFromCache,
+		// which routes execution through FilterFilesParallel instead of FilterFilesSequential.
+		using (var manager = new TempFileManager())
+		{
+			var files = manager.CreateFiles(51);
+			var fileToDelete = files[0];
+
+			// Act
+			manager.DeleteFile(fileToDelete);
+
+			// Assert
+			var managedFiles = manager.GetManagedFiles();
+			Assert.IsFalse(File.Exists(fileToDelete), $"File {fileToDelete} should have been deleted from disk.");
+			Assert.DoesNotContain(fileToDelete, managedFiles);
+			Assert.HasCount(50, managedFiles);
+		}
+	}
+
 }
