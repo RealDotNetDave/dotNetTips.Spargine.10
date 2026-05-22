@@ -41,7 +41,7 @@ public static class PathHelper
 	/// It is used to validate file names by checking against characters that are not allowed in file names according to the file system.
 	/// </remarks>
 	[SupportedOSPlatform("windows")]
-	private static readonly char[] InvalidFileNameChars = [.. FileHelper.InvalidFileNameChars.Where(c => c is not '*' and not '|' and not '?')];
+	private static readonly char[] InvalidFileNameChars = [.. FileHelper.InvalidFileNameChars.Except(['*', '|', '?'])];
 
 	/// <summary>
 	/// The invalid path characters, excluding directory separator characters.
@@ -51,7 +51,7 @@ public static class PathHelper
 	/// <see cref="Path.DirectorySeparatorChar"/> and <see cref="Path.AltDirectorySeparatorChar"/>.
 	/// It is used to validate paths by checking against characters that are not allowed in paths according to the file system.
 	/// </remarks>
-	private static readonly char[] InvalidPathChars = [.. Path.GetInvalidPathChars().Where(c => c != Path.DirectorySeparatorChar && c != Path.AltDirectorySeparatorChar)];
+	private static readonly char[] InvalidPathChars = [.. Path.GetInvalidPathChars().Except([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar])];
 
 	/// <summary>
 	/// Gets the path separators used in file paths.
@@ -90,11 +90,13 @@ public static class PathHelper
 			paths[paramCount] = paths[paramCount].ToTrimmed()!;
 		}
 
-		var combinedPath = Path.Combine(paths);
+		return EnsureDirectoryCreated(new DirectoryInfo(Path.Combine(paths)), createIfNotExists);
+	}
 
-		var di = new DirectoryInfo(combinedPath);
-
-		if (createIfNotExists && di.CheckExists() is false)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static DirectoryInfo EnsureDirectoryCreated(DirectoryInfo di, bool create)
+	{
+		if (create && di.CheckExists() is false)
 		{
 			di.Create();
 		}
