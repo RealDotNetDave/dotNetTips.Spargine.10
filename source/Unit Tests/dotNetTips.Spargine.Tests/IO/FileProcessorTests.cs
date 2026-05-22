@@ -1995,6 +1995,26 @@ public class FileProcessorTests
 	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
 	private void Processor_Processed(object? sender, ProgressEventArgs e) => Trace.WriteLine(e.Name + ":" + e.Message + ":" + e.ProgressState + ":" + e.Size);
 
+	[TestMethod]
+	public void DeleteFiles_WithoutEventHandler_DeletesSuccessfully()
+	{
+		// Arrange — no Processed handler attached, so psw will be null inside ExecuteDelete.
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		// Act
+		var deletedCount = processor.DeleteFiles(files);
+
+		// Assert
+		Assert.AreEqual(3, deletedCount);
+	}
+
 	//[TestMethod]
 	//public void TEMPDeleteFoldersTest()
 	//{
