@@ -35,6 +35,13 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.NeedsDocumentation)]
 public static class SocketExtensions
 {
+
+	/// <summary>The maximum recommended buffer size in bytes for send and receive socket buffers (1 MB).</summary>
+	public const int MaximumBufferSize = 1_048_576;
+
+	/// <summary>The minimum allowed buffer size in bytes for send and receive socket buffers.</summary>
+	public const int MinimumBufferSize = 4096;
+
 	/// <summary>
 	/// Binds <paramref name="socket"/> to <paramref name="address"/> on an OS-assigned port and
 	/// returns the chosen port number.
@@ -58,17 +65,34 @@ public static class SocketExtensions
 	/// Configures the send and receive buffer sizes for <paramref name="socket"/>.
 	/// </summary>
 	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
-	/// <param name="sendBufferSize">The size, in bytes, of the send buffer. Must be at least 1.</param>
-	/// <param name="receiveBufferSize">The size, in bytes, of the receive buffer. Must be at least 1.</param>
+	/// <param name="sendBufferSize">
+	/// The size, in bytes, of the send buffer. Must be between <see cref="MinimumBufferSize" /> (4 KB)
+	/// and <see cref="MaximumBufferSize" /> (1 MB) inclusive. Values below 4 KB degrade throughput;
+	/// values above 1 MB increase kernel memory pressure without measurable gain for most workloads.
+	/// </param>
+	/// <param name="receiveBufferSize">
+	/// The size, in bytes, of the receive buffer. Must be between <see cref="MinimumBufferSize" /> (4 KB)
+	/// and <see cref="MaximumBufferSize" /> (1 MB) inclusive. Values below 4 KB degrade throughput;
+	/// values above 1 MB increase kernel memory pressure without measurable gain for most workloads.
+	/// </param>
 	/// <returns>The configured <c>Socket</c> for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="socket"/> is <c>null</c>.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">
+	/// Thrown when <paramref name="sendBufferSize"/> or <paramref name="receiveBufferSize"/> is outside
+	/// the range [<see cref="MinimumBufferSize"/>, <see cref="MaximumBufferSize"/>].
+	/// </exception>
+	/// <remarks>
+	/// Windows internally doubles the buffer value you set (kernel overhead), so a 1 MB setting
+	/// reserves approximately 2 MB of kernel memory per socket. For high-throughput scenarios,
+	/// 64 KB–256 KB is typically sufficient; use larger values only when profiling confirms a benefit.
+	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConfigureBufferSizes), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static Socket ConfigureBufferSizes([DisallowNull] this Socket socket, int sendBufferSize, int receiveBufferSize)
 	{
 		socket = socket.ArgumentNotNull();
-		sendBufferSize = sendBufferSize.EnsureMinimum(1); // TODO: What is a good minimum value for this?
-		receiveBufferSize = receiveBufferSize.EnsureMinimum(1); // TODO: What is a good minimum value for this?
+		sendBufferSize = sendBufferSize.ArgumentInRange(MinimumBufferSize, MaximumBufferSize);
+		receiveBufferSize = receiveBufferSize.ArgumentInRange(MinimumBufferSize, MaximumBufferSize);
 
 		socket.SendBufferSize = sendBufferSize;
 		socket.ReceiveBufferSize = receiveBufferSize;
