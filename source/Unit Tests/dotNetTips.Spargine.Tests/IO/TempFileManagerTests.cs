@@ -400,9 +400,10 @@ public class TempFileManagerTests
 			manager.DeleteFile(fileToDelete);
 
 			// Assert
+			var managedFiles = manager.GetManagedFiles();
 			Assert.IsFalse(File.Exists(fileToDelete), $"File {fileToDelete} should have been deleted from disk.");
-			Assert.DoesNotContain(fileToDelete, manager.GetManagedFiles());
-			Assert.HasCount(50, manager.GetManagedFiles());
+			Assert.DoesNotContain(fileToDelete, managedFiles);
+			Assert.HasCount(50, managedFiles);
 		}
 	}
 
