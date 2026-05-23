@@ -1,6 +1,6 @@
 # **Spargine Coding & Repository Rules**
 
-## DEFINITION OF DONE - MANDATORY
+## DEFINITION OF DONE - MANDATORY!
 
 Before writing any code, read this section. After writing code, execute every step below in order before responding.
 

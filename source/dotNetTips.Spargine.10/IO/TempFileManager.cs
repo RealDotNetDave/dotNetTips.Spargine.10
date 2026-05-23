@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 08-04-2024
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-23-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -159,7 +159,10 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <returns>A read-only collection of the paths of the managed temporary files.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(GetManagedFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public ReadOnlyCollection<string> GetManagedFiles() => this._files.ToReadOnlyCollection();
+	public ReadOnlyCollection<string> GetManagedFiles()
+	{
+		return this._files.ToReadOnlyCollection();
+	}
 
 	/// <summary>
 	/// Generates a random temporary file.
@@ -274,14 +277,16 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// </summary>
 	/// <param name="deletedSet">The set of deleted file paths.</param>
 	/// <param name="tempBag">The bag to add retained files to.</param>
-	private void FilterFilesParallel(HashSet<string> deletedSet, ConcurrentBag<string> tempBag) =>
+	private void FilterFilesParallel(HashSet<string> deletedSet, ConcurrentBag<string> tempBag)
+	{
 		_ = Parallel.ForEach(this._files, file =>
-		{
-			if (!deletedSet.Contains(file))
-			{
-				tempBag.Add(file);
-			}
-		});
+				{
+					if (!deletedSet.Contains(file))
+					{
+						tempBag.Add(file);
+					}
+				});
+	}
 
 	/// <summary>
 	/// Filters files sequentially, retaining those not in the deleted set.

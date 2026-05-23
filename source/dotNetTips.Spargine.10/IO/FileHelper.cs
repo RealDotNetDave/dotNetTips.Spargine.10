@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified On : 05-23-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -693,6 +693,17 @@ public static class FileHelper
 	}
 
 	/// <summary>
+	/// Returns the size contribution of a single file entry.
+	/// </summary>
+	/// <param name="file">The <see cref="FileInfo"/> to measure, or <c>null</c>.</param>
+	/// <returns>The file's <see cref="FileInfo.Length"/> if it is non-null and exists; otherwise <c>0</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static long ComputeFileSizeContribution(FileInfo? file)
+	{
+		return file is not null && file.Exists ? file.Length : 0L;
+	}
+
+	/// <summary>
 	/// Evaluates the access rules for the specified permission, returning <c>true</c> if access is allowed and not denied.
 	/// </summary>
 	/// <param name="rules">The collection of <see cref="AuthorizationRuleCollection"/> access rules to evaluate.</param>
@@ -716,6 +727,84 @@ public static class FileHelper
 		}
 
 		return allow && !deny;
+	}
+
+	/// <summary>
+	/// Extracts a single <see cref="ZipArchiveEntry"/> to the expanded directory, validating the target path
+	/// to prevent directory-traversal attacks before opening the output stream.
+	/// </summary>
+	/// <param name="entry">The zip entry to extract.</param>
+	/// <param name="expandedDirectoryPath">The root destination directory path (may be relative).</param>
+	/// <param name="fullExpandedPath">The canonical (absolute) form of <paramref name="expandedDirectoryPath"/>.</param>
+	/// <param name="cancellationToken">Cancellation token.</param>
+	private static async Task ExtractZipEntryAsync(ZipArchiveEntry entry, string expandedDirectoryPath, string fullExpandedPath, CancellationToken cancellationToken)
+	{
+		if (entry.CompressedLength == 0)
+		{
+			return;
+		}
+
+		var rawExtractedFilePath = Path.Combine(expandedDirectoryPath, entry.FullName);
+		var extractedFilePath = Path.GetFullPath(rawExtractedFilePath);
+		var fullExpandedRoot = Path.GetFullPath(fullExpandedPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+		// Sanitize the extracted file path to prevent directory traversal attacks
+		if (!extractedFilePath.StartsWith(fullExpandedRoot, StringComparison.OrdinalIgnoreCase))
+		{
+			ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
+		}
+
+		_ = Directory.CreateDirectory(Path.GetDirectoryName(extractedFilePath)!);
+
+		using var zipStream = await entry.OpenAsync(cancellationToken).ConfigureAwait(false);
+		using var extractedFileStream = new FileStream(extractedFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+		await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// Processes the deletion of a single file during a batch delete operation.
+	/// </summary>
+	/// <param name="fileName">The path of the file to delete.</param>
+	/// <param name="result">The <see cref="SimpleResult{T}"/> that accumulates exceptions.</param>
+	/// <param name="filesDeleted">The list that accumulates successfully deleted file paths.</param>
+	/// <param name="stopOnFirstError">Whether to signal the caller to stop on the first error.</param>
+	/// <returns><c>true</c> if the caller should stop iterating (i.e., an error occurred and <paramref name="stopOnFirstError"/> is <c>true</c>); otherwise <c>false</c>.</returns>
+	private static bool ProcessFileDeletion(string fileName, SimpleResult<ReadOnlyCollection<string>> result, List<string> filesDeleted, bool stopOnFirstError)
+	{
+		var deleted = TryDeleteFile(fileName, out var exception);
+
+		if (deleted)
+		{
+			filesDeleted.Add(fileName);
+			return false;
+		}
+
+		if (exception is not null)
+		{
+			result.AddException(exception);
+			return stopOnFirstError;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Allow"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool RuleMatchesPermissionAndAllows(FileSystemAccessRule rule, FileSystemRights permission)
+	{
+		return (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Allow;
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Deny"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool RuleMatchesPermissionAndDenies(FileSystemAccessRule rule, FileSystemRights permission)
+	{
+		return (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Deny;
 	}
 
 
@@ -819,88 +908,5 @@ public static class FileHelper
 		}
 
 		_ = destination.CheckExists(createDirectory: true);
-	}
-
-	/// <summary>
-	/// Returns the size contribution of a single file entry.
-	/// </summary>
-	/// <param name="file">The <see cref="FileInfo"/> to measure, or <c>null</c>.</param>
-	/// <returns>The file's <see cref="FileInfo.Length"/> if it is non-null and exists; otherwise <c>0</c>.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static long ComputeFileSizeContribution(FileInfo? file)
-		=> file is not null && file.Exists ? file.Length : 0L;
-
-	/// <summary>
-	/// Processes the deletion of a single file during a batch delete operation.
-	/// </summary>
-	/// <param name="fileName">The path of the file to delete.</param>
-	/// <param name="result">The <see cref="SimpleResult{T}"/> that accumulates exceptions.</param>
-	/// <param name="filesDeleted">The list that accumulates successfully deleted file paths.</param>
-	/// <param name="stopOnFirstError">Whether to signal the caller to stop on the first error.</param>
-	/// <returns><c>true</c> if the caller should stop iterating (i.e., an error occurred and <paramref name="stopOnFirstError"/> is <c>true</c>); otherwise <c>false</c>.</returns>
-	private static bool ProcessFileDeletion(string fileName, SimpleResult<ReadOnlyCollection<string>> result, List<string> filesDeleted, bool stopOnFirstError)
-	{
-		var deleted = TryDeleteFile(fileName, out var exception);
-
-		if (deleted)
-		{
-			filesDeleted.Add(fileName);
-			return false;
-		}
-
-		if (exception is not null)
-		{
-			result.AddException(exception);
-			return stopOnFirstError;
-		}
-
-		return false;
-	}
-
-	/// <summary>
-	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Allow"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static bool RuleMatchesPermissionAndAllows(FileSystemAccessRule rule, FileSystemRights permission)
-		=> (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Allow;
-
-	/// <summary>
-	/// Returns <c>true</c> if <paramref name="rule"/> covers the requested <paramref name="permission"/> and its access type is <see cref="AccessControlType.Deny"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static bool RuleMatchesPermissionAndDenies(FileSystemAccessRule rule, FileSystemRights permission)
-		=> (rule.FileSystemRights & permission) == permission && rule.AccessControlType == AccessControlType.Deny;
-
-	/// <summary>
-	/// Extracts a single <see cref="ZipArchiveEntry"/> to the expanded directory, validating the target path
-	/// to prevent directory-traversal attacks before opening the output stream.
-	/// </summary>
-	/// <param name="entry">The zip entry to extract.</param>
-	/// <param name="expandedDirectoryPath">The root destination directory path (may be relative).</param>
-	/// <param name="fullExpandedPath">The canonical (absolute) form of <paramref name="expandedDirectoryPath"/>.</param>
-	/// <param name="cancellationToken">Cancellation token.</param>
-	private static async Task ExtractZipEntryAsync(ZipArchiveEntry entry, string expandedDirectoryPath, string fullExpandedPath, CancellationToken cancellationToken)
-	{
-		if (entry.CompressedLength == 0)
-		{
-			return;
-		}
-
-		var rawExtractedFilePath = Path.Combine(expandedDirectoryPath, entry.FullName);
-		var extractedFilePath = Path.GetFullPath(rawExtractedFilePath);
-		var fullExpandedRoot = Path.GetFullPath(fullExpandedPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
-
-		// Sanitize the extracted file path to prevent directory traversal attacks
-		if (!extractedFilePath.StartsWith(fullExpandedRoot, StringComparison.OrdinalIgnoreCase))
-		{
-			ExceptionThrower.ThrowInvalidOperationException(Resources.ErrorInvalidFilePathZipArchive);
-		}
-
-		_ = Directory.CreateDirectory(Path.GetDirectoryName(extractedFilePath)!);
-
-		using var zipStream = await entry.OpenAsync(cancellationToken).ConfigureAwait(false);
-		using var extractedFileStream = new FileStream(extractedFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
-
-		await zipStream.CopyToAsync(extractedFileStream, cancellationToken).ConfigureAwait(false);
 	}
 }

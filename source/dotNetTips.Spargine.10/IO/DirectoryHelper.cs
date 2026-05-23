@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-23-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -133,7 +133,6 @@ public static class DirectoryHelper
 	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckPermission([DisallowNull] DirectoryInfo directory, FileSystemRights permission = FileSystemRights.Read)
 	{
-		//OPTIMIZATION FROM COPILOT BREAKS THIS CODE
 		directory = directory.ArgumentExists();
 
 		return EvaluatePermission(directory, permission);
@@ -240,16 +239,6 @@ public static class DirectoryHelper
 		}
 
 		return LoadFilesAsyncCore(directories, searchPattern, searchOption, cancellationToken);
-	}
-
-	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
-	{
-		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
-
-		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
-		{
-			yield return await task.ConfigureAwait(false);
-		}
 	}
 
 
@@ -367,13 +356,13 @@ public static class DirectoryHelper
 	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
 	{
-		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		path = path.ArgumentExists();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
 		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
 
+		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		foreach (var directory in path.EnumerateFiles(searchPattern, options).Select(file => file.Directory).FastDistinct())
 		{
 			yield return directory!;
@@ -524,9 +513,9 @@ public static class DirectoryHelper
 	/// <returns>A list of tasks, each returning an array of <see cref="FileInfo"/> for one directory.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static List<Task<FileInfo[]>> BuildFileLoadTasks(IEnumerable<DirectoryInfo> directories, string searchPattern, EnumerationOptions options, CancellationToken cancellationToken)
-		=> directories.Where(directory => directory.CheckExists())
-			.Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))
-			.ToList();
+	{
+		return [.. directories.Where(directory => directory.CheckExists()).Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))];
+	}
 
 	/// <summary>
 	/// Evaluates the access rules on <paramref name="directory"/> and returns whether <paramref name="permission"/> is
@@ -565,22 +554,26 @@ public static class DirectoryHelper
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string? GetEntryAssemblyCompanyName()
-		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
+	{
+		return Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
+	}
 
 	/// <summary>
-	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
-	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
-	/// that match <paramref name="searchPattern"/>.
+	/// Loads the files asynchronous core.
 	/// </summary>
-	/// <param name="directories">The already-validated list of directories to search.</param>
-	/// <param name="searchPattern">The already-validated search pattern.</param>
-	/// <param name="searchOption">The already-validated search scope.</param>
-	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption)
+	/// <param name="directories">The directories.</param>
+	/// <param name="searchPattern">The search pattern.</param>
+	/// <param name="searchOption">The search option.</param>
+	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>IAsyncEnumerable&lt;IEnumerable&lt;FileInfo&gt;&gt;.</returns>
+	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
 	{
-		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
-		return directories.Where(d => d.CheckExists()).SelectMany(d => d.GetFiles(searchPattern, options));
+		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
+
+		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
+		{
+			yield return await task.ConfigureAwait(false);
+		}
 	}
 
 	/// <summary>
@@ -671,6 +664,22 @@ public static class DirectoryHelper
 		SetOneDriveFolderAccount(key, folder, DisplayNameKey);
 
 		return folder;
+	}
+
+	/// <summary>
+	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
+	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
+	/// that match <paramref name="searchPattern"/>.
+	/// </summary>
+	/// <param name="directories">The already-validated list of directories to search.</param>
+	/// <param name="searchPattern">The already-validated search pattern.</param>
+	/// <param name="searchOption">The already-validated search scope.</param>
+	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption)
+	{
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
+		return directories.Where(d => d.CheckExists()).SelectMany(d => d.GetFiles(searchPattern, options));
 	}
 
 	/// <summary>
