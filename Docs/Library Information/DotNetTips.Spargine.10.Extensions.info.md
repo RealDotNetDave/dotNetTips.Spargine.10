@@ -6,7 +6,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -16,7 +16,7 @@
 ### T AddIf(T array, T item, System.Boolean condition)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -71,8 +71,8 @@
 ### T FastClone(T array)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -82,7 +82,7 @@
 ### System.Byte[] FastHashData(System.Byte[] array)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -93,7 +93,7 @@
 ### System.Int64 FastLongCount(T array)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -126,8 +126,8 @@
 ### System.Int32 GenerateHashCode(T array)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -159,8 +159,8 @@
 ### System.Boolean IsNotEmpty(T array, T actionFunction)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
@@ -225,8 +225,8 @@
 ### T ToDistinct(T array, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -236,7 +236,7 @@
 ### T ToFrozenSet(T array, T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -262,7 +262,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -272,7 +272,7 @@
 ### T AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -316,8 +316,8 @@
 ### T FastClone()
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/30/2020
@@ -327,7 +327,7 @@
 ### System.Int64 FastLongCount()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -360,8 +360,8 @@
 ### System.Int32 GenerateHashCode()
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 7/15/2020
@@ -393,8 +393,8 @@
 ### System.Boolean IsNotEmpty(T actionFunction)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/15/2022
@@ -459,8 +459,8 @@
 ### T ToDistinct(T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
@@ -470,7 +470,7 @@
 ### T ToFrozenSet(T comparer)
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -506,7 +506,7 @@
 ### System.Byte[] FastHashData()
 
 * **Status:** Available
-* **Optimization Status:** None
+* **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -7860,4 +7860,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/22/2026 7:14:02 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/23/2026 4:05:33 PM UTC**
