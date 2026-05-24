@@ -254,6 +254,7 @@ string message = string.Format(CultureInfo.InvariantCulture, _rangeError, min, m
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
 - Review all methods in a test class for: missing test coverage, incorrect assertions, hard-coded values that should use `RandomData`, missing `[ExpectedException]` or `Assert.ThrowsException` for error paths, and any violations of the naming convention.
+- ALWAYS run unit tests after writing or modifying code. If any test fails, fix it before considering the task done.
 
 #### **Structure & Conventions**
 - Test classes may inherit from **UnitTester** only when it adds value.  
