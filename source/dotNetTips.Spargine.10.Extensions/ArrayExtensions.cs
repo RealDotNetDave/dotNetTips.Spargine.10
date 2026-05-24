@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-23-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -124,7 +124,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
@@ -138,8 +138,8 @@ public static class ArrayExtensions
 			var result = new T[length + 1];
 			result[0] = item;
 
-			// dotnet-best-practices
-			array.AsSpan().CopyTo(result.AsSpan(1));
+			// SUGGESTION FROM COPILOT SLOWER
+			Array.Copy(array, 0, result, 1, length);
 
 			return result;
 		}
@@ -415,17 +415,14 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] FastClone()
 		{
 			array = array.ArgumentNotNull();
 
-			// dotnet-best-practices
-			var result = new T[array.Length];
+			// SUGGESTION FROM COPILOT SLOWER
+			return (T[])array.Clone();
 
-			array.AsSpan().CopyTo(result);
-
-			return result;
 		}
 
 		/// <summary>
@@ -508,13 +505,14 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int GenerateHashCode()
 		{
 			array = array.ArgumentNotNull();
 
-			// dotnet-best-practices
-			var hash = new HashCode();
+			// SUGGESTION FROM COPILOT SLOWER
+			var hashCode = 6551;
+
 			ref var start = ref MemoryMarshal.GetArrayDataReference(array);
 			var length = array.Length;
 
@@ -524,11 +522,11 @@ public static class ArrayExtensions
 
 				if (element is not null)
 				{
-					hash.Add(element);
+					hashCode ^= (hashCode << 5) ^ EqualityComparer<T>.Default.GetHashCode(element);
 				}
 			}
 
-			return hash.ToHashCode();
+			return hashCode;
 		}
 
 		/// <summary>
@@ -593,10 +591,9 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(in Func<T, bool> actionFunction)
 		{
-			// dotnet-best-practices
 			if (array is null || actionFunction is null)
 			{
 				return false;
@@ -768,11 +765,11 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] ToDistinct(IEqualityComparer<T>? comparer = null)
 		{
-			// dotnet-best-practices
 			array = array.ArgumentNotNull();
+
 			var seen = new HashSet<T>(array.Length, comparer);
 
 			foreach (var item in array.AsSpan())
