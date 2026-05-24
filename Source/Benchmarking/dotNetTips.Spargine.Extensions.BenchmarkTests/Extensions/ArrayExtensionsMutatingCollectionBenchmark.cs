@@ -4,14 +4,14 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary>
 // Benchmark tests for ArrayExtensions methods that mutate collections,
-// including Remove*, Upsert*, and in-place processing methods.
+// including AddFirst*, AddLast*, Remove*, Upsert*, and in-place processing methods.
 // Uses [IterationSetup] to reset collections before each iteration.
 // </summary>
 // ***********************************************************************
@@ -40,6 +40,42 @@ public class ArrayExtensionsMutatingCollectionBenchmark : LargeCollectionBenchma
 	private PersonRecord[] _personRecordArray = default!;
 	private Person[] _personRefArray = default!;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray = default!;
+
+	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void AddFirstRef()
+	{
+		var result = this._personRefArray.AddFirst(this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void AddFirstVal()
+	{
+		var result = this._personValArray.AddFirst(this.PersonVal01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Reference")]
+	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
+	public void AddLastRef()
+	{
+		var result = this._personRefArray.AddLast(this.PersonRef02);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Value")]
+	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
+	public void AddLastVal()
+	{
+		var result = this._personValArray.AddLast(this.PersonVal02);
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = "Process Collection: FastProcessor()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -44,42 +44,6 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 	private Person[] _personRefArrayWithDups = default!;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArray = default!;
 	private Spargine.Tester.Models.ValueTypes.Person[] _personValArrayHalf = default!;
-
-	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void AddFirst_Ref()
-	{
-		var result = this._personRefArray.AddFirst(this.PersonRef01);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.AddFirst) + " : Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void AddFirst_Val()
-	{
-		var result = this._personValArray.AddFirst(this.PersonVal01);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Reference")]
-	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void AddLast_Ref()
-	{
-		var result = this._personRefArray.AddLast(this.PersonRef02);
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(ArrayExtensions.AddLast) + " : Value")]
-	[BenchmarkCategory(Categories.Array, Categories.ValueType)]
-	public void AddLast_Val()
-	{
-		var result = this._personValArray.AddLast(this.PersonVal02);
-
-		this.Consume(result);
-	}
 
 	[Benchmark(Description = nameof(ArrayExtensions.AreEqual) + ": Different collections as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
