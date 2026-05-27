@@ -1850,6 +1850,7 @@ public class DirectoryHelperTests
 		var filePath = Path.Combine(tempPath, "file.txt");
 		File.WriteAllText(filePath, "content");
 		File.SetAttributes(filePath, FileAttributes.ReadOnly);
+		Assert.IsTrue(File.GetAttributes(filePath).HasFlag(FileAttributes.ReadOnly), "Precondition failed: file should start as read-only.");
 
 		try
 		{
