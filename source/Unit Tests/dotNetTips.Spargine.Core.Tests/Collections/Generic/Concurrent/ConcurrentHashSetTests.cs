@@ -4,7 +4,7 @@
 // Created          : 12-06-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-01-2026
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -40,7 +40,7 @@ public class ConcurrentHashSetTests
 		// Arrange - Default constructor sets growLockArray = true
 		var hashSet = new ConcurrentHashSet<int>();
 
-		// Act - Add enough items to trigger GrowTable (default capacity is 31)
+		// Act - Add enough items to trigger GrowTable from the default capacity
 		for (int i = 0; i < 500; i++)
 		{
 			hashSet.Add(i);
@@ -581,15 +581,15 @@ public class ConcurrentHashSetTests
 	{
 		// Arrange
 		var set = new ConcurrentHashSet<int>();
-		var array = new int[3];
+		var array = new[] { -1, -1, -1 };
 
 		// Act
 		set.CopyTo(array, 0);
 
 		// Assert
-		Assert.AreEqual(0, array[0], "Array should remain unchanged.");
-		Assert.AreEqual(0, array[1], "Array should remain unchanged.");
-		Assert.AreEqual(0, array[2], "Array should remain unchanged.");
+		Assert.AreEqual(-1, array[0], "Array should remain unchanged when copying from an empty set.");
+		Assert.AreEqual(-1, array[1], "Array should remain unchanged when copying from an empty set.");
+		Assert.AreEqual(-1, array[2], "Array should remain unchanged when copying from an empty set.");
 	}
 
 	[TestMethod]
@@ -1078,11 +1078,21 @@ public class ConcurrentHashSetTests
 		}
 		Task.WaitAll(tasks.ToArray());
 
-		// Assert - All snapshots should have the same items
-		foreach (var task in tasks)
+		// Assert - All snapshots should have the same items and be distinct arrays
+		var expected = Enumerable.Range(0, 100).OrderBy(i => i).ToArray();
+		var snapshots = tasks.Select(t => t.Result).ToList();
+
+		foreach (var snapshot in snapshots)
 		{
-			Assert.HasCount(100, task.Result, "Each ToArray snapshot should contain all 100 items.");
+			Assert.HasCount(100, snapshot, "Each ToArray snapshot should contain all 100 items.");
+
+			var sortedSnapshot = snapshot.ToArray();
+			Array.Sort(sortedSnapshot);
+			CollectionAssert.AreEqual(expected, sortedSnapshot, "Each ToArray snapshot should contain exactly the values 0..99.");
 		}
+
+		var uniqueSnapshots = new HashSet<int[]>(snapshots);
+		Assert.IsTrue(uniqueSnapshots.Count > 1, "ToArray should return distinct array instances across calls.");
 	}
 
 	[TestMethod]
