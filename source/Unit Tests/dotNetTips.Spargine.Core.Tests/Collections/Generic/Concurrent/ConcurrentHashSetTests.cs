@@ -1086,13 +1086,11 @@ public class ConcurrentHashSetTests
 		{
 			Assert.HasCount(100, snapshot, "Each ToArray snapshot should contain all 100 items.");
 
-			var sortedSnapshot = snapshot.ToArray();
-			Array.Sort(sortedSnapshot);
-			CollectionAssert.AreEqual(expected, sortedSnapshot, "Each ToArray snapshot should contain exactly the values 0..99.");
+			Array.Sort(snapshot);
+			CollectionAssert.AreEqual(expected, snapshot, "Each ToArray snapshot should contain exactly the values 0..99.");
 		}
 
-		var uniqueSnapshots = new HashSet<int[]>(snapshots);
-		Assert.IsTrue(uniqueSnapshots.Count > 1, "ToArray should return distinct array instances across calls.");
+		Assert.AreNotSame(snapshots[0], snapshots[1], "ToArray should return distinct array instances across calls.");
 	}
 
 	[TestMethod]
