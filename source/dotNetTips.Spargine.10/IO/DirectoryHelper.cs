@@ -145,6 +145,7 @@ public static class DirectoryHelper
 	/// <param name="source">The source directory to copy from.</param>
 	/// <param name="destination">The destination directory to copy to.</param>
 	/// <param name="overwrite">if set to <c>true</c>, the destination files will be overwritten if they already exist.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while copying.</param>
 	/// <example>
 	/// This example shows how to use the <see cref="CopyDirectory" /> method.
 	/// <code>
@@ -155,7 +156,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static void CopyDirectory([DisallowNull] DirectoryInfo source, [NotNull] DirectoryInfo destination, bool overwrite = true)
+	public static void CopyDirectory([DisallowNull] DirectoryInfo source, [NotNull] DirectoryInfo destination, bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentExists();
 		destination = destination.ArgumentNotNull();
@@ -167,17 +168,18 @@ public static class DirectoryHelper
 
 		var files = source.EnumerateFiles();
 		var subdirs = source.EnumerateDirectories();
+		var parallelOptions = new ParallelOptions { CancellationToken = cancellationToken };
 
-		_ = Parallel.ForEach(files, file =>
+		_ = Parallel.ForEach(files, parallelOptions, file =>
 		{
 			var destFile = Path.Combine(destination.FullName, file.Name);
 			_ = file.CopyTo(destFile, overwrite);
 		});
 
-		_ = Parallel.ForEach(subdirs, subdir =>
+		_ = Parallel.ForEach(subdirs, parallelOptions, subdir =>
 		{
 			var destSubDir = destination.CreateSubdirectory(subdir.Name);
-			CopyDirectory(subdir, destSubDir, overwrite);
+			CopyDirectory(subdir, destSubDir, overwrite, cancellationToken);
 		});
 	}
 
@@ -187,16 +189,19 @@ public static class DirectoryHelper
 	/// <param name="path">The directory to delete.</param>
 	/// <param name="retries">Number of retries in case of failure. Default is 5.</param>
 	/// <param name="recursive">Specifies whether to delete directories, subdirectories, and files in <paramref name="path"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the operation to complete.</param>
 	/// <returns>A <see cref="SimpleResult{T}"/> indicating the result of the operation.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
 	/// <exception cref="IOException">Thrown when the directory could not be deleted after the specified number of retries.</exception>
 	/// <exception cref="UnauthorizedAccessException">Thrown when the directory could not be deleted due to unauthorized access after the specified number of retries.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static SimpleResult<int> DeleteDirectory([DisallowNull] DirectoryInfo path, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5, bool recursive = true)
+	public static SimpleResult<int> DeleteDirectory([DisallowNull] DirectoryInfo path, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5, bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		path = path.ArgumentExists();
 		retries = retries.ArgumentInRange(min: 1, max: byte.MaxValue, Resources.RetriesAreLimitedTo255);
+
+		cancellationToken.ThrowIfCancellationRequested();
 
 		if (path.Exists == false)
 		{
@@ -205,7 +210,7 @@ public static class DirectoryHelper
 
 		// On some systems, directories/files created are created with attributes
 		// that prevent them from being deleted. Set those attributes to be normal
-		SetFileAttributesToNormal(path);
+		SetFileAttributesToNormal(path, cancellationToken);
 
 		var result = ExecutionHelper.ProgressiveRetry(() => path.Delete(recursive), retryCount: retries, retryWaitMilliseconds: 5);
 
@@ -248,6 +253,7 @@ public static class DirectoryHelper
 
 		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			yield return await task.ConfigureAwait(false);
 		}
 	}
@@ -299,6 +305,7 @@ public static class DirectoryHelper
 	/// The maximum number of retry attempts if the move operation fails.
 	/// Valid range is from 1 to 255. Default is 5.
 	/// </param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the operation to complete.</param>
 	/// <returns>
 	/// A <see cref="SimpleResult{T}"/> containing the number of attempts performed.
 	/// If the operation fails after all retries, the result will contain an exception.
@@ -311,12 +318,14 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="retries"/> is outside the valid range (1-255).</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MoveDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	public static SimpleResult<int> MoveDirectory([DisallowNull] DirectoryInfo source, [DisallowNull] DirectoryInfo destination, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5)
+	public static SimpleResult<int> MoveDirectory([DisallowNull] DirectoryInfo source, [DisallowNull] DirectoryInfo destination, [ConstantExpected(Min = 1, Max = byte.MaxValue)] byte retries = 5, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentExists();
 		destination = destination.ArgumentNotNull();
 
 		retries = retries.ArgumentInRange(min: 1, max: byte.MaxValue, errorMessage: Resources.RetriesAreLimitedTo255);
+
+		cancellationToken.ThrowIfCancellationRequested();
 
 		var result = ExecutionHelper.ProgressiveRetry(() => Directory.Move(source.FullName, destination.FullName), retryCount: 3, retryWaitMilliseconds: 5);
 
@@ -350,6 +359,7 @@ public static class DirectoryHelper
 	/// <param name="path">The root directory to start the search from. Must not be null.</param>
 	/// <param name="searchPattern">The search pattern to match against the directory names. Default is "*.*" which matches all directories.</param>
 	/// <param name="searchOption">Specifies whether to search only the current directory, or all subdirectories. The default is <see cref="SearchOption.TopDirectoryOnly" />.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while iterating directories.</param>
 	/// <returns>An <see cref="IEnumerable{DirectoryInfo}" /> containing directories that match the search pattern and option.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
@@ -365,7 +375,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
+	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
 		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		path = path.ArgumentExists();
@@ -376,6 +386,7 @@ public static class DirectoryHelper
 
 		foreach (var directory in path.EnumerateFiles(searchPattern, options).Select(file => file.Directory).FastDistinct())
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			yield return directory!;
 		}
 	}
@@ -387,6 +398,7 @@ public static class DirectoryHelper
 	/// <param name="path">The directory to search. Must not be null.</param>
 	/// <param name="searchPattern">The search pattern to match against the names of files in <paramref name="path"/>.</param>
 	/// <param name="searchOption">Specifies whether the search operation should include only the current directory or should include all subdirectories. Uses <see cref="SearchOption"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while searching.</param>
 	/// <returns>A read-only collection of <see cref="FileInfo"/> objects that match the search pattern and option.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
@@ -403,14 +415,14 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<FileInfo> SafeFileSearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern, SearchOption searchOption)
+	public static ReadOnlyCollection<FileInfo> SafeFileSearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		var directories = new List<DirectoryInfo>(1)
 		{
 			path
 		};
 
-		return SafeFileSearch(directories, searchPattern, searchOption).ToReadOnlyCollection();
+		return SafeFileSearch(directories, searchPattern, searchOption, cancellationToken).ToReadOnlyCollection();
 	}
 
 	/// <summary>
@@ -420,18 +432,19 @@ public static class DirectoryHelper
 	/// <param name="directories">The directories to search. Must not be null.</param>
 	/// <param name="searchPattern">The search pattern to match against the names of files in <paramref name="directories"/>.</param>
 	/// <param name="searchOption">Specifies whether the search operation should include only the current directory or should include all subdirectories. Uses <see cref="SearchOption"/>.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while searching.</param>
 	/// <returns>An <see cref="IEnumerable{FileInfo}"/> containing files that match the search pattern and option.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
-	public static IEnumerable<FileInfo> SafeFileSearch([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, [DisallowNull] SearchOption searchOption = SearchOption.TopDirectoryOnly)
+	public static IEnumerable<FileInfo> SafeFileSearch([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, [DisallowNull] SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
-		return SafeFileSearchCore(directories, searchPattern, searchOption);
+		return SafeFileSearchCore(directories, searchPattern, searchOption, cancellationToken);
 	}
 
 	/// <summary>
@@ -451,7 +464,7 @@ public static class DirectoryHelper
 	/// <c>true</c> if the directory contains any files or folders that match the search patterns; otherwise, <c>false</c>.
 	/// </returns>
 	/// <remarks>
-	/// This method utilizes <see cref="SafeDirectorySearch(DirectoryInfo, string, SearchOption)"/> to perform a robust and error-tolerant search.
+	/// This method utilizes <see cref="SafeDirectorySearch(DirectoryInfo, string, SearchOption, CancellationToken)"/> to perform a robust and error-tolerant search.
 	/// It ensures that inaccessible directories do not cause the operation to fail.
 	/// </remarks>
 	/// <example>
@@ -483,6 +496,7 @@ public static class DirectoryHelper
 	/// Sets the attributes of all files in the specified directory, and its subdirectories, to normal.
 	/// </summary>
 	/// <param name="path">The directory whose path attributes will be set to normal. Must not be null.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while setting attributes.</param>
 	/// <remarks>
 	/// This method recursively traverses all files in the given directory and its subdirectories, setting their attributes to <see cref="FileAttributes.Normal"/>.
 	/// It's useful for preparing files for deletion that might otherwise be read-only or have other attributes set.
@@ -497,7 +511,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static void SetFileAttributesToNormal([DisallowNull] DirectoryInfo path)
+	public static void SetFileAttributesToNormal([DisallowNull] DirectoryInfo path, CancellationToken cancellationToken = default)
 	{
 		if (path.CheckExists() == false)
 		{
@@ -510,6 +524,7 @@ public static class DirectoryHelper
 		// Single pass: handle both sub-directories and files
 		foreach (var item in path.EnumerateFileSystemInfos(ControlChars.WildcardAllFiles, _setAttributesOptions))
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			item.Attributes = FileAttributes.Normal;
 		}
 	}
@@ -568,19 +583,29 @@ public static class DirectoryHelper
 		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
 
 	/// <summary>
-	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
+	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption, CancellationToken)"/>.
 	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
 	/// that match <paramref name="searchPattern"/>.
 	/// </summary>
 	/// <param name="directories">The already-validated list of directories to search.</param>
 	/// <param name="searchPattern">The already-validated search pattern.</param>
 	/// <param name="searchOption">The already-validated search scope.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while iterating directories.</param>
 	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption)
+	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, CancellationToken cancellationToken)
 	{
 		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
-		return directories.Where(d => d.CheckExists()).SelectMany(d => d.GetFiles(searchPattern, options));
+
+		foreach (var d in directories.Where(d => d.CheckExists()))
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+
+			foreach (var file in d.GetFiles(searchPattern, options))
+			{
+				yield return file;
+			}
+		}
 	}
 
 	/// <summary>
