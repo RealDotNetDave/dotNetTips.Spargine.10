@@ -8,6 +8,25 @@ This skill guides developers through choosing the right diagnostic tool and coll
 
 ---
 
+
+## dotNetDave-Style Diagnostics Prompt
+
+```text
+Use the dotnet-trace-collect skill to collect production diagnostics for a .NET 10 application. The app runs on Linux in a Kubernetes pod where I have console access and root access inside the container.
+
+The symptom is [describe symptom: high CPU / memory growth / slow requests / hang / excessive GC / networking errors / assembly loading failures].
+
+Apply these constraints:
+- Prefer dotnet-trace collect-linux (richer traces with native stacks on .NET 10+ with root).
+- Include ASP.NET Core providers (Microsoft.AspNetCore.Hosting, Microsoft-AspNetCore-Server-Kestrel) for slow-request scenarios.
+- Include all four System.Net.* providers for networking scenarios.
+- Use --clrevents assemblyloader for assembly loading issues; prefer launch mode if the process is short-lived.
+- Always verify PID with dotnet-trace ps before attaching.
+- Provide the artifact handoff checklist.
+- Recommend the analysis tool (PerfView or Speedscope) for the collected .nettrace file.
+```
+---
+
 ## General Triage — I Don't Know Where to Start
 
 ```text
@@ -179,20 +198,3 @@ Use the dotnet-trace-collect skill to generate the artifact handoff checklist fo
 ```
 
 ---
-
-## Spargine-Style Diagnostics Prompt
-
-```text
-Use the dotnet-trace-collect skill to collect production diagnostics for a Spargine-based .NET 10 application. The app runs on Linux in a Kubernetes pod where I have console access and root access inside the container.
-
-The symptom is [describe symptom: high CPU / memory growth / slow requests / hang / excessive GC / networking errors / assembly loading failures].
-
-Apply these constraints:
-- Prefer dotnet-trace collect-linux (richer traces with native stacks on .NET 10+ with root).
-- Include ASP.NET Core providers (Microsoft.AspNetCore.Hosting, Microsoft-AspNetCore-Server-Kestrel) for slow-request scenarios.
-- Include all four System.Net.* providers for networking scenarios.
-- Use --clrevents assemblyloader for assembly loading issues; prefer launch mode if the process is short-lived.
-- Always verify PID with dotnet-trace ps before attaching.
-- Provide the artifact handoff checklist.
-- Recommend the analysis tool (PerfView or Speedscope) for the collected .nettrace file.
-```

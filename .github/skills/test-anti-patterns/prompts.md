@@ -8,6 +8,23 @@ This skill performs a quick, pragmatic detection-focused review of .NET test cod
 
 ---
 
+## dotNetDave-Ready Test Anti-Pattern Audit Prompt
+
+```text
+Use the test-anti-patterns skill to perform a full anti-pattern audit on [test project].
+
+Report:
+1. Summary — total findings by severity (Critical / High / Medium / Low). If the tests are well-written, say so up front.
+2. Critical findings — no assertions, swallowed exceptions, always-true assertions, commented-out assertions, assert-in-catch-only. Each with file, method, line, explanation, and before/after fix.
+3. High findings — flakiness indicators, test ordering dependencies, over-mocking, implementation coupling, broad exception assertions. Each with file, method, line, explanation, and concrete fix.
+4. Medium and Low findings — summarized in a table (pattern, location, suggested fix).
+5. Positive observations — what the tests do well (specific patterns, not generic praise).
+6. Prioritized fix list — Critical first, then High, then Medium/Low opportunistically.
+
+Do not inflate severity. A finding is Critical only if it causes false confidence. A finding is High only if it causes flakiness or serious maintenance burden. If tests are clean, report that clearly.
+```
+---
+
 ## General Test Quality Audit
 
 ```text
@@ -140,33 +157,3 @@ Use the test-anti-patterns skill to focus only on Critical and High severity fin
 
 ---
 
-## Spargine-Style Test Anti-Pattern Review
-
-```text
-Use the test-anti-patterns skill to review this Spargine test project. Apply these priorities:
-
-- Critical: Any test with no assertions, swallowed exceptions, or always-true conditions.
-- High: Flakiness from Thread.Sleep, DateTime.Now without abstraction, or static shared state. Broad Exception assertions instead of specific types.
-- Medium: Test names that do not follow MethodName_Scenario_ExpectedBehavior. Magic values with no context. Groups of 3+ near-identical tests that should be data-driven.
-- Low: Unused [TestInitialize] methods, IDisposable not disposed, leftover debug output.
-
-Report Critical and High findings with specific file and method locations and concrete before/after fixes. Summarize Medium and Low in a table. Call out positive patterns — sealed test classes, [ExcludeFromCodeCoverage], specific exception types, clear AAA structure, proper use of RandomData from the Tester assembly. End with a prioritized fix list.
-```
-
----
-
-## David-Ready Test Anti-Pattern Audit Prompt
-
-```text
-Use the test-anti-patterns skill to perform a full anti-pattern audit on this .NET 10 test project.
-
-Report:
-1. Summary — total findings by severity (Critical / High / Medium / Low). If the tests are well-written, say so up front.
-2. Critical findings — no assertions, swallowed exceptions, always-true assertions, commented-out assertions, assert-in-catch-only. Each with file, method, line, explanation, and before/after fix.
-3. High findings — flakiness indicators, test ordering dependencies, over-mocking, implementation coupling, broad exception assertions. Each with file, method, line, explanation, and concrete fix.
-4. Medium and Low findings — summarized in a table (pattern, location, suggested fix).
-5. Positive observations — what the tests do well (specific patterns, not generic praise).
-6. Prioritized fix list — Critical first, then High, then Medium/Low opportunistically.
-
-Do not inflate severity. A finding is Critical only if it causes false confidence. A finding is High only if it causes flakiness or serious maintenance burden. If tests are clean, report that clearly.
-```

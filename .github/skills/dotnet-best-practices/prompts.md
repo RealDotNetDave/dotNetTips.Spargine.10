@@ -8,6 +8,26 @@ This skill ensures .NET/C# code meets the best practices specific to this soluti
 
 ---
 
+
+## dotNetDave-Ready Best-Practices Audit Prompt
+
+```text
+Use the dotnet-best-practices skill to perform a full best-practices audit on [class].
+Report:
+1. Documentation gaps — public members missing XML doc tags, or docs that no longer match the current signature.
+2. Architecture issues — SOLID violations, missing Factory or Command Handler patterns, interface naming.
+3. DI problems — missing null checks, wrong service lifetime, services not backed by interfaces.
+4. Async issues — blocking calls, missing ConfigureAwait(false), async void, unhandled async exceptions.
+5. Resource strings — hard-coded user-facing text that should use ResourceManager.
+6. Error handling and logging — swallowed exceptions, missing context in logs, generic exception types.
+7. Configuration — hard-coded settings that should use IConfiguration, missing validation attributes.
+8. Performance and security — disposal violations, missing input validation, optimization opportunities.
+9. Testing gaps — missing failure-path tests, missing null parameter tests, incorrect assertion patterns.
+
+For each finding: category, location (file and method), explanation, and a concrete fix. End with a prioritized summary table grouped by category.
+```
+---
+
 ## General Best-Practices Review
 
 ```text
@@ -148,21 +168,3 @@ Use the dotnet-best-practices skill to do a pre-merge review of this feature bra
 
 ---
 
-## David-Ready Best-Practices Audit Prompt
-
-```text
-Use the dotnet-best-practices skill to perform a full best-practices audit on this .NET code.
-
-Report:
-1. Documentation gaps — public members missing XML doc tags, or docs that no longer match the current signature.
-2. Architecture issues — SOLID violations, missing Factory or Command Handler patterns, interface naming.
-3. DI problems — missing null checks, wrong service lifetime, services not backed by interfaces.
-4. Async issues — blocking calls, missing ConfigureAwait(false), async void, unhandled async exceptions.
-5. Resource strings — hard-coded user-facing text that should use ResourceManager.
-6. Error handling and logging — swallowed exceptions, missing context in logs, generic exception types.
-7. Configuration — hard-coded settings that should use IConfiguration, missing validation attributes.
-8. Performance and security — disposal violations, missing input validation, optimization opportunities.
-9. Testing gaps — missing failure-path tests, missing null parameter tests, incorrect assertion patterns.
-
-For each finding: category, location (file and method), explanation, and a concrete fix. End with a prioritized summary table grouped by category.
-```

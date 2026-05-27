@@ -8,6 +8,23 @@ This skill runs a three-layer verification pipeline on AI-generated output — e
 
 ---
 
+## dotNetDave-Ready Verification Prompt
+
+```text
+Use the doublecheck skill to run a full three-layer verification on the response above.
+
+Report:
+1. Self-audit — every verifiable claim extracted and categorized (Factual, Statistical, Citation, Entity, Causal, Temporal), with internal consistency check.
+2. Source verification — web search results for each claim, with source URLs rated by authority (primary vs. secondary).
+3. Adversarial review — hallucination pattern check (fabricated citations, unsourced statistics, plausible-but-wrong associations, temporal confusion, overgeneralizations, missing qualifiers).
+4. Final claim table — each claim rated VERIFIED / PLAUSIBLE / UNVERIFIED / DISPUTED / FABRICATION RISK with source link.
+5. Priority findings — any DISPUTED or FABRICATION RISK claims called out at the top before the full table.
+6. Limitations disclosure — standard limitations of this verification pipeline.
+
+Do not omit the limitations disclosure. Provide links, not verdicts — I decide what's true.
+```
+---
+
 ## Activating and Deactivating Persistent Mode
 
 ```text
@@ -136,33 +153,3 @@ Full report on claim [C3] from the verification section above.
 
 ---
 
-## Spargine-Style Verification Prompt
-
-```text
-Use the doublecheck skill to verify the Copilot-generated code and documentation in this response. Apply these priorities:
-
-1. Verify all .NET API names, method signatures, and type names against current official documentation.
-2. Verify all NuGet package names and version numbers.
-3. Verify any performance claims (allocation behavior, JIT inlining, Span<T> semantics) against official .NET docs or benchmarking guidance.
-4. Verify any C# language feature version claims (e.g., "available in C# 12+") against the official release notes.
-5. Flag any claim rated FABRICATION RISK or DISPUTED prominently before the report body.
-6. Produce the full three-layer report with source links for every verified or disputed claim.
-```
-
----
-
-## David-Ready Verification Prompt
-
-```text
-Use the doublecheck skill to run a full three-layer verification on the response above.
-
-Report:
-1. Self-audit — every verifiable claim extracted and categorized (Factual, Statistical, Citation, Entity, Causal, Temporal), with internal consistency check.
-2. Source verification — web search results for each claim, with source URLs rated by authority (primary vs. secondary).
-3. Adversarial review — hallucination pattern check (fabricated citations, unsourced statistics, plausible-but-wrong associations, temporal confusion, overgeneralizations, missing qualifiers).
-4. Final claim table — each claim rated VERIFIED / PLAUSIBLE / UNVERIFIED / DISPUTED / FABRICATION RISK with source link.
-5. Priority findings — any DISPUTED or FABRICATION RISK claims called out at the top before the full table.
-6. Limitations disclosure — standard limitations of this verification pipeline.
-
-Do not omit the limitations disclosure. Provide links, not verdicts — I decide what's true.
-```

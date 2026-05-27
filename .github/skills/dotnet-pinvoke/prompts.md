@@ -8,6 +8,25 @@ This skill covers correctly calling native (C/C++) libraries from .NET using bot
 
 ---
 
+## dotNetDave-Ready P/Invoke Audit Prompt
+
+```text
+Use the dotnet-pinvoke skill to perform a full P/Invoke correctness audit for [pinvoke class].
+
+Report:
+1. Type mapping issues — incorrect int/long for C long, ulong for size_t, bool without MarshalAs, BOOL mapped to bool.
+2. String marshalling — missing or implicit encoding, CharSet.Auto usage, StringBuilder output buffers that should use Span<char> or char[].
+3. Memory ownership violations — mismatched allocator/free pairs, unprotected callee-allocated buffers, incorrect pinning strategy.
+4. SafeHandle gaps — raw IntPtr handles that should be wrapped in SafeHandle.
+5. Callback safety — unrooted delegates, missing GC.KeepAlive after Marshal.GetFunctionPointerForDelegate.
+6. Error handling — missing SetLastPInvokeError, unchecked HRESULTs.
+7. Cross-platform issues — hardcoded library names without a resolver, CLong/CULong not used.
+8. Migration opportunities — DllImport declarations that should be LibraryImport on .NET 10.
+
+For each finding: location (file and declaration), explanation of the bug or risk, and a concrete before/after fix. End with the full validation checklist showing pass/fail for each item.
+```
+---
+
 ## Writing a New Declaration
 
 ```text
@@ -149,40 +168,4 @@ Use the dotnet-pinvoke skill to diagnose a DllNotFoundException for this native 
 ```text
 Use the dotnet-pinvoke skill to set up CsWin32 for this project. I need P/Invoke declarations for the following Win32 APIs: [list APIs]. Show me how to install Microsoft.Windows.CsWin32 and configure NativeMethods.txt.
 ```
-
 ---
-
-## Spargine-Style P/Invoke Review Prompt
-
-```text
-Use the dotnet-pinvoke skill to review the P/Invoke interop code in this Spargine library. Apply these constraints:
-
-- Target is .NET 10 — use LibraryImport for all declarations, not DllImport.
-- All native handles must use SafeHandle — no raw IntPtr escaping the interop layer.
-- String encoding must be explicit — no CharSet.Auto.
-- Memory ownership must be documented in XML doc comments for every method that crosses the boundary.
-- CLong/CULong must be used for C long/unsigned long in any cross-platform declarations.
-- Callbacks must use UnmanagedCallersOnly where possible; delegate-based callbacks must be explicitly rooted.
-- All interop classes must be sealed and internal unless public access is required.
-- Run the validation checklist and report every violation with a concrete fix.
-```
-
----
-
-## David-Ready P/Invoke Audit Prompt
-
-```text
-Use the dotnet-pinvoke skill to perform a full P/Invoke correctness audit on this .NET 10 interop code.
-
-Report:
-1. Type mapping issues — incorrect int/long for C long, ulong for size_t, bool without MarshalAs, BOOL mapped to bool.
-2. String marshalling — missing or implicit encoding, CharSet.Auto usage, StringBuilder output buffers that should use Span<char> or char[].
-3. Memory ownership violations — mismatched allocator/free pairs, unprotected callee-allocated buffers, incorrect pinning strategy.
-4. SafeHandle gaps — raw IntPtr handles that should be wrapped in SafeHandle.
-5. Callback safety — unrooted delegates, missing GC.KeepAlive after Marshal.GetFunctionPointerForDelegate.
-6. Error handling — missing SetLastPInvokeError, unchecked HRESULTs.
-7. Cross-platform issues — hardcoded library names without a resolver, CLong/CULong not used.
-8. Migration opportunities — DllImport declarations that should be LibraryImport on .NET 10.
-
-For each finding: location (file and declaration), explanation of the bug or risk, and a concrete before/after fix. End with the full validation checklist showing pass/fail for each item.
-```

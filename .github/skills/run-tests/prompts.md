@@ -8,6 +8,29 @@ This skill detects the test platform (VSTest or Microsoft.Testing.Platform) and 
 
 ---
 
+## dotNetDave-Ready Run-Tests Prompt
+
+This prompt should be used with a GitHub Agent. They can take a very long time to produce results.
+
+```text
+Use the run-tests skill to produce a complete test execution reference for this solution.
+
+Report:
+1. Detected SDK version (from dotnet --version and global.json).
+2. Detected test platform — VSTest or MTP — and how it was determined.
+3. Detected test framework — MSTest, xUnit, NUnit, or TUnit — and version.
+4. The correct dotnet test command to run all tests with a TRX report.
+5. The correct command to run tests filtered by class name.
+6. The correct command to run tests filtered by method name.
+7. The correct command to run tests filtered by category.
+8. The correct command to run with code coverage.
+9. The correct command to run with hang detection (2-minute timeout).
+10. Any configuration issues found (missing packages, incorrect platform settings, multi-TFM considerations).
+
+Use the exact syntax appropriate for the detected platform and SDK version. Flag any pitfalls specific to this project's configuration.
+```
+---
+
 ## Run All Tests
 
 ```text
@@ -137,41 +160,5 @@ Use the run-tests skill to run only xUnit v3 tests with a specific trait on MTP.
 ```text
 Use the run-tests skill to run a specific subset of TUnit tests using the treenode filter. My test is in namespace [Namespace], class [ClassName], method [MethodName]. Provide the correct --treenode-filter path syntax.
 ```
-
 ---
 
-## Spargine-Style Run-Tests Prompt
-
-```text
-Use the run-tests skill to run the Spargine test suite. This solution targets .NET 10 and uses MSTest. Detect the platform, confirm the SDK version from global.json, and provide:
-
-1. The command to run all tests in the solution with a TRX report.
-2. The command to run only tests in a specific test project (e.g., DotNetTips.Spargine.Core.Tests).
-3. The command to run only tests in a specific class using FullyQualifiedName filter.
-4. The command to run only tests in a specific category using TestCategory filter.
-5. The command to run with code coverage enabled.
-
-Use the correct dotnet test syntax for .NET 10 MTP or VSTest based on what you detect in the project files.
-```
-
----
-
-## David-Ready Run-Tests Prompt
-
-```text
-Use the run-tests skill to produce a complete test execution reference for this solution.
-
-Report:
-1. Detected SDK version (from dotnet --version and global.json).
-2. Detected test platform — VSTest or MTP — and how it was determined.
-3. Detected test framework — MSTest, xUnit, NUnit, or TUnit — and version.
-4. The correct dotnet test command to run all tests with a TRX report.
-5. The correct command to run tests filtered by class name.
-6. The correct command to run tests filtered by method name.
-7. The correct command to run tests filtered by category.
-8. The correct command to run with code coverage.
-9. The correct command to run with hang detection (2-minute timeout).
-10. Any configuration issues found (missing packages, incorrect platform settings, multi-TFM considerations).
-
-Use the exact syntax appropriate for the detected platform and SDK version. Flag any pitfalls specific to this project's configuration.
-```

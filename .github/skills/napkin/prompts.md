@@ -8,6 +8,23 @@ This skill opens a browser-based interactive whiteboard (napkin.html on your Des
 
 ---
 
+
+## dotNetDave-Ready Napkin Prompt
+
+```text
+Use the napkin skill to open a whiteboard.
+
+After I sketch my idea and share it back, respond with:
+1. A plain-English description of what you see — layout, sketches, arrows, groupings, and sticky note text.
+2. Your interpretation of what I am trying to design or plan.
+3. Any gaps, inconsistencies, or missing steps you notice.
+4. Concrete suggestions for what to add or change.
+5. A question to confirm whether your interpretation is correct before going further.
+
+Keep the tone collaborative — you are building on my thinking, not analyzing my input.
+```
+---
+
 ## Opening a Napkin
 
 ```text
@@ -139,32 +156,3 @@ Read the napkin and tell me which of the ideas I sketched seem most promising an
 ```
 
 ---
-
-## Spargine-Style Napkin Prompt
-
-```text
-Use the napkin skill to open a whiteboard so I can sketch a design for a new Spargine API, extension method, or utility class.
-
-After I share the napkin back:
-1. Describe the structure I sketched — classes, methods, relationships, data flows.
-2. Check whether the design follows Spargine conventions (sealed classes, extension methods, performance-first, minimal allocations).
-3. Identify any gaps — missing error handling, missing XML doc comments, missing [Information] attributes, or design patterns that should be applied.
-4. Suggest the next concrete step: start with a plan, draft the class skeleton, or write tests first.
-```
-
----
-
-## David-Ready Napkin Prompt
-
-```text
-Use the napkin skill to open a whiteboard.
-
-After I sketch my idea and share it back, respond with:
-1. A plain-English description of what you see — layout, sketches, arrows, groupings, and sticky note text.
-2. Your interpretation of what I am trying to design or plan.
-3. Any gaps, inconsistencies, or missing steps you notice.
-4. Concrete suggestions for what to add or change.
-5. A question to confirm whether your interpretation is correct before going further.
-
-Keep the tone collaborative — you are building on my thinking, not analyzing my input.
-```
