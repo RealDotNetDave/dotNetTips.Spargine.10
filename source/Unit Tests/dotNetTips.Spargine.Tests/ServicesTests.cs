@@ -93,7 +93,13 @@ public class ServicesTests
 	[TestMethod]
 	public void KillProcessNonExistingProcessDoesNotThrow()
 	{
-		ServiceHelper.KillProcess("FakeProcess123");
+		const string processName = "FakeProcess123";
+
+		Assert.IsFalse(ServiceHelper.IsProcessRunning(processName), "Precondition failed: fake process should not be running.");
+
+		ServiceHelper.KillProcess(processName);
+
+		Assert.IsFalse(ServiceHelper.IsProcessRunning(processName), "Killing a non-existing process should not change process state.");
 	}
 
 	// ── KillProcess ───────────────────────────────────────────────────
@@ -267,7 +273,11 @@ public class ServicesTests
 	[TestMethod]
 	public void StartServicesEmptyCollectionDoesNotThrow()
 	{
-		ServiceHelper.StartServices(new List<string>());
+		var services = new List<string>();
+
+		ServiceHelper.StartServices(services);
+
+		Assert.IsEmpty(services);
 	}
 
 	// ── StartServices ─────────────────────────────────────────────────
@@ -277,7 +287,17 @@ public class ServicesTests
 	{
 		var services = new List<string> { NonExistingServiceName, "AnotherFakeService456" };
 
+		foreach (var service in services)
+		{
+			Assert.IsFalse(ServiceHelper.ServiceExists(service), $"Precondition failed: service '{service}' should not exist.");
+		}
+
 		ServiceHelper.StartServices(services);
+
+		foreach (var service in services)
+		{
+			Assert.IsFalse(ServiceHelper.ServiceExists(service), $"Starting a non-existing service should not create service '{service}'.");
+		}
 	}
 
 	[TestMethod]
@@ -302,7 +322,11 @@ public class ServicesTests
 	[TestMethod]
 	public void StartStopServicesEmptyCollectionDoesNotThrow()
 	{
-		ServiceHelper.StartStopServices(new List<ServiceAction>());
+		var requests = new List<ServiceAction>();
+
+		ServiceHelper.StartStopServices(requests);
+
+		Assert.IsEmpty(requests);
 	}
 
 	[TestMethod]
@@ -355,7 +379,11 @@ public class ServicesTests
 	[TestMethod]
 	public void StopServicesEmptyCollectionDoesNotThrow()
 	{
-		ServiceHelper.StopServices(new List<string>());
+		var services = new List<string>();
+
+		ServiceHelper.StopServices(services);
+
+		Assert.IsEmpty(services);
 	}
 
 	// ── StopServices ──────────────────────────────────────────────────
@@ -365,7 +393,17 @@ public class ServicesTests
 	{
 		var services = new List<string> { NonExistingServiceName, "AnotherFakeService456" };
 
+		foreach (var service in services)
+		{
+			Assert.IsFalse(ServiceHelper.ServiceExists(service), $"Precondition failed: service '{service}' should not exist.");
+		}
+
 		ServiceHelper.StopServices(services);
+
+		foreach (var service in services)
+		{
+			Assert.IsFalse(ServiceHelper.ServiceExists(service), $"Stopping a non-existing service should not create service '{service}'.");
+		}
 	}
 
 	[TestMethod]
