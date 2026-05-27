@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -101,7 +101,7 @@ public static class DirectoryHelper
 	/// <returns>The path to the application data folder.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when the user path environment variable is not set.</exception>
 	[SupportedOSPlatform("macos")]
-	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.NeedsUpdate, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string AppDataFolder()
 	{
 		var companyName = GetEntryAssemblyCompanyName();
@@ -196,11 +196,6 @@ public static class DirectoryHelper
 	{
 		path = path.ArgumentExists();
 		retries = retries.ArgumentInRange(min: 1, max: byte.MaxValue, Resources.RetriesAreLimitedTo255);
-
-		if (path.Exists == false)
-		{
-			return SimpleResult.FromException<int>(new Core.DirectoryNotFoundException());
-		}
 
 		// On some systems, directories/files created are created with attributes
 		// that prevent them from being deleted. Set those attributes to be normal
@@ -610,7 +605,7 @@ public static class DirectoryHelper
 	/// <param name="folders">The list to populate.</param>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadOneDriveFoldersFromKey), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(LoadOneDriveFoldersFromKey), UnitTestStatus = UnitTestStatus.NeedsUpdate, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void LoadOneDriveFoldersFromKey(RegistryKey oneDriveKey, List<OneDriveFolder> folders)
 	{
 		const string AccountsKey = "Accounts";
@@ -636,7 +631,7 @@ public static class DirectoryHelper
 	/// <returns>A populated <see cref="OneDriveFolder"/>, or <see langword="null"/> if the key is invalid or has no user folder.</returns>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ParseOneDriveFolder), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ParseOneDriveFolder), UnitTestStatus = UnitTestStatus.NeedsUpdate, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static OneDriveFolder? ParseOneDriveFolder(RegistryKey? key)
 	{
 		if (key is null)
