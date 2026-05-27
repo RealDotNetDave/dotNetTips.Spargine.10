@@ -28,7 +28,7 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class StringBuilderExtensionsTests
+public sealed class StringBuilderExtensionsTests
 {
 
 	[TestMethod]
@@ -61,32 +61,23 @@ public class StringBuilderExtensionsTests
 		Assert.IsGreaterThan(50, sb.Length);
 	}
 
-	[TestMethod]
-	public void AppendKeyValueNoQuotesNoCommaTest()
+	[DataTestMethod]
+	[DataRow(false, false)]
+	[DataRow(false, true)]
+	[DataRow(true, false)]
+	public void AppendKeyValue_FlagCombinations_FormatsCorrectly(bool includeQuotes, bool includeComma)
 	{
 		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
+		const string key = "Name";
+		const string value = "TestValue";
 
-		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.AreEqual($"{key}={value}", result, "Should format as key=value without quotes or comma.");
-	}
-
-	[TestMethod]
-	public void AppendKeyValueNoQuotesWithCommaTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
-
-		sb.AppendKeyValue(key, value, includeQuotes: false, includeComma: true);
+		sb.AppendKeyValue(key, value, includeQuotes: includeQuotes, includeComma: includeComma);
 
 		var result = sb.ToString();
+		var expectedValue = includeQuotes ? $"\"{value}\"" : value;
+		var expectedSuffix = includeComma ? ControlChars.DefaultSeparator : string.Empty;
 
-		Assert.AreEqual($"{key}={value}{ControlChars.DefaultSeparator}", result, "Should format as key=value with comma separator.");
+		Assert.AreEqual($"{key}={expectedValue}{expectedSuffix}", result);
 	}
 
 	[TestMethod]
@@ -148,7 +139,7 @@ public class StringBuilderExtensionsTests
 
 		var result = sb.ToString();
 
-		Assert.IsTrue(result.Contains("\\\\"), "Backslash in value should be escaped with backslash.");
+		StringAssert.Contains(result, "\\\\", "Backslash in value should be escaped with backslash.");
 		Assert.AreEqual("Path=\"C:\\\\path\"", result);
 	}
 
@@ -175,55 +166,31 @@ public class StringBuilderExtensionsTests
 
 		var result = sb.ToString();
 
-		Assert.IsTrue(result.Contains("\\\""), "Double quote in value should be escaped with backslash.");
+		StringAssert.Contains(result, "\\\"", "Double quote in value should be escaped with backslash.");
 		Assert.AreEqual("Path=\"hello\\\"world\"", result);
 	}
 
-	[TestMethod]
-	public void AppendKeyValueWithQuotesNoCommaTest()
-	{
-		var sb = new StringBuilder();
-		var key = "Name";
-		var value = RandomData.GenerateWord(10);
-
-		sb.AppendKeyValue(key, value, includeQuotes: true, includeComma: false);
-
-		var result = sb.ToString();
-
-		Assert.AreEqual($"{key}=\"{value}\"", result, "Should format as key=\"value\" without comma.");
-	}
-
-	[TestMethod]
-	public void AppendValues01()
+	[DataTestMethod]
+	[DataRow(", ")]
+	[DataRow("|")]
+	public void AppendValues_IEnumerableStrings_WithSeparator_AppendsJoined(string separator)
 	{
 		var sb = new StringBuilder();
 		var values = RandomData.GenerateWords(count: 5, minLength: 5, maxLength: 7);
 
-		sb.AppendValues(ControlChars.CommaSpace, values);
+		sb.AppendValues(separator, values);
 
 		Assert.IsGreaterThan(10, sb.Length);
-
-		var pool = new StringBuilder();
-
-		pool.AppendValues(", ", values);
-
-		Assert.IsGreaterThan(10, pool.Length);
 	}
 
 	[TestMethod]
-	public void AppendValues02()
+	public void AppendValues_ParamsStrings_WithSeparator_AppendsJoined()
 	{
 		var sb = new StringBuilder();
 
 		sb.AppendValues(", ", RandomData.GenerateWord(100), RandomData.GenerateWord(100));
 
 		Assert.IsGreaterThan(10, sb.Length);
-
-		var pool = new StringBuilder();
-
-		pool.AppendValues(", ", RandomData.GenerateWord(100), RandomData.GenerateWord(100));
-
-		Assert.IsGreaterThan(10, pool.Length);
 	}
 
 	[TestMethod]
@@ -298,7 +265,7 @@ public class StringBuilderExtensionsTests
 		sb.AppendValues(string.Empty, values);
 
 		Assert.IsGreaterThan(0, sb.Length);
-		Assert.IsTrue(sb.ToString().Contains(ControlChars.DefaultSeparator), "Should use default separator when empty separator is provided.");
+		StringAssert.Contains(sb.ToString(), ControlChars.DefaultSeparator, "Should use default separator when empty separator is provided.");
 	}
 
 	[TestMethod]
@@ -706,7 +673,8 @@ public class StringBuilderExtensionsTests
 
 		// Set capacity within max capacity
 		sb.SetCapacity(40);
-		Assert.IsTrue(sb.Capacity >= 40 && sb.Capacity <= 50, "Capacity should be within max capacity limits.");
+		Assert.IsGreaterThanOrEqualTo(40, sb.Capacity, "Capacity should be at least 40.");
+		Assert.IsLessThanOrEqualTo(50, sb.Capacity, "Capacity should be at most 50.");
 
 		// Attempt to exceed max capacity should throw ArgumentOutOfRangeException
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => sb.SetCapacity(100));
@@ -736,7 +704,7 @@ public class StringBuilderExtensionsTests
 #pragma warning restore CS8625
 
 		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
-		Assert.IsTrue(sb.ToString().Contains(ControlChars.DefaultSeparator), "Default separator should be used when null separator is provided.");
+		StringAssert.Contains(sb.ToString(), ControlChars.DefaultSeparator, "Default separator should be used when null separator is provided.");
 	}
 
 	[TestMethod]
