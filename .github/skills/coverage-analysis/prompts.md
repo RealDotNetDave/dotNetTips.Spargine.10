@@ -8,6 +8,32 @@ This skill is designed to run project-wide code coverage collection, generate re
 
 ---
 
+## David-Ready Coverage Audit Prompt
+
+This prompt should be used with a GitHub Agent. They can take a very long time to produce results.
+
+```text
+Use the coverage-analysis skill to perform a full coverage and risk audit on [class].
+
+Use these thresholds:
+- Line coverage: 90%
+- Branch coverage: 80%
+- CRAP score limit: 5
+- Top N hotspots: 20
+
+Report:
+1. Total methods analyzed and flagged hotspot count.
+2. Risk hotspot table sorted by CRAP score descending (method, complexity, line coverage, branch coverage, CRAP score).
+3. Coverage gaps by file — methods below threshold sorted by coverage ascending.
+4. Methods with zero coverage.
+5. Whether ReportGenerator HTML report was generated and where it is located.
+6. Final coverage summary table (line %, branch %, methods meeting threshold, methods failing threshold).
+7. Recommended next tests — the three methods where adding tests would most reduce overall CRAP risk.
+
+Flag any test failures encountered during dotnet test but proceed with partial data. Note any coverage provider additions made automatically.
+```
+---
+
 ## General Solution-Wide Coverage Run
 
 ```text
@@ -100,14 +126,6 @@ Use the coverage-analysis skill as a release gate check. Report whether the solu
 
 ---
 
-## Spargine-Style Coverage Audit Prompt
-
-```text
-Use the coverage-analysis skill to audit this Spargine project. Use line threshold 90%, branch threshold 80%, and CRAP threshold 5. The CRAP score limit for public and protected methods is 5 — flag everything above that. Show method-level detail, file grouping, and the full risk hotspot table. Identify which methods need new tests to reach CRAP ≤ 5 and summarize the minimum test coverage needed to close each gap.
-```
-
----
-
 ## Output-Control Prompts
 
 ```text
@@ -117,28 +135,4 @@ Use the coverage-analysis skill and keep the output concise. I only want the ris
 ```text
 Use the coverage-analysis skill and produce the full detailed report including the HTML report via ReportGenerator, the CRAP score table, coverage gaps by file, and the final summary. Save the report to TestResults/coverage-analysis/coverage-analysis.md and open it.
 ```
-
 ---
-
-## David-Ready Coverage Audit Prompt
-
-```text
-Use the coverage-analysis skill to perform a full coverage and risk audit on this .NET 10 solution.
-
-Use these thresholds:
-- Line coverage: 90%
-- Branch coverage: 80%
-- CRAP score limit: 5 (Spargine standard for public and protected methods)
-- Top N hotspots: 20
-
-Report:
-1. Total methods analyzed and flagged hotspot count.
-2. Risk hotspot table sorted by CRAP score descending (method, complexity, line coverage, branch coverage, CRAP score).
-3. Coverage gaps by file — methods below threshold sorted by coverage ascending.
-4. Methods with zero coverage.
-5. Whether ReportGenerator HTML report was generated and where it is located.
-6. Final coverage summary table (line %, branch %, methods meeting threshold, methods failing threshold).
-7. Recommended next tests — the three methods where adding tests would most reduce overall CRAP risk.
-
-Flag any test failures encountered during dotnet test but proceed with partial data. Note any coverage provider additions made automatically.
-```

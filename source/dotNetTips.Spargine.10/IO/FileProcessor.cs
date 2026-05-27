@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-03-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-23-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@
 // </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Diagnostics;
@@ -53,7 +52,7 @@ namespace DotNetTips.Spargine.IO;
 /// </remarks>
 [SupportedOSPlatform("windows")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFileProcessor")]
-public class FileProcessor
+public sealed class FileProcessor
 {
 	/// <summary>
 	/// Occurs when a file or folder has been processed.
@@ -91,7 +90,6 @@ public class FileProcessor
 	/// fileProcessor.CopyFiles(filesToCopy, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -146,7 +144,6 @@ public class FileProcessor
 	/// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
@@ -203,7 +200,6 @@ public class FileProcessor
 	/// fileProcessor.DeleteFiles(filesToDelete, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
@@ -251,7 +247,6 @@ public class FileProcessor
 	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
@@ -300,7 +295,6 @@ public class FileProcessor
 	/// fileProcessor.MoveFiles(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -356,7 +350,6 @@ public class FileProcessor
 	/// fileProcessor.MoveFilesWithOriginalPath(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -387,12 +380,6 @@ public class FileProcessor
 
 		return successCount;
 	}
-
-	/// <summary>
-	/// Raises the <see cref="Processed"/> event.
-	/// </summary>
-	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
-	protected virtual void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
 
 	/// <summary>
 	/// Computes the destination path for a file, preserving its original directory structure below the file-system root.
@@ -740,5 +727,11 @@ public class FileProcessor
 			return 0;
 		}
 	}
+
+	/// <summary>
+	/// Raises the <see cref="Processed"/> event.
+	/// </summary>
+	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
+	private void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
 
 }
