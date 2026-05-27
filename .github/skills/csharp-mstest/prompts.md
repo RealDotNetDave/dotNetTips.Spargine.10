@@ -8,6 +8,28 @@ This skill covers modern MSTest 3.x/4.x best practices including test class stru
 
 ---
 
+
+## dotNetDave-Ready MSTest Audit Prompt
+
+This prompt should be used with a GitHub Agent. They can take a very long time to produce results.
+
+```text
+Use the csharp-mstest skill to perform a full MSTest 4.x best-practices audit on [class].
+
+Report:
+1. Structural violations — unsealed classes, missing [TestClass]/[TestMethod], naming convention violations.
+2. Lifecycle issues — [TestInitialize] that should be constructors, missing [TestCleanup] for resources.
+3. Assertion problems — reversed Assert.AreEqual arguments, [ExpectedException] usage, hard casts instead of Assert.IsInstanceOfType, Single() instead of Assert.ContainsSingle.
+4. Collection and string assertions — StringAssert/CollectionAssert calls that have Assert class equivalents.
+5. Data-driven test modernization — IEnumerable<object[]> DynamicData sources that should use ValueTuple or TestDataRow.
+6. TestContext gaps — property injection instead of constructor injection, nullable or null! declarations, missing CancellationToken forwarding.
+7. Advanced feature opportunities — flaky tests without [Retry], platform-specific tests without [OSCondition], CI-only tests without [CICondition].
+8. Coverage gaps — public and protected methods with no corresponding test, error paths not covered.
+
+For each finding: file and line reference, severity (correctness / modernization / style), and a concrete fix. End with a summary table grouped by severity.
+```
+---
+
 ## General Test Review
 
 ```text
@@ -144,41 +166,3 @@ Use the csharp-mstest skill to add [GitHubWorkItem] or [WorkItem] traceability a
 
 ---
 
-## Spargine-Style MSTest Review Prompt
-
-```text
-Use the csharp-mstest skill to review this Spargine test project. Apply these rules strictly:
-
-- All test classes must be sealed and marked [ExcludeFromCodeCoverage].
-- Test methods must use the MethodName_Scenario_ExpectedBehavior naming convention.
-- No [ExpectedException] — use Assert.Throws or Assert.ThrowsExactly.
-- Assert.AreEqual argument order must be (expected, actual).
-- [DynamicData] sources must use ValueTuple or TestDataRow — no IEnumerable<object[]>.
-- [TestInitialize] should only be used for async setup; synchronous setup belongs in constructors.
-- Async tests with [Timeout] must forward TestContext.CancellationToken.
-- TestContext must not be declared nullable or initialized with null!.
-- Use Assert class equivalents instead of StringAssert or CollectionAssert where available.
-- All public and protected methods under test must have full coverage (CRAP score ≤ 5).
-
-Report findings by severity, include exact file and line references, and provide a concrete fix for each issue.
-```
-
----
-
-## David-Ready MSTest Audit Prompt
-
-```text
-Use the csharp-mstest skill to perform a full MSTest 3.x/4.x best-practices audit on this .NET 10 test project.
-
-Report:
-1. Structural violations — unsealed classes, missing [TestClass]/[TestMethod], naming convention violations.
-2. Lifecycle issues — [TestInitialize] that should be constructors, missing [TestCleanup] for resources.
-3. Assertion problems — reversed Assert.AreEqual arguments, [ExpectedException] usage, hard casts instead of Assert.IsInstanceOfType, Single() instead of Assert.ContainsSingle.
-4. Collection and string assertions — StringAssert/CollectionAssert calls that have Assert class equivalents.
-5. Data-driven test modernization — IEnumerable<object[]> DynamicData sources that should use ValueTuple or TestDataRow.
-6. TestContext gaps — property injection instead of constructor injection, nullable or null! declarations, missing CancellationToken forwarding.
-7. Advanced feature opportunities — flaky tests without [Retry], platform-specific tests without [OSCondition], CI-only tests without [CICondition].
-8. Coverage gaps — public and protected methods with no corresponding test, error paths not covered.
-
-For each finding: file and line reference, severity (correctness / modernization / style), and a concrete fix. End with a summary table grouped by severity.
-```

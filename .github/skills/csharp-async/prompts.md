@@ -8,6 +8,27 @@ This skill is designed to review C# async code for correctness, performance, nam
 
 ---
 
+## dotNetDave-Ready Async Audit Prompt
+
+This prompt should be used with a GitHub Agent. They can take a very long time to produce results.
+
+```text
+Use the csharp-async skill to perform a full async best-practices audit on [class]
+
+Report:
+1. Naming convention violations — async methods missing the Async suffix.
+2. Return type issues — async void non-event-handlers, missed ValueTask<T> opportunities.
+3. Exception handling gaps — swallowed exceptions, missing try/catch around awaits, fire-and-forget Task discard.
+4. Blocking and deadlock risks — .Wait(), .Result, .GetAwaiter().GetResult(), sync-over-async patterns.
+5. ConfigureAwait(false) gaps — every library await missing ConfigureAwait(false).
+6. Cancellation token gaps — long-running async methods missing CancellationToken, tokens not forwarded.
+7. Parallelization opportunities — sequential awaits on independent tasks that could use Task.WhenAll().
+8. Async stream improvements — IEnumerable<T> over I/O-bound data that should be IAsyncEnumerable<T>.
+
+For each finding: file and line reference, severity (correctness / performance / style), and a concrete fix. End with a summary table grouped by severity.
+```
+---
+
 ## General Async Code Review
 
 ```text
@@ -135,40 +156,3 @@ Use the csharp-async skill to audit this high-throughput service for async overh
 ```
 
 ---
-
-## Spargine-Style Async Review Prompt
-
-```text
-Use the csharp-async skill to review this Spargine library code for async correctness and performance. Apply these rules strictly:
-
-- All async methods must use the Async suffix.
-- No async void except event handlers.
-- All library code must use ConfigureAwait(false) on every await.
-- No .Wait(), .Result, or .GetAwaiter().GetResult().
-- Long-running async methods must accept CancellationToken.
-- CancellationToken must be forwarded to all downstream awaited calls.
-- Use ValueTask<T> for async methods that frequently complete synchronously.
-- Independent async operations must use Task.WhenAll() instead of sequential awaits.
-
-Report findings by severity, include exact file and line references, and provide a concrete one-line fix for each issue.
-```
-
----
-
-## David-Ready Async Audit Prompt
-
-```text
-Use the csharp-async skill to perform a full async best-practices audit on this .NET 10 code.
-
-Report:
-1. Naming convention violations — async methods missing the Async suffix.
-2. Return type issues — async void non-event-handlers, missed ValueTask<T> opportunities.
-3. Exception handling gaps — swallowed exceptions, missing try/catch around awaits, fire-and-forget Task discard.
-4. Blocking and deadlock risks — .Wait(), .Result, .GetAwaiter().GetResult(), sync-over-async patterns.
-5. ConfigureAwait(false) gaps — every library await missing ConfigureAwait(false).
-6. Cancellation token gaps — long-running async methods missing CancellationToken, tokens not forwarded.
-7. Parallelization opportunities — sequential awaits on independent tasks that could use Task.WhenAll().
-8. Async stream improvements — IEnumerable<T> over I/O-bound data that should be IAsyncEnumerable<T>.
-
-For each finding: file and line reference, severity (correctness / performance / style), and a concrete fix. End with a summary table grouped by severity.
-```
