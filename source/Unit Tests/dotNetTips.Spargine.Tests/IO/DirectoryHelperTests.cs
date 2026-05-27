@@ -1847,12 +1847,21 @@ public class DirectoryHelperTests
 		// Validates that caching EnumerationOptions does not corrupt state between repeated calls.
 		var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 		var directory = Directory.CreateDirectory(tempPath);
-		File.WriteAllText(Path.Combine(tempPath, "file.txt"), "content");
+		var filePath = Path.Combine(tempPath, "file.txt");
+		File.WriteAllText(filePath, "content");
+		File.SetAttributes(filePath, FileAttributes.ReadOnly);
+		var startingAttributes = File.GetAttributes(filePath);
+		Assert.IsTrue(startingAttributes.HasFlag(FileAttributes.ReadOnly), "Precondition failed: file should start as read-only.");
 
 		try
 		{
 			DirectoryHelper.SetFileAttributesToNormal(directory);
 			DirectoryHelper.SetFileAttributesToNormal(directory);
+
+			Assert.IsTrue(directory.Exists, "Directory should still exist after repeated calls.");
+			Assert.IsTrue(File.Exists(filePath), "File should still exist after repeated calls.");
+			var attributes = File.GetAttributes(filePath);
+			Assert.IsFalse(attributes.HasFlag(FileAttributes.ReadOnly), "ReadOnly attribute should be removed after repeated calls.");
 		}
 		finally
 		{
@@ -1896,6 +1905,9 @@ public class DirectoryHelperTests
 		{
 			// Act & Assert - should complete without throwing on an empty directory
 			DirectoryHelper.SetFileAttributesToNormal(tempDirectory);
+
+			Assert.IsTrue(tempDirectory.Exists, "Directory should still exist.");
+			Assert.AreEqual(0, tempDirectory.GetFileSystemInfos().Length, "Directory should remain empty.");
 		}
 		finally
 		{
@@ -1940,9 +1952,12 @@ public class DirectoryHelperTests
 	{
 		// Arrange
 		var nonExistentDir = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var nonExistentPath = nonExistentDir.FullName;
 
 		// Act & Assert - should return early without throwing
 		DirectoryHelper.SetFileAttributesToNormal(nonExistentDir);
+
+		Assert.IsFalse(Directory.Exists(nonExistentPath), "Non-existent directory should remain non-existent.");
 	}
 
 	[SupportedOSPlatform("windows")]
