@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-24-2026
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -169,7 +170,9 @@ public static class CollectionExtensions
 		/// // myCollection now contains the unique items from newItems.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
+		/// <exception cref="ArgumentReadOnlyException">Thrown when the collection is a fixed-size array.</exception>
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -182,8 +185,8 @@ public static class CollectionExtensions
 
 			if (!ensureUnique)
 			{
-				CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
-				return true;
+				return CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
+
 			}
 
 			return CollectionExtensionsHelper.AddUniqueItemsToCollection(collection, items, CollectionExtensionsHelper.ResolveComparer(comparer));
@@ -217,14 +220,15 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
-			if (collection is null)
-			{
-				ExceptionThrower.ThrowArgumentNullException(nameof(collection));
-			}
+			collection = collection.ArgumentNotNull();
 
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
+			}
 			return new([.. collection]);
 		}
 
@@ -233,17 +237,23 @@ public static class CollectionExtensions
 		/// This method provides an efficient way to access a <see cref="Collection{T}" /> with the performance benefits of a <see cref="Span{T}" />.
 		/// </summary>
 		/// <returns>A span representing the same elements as the collection.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
 		/// <remarks>
-		/// This method is particularly useful for high-performance scenarios where the overhead of enumeration or random access in a collection needs to be minimized.
+		/// Creates a new array copy of the collection. Mutations to the returned
+		/// <see cref="Span{T}"/> do not affect the source collection.
 		/// </remarks>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
 			collection = collection.ArgumentNotNull();
 
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
+			}
 			return new([.. collection]);
 		}
 
@@ -260,6 +270,7 @@ public static class CollectionExtensions
 		/// <see cref="FrozenSet{T}" /> is useful for scenarios where a set of items should not be modified after creation.
 		/// This method is particularly useful for quickly converting existing collections to immutable sets.
 		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -277,6 +288,11 @@ public static class CollectionExtensions
 		/// Otherwise, the new item is added to the collection.
 		/// </summary>
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
+		/// <remarks>
+		/// Dispatches to an optimized fast path for <see cref="List{T}"/> (index-based in-place
+		/// replacement) and <see cref="HashSet{T}"/> (Remove + Add). All other <see cref="ICollection{T}"/>
+		/// implementations use a generic Remove-then-Add path.
+		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
 		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]

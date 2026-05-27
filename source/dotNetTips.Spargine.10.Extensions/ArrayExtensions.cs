@@ -90,7 +90,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastHashData), author: "David McCarter", createdOn: "3/11/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastHashData), author: "David McCarter", createdOn: "3/11/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public byte[] FastHashData()
 		{
 			return SHA256.HashData(array.ArgumentNotNull());
@@ -124,7 +124,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddFirst([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
@@ -135,7 +135,9 @@ public static class ArrayExtensions
 			}
 
 			var length = array.Length;
-			var result = new T[length + 1];
+
+			// Suggestion from skill dotnet-best-practices performance and security
+			var result = GC.AllocateUninitializedArray<T>(length + 1);
 			result[0] = item;
 
 			// SUGGESTION FROM COPILOT SLOWER
@@ -277,10 +279,10 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] FastSelectItems(int startIndex, int count)
 		{
-			array = array.ArgumentNotNull();
+			array = array.ArgumentItemsExists();
 			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
 			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
 
@@ -310,7 +312,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
@@ -321,7 +323,9 @@ public static class ArrayExtensions
 			}
 
 			var length = array.Length;
-			var result = new T[length + 1];
+
+			// Suggestion from skill dotnet-best-practices performance and security
+			var result = GC.AllocateUninitializedArray<T>(length + 1);
 
 			// dotnet-best-practices
 			array.AsSpan().CopyTo(result);
@@ -339,8 +343,10 @@ public static class ArrayExtensions
 		/// <remarks>
 		/// Uses <see cref="MemoryExtensions.SequenceEqual{T}(Span{T}, ReadOnlySpan{T})"/> for element-wise
 		/// comparison. <see cref="MethodImplOptions.NoInlining"/> and <see cref="MethodImplOptions.NoOptimization"/>
-		/// are applied intentionally to prevent the JIT from collapsing the comparison loop, ensuring
-		/// consistent execution time regardless of content (timing-safe comparison).
+		/// are applied to prevent JIT inlining of this method at call sites.
+		/// <para><b>⚠ This method is NOT suitable for timing-sensitive security comparisons</b> (e.g., HMAC
+		/// validation, token equality). Use <see cref="CryptographicOperations.FixedTimeEquals"/> for
+		/// <c>byte[]</c> inputs that require constant-time comparison.</para>
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the source array is null.</exception>
 		/// <example>
@@ -511,7 +517,7 @@ public static class ArrayExtensions
 			array = array.ArgumentNotNull();
 
 			// SUGGESTION FROM COPILOT SLOWER
-			var hashCode = 6551;
+			var hashSeed = 6551;
 
 			ref var start = ref MemoryMarshal.GetArrayDataReference(array);
 			var length = array.Length;
@@ -522,11 +528,11 @@ public static class ArrayExtensions
 
 				if (element is not null)
 				{
-					hashCode ^= (hashCode << 5) ^ EqualityComparer<T>.Default.GetHashCode(element);
+					hashSeed ^= (hashSeed << 5) ^ EqualityComparer<T>.Default.GetHashCode(element);
 				}
 			}
 
-			return hashCode;
+			return hashSeed;
 		}
 
 		/// <summary>
@@ -591,7 +597,7 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty(in Func<T, bool> actionFunction)
 		{
 			if (array is null || actionFunction is null)
@@ -599,9 +605,10 @@ public static class ArrayExtensions
 				return false;
 			}
 
-			foreach (var item in array.AsSpan())
+			var span = array.AsSpan();
+			for (var index = 0; index < span.Length; index++)
 			{
-				if (actionFunction(item))
+				if (actionFunction(span[index]))
 				{
 					return true;
 				}
@@ -640,10 +647,11 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty(int count)
 		{
-			return array is not null && array.Length == count;
+			// Suggestion from skill dotnet-best-practices performance and security
+			return array is not null && count >= 0 && array.Length == count;
 		}
 
 		/// <summary>
@@ -665,15 +673,18 @@ public static class ArrayExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PerformAction), "David McCarter", "1/4/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public void PerformAction([DisallowNull] Action<T> action)
 		{
 			array = array.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			foreach (var value in array.AsSpan())
+			// Suggestion from skill dotnet-best-practices performance and security
+			var span = array.AsSpan();
+
+			for (var index = 0; index < span.Length; index++)
 			{
-				action(value);
+				action(span[index]);
 			}
 		}
 
@@ -702,7 +713,10 @@ public static class ArrayExtensions
 			array = array.ArgumentItemsExists();
 
 			var newLength = array.Length - 1;
-			var result = new T[newLength];
+
+			// Suggestion from skill dotnet-best-practices performance and security
+			var result = GC.AllocateUninitializedArray<T>(newLength);
+
 
 			array.AsSpan(1, newLength).CopyTo(result);
 
@@ -728,13 +742,15 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] RemoveLast()
 		{
 			array = array.ArgumentItemsExists();
 
 			var newLength = array.Length - 1;
-			var result = new T[newLength];
+
+			// Suggestion from skill dotnet-best-practices performance and security
+			var result = GC.AllocateUninitializedArray<T>(newLength);
 
 			array.AsSpan(0, newLength).CopyTo(result);
 
@@ -765,16 +781,19 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] ToDistinct(IEqualityComparer<T>? comparer = null)
 		{
 			array = array.ArgumentNotNull();
 
 			var seen = new HashSet<T>(array.Length, comparer);
 
-			foreach (var item in array.AsSpan())
+			// Suggestion from skill dotnet-best-practices performance and security
+			var span = array.AsSpan();
+
+			for (var index = 0; index < span.Length; index++)
 			{
-				_ = seen.Add(item);
+				_ = seen.Add(span[index]);
 			}
 
 			return [.. seen];
@@ -831,8 +850,8 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public T[] Upsert([AllowNull] T item)
+		[Information(nameof(Upsert), author: "David McCarter", createdOn: "4/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		public T[] Upsert([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
 

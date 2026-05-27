@@ -4,7 +4,7 @@
 // Created          : 10-22-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-22-2025
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="LibraryImport.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ internal static partial class LibraryImport
 	[LibraryImport("kernel32.dll", EntryPoint = "CopyFileExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
 	[DefaultDllImportSearchPaths(DllImportSearchPath.SafeDirectories)]
 	[return: MarshalAs(UnmanagedType.Bool)]
-	internal static partial bool CopyFileEx(string lpExistingFileName, string lpNewFileName, CopyProgressRoutine lpProgressRoutine, IntPtr lpData, ref int pbCancel, CopyFileMode dwCopyFlags);
+	internal static partial bool CopyFileEx(string lpExistingFileName, string lpNewFileName, [MarshalAs(UnmanagedType.FunctionPtr)] CopyProgressRoutine lpProgressRoutine, IntPtr lpData, ref int pbCancel, CopyFileMode dwCopyFlags);
 
 	/// <summary>
 	/// Retrieves a <see cref="PROPERTYKEY"/> structure from a canonical property name.
@@ -47,7 +47,7 @@ internal static partial class LibraryImport
 	/// <param name="pszName">The canonical name of the property.</param>
 	/// <param name="pkey">When this method returns, contains the <see cref="PROPERTYKEY"/> that corresponds to the specified property name.</param>
 	/// <returns>Returns HRESULT. S_OK if successful.</returns>
-	[LibraryImport("propsys.dll", StringMarshalling = StringMarshalling.Utf16, SetLastError = true)]
+	[LibraryImport("propsys.dll", StringMarshalling = StringMarshalling.Utf16)]
 	[DefaultDllImportSearchPaths(DllImportSearchPath.SafeDirectories)]
 	internal static partial int PSGetPropertyKeyFromName(string pszName, out PROPERTYKEY pkey);
 }

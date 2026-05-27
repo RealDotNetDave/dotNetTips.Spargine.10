@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-23-2026
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,6 +17,7 @@ using System.Diagnostics.Contracts;
 using System.IO.Compression;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Security.Principal;
@@ -73,6 +74,7 @@ public static class FileHelper
 	/// <param name="hDestinationFile">A handle to the destination file. This is an IntPtr and does not have a direct <see cref="FileInfo"/> equivalent.</param>
 	/// <param name="lpData">A pointer to application-defined data passed to the callback function. This is an IntPtr and does not have a direct .NET equivalent.</param>
 	/// <returns>A <see cref="CopyProgressResult"/> value that determines the action to take.</returns>
+	[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 	public delegate CopyProgressResult CopyProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint dwStreamNumber, CopyProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
 	/// <summary>
