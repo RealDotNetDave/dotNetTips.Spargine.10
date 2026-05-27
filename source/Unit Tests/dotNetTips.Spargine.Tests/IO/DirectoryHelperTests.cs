@@ -687,7 +687,7 @@ public class DirectoryHelperTests
 			cts.Cancel();
 
 			// Act & Assert
-			await Assert.ThrowsExactlyAsync<TaskCanceledException>(async () =>
+			await Assert.ThrowsExactlyAsync<OperationCanceledException>(async () =>
 			{
 				await foreach (var _ in DirectoryHelper.LoadFilesAsync(directories, "*.txt", SearchOption.TopDirectoryOnly, cts.Token))
 				{
@@ -1971,5 +1971,163 @@ public class DirectoryHelperTests
 
 		// Cleanup
 		directory.Delete(true);
+	}
+
+	[TestMethod]
+	public void CopyDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.CopyDirectory(source, destination, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (source.Exists) { source.Delete(true); }
+			if (destination.Exists) { destination.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void DeleteDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.DeleteDirectory(dir, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists) { dir.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void MoveDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.MoveDirectory(source, destination, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (source.Exists) { source.Delete(true); }
+			if (destination.Exists) { destination.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void SafeDirectorySearch_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				foreach (var _ in DirectoryHelper.SafeDirectorySearch(dir, "*.*", SearchOption.TopDirectoryOnly, cts.Token))
+				{
+					// iteration triggers the check
+				}
+			});
+		}
+		finally
+		{
+			if (dir.Exists) { dir.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void SafeFileSearch_DirectoryInfo_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				_ = DirectoryHelper.SafeFileSearch(dir, "*.txt", SearchOption.TopDirectoryOnly, cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists) { dir.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void SafeFileSearch_IEnumerable_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				_ = DirectoryHelper.SafeFileSearch(new List<DirectoryInfo> { dir }, "*.txt", SearchOption.TopDirectoryOnly, cts.Token).ToList();
+			});
+		}
+		finally
+		{
+			if (dir.Exists) { dir.Delete(true); }
+		}
+	}
+
+	[TestMethod]
+	public void SetFileAttributesToNormal_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.SetFileAttributesToNormal(dir, cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists) { dir.Delete(true); }
+		}
 	}
 }
