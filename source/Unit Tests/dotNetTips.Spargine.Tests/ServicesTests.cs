@@ -274,10 +274,13 @@ public class ServicesTests
 	public void StartServicesEmptyCollectionDoesNotThrow()
 	{
 		var services = new List<string>();
+		var servicesBefore = ServiceHelper.AllServices();
 
 		ServiceHelper.StartServices(services);
+		var servicesAfter = ServiceHelper.AllServices();
 
 		Assert.IsEmpty(services);
+		CollectionAssert.AreEquivalent(servicesBefore, servicesAfter);
 	}
 
 	// ── StartServices ─────────────────────────────────────────────────
@@ -323,10 +326,13 @@ public class ServicesTests
 	public void StartStopServicesEmptyCollectionDoesNotThrow()
 	{
 		var requests = new List<ServiceAction>();
+		var servicesBefore = ServiceHelper.AllServices();
 
 		ServiceHelper.StartStopServices(requests);
+		var servicesAfter = ServiceHelper.AllServices();
 
 		Assert.IsEmpty(requests);
+		CollectionAssert.AreEquivalent(servicesBefore, servicesAfter);
 	}
 
 	[TestMethod]
@@ -380,10 +386,13 @@ public class ServicesTests
 	public void StopServicesEmptyCollectionDoesNotThrow()
 	{
 		var services = new List<string>();
+		var servicesBefore = ServiceHelper.AllServices();
 
 		ServiceHelper.StopServices(services);
+		var servicesAfter = ServiceHelper.AllServices();
 
 		Assert.IsEmpty(services);
+		CollectionAssert.AreEquivalent(servicesBefore, servicesAfter);
 	}
 
 	// ── StopServices ──────────────────────────────────────────────────
