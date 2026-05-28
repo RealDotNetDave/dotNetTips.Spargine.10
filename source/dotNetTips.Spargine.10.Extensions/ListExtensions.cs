@@ -706,14 +706,14 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-		public async Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();
 
 			cancellationToken.ThrowIfCancellationRequested();
 
-			return await Task.FromResult(new List<T>(list)).ConfigureAwait(false);
+			return Task.FromResult(new List<T>(list));
 		}
 
 		/// <summary>

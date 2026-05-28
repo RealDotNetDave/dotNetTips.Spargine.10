@@ -2122,13 +2122,16 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void TryDispose_WithAsyncDisposable_CallsDisposeAsync()
+	public void TryDispose_ObjectImplementsBothInterfaces_CallsSynchronousDispose()
 	{
 		var asyncObj = new AsyncDisposableObject();
 
 		asyncObj.TryDispose(throwException: false);
 
-		Assert.IsTrue(asyncObj.DisposeAsyncWasCalled);
+		// In a synchronous context, IDisposable.Dispose() is called rather than
+		// fire-and-forget DisposeAsync() to avoid potential resource leaks.
+		Assert.IsFalse(asyncObj.DisposeAsyncWasCalled);
+		Assert.IsTrue(asyncObj.DisposeSyncWasCalled);
 	}
 
 	[TestMethod]
@@ -2254,8 +2257,9 @@ public class ObjectExtensionsTests : UnitTester
 	private sealed class AsyncDisposableObject : IDisposable, IAsyncDisposable
 	{
 		public bool DisposeAsyncWasCalled { get; private set; }
+		public bool DisposeSyncWasCalled { get; private set; }
 
-		public void Dispose() { }
+		public void Dispose() { this.DisposeSyncWasCalled = true; }
 
 		public System.Threading.Tasks.ValueTask DisposeAsync()
 		{
