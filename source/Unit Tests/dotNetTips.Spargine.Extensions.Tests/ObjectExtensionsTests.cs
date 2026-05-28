@@ -2122,7 +2122,7 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void TryDispose_WithAsyncDisposable_CallsSyncDispose()
+	public void TryDispose_ObjectImplementsBothInterfaces_CallsSynchronousDispose()
 	{
 		var asyncObj = new AsyncDisposableObject();
 

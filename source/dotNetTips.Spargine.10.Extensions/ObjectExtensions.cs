@@ -459,6 +459,7 @@ public static class ObjectExtensions
 
 	/// <summary>Disposes an object synchronously. Since this method runs in a synchronous context,
 	/// it always uses the <see cref="IDisposable.Dispose"/> path to avoid fire-and-forget async disposal.</summary>
+	/// <param name="obj">The object to dispose.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DisposeObjectInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	private static void DisposeObjectInternal(IDisposable obj)
