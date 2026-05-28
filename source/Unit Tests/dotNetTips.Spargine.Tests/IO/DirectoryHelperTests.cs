@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -282,6 +282,41 @@ public class DirectoryHelperTests
 
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
+	public void DeleteDirectory_LockedFile_ReturnsFailedResultWithException()
+	{
+		// Arrange
+		var tempDirectoryPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+		_ = Directory.CreateDirectory(tempDirectoryPath);
+		var lockedFilePath = Path.Combine(tempDirectoryPath, "locked.txt");
+
+		// Hold an open file handle to prevent deletion
+		using var fileStream = new FileStream(lockedFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+
+		var directory = new DirectoryInfo(tempDirectoryPath);
+
+		try
+		{
+			// Act — with recursive=true and only 1 retry the deletion will fail because the file is locked
+			var result = DirectoryHelper.DeleteDirectory(directory, retries: 1);
+
+			// Assert — the failure branch should have appended an IOException to the result
+			Assert.IsNotNull(result);
+			Assert.AreNotEqual(ResultStatus.Succeeded, result.Status);
+			Assert.IsTrue(result.HasErrors, "Result should contain at least one exception when deletion fails.");
+		}
+		finally
+		{
+			fileStream.Dispose();
+
+			if (Directory.Exists(tempDirectoryPath))
+			{
+				Directory.Delete(tempDirectoryPath, true);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
 	public void DeleteDirectory_RecursiveFalse_DeletesEmptyDirectory()
 	{
 		// Arrange
@@ -439,6 +474,40 @@ public class DirectoryHelperTests
 
 			// Assert
 			Assert.IsEmpty(files);
+		}
+		finally
+		{
+			tempDirectory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public async Task LoadFilesAsync_InvalidSearchOption_DefaultsToTopDirectoryOnly()
+	{
+		// Arrange
+		var tempDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		tempDirectory.Create();
+
+		var subDirectory = new DirectoryInfo(Path.Combine(tempDirectory.FullName, "sub"));
+		subDirectory.Create();
+
+		File.WriteAllText(Path.Combine(tempDirectory.FullName, "root.txt"), "root");
+		File.WriteAllText(Path.Combine(subDirectory.FullName, "sub.txt"), "sub");
+
+		var directories = new List<DirectoryInfo> { tempDirectory };
+		var results = new List<FileInfo>();
+
+		try
+		{
+			// Act - pass an out-of-range SearchOption value to trigger the default branch
+			await foreach (var fileSet in DirectoryHelper.LoadFilesAsync(directories, "*.txt", (SearchOption)99))
+			{
+				results.AddRange(fileSet);
+			}
+
+			// Assert: only the root file is found (TopDirectoryOnly behavior)
+			Assert.AreEqual(1, results.Count, "Expected only top-level files when SearchOption is invalid.");
+			Assert.AreEqual("root.txt", results[0].Name);
 		}
 		finally
 		{
@@ -694,40 +763,6 @@ public class DirectoryHelperTests
 					// Should not reach here
 				}
 			});
-		}
-		finally
-		{
-			tempDirectory.Delete(true);
-		}
-	}
-
-	[TestMethod]
-	public async Task LoadFilesAsync_InvalidSearchOption_DefaultsToTopDirectoryOnly()
-	{
-		// Arrange
-		var tempDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-		tempDirectory.Create();
-
-		var subDirectory = new DirectoryInfo(Path.Combine(tempDirectory.FullName, "sub"));
-		subDirectory.Create();
-
-		File.WriteAllText(Path.Combine(tempDirectory.FullName, "root.txt"), "root");
-		File.WriteAllText(Path.Combine(subDirectory.FullName, "sub.txt"), "sub");
-
-		var directories = new List<DirectoryInfo> { tempDirectory };
-		var results = new List<FileInfo>();
-
-		try
-		{
-			// Act - pass an out-of-range SearchOption value to trigger the default branch
-			await foreach (var fileSet in DirectoryHelper.LoadFilesAsync(directories, "*.txt", (SearchOption)99))
-			{
-				results.AddRange(fileSet);
-			}
-
-			// Assert: only the root file is found (TopDirectoryOnly behavior)
-			Assert.AreEqual(1, results.Count, "Expected only top-level files when SearchOption is invalid.");
-			Assert.AreEqual("root.txt", results[0].Name);
 		}
 		finally
 		{

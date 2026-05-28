@@ -16,6 +16,7 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.BenchmarkTests.IO;
 using Perfolizer.Horology;
 
 //`![Spargine 6 Rocks Your Code](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
@@ -39,6 +40,12 @@ public static class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
+
+		// Run Selected Tests
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(DirectoryHelperBenchmark),
+			typeof(DirectoryHelperCopyDirectoryBenchmark)
+			);
 	}
 }

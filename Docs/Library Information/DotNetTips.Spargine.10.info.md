@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10 - 2026.10.5.21
+# DotNetTips.Spargine.10 - 2026.10.5.22
 
 ## DotNetTips.Spargine.Extensions.RegistryExtensions
 
@@ -49,7 +49,7 @@
 * **Description:** CheckPermission
 * **Modified By:** David McCarter
 
-### System.Void CopyDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Boolean overwrite)
+### System.Void CopyDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Boolean overwrite, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -60,7 +60,7 @@
 * **Description:** CopyDirectory
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.SimpleResult<System.Int32> DeleteDirectory(System.IO.DirectoryInfo path, System.Byte retries, System.Boolean recursive)
+### DotNetTips.Spargine.Core.SimpleResult<System.Int32> DeleteDirectory(System.IO.DirectoryInfo path, System.Byte retries, System.Boolean recursive, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -75,7 +75,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 3/1/2021
@@ -109,7 +109,7 @@
 * **Unit Test Status:** Completed
 * **Description:** LoadOneDriveFoldersFromKey
 
-### DotNetTips.Spargine.Core.SimpleResult<System.Int32> MoveDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Byte retries)
+### DotNetTips.Spargine.Core.SimpleResult<System.Int32> MoveDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Byte retries, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -136,7 +136,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RemoveAttributes
 
-### System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> SafeDirectorySearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption)
+### System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> SafeDirectorySearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -147,7 +147,7 @@
 * **Description:** SafeDirectorySearch
 * **Modified By:** David McCarter
 
-### System.Collections.ObjectModel.ReadOnlyCollection<System.IO.FileInfo> SafeFileSearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption)
+### System.Collections.ObjectModel.ReadOnlyCollection<System.IO.FileInfo> SafeFileSearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -158,11 +158,11 @@
 * **Description:** SafeFileSearch
 * **Modified By:** David McCarter
 
-### System.Collections.Generic.IEnumerable<System.IO.FileInfo> SafeFileSearch(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> directories, System.String searchPattern, System.IO.SearchOption searchOption)
+### System.Collections.Generic.IEnumerable<System.IO.FileInfo> SafeFileSearch(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> directories, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 2/14/2018
@@ -180,7 +180,7 @@
 * **Description:** SafeDirectorySearch
 * **Modified By:** David McCarter
 
-### System.Void SetFileAttributesToNormal(System.IO.DirectoryInfo path)
+### System.Void SetFileAttributesToNormal(System.IO.DirectoryInfo path, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -579,6 +579,17 @@
 * **Description:** CombinePaths
 * **Modified By:** David McCarter
 
+### System.IO.DirectoryInfo EnsureDirectoryCreated(System.IO.DirectoryInfo di, System.Boolean create)
+
+* **Status:** Available
+* **Optimization Status:** None
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Author:** David McCarter
+* **CreatedOn:** 8/10/2020
+* **Description:** EnsureDirectoryCreated
+* **Modified By:** David McCarter
+
 ### System.String EnsureTrailingSlash(System.String path)
 
 * **Status:** Available
@@ -767,7 +778,9 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### * **Status:** Available
+### System.ServiceProcess.ServiceController LoadService(System.String serviceName)
+
+* **Status:** Available
 * **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
@@ -787,7 +800,9 @@
 * **Description:** ServiceExists
 * **Modified By:** David McCarter
 
-### * **Status:** Available
+### System.ServiceProcess.ServiceControllerStatus ServiceStatus(System.String serviceName)
+
+* **Status:** Available
 * **Optimization Status:** None
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
@@ -818,7 +833,7 @@
 * **Description:** StartServices
 * **Modified By:** David McCarter
 
-### System.Void StartStopServices(System.Collections.Generic.IEnumerable`1[[DotNetTips.Spargine.ServiceAction, DotNetTips.Spargine.10, Version=2026.10.5.21, Culture=neutral, PublicKeyToken=null]]& requests, Microsoft.Extensions.Logging.ILogger logger)
+### System.Void StartStopServices(System.Collections.Generic.IEnumerable`1[[DotNetTips.Spargine.ServiceAction, DotNetTips.Spargine.10, Version=2026.10.5.22, Culture=neutral, PublicKeyToken=null]]& requests, Microsoft.Extensions.Logging.ILogger logger)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -852,4 +867,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/21/2026 7:04:12 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/27/2026 8:26:36 PM UTC**

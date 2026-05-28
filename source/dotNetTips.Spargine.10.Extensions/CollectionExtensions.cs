@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-28-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -63,7 +63,7 @@ public static class CollectionExtensions
 	/// This method performs a linear search to find an existing item with the same <c>Id</c>, removes it if found,
 	/// and then adds <paramref name="item"/>. This guarantees at most one item with the same identifier in the collection.
 	/// </remarks>
-	[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void Upsert<T, TKey>([DisallowNull] this ICollection<T> collection, [AllowNull] T item) where T : IDataModel<T, TKey> where TKey : notnull
 	{
 		if (item is null)
@@ -100,7 +100,7 @@ public static class CollectionExtensions
 		/// // newItem is added to myCollection because condition is true.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddIf([AllowNull] in T item, bool condition)
 		{
 			if (item is null || !condition)
@@ -136,7 +136,7 @@ public static class CollectionExtensions
 		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AddIfNotExists([AllowNull] T item, IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
@@ -170,7 +170,9 @@ public static class CollectionExtensions
 		/// // myCollection now contains the unique items from newItems.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
+		/// <exception cref="ArgumentReadOnlyException">Thrown when the collection is a fixed-size array.</exception>
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -183,8 +185,8 @@ public static class CollectionExtensions
 
 			if (!ensureUnique)
 			{
-				CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
-				return true;
+				return CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
+
 			}
 
 			return CollectionExtensionsHelper.AddUniqueItemsToCollection(collection, items, CollectionExtensionsHelper.ResolveComparer(comparer));
@@ -221,10 +223,7 @@ public static class CollectionExtensions
 		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
-			if (collection is null)
-			{
-				ExceptionThrower.ThrowArgumentNullException(nameof(collection));
-			}
+			collection = collection.ArgumentNotNull();
 
 			if (collection is T[] array)
 			{
@@ -244,8 +243,10 @@ public static class CollectionExtensions
 		/// This method provides an efficient way to access a <see cref="Collection{T}" /> with the performance benefits of a <see cref="Span{T}" />.
 		/// </summary>
 		/// <returns>A span representing the same elements as the collection.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
 		/// <remarks>
-		/// This method is particularly useful for high-performance scenarios where the overhead of enumeration or random access in a collection needs to be minimized.
+		/// Creates a new array copy of the collection. Mutations to the returned
+		/// <see cref="Span{T}"/> do not affect the source collection.
 		/// </remarks>
 		[Pure]
 		[return: NotNull]
@@ -281,6 +282,7 @@ public static class CollectionExtensions
 		/// <see cref="FrozenSet{T}" /> is useful for scenarios where a set of items should not be modified after creation.
 		/// This method is particularly useful for quickly converting existing collections to immutable sets.
 		/// </remarks>
+		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -298,9 +300,14 @@ public static class CollectionExtensions
 		/// Otherwise, the new item is added to the collection.
 		/// </summary>
 		/// <param name="item">The item to upsert into the collection. If <c>null</c>, the method returns without modifying the collection.</param>
+		/// <remarks>
+		/// Dispatches to an optimized fast path for <see cref="List{T}"/> (index-based in-place
+		/// replacement) and <see cref="HashSet{T}"/> (Remove + Add). All other <see cref="ICollection{T}"/>
+		/// implementations use a generic Remove-then-Add path.
+		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void Upsert([AllowNull] T item)
 		{
 			if (item is null)

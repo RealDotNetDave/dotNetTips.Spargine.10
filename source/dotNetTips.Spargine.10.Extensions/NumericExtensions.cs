@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -259,14 +259,20 @@ public static class NumericExtensions
 			if (timeSpan.Minutes > 0)
 			{
 				if (sb.Length > 0)
-				{ _ = sb.Append(ControlChars.Space); }
+				{
+					_ = sb.Append(ControlChars.Space);
+				}
+
 				_ = sb.Append(timeSpan.Minutes).Append(timeSpan.Minutes == 1 ? " minute" : " minutes");
 			}
 
 			if (timeSpan.Seconds > 0 || sb.Length == 0)
 			{
 				if (sb.Length > 0)
-				{ _ = sb.Append(ControlChars.Space); }
+				{
+					_ = sb.Append(ControlChars.Space);
+				}
+
 				_ = sb.Append(timeSpan.Seconds).Append(timeSpan.Seconds == 1 ? " second" : " seconds");
 			}
 

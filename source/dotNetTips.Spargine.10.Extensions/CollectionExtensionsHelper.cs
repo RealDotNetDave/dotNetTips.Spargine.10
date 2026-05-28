@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-21-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,32 +29,6 @@ namespace DotNetTips.Spargine.Extensions;
 /// </summary>
 internal static class CollectionExtensionsHelper
 {
-	/// <summary>
-	/// Throws <see cref="ArgumentReadOnlyException"/> when <paramref name="collection"/> is a fixed-size array.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The collection to check.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static void ThrowIfArray<T>(ICollection<T> collection)
-	{
-		if (collection is T[])
-		{
-			ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
-		}
-	}
-
-	/// <summary>
-	/// Finds the first item in <paramref name="collection"/> whose <c>Id</c> equals that of <paramref name="item"/>.
-	/// </summary>
-	/// <typeparam name="T">The element type implementing <see cref="IDataModel{T,TKey}"/>.</typeparam>
-	/// <typeparam name="TKey">The key type.</typeparam>
-	/// <param name="collection">The collection to search.</param>
-	/// <param name="item">The item whose <c>Id</c> is used as the search key.</param>
-	/// <returns>The matching element, or <see langword="null"/> if none found.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static T? FindItemById<T, TKey>(ICollection<T> collection, T item)
-		where T : IDataModel<T, TKey> where TKey : notnull
-		=> collection.FirstOrDefault(p => Equals(p.Id, item.Id));
 
 	/// <summary>
 	/// Adds all items in <paramref name="src"/> to <paramref name="col"/> without checking for duplicates.
@@ -63,12 +37,16 @@ internal static class CollectionExtensionsHelper
 	/// <param name="col">The target collection.</param>
 	/// <param name="src">The source sequence to add.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static void AddAllItemsToCollection<T>(ICollection<T> col, IEnumerable<T> src)
+	internal static bool AddAllItemsToCollection<T>(ICollection<T> col, IEnumerable<T> src)
 	{
+		var added = false;
+
 		foreach (var item in src)
 		{
 			col.Add(item);
+			added = true;
 		}
+		return added;
 	}
 
 	/// <summary>
@@ -82,64 +60,29 @@ internal static class CollectionExtensionsHelper
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static bool AddUniqueItemsToCollection<T>(ICollection<T> col, IEnumerable<T> src, IEqualityComparer<T> comparer)
 	{
-		var added = false;
-		var seen = new HashSet<T>(col, comparer);
+		if (col is HashSet<T> existingSet)
+		{
+			var added = false;
+			foreach (var item in src)
+			{
+				if (existingSet.Add(item))
+				{ added = true; }
+			}
+			return added;
+		}
+
+		var added2 = false;
+		var seen = new HashSet<T>(col, comparer);   // only for non-HashSet collections
 
 		foreach (var item in src)
 		{
 			if (seen.Add(item))
 			{
 				col.Add(item);
-				added = true;
+				added2 = true;
 			}
 		}
-
-		return added;
-	}
-
-	/// <summary>
-	/// Attempts to add <paramref name="item"/> to <paramref name="collection"/> if not already present,
-	/// using the fastest path for <see cref="HashSet{T}"/> or a comparer-based contains check.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The target collection.</param>
-	/// <param name="item">The item to add.</param>
-	/// <param name="comparer">The equality comparer to use; must not be <see langword="null"/>.</param>
-	/// <returns><see langword="true"/> if the item was added; <see langword="false"/> if it was already present.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static bool TryAddIfUnique<T>(ICollection<T> collection, T item, IEqualityComparer<T> comparer)
-	{
-		if (collection is HashSet<T> hashSet)
-		{
-			return hashSet.Add(item);
-		}
-
-		if (collection.Contains(item, comparer))
-		{
-			return false;
-		}
-
-		collection.Add(item);
-		return true;
-	}
-
-	/// <summary>
-	/// Finds and removes the first item in <paramref name="collection"/> whose <c>Id</c> equals that of <paramref name="item"/>.
-	/// </summary>
-	/// <typeparam name="T">The element type implementing <see cref="IDataModel{T,TKey}"/>.</typeparam>
-	/// <typeparam name="TKey">The key type.</typeparam>
-	/// <param name="collection">The collection to search.</param>
-	/// <param name="item">The item whose <c>Id</c> is used as the search key.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static void RemoveItemById<T, TKey>(ICollection<T> collection, T item)
-		where T : IDataModel<T, TKey> where TKey : notnull
-	{
-		var existingItem = FindItemById<T, TKey>(collection, item);
-
-		if (existingItem != null)
-		{
-			_ = collection.Remove(existingItem);
-		}
+		return added2;
 	}
 
 	/// <summary>
@@ -170,6 +113,48 @@ internal static class CollectionExtensionsHelper
 	}
 
 	/// <summary>
+	/// Finds the first item in <paramref name="collection"/> whose <c>Id</c> equals that of <paramref name="item"/>.
+	/// </summary>
+	/// <typeparam name="T">The element type implementing <see cref="IDataModel{T,TKey}"/>.</typeparam>
+	/// <typeparam name="TKey">The key type.</typeparam>
+	/// <param name="collection">The collection to search.</param>
+	/// <param name="item">The item whose <c>Id</c> is used as the search key.</param>
+	/// <returns>The matching element, or <see langword="null"/> if none found.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static T? FindItemById<T, TKey>(ICollection<T> collection, T item)
+	where T : IDataModel<T, TKey> where TKey : notnull
+	{
+		var comparer = EqualityComparer<TKey>.Default;
+		foreach (var existing in collection)
+		{
+			if (comparer.Equals(existing.Id, item.Id))
+			{
+				return existing;
+			}
+		}
+		return default;
+	}
+
+	/// <summary>
+	/// Finds and removes the first item in <paramref name="collection"/> whose <c>Id</c> equals that of <paramref name="item"/>.
+	/// </summary>
+	/// <typeparam name="T">The element type implementing <see cref="IDataModel{T,TKey}"/>.</typeparam>
+	/// <typeparam name="TKey">The key type.</typeparam>
+	/// <param name="collection">The collection to search.</param>
+	/// <param name="item">The item whose <c>Id</c> is used as the search key.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static void RemoveItemById<T, TKey>(ICollection<T> collection, T item)
+		where T : IDataModel<T, TKey> where TKey : notnull
+	{
+		var existingItem = FindItemById<T, TKey>(collection, item);
+
+		if (existingItem != null)
+		{
+			_ = collection.Remove(existingItem);
+		}
+	}
+
+	/// <summary>
 	/// Returns <paramref name="comparer"/> if it is not <see langword="null"/>; otherwise returns <see cref="EqualityComparer{T}.Default"/>.
 	/// </summary>
 	/// <typeparam name="T">The element type.</typeparam>
@@ -178,6 +163,45 @@ internal static class CollectionExtensionsHelper
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static IEqualityComparer<T> ResolveComparer<T>(IEqualityComparer<T>? comparer)
 		=> comparer ?? EqualityComparer<T>.Default;
+	/// <summary>
+	/// Throws <see cref="ArgumentReadOnlyException"/> when <paramref name="collection"/> is a fixed-size array.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to check.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static void ThrowIfArray<T>(ICollection<T> collection)
+	{
+		if (collection is T[])
+		{
+			ExceptionThrower.ThrowArgumentReadOnlyException(Resources.ArraysAreFixedSize, nameof(collection));
+		}
+	}
+
+	/// <summary>
+	/// Attempts to add <paramref name="item"/> to <paramref name="collection"/> if not already present,
+	/// using the fastest path for <see cref="HashSet{T}"/> or a comparer-based contains check.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The target collection.</param>
+	/// <param name="item">The item to add.</param>
+	/// <param name="comparer">The equality comparer to use; must not be <see langword="null"/>.</param>
+	/// <returns><see langword="true"/> if the item was added; <see langword="false"/> if it was already present.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static bool TryAddIfUnique<T>(ICollection<T> collection, T item, IEqualityComparer<T> comparer)
+	{
+		if (collection is HashSet<T> hashSet)
+		{
+			return hashSet.Add(item);
+		}
+
+		if (collection.Contains(item, comparer))
+		{
+			return false;
+		}
+
+		collection.Add(item);
+		return true;
+	}
 
 	/// <summary>
 	/// Upserts <paramref name="item"/> into <paramref name="list"/> using index-based replacement when found.

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-07-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -119,7 +119,7 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("Uses assembly-wide runtime type discovery and Activator.CreateInstance. Types, constructors, or metadata may be removed in trimmed apps.")]
-		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(GetInstances), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> GetInstances<T>() where T : class
 		{
 			var types = AssemblyExtensionsHelper.GetLoadableTypes(assembly);

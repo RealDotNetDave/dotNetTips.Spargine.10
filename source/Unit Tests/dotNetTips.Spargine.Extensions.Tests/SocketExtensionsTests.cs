@@ -4,7 +4,7 @@
 // Created          : 04-06-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-13-2026
+// Last Modified On : 05-22-2026
 // ***********************************************************************
 // <copyright file="SocketExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -102,6 +102,59 @@ public class SocketExtensionsTests
 		Assert.AreNotEqual(port1, port2);
 	}
 
+	[TestMethod]
+	public void ConfigureBufferSizes_AboveMaximum_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		const int overMax = SocketExtensions.MaximumBufferSize + 1;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => socket.ConfigureBufferSizes(overMax, overMax));
+	}
+
+	[TestMethod]
+	public void ConfigureBufferSizes_BoundaryMaximum_SetsSizes()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureBufferSizes(SocketExtensions.MaximumBufferSize, SocketExtensions.MaximumBufferSize);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.AreEqual(SocketExtensions.MaximumBufferSize, socket.SendBufferSize);
+		Assert.AreEqual(SocketExtensions.MaximumBufferSize, socket.ReceiveBufferSize);
+	}
+
+	[TestMethod]
+	public void ConfigureBufferSizes_BoundaryMinimum_SetsSizes()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act
+		var result = socket.ConfigureBufferSizes(SocketExtensions.MinimumBufferSize, SocketExtensions.MinimumBufferSize);
+
+		// Assert
+		Assert.AreSame(socket, result);
+		Assert.AreEqual(SocketExtensions.MinimumBufferSize, socket.SendBufferSize);
+		Assert.AreEqual(SocketExtensions.MinimumBufferSize, socket.ReceiveBufferSize);
+	}
+
+	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
+
+	[TestMethod]
+	public void ConfigureBufferSizes_NegativeValues_ThrowsArgumentOutOfRangeException()
+	{
+		// Arrange
+		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => socket.ConfigureBufferSizes(-100, -200));
+	}
+
 	// ─── ConfigureBufferSizes Tests ────────────────────────────────────
 
 	[TestMethod]
@@ -132,35 +185,13 @@ public class SocketExtensionsTests
 	}
 
 	[TestMethod]
-	public void ConfigureBufferSizes_ZeroValues_ClampedToMinimum()
+	public void ConfigureBufferSizes_ZeroValues_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
 		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-		// Act
-		var result = socket.ConfigureBufferSizes(0, 0);
-
-		// Assert
-		Assert.AreSame(socket, result);
-		Assert.IsTrue(socket.SendBufferSize >= 1);
-		Assert.IsTrue(socket.ReceiveBufferSize >= 1);
-	}
-
-	// ─── Additional ConfigureBufferSizes Tests ────────────────────────
-
-	[TestMethod]
-	public void ConfigureBufferSizesNegativeValuesClampedToMinimum()
-	{
-		// Arrange
-		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-		// Act - negative values should be clamped to 1 by EnsureMinimum
-		var result = socket.ConfigureBufferSizes(-100, -200);
-
-		// Assert
-		Assert.AreSame(socket, result);
-		Assert.IsTrue(socket.SendBufferSize >= 1);
-		Assert.IsTrue(socket.ReceiveBufferSize >= 1);
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => socket.ConfigureBufferSizes(0, 0));
 	}
 
 	// ─── ConfigureKeepAlive Tests ──────────────────────────────────────

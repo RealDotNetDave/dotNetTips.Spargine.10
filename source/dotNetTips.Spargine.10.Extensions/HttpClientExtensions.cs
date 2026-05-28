@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-21-2026
+// Last Modified On : 05-22-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -579,12 +579,7 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[Information(nameof(PostAndEnsureSuccessAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>(
-	[DisallowNull] this HttpClient client,
-	[DisallowNull] Uri url,
-	[DisallowNull] TRequest request,
-	[DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo,
-	CancellationToken cancellationToken = default)
+	public static async Task<HttpStatusCode> PostAndEnsureSuccessAsync<TRequest>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
@@ -729,13 +724,7 @@ public static class HttpClientExtensions
 	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="TResponse"/>.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if the operation is canceled, times out, or encounters an HTTP error.</exception>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(
-		HttpClient client,
-		HttpMethod method,
-		Uri url,
-		TRequest request,
-		JsonSerializerOptions options,
-		CancellationToken cancellationToken)
+	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(HttpClient client, HttpMethod method, Uri url, TRequest request, JsonSerializerOptions options, CancellationToken cancellationToken)
 	{
 		try
 		{
@@ -778,14 +767,21 @@ public static class HttpClientExtensions
 		}
 	}
 
-	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(
-	HttpClient client,
-	HttpMethod method,
-	Uri url,
-	TRequest request,
-	JsonTypeInfo<TRequest> requestTypeInfo,
-	JsonTypeInfo<TResponse> responseTypeInfo,
-	CancellationToken cancellationToken)
+	/// <summary>
+	/// Send and deserialize as an asynchronous operation.
+	/// </summary>
+	/// <typeparam name="TRequest">The type of the t request.</typeparam>
+	/// <typeparam name="TResponse">The type of the t response.</typeparam>
+	/// <param name="client">The client.</param>
+	/// <param name="method">The method.</param>
+	/// <param name="url">The URL.</param>
+	/// <param name="request">The request.</param>
+	/// <param name="requestTypeInfo">The request type information.</param>
+	/// <param name="responseTypeInfo">The response type information.</param>
+	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>A Task&lt;TResponse&gt; representing the asynchronous operation.</returns>
+	/// <exception cref="JsonException">Failed to deserialize response to {typeof(TResponse)}.</exception>
+	private static async Task<TResponse> SendAndDeserializeAsync<TRequest, TResponse>(HttpClient client, HttpMethod method, Uri url, TRequest request, JsonTypeInfo<TRequest> requestTypeInfo, JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken)
 	{
 		var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(request, requestTypeInfo);
 

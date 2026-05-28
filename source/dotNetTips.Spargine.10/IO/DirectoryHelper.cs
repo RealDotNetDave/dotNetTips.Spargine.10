@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-28-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -233,7 +233,7 @@ public static class DirectoryHelper
 	/// <remarks>This method utilizes deferred execution to improve performance. Files are not loaded into memory until the asynchronous stream is iterated.</remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
@@ -245,17 +245,6 @@ public static class DirectoryHelper
 		}
 
 		return LoadFilesAsyncCore(directories, searchPattern, searchOption, cancellationToken);
-	}
-
-	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
-	{
-		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
-
-		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
-		{
-			cancellationToken.ThrowIfCancellationRequested();
-			yield return await task.ConfigureAwait(false);
-		}
 	}
 
 
@@ -437,7 +426,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FileInfo> SafeFileSearch([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, [DisallowNull] SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
@@ -582,29 +571,14 @@ public static class DirectoryHelper
 	private static string? GetEntryAssemblyCompanyName()
 		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
 
-	/// <summary>
-	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption, CancellationToken)"/>.
-	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
-	/// that match <paramref name="searchPattern"/>.
-	/// </summary>
-	/// <param name="directories">The already-validated list of directories to search.</param>
-	/// <param name="searchPattern">The already-validated search pattern.</param>
-	/// <param name="searchOption">The already-validated search scope.</param>
-	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while iterating directories.</param>
-	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, CancellationToken cancellationToken)
+	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
 	{
-		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
+		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
 
-		foreach (var d in directories.Where(d => d.CheckExists()))
+		foreach (var task in BuildFileLoadTasks(directories, searchPattern, options, cancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
-			foreach (var file in d.GetFiles(searchPattern, options))
-			{
-				yield return file;
-			}
+			yield return await task.ConfigureAwait(false);
 		}
 	}
 
@@ -696,6 +670,32 @@ public static class DirectoryHelper
 		SetOneDriveFolderAccount(key, folder, DisplayNameKey);
 
 		return folder;
+	}
+
+	/// <summary>
+	/// Core query for <see cref="SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption, CancellationToken)"/>.
+	/// Returns a lazy <see cref="IEnumerable{FileInfo}"/> of files found in each existing directory
+	/// that match <paramref name="searchPattern"/>.
+	/// </summary>
+	/// <param name="directories">The already-validated list of directories to search.</param>
+	/// <param name="searchPattern">The already-validated search pattern.</param>
+	/// <param name="searchOption">The already-validated search scope.</param>
+	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while iterating directories.</param>
+	/// <returns>All matching <see cref="FileInfo"/> instances found across the supplied directories.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static IEnumerable<FileInfo> SafeFileSearchCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, CancellationToken cancellationToken)
+	{
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
+
+		foreach (var d in directories.Where(d => d.CheckExists()))
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+
+			foreach (var file in d.GetFiles(searchPattern, options))
+			{
+				yield return file;
+			}
+		}
 	}
 
 	/// <summary>

@@ -8,6 +8,28 @@ This skill is designed to scan C#/.NET code for performance anti-patterns across
 
 ---
 
+
+## dotNetDave-Ready Performance Audit Prompt
+
+This prompt should be used with a GitHub Agent. They can take a very long time to produce results.
+
+```text
+Use the analyzing-dotnet-performance skill to perform a standard performance audit on this .NET 10 code. Treat any benchmark, serialization, collection-processing, regex, string-processing, or file I/O code as hot-path unless clearly proven otherwise. 
+
+Report:
+1. The scan execution checklist with exact hit counts, including zero-hit checks.
+2. Critical findings first.
+3. Moderate findings that matter on hot paths.
+4. Info findings only when useful.
+5. Positive performance patterns already used.
+6. Concrete one-line fixes with file:line locations.
+7. A final severity summary table.
+
+Avoid generic micro-optimization advice. Verify recommendations against modern .NET behavior and call out anything that should be benchmarked before changing.
+```
+
+---
+
 ## General Repository Scan
 
 ```text
@@ -136,25 +158,6 @@ Use the analyzing-dotnet-performance skill and include the required disclaimer. 
 
 ---
 
-## David-Ready Performance Audit Prompt
-
-```text
-Use the analyzing-dotnet-performance skill to perform a standard performance audit on this .NET 10 code. Treat any benchmark, serialization, collection-processing, regex, string-processing, or file I/O code as hot-path unless clearly proven otherwise. 
-
-Report:
-1. The scan execution checklist with exact hit counts, including zero-hit checks.
-2. Critical findings first.
-3. Moderate findings that matter on hot paths.
-4. Info findings only when useful.
-5. Positive performance patterns already used.
-6. Concrete one-line fixes with file:line locations.
-7. A final severity summary table.
-
-Avoid generic micro-optimization advice. Verify recommendations against modern .NET behavior and call out anything that should be benchmarked before changing.
-```
-
----
-
 ## Release-Readiness Prompt
 
 ```text
@@ -170,9 +173,4 @@ Use the analyzing-dotnet-performance skill to review this benchmark code and the
 ```
 
 ---
-
-## Spargine-Style Prompt
-
-```text
-Use the analyzing-dotnet-performance skill to review this Spargine code with a performance-first mindset. Focus on reusable library code, public APIs, hot-path helpers, allocation reduction, modern .NET APIs, and consistency with high-performance patterns used elsewhere in the codebase. Include exact file and line references, severity, impact, and recommended fixes.
 ```

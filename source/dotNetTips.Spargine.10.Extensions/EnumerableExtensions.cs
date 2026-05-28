@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-24-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -169,51 +169,6 @@ public static class EnumerableExtensions
 	}
 
 	/// <summary>
-	/// Checks whether <paramref name="collection"/> is an empty concurrent collection
-	/// (<see cref="ConcurrentBag{T}"/>, <see cref="ConcurrentQueue{T}"/>, or <see cref="ConcurrentStack{T}"/>).
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="collection">The collection to inspect.</param>
-	/// <returns>
-	/// <c>true</c> if the concurrent collection is empty, <c>false</c> if it is not empty,
-	/// or <c>null</c> if the collection is not a recognized concurrent type.
-	/// </returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	private static bool? TryIsEmptyConcurrent<T>([DisallowNull] IEnumerable<T> collection)
-	{
-		if (collection is ConcurrentBag<T> concurrentBag)
-		{
-			return concurrentBag.IsEmpty;
-		}
-
-		if (collection is ConcurrentQueue<T> concurrentQueue)
-		{
-			return concurrentQueue.IsEmpty;
-		}
-
-		if (collection is ConcurrentStack<T> concurrentStack)
-		{
-			return concurrentStack.IsEmpty;
-		}
-
-		return null;
-	}
-
-	/// <summary>
-	/// Picks a random element from an <see cref="IList{T}"/>.
-	/// Returns <c>default</c> when the list is empty.
-	/// </summary>
-	/// <typeparam name="T">The element type.</typeparam>
-	/// <param name="list">The list to pick from.</param>
-	/// <returns>A randomly selected element, or <c>default</c> if the list is empty.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
-	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
-	private static T? PickFromList<T>(IList<T> list) =>
-		list.Count == 0 ? default : list[Random.Shared.Next(list.Count)];
-
-	/// <summary>
 	/// Picks a random element from an <see cref="ICollection{T}"/> by enumerating to a random index.
 	/// Returns <c>default</c> when the collection is empty.
 	/// </summary>
@@ -246,6 +201,53 @@ public static class EnumerableExtensions
 		}
 
 		return default;
+	}
+
+	/// <summary>
+	/// Picks a random element from an <see cref="IList{T}"/>.
+	/// Returns <c>default</c> when the list is empty.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="list">The list to pick from.</param>
+	/// <returns>A randomly selected element, or <c>default</c> if the list is empty.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "General-purpose random selection, not cryptographic. Random.Shared is appropriate.")]
+	private static T? PickFromList<T>(IList<T> list)
+	{
+		return list.Count == 0 ? default : list[Random.Shared.Next(list.Count)];
+	}
+
+	/// <summary>
+	/// Checks whether <paramref name="collection"/> is an empty concurrent collection
+	/// (<see cref="ConcurrentBag{T}"/>, <see cref="ConcurrentQueue{T}"/>, or <see cref="ConcurrentStack{T}"/>).
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="collection">The collection to inspect.</param>
+	/// <returns>
+	/// <c>true</c> if the concurrent collection is empty, <c>false</c> if it is not empty,
+	/// or <c>null</c> if the collection is not a recognized concurrent type.
+	/// </returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
+	private static bool? TryIsEmptyConcurrent<T>([DisallowNull] IEnumerable<T> collection)
+	{
+		if (collection is ConcurrentBag<T> concurrentBag)
+		{
+			return concurrentBag.IsEmpty;
+		}
+
+		if (collection is ConcurrentQueue<T> concurrentQueue)
+		{
+			return concurrentQueue.IsEmpty;
+		}
+
+		if (collection is ConcurrentStack<T> concurrentStack)
+		{
+			return concurrentStack.IsEmpty;
+		}
+
+		return null;
 	}
 
 	/// <summary>

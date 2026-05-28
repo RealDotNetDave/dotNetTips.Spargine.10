@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 05-23-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -91,24 +91,6 @@ public static class PathHelper
 		}
 
 		return EnsureDirectoryCreated(new DirectoryInfo(Path.Combine(paths)), createIfNotExists);
-	}
-
-	/// <summary>
-	/// Creates the directory represented by <paramref name="di"/> if <paramref name="create"/> is <c>true</c> and the directory does not already exist.
-	/// </summary>
-	/// <param name="di">The <see cref="DirectoryInfo"/> representing the directory to potentially create.</param>
-	/// <param name="create">If <c>true</c>, the directory will be created when it does not exist.</param>
-	/// <returns>The <paramref name="di"/> instance, regardless of whether the directory was created.</returns>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureDirectoryCreated), author: "David McCarter", createdOn: "8/10/2020", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static DirectoryInfo EnsureDirectoryCreated(DirectoryInfo di, bool create)
-	{
-		if (create && di.CheckExists() is false)
-		{
-			di.Create();
-		}
-
-		return di;
 	}
 
 	/// <summary>
@@ -279,7 +261,10 @@ public static class PathHelper
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static ReadOnlyCollection<char> InvalidPathNameChars() => InvalidPathChars.AsReadOnly();
+	public static ReadOnlyCollection<char> InvalidPathNameChars()
+	{
+		return InvalidPathChars.AsReadOnly();
+	}
 
 	/// <summary>
 	/// Checks to see if the path contains any wildcards ('*' or '?').
@@ -319,5 +304,23 @@ public static class PathHelper
 		path = path.ArgumentNotNullOrEmpty();
 
 		return path.IndexOfAny(InvalidPathChars) != -1;
+	}
+
+	/// <summary>
+	/// Creates the directory represented by <paramref name="di"/> if <paramref name="create"/> is <c>true</c> and the directory does not already exist.
+	/// </summary>
+	/// <param name="di">The <see cref="DirectoryInfo"/> representing the directory to potentially create.</param>
+	/// <param name="create">If <c>true</c>, the directory will be created when it does not exist.</param>
+	/// <returns>The <paramref name="di"/> instance, regardless of whether the directory was created.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EnsureDirectoryCreated), author: "David McCarter", createdOn: "8/10/2020", UnitTestStatus = UnitTestStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	private static DirectoryInfo EnsureDirectoryCreated(DirectoryInfo di, bool create)
+	{
+		if (create && di.CheckExists() is false)
+		{
+			di.Create();
+		}
+
+		return di;
 	}
 }

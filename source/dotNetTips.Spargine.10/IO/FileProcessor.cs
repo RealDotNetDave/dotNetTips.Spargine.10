@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified On : 05-27-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@
 // </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Diagnostics;
@@ -53,7 +52,7 @@ namespace DotNetTips.Spargine.IO;
 /// </remarks>
 [SupportedOSPlatform("windows")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFileProcessor")]
-public class FileProcessor
+public sealed class FileProcessor
 {
 	/// <summary>
 	/// Occurs when a file or folder has been processed.
@@ -91,7 +90,6 @@ public class FileProcessor
 	/// fileProcessor.CopyFiles(filesToCopy, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -146,7 +144,6 @@ public class FileProcessor
 	/// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
@@ -203,7 +200,6 @@ public class FileProcessor
 	/// fileProcessor.DeleteFiles(filesToDelete, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
@@ -251,7 +247,6 @@ public class FileProcessor
 	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
@@ -300,7 +295,6 @@ public class FileProcessor
 	/// fileProcessor.MoveFiles(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -356,7 +350,6 @@ public class FileProcessor
 	/// fileProcessor.MoveFilesWithOriginalPath(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
@@ -389,10 +382,111 @@ public class FileProcessor
 	}
 
 	/// <summary>
-	/// Raises the <see cref="Processed"/> event.
+	/// Computes the destination path for a file, preserving its original directory structure below the file-system root.
 	/// </summary>
-	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
-	protected virtual void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
+	/// <param name="fileFullName">The full path of the source file.</param>
+	/// <param name="destinationPath">The root destination path (with trailing slash) that replaces the source root.</param>
+	/// <returns>The new full path under <paramref name="destinationPath"/> with the original sub-root structure preserved.</returns>
+	/// <exception cref="InvalidOperationException">Thrown when the source file has no file-system root.</exception>
+	private static string ComputeOriginalDestPath(string fileFullName, string destinationPath)
+	{
+		var root = Path.GetPathRoot(fileFullName);
+
+		if (root is null)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
+		}
+
+		// Use OrdinalIgnoreCase for Windows path replacement — InvariantCulture applies
+		// unnecessary Unicode normalization and is semantically incorrect for file paths.
+		return fileFullName.Replace(root, destinationPath, StringComparison.OrdinalIgnoreCase);
+	}
+
+	/// <summary>
+	/// Removes the read-only attribute from <paramref name="file"/>, starts the optional stopwatch, deletes the file, then returns the elapsed time.
+	/// </summary>
+	/// <param name="file">The file to delete.</param>
+	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>The elapsed time of the delete operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
+	private static TimeSpan ExecuteDelete(FileInfo file, PerformanceStopwatch? psw)
+	{
+		FileHelper.RemoveReadOnlyAttribute(file);
+		psw?.Start();
+
+		file.Delete();
+
+		return psw?.StopReset() ?? TimeSpan.Zero;
+	}
+
+	/// <summary>
+	/// Removes the read-only attribute from <paramref name="file"/>, starts the optional stopwatch, moves the file, then returns the elapsed time.
+	/// </summary>
+	/// <param name="file">The source file to move.</param>
+	/// <param name="newFilePath">The full destination path including the file name.</param>
+	/// <param name="overwrite">Whether to overwrite an existing destination file.</param>
+	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>The elapsed time of the move operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
+	private static TimeSpan ExecuteMove(FileInfo file, string newFilePath, bool overwrite, PerformanceStopwatch? psw)
+	{
+		FileHelper.RemoveReadOnlyAttribute(file);
+		psw?.Start();
+
+		file.MoveTo(newFilePath, overwrite);
+
+		return psw?.StopReset() ?? TimeSpan.Zero;
+	}
+
+	/// <summary>
+	/// Determines whether a copy operation should be blocked because the destination file already exists and overwriting is not permitted.
+	/// </summary>
+	/// <param name="newFilePath">The full path of the prospective destination file.</param>
+	/// <param name="overwrite">Whether overwriting is allowed.</param>
+	/// <returns><see langword="true"/> when <paramref name="overwrite"/> is <see langword="false"/> and the destination file exists; otherwise <see langword="false"/>.</returns>
+	private static bool IsOverwriteConflict(string newFilePath, bool overwrite)
+	{
+		return !overwrite && File.Exists(newFilePath);
+	}
+
+	/// <summary>
+	/// Materializes the source sequence, removing nulls and duplicates, into a <see cref="List{T}"/>.
+	/// </summary>
+	/// <typeparam name="T">A reference type.</typeparam>
+	/// <param name="source">The source sequence; may be <see langword="null"/>.</param>
+	/// <returns>A non-empty list, or <see langword="null"/> when <paramref name="source"/> is <see langword="null"/> or yields no elements.</returns>
+	private static List<T>? PrepareList<T>(IEnumerable<T>? source) where T : class
+	{
+		if (source is null)
+		{
+			return null;
+		}
+
+		var list = source.RemoveNulls().FastDistinct().ToList();
+
+		return list.Count == 0 ? null : list;
+	}
+
+	/// <summary>
+	/// Starts the optional stopwatch, copies <paramref name="file"/> to <paramref name="newFilePath"/> using large-buffer sequential streams, then returns the elapsed time.
+	/// </summary>
+	/// <param name="file">The source file.</param>
+	/// <param name="newFilePath">The full destination path including the file name.</param>
+	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
+	/// <returns>The elapsed time of the copy operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
+	private static TimeSpan StreamCopyFile(FileInfo file, string newFilePath, PerformanceStopwatch? psw)
+	{
+		psw?.Start();
+
+		// Use an explicit large buffer + SequentialScan for throughput (FileInfo.CopyTo uses 4096 bytes).
+		using (var src = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan))
+		{
+			using (var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan))
+			{
+				src.CopyTo(dst);
+			}
+		}
+
+		return psw?.StopReset() ?? TimeSpan.Zero;
+	}
 
 	/// <summary>
 	/// Copies a single <paramref name="file"/> to <paramref name="destinationPath"/>
@@ -473,6 +567,16 @@ public class FileProcessor
 			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
 			return 0;
 		}
+	}
+
+	/// <summary>
+	/// Allocates a <see cref="PerformanceStopwatch"/> only when the <see cref="Processed"/> event has subscribers.
+	/// </summary>
+	/// <param name="name">The label passed to the stopwatch constructor.</param>
+	/// <returns>A new <see cref="PerformanceStopwatch"/>, or <see langword="null"/> when there are no event subscribers.</returns>
+	private PerformanceStopwatch? CreateStopwatch(string name)
+	{
+		return this.Processed is not null ? new PerformanceStopwatch(name) : null;
 	}
 
 	/// <summary>
@@ -566,6 +670,7 @@ public class FileProcessor
 			fileLength = file.Length;
 			var newFileName = Path.Combine(destinationPath, file.Name);
 			var perf = ExecuteMove(file, newFileName, overwrite, psw);
+
 			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
@@ -610,6 +715,7 @@ public class FileProcessor
 			}
 
 			var perf = ExecuteMove(file, newFilePath, overwrite, psw);
+
 			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
@@ -623,109 +729,9 @@ public class FileProcessor
 	}
 
 	/// <summary>
-	/// Computes the destination path for a file, preserving its original directory structure below the file-system root.
+	/// Raises the <see cref="Processed"/> event.
 	/// </summary>
-	/// <param name="fileFullName">The full path of the source file.</param>
-	/// <param name="destinationPath">The root destination path (with trailing slash) that replaces the source root.</param>
-	/// <returns>The new full path under <paramref name="destinationPath"/> with the original sub-root structure preserved.</returns>
-	/// <exception cref="InvalidOperationException">Thrown when the source file has no file-system root.</exception>
-	private static string ComputeOriginalDestPath(string fileFullName, string destinationPath)
-	{
-		var root = Path.GetPathRoot(fileFullName);
-
-		if (root is null)
-		{
-			ExceptionThrower.ThrowInvalidOperationException(Resources.TheRootDirectoryOfTheFileIsNull);
-		}
-
-		// Use OrdinalIgnoreCase for Windows path replacement — InvariantCulture applies
-		// unnecessary Unicode normalization and is semantically incorrect for file paths.
-		return fileFullName.Replace(root, destinationPath, StringComparison.OrdinalIgnoreCase);
-	}
-
-	/// <summary>
-	/// Allocates a <see cref="PerformanceStopwatch"/> only when the <see cref="Processed"/> event has subscribers.
-	/// </summary>
-	/// <param name="name">The label passed to the stopwatch constructor.</param>
-	/// <returns>A new <see cref="PerformanceStopwatch"/>, or <see langword="null"/> when there are no event subscribers.</returns>
-	private PerformanceStopwatch? CreateStopwatch(string name) => this.Processed is not null ? new PerformanceStopwatch(name) : null;
-
-	/// <summary>
-	/// Removes the read-only attribute from <paramref name="file"/>, starts the optional stopwatch, deletes the file, then returns the elapsed time.
-	/// </summary>
-	/// <param name="file">The file to delete.</param>
-	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
-	/// <returns>The elapsed time of the delete operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
-	private static TimeSpan ExecuteDelete(FileInfo file, PerformanceStopwatch? psw)
-	{
-		FileHelper.RemoveReadOnlyAttribute(file);
-		psw?.Start();
-		file.Delete();
-		return psw?.StopReset() ?? TimeSpan.Zero;
-	}
-
-	/// <summary>
-	/// Removes the read-only attribute from <paramref name="file"/>, starts the optional stopwatch, moves the file, then returns the elapsed time.
-	/// </summary>
-	/// <param name="file">The source file to move.</param>
-	/// <param name="newFilePath">The full destination path including the file name.</param>
-	/// <param name="overwrite">Whether to overwrite an existing destination file.</param>
-	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
-	/// <returns>The elapsed time of the move operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
-	private static TimeSpan ExecuteMove(FileInfo file, string newFilePath, bool overwrite, PerformanceStopwatch? psw)
-	{
-		FileHelper.RemoveReadOnlyAttribute(file);
-		psw?.Start();
-		file.MoveTo(newFilePath, overwrite);
-		return psw?.StopReset() ?? TimeSpan.Zero;
-	}
-
-	/// <summary>
-	/// Determines whether a copy operation should be blocked because the destination file already exists and overwriting is not permitted.
-	/// </summary>
-	/// <param name="newFilePath">The full path of the prospective destination file.</param>
-	/// <param name="overwrite">Whether overwriting is allowed.</param>
-	/// <returns><see langword="true"/> when <paramref name="overwrite"/> is <see langword="false"/> and the destination file exists; otherwise <see langword="false"/>.</returns>
-	private static bool IsOverwriteConflict(string newFilePath, bool overwrite) => !overwrite && File.Exists(newFilePath);
-
-	/// <summary>
-	/// Materializes the source sequence, removing nulls and duplicates, into a <see cref="List{T}"/>.
-	/// </summary>
-	/// <typeparam name="T">A reference type.</typeparam>
-	/// <param name="source">The source sequence; may be <see langword="null"/>.</param>
-	/// <returns>A non-empty list, or <see langword="null"/> when <paramref name="source"/> is <see langword="null"/> or yields no elements.</returns>
-	private static List<T>? PrepareList<T>(IEnumerable<T>? source) where T : class
-	{
-		if (source is null)
-		{
-			return null;
-		}
-
-		var list = source.RemoveNulls().FastDistinct().ToList();
-		return list.Count == 0 ? null : list;
-	}
-
-	/// <summary>
-	/// Starts the optional stopwatch, copies <paramref name="file"/> to <paramref name="newFilePath"/> using large-buffer sequential streams, then returns the elapsed time.
-	/// </summary>
-	/// <param name="file">The source file.</param>
-	/// <param name="newFilePath">The full destination path including the file name.</param>
-	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
-	/// <returns>The elapsed time of the copy operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
-	private static TimeSpan StreamCopyFile(FileInfo file, string newFilePath, PerformanceStopwatch? psw)
-	{
-		psw?.Start();
-
-		// Use an explicit large buffer + SequentialScan for throughput (FileInfo.CopyTo uses 4096 bytes).
-		using (var src = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan))
-		{
-			using (var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan))
-			{
-				src.CopyTo(dst);
-			}
-		}
-
-		return psw?.StopReset() ?? TimeSpan.Zero;
-	}
+	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
+	private void OnProcessed(ProgressEventArgs e) => this.Processed?.Invoke(this, e);
 
 }
