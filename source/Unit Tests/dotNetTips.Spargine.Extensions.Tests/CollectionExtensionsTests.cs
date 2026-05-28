@@ -259,6 +259,28 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AsSpan_WithArray_ReturnsSpanOverSameStorage()
+	{
+		var values = new[] { 1, 2, 3 };
+
+		var span = CollectionExtensions.AsSpan(values);
+		span[0] = 42;
+
+		Assert.AreEqual(42, values[0]);
+	}
+
+	[TestMethod]
+	public void AsSpan_WithList_ReturnsSpanOverSameStorage()
+	{
+		var values = new List<int> { 1, 2, 3 };
+
+		var span = CollectionExtensions.AsSpan(values);
+		span[1] = 99;
+
+		Assert.AreEqual(99, values[1]);
+	}
+
+	[TestMethod]
 	public void ToFrozenSet_EmptyCollection_ReturnsEmptyFrozenSet()
 	{
 		var collection = new Collection<Person>();

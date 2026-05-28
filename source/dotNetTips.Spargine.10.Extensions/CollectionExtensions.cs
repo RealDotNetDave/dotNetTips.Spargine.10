@@ -220,12 +220,22 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			collection = collection.ArgumentNotNull();
 
-			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
+			if (collection is T[] array)
+			{
+				return MemoryExtensions.AsSpan(array);
+			}
+
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
+			}
+
+			return new([.. collection]);
 		}
 
 		/// <summary>
@@ -245,6 +255,11 @@ public static class CollectionExtensions
 		public Span<T> AsSpan()
 		{
 			collection = collection.ArgumentNotNull();
+
+			if (collection is T[] array)
+			{
+				return MemoryExtensions.AsSpan(array);
+			}
 
 			if (collection is List<T> list)
 			{

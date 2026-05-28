@@ -323,6 +323,21 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public async Task AddCacheItemAsync_WithCancelledToken_ThrowsTaskCanceledExceptionAndDoesNotAdd()
+	{
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => cache.AddCacheItemAsync(key, "value", cts.Token));
+		Assert.IsNull(cache.GetCacheItem<string>(key));
+
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public void AddCacheItemBatch_AddsMultipleItems()
 	{
 		// Arrange
@@ -1099,6 +1114,16 @@ public class InMemoryCacheTests
 		Assert.AreEqual(value, cached);
 
 		cache.Clear();
+	}
+
+	[TestMethod]
+	public async Task GetCacheItemAsync_WithCancelledToken_ThrowsTaskCanceledException()
+	{
+		var cache = InMemoryCache.Instance;
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => cache.GetCacheItemAsync<string>(Guid.NewGuid().ToString(), cts.Token));
 	}
 
 	[TestMethod]
