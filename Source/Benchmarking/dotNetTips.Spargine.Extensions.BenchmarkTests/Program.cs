@@ -49,11 +49,8 @@ internal sealed class Program
 		BenchmarkHelper.RunBenchmarks(config, true,
 			typeof(ArrayExtensionsCollectionBenchmark),
 			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(AssemblyExtensionsBenchmark),
 			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			typeof(ListExtensionsCollectionBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark)
+			typeof(CollectionExtensionsMutatingCollectionBenchmark)
 		);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks

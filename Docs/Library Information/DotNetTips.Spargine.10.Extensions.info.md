@@ -5134,6 +5134,14 @@
 * **Unit Test Status:** Not Required
 * **Description:** AddSelectedPropertyValueCore
 
+### System.Void AppendPropertiesPairs(System.Text.StringBuilder sb, System.Collections.Generic.IReadOnlyDictionary<System.String, System.String> properties, System.String sequenceSeparator, System.Char keyValueSeparator)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** AppendPropertiesPairs
+
 ### T As(System.Object obj)
 
 * **Status:** Available
@@ -5182,6 +5190,14 @@
 * **Unit Test Status:** Not Required
 * **Description:** BuildKeyValueString
 
+### System.String BuildPrefixedMemberName(System.String memberName)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** BuildPrefixedMemberName
+
 ### System.String BuildPropertyName(System.String name, System.String typeName)
 
 * **Status:** Available
@@ -5214,6 +5230,14 @@
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
+### System.Void DisposeAllFields(System.Reflection.FieldInfo[] fields, System.IDisposable obj)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** DisposeAllFields
+
 ### System.Void DisposeCollection(T items)
 
 * **Status:** Available
@@ -5221,6 +5245,14 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Description:** DisposeCollection
+
+### System.Void DisposeEachItem(T items)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** DisposeEachItem
 
 ### System.Void DisposeField(System.Reflection.FieldInfo field, System.IDisposable obj)
 
@@ -5315,6 +5347,14 @@
 * **CreatedOn:** 8/22/2025
 * **Description:** FieldsToString
 * **Modified By:** David McCarter
+
+### System.Void FillSelectedPropertiesDictionary(System.Collections.Generic.Dictionary<System.String, System.String> properties, System.Reflection.PropertyInfo[] allProperties, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.Object obj, System.String typeName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** FillSelectedPropertiesDictionary
 
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> FilterEmptyProperties(System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> properties)
 
@@ -5431,6 +5471,22 @@
 * **Unit Test Status:** Completed
 * **Description:** Max
 
+### System.Void MergeEligibleFieldsToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.FieldInfo[] fields, System.Object obj, System.String newMemberName, System.Boolean ignoreEmptyValues)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** MergeEligibleFieldsToResult
+
+### System.Void MergeEligiblePropertiesToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.PropertyInfo[] properties, System.Object obj, System.String newMemberName, System.Boolean ignoreNulls)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** MergeEligiblePropertiesToResult
+
 ### System.Void MergeFieldsDictionaryToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> source, System.Boolean ignoreEmptyValues)
 
 * **Status:** Available
@@ -5438,6 +5494,14 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** MergeFieldsDictionaryToResult
+
+### System.Void MergeNestedPropertiesDictionary(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> source)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** MergeNestedPropertiesDictionary
 
 ### System.Void MergePropertyValueToResult(System.Collections.Generic.Dictionary<System.String, System.String> result, System.Reflection.PropertyInfo property, System.Object obj, System.String memberPrefix, System.Boolean ignoreNulls)
 
@@ -5496,6 +5560,14 @@
 * **Description:** PropertiesToString
 * **Modified By:** David McCarter
 
+### System.Func<System.Object> ResolveOrCreateFieldFactory(System.Type fieldType)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** ResolveOrCreateFieldFactory
+
 ### System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.String> ResolvePropertiesDictionary(System.String memberName, System.Object obj, System.Boolean ignoreNulls, System.Type objectType)
 
 * **Status:** Available
@@ -5527,6 +5599,14 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** SetPropertyValue
+
+### System.Boolean ShouldIncludeProperty(System.Reflection.PropertyInfo property)
+
+* **Status:** Available
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
+* **Description:** ShouldIncludeProperty
 
 ### System.Boolean ShouldReturnNullPlaceholder(System.String memberName, System.Object obj, System.Boolean ignoreNulls)
 
@@ -7860,4 +7940,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 5/27/2026 12:16:54 PM UTC**
+**Generated by Spargine - dotNetTips.com on 5/27/2026 8:26:36 PM UTC**
