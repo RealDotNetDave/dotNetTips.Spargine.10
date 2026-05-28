@@ -4,12 +4,15 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 05-28-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// <summary>
+// Benchmarks for CollectionExtensions covering AsSpan, AsReadOnlySpan, and ToFrozenSet
+// across reference, value, and record collection types.
+// </summary>
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
@@ -32,22 +35,62 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+	private Collection<PersonRecord> _peopleRecordCollection = default!;
 	private Collection<Person> _peopleRefCollection = default!;
+	private Collection<Spargine.Tester.Models.ValueTypes.Person> _peopleValCollection = default!;
 
-	[Benchmark(Description = nameof(CollectionExtensions.AsReadOnlySpan))]
-	public void AsReadOnlySpan()
+	[Benchmark(Description = nameof(CollectionExtensions.AsReadOnlySpan) + ": Record")]
+	[BenchmarkCategory(Categories.Span, Categories.RecordType)]
+	public void AsReadOnlySpanRecord()
+	{
+		var result = this._peopleRecordCollection.AsReadOnlySpan();
+
+		this.Consume(result.Length);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AsReadOnlySpan) + ": Reference")]
+	[BenchmarkCategory(Categories.Span, Categories.ReferenceType)]
+	public void AsReadOnlySpanRef()
 	{
 		var result = this._peopleRefCollection.AsReadOnlySpan();
 
-		this.Consume(result.ToArray());
+		this.Consume(result.Length);
 	}
 
-	[Benchmark(Description = nameof(CollectionExtensions.AsSpan))]
-	public void AsSpan()
+	[Benchmark(Description = nameof(CollectionExtensions.AsReadOnlySpan) + ": Value")]
+	[BenchmarkCategory(Categories.Span, Categories.ValueType)]
+	public void AsReadOnlySpanVal()
+	{
+		var result = this._peopleValCollection.AsReadOnlySpan();
+
+		this.Consume(result.Length);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AsSpan) + ": Record")]
+	[BenchmarkCategory(Categories.Span, Categories.RecordType)]
+	public void AsSpanRecord()
+	{
+		var result = this._peopleRecordCollection.AsSpan();
+
+		this.Consume(result.Length);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AsSpan) + ": Reference")]
+	[BenchmarkCategory(Categories.Span, Categories.ReferenceType)]
+	public void AsSpanRef()
 	{
 		var result = this._peopleRefCollection.AsSpan();
 
-		this.Consume(result.ToArray());
+		this.Consume(result.Length);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AsSpan) + ": Value")]
+	[BenchmarkCategory(Categories.Span, Categories.ValueType)]
+	public void AsSpanVal()
+	{
+		var result = this._peopleValCollection.AsSpan();
+
+		this.Consume(result.Length);
 	}
 
 	/// <summary>
@@ -58,6 +101,8 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		base.Setup();
 
 		this._peopleRefCollection = this.GetPersonRefArray().ToCollection();
+		this._peopleValCollection = this.GetPersonValArray().ToCollection();
+		this._peopleRecordCollection = this.GetPersonRecordArray().ToCollection();
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.ToFrozenSet))]

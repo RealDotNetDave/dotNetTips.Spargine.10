@@ -246,7 +246,6 @@ public static class CollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			// TODO: ADD BENCHMARK TEST TO TEST BOTH COLLECTION TYPES.
 			if (collection is List<T> list)
 			{
 				return CollectionsMarshal.AsSpan(list);
