@@ -21,7 +21,6 @@
 // ***********************************************************************
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
@@ -190,9 +189,8 @@ public static class HttpClientExtensions
 	/// <returns>A task that represents the asynchronous operation. The task result contains the deserialized object of type <typeparamref name="T"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="client"/>, <paramref name="url"/>, or <paramref name="options"/> is null.</exception>
 	/// <remarks>This overload reads the entire response into a string before deserializing. For large payloads, prefer <see cref="GetAndDeserializeFromStreamAsync{T}(HttpClient, Uri, JsonSerializerOptions, CancellationToken)"/> which uses stream-based deserialization to minimize allocations.</remarks>
-	[Pure]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information("Original code from: https://ardalis.com/keep-tests-short-and-dry-with-extensions", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	[Information("Original code from: https://ardalis.com/keep-tests-short-and-dry-with-extensions", "David McCarter", "7/13/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static async Task<T> GetAndDeserializeAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
@@ -231,8 +229,7 @@ public static class HttpClientExtensions
 	/// var item = await httpClient.GetAndDeserializeFromStreamAsync(url, MyJsonContext.Default.MyItem);
 	/// </code>
 	/// </example>
-	[Pure]
-	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static async Task<T> GetAndDeserializeFromStreamAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonTypeInfo<T> typeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
@@ -271,9 +268,8 @@ public static class HttpClientExtensions
 	/// var item = await httpClient.GetAndDeserializeFromStreamAsync&lt;MyItem&gt;(url, options);
 	/// </code>
 	/// </example>
-	[Pure]
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetAndDeserializeFromStreamAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static async Task<T> GetAndDeserializeFromStreamAsync<T>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
@@ -458,15 +454,15 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(PatchAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<TResponse> PatchAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
+	[Information(nameof(PatchAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<TResponse> PatchAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
 		request = request.ArgumentNotNull();
 		options = options.ArgumentNotNull();
 
-		return await SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Patch, url, request, options, cancellationToken).ConfigureAwait(false);
+		return SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Patch, url, request, options, cancellationToken);
 	}
 
 	/// <summary>
@@ -494,15 +490,15 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
+	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
 		request = request.ArgumentNotNull();
 		options = options.ArgumentNotNull();
 
-		return await SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Post, url, request, options, cancellationToken).ConfigureAwait(false);
+		return SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Post, url, request, options, cancellationToken);
 	}
 
 	/// <summary>
@@ -535,8 +531,8 @@ public static class HttpClientExtensions
 	///     MyJsonContext.Default.MyItemResponse);
 	/// </code>
 	/// </example>
-	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, [DisallowNull] JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken = default)
+	[Information(nameof(PostAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<TResponse> PostAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonTypeInfo<TRequest> requestTypeInfo, [DisallowNull] JsonTypeInfo<TResponse> responseTypeInfo, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
@@ -544,14 +540,14 @@ public static class HttpClientExtensions
 		requestTypeInfo = requestTypeInfo.ArgumentNotNull();
 		responseTypeInfo = responseTypeInfo.ArgumentNotNull();
 
-		return await SendAndDeserializeAsync(
+		return SendAndDeserializeAsync(
 			client,
 			HttpMethod.Post,
 			url,
 			request,
 			requestTypeInfo,
 			responseTypeInfo,
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 	}
 
 	/// <summary>
@@ -698,15 +694,15 @@ public static class HttpClientExtensions
 	/// </code>
 	/// </example>
 	[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-	[Information(nameof(PutAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<TResponse> PutAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
+	[Information(nameof(PutAndDeserializeAsync), UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<TResponse> PutAndDeserializeAsync<TRequest, TResponse>([DisallowNull] this HttpClient client, [DisallowNull] Uri url, [DisallowNull] TRequest request, [DisallowNull] JsonSerializerOptions options, CancellationToken cancellationToken = default)
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
 		request = request.ArgumentNotNull();
 		options = options.ArgumentNotNull();
 
-		return await SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Put, url, request, options, cancellationToken).ConfigureAwait(false);
+		return SendAndDeserializeAsync<TRequest, TResponse>(client, HttpMethod.Put, url, request, options, cancellationToken);
 	}
 
 	/// <summary>

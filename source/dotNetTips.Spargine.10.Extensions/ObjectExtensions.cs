@@ -457,25 +457,15 @@ public static class ObjectExtensions
 		}
 	}
 
-	/// <summary>Disposes an object, handling both <see cref="IAsyncDisposable"/> and <see cref="IDisposable"/>.</summary>
+	/// <summary>Disposes an object synchronously. Since this method runs in a synchronous context,
+	/// it always uses the <see cref="IDisposable.Dispose"/> path to avoid fire-and-forget async disposal.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DisposeObjectInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(DisposeObjectInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	private static void DisposeObjectInternal(IDisposable obj)
 	{
-		if (obj is IAsyncDisposable asyncDisposable)
-		{
-#pragma warning disable CA2012 // Use ValueTasks correctly – deliberately fire-and-forget
 #pragma warning disable IDISP007 // Don't dispose injected – DisposeObjectInternal is specifically designed to dispose its argument
-			_ = asyncDisposable.DisposeAsync();
+		obj.Dispose();
 #pragma warning restore IDISP007
-#pragma warning restore CA2012
-		}
-		else
-		{
-#pragma warning disable IDISP007 // Don't dispose injected – DisposeObjectInternal is specifically designed to dispose its argument
-			obj.Dispose();
-#pragma warning restore IDISP007
-		}
 	}
 
 	/// <summary>Returns a new <see cref="ReadOnlyDictionary{TKey,TValue}"/> with empty-value entries removed.</summary>
