@@ -964,9 +964,14 @@ public static class EnumerableExtensions
 		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
-			if (collection is IList<T> list)
+			if (collection is List<T> list)
 			{
 				return new Collection<T>(list);
+			}
+
+			if (collection is IList<T> iList)
+			{
+				return new Collection<T>([.. iList]);
 			}
 
 			if (collection is ICollection<T> col)
@@ -1131,7 +1136,7 @@ public static class EnumerableExtensions
 				return Task.FromResult(result);
 			}
 
-			return Task.FromResult([.. collection]);
+			return Task.FromResult<List<T>>([.. collection]);
 		}
 
 		/// <summary>

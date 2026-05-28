@@ -228,7 +228,7 @@ public static class CollectionExtensions
 
 			if (collection is T[] array)
 			{
-				return array.AsSpan();
+				return MemoryExtensions.AsSpan(array);
 			}
 
 			if (collection is List<T> list)
@@ -257,7 +257,7 @@ public static class CollectionExtensions
 
 			if (collection is T[] array)
 			{
-				return array.AsSpan();
+				return MemoryExtensions.AsSpan(array);
 			}
 
 			if (collection is List<T> list)
