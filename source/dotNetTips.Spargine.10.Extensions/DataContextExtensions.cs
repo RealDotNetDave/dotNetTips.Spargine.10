@@ -118,13 +118,13 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records in the table.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 
-		return await context.GetTable<T>().CountAsync(cancellationToken).ConfigureAwait(false);
+		return context.GetTable<T>().CountAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -137,14 +137,14 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records matching the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		ArgumentNullException.ThrowIfNull(predicate);
 
-		return await context.GetTable<T>().CountAsync(predicate, cancellationToken).ConfigureAwait(false);
+		return context.GetTable<T>().CountAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
@@ -208,13 +208,13 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if the table contains any records; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 
-		return await context.GetTable<T>().AnyAsync(cancellationToken).ConfigureAwait(false);
+		return context.GetTable<T>().AnyAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -227,14 +227,14 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if any records match the predicate; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
-	public static async Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public static Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		ArgumentNullException.ThrowIfNull(predicate);
 
-		return await context.GetTable<T>().AnyAsync(predicate, cancellationToken).ConfigureAwait(false);
+		return context.GetTable<T>().AnyAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
