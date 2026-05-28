@@ -639,6 +639,16 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public async Task CountAsync_WithCancelledToken_ThrowsTaskCanceledException()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => people.CountAsync(cts.Token));
+	}
+
+	[TestMethod]
 	public void CountTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).AsEnumerable();
@@ -5329,6 +5339,18 @@ public class EnumerableExtensionsTests
 		Assert.HasCount(5, result);
 		Assert.AreEqual(1, result[0]);
 		Assert.AreEqual(5, result[4]);
+	}
+
+	[TestMethod]
+	public void ToCollection_WithList_WrapsDirectly()
+	{
+		var numbers = new List<int> { 1, 2, 3 };
+
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+		numbers.Add(4);
+
+		Assert.HasCount(4, result);
+		Assert.AreEqual(4, result[^1]);
 	}
 
 	[TestMethod]

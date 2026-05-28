@@ -961,12 +961,12 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
 			if (collection is IList<T> list)
 			{
-				return new Collection<T>([.. list]);
+				return new Collection<T>(list);
 			}
 
 			if (collection is ICollection<T> col)
@@ -1111,7 +1111,7 @@ public static class EnumerableExtensions
 		/// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="List{T}"/> that contains elements from the input collection.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			if (cancellationToken.IsCancellationRequested)
@@ -1131,7 +1131,7 @@ public static class EnumerableExtensions
 				return Task.FromResult(result);
 			}
 
-			return Task.Run(() => collection.ToList(), cancellationToken);
+			return Task.FromResult([.. collection]);
 		}
 
 		/// <summary>
@@ -1406,12 +1406,22 @@ public static class EnumerableExtensions
 		/// <remarks>Original code from: https://github.com/dncuug/X.PagedList/blob/master/src/X.PagedList/PagedListExtensions.cs</remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(CountAsync), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(CountAsync), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<int> CountAsync(CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
 
-			return Task.Run(collection.Count, cancellationToken);
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return Task.FromCanceled<int>(cancellationToken);
+			}
+
+			if (collection is ICollection<T> col)
+			{
+				return Task.FromResult(col.Count);
+			}
+
+			return Task.FromResult(collection.Count());
 		}
 
 		/// <summary>

@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -217,12 +218,22 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			if (collection is null)
 			{
 				ExceptionThrower.ThrowArgumentNullException(nameof(collection));
+			}
+
+			if (collection is T[] array)
+			{
+				return array.AsSpan();
+			}
+
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
 			}
 
 			return new([.. collection]);
@@ -239,10 +250,20 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
 			collection = collection.ArgumentNotNull();
+
+			if (collection is T[] array)
+			{
+				return array.AsSpan();
+			}
+
+			if (collection is List<T> list)
+			{
+				return CollectionsMarshal.AsSpan(list);
+			}
 
 			return new([.. collection]);
 		}
