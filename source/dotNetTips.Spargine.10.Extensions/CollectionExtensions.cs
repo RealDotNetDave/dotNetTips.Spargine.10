@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-27-2026
+// Last Modified On : 05-28-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -63,7 +63,7 @@ public static class CollectionExtensions
 	/// This method performs a linear search to find an existing item with the same <c>Id</c>, removes it if found,
 	/// and then adds <paramref name="item"/>. This guarantees at most one item with the same identifier in the collection.
 	/// </remarks>
-	[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(Upsert), "David McCarter", "5/2/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void Upsert<T, TKey>([DisallowNull] this ICollection<T> collection, [AllowNull] T item) where T : IDataModel<T, TKey> where TKey : notnull
 	{
 		if (item is null)
@@ -172,7 +172,7 @@ public static class CollectionExtensions
 		/// </example>
 		/// <exception cref="ArgumentNullException">Thrown when the collection is <see langword="null"/>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown when the collection is a fixed-size array.</exception>
-		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AddRange), "David McCarter", "11/7/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AddRange([DisallowNull] IEnumerable<T> items, bool ensureUnique = true, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (items is null)
@@ -220,16 +220,12 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			collection = collection.ArgumentNotNull();
 
-			if (collection is List<T> list)
-			{
-				return CollectionsMarshal.AsSpan(list);
-			}
-			return new([.. collection]);
+			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
 		}
 
 		/// <summary>
@@ -250,10 +246,12 @@ public static class CollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
+			// TODO: ADD BENCHMARK TEST TO TEST BOTH COLLECTION TYPES.
 			if (collection is List<T> list)
 			{
 				return CollectionsMarshal.AsSpan(list);
 			}
+
 			return new([.. collection]);
 		}
 
