@@ -45,7 +45,7 @@ Use the csharp-mstest skill to audit the test project for outdated or incorrect 
 ## Test Class Structure and Naming
 
 ```text
-Use the csharp-mstest skill to check all test classes in this file for correct structure. Verify that each class uses [TestClass], is sealed, uses the MethodName_Scenario_ExpectedBehavior naming convention, and follows the Arrange-Act-Assert pattern.
+Use the csharp-mstest skill to check all test classes in this file for correct structure. Verify that each class uses [TestClass], is sealed, uses the MethodNameScenarioExpectedBehavior naming convention, and follows the Arrange-Act-Assert pattern.
 ```
 
 ```text
