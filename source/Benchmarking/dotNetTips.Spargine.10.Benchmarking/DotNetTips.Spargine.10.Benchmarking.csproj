@@ -1,116 +1,116 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<AnalysisLevel>latest-recommended</AnalysisLevel>
-	<AnalysisMode>AllEnabledByDefault</AnalysisMode>
-	<ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
-	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
-	<AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
-	<AssemblyVersion>2026.10.5.22</AssemblyVersion>
-	<Authors>David McCarter</Authors>
-	<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
-	<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
-	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-	<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-	<Company>dotNetTips.com - McCarter Consulting</Company>
-	<Configurations>Debug;Release</Configurations>
-	<Copyright>McCarter Consulting (David McCarter)</Copyright>
-	<DebugType>embedded</DebugType>
-	<Description>Common classes from dotNetTips.com that can be used with BenchmarkDotNet.</Description>
-	<DocumentationFile>..\..\..\AppBin\DotNetTips.Spargine.10.Benchmarking.xml</DocumentationFile>
-	<EmbedUntrackedSources>true</EmbedUntrackedSources>
-	<EnablePackageValidation>false</EnablePackageValidation>
-	<EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
-	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-	<FileVersion>2026.10.5.22</FileVersion>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<IncludeSymbols>true</IncludeSymbols>
-	<LangVersion>latest</LangVersion>
-	<NeutralLanguage>en-US</NeutralLanguage>
-	<Nullable>enable</Nullable>
-	<PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
-	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	<PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
-	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-	<Product>DotNetTips.Spargine.10</Product>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
-	<RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
-	<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
-	<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<TargetFramework>net10.0</TargetFramework>
-	<Title>DotNetTips.Spargine.Benchmarking</Title>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<Version>2026.10.5.22</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
+    <AssemblyVersion>2026.10.6.1</AssemblyVersion>
+    <Authors>David McCarter</Authors>
+    <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
+    <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <Company>dotNetTips.com - McCarter Consulting</Company>
+    <Configurations>Debug;Release</Configurations>
+    <Copyright>McCarter Consulting (David McCarter)</Copyright>
+    <DebugType>embedded</DebugType>
+    <Description>Common classes from dotNetTips.com that can be used with BenchmarkDotNet.</Description>
+    <DocumentationFile>..\..\..\AppBin\DotNetTips.Spargine.10.Benchmarking.xml</DocumentationFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnablePackageValidation>false</EnablePackageValidation>
+    <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <FileVersion>2026.10.6.1</FileVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IncludeSymbols>true</IncludeSymbols>
+    <LangVersion>latest</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Nullable>enable</Nullable>
+    <PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <Product>DotNetTips.Spargine.10</Product>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/RealDotNetDave/dotNetTips.Spargine.10</RepositoryUrl>
+    <RootNamespace>DotNetTips.Spargine.Benchmarking</RootNamespace>
+    <RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <TargetFramework>net10.0</TargetFramework>
+    <Title>DotNetTips.Spargine.Benchmarking</Title>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>2026.10.6.1</Version>
   </PropertyGroup>
   <PropertyGroup>
-	<NuGetAudit>true</NuGetAudit>
-	<NuGetAuditMode>all</NuGetAuditMode>
-	<NuGetAuditLevel>low</NuGetAuditLevel>
-	<PackageReleaseNotes>
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+    <PackageReleaseNotes>
 	  --JAN 2026: Initial .NET 10 release.
 	  --APR 2026: Updated to BenchmarkDotNet 0.15.8 and added Windows Diagnostics support and BenchmarkHelper.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-	<Compile Remove="CollectionBenchmark.PersonRecord.cs" />
+    <Compile Remove="CollectionBenchmark.PersonRecord.cs" />
   </ItemGroup>
   <ItemGroup>
-	<Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
+    <Content Include="SPARGINE-ICON-GRAPHIC-SMALL.ico" />
   </ItemGroup>
   <ItemGroup>
-	<EmbeddedResource Include="SPARGINE-ICON-GRAPHIC-SMALL.png">
-	  <Pack>true</Pack>
-	  <PackagePath>\</PackagePath>
-	  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	</EmbeddedResource>
+    <EmbeddedResource Include="SPARGINE-ICON-GRAPHIC-SMALL.png">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-	<None Include="..\..\..\LICENSE.txt">
-	  <Pack>True</Pack>
-	  <PackagePath>\</PackagePath>
-	</None>
-	<None Include="..\README.md">
-	  <Pack>True</Pack>
-	  <PackagePath>\</PackagePath>
-	</None>
+    <None Include="..\..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
-	<PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
-	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-	<PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	<OutputPath>..\..\..\AppBin\</OutputPath>
+    <OutputPath>..\..\..\AppBin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
-	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
   </ItemGroup>
   <ItemGroup>
-	<Compile Update="Properties\Resources.Designer.cs">
-	  <DesignTime>True</DesignTime>
-	  <AutoGen>True</AutoGen>
-	  <DependentUpon>Resources.resx</DependentUpon>
-	</Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-	<EmbeddedResource Update="Properties\Resources.resx">
-	  <Generator>ResXFileCodeGenerator</Generator>
-	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	</EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-	<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 </Project>
