@@ -1,52 +1,53 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AnalysisLevel>latest-recommended</AnalysisLevel>
-    <AssemblyVersion>2026.10.4.18</AssemblyVersion>
-    <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
-    <Company>dotNetTips.com - McCarter Consulting</Company>
-    <Configurations>Release</Configurations>
-    <Copyright>McCarter Consulting (David McCarter)</Copyright>
-    <DebugType>none</DebugType>
-    <Description>DotNetTips.Spargine.Core.BenchmarkTests</Description>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.4.18</FileVersion>
-    <IsPublishable>False</IsPublishable>
-    <LangVersion>latest</LangVersion>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Nullable>enable</Nullable>
-    <OutputType>Exe</OutputType>
-    <Platforms>AnyCPU</Platforms>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
-    <SignAssembly>False</SignAssembly>
-    <TargetFramework>net10.0</TargetFramework>
-    <Version>2026.10.4.18</Version>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<AnalysisLevel>latest-recommended</AnalysisLevel>
+	<AssemblyVersion>2026.10.4.18</AssemblyVersion>
+	<BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
+	<Company>dotNetTips.com - McCarter Consulting</Company>
+	<Configurations>Release</Configurations>
+	<Copyright>McCarter Consulting (David McCarter)</Copyright>
+	<DebugType>none</DebugType>
+	<Description>DotNetTips.Spargine.Core.BenchmarkTests</Description>
+	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+	<FileVersion>2026.10.4.18</FileVersion>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<IsPublishable>False</IsPublishable>
+	<LangVersion>latest</LangVersion>
+	<NeutralLanguage>en</NeutralLanguage>
+	<Nullable>enable</Nullable>
+	<OutputType>Exe</OutputType>
+	<Platforms>AnyCPU</Platforms>
+	<PlatformTarget>AnyCPU</PlatformTarget>
+	<ServerGarbageCollection>true</ServerGarbageCollection>
+	<SignAssembly>False</SignAssembly>
+	<TargetFramework>net10.0</TargetFramework>
+	<Version>2026.10.4.18</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\..\AppBin\</OutputPath>
+	<OutputPath>..\..\..\AppBin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-    <PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.7.37220.1" />
+	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+	<PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.7.37220.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
-    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
-    <ProjectReference Include="..\dotNetTips.Spargine.10.Benchmarking\DotNetTips.Spargine.10.Benchmarking.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
+	<ProjectReference Include="..\dotNetTips.Spargine.10.Benchmarking\DotNetTips.Spargine.10.Benchmarking.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+	<Compile Update="Properties\Resources.Designer.cs">
+	  <DesignTime>True</DesignTime>
+	  <AutoGen>True</AutoGen>
+	  <DependentUpon>Resources.resx</DependentUpon>
+	</Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+	<EmbeddedResource Update="Properties\Resources.resx">
+	  <Generator>ResXFileCodeGenerator</Generator>
+	  <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	</EmbeddedResource>
   </ItemGroup>
 </Project>
