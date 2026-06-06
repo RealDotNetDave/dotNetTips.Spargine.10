@@ -46,26 +46,26 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ArrayExtensionsCollectionBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	typeof(ArrayExtensionsCollectionBenchmark),
+		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
+		//	typeof(CollectionExtensionsCollectionBenchmark),
+		//	typeof(CollectionExtensionsMutatingCollectionBenchmark)
+		//);
 
 		// Group 1: A–D - 7:45 hours, 786 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true, filePrefix: "Group 1: A–D",
-		// typeof(ArrayExtensionsCollectionBenchmark),
-		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
-		//	typeof(AssemblyExtensionsBenchmark),
-		//	typeof(CharacterExtensionsBenchmark),
-		//	typeof(CollectionExtensionsCollectionBenchmark),
-		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
-		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
-		//	typeof(DataReaderExtensionsBenchmark),
-		//	typeof(DictionaryExtensionsCollectionBenchmark),
-		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true, filePrefix: "Group 1: A–D",
+		 typeof(ArrayExtensionsCollectionBenchmark),
+			typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark),
+			typeof(CharacterExtensionsBenchmark),
+			typeof(CollectionExtensionsCollectionBenchmark),
+			typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			typeof(ConcurrentBagExtensionsCollectionBenchmark),
+			typeof(DataReaderExtensionsBenchmark),
+			typeof(DictionaryExtensionsCollectionBenchmark),
+			typeof(DictionaryExtensionsMutatingCollectionBenchmark)
+		);
 
 		// Group 2: E–H - 11 hours, 942 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true, filePrefix: "Group 2: E–H",
