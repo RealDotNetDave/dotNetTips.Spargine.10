@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260512-184536</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260606-134623</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260512-184536</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark-20260606-134623</th></tr>
 <tr>
 <th>DeleteAllFiles .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3</th>
 </tr>
@@ -30,23 +30,13 @@ mov       [rbp+10],rcx
 mov       rax,[rbp+10]
 mov       rcx,[rax+138]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6FCAF8]
+call      qword ptr [7FF9F12F40F0]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 DotNetTips.Spargine.IO.TempFileManager.DeleteAllFiles()
-		var snapshot = this._files.Count;
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		var filesDeletedResult = FileHelper.DeleteFiles(this._files.AsEnumerable().ToReadOnlyCollection());
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		if (filesDeletedResult.Value.Count == snapshot)
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-			this._files.Clear();
-			^^^^^^^^^^^^^^^^^^^^
-		this.DeleteFilesFromCache(filesDeletedResult.Value);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 push      rbp
 sub       rsp,50
 lea       rbp,[rsp+50]
@@ -55,51 +45,57 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
+		var snapshot = this._files.Count;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rax,[rbp+10]
 mov       rcx,[rax+8]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC693DF8]
+call      qword ptr [7FF9F1283E28]
 mov       [rbp-4],eax
+		var filesDeletedResult = FileHelper.DeleteFiles(this._files.AsEnumerable().ToReadOnlyCollection());
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rax,[rbp+10]
 mov       rdx,[rax+8]
-mov       rcx,7FFBEC74E318
-call      qword ptr [7FFBEC6FCB70]
+mov       rcx,7FF9F12E8EF0
+call      qword ptr [7FF9F12F4168]
 mov       [rbp-18],rax
 mov       rdx,[rbp-18]
-mov       rcx,7FFBEC74E3C8
-call      qword ptr [7FFBEC455D70]
+mov       rcx,7FF9F12E8FA0
+call      qword ptr [7FF9F1075B78]
 mov       [rbp-20],rax
 mov       rcx,[rbp-20]
 xor       edx,edx
-call      qword ptr [7FFBEC6FCBD0]
+call      qword ptr [7FF9F12F41C8]
 mov       [rbp-10],rax
+		if (filesDeletedResult.Value.Count == snapshot)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6FCBE8]
+call      qword ptr [7FF9F12F41E0]
 mov       rcx,rax
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC495F68]
+call      qword ptr [7FF9F10B3040]
 cmp       eax,[rbp-4]
-jne       short 00007FFBEC7CDFC6
-mov       rcx,7FFBEC8C5860
-call      CORINFO_HELP_COUNTPROFILE32
+jne       short 00007FF9F0CE0377
+			this._files.Clear();
+			^^^^^^^^^^^^^^^^^^^^
 mov       rax,[rbp+10]
 mov       rcx,[rax+8]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6FCC00]
+call      qword ptr [7FF9F12F41F8]
 nop
 add       rsp,50
 pop       rbp
 ret
-mov       rcx,7FFBEC8C5864
-call      CORINFO_HELP_COUNTPROFILE32
+		this.DeleteFilesFromCache(filesDeletedResult.Value);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6FCBE8]
+call      qword ptr [7FF9F12F41E0]
 mov       [rbp-28],rax
 mov       rdx,[rbp-28]
 mov       rcx,[rbp+10]
-call      qword ptr [7FFBEC6FCC18]
+call      qword ptr [7FF9F12F4210]
 nop
 add       rsp,50
 pop       rbp

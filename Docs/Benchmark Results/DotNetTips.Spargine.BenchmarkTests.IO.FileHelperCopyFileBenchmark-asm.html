@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark-20260512-170748</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark-20260606-120530</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -69,7 +69,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC636028]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F126D8F0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -83,11 +83,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC636010]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark+<CopyFileAsync>d__6, DotNetTips.Spargine.BenchmarkTests]](<CopyFileAsync>d__6 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F126D8D8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark+<CopyFileAsync>d__6, DotNetTips.Spargine.BenchmarkTests]](<CopyFileAsync>d__6 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC636040]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F126D908]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -115,13 +115,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC63C9A8]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F12F4030]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC63C9C0]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F12F4048]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -151,7 +151,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC636058]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark+<CopyFileAsync>d__6, DotNetTips.Spargine.BenchmarkTests]](<CopyFileAsync>d__6 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F126D920]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark+<CopyFileAsync>d__6, DotNetTips.Spargine.BenchmarkTests]](<CopyFileAsync>d__6 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -163,20 +163,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="5" class="reference" data-reference="5_M04_L00"><a href="#5_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FF9F14C6BD0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="5_M04_L00" class="label" data-label="5_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FF9F14C6BD4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FF9F14C6BD0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FF9F144E4F0]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -188,11 +222,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="7" class="reference" data-reference="7_M06_L00"><a href="#7_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -201,11 +235,9 @@
 <td id="7_M06_L00" class="label" data-label="7_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FF9F12F40C0]; System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(System.Threading.Tasks.Task, System.Threading.Tasks.ConfigureAwaitOptions)</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 </body></html>

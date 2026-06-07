@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorDeleteFoldersBenchmark-20260512-171340
+## DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorDeleteFoldersBenchmark-20260606-121135

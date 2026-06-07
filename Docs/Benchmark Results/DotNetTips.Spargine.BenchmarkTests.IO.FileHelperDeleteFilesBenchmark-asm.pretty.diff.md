@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDeleteFilesBenchmark-20260512-170852
+## DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDeleteFilesBenchmark-20260606-120642

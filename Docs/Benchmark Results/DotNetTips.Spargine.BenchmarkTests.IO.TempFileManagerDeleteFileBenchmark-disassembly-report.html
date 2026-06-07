@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260512-184635</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260606-134721</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260512-184635</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260606-134721</th></tr>
 <tr>
 <th>DeleteFile .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3</th>
 </tr>
@@ -32,13 +32,21 @@ mov       rdx,[rax+140]
 mov       rax,[rbp+10]
 mov       rcx,[rax+138]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6B5D10]
+call      qword ptr [7FF9F127E868]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)
+		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		if (filesDeletedResult.Value.Count > 0)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			this.DeleteFilesFromCache(filesDeletedResult.Value);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 push      rbp
 sub       rsp,60
 lea       rbp,[rsp+60]
@@ -49,34 +57,33 @@ vmovdqu   ymmword ptr [rbp-30],ymm4
 vmovdqa   xmmword ptr [rbp-10],xmm4
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
-		if (string.IsNullOrEmpty(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp+18]
-call      qword ptr [7FFBEC21F1B0]
+call      qword ptr [7FF9F0E6F1B0]
 test      eax,eax
-je        short 00007FFBEC0915FA
+je        short 00007FF9F1372E6A
+mov       rcx,7FF9F14B1530
+call      CORINFO_HELP_COUNTPROFILE32
+nop
 add       rsp,60
 pop       rbp
 ret
-		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       dword ptr [rbp-0C],1
 mov       rcx,offset MT_System.Collections.Generic.List<System.String>
 call      CORINFO_HELP_NEWSFAST
 mov       [rbp-28],rax
 mov       rcx,[rbp-28]
 mov       edx,[rbp-0C]
-call      qword ptr [7FFBEC5946D8]
+call      qword ptr [7FF9F11E4120]
 mov       r8d,[rbp-0C]
 mov       rdx,[rbp-28]
-mov       rcx,7FFBEC6C6BA0
-call      qword ptr [7FFBEC59FD98]
+mov       rcx,7FF9F12D0D80
+call      qword ptr [7FF9F11EFD38]
 lea       rcx,[rbp-20]
 mov       r8,[rbp-28]
-mov       rdx,7FFBEC6C6C28
-call      qword ptr [7FFBEC59FDC8]
+mov       rdx,7FF9F12D0E08
+call      qword ptr [7FF9F11EFD68]
 cmp       dword ptr [rbp-18],0
-jbe       near ptr 00007FFBEC0916D9
+jbe       near ptr 00007FF9F1372F67
 mov       rcx,[rbp-20]
 mov       rdx,[rbp+18]
 call      CORINFO_HELP_CHECKED_ASSIGN_REF
@@ -85,30 +92,30 @@ call      CORINFO_HELP_NEWSFAST
 mov       [rbp-30],rax
 mov       rcx,[rbp-30]
 mov       rdx,[rbp-28]
-call      qword ptr [7FFBEC42C7C8]
+call      qword ptr [7FF9F10773A8]
 mov       rcx,[rbp-30]
 xor       edx,edx
-call      qword ptr [7FFBEC6B5DB8]
+call      qword ptr [7FF9F127E910]
 mov       [rbp-8],rax
-		if (filesDeletedResult.Value.Count > 0)
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp-8]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6B5DD0]
+call      qword ptr [7FF9F127E928]
 mov       rcx,rax
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC465F68]
+call      qword ptr [7FF9F10B3040]
 test      eax,eax
-jle       short 00007FFBEC0916D2
-			this.DeleteFilesFromCache(filesDeletedResult.Value);
-			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jle       short 00007FF9F1372F51
+mov       rcx,7FF9F14B1534
+call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,[rbp-8]
 cmp       [rcx],ecx
-call      qword ptr [7FFBEC6B5DD0]
+call      qword ptr [7FF9F127E928]
 mov       [rbp-38],rax
 mov       rdx,[rbp-38]
 mov       rcx,[rbp+10]
-call      qword ptr [7FFBEC6B5DE8]
+call      qword ptr [7FF9F127E940]
+mov       rcx,7FF9F14B1538
+call      CORINFO_HELP_COUNTPROFILE32
 nop
 add       rsp,60
 pop       rbp

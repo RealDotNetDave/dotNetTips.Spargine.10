@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260512-184635</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260606-134721</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -71,7 +71,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC6B5D10]; DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F127E868]; DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -83,6 +83,18 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</th><th></th></tr>
 <tr class="">
+<td></td><td><pre><code>		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		if (filesDeletedResult.Value.Count > 0)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			this.DeleteFilesFromCache(filesDeletedResult.Value);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,60</pre></code></td>
@@ -103,25 +115,25 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		if (string.IsNullOrEmpty(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBEC21F1B0]; System.String.IsNullOrEmpty(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F0E6F1B0]; System.String.IsNullOrEmpty(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M01_L00"><a href="#2_M01_L00"><pre><code>je        short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FF9F14B1530</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       rsp,60</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>pop       rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
 </tr><tr class="evenMap">
 <td id="2_M01_L00" class="label" data-label="2_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -138,23 +150,23 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,[rbp-0C]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC5946D8]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]]..ctor(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F11E4120]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]]..ctor(Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8d,[rbp-0C]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rbp-28]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,7FFBEC6C6BA0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FF9F12D0D80</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC59FD98]; System.Runtime.InteropServices.CollectionsMarshal.SetCount[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.List`1<System.__Canon>, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F11EFD38]; System.Runtime.InteropServices.CollectionsMarshal.SetCount[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.List`1<System.__Canon>, Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp-20]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,[rbp-28]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFBEC6C6C28</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9F12D0E08</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC59FDC8]; System.Runtime.InteropServices.CollectionsMarshal.AsSpan[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.List`1<System.__Canon>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F11EFD68]; System.Runtime.InteropServices.CollectionsMarshal.AsSpan[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.List`1<System.__Canon>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       dword ptr [rbp-18],0</pre></code></td>
 </tr><tr class="evenMap">
@@ -176,43 +188,41 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rbp-28]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC42C7C8]; System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]]..ctor(System.Collections.Generic.IList`1<System.__Canon>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F10773A8]; System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]]..ctor(System.Collections.Generic.IList`1<System.__Canon>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp-30]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC6B5DB8]; DotNetTips.Spargine.IO.FileHelper.DeleteFiles(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>, Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F127E910]; DotNetTips.Spargine.IO.FileHelper.DeleteFiles(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>, Boolean)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>		if (filesDeletedResult.Value.Count > 0)
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC6B5DD0]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F127E928]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC465F68]; System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]].get_Count()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F10B3040]; Precode of System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]].get_Count()</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L01"><a href="#2_M01_L01"><pre><code>jle       short M01_L01</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>			this.DeleteFilesFromCache(filesDeletedResult.Value);
-			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FF9F14B1534</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC6B5DD0]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F127E928]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp-38],rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -220,11 +230,15 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBEC6B5DE8]; DotNetTips.Spargine.IO.TempFileManager.DeleteFilesFromCache(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9F127E940]; DotNetTips.Spargine.IO.TempFileManager.DeleteFilesFromCache(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>)</pre></code></td>
 </tr><tr class="">
 <td id="2_M01_L01" class="label" data-label="2_M01_L01"><pre><code>M01_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
+<td></td><td><pre><code>mov       rcx,7FF9F14B1538</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       rsp,60</pre></code></td>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperUnGZipAsyncBenchmark-20260512-171040</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperUnGZipAsyncBenchmark-20260606-120832</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,9 +13,9 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7184/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.203
+.NET SDK 10.0.204
   [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
   Job-JZFTPE : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -24,9 +24,9 @@ InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min     </th><th>Q1      </th><th>Median  </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Kurtosis</th><th>MValue</th><th>Skewness</th><th>Rank</th><th>LogicalGroup</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min     </th><th>Q1      </th><th>Median  </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>UnGZipAsync</td><td>1,270,657.1 ns</td><td>42,259.8 ns</td><td>118,501.1 ns</td><td>12,422.3 ns</td><td>1,045,300.0 ns</td><td>1,177,350.0 ns</td><td>1,271,100.0 ns</td><td>1,326,250.0 ns</td><td>1,595,400.0 ns</td><td>787.0</td><td>-6,165.6 ns</td><td>91.00</td><td>3.262</td><td>3.385</td><td>0.6386</td><td>1</td><td>*</td><td>No</td><td>-</td><td>298 B</td><td>83.63 KB</td>
+</thead><tbody><tr><td>UnGZipAsync</td><td>1,267,535.2 ns</td><td>35,337.0 ns</td><td>97,328.4 ns</td><td>10,375.2 ns</td><td>1,101,400.0 ns</td><td>1,200,400.0 ns</td><td>1,244,400.0 ns</td><td>1,320,700.0 ns</td><td>1,545,200.0 ns</td><td>788.9</td><td>-5,143.6 ns</td><td>88.00</td><td>No</td><td>-</td><td>296 B</td><td>3.0000</td><td>-</td><td>83.63 KB</td>
 </tr></tbody></table>
 </body>
 </html>

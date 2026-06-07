@@ -9,7 +9,7 @@
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary></summary>
+// <summary>2 hours, 40 benchmarks</summary>
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
