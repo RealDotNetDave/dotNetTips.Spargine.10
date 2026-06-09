@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-26-2026
+// Last Modified On : 06-08-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -65,38 +65,38 @@ internal sealed class Program
 		//	typeof(DataReaderExtensionsBenchmark),
 		//	typeof(DictionaryExtensionsCollectionBenchmark),
 		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
-		//);
+		);
 
 		// Group 2: E–H - 11 hours, 942 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(EnumExtensionsBenchmark),
-		//	typeof(EnumerableExtensionsCollectionBenchmark),
-		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
-		//	typeof(EnumerableExtensionsCountCollectionBenchmark),
-		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
-		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-		//	typeof(ExceptionExtensionsBenchmark),
-		//	typeof(HashSetExtensionsCollectionBenchmark),
-		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(EnumExtensionsBenchmark),
+			typeof(EnumerableExtensionsCollectionBenchmark),
+			typeof(EnumerableExtensionsConvertingCollectionBenchmark),
+			typeof(EnumerableExtensionsCountCollectionBenchmark),
+			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+			typeof(ExceptionExtensionsBenchmark),
+			typeof(HashSetExtensionsCollectionBenchmark),
+			typeof(HashSetExtensionsMutatingCollectionBenchmark)
+		);
 
 		// Group 3: L–T - 11 hours, 944 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, saveResults: true,
-		  typeof(ImmutableArrayExtensionsBenchmark),
-			typeof(LinqExtensionsBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark),
-			typeof(ListExtensionsCollectionBenchmark),
-			typeof(NumericExtensionsBenchmark),
-			typeof(ObjectExtensionsBenchmark),
-			typeof(ObservableCollectionExtensionsCollectionBenchmark),
-			typeof(ReadOnlyCollectionExtensionsBenchmark),
-			typeof(ReadOnlySpanExtensionsBenchmark),
-			typeof(SortedDictionaryExtensionsBenchmark),
-			typeof(SortedSetExtensionsBenchmark),
-			typeof(StringBuilderExtensionsCounterBenchmark),
-			typeof(StringExtensionsBenchmark),
-			typeof(StringExtensionsCounterBenchmark),
-			typeof(TypeExtensionsBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
+		//  typeof(ImmutableArrayExtensionsBenchmark),
+		//	typeof(LinqExtensionsBenchmark),
+		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
+		//	typeof(ListExtensionsCollectionBenchmark),
+		//	typeof(NumericExtensionsBenchmark),
+		//	typeof(ObjectExtensionsBenchmark),
+		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
+		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
+		//	typeof(ReadOnlySpanExtensionsBenchmark),
+		//	typeof(SortedDictionaryExtensionsBenchmark),
+		//	typeof(SortedSetExtensionsBenchmark),
+		//	typeof(StringBuilderExtensionsCounterBenchmark),
+		//	typeof(StringExtensionsBenchmark),
+		//	typeof(StringExtensionsCounterBenchmark),
+		//	typeof(TypeExtensionsBenchmark)
+		//);
 	}
 }
