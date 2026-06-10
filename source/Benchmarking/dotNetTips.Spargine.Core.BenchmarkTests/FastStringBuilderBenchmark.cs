@@ -4,7 +4,7 @@
 // Created          : 03-06-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -38,7 +38,7 @@ public class FastStringBuilderBenchmark : Benchmark
 
 	[Benchmark(Description = "Format: SB.AppendFormat() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void FormatComparison()
+	public void FormatComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -58,7 +58,7 @@ public class FastStringBuilderBenchmark : Benchmark
 
 	[Benchmark(Description = "Remove: SB.Replace() with string.Empty for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void RemoveComparison()
+	public void RemoveComparison_ForComparison()
 	{
 		var sb = new StringBuilder(this.LongTestString);
 

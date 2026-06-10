@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -17,7 +17,6 @@
 // </summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
@@ -113,7 +112,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Modify Collection: Normal Loop")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void ModifyCollectionLoop()
+	public void ModifyCollectionLoop_ForComparison()
 	{
 		var people = this._personRefEnumerable;
 		var result = new List<Person>();

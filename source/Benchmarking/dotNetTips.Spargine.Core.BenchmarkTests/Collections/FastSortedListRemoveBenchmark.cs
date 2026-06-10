@@ -4,7 +4,7 @@
 // Created          : 01-13-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="FastSortedListRemoveBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
@@ -78,26 +77,26 @@ public class FastSortedListRemoveBenchmark : TinyCollectionBenchmark
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = "RemoveAt: FastSortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void RemoveAt_SortedList()
-	{
-		var people = new FastSortedList<Person>(this._personRefFastSortedList);
-
-		people.RemoveAt(people.Count - 1);
-
-		this.Consume(people);
-	}
-
 	[Benchmark(Description = "RemoveAt: With Comparer(LastName) - SortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void RemoveAt_SortedList_Comparer()
+	public void RemoveAt_SortedList_Comparer_ForComparison()
 	{
 		var people = new SortedList<string, Person>(this._personRefSortedList, new OrdinalStringComparer());
 
 		people.RemoveAt(people.Count - 1);
 
 		this.Consume(people.Count);
+	}
+
+	[Benchmark(Description = "RemoveAt: FastSortedList<ref>")]
+	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
+	public void RemoveAt_SortedList_ForComparison()
+	{
+		var people = new FastSortedList<Person>(this._personRefFastSortedList);
+
+		people.RemoveAt(people.Count - 1);
+
+		this.Consume(people);
 	}
 
 	public override void Setup()

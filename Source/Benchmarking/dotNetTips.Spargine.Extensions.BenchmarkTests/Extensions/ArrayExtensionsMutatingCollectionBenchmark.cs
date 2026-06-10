@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-24-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -90,7 +90,7 @@ public class ArrayExtensionsMutatingCollectionBenchmark : LargeCollectionBenchma
 
 	[Benchmark(Description = "Process Collection: foreach()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void ProcessCollectionNormalRef()
+	public void ProcessCollectionNormalRef_ForComparison()
 	{
 		var people = this._personRefArray;
 

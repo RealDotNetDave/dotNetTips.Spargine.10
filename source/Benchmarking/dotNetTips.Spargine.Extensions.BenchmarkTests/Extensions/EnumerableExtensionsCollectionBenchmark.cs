@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,14 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Frozen;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -70,7 +67,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "Any: With Predicate")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void AnyWithPredicate()
+	public void AnyWithPredicate_ForComparison()
 	{
 		var result = AnyWithPredicate(this._personRefEnumerable, p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
@@ -373,7 +370,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "HasDuplicates(): IEnumerable<Ref>")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void HasDuplicatesRef()
+	public void HasDuplicatesRef_ForComparison()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -441,7 +438,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "IsNullOrEmpty: Comparison using ? and Any()")]
 	[BenchmarkCategory(Categories.Collections, Categories.LINQ, Categories.ForComparison)]
-	public void IsNullOrEmptyComparison()
+	public void IsNullOrEmptyComparison_ForComparison()
 	{
 		var result = this._personRefEnumerable?.Any() != true;
 
@@ -493,7 +490,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "Chunk (compare to Partition) - Half Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void PartitionChunk()
+	public void PartitionChunk_ForComparison()
 	{
 		foreach (var people in this._personRefEnumerable.Chunk(this.HalfCount))
 		{
@@ -567,7 +564,7 @@ public class EnumerableExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "LINQ: SequenceEqual()")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void SequenceEqualLINQ()
+	public void SequenceEqualLINQ_ForComparison()
 	{
 		var people = this._personRefEnumerable;
 		var people2 = this._personRefEnumerableToAdd;

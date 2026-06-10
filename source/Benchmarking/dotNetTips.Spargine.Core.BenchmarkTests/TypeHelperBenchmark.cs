@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,7 +15,6 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -51,7 +50,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.BuiltInTypeNames) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void BuiltInTypeNames_NoCache()
+	public void BuiltInTypeNames_NoCache_ForComparison()
 	{
 		var result = BuiltInTypeNamesNoCache();
 
@@ -119,7 +118,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.FindDerivedTypes) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void FindDerivedTypes()
+	public void FindDerivedTypes_ForComparison()
 	{
 		var result = FindDerivedTypesNoCache(AppDomain.CurrentDomain, typeof(Exception), true);
 
@@ -153,7 +152,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllAbstractMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllAbstractMethods()
+	public void GetAllAbstractMethods_ForComparison()
 	{
 		var result = GetAllAbstractMethodsNoCache(typeof(Benchmark));
 
@@ -171,7 +170,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllConstructors) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllConstructors()
+	public void GetAllConstructors_ForComparison()
 	{
 		var result = GetAllConstructorsNoCache(typeof(Benchmark));
 
@@ -189,7 +188,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredFields) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllDeclaredFields()
+	public void GetAllDeclaredFields_ForComparison()
 	{
 		var result = GetAllDeclaredFieldsNoCache(typeof(Benchmark));
 
@@ -207,7 +206,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllDeclaredMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllDeclaredMethods()
+	public void GetAllDeclaredMethods_ForComparison()
 	{
 		var result = GetAllDeclaredMethodsNoCache(typeof(Benchmark));
 
@@ -226,7 +225,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllFields) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllFields()
+	public void GetAllFields_ForComparison()
 	{
 		var result = GetAllFieldsNoCache(typeof(Benchmark));
 
@@ -254,7 +253,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllMethods) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllMethods()
+	public void GetAllMethods_ForComparison()
 	{
 		var result = GetAllMethodsNoCache(typeof(StringBuilder));
 
@@ -272,7 +271,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetAllProperties) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetAllProperties()
+	public void GetAllProperties_ForComparison()
 	{
 		var result = GetAllPropertiesNoCache(typeof(Person));
 
@@ -401,7 +400,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.GetMembersWithAttribute) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetMembersWithAttribute()
+	public void GetMembersWithAttribute_ForComparison()
 	{
 		var type = typeof(Person);
 
@@ -465,7 +464,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.HasBaseClass) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void HasBaseClass()
+	public void HasBaseClass_ForComparison()
 	{
 		var result = HasBaseClassNoCache(typeof(Exception), typeof(object));
 
@@ -510,7 +509,7 @@ public class TypeHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(TypeHelper.ImplementsInterface) + ": No Cache")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void ImplementsInterface()
+	public void ImplementsInterface_ForComparison()
 	{
 		var result = ImplementsInterfaceNoCache(typeof(List<int>), typeof(IEnumerable<>).MakeGenericType(typeof(int)));
 

@@ -4,7 +4,7 @@
 // Created          : 02-19-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,8 +13,8 @@
 // ***********************************************************************
 
 using BenchmarkDotNet.Attributes;
-using DotNetTips.Spargine.Benchmarking;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
+using DotNetTips.Spargine.Benchmarking;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -96,7 +96,7 @@ public class CharacterExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "To Lower: char.ToLower()")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ToLowerToLower()
+	public void ToLowerToLower_ForComparison()
 	{
 		this.Consume(char.ToLower('A'));
 	}
@@ -110,7 +110,7 @@ public class CharacterExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "To Upper: char.ToUpper()")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ToUpperToUpper()
+	public void ToUpperToUpper_ForComparison()
 	{
 		this.Consume(char.ToUpper('a'));
 	}

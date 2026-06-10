@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,12 +15,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -192,21 +191,21 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": Char Separator + Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void SplitCharSeparator()
+	public void SplitCharSeparator_ForComparison()
 	{
 		this.Consume(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, 2, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": Char Separator ")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void SplitCharSeparatorNoCount()
+	public void SplitCharSeparatorNoCount_ForComparison()
 	{
 		this.Consume(this._crlfString.Split(StringSplitOptions.RemoveEmptyEntries, ControlChars.Dot));
 	}
 
 	[Benchmark(Description = "Split")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void SplitComparison()
+	public void SplitComparison_ForComparison()
 	{
 		this.Consume(this._crlfString.Split(ControlChars.CRLF));
 	}
@@ -230,7 +229,7 @@ public class StringExtensionsCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = nameof(StringExtensions.Split) + ": String Separator + Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void SplitStringSeparator()
+	public void SplitStringSeparator_ForComparison()
 	{
 		this.Consume(this._crlfString.Split(ControlChars.CRLF, 2, StringSplitOptions.RemoveEmptyEntries));
 	}

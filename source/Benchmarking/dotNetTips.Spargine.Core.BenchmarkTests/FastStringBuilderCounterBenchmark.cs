@@ -4,7 +4,7 @@
 // Created          : 02-19-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderCounterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -50,7 +49,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "BytesToString: Array SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Array, Categories.Strings, Categories.ForComparison)]
-	public void ArrayBytesToStringComparison()
+	public void ArrayBytesToStringComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -75,7 +74,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Combine Strings: SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void CombineComparison()
+	public void CombineComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -98,7 +97,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Combine Strings with Space: SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void CombineWithSpaceComparison()
+	public void CombineWithSpaceComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -121,7 +120,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Concat Strings: SB.Append() with Char delimiter for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ConcatCharComparison()
+	public void ConcatCharComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -146,7 +145,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Concat Strings: SB.Append() with String delimiter for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ConcatStringComparison()
+	public void ConcatStringComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -171,7 +170,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Join String: SB.AppendJoin()  with Char delimiter for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void JoinCharComparison()
+	public void JoinCharComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -191,7 +190,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "Join String: SB.AppendJoin() with String delimiter for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void JoinStringComparison()
+	public void JoinStringComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -220,7 +219,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "PerformAction: SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void PerformActionComparison()
+	public void PerformActionComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -234,7 +233,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "PerformAction: Using Object Pool for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void PerformActionStringBuilderPool()
+	public void PerformActionStringBuilderPool_ForComparison()
 	{
 		var sb = _stringBuilderPool.Get();
 
@@ -265,7 +264,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "BytesToString: ReadOnlySpan SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Array, Categories.Strings, Categories.ForComparison)]
-	public void ReadOnlySpanBytesToStringComparison()
+	public void ReadOnlySpanBytesToStringComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -303,7 +302,7 @@ public class FastStringBuilderCounterBenchmark : TinyCollectionBenchmark
 
 	[Benchmark(Description = "ToDelimitedString: SB.Append() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ToDelimitedStringComparison()
+	public void ToDelimitedStringComparison_ForComparison()
 	{
 		var sb = new StringBuilder();
 

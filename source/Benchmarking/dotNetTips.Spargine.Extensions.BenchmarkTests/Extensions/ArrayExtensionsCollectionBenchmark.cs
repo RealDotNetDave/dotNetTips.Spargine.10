@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-24-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -115,7 +115,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(Array.Clone) + ": Array as Record")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void CloneArrayClonePersonRecord()
+	public void CloneArrayClonePersonRecord_ForComparison()
 	{
 		var result = this._personRecordArray.Clone();
 
@@ -124,7 +124,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(Array.Clone) + ": Array as Reference")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void CloneArrayClonePersonRef()
+	public void CloneArrayClonePersonRef_ForComparison()
 	{
 		var result = this._personRefArray.Clone();
 
@@ -133,7 +133,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(Array.Clone) + ": Array as Val")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void CloneArrayClonePersonVal()
+	public void CloneArrayClonePersonVal_ForComparison()
 	{
 		var result = this._personValArray.Clone();
 
@@ -301,7 +301,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " : Record (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.RecordType, Categories.ForComparison)]
-	public void PerformActionRecordComparison()
+	public void PerformActionRecordComparison_ForComparison()
 	{
 		var people = this._personRecordArray;
 		var sb = new StringBuilder();
@@ -327,7 +327,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Ref (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void PerformActionRefComparison()
+	public void PerformActionRefComparison_ForComparison()
 	{
 		var people = this._personRefArray;
 		var sb = new StringBuilder();
@@ -354,7 +354,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = nameof(ArrayExtensions.PerformAction) + " :Val (Comparison)")]
 	[BenchmarkCategory(Categories.Array, Categories.ValueType, Categories.ForComparison)]
-	public void PerformActionValComparison()
+	public void PerformActionValComparison_ForComparison()
 	{
 		var people = this._personValArray;
 		var sb = new StringBuilder();
@@ -369,7 +369,7 @@ public class ArrayExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "Select Items: ArraySegment-HalfCount")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void SelectItemsArraySegment()
+	public void SelectItemsArraySegment_ForComparison()
 	{
 		var result = new ArraySegment<Person>(this._personRefArray, 0, this.HalfCount).ToArray();
 

@@ -4,14 +4,13 @@
 // Created          : 03-04-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="FastSortedListCreateAddBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic;
@@ -59,20 +58,6 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = "Add: SortedList<ref>")]
-	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void Add_SortedList()
-	{
-		var people = new SortedList<string, Person>(this.Count);
-
-		foreach (var person in this._peopleRefDictionaryToInsert)
-		{
-			people.Add(person.Key, person.Value);
-		}
-
-		this.Consume(people);
-	}
-
 	[Benchmark(Description = "Add: with OrdinalStringComparer")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void Add_SortedList_Comparer()
@@ -87,9 +72,23 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 		this.Consume(people);
 	}
 
+	[Benchmark(Description = "Add: SortedList<ref>")]
+	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
+	public void Add_SortedList_ForComparison()
+	{
+		var people = new SortedList<string, Person>(this.Count);
+
+		foreach (var person in this._peopleRefDictionaryToInsert)
+		{
+			people.Add(person.Key, person.Value);
+		}
+
+		this.Consume(people);
+	}
+
 	[Benchmark(Description = "Add: SortedList<ref> with Tuple")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void Add_Tuple_SortedList()
+	public void Add_Tuple_SortedList_ForComparison()
 	{
 		var people = new SortedList<string, Person>(this.Count);
 
@@ -163,20 +162,20 @@ public class FastSortedListCreateAddBenchmark : LargeCollectionBenchmark
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = "New: add collection in constructor - SortedList<ref>")]
+	[Benchmark(Description = "New: with OrdinalStringComparer - SortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void Create_SortedList()
+	public void Create_SortedList_Comparer_ForComparison()
 	{
-		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert);
+		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert, new OrdinalStringComparer());
 
 		this.Consume(people);
 	}
 
-	[Benchmark(Description = "New: with OrdinalStringComparer - SortedList<ref>")]
+	[Benchmark(Description = "New: add collection in constructor - SortedList<ref>")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void Create_SortedList_Comparer()
+	public void Create_SortedList_ForComparison()
 	{
-		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert, new OrdinalStringComparer());
+		var people = new SortedList<string, Person>(this._peopleRefDictionaryToInsert);
 
 		this.Consume(people);
 	}

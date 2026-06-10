@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,11 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -71,7 +69,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void Count_Count()
+	public void Count_Count_ForComparison()
 	{
 		var result = this._peopleRefList.Count;
 
@@ -125,7 +123,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "Index []: Compare with IndexAtLooped-Half Count")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void Index()
+	public void Index_ForComparison()
 	{
 		var result = this._peopleRefList[this.HalfCount];
 
@@ -223,7 +221,7 @@ public class ListExtensionsCollectionBenchmark : LargeCollectionBenchmark
 
 	[Benchmark(Description = "LINQ.Shuffle")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void ShuffleShuffle()
+	public void ShuffleShuffle_ForComparison()
 	{
 		var result = this._peopleRefList.Shuffle();
 

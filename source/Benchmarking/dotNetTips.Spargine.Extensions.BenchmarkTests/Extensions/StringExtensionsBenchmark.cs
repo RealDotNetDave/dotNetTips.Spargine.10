@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,9 +13,7 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -211,7 +209,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "Format: string.Format()")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void FormatStringFormat()
+	public void FormatStringFormat_ForComparison()
 	{
 		this.Consume(string.Format(this._formatString, this._formatDateTime));
 	}
@@ -444,7 +442,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "Parse Url: Uri")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ParseUrlUri()
+	public void ParseUrlUri_ForComparison()
 	{
 		var uri = new Uri(this._url);
 		var result = (uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath, uri.Query, uri.Fragment);

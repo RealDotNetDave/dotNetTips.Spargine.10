@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -18,7 +18,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BenchmarkDotNet.Attributes;
@@ -287,7 +286,7 @@ public class ObjectExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "string.GetHashCode()")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void HashCodeGetHashCode()
+	public void HashCodeGetHashCode_ForComparison()
 	{
 		this.Consume(this.LongTestString.GetHashCode());
 	}

@@ -4,7 +4,7 @@
 // Created          : 01-23-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsDistinctCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,14 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -115,7 +114,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Ref")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctComparerRef()
+	public void DistinctLINQDistinctComparerRef_ForComparison()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -126,7 +125,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Val")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctComparerVal()
+	public void DistinctLINQDistinctComparerVal_ForComparison()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
@@ -137,7 +136,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Ref>")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctRef()
+	public void DistinctLINQDistinctRef_ForComparison()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -148,7 +147,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Val>")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctVal()
+	public void DistinctLINQDistinctVal_ForComparison()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 

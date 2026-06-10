@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -39,7 +39,7 @@ public class EnumHelperBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(GetDescriptionNoCache))]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void GetDescription_NoCache()
+	public void GetDescription_NoCache_ForComparison()
 	{
 		var result = GetDescriptionNoCache(CountryName.Japan);
 

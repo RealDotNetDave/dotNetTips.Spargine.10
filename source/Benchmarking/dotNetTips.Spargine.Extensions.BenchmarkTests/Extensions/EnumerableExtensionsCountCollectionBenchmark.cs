@@ -4,7 +4,7 @@
 // Created          : 12-14-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 06-10-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsCountCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,11 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -43,7 +40,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 
 	[Benchmark(Description = "IEnumerable.Count(): With Predicate")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void CountCountWithPredicate()
+	public void CountCountWithPredicate_ForComparison()
 	{
 		var result = CountWithPredicate(this._personRefEnumerable, p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
@@ -85,7 +82,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 
 	[Benchmark(Description = "Enumerable.LongCount()")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void CountLongCount()
+	public void CountLongCount_ForComparison()
 	{
 		var result = this._personRefEnumerable.LongCount();
 
