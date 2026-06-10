@@ -89,28 +89,28 @@ public class CharacterExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "To Lower: " + nameof(CharacterExtensions.ToAsciiLower))]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToLowerToAsciiLower()
+	public void ToLower_ToAsciiLower()
 	{
 		this.Consume('A'.ToAsciiLower());
 	}
 
 	[Benchmark(Description = "To Lower: char.ToLower()")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ToLowerToLower_ForComparison()
+	public void ToLower_ToLower_ForComparison()
 	{
 		this.Consume(char.ToLower('A'));
 	}
 
 	[Benchmark(Description = "To Upper: " + nameof(CharacterExtensions.ToAsciiUpper))]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ToUpperToAsciiUpper()
+	public void ToUpper_ToAsciiUpper()
 	{
 		this.Consume('a'.ToAsciiUpper());
 	}
 
 	[Benchmark(Description = "To Upper: char.ToUpper()")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ToUpperToUpper_ForComparison()
+	public void ToUpper_ToUpper_ForComparison()
 	{
 		this.Consume(char.ToUpper('a'));
 	}

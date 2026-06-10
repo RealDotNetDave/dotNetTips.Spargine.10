@@ -17,7 +17,6 @@
 // </summary>
 // ***********************************************************************
 
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -79,7 +78,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Array")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorArray()
+	public void ModifyCollection_FastProcessor_Array()
 	{
 		var people = this._personRefArray;
 
@@ -90,7 +89,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": IEnumerable")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorEnumerable()
+	public void ModifyCollection_FastProcessor_Enumerable()
 	{
 		var people = this._personRefEnumerable;
 
@@ -101,7 +100,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": List")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void ModifyCollectionFastProcessorList()
+	public void ModifyCollection_FastProcessor_List()
 	{
 		var people = this._personRefList;
 
@@ -112,7 +111,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Modify Collection: Normal Loop")]
 	[BenchmarkCategory(Categories.Collections, Categories.ForComparison)]
-	public void ModifyCollectionLoop_ForComparison()
+	public void ModifyCollection_Loop_ForComparison()
 	{
 		var people = this._personRefEnumerable;
 		var result = new List<Person>();
@@ -160,7 +159,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - Array")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorArray()
+	public void TransformCollection_FastProcessor_Array()
 	{
 		var result = this._personRefArray.FastProcessor(person =>
 		{
@@ -173,7 +172,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - IEnumerable")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorEnumerable()
+	public void TransformCollection_FastProcessor_Enumerable()
 	{
 		var result = this._personRefEnumerable.FastProcessor(person =>
 		{
@@ -186,7 +185,7 @@ public class EnumerableExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastProcessor) + ": Transform - List")]
 	[BenchmarkCategory(Categories.ReferenceType)]
-	public void TransformCollectionFastProcessorList()
+	public void TransformCollection_FastProcessor_List()
 	{
 		var result = this._personRefList.FastProcessor(person =>
 		{

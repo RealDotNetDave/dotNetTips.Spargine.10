@@ -11,9 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -31,24 +28,15 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 	private List<Person> _personRefList = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.CountAsync))]
-	public async Task CountCountAsync()
+	public async Task Count_CountAsync()
 	{
 		var result = await this._personRefEnumerable.CountAsync(CancellationToken.None).ConfigureAwait(false);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = "IEnumerable.Count(): With Predicate")]
-	[BenchmarkCategory(Categories.ForComparison)]
-	public void CountCountWithPredicate_ForComparison()
-	{
-		var result = CountWithPredicate(this._personRefEnumerable, p => p.LastName.Contains('a', StringComparison.CurrentCulture));
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = "Enumerable.Count()")]
-	public void CountEnumerableExtensionsCount()
+	public void Count_Enumerable_Count()
 	{
 		var result = this._personRefEnumerable.Count();
 
@@ -57,7 +45,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount))]
-	public void CountFastLongCount()
+	public void Count_LongCount_FastLongCount()
 	{
 		var result = this._personRefEnumerable.FastLongCount();
 
@@ -65,7 +53,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": List")]
-	public void CountFastLongCountList()
+	public void Count_LongCount_FastLongCount_List()
 	{
 		var result = this._personRefList.FastLongCount();
 
@@ -73,7 +61,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastLongCount) + ": With Predicate")]
-	public void CountFastLongCountWithPredicate()
+	public void Count_LongCount_FastLongCount_WithPredicate()
 	{
 		var result = this._personRefEnumerable.FastLongCount(p => p.LastName.Contains('a', StringComparison.CurrentCulture));
 
@@ -82,7 +70,7 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 
 	[Benchmark(Description = "Enumerable.LongCount()")]
 	[BenchmarkCategory(Categories.ForComparison)]
-	public void CountLongCount_ForComparison()
+	public void Count_LongCount_ForComparison()
 	{
 		var result = this._personRefEnumerable.LongCount();
 
@@ -96,8 +84,5 @@ public class EnumerableExtensionsCountCollectionBenchmark : LargeCollectionBench
 		this._personRefEnumerable = this.GetPersonRefArray().AsEnumerable();
 		this._personRefList = [.. this.GetPersonRefArray()];
 	}
-
-	private static int CountWithPredicate<T>([NotNull] IEnumerable<T> list, [NotNull] Func<T, bool> predicate) => list.Count(predicate);
-
 
 }

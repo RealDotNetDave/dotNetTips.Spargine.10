@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
@@ -42,8 +41,6 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
 	private readonly string _domainAddress = "www.dotnettips.com";
 	private readonly string _emailAddress = RandomData.GenerateEmailAddress();
-	private readonly DateTime _formatDateTime = new(2026, 2, 15, 14, 30, 45);
-	private readonly string _formatString = "The time is {0:HH:mm:ss}";
 	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";
 	private readonly string _nullTestString = null!;
@@ -205,13 +202,6 @@ public class StringExtensionsBenchmark : Benchmark
 		var result = input.FastReplace("Hello", "Googbye");
 
 		this.Consume(result);
-	}
-
-	[Benchmark(Description = "Format: string.Format()")]
-	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void FormatStringFormat_ForComparison()
-	{
-		this.Consume(string.Format(this._formatString, this._formatDateTime));
 	}
 
 	[Benchmark(Description = nameof(StringExtensions.FromBase64))]
@@ -434,7 +424,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = nameof(StringExtensions.FastParseUrl))]
 	[BenchmarkCategory(Categories.Strings)]
-	public void ParseUrlFastParseUrl()
+	public void ParseUrl_FastParseUrl()
 	{
 		var result = this._url.FastParseUrl();
 		this.Consume(result);
@@ -442,7 +432,7 @@ public class StringExtensionsBenchmark : Benchmark
 
 	[Benchmark(Description = "Parse Url: Uri")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void ParseUrlUri_ForComparison()
+	public void ParseUrl_Uri_ForComparison()
 	{
 		var uri = new Uri(this._url);
 		var result = (uri.Scheme, uri.Host, uri.Port, uri.AbsolutePath, uri.Query, uri.Fragment);

@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
@@ -33,7 +32,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	private IEnumerable<Spargine.Tester.Models.ValueTypes.Person> _personValEnumerable = default!;
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Ref")]
-	public void DistinctFastDistinctComparerRef()
+	public void Distinct_FastDistinct_Comparer_Ref()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -43,7 +42,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": Comparer - Val")]
-	public void DistinctFastDistinctComparerVal()
+	public void Distinct_FastDistinct_Comparer_Val()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
@@ -53,7 +52,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<ref>")]
-	public void DistinctFastDistinctIEnumerableRef()
+	public void Distinct_FastDistinct_IEnumerable_Ref()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -63,7 +62,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": IEnumerable<val>")]
-	public void DistinctFastDistinctIEnumerableVal()
+	public void Distinct_FastDistinct_IEnumerable_Val()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
@@ -73,7 +72,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<ref>")]
-	public void DistinctFastDistinctListRef()
+	public void Distinct_FastDistinct_List_Ref()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01).ToList();
 
@@ -83,7 +82,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": List<val>")]
-	public void DistinctFastDistinctListVal()
+	public void Distinct_FastDistinct_List_Val()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01).ToList();
 
@@ -93,7 +92,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<ref>")]
-	public void DistinctFastDistinctReadOnlyCollectionRef()
+	public void Distinct_FastDistinct_ReadOnlyCollection_Ref()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01).ToReadOnlyCollection();
 
@@ -103,7 +102,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 	}
 
 	[Benchmark(Description = nameof(EnumerableExtensions.FastDistinct) + ": ReadOnlyCollection<val>")]
-	public void DistinctFastDistinctReadOnlyCollectionVal()
+	public void Distinct_FastDistinct_ReadOnlyCollection_Val()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01).ToReadOnlyCollection();
 
@@ -114,7 +113,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Ref")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctComparerRef_ForComparison()
+	public void Distinct_LINQ_Distinct_Comparer_Ref_ForComparison()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -125,7 +124,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct with Comparer - Val")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctComparerVal_ForComparison()
+	public void Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 
@@ -136,7 +135,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Ref>")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctRef_ForComparison()
+	public void Distinct_LINQ_Distinct_Ref_ForComparison()
 	{
 		var people = this._personRefEnumerable.AddLast(this.PersonRef01);
 
@@ -147,7 +146,7 @@ public class EnumerableExtensionsDistinctCollectionBenchmark : LargeCollectionBe
 
 	[Benchmark(Description = "Distinct: LINQ.Distinct - IEnumerable<Val>")]
 	[BenchmarkCategory(Categories.LINQ, Categories.ForComparison)]
-	public void DistinctLINQDistinctVal_ForComparison()
+	public void Distinct_LINQ_Distinct_Val_ForComparison()
 	{
 		var people = this._personValEnumerable.AddLast(this.PersonVal01);
 

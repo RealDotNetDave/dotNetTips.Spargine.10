@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.ObjectModel;
 using System.Text;
 using BenchmarkDotNet.Attributes;

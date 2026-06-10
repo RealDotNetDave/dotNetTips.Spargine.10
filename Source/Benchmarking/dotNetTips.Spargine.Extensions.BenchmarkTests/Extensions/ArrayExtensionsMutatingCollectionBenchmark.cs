@@ -79,7 +79,7 @@ public class ArrayExtensionsMutatingCollectionBenchmark : LargeCollectionBenchma
 
 	[Benchmark(Description = "Process Collection: FastProcessor()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType)]
-	public void ProcessCollectionFastProcessorRef()
+	public void ProcessCollection_FastProcessor()
 	{
 		var people = this._personRefArray;
 
@@ -90,7 +90,7 @@ public class ArrayExtensionsMutatingCollectionBenchmark : LargeCollectionBenchma
 
 	[Benchmark(Description = "Process Collection: foreach()")]
 	[BenchmarkCategory(Categories.Array, Categories.ReferenceType, Categories.ForComparison)]
-	public void ProcessCollectionNormalRef_ForComparison()
+	public void ProcessCollection_ForComparison()
 	{
 		var people = this._personRefArray;
 

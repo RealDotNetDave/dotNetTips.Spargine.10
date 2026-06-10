@@ -38,7 +38,7 @@ public class FastStringBuilderBenchmark : Benchmark
 
 	[Benchmark(Description = "Format: SB.AppendFormat() for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void FormatComparison_ForComparison()
+	public void Format_ForComparison()
 	{
 		var sb = new StringBuilder();
 
@@ -58,7 +58,7 @@ public class FastStringBuilderBenchmark : Benchmark
 
 	[Benchmark(Description = "Remove: SB.Replace() with string.Empty for Comparison")]
 	[BenchmarkCategory(Categories.Strings, Categories.ForComparison)]
-	public void RemoveComparison_ForComparison()
+	public void Remove_ForComparison()
 	{
 		var sb = new StringBuilder(this.LongTestString);
 
