@@ -3,16 +3,15 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  [Host] : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Reflection  
 
 ```
-| Method           | Mean       | Error    | StdDev   | StdErr  | Min        | Q1         | Median     | Q3         | Max        | Op/s        | CI99.9% Margin | Iterations | Baseline | Exceptions | Gen0   | Code Size | Gen1   | Gen2   | Allocated |
-|----------------- |-----------:|---------:|---------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|------------:|---------------:|-----------:|--------- |-----------:|-------:|----------:|-------:|-------:|----------:|
-| **GetAllInterfaces** | **3,484.7 ns** | **15.99 ns** | **14.17 ns** | **3.79 ns** | **3,456.5 ns** | **3,474.1 ns** | **3,485.5 ns** | **3,495.8 ns** | **3,507.6 ns** |   **286,970.4** |       **5.106 ns** |      **14.00** | **No**       |          **-** | **0.0877** |        **NA** | **0.0038** | **0.0038** |         **-** |
-| **GetAllTypes**      | **2,232.3 ns** | **21.17 ns** | **17.67 ns** | **4.90 ns** | **2,205.5 ns** | **2,220.2 ns** | **2,230.1 ns** | **2,242.5 ns** | **2,263.3 ns** |   **447,974.5** |       **4.049 ns** |      **13.00** | **No**       |          **-** | **0.0381** |        **NA** |      **-** |      **-** |    **1240 B** |
-| **GetInstances**     |   **360.8 ns** |  **3.22 ns** |  **3.01 ns** | **0.78 ns** |   **355.9 ns** |   **359.2 ns** |   **360.4 ns** |   **362.3 ns** |   **367.0 ns** | **2,771,705.3** |       **7.112 ns** |      **15.00** | **No**       |          **-** | **0.0024** |     **279 B** |      **-** |      **-** |      **72 B** |
-| **GetTypes**         | **2,140.3 ns** | **10.20 ns** |  **9.04 ns** | **2.42 ns** | **2,125.4 ns** | **2,135.2 ns** | **2,140.7 ns** | **2,146.6 ns** | **2,157.7 ns** |   **467,217.3** |       **5.792 ns** |      **14.00** | **No**       |          **-** | **0.0381** |   **2,135 B** |      **-** |      **-** |    **1240 B** |
+| Method           | Mean | Error | StdErr | StdDev | Min | Q1 | Median | Q3 | Max | Op/s | CI99.9% Margin | Iterations | Baseline |
+|----------------- |-----:|------:|-------:|-------:|----:|---:|-------:|---:|----:|-----:|---------------:|-----------:|--------- |
+| GetAllInterfaces |   NA |    NA |     NA |     NA |  NA | NA |     NA | NA |  NA |   NA |             NA |         NA | No       |
+
+Benchmarks with issues:
+  AssemblyExtensionsBenchmark.GetAllInterfaces: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)

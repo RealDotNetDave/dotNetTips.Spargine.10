@@ -3,14 +3,15 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  [Host] : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=IO  
 
 ```
-| Method                  | Mean        | Error      | StdDev     | StdErr    | Min         | Q1          | Median      | Q3          | Max         | Op/s     | CI99.9% Margin | Iterations | Baseline | Exceptions | Code Size | Gen0   | Allocated |
-|------------------------ |------------:|-----------:|-----------:|----------:|------------:|------------:|------------:|------------:|------------:|---------:|---------------:|-----------:|--------- |-----------:|----------:|-------:|----------:|
-| **&#39;ToCsv: With Header&#39;**    | **66,700.5 ns** | **1,103.7 ns** | **1,032.4 ns** | **266.56 ns** | **65,574.0 ns** | **65,974.5 ns** | **66,266.6 ns** | **67,255.3 ns** | **68,520.3 ns** | **14,992.4** |     **-125.78 ns** |      **15.00** | **No**       |          **-** |  **13,937 B** | **1.0986** |  **32.87 KB** |
-| **&#39;ToCsv: Without Header&#39;** | **69,168.9 ns** |   **317.8 ns** |   **297.3 ns** |  **76.76 ns** | **68,515.1 ns** | **69,031.3 ns** | **69,270.4 ns** | **69,337.4 ns** | **69,568.8 ns** | **14,457.4** |      **-30.88 ns** |      **15.00** | **No**       |          **-** |  **10,699 B** | **1.0986** |  **32.79 KB** |
+| Method               | Mean | Error | StdErr | StdDev | Min | Q1 | Median | Q3 | Max | Op/s | CI99.9% Margin | Iterations | Baseline |
+|--------------------- |-----:|------:|-------:|-------:|----:|---:|-------:|---:|----:|-----:|---------------:|-----------:|--------- |
+| &#39;ToCsv: With Header&#39; |   NA |    NA |     NA |     NA |  NA | NA |     NA | NA |  NA |   NA |             NA |         NA | No       |
+
+Benchmarks with issues:
+  DataReaderExtensionsBenchmark.'ToCsv: With Header': Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)

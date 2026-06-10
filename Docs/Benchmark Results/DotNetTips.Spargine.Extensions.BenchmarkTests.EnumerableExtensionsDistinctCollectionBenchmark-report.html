@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark-20260610-013109</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                           </th><th>Count</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;FastDistinct: Comparer - Ref&#39;</td><td>64</td><td>3,363.8 ns</td><td>15.66 ns</td><td>14.65 ns</td><td>3.78 ns</td><td>3,340.0 ns</td><td>3,354.8 ns</td><td>3,362.1 ns</td><td>3,374.1 ns</td><td>3,390.3 ns</td><td>297,284.8</td><td>5.609 ns</td><td>15.00</td><td>No</td><td>0.1144</td><td>-</td><td>-</td><td>-</td><td>3.43 KB</td>
+</tr><tr><td>&#39;FastDistinct: Comparer - Ref&#39;</td><td>128</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>No</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
+</tr><tr><td>&#39;FastDistinct: Comparer - Val&#39;</td><td>64</td><td>5,868.0 ns</td><td>31.03 ns</td><td>29.03 ns</td><td>7.50 ns</td><td>5,815.6 ns</td><td>5,841.3 ns</td><td>5,870.4 ns</td><td>5,889.8 ns</td><td>5,912.3 ns</td><td>170,414.6</td><td>3.752 ns</td><td>15.00</td><td>No</td><td>0.5112</td><td>-</td><td>0.0153</td><td>0.0153</td><td>14.4 KB</td>
+</tr><tr><td>&#39;FastDistinct: IEnumerable&lt;ref&gt;&#39;</td><td>64</td><td>3,224.6 ns</td><td>33.18 ns</td><td>31.03 ns</td><td>8.01 ns</td><td>3,178.0 ns</td><td>3,200.5 ns</td><td>3,229.3 ns</td><td>3,246.6 ns</td><td>3,282.6 ns</td><td>310,118.3</td><td>3.494 ns</td><td>15.00</td><td>No</td><td>0.1144</td><td>-</td><td>-</td><td>-</td><td>3.41 KB</td>
+</tr><tr><td>&#39;FastDistinct: IEnumerable&lt;val&gt;&#39;</td><td>64</td><td>5,820.8 ns</td><td>23.47 ns</td><td>19.60 ns</td><td>5.44 ns</td><td>5,793.3 ns</td><td>5,801.9 ns</td><td>5,823.4 ns</td><td>5,835.3 ns</td><td>5,859.3 ns</td><td>171,798.0</td><td>3.782 ns</td><td>13.00</td><td>No</td><td>0.5112</td><td>-</td><td>0.0153</td><td>0.0153</td><td>14.38 KB</td>
+</tr><tr><td>&#39;FastDistinct: List&lt;ref&gt;&#39;</td><td>64</td><td>3,361.4 ns</td><td>22.44 ns</td><td>20.99 ns</td><td>5.42 ns</td><td>3,332.9 ns</td><td>3,344.9 ns</td><td>3,359.5 ns</td><td>3,376.5 ns</td><td>3,399.8 ns</td><td>297,496.2</td><td>4.790 ns</td><td>15.00</td><td>No</td><td>0.1335</td><td>-</td><td>0.0076</td><td>0.0076</td><td>3.74 KB</td>
+</tr><tr><td>&#39;FastDistinct: List&lt;val&gt;&#39;</td><td>64</td><td>8,102.2 ns</td><td>161.91 ns</td><td>341.53 ns</td><td>46.48 ns</td><td>7,589.7 ns</td><td>7,783.8 ns</td><td>8,182.4 ns</td><td>8,337.0 ns</td><td>8,889.2 ns</td><td>123,422.8</td><td>3.762 ns</td><td>54.00</td><td>No</td><td>0.2899</td><td>-</td><td>-</td><td>-</td><td>26.66 KB</td>
+</tr><tr><td>&#39;FastDistinct: ReadOnlyCollection&lt;ref&gt;&#39;</td><td>64</td><td>3,339.8 ns</td><td>16.42 ns</td><td>15.36 ns</td><td>3.97 ns</td><td>3,306.2 ns</td><td>3,331.5 ns</td><td>3,339.8 ns</td><td>3,350.9 ns</td><td>3,367.1 ns</td><td>299,417.1</td><td>5.517 ns</td><td>15.00</td><td>No</td><td>0.1373</td><td>-</td><td>0.0076</td><td>0.0076</td><td>3.8 KB</td>
+</tr><tr><td>&#39;FastDistinct: ReadOnlyCollection&lt;val&gt;&#39;</td><td>64</td><td>8,266.1 ns</td><td>163.59 ns</td><td>398.20 ns</td><td>47.59 ns</td><td>7,721.6 ns</td><td>7,899.2 ns</td><td>8,313.5 ns</td><td>8,597.1 ns</td><td>9,065.5 ns</td><td>120,975.3</td><td>11.203 ns</td><td>70.00</td><td>No</td><td>1.2207</td><td>-</td><td>0.0458</td><td>-</td><td>26.8 KB</td>
+</tr></tbody></table>
+</body>
+</html>
