@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-11-2026
 // ***********************************************************************
 // <copyright file="DictionaryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -210,12 +210,11 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] TValue value)
 	where TKey : notnull
 	where TValue : notnull
 	{
-		//TODO: FIX PERFORMANCE BEFORE RELEASE
 		value = value.ArgumentNotNull();
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
@@ -816,10 +815,9 @@ public static class DictionaryExtensions
 	/// instead of the previous ContainsKey + Remove + Add pattern which required three O(1) operations.
 	/// The indexer automatically handles both insert and update scenarios efficiently in .NET 10.
 	/// </remarks>
-	[Information(nameof(Upsert), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Upsert), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void Upsert<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [AllowNull] in TValue item)
 	{
-		//TODO: FIX PERFORMANCE BEFORE RELEASE
 		if (item is null)
 		{
 			return;
