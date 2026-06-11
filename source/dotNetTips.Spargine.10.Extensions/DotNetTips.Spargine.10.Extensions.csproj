@@ -98,7 +98,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="linq2db" Version="6.3.0" />
-    <PackageReference Include="MessagePack" Version="3.1.6" />
+    <PackageReference Include="MessagePack" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.8" />
     <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.8" />
