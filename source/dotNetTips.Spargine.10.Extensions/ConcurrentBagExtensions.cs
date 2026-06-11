@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-24-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-11-2026
 // ***********************************************************************
 // <copyright file="ConcurrentBagExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)

@@ -4,7 +4,7 @@
 // Created          : 06-25-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-21-2026
+// Last Modified On : 06-11-2026
 // ***********************************************************************
 // <copyright file="CharacterExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -90,7 +90,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is a newline character; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsNewLine", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("IsNewLine", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNewLine
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,7 +116,7 @@ public static class CharacterExtensions
 		/// <value>
 		/// <c>true</c> if the character is an ASCII control character; otherwise, <c>false</c>.
 		/// </value>
-		[Information("IsAsciiControl", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("IsAsciiControl", author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiControl
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -152,7 +152,7 @@ public static class CharacterExtensions
 		/// </summary>
 		/// <returns>The numeric value (0-9) if the character is a digit; otherwise, -1.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GetDigitValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetDigitValue), author: "David McCarter", createdOn: "2/16/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int GetDigitValue()
 		{
 			return character is >= '0' and <= '9' ? character - '0' : -1;
@@ -167,7 +167,7 @@ public static class CharacterExtensions
 		/// <remarks>
 		/// This property checks if the character is a whitespace character using <see cref="char.IsWhiteSpace(char)"/>.
 		/// </remarks>
-		[Information("IsAsciiWhitespace", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information("IsAsciiWhitespace", author: "David McCarter", createdOn: "6/10/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsAsciiWhitespace
 		{
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]

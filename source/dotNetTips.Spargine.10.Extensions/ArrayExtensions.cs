@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-28-2026
+// Last Modified On : 06-11-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -310,7 +310,7 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
@@ -323,8 +323,7 @@ public static class ArrayExtensions
 			var length = array.Length;
 			var result = new T[length + 1];
 
-			// SUGGESTION FROM COPILOT SLOWER
-			array.AsSpan().CopyTo(result);
+			Array.Copy(array, 0, result, 0, length);
 
 			result[length] = item;
 
@@ -357,16 +356,12 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			if (array is null || arrayToCheck is null)
-			{
-				return false;
-			}
-
-			// SUGGESTION FROM COPILOT SLOWER
-			return array.AsSpan().SequenceEqual(arrayToCheck);
+			return array is null || arrayToCheck is null
+				? false
+				: array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
@@ -593,25 +588,10 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty(in Func<T, bool> actionFunction)
 		{
-			if (array is null || actionFunction is null)
-			{
-				return false;
-			}
-
-			var span = array.AsSpan();
-
-			for (var index = 0; index < span.Length; index++)
-			{
-				if (actionFunction(span[index]))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return array is null || actionFunction is null ? false : array.Any(actionFunction);
 		}
 
 		/// <summary>
@@ -644,10 +624,10 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty(int count)
 		{
-			return array is not null && count >= 0 && array.Length == count;
+			return array is null ? false : array.Length == count;
 		}
 
 		/// <summary>
@@ -702,16 +682,13 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] RemoveFirst()
 		{
 			array = array.ArgumentItemsExists();
 
 			var newLength = array.Length - 1;
-
-			// Suggestion from skill dotnet-best-practices performance and security
-			var result = GC.AllocateUninitializedArray<T>(newLength);
-
+			var result = new T[newLength];
 
 			array.AsSpan(1, newLength).CopyTo(result);
 
