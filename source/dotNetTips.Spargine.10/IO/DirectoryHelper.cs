@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-28-2026
+// Last Modified On : 06-11-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -528,9 +528,9 @@ public static class DirectoryHelper
 	/// <returns>A list of tasks, each returning an array of <see cref="FileInfo"/> for one directory.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static List<Task<FileInfo[]>> BuildFileLoadTasks(IEnumerable<DirectoryInfo> directories, string searchPattern, EnumerationOptions options, CancellationToken cancellationToken)
-		=> directories.Where(directory => directory.CheckExists())
-			.Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))
-			.ToList();
+	{
+		return [.. directories.Where(directory => directory.CheckExists()).Select(directory => Task.Run(() => directory.GetFiles(searchPattern, options), cancellationToken))];
+	}
 
 	/// <summary>
 	/// Evaluates the access rules on <paramref name="directory"/> and returns whether <paramref name="permission"/> is
