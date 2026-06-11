@@ -3,15 +3,14 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host] : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=IO  
 
 ```
-| Method               | Mean | Error | StdErr | StdDev | Min | Q1 | Median | Q3 | Max | Op/s | CI99.9% Margin | Iterations | Baseline |
-|--------------------- |-----:|------:|-------:|-------:|----:|---:|-------:|---:|----:|-----:|---------------:|-----------:|--------- |
-| &#39;ToCsv: With Header&#39; |   NA |    NA |     NA |     NA |  NA | NA |     NA | NA |  NA |   NA |             NA |         NA | No       |
-
-Benchmarks with issues:
-  DataReaderExtensionsBenchmark.'ToCsv: With Header': Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)
+| Method                  | Mean        | Error    | StdDev   | StdErr   | Min         | Q1          | Median      | Q3          | Max         | Op/s     | CI99.9% Margin | Iterations | Baseline | Exceptions | Code Size | Gen0   | Allocated |
+|------------------------ |------------:|---------:|---------:|---------:|------------:|------------:|------------:|------------:|------------:|---------:|---------------:|-----------:|--------- |-----------:|----------:|-------:|----------:|
+| **&#39;ToCsv: With Header&#39;**    | **68,138.7 ns** | **276.6 ns** | **245.2 ns** | **65.53 ns** | **67,556.1 ns** | **68,053.6 ns** | **68,151.7 ns** | **68,307.1 ns** | **68,543.4 ns** | **14,675.9** |      **-25.77 ns** |      **14.00** | **No**       |          **-** |  **13,657 B** | **1.0986** |  **32.88 KB** |
+| **&#39;ToCsv: Without Header&#39;** | **69,236.8 ns** | **423.0 ns** | **353.2 ns** | **97.97 ns** | **68,600.2 ns** | **69,035.2 ns** | **69,247.4 ns** | **69,394.6 ns** | **69,880.7 ns** | **14,443.2** |      **-42.49 ns** |      **13.00** | **No**       |          **-** |  **10,676 B** | **1.0986** |   **32.8 KB** |

@@ -3,15 +3,16 @@
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7291/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host] : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 
 EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Reflection  
 
 ```
-| Method           | Mean | Error | StdErr | StdDev | Min | Q1 | Median | Q3 | Max | Op/s | CI99.9% Margin | Iterations | Baseline |
-|----------------- |-----:|------:|-------:|-------:|----:|---:|-------:|---:|----:|-----:|---------------:|-----------:|--------- |
-| GetAllInterfaces |   NA |    NA |     NA |     NA |  NA | NA |     NA | NA |  NA |   NA |             NA |         NA | No       |
-
-Benchmarks with issues:
-  AssemblyExtensionsBenchmark.GetAllInterfaces: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)
+| Method           | Mean       | Error    | StdDev   | StdErr  | Min        | Q1         | Median     | Q3         | Max        | Op/s        | CI99.9% Margin | Iterations | Baseline | Exceptions | Gen0   | Code Size | Allocated |
+|----------------- |-----------:|---------:|---------:|--------:|-----------:|-----------:|-----------:|-----------:|-----------:|------------:|---------------:|-----------:|--------- |-----------:|-------:|----------:|----------:|
+| **GetAllInterfaces** | **3,335.5 ns** | **24.39 ns** | **20.37 ns** | **5.65 ns** | **3,305.6 ns** | **3,324.5 ns** | **3,328.2 ns** | **3,343.9 ns** | **3,384.1 ns** |   **299,803.2** |       **3.675 ns** |      **13.00** | **No**       |          **-** | **0.0801** |        **NA** |    **2489 B** |
+| **GetAllTypes**      | **2,214.5 ns** | **20.96 ns** | **19.60 ns** | **5.06 ns** | **2,191.5 ns** | **2,200.5 ns** | **2,205.7 ns** | **2,224.5 ns** | **2,260.1 ns** |   **451,566.0** |       **4.969 ns** |      **15.00** | **No**       |          **-** | **0.0381** |        **NA** |    **1240 B** |
+| **GetInstances**     |   **363.5 ns** |  **2.96 ns** |  **2.47 ns** | **0.68 ns** |   **360.1 ns** |   **361.9 ns** |   **363.0 ns** |   **364.8 ns** |   **367.6 ns** | **2,751,191.6** |       **6.158 ns** |      **13.00** | **No**       |          **-** | **0.0024** |     **279 B** |      **72 B** |
+| **GetTypes**         | **2,192.9 ns** | **20.38 ns** | **19.06 ns** | **4.92 ns** | **2,161.0 ns** | **2,182.3 ns** | **2,189.7 ns** | **2,201.9 ns** | **2,227.4 ns** |   **456,020.1** |       **5.039 ns** |      **15.00** | **No**       |          **-** | **0.0381** |   **2,133 B** |    **1240 B** |
