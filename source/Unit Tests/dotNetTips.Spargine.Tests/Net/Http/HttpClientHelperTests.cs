@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 11-14-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-12-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,10 +14,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Net.Http;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.Net.Http;
@@ -26,6 +23,92 @@ namespace DotNetTips.Spargine.Tests.Net.Http;
 [TestClass]
 public class HttpClientHelperTests
 {
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_CustomTimeout_SetsTimeoutOnClient()
+	{
+		// Arrange
+		var options = new HttpClientOptions { Timeout = TimeSpan.FromMinutes(2) };
+
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient(options);
+
+		// Assert
+		Assert.AreEqual(TimeSpan.FromMinutes(2), client.Timeout);
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_CustomUserAgent_SetsUserAgentHeader()
+	{
+		// Arrange
+		var options = new HttpClientOptions { UserAgent = "MyApp/3.0" };
+
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient(options);
+
+		// Assert
+		Assert.Contains("MyApp/3.0", client.DefaultRequestHeaders.UserAgent.ToString());
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NoOptions_HasDefaultTimeout()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient();
+
+		// Assert
+		Assert.AreEqual(TimeSpan.FromSeconds(30), client.Timeout);
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NoOptions_ReturnsNotNull()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient();
+
+		// Assert
+		Assert.IsNotNull(client);
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NoOptions_SetsDefaultUserAgentHeader()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient();
+
+		// Assert
+		Assert.Contains("OptimizedHttpClient/1.0", client.DefaultRequestHeaders.UserAgent.ToString());
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NoOptions_SetsDeflateAcceptEncoding()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient();
+
+		// Assert
+		Assert.Contains("deflate", client.DefaultRequestHeaders.AcceptEncoding.ToString());
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NoOptions_SetsGzipAcceptEncoding()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient();
+
+		// Assert
+		Assert.Contains("gzip", client.DefaultRequestHeaders.AcceptEncoding.ToString());
+	}
+
+	[TestMethod]
+	public void CreateOptimizedHttpClient_NullOptions_UsesDefaultTimeout()
+	{
+		// Act
+		using var client = HttpClientHelper.CreateOptimizedHttpClient(null);
+
+		// Assert
+		Assert.AreEqual(TimeSpan.FromSeconds(30), client.Timeout);
+	}
 
 	[TestMethod]
 	public async Task GetHttpResponseAsync_InvalidUrl_ThrowsHttpRequestException()

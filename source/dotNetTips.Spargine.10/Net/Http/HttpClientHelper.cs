@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-11-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 04-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-12-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Properties;
@@ -48,6 +49,50 @@ public static class HttpClientHelper
 	{
 		Timeout = TimeSpan.FromSeconds(value: 20),
 	};
+
+	/// <summary>
+	/// Creates a new, performance-optimized <see cref="HttpClient"/> instance configured with the specified options.
+	/// </summary>
+	/// <param name="options">
+	/// The configuration options. When <c>null</c>, a default <see cref="HttpClientOptions"/> instance is used.
+	/// </param>
+	/// <returns>A fully configured <see cref="HttpClient"/> instance backed by a <see cref="SocketsHttpHandler"/>.</returns>
+	[Information(nameof(CreateOptimizedHttpClient), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static HttpClient CreateOptimizedHttpClient(HttpClientOptions? options = null)
+	{
+		options ??= new HttpClientOptions();
+
+		// CA2000: HttpClient(handler, disposeHandler: true) takes ownership and will dispose the handler on disposal.
+#pragma warning disable CA2000
+		var handler = new SocketsHttpHandler()
+		{
+			MaxConnectionsPerServer = options.MaxConnectionsPerServer,
+			KeepAlivePingPolicy = options.KeepAlivePingPolicy,
+			KeepAlivePingTimeout = options.KeepAlivePingTimeout,
+			PooledConnectionLifetime = options.PooledConnectionLifetime,
+			PooledConnectionIdleTimeout = options.PooledConnectionIdleTimeout,
+			UseCookies = options.UseCookies,
+			UseProxy = options.UseProxy,
+			AllowAutoRedirect = options.AllowAutoRedirect,
+			MaxAutomaticRedirections = options.MaxAutomaticRedirections,
+		};
+#pragma warning restore CA2000
+
+		// IDISP014: This is a factory method; the caller is responsible for disposing the returned HttpClient.
+#pragma warning disable IDISP014
+		var client = new HttpClient(handler)
+		{
+			Timeout = options.Timeout,
+		};
+#pragma warning restore IDISP014
+
+		// Optimize headers
+		client.DefaultRequestHeaders.Add("User-Agent", options.UserAgent);
+		client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+		client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+
+		return client;
+	}
 
 	/// <summary>
 	/// Asynchronously gets an HTTP response for the specified URL using a cancellation token.
