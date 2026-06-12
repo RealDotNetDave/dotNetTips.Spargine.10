@@ -45,12 +45,12 @@ internal sealed class Program
 
 		// Temp tests
 		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ArrayExtensionsCollectionBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+			//typeof(ArrayExtensionsCollectionBenchmark),
+			//typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			//typeof(CollectionExtensionsCollectionBenchmark),
+			//typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			//typeof(EnumerableExtensionsCollectionBenchmark),
+			//typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 			typeof(ListExtensionsCollectionBenchmark),
 			typeof(ListExtensionsAddRemoveCollectionBenchmark),
 			typeof(ObjectExtensionsBenchmark)
