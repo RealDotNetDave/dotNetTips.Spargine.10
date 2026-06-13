@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-11-2026
+// Last Modified On : 06-13-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -963,7 +963,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToCollection), "David McCarter", "4/13/2021", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Collection<T> ToCollection()
 		{
 			if (collection is List<T> list)
@@ -1118,9 +1118,10 @@ public static class EnumerableExtensions
 		/// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="List{T}"/> that contains elements from the input collection.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
+
 			if (cancellationToken.IsCancellationRequested)
 			{
 				return Task.FromCanceled<List<T>>(cancellationToken);
@@ -1413,7 +1414,7 @@ public static class EnumerableExtensions
 		/// <remarks>Original code from: https://github.com/dncuug/X.PagedList/blob/master/src/X.PagedList/PagedListExtensions.cs</remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(CountAsync), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(CountAsync), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<int> CountAsync(CancellationToken cancellationToken = default)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1965,7 +1966,7 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the specified count has items; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsNotEmpty(in int count)
 		{
 			return collection is null ? false : collection.Count() == count;

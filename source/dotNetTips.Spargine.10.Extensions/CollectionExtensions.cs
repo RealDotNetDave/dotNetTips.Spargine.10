@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-28-2026
+// Last Modified On : 06-13-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -220,7 +220,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AsReadOnlySpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlySpan<T> AsReadOnlySpan()
 		{
 			collection = collection.ArgumentNotNull();
@@ -251,7 +251,7 @@ public static class CollectionExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(AsSpan), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public Span<T> AsSpan()
 		{
 			collection = collection.ArgumentNotNull();

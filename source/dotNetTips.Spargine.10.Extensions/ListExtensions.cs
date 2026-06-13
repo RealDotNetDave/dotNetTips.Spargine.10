@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-14-2018
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-13-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -706,7 +706,7 @@ public static class ListExtensions
 		/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 		/// <returns>A task representing the asynchronous operation, with a <see cref="List{T}"/> result.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 			list = list.ArgumentNotNull();

@@ -4,7 +4,7 @@
 // Created          : 01-13-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified On : 06-13-2026
 // ***********************************************************************
 // <copyright file="InMemoryCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -217,7 +217,7 @@ public sealed class InMemoryCache
 	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 	/// <returns>A task that represents the asynchronous operation.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
-	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public Task AddCacheItemAsync<T>([DisallowNull] string key, [DisallowNull] T item, CancellationToken cancellationToken = default)
 	{
 		if (cancellationToken.IsCancellationRequested)
@@ -240,7 +240,7 @@ public sealed class InMemoryCache
 	/// <returns>A task that represents the asynchronous operation.</returns>
 	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
-	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public Task AddCacheItemAsync<T>([DisallowNull] string key, [DisallowNull] T item, TimeSpan timeout, CancellationToken cancellationToken = default)
 	{
 		if (cancellationToken.IsCancellationRequested)
@@ -263,7 +263,7 @@ public sealed class InMemoryCache
 	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
 	/// <returns>A task that represents the asynchronous operation.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if either <paramref name="key"/> is null or empty, or <paramref name="item"/> is null.</exception>
-	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(AddCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public Task AddCacheItemAsync<T>([DisallowNull] string key, [DisallowNull] T item, DateTimeOffset timeout, CancellationToken cancellationToken = default)
 	{
 		if (cancellationToken.IsCancellationRequested)
@@ -585,7 +585,7 @@ public sealed class InMemoryCache
 	/// Retrieves an item from the cache using the specified key asynchronously. If the item is found, it is returned; otherwise, the default value for type <typeparamref name="T"/> is returned.
 	/// This method utilizes the MemoryCache.TryGetValue method to attempt to retrieve the item.
 	/// </remarks>
-	[Information(nameof(GetCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetCacheItemAsync), "David McCarter", "1/20/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public Task<T> GetCacheItemAsync<T>([DisallowNull] string key, CancellationToken cancellationToken = default)
 	{
 		if (cancellationToken.IsCancellationRequested)
