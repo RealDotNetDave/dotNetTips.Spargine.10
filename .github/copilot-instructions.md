@@ -250,6 +250,7 @@ string message = string.Format(CultureInfo.InvariantCulture, _rangeError, min, m
 - If methods are new or modified, ensure they are covered by unit tests.
 - Ensure **full code‑path coverage**. **THIS IS MANDATORY!**
     - CRAP score for public and protected methods must be 5 or under.
+    - **Maintainability Index** for every method must be **50 or above** (minimum); **80 or above** is the target. If a method falls below 50, refactor it before considering the task done.
 - Tests must run successfully on **GitHub** and **local Windows** environments.
 - Do not add code comments between methods, only in unit test methods. 
 - Mark all test classes with the `[ExcludeFromCodeCoverage]` attribute.
