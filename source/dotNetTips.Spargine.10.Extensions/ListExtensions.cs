@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-14-2018
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-14-2026
 // ***********************************************************************
 // <copyright file="ListExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -518,8 +518,6 @@ public static class ListExtensions
 		[Information(nameof(FastShuffle), author: "David McCarter", createdOn: "12/30/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public List<T> FastShuffle()
 		{
-			list = list.ArgumentNotNull();
-
 			return [.. list.Shuffle()];
 		}
 
@@ -664,7 +662,6 @@ public static class ListExtensions
 		[Information(nameof(ToFastSortedList), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public FastSortedList<T> ToFastSortedList([DisallowNull] IComparer<T> comparer)
 		{
-			list = list.ArgumentNotNull();
 			comparer = comparer.ArgumentNotNull();
 
 			return new(list, comparer);
@@ -709,8 +706,6 @@ public static class ListExtensions
 		[Information(nameof(ToListAsync), "David McCarter", "12/3/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
-			list = list.ArgumentNotNull();
-
 			cancellationToken.ThrowIfCancellationRequested();
 
 			return Task.FromResult(new List<T>(list));

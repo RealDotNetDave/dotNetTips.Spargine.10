@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-07-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-24-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-14-2026
 // ***********************************************************************
 // <copyright file="AssemblyExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -55,10 +55,9 @@ public static class AssemblyExtensions
 		[Pure]
 		[return: NotNull]
 		[RequiresUnreferencedCode("Uses assembly-wide runtime type discovery. Types or interfaces may be removed in trimmed apps.")]
-		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GetAllInterfaces), "David McCarter", "1/7/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public ReadOnlyCollection<Type> GetAllInterfaces()
 		{
-			assembly = assembly.ArgumentNotNull();
 			var interfaces = new List<Type>();
 
 			// USING SPAN CAUSES ISSUES.

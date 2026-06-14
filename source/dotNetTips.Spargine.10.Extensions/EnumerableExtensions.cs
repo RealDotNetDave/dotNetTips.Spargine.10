@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-14-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -769,7 +769,6 @@ public static class EnumerableExtensions
 		[Information(nameof(Partition), "David McCarter", "3/2/2023", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<IEnumerable<T>> Partition(int pageCount)
 		{
-			collection = collection.ArgumentNotNull();
 			pageCount = pageCount.EnsureMinimum(2);
 
 			return collection.Chunk(pageCount);
@@ -833,8 +832,6 @@ public static class EnumerableExtensions
 		[Information(nameof(FastShuffle), "David McCarter", "8/26/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastShuffle()
 		{
-			collection = collection.ArgumentNotNull();
-
 			return collection.Shuffle();
 		}
 
@@ -1078,8 +1075,6 @@ public static class EnumerableExtensions
 		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
-			collection = collection.ArgumentNotNull();
-
 			return FrozenSet.ToFrozenSet(collection, comparer);
 		}
 
@@ -1351,8 +1346,6 @@ public static class EnumerableExtensions
 		[Information(nameof(FastLongCount), "David McCarter", "5/21/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public long FastLongCount()
 		{
-			collection = collection.ArgumentNotNull();
-
 			if (collection.TryGetNonEnumeratedCount(out var fastCount))
 			{
 				return fastCount;

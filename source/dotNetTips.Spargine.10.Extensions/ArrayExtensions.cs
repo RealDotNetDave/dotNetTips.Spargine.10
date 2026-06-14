@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 06-14-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -210,10 +210,9 @@ public static class ArrayExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(LastIndexOf), "David McCarter", "1/3/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int LastIndexOf([DisallowNull] T item)
 		{
-			array = array.ArgumentNotNull();
 			item = item.ArgumentNotNull();
 
 			// SUGGESTION FROM COPILOT SLOWER
@@ -277,12 +276,12 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastSelectItems), author: "David McCarter", createdOn: "7/28/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] FastSelectItems(int startIndex, int count)
 		{
-			array = array.ArgumentItemsExists();
-			startIndex = startIndex.ArgumentInRange(0, max: array.Length - 1);
-			count = count.ArgumentInRange(min: 1, max: array.Length - startIndex);
+			var length = array.ArgumentNotNull().Length;
+			startIndex = startIndex.ArgumentInRange(0, max: length - 1);
+			count = count.ArgumentInRange(min: 1, max: length - startIndex);
 
 			// SUGGESTION FROM COPILOT SLOWER
 			var result = new ArraySegment<T>(array, startIndex, count);
@@ -794,10 +793,10 @@ public static class ArrayExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToFrozenSet), "David McCarter", "6/3/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public FrozenSet<T> ToFrozenSet(IEqualityComparer<T>? comparer = null)
 		{
-			return FrozenSet.ToFrozenSet(array.ArgumentNotNull(), comparer);
+			return FrozenSet.ToFrozenSet(array, comparer);
 		}
 
 		/// <summary>
