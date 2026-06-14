@@ -81,7 +81,6 @@ public static class HttpClientExtensions
 	{
 		client = client.ArgumentNotNull();
 		url = url.ArgumentNotNull();
-		options = options.ArgumentNotNull();
 
 		try
 		{
@@ -540,14 +539,7 @@ public static class HttpClientExtensions
 		requestTypeInfo = requestTypeInfo.ArgumentNotNull();
 		responseTypeInfo = responseTypeInfo.ArgumentNotNull();
 
-		return SendAndDeserializeAsync(
-			client,
-			HttpMethod.Post,
-			url,
-			request,
-			requestTypeInfo,
-			responseTypeInfo,
-			cancellationToken);
+		return SendAndDeserializeAsync(client, HttpMethod.Post, url, request, requestTypeInfo, responseTypeInfo, cancellationToken);
 	}
 
 	/// <summary>
