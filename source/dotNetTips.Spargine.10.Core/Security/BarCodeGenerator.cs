@@ -118,12 +118,7 @@ public static class BarcodeGenerator
 			return false;
 		}
 
-		if (keysByKid is null)
-		{
-			return false;
-		}
-
-		return VerifySignature(payload, providedSig, fields, keysByKid, macLenBytes);
+		return keysByKid is null ? false : VerifySignature(payload, providedSig, fields, keysByKid, macLenBytes);
 	}
 
 	/// <summary>
@@ -216,12 +211,9 @@ public static class BarcodeGenerator
 	/// </summary>
 	private static bool ValidateBarcodeFields(Dictionary<string, string> fields)
 	{
-		if (!fields.TryGetValue(V, out var v) || !string.Equals(v, "1", StringComparison.Ordinal))
-		{
-			return false;
-		}
-
-		return fields.TryGetValue(ALG, out var alg) && alg.Equals(ALG_H256, StringComparison.OrdinalIgnoreCase);
+		return !fields.TryGetValue(V, out var v) || !string.Equals(v, "1", StringComparison.Ordinal)
+			? false
+			: fields.TryGetValue(ALG, out var alg) && alg.Equals(ALG_H256, StringComparison.OrdinalIgnoreCase);
 	}
 
 	/// <summary>
@@ -234,12 +226,7 @@ public static class BarcodeGenerator
 			return false;
 		}
 
-		if (keysByKid is null || keysByKid.Count == 0)
-		{
-			return false;
-		}
-
-		return macLenBytes.CheckIsInRange(1, 32);
+		return keysByKid is null || keysByKid.Count == 0 ? false : macLenBytes.CheckIsInRange(1, 32);
 	}
 
 	/// <summary>

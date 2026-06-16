@@ -242,12 +242,7 @@ public static class EnumerableExtensions
 			return concurrentQueue.IsEmpty;
 		}
 
-		if (collection is ConcurrentStack<T> concurrentStack)
-		{
-			return concurrentStack.IsEmpty;
-		}
-
-		return null;
+		return collection is ConcurrentStack<T> concurrentStack ? concurrentStack.IsEmpty : null;
 	}
 
 	/// <summary>
@@ -1417,12 +1412,7 @@ public static class EnumerableExtensions
 				return Task.FromCanceled<int>(cancellationToken);
 			}
 
-			if (collection is ICollection<T> col)
-			{
-				return Task.FromResult(col.Count);
-			}
-
-			return Task.FromResult(collection.Count());
+			return collection is ICollection<T> col ? Task.FromResult(col.Count) : Task.FromResult(collection.Count());
 		}
 
 		/// <summary>
@@ -1575,12 +1565,7 @@ public static class EnumerableExtensions
 				return collectionT.Count == 0;
 			}
 
-			if (collection is IReadOnlyCollection<T> readOnlyCollection)
-			{
-				return readOnlyCollection.Count == 0;
-			}
-
-			return !collection.Any();
+			return collection is IReadOnlyCollection<T> readOnlyCollection ? readOnlyCollection.Count == 0 : !collection.Any();
 		}
 
 		/// <summary>

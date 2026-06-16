@@ -243,15 +243,12 @@ public static partial class ExceptionExtensions
 
 			lock (_threadLock)
 			{
-				if (_exceptionMetadata.TryGetValue(exception, out var metadata))
-				{
-					return new Dictionary<string, object>
+				return _exceptionMetadata.TryGetValue(exception, out var metadata)
+					? new Dictionary<string, object>
 					{
 						{ "IsLogged", metadata.IsLogged }
-					}.AsReadOnly();
-				}
-
-				return ReadOnlyDictionary<string, object>.Empty;
+					}.AsReadOnly()
+					: ReadOnlyDictionary<string, object>.Empty;
 			}
 		}
 

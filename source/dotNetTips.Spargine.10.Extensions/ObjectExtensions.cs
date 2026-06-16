@@ -661,12 +661,7 @@ public static class ObjectExtensions
 	[Information(nameof(ResolveStringTypeName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string ResolveStringTypeName(string typeName, bool includeMemberName)
 	{
-		if (string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal))
-		{
-			return Item;
-		}
-
-		return includeMemberName ? typeName : string.Empty;
+		return string.Equals(typeName, typeof(List<>).Name, StringComparison.Ordinal) ? Item : includeMemberName ? typeName : string.Empty;
 	}
 
 	/// <summary>Writes an empty string for a null property when <paramref name="ignoreNulls"/> is <c>false</c>.</summary>
@@ -1212,12 +1207,9 @@ public static class ObjectExtensions
 				return result.AsReadOnly();
 			}
 
-			if (objectType.IsEnumerable())
-			{
-				return BuildEnumerableFieldsDictionary(memberName, (IEnumerable)obj, ignoreEmptyValues);
-			}
-
-			return BuildComplexTypeFieldsDictionary(memberName, obj, objectType, ignoreEmptyValues);
+			return objectType.IsEnumerable()
+				? BuildEnumerableFieldsDictionary(memberName, (IEnumerable)obj, ignoreEmptyValues)
+				: BuildComplexTypeFieldsDictionary(memberName, obj, objectType, ignoreEmptyValues);
 		}
 
 		/// <summary>
@@ -1357,12 +1349,9 @@ public static class ObjectExtensions
 			obj = obj.ArgumentNotNull();
 			typeInfo = typeInfo.ArgumentNotNull();
 
-			if (obj is not T typedObject)
-			{
-				throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.");
-			}
-
-			return JsonSerializer.Serialize(typedObject, typeInfo);
+			return obj is not T typedObject
+				? throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.")
+				: JsonSerializer.Serialize(typedObject, typeInfo);
 		}
 
 		/// <summary>

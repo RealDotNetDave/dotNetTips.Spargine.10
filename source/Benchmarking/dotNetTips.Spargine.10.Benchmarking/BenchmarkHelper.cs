@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-01-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-20-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-16-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -81,7 +81,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// </code>
 /// </example>
 /// <seealso cref="Benchmark"/>
-[Information(description: nameof(BenchmarkHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
+[Information(description: nameof(BenchmarkHelper), Status = Status.Available, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public static class BenchmarkHelper
 {
 	/// <summary>

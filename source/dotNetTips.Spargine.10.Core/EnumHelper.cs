@@ -147,12 +147,7 @@ public static partial class EnumHelper
 
 		var enumMemberAttr = field.GetCustomAttribute<EnumMemberAttribute>(false);
 
-		if (enumMemberAttr is not null && string.IsNullOrEmpty(enumMemberAttr.Value) is false)
-		{
-			return enumMemberAttr.Value;
-		}
-
-		return name;
+		return enumMemberAttr is not null && string.IsNullOrEmpty(enumMemberAttr.Value) is false ? enumMemberAttr.Value : name;
 	}
 
 	/// <summary>

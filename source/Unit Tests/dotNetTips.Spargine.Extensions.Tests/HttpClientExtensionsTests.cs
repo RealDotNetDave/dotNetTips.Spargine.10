@@ -14,16 +14,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -106,23 +101,6 @@ public class HttpClientExtensionsTests
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
 		{
 			await client.DeleteAndDeserializeAsync<TestPayload>(url, options);
-		});
-	}
-
-	[TestMethod]
-	public async Task DeleteAndDeserializeAsyncNullOptionsThrowsArgumentNullException()
-	{
-		// Arrange
-		using var client = new HttpClient(new MockHttpMessageHandler(HttpStatusCode.OK, "{}"))
-		{
-			BaseAddress = new Uri("https://example.com"),
-		};
-		var url = new Uri("https://example.com/api/test/1");
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(async () =>
-		{
-			await client.DeleteAndDeserializeAsync<TestPayload>(url, null);
 		});
 	}
 

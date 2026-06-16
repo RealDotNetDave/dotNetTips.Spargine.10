@@ -109,11 +109,6 @@ internal static class ListExtensionsHelper
 			return true;
 		}
 
-		if (a.Count != b.Count)
-		{
-			return true;
-		}
-
-		return false;
+		return a.Count != b.Count;
 	}
 }

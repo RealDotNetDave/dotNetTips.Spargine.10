@@ -183,13 +183,9 @@ public static class CollectionExtensions
 			ArgumentNullException.ThrowIfNull(collection);
 			CollectionExtensionsHelper.ThrowIfArray(collection);
 
-			if (!ensureUnique)
-			{
-				return CollectionExtensionsHelper.AddAllItemsToCollection(collection, items);
-
-			}
-
-			return CollectionExtensionsHelper.AddUniqueItemsToCollection(collection, items, CollectionExtensionsHelper.ResolveComparer(comparer));
+			return !ensureUnique
+				? CollectionExtensionsHelper.AddAllItemsToCollection(collection, items)
+				: CollectionExtensionsHelper.AddUniqueItemsToCollection(collection, items, CollectionExtensionsHelper.ResolveComparer(comparer));
 		}
 
 		/// <summary>
@@ -230,12 +226,7 @@ public static class CollectionExtensions
 				return MemoryExtensions.AsSpan(array);
 			}
 
-			if (collection is List<T> list)
-			{
-				return CollectionsMarshal.AsSpan(list);
-			}
-
-			return new([.. collection]);
+			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
 		}
 
 		/// <summary>
@@ -261,12 +252,7 @@ public static class CollectionExtensions
 				return MemoryExtensions.AsSpan(array);
 			}
 
-			if (collection is List<T> list)
-			{
-				return CollectionsMarshal.AsSpan(list);
-			}
-
-			return new([.. collection]);
+			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
 		}
 
 		/// <summary>

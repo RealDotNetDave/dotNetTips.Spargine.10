@@ -266,12 +266,9 @@ public static class RandomData
 		addressLength = addressLength.ArgumentInRange(min: 5, max: 100);
 		countyProvinceLength = countyProvinceLength.ArgumentInRange(min: 5, max: 50);
 
-		if (!_addressFactories.TryGetValue(typeof(TAddress), out var factory))
-		{
-			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)));
-		}
-
-		return (TAddress)factory(BuildAddressComponents(country!, addressLength, countyProvinceLength));
+		return !_addressFactories.TryGetValue(typeof(TAddress), out var factory)
+			? throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TAddress).FullName, nameof(GenerateAddress)))
+			: (TAddress)factory(BuildAddressComponents(country!, addressLength, countyProvinceLength));
 	}
 
 	/// <summary>
@@ -849,12 +846,9 @@ public static class RandomData
 	[Information(nameof(GeneratePerson), author: "David McCarter", createdOn: "6/4/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TPerson GeneratePerson<TPerson>(in int addressCount = 2, in int addressLength = 25, in int countyProvinceLength = 20)
 	{
-		if (!_personFactories.TryGetValue(typeof(TPerson), out var factory))
-		{
-			throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TPerson).FullName, nameof(GeneratePerson)));
-		}
-
-		return (TPerson)factory(addressCount, addressLength, countyProvinceLength);
+		return !_personFactories.TryGetValue(typeof(TPerson), out var factory)
+			? throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, _errorTypeNotSupportedByMethod, typeof(TPerson).FullName, nameof(GeneratePerson)))
+			: (TPerson)factory(addressCount, addressLength, countyProvinceLength);
 	}
 
 	/// <summary>

@@ -142,23 +142,6 @@ public class HttpClientHelperTests
 
 
 	[TestMethod]
-	public async Task GetHttpResponseAsync_ValidUrl_ReturnsSuccessStatusCode()
-	{
-		// Arrange
-		var url = new Uri("https://httpbin.org/get");
-
-		// Act
-#pragma warning disable CS0618 // Type or member is obsolete
-		var response = await HttpClientHelper.GetHttpResponseAsync(url);
-#pragma warning restore CS0618 // Type or member is obsolete
-
-		// Assert
-		Assert.IsNotNull(response);
-		Assert.IsTrue(response.IsSuccessStatusCode);
-	}
-
-
-	[TestMethod]
 	public async Task GetStreamAsync_NullUrl_ThrowsArgumentNullException()
 	{
 		// Arrange

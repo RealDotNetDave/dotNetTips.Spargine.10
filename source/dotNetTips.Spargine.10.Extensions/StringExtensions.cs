@@ -112,12 +112,7 @@ public static class StringExtensions
 	[Information(nameof(CalculateTotalLength), "David McCarter", "12/29/2025", OptimizationStatus = OptimizationStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int CalculateTotalLength(this string[] args)
 	{
-		if (args is null || args.Length == 0)
-		{
-			return 0;
-		}
-
-		return SumStringLengths(args);
+		return args is null || args.Length == 0 ? 0 : SumStringLengths(args);
 	}
 
 	/// <summary>
@@ -203,12 +198,7 @@ public static class StringExtensions
 		delimiter = delimiter.ArgumentNotNullOrEmpty();
 
 		// Early exit: if no args, return input immediately
-		if (args is null || args.Count == 0)
-		{
-			return input;
-		}
-
-		return BuildConcatenatedString(input, args, delimiter, addLineFeed);
+		return args is null || args.Count == 0 ? input : BuildConcatenatedString(input, args, delimiter, addLineFeed);
 	}
 
 	/// <summary>
@@ -1804,6 +1794,32 @@ public static class StringExtensions
 	}
 
 	/// <summary>
+	/// Computes the trimmed length of <paramref name="span"/> by counting characters
+	/// after skipping leading and trailing whitespace — without allocating a string.
+	/// </summary>
+	/// <param name="span">The character span to measure.</param>
+	/// <returns>The number of non-whitespace-bounded characters, or a negative value if the span is all whitespace.</returns>
+	private static int ComputeTrimmedLength(ReadOnlySpan<char> span)
+	{
+		var start = 0;
+		var end = span.Length - 1;
+
+		// Trim leading whitespace
+		while (start <= end && char.IsWhiteSpace(span[start]))
+		{
+			start++;
+		}
+
+		// Trim trailing whitespace
+		while (end >= start && char.IsWhiteSpace(span[end]))
+		{
+			end--;
+		}
+
+		return end - start + 1;
+	}
+
+	/// <summary>
 	/// Computes the hash of the given <paramref name="input"/> string using the specified <paramref name="hashType"/> algorithm.
 	/// </summary>
 	/// <param name="input">The input string to compute the hash for. Must not be null.</param>
@@ -1839,6 +1855,24 @@ public static class StringExtensions
 	}
 
 	/// <summary>
+	/// Parses the host and port from a combined host-and-port span (e.g. "example.com:8080").
+	/// Returns the host as a string and the port as a string ("443" when no port is present).
+	/// </summary>
+	/// <param name="hostAndPort">The span containing the host, optionally followed by a colon and port number.</param>
+	/// <returns>A tuple of (<c>host</c>, <c>port</c>) where <c>port</c> defaults to "443" when absent.</returns>
+	private static (string host, string port) ParseHostAndPort(ReadOnlySpan<char> hostAndPort)
+	{
+		var portIndex = hostAndPort.IndexOf(':');
+
+		if (portIndex >= 0)
+		{
+			return (hostAndPort[..portIndex].ToString(), hostAndPort[(portIndex + 1)..].ToString());
+		}
+
+		return (hostAndPort.ToString(), "443");
+	}
+
+	/// <summary>
 	/// Sums the <see cref="string.Length"/> of all non-null elements in <paramref name="args"/>.
 	/// </summary>
 	private static int SumStringLengths(string[] args)
@@ -1857,50 +1891,6 @@ public static class StringExtensions
 		}
 
 		return totalLength;
-	}
-
-	/// <summary>
-	/// Computes the trimmed length of <paramref name="span"/> by counting characters
-	/// after skipping leading and trailing whitespace — without allocating a string.
-	/// </summary>
-	/// <param name="span">The character span to measure.</param>
-	/// <returns>The number of non-whitespace-bounded characters, or a negative value if the span is all whitespace.</returns>
-	private static int ComputeTrimmedLength(ReadOnlySpan<char> span)
-	{
-		var start = 0;
-		var end = span.Length - 1;
-
-		// Trim leading whitespace
-		while (start <= end && char.IsWhiteSpace(span[start]))
-		{
-			start++;
-		}
-
-		// Trim trailing whitespace
-		while (end >= start && char.IsWhiteSpace(span[end]))
-		{
-			end--;
-		}
-
-		return end - start + 1;
-	}
-
-	/// <summary>
-	/// Parses the host and port from a combined host-and-port span (e.g. "example.com:8080").
-	/// Returns the host as a string and the port as a string ("443" when no port is present).
-	/// </summary>
-	/// <param name="hostAndPort">The span containing the host, optionally followed by a colon and port number.</param>
-	/// <returns>A tuple of (<c>host</c>, <c>port</c>) where <c>port</c> defaults to "443" when absent.</returns>
-	private static (string host, string port) ParseHostAndPort(ReadOnlySpan<char> hostAndPort)
-	{
-		var portIndex = hostAndPort.IndexOf(':');
-
-		if (portIndex >= 0)
-		{
-			return (hostAndPort[..portIndex].ToString(), hostAndPort[(portIndex + 1)..].ToString());
-		}
-
-		return (hostAndPort.ToString(), "443");
 	}
 
 }

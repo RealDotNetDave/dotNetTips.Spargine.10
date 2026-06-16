@@ -114,7 +114,7 @@ public abstract class UnitTester(string? outputDirectory = null)
 	public TimeSpan MeasureAction([NotNull] Action action, bool printResult = true, [CallerMemberName] string methodName = ControlChars.EmptyString)
 	{
 		action = action.ArgumentNotNull();
-		
+
 		var startTimestamp = Stopwatch.GetTimestamp();
 
 		action();
