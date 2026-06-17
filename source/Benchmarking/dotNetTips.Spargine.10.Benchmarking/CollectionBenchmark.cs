@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified On : 06-17-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -185,11 +185,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 	{
 		if (count <= MaxPeopleDataCount)
 		{
-			return [.. JsonSerialization.LoadCollectionFromJson<PersonRecord>(Resources.PeopleJson, count, PersonRecordJsonSerializerContext.Default.Person)];
+			return [.. JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, count, PersonRecordJsonSerializerContext.Default.Person)];
 		}
 		else
 		{
-			var people = JsonSerialization.LoadCollectionFromJson<PersonRecord>(Resources.PeopleJson, MaxPeopleDataCount, PersonRecordJsonSerializerContext.Default.Person);
+			var people = JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, MaxPeopleDataCount, PersonRecordJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonRecordCollection(count - MaxPeopleDataCount);
 			var result = new List<PersonRecord>(count);
 			result.AddRange(people);
@@ -210,11 +210,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 	{
 		if (count <= MaxPeopleDataCount)
 		{
-			return [.. JsonSerialization.LoadCollectionFromJson<Person>(Resources.PeopleJson, count, PersonRefJsonSerializerContext.Default.Person)];
+			return [.. JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, count, PersonRefJsonSerializerContext.Default.Person)];
 		}
 		else
 		{
-			var people = JsonSerialization.LoadCollectionFromJson<Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonRefJsonSerializerContext.Default.Person);
+			var people = JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, MaxPeopleDataCount, PersonRefJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonRefCollection(count - MaxPeopleDataCount);
 			var result = new List<Person>(count);
 			result.AddRange(people);
@@ -235,11 +235,11 @@ public abstract partial class CollectionBenchmark : Benchmark
 	{
 		if (count <= MaxPeopleDataCount)
 		{
-			return [.. JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, count, PersonValJsonSerializerContext.Default.Person)];
+			return [.. JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, count, PersonValJsonSerializerContext.Default.Person)];
 		}
 		else
 		{
-			var people = JsonSerialization.LoadCollectionFromJson<Tester.Models.ValueTypes.Person>(Resources.PeopleJson, MaxPeopleDataCount, PersonValJsonSerializerContext.Default.Person);
+			var people = JsonSerialization.LoadCollectionFromJson(Resources.PeopleJson, MaxPeopleDataCount, PersonValJsonSerializerContext.Default.Person);
 			var newPeople = RandomData.GeneratePersonValCollection(count - MaxPeopleDataCount);
 			var result = new List<Tester.Models.ValueTypes.Person>(count);
 			result.AddRange(people);
