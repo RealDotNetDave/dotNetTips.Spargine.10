@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-21-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="LinqExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,9 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,9 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;

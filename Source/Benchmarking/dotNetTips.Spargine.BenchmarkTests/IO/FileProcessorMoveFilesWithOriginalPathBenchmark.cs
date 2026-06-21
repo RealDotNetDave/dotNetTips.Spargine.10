@@ -15,9 +15,6 @@
 // </summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;

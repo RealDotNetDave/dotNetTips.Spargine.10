@@ -4,7 +4,7 @@
 // Created          : 07-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified On : 06-14-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Reflection-based overloads are annotated with <see cref="RequiresUnreferencedCodeAttribute"/>;
 /// trim-safe alternatives accept <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class HttpClientExtensions
 {
 

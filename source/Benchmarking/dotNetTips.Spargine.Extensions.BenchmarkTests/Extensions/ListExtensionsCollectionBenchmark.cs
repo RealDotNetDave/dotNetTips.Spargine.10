@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-13-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="FastSortedListRemoveBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Linq;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic;

@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 06-10-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="UnitTesterBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,8 +15,6 @@
 // and SaveToFile collection overloads (LINQ vs pre-allocated loop).
 // </summary>
 // ***********************************************************************
-using System;
-using System.IO;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;

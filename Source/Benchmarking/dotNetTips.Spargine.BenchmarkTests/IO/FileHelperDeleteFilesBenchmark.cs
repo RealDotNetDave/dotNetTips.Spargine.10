@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified By : David McCarter
+// Last Modified On : 06-21-2026
 // ***********************************************************************
 // <copyright file="FileHelperDeleteFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -13,8 +13,6 @@
 // ***********************************************************************
 
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
