@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Net.Http;
 /// via <see cref="HttpClientHelper.CreateOptimizedHttpClient"/>.
 /// All properties carry sensible defaults so the record can be used as-is or customized with <c>with</c> expressions.
 /// </summary>
-[Information("Holds configuration settings for creating a performance-optimized HttpClient.", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+[Information("Holds configuration settings for creating a performance-optimized HttpClient.", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 public sealed record HttpClientOptions
 {
 

@@ -274,7 +274,7 @@ public static class BenchmarkHelper
 	/// <item><description>Any provided type does not inherit from <see cref="Benchmark"/> or is not defined in the calling assembly.</description></item>
 	/// </list>
 	/// </exception>
-	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
+	[Information(description: nameof(RunBenchmarks), Status = Status.Available)]
 	public static void RunBenchmarks([DisallowNull] IConfig config, bool saveResults, [DisallowNull] params Type[] benchmarks)
 	{
 		config = config.ArgumentNotNull();
