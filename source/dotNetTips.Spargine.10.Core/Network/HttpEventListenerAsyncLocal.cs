@@ -4,7 +4,7 @@
 // Created          : 07-11-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified On : 12-24-2025
 // ***********************************************************************
 // <copyright file="HttpEventListenerAsyncLocal.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Logging;
 using Microsoft.Extensions.Logging;
 
@@ -56,19 +55,6 @@ public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 	/// This enables tracking of request start and stop events to accurately log request execution times.
 	/// </summary>
 	private readonly AsyncLocal<Request> _currentRequest = new();
-
-	/// <summary>
-	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
-	/// This method is intended for internal use within the <see cref="HttpEventListenerAsyncLocal"/> class to log HTTP event information.
-	/// </summary>
-	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void LogMessage(string message)
-	{
-		logger?.LogInformationMessage(message);
-
-		Trace.WriteLine(message);
-	}
 
 	/// <summary>
 	/// Called for all existing event sources when the event listener is created and when a new event source is attached to the listener.
@@ -118,6 +104,19 @@ public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 				this.LogMessage($"HTTP Request: {currentRequest.Url} executed in {currentRequest.ExecutionTime.ElapsedMilliseconds:F1}ms");
 			}
 		}
+	}
+
+	/// <summary>
+	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
+	/// This method is intended for internal use within the <see cref="HttpEventListenerAsyncLocal"/> class to log HTTP event information.
+	/// </summary>
+	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void LogMessage(string message)
+	{
+		logger?.LogInformationMessage(message);
+
+		Trace.WriteLine(message);
 	}
 
 	/// <summary>

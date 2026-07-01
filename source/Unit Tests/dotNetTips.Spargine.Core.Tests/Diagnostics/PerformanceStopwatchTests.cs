@@ -4,7 +4,7 @@
 // Created          : 01-18-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-01-2026
+// Last Modified On : 07-01-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatchTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,17 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Diagnostics;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -235,11 +231,11 @@ public class PerformanceStopwatchTests
 	[TestMethod]
 	public void GetElapsedTime_WithStartAndEndTimestamp_ReturnsPositiveTimeSpan()
 	{
-		var startingTimestamp = Stopwatch.GetTimestamp();
+		var startingTimestamp = PerformanceStopwatch.GetTimeStamp();
 
 		Thread.Sleep(100);
 
-		var endingTimestamp = Stopwatch.GetTimestamp();
+		var endingTimestamp = PerformanceStopwatch.GetTimeStamp();
 
 		var elapsed = PerformanceStopwatch.GetElapsedTime(startingTimestamp, endingTimestamp);
 
@@ -249,7 +245,7 @@ public class PerformanceStopwatchTests
 	[TestMethod]
 	public void GetElapsedTime_WithStartingTimestamp_ReturnsPositiveTimeSpan()
 	{
-		var startingTimestamp = Stopwatch.GetTimestamp();
+		var startingTimestamp = PerformanceStopwatch.GetTimeStamp();
 
 		Thread.Sleep(100);
 
