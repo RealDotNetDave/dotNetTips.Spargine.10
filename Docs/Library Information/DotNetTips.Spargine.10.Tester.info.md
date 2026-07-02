@@ -1311,7 +1311,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** FillWordChars
 
-### T GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
+### TAddress GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1322,7 +1322,7 @@
 * **Description:** GenerateAddress
 * **Modified By:** David McCarter
 
-### T GenerateAddressCollection(System.Int32& count, System.Int32& addressLength, System.Int32& countyProvinceLength)
+### TAddress GenerateAddressCollection(System.Int32& count, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1333,7 +1333,7 @@
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
 
-### T GenerateAddressCollection(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 count, System.Int32 addressLength, System.Int32 countyProvinceLength)
+### TAddress GenerateAddressCollection(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 count, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1377,7 +1377,7 @@
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
 
-### T GenerateCoordinate()
+### TAddress GenerateCoordinate()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1388,7 +1388,7 @@
 * **Description:** GenerateCoordinate
 * **Modified By:** David McCarter
 
-### T GenerateCoordinateCollection(System.Int32 count)
+### TAddress GenerateCoordinateCollection(System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1553,7 +1553,7 @@
 * **Description:** GenerateNumber
 * **Modified By:** David McCarter
 
-### T GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
+### TAddress GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1956,7 +1956,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PrintToDebug
 
-### System.Void PrintToDebug(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Void PrintToDebug(TAddress collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1964,7 +1964,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PrintToDebug
 
-### System.Void PrintToDebug(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Void PrintToDebug(TAddress input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1972,7 +1972,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PrintToDebug
 
-### System.String SaveAsJsonToFile(T input, System.String methodName)
+### System.String SaveAsJsonToFile(TAddress input, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1996,7 +1996,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.String SaveToFile(TAddress collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2004,7 +2004,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.String SaveToFile(TAddress input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2012,7 +2012,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
+### System.String SaveToFile(TAddress input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2020,7 +2020,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
+### System.String SaveToFile(TAddress collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2036,7 +2036,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFileAsync
 
-### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Threading.Tasks.Task<System.String> SaveToFileAsync(TAddress collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2044,7 +2044,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFileAsync
 
-### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Threading.Tasks.Task<System.String> SaveToFileAsync(TAddress input, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2052,7 +2052,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFileAsync
 
-### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
+### System.Threading.Tasks.Task<System.String> SaveToFileAsync(TAddress collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2061,4 +2061,4 @@
 * **Description:** SaveToFileAsync
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/1/2026 12:18:59 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/2/2026 8:07:14 PM UTC**

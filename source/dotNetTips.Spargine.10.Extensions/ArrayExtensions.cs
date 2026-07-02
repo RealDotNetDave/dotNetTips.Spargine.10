@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 06-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-02-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -37,7 +37,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// generating hash codes for arrays, removing elements, and more. These methods are designed to be efficient and
 /// are optimized for performance where applicable.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineArrayExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineArrayExtensions")]
 public static class ArrayExtensions
 {
 	/// <summary>
@@ -77,7 +77,7 @@ public static class ArrayExtensions
 		/// <returns>A new byte array containing the 32-byte SHA-256 hash.</returns>
 		/// <remarks>
 		/// Delegates directly to <see cref="SHA256.HashData(ReadOnlySpan{byte})"/>, which uses
-		/// hardware acceleration when available. The returned array is always 32 bytes in length.
+		/// hardware acceleration when available. The returned array is always 32 rom in length.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		/// <example>
@@ -797,6 +797,130 @@ public static class ArrayExtensions
 		public FrozenSet<T> ToFrozenSet(IEqualityComparer<T>? comparer = null)
 		{
 			return FrozenSet.ToFrozenSet(array, comparer);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="Memory{T}"/> slice over a contiguous range of the source array.
+		/// </summary>
+		/// <param name="start">The zero-based index at which the slice begins.</param>
+		/// <param name="length">The number of elements in the slice.</param>
+		/// <returns>
+		/// A <see cref="Memory{T}"/> that represents the requested range of the source array without copying data.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a zero-allocation view over the existing array storage and is useful when APIs require
+		/// <see cref="Memory{T}"/> rather than <see cref="ReadOnlySpan{T}"/>. The returned memory remains valid as long
+		/// as the underlying array remains alive.
+		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Thrown when <paramref name="start"/> or <paramref name="length"/> is negative, or when the specified range
+		/// exceeds the bounds of the source array.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 40, 50 };
+		/// Memory&lt;int&gt; middle = numbers.FastSliceToMemory(1, 3);
+		/// // middle represents { 20, 30, 40 }
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastSliceToMemory), "David McCarter", "7/2/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public Memory<T> FastSliceToMemory(int start, int length)
+		{
+			return array.AsMemory(start, length);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="ReadOnlyMemory{T}"/> slice over a contiguous range of the source array.
+		/// </summary>
+		/// <param name="start">The zero-based index at which the slice begins.</param>
+		/// <param name="length">The number of elements in the slice.</param>
+		/// <returns>
+		/// A <see cref="ReadOnlyMemory{T}"/> that represents the requested range of the source array without copying data.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a zero-allocation, read-only memory view over the existing array storage.
+		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Thrown when <paramref name="start"/> or <paramref name="length"/> is negative, or when the specified range
+		/// exceeds the bounds of the source array.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 40, 50 };
+		/// ReadOnlyMemory&lt;int&gt; middle = numbers.FastSliceToReadOnlyMemory(1, 3);
+		/// // middle represents { 20, 30, 40 }
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastSliceToReadOnlyMemory), "David McCarter", "7/2/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public ReadOnlyMemory<T> FastSliceToReadOnlyMemory(int start, int length)
+		{
+			return array.AsMemory(start, length);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="Span{T}"/> slice over a contiguous range of the source array.
+		/// </summary>
+		/// <param name="start">The zero-based index at which the slice begins.</param>
+		/// <param name="length">The number of elements in the slice.</param>
+		/// <returns>
+		/// A <see cref="Span{T}"/> that represents the requested range of the source array without copying data.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a zero-allocation, mutable span view over the existing array storage for
+		/// high-performance operations on a subsection of elements.
+		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Thrown when <paramref name="start"/> or <paramref name="length"/> is negative, or when the specified range
+		/// exceeds the bounds of the source array.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 40, 50 };
+		/// Span&lt;int&gt; middle = numbers.FastSliceToSpan(1, 3);
+		/// // middle represents { 20, 30, 40 }
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastSliceToSpan), "David McCarter", "7/2/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public Span<T> FastSliceToSpan(int start, int length)
+		{
+			return new Span<T>(array, start, length);
+		}
+
+		/// <summary>
+		/// Creates a <see cref="ReadOnlySpan{T}"/> slice over a contiguous range of the source array.
+		/// </summary>
+		/// <param name="start">The zero-based index at which the slice begins.</param>
+		/// <param name="length">The number of elements in the slice.</param>
+		/// <returns>
+		/// A <see cref="ReadOnlySpan{T}"/> that represents the requested range of the source array without copying data.
+		/// </returns>
+		/// <remarks>
+		/// This method provides a zero-allocation, read-only span view over the existing array storage for
+		/// high-performance operations on a subsection of elements.
+		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Thrown when <paramref name="start"/> or <paramref name="length"/> is negative, or when the specified range
+		/// exceeds the bounds of the source array.
+		/// </exception>
+		/// <example>
+		/// <code>
+		/// int[] numbers = { 10, 20, 30, 40, 50 };
+		/// ReadOnlySpan&lt;int&gt; middle = numbers.FastSliceToReadOnlySpan(1, 3);
+		/// // middle represents { 20, 30, 40 }
+		/// </code>
+		/// </example>
+		[Pure]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(FastSliceToReadOnlySpan), "David McCarter", "7/2/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public ReadOnlySpan<T> FastSliceToReadOnlySpan(int start, int length)
+		{
+			return array.AsSpan(start, length);
 		}
 
 		/// <summary>

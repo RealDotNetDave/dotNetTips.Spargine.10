@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-20-2026
+// Last Modified On : 07-02-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -20,7 +19,6 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -396,6 +394,84 @@ public class ArrayExtensionsTests
 		var result = people.FastSelectItems(0, 2);
 
 		Assert.AreEqual(2, result.Length);
+	}
+
+	[TestMethod]
+	public void FastSliceToMemory_InvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => numbers.FastSliceToMemory(4, 2));
+	}
+
+	[TestMethod]
+	public void FastSliceToMemory_ReturnsExpectedSlice()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		var result = numbers.FastSliceToMemory(1, 3);
+
+		CollectionAssert.AreEqual(new[] { 20, 30, 40 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastSliceToReadOnlyMemory_InvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => numbers.FastSliceToReadOnlyMemory(4, 2));
+	}
+
+	[TestMethod]
+	public void FastSliceToReadOnlyMemory_ReturnsExpectedSlice()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		var result = numbers.FastSliceToReadOnlyMemory(1, 3);
+
+		CollectionAssert.AreEqual(new[] { 20, 30, 40 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastSliceToReadOnlySpan_InvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+		{
+			_ = numbers.FastSliceToReadOnlySpan(4, 2);
+		});
+	}
+
+	[TestMethod]
+	public void FastSliceToReadOnlySpan_ReturnsExpectedSlice()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		var result = numbers.FastSliceToReadOnlySpan(1, 3);
+
+		CollectionAssert.AreEqual(new[] { 20, 30, 40 }, result.ToArray());
+	}
+
+	[TestMethod]
+	public void FastSliceToSpan_InvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		Assert.ThrowsExactly<ArgumentOutOfRangeException>(() =>
+		{
+			_ = numbers.FastSliceToSpan(4, 2);
+		});
+	}
+
+	[TestMethod]
+	public void FastSliceToSpan_ReturnsExpectedSlice()
+	{
+		var numbers = new[] { 10, 20, 30, 40, 50 };
+
+		var result = numbers.FastSliceToSpan(1, 3);
+
+		CollectionAssert.AreEqual(new[] { 20, 30, 40 }, result.ToArray());
 	}
 
 	[TestMethod]
