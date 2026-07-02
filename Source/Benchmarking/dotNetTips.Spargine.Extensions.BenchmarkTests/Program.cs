@@ -4,14 +4,12 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-08-2026
+// Last Modified On : 07-02-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
 // </copyright>
-// <summary>
-// Divided into 3 groups to reduce single-run duration.
-// </summary>
+// <summary>Divided into 3 groups to reduce single-run duration.</summary>
 // ***********************************************************************
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
@@ -45,12 +43,13 @@ internal sealed class Program
 
 		// Temp tests
 		BenchmarkHelper.RunBenchmarks(config, true,
-			//typeof(ArrayExtensionsCollectionBenchmark),
-			//typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			//typeof(CollectionExtensionsCollectionBenchmark),
-			//typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			//typeof(EnumerableExtensionsCollectionBenchmark),
-			//typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+			typeof(ArrayExtensionsCollectionBenchmark),
+			typeof(ArrayExtensionsSliceBenchmark),
+			typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			typeof(CollectionExtensionsCollectionBenchmark),
+			typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			typeof(EnumerableExtensionsCollectionBenchmark),
+			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 			typeof(ListExtensionsCollectionBenchmark),
 			typeof(ListExtensionsAddRemoveCollectionBenchmark),
 			typeof(ObjectExtensionsBenchmark)
