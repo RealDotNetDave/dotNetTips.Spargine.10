@@ -42,32 +42,33 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ArrayExtensionsCollectionBenchmark),
-			typeof(ArrayExtensionsSliceBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-			typeof(ListExtensionsCollectionBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark),
-			typeof(ObjectExtensionsBenchmark)
-		);
-
-		// Group 1: A–D - 7:45 hours, 818 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(ArrayExtensionsCollectionBenchmark),
+		//	typeof(ArrayExtensionsCollectionBenchmark),
+		//	typeof(ArrayExtensionsSliceBenchmark),
 		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
-		//	typeof(AssemblyExtensionsBenchmark),
-		//	typeof(CharacterExtensionsBenchmark),
 		//	typeof(CollectionExtensionsCollectionBenchmark),
 		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
-		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
-		//	typeof(DataReaderExtensionsBenchmark),
-		//	typeof(DictionaryExtensionsCollectionBenchmark),
-		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
+		//	typeof(EnumerableExtensionsCollectionBenchmark),
+		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+		//	typeof(ListExtensionsCollectionBenchmark),
+		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
+		//	typeof(ObjectExtensionsBenchmark)
 		//);
+
+		// Group 1: A–D - 7:45 hours, 818 benchmarks
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(ArrayExtensionsCollectionBenchmark),
+		 typeof(ArrayExtensionsSliceBenchmark),
+			typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark),
+			typeof(CharacterExtensionsBenchmark),
+			typeof(CollectionExtensionsCollectionBenchmark),
+			typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			typeof(ConcurrentBagExtensionsCollectionBenchmark),
+			typeof(DataReaderExtensionsBenchmark),
+			typeof(DictionaryExtensionsCollectionBenchmark),
+			typeof(DictionaryExtensionsMutatingCollectionBenchmark)
+		);
 
 		// Group 2: E–H - 9:15 hours, 934 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
