@@ -31,11 +31,8 @@ namespace DotNetTips.Spargine.Tester.BenchmarkTests;
 public class DateOnlyConverterBenchmark : Benchmark
 {
 	private DateOnlyConverter _converter;
-
 	private byte[] _dateJsonBytes;
-
 	private DateOnly _dateValue;
-
 	private ArrayBufferWriter<byte> _writeBuffer;
 
 	[Benchmark(Description = nameof(DateOnlyConverter.Read))]

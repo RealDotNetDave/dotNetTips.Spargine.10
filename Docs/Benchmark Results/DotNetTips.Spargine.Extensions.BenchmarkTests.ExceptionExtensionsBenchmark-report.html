@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.ExceptionExtensionsBenchmark-20260704-224207</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7417/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Exceptions  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;GetAllMessages: Separator&#39;</td><td>91.60 ns</td><td>0.440 ns</td><td>0.412 ns</td><td>0.106 ns</td><td>90.92 ns</td><td>91.30 ns</td><td>91.51 ns</td><td>91.86 ns</td><td>92.33 ns</td><td>10,917,007.6</td><td>7.447 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.0076</td><td>5,276 B</td><td>0.0002</td><td>0.0002</td><td>224 B</td>
+</tr><tr><td>GetAllMessages</td><td>88.23 ns</td><td>0.688 ns</td><td>0.610 ns</td><td>0.163 ns</td><td>86.98 ns</td><td>87.84 ns</td><td>88.37 ns</td><td>88.63 ns</td><td>89.11 ns</td><td>11,334,527.9</td><td>6.918 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.0076</td><td>5,316 B</td><td>0.0002</td><td>0.0002</td><td>224 B</td>
+</tr><tr><td>GetAllMessagesWithStackTrace</td><td>64.66 ns</td><td>1.322 ns</td><td>3.528 ns</td><td>0.387 ns</td><td>59.50 ns</td><td>61.15 ns</td><td>65.18 ns</td><td>67.77 ns</td><td>72.95 ns</td><td>15,464,525.4</td><td>41.306 ns</td><td>83.00</td><td>No</td><td>-</td><td>0.0074</td><td>NA</td><td>-</td><td>-</td><td>224 B</td>
+</tr></tbody></table>
+</body>
+</html>

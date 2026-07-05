@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-11-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-04-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -40,6 +40,8 @@ namespace DotNetTips.Spargine.IO;
 public static class DirectoryHelper
 {
 	private const string LocalAppData = "LOCALAPPDATA";
+
+	private static readonly ReadOnlyCollection<OneDriveFolder> _emptyOneDriveFolders = new List<OneDriveFolder>(0).AsReadOnly();
 
 	/// <summary>
 	/// Cached <see cref="EnumerationOptions"/> for recursive file/directory enumeration.
@@ -101,7 +103,7 @@ public static class DirectoryHelper
 	/// <returns>The path to the application data folder.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when the user path environment variable is not set.</exception>
 	[SupportedOSPlatform("macos")]
-	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string AppDataFolder()
 	{
 		var companyName = GetEntryAssemblyCompanyName();
@@ -155,7 +157,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void CopyDirectory([DisallowNull] DirectoryInfo source, [NotNull] DirectoryInfo destination, bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentExists();
@@ -166,20 +168,30 @@ public static class DirectoryHelper
 			ExceptionThrower.ThrowDirectoryNotFoundException(Resources.CouldNotCreateDirectory, destination);
 		}
 
-		var files = source.EnumerateFiles();
-		var subdirs = source.EnumerateDirectories();
+		// Use a single parallel pass over all files to avoid nested parallelism and excess thread scheduling.
 		var parallelOptions = new ParallelOptions { CancellationToken = cancellationToken };
 
-		_ = Parallel.ForEach(files, parallelOptions, file =>
-		{
-			var destFile = Path.Combine(destination.FullName, file.Name);
-			_ = file.CopyTo(destFile, overwrite);
-		});
+		var sourceRoot = source.FullName.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
-		_ = Parallel.ForEach(subdirs, parallelOptions, subdir =>
+		var files = Directory.EnumerateFiles(sourceRoot, "*", SearchOption.AllDirectories);
+
+		_ = Parallel.ForEach(files, parallelOptions, srcPath =>
 		{
-			var destSubDir = destination.CreateSubdirectory(subdir.Name);
-			CopyDirectory(subdir, destSubDir, overwrite, cancellationToken);
+			cancellationToken.ThrowIfCancellationRequested();
+
+			// Compute relative path and destination path to preserve directory structure
+			var relative = Path.GetRelativePath(sourceRoot, srcPath);
+			var destFile = Path.Combine(destination.FullName, relative);
+
+			var destDir = Path.GetDirectoryName(destFile);
+
+			if (destDir is not null)
+			{
+				_ = Directory.CreateDirectory(destDir);
+			}
+
+			// Use File.Copy to copy by path which avoids allocating FileInfo per file
+			File.Copy(srcPath, destFile, overwrite);
 		});
 	}
 
@@ -233,7 +245,7 @@ public static class DirectoryHelper
 	/// <remarks>This method utilizes deferred execution to improve performance. Files are not loaded into memory until the asynchronous stream is iterated.</remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
@@ -269,19 +281,12 @@ public static class DirectoryHelper
 	/// </example>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
-		var folders = new List<OneDriveFolder>();
-
 		using var oneDriveKey = RegistryHelper.GetRegistryKey(RegistryHelper.KeyCurrentUserOneDrive, RegistryHive.CurrentUser);
 
-		if (oneDriveKey is not null)
-		{
-			LoadOneDriveFoldersFromKey(oneDriveKey, folders);
-		}
-
-		return folders.AsReadOnly();
+		return oneDriveKey is null ? _emptyOneDriveFolders : LoadOneDriveFoldersFromKey(oneDriveKey);
 	}
 
 
@@ -363,20 +368,19 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
-		//OPTIMIZATION FROM COPILOT BREAKS CODE
 		path = path.ArgumentExists();
 		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
 		searchOption = searchOption.ArgumentDefined();
 
 		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
 
-		foreach (var directory in path.EnumerateFiles(searchPattern, options).Select(file => file.Directory).FastDistinct())
+		foreach (var directory in path.EnumerateDirectories(searchPattern, options))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-			yield return directory!;
+			yield return directory;
 		}
 	}
 
@@ -403,15 +407,17 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static ReadOnlyCollection<FileInfo> SafeFileSearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
-		var directories = new List<DirectoryInfo>(1)
-		{
-			path
-		};
+		path = path.ArgumentExists();
+		searchPattern = searchPattern.ArgumentNotNullOrEmpty();
+		searchOption = searchOption.ArgumentDefined();
+		cancellationToken.ThrowIfCancellationRequested();
 
-		return SafeFileSearch(directories, searchPattern, searchOption, cancellationToken).ToReadOnlyCollection();
+		var options = searchOption == SearchOption.AllDirectories ? _enumerationOptionsRecursive : _enumerationOptionsTopOnly;
+
+		return Array.AsReadOnly(path.GetFiles(searchPattern, options));
 	}
 
 	/// <summary>
@@ -499,22 +505,29 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static void SetFileAttributesToNormal([DisallowNull] DirectoryInfo path, CancellationToken cancellationToken = default)
 	{
-		if (path.CheckExists() == false)
+		path = path.ArgumentNotNull();
+
+		if (path.Exists == false)
 		{
 			return;
 		}
 
-		// Set the directory attributes to normal
-		RemoveAttributes(path, FileAttributes.ReadOnly);
+		if ((path.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+		{
+			path.Attributes &= ~FileAttributes.ReadOnly;
+		}
 
-		// Single pass: handle both sub-directories and files
 		foreach (var item in path.EnumerateFileSystemInfos(ControlChars.WildcardAllFiles, _setAttributesOptions))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-			item.Attributes = FileAttributes.Normal;
+
+			if (item.Attributes != FileAttributes.Normal)
+			{
+				item.Attributes = FileAttributes.Normal;
+			}
 		}
 	}
 
@@ -569,8 +582,18 @@ public static class DirectoryHelper
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string? GetEntryAssemblyCompanyName()
-		=> Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
+	{
+		return Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyCompanyAttribute>()?.Company?.Trim();
+	}
 
+	/// <summary>
+	/// Loads the files asynchronous core.
+	/// </summary>
+	/// <param name="directories">The directories.</param>
+	/// <param name="searchPattern">The search pattern.</param>
+	/// <param name="searchOption">The search option.</param>
+	/// <param name="cancellationToken">The cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+	/// <returns>IAsyncEnumerable&lt;IEnumerable&lt;FileInfo&gt;&gt;.</returns>
 	private static async IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsyncCore(IEnumerable<DirectoryInfo> directories, string searchPattern, SearchOption searchOption, [EnumeratorCancellation] CancellationToken cancellationToken)
 	{
 		var options = searchOption == SearchOption.AllDirectories ? _loadFilesOptionsRecursive : _loadFilesOptionsTopOnly;
@@ -594,7 +617,7 @@ public static class DirectoryHelper
 	private static void LoadOneDriveAccounts(RegistryKey accountKey, List<OneDriveFolder> folders)
 	{
 		var subKeyNames = accountKey.GetSubKeyNames();
-		var subKeyCount = subKeyNames.LongLength;
+		var subKeyCount = subKeyNames.Length;
 
 		for (var subKeyIndex = 0; subKeyIndex < subKeyCount; subKeyIndex++)
 		{
@@ -610,28 +633,29 @@ public static class DirectoryHelper
 	}
 
 	/// <summary>
-	/// Loads OneDrive folders from the given registry key into the supplied list.
+	/// Loads OneDrive folders from the given registry key.
 	/// </summary>
 	/// <param name="oneDriveKey">The open OneDrive registry key.</param>
-	/// <param name="folders">The list to populate.</param>
+	/// <returns>A read-only collection of discovered OneDrive folders.</returns>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadOneDriveFoldersFromKey), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
-	private static void LoadOneDriveFoldersFromKey(RegistryKey oneDriveKey, List<OneDriveFolder> folders)
+	private static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFoldersFromKey(RegistryKey oneDriveKey)
 	{
 		const string AccountsKey = "Accounts";
 
 		using var accountKey = oneDriveKey.GetSubKey(AccountsKey);
 
-		if (accountKey is null)
+		if (accountKey is null || accountKey.SubKeyCount <= 0)
 		{
-			return;
+			return _emptyOneDriveFolders;
 		}
 
-		if (accountKey.SubKeyCount > 0)
-		{
-			LoadOneDriveAccounts(accountKey, folders);
-		}
+		var folders = new List<OneDriveFolder>(accountKey.SubKeyCount);
+
+		LoadOneDriveAccounts(accountKey, folders);
+
+		return folders.Count == 0 ? _emptyOneDriveFolders : folders.AsReadOnly();
 	}
 
 	/// <summary>
