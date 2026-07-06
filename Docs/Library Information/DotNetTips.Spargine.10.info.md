@@ -30,7 +30,7 @@
 ### System.String AppDataFolder()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -52,7 +52,7 @@
 ### System.Void CopyDirectory(System.IO.DirectoryInfo source, System.IO.DirectoryInfo destination, System.Boolean overwrite, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -74,7 +74,7 @@
 ### System.Collections.Generic.IAsyncEnumerable<System.Collections.Generic.IEnumerable<System.IO.FileInfo>> LoadFilesAsync(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> directories, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -93,7 +93,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.IO.OneDriveFolder> LoadOneDriveFolders()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -101,7 +101,7 @@
 * **Description:** LoadOneDriveFolders
 * **Modified By:** David McCarter
 
-### System.Void LoadOneDriveFoldersFromKey(Microsoft.Win32.RegistryKey oneDriveKey, System.Collections.Generic.List<DotNetTips.Spargine.IO.OneDriveFolder> folders)
+### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.IO.OneDriveFolder> LoadOneDriveFoldersFromKey(Microsoft.Win32.RegistryKey oneDriveKey)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -139,7 +139,7 @@
 ### System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> SafeDirectorySearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -150,7 +150,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.IO.FileInfo> SafeFileSearch(System.IO.DirectoryInfo path, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -161,7 +161,7 @@
 ### System.Collections.Generic.IEnumerable<System.IO.FileInfo> SafeFileSearch(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> directories, System.String searchPattern, System.IO.SearchOption searchOption, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -183,7 +183,7 @@
 ### System.Void SetFileAttributesToNormal(System.IO.DirectoryInfo path, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -302,7 +302,7 @@
 ### System.Int64 CalculateTotalFileSize(System.ReadOnlySpan<System.IO.FileInfo> files)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -313,7 +313,7 @@
 ### System.Boolean CheckPermission(System.IO.FileInfo file, System.Security.AccessControl.FileSystemRights permission)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -324,7 +324,7 @@
 ### System.Int64 CopyFile(System.IO.FileInfo file, System.IO.DirectoryInfo destination)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CopyFile
@@ -332,7 +332,7 @@
 ### System.Boolean CopyFile(System.IO.FileInfo file, System.IO.DirectoryInfo destination, DotNetTips.Spargine.IO.FileHelper.CopyProgressRoutine progressCallback)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CopyFile
@@ -340,7 +340,7 @@
 ### System.Threading.Tasks.Task<System.Int64> CopyFileAsync(System.IO.FileInfo file, System.IO.DirectoryInfo destination, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CopyFileAsync
@@ -348,7 +348,7 @@
 ### DotNetTips.Spargine.Core.SimpleResult<System.Collections.ObjectModel.ReadOnlyCollection<System.String>> DeleteFiles(System.Collections.ObjectModel.ReadOnlyCollection<System.String> files, System.Boolean stopOnFirstError)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** DeleteFiles
@@ -364,15 +364,15 @@
 ### System.Threading.Tasks.Task<DotNetTips.Spargine.Core.SimpleResult<System.Int32>> DownloadFileFromWebAsync(System.Uri remoteUri, System.IO.DirectoryInfo destination, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
 * **Unit Test Status:** Completed
 * **Description:** DownloadFileFromWebAsync
 
 ### System.Boolean FileHasInvalidChars(System.IO.FileInfo file)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -394,7 +394,7 @@
 ### System.Boolean MoveFile(System.IO.FileInfo file, System.IO.FileInfo destinationFile, System.Boolean replaceExisting, System.Int32 retryCount)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** MoveFile
@@ -426,7 +426,7 @@
 ### System.Threading.Tasks.Task UnGZipAsync(System.IO.FileInfo file, System.IO.DirectoryInfo destination, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** UnGZipAsync
@@ -434,7 +434,7 @@
 ### System.Threading.Tasks.Task UnGZipAsync(System.IO.FileInfo file, System.IO.DirectoryInfo destination, System.Boolean deleteGZipFile, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** UnGZipAsync
@@ -469,7 +469,7 @@
 ### System.Int32 CopyFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -480,7 +480,7 @@
 ### System.Int32 CopyFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files, System.IO.DirectoryInfo destination, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -491,7 +491,7 @@
 ### System.Int32 DeleteFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -502,7 +502,7 @@
 ### System.Int32 DeleteFolders(System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo> folders, System.Boolean& recursive, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -513,7 +513,7 @@
 ### System.Int32 MoveFiles(System.Collections.Generic.IEnumerable<System.IO.FileInfo> files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -524,7 +524,7 @@
 ### System.Int32 MoveFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1[[System.IO.FileInfo, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& files, System.IO.DirectoryInfo destination, System.Boolean& overwrite, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -593,7 +593,7 @@
 ### System.String EnsureTrailingSlash(System.String path)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -604,7 +604,7 @@
 ### System.Boolean HasInvalidFilterChars(System.String filter)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -615,7 +615,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Char> InvalidFilterChars()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -626,7 +626,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Char> InvalidPathNameChars()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -637,7 +637,7 @@
 ### System.Boolean PathContainsWildcard(System.String path)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -648,7 +648,7 @@
 ### System.Boolean PathHasInvalidChars(System.String path)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -659,7 +659,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Char> PathSeparators { get; set; }
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -673,7 +673,7 @@
 ### System.String CreateFile()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CreateFile
@@ -681,7 +681,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.String> CreateFiles(System.Int32& count)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CreateFiles
@@ -689,7 +689,7 @@
 ### System.Void DeleteAllFiles()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** DeleteAllFiles
@@ -697,7 +697,7 @@
 ### System.Void DeleteFile(System.String fileName)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** DeleteFile
@@ -732,8 +732,8 @@
 ### System.Net.Http.HttpClient CreateOptimizedHttpClient(DotNetTips.Spargine.Net.Http.HttpClientOptions options)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Not Required
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** CreateOptimizedHttpClient
 
@@ -878,4 +878,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/2/2026 8:07:35 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/6/2026 12:13:31 PM UTC**
