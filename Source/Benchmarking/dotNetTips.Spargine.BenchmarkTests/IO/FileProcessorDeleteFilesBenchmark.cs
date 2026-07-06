@@ -45,7 +45,7 @@ public class FileProcessorDeleteFilesBenchmark : Benchmark
 	/// File creation is isolated to <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.DeleteFiles))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void DeleteFiles()
 	{
 		var result = this._fileProcessor.DeleteFiles(this._filesToDelete);

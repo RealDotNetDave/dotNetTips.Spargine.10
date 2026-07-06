@@ -89,7 +89,7 @@ public class FileProcessorMoveFilesWithOriginalPathBenchmark : Benchmark
 	/// <see cref="IterationCleanupAttribute"/>; only the forward move is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.MoveFilesWithOriginalPath))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void MoveFilesWithOriginalPath()
 	{
 		var result = this._fileProcessor.MoveFilesWithOriginalPath(this._sourceFiles, this._destinationPath, overwrite: true);

@@ -42,18 +42,10 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(ArrayExtensionsCollectionBenchmark),
-		//	typeof(ArrayExtensionsSliceBenchmark),
-		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
-		//	typeof(CollectionExtensionsCollectionBenchmark),
-		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
-		//	typeof(EnumerableExtensionsCollectionBenchmark),
-		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
-		//	typeof(ObjectExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(ArrayExtensionsCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark)
+		);
 
 		// Group 1: A–D - 8:30 hours, 882 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
@@ -83,23 +75,23 @@ internal sealed class Program
 		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
 		//);
 
-		// Group 3: L–T - 11 hours, 944 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, saveResults: true,
-		  typeof(ImmutableArrayExtensionsBenchmark),
-			typeof(LinqExtensionsBenchmark),
-			typeof(ListExtensionsAddRemoveCollectionBenchmark),
-			typeof(ListExtensionsCollectionBenchmark),
-			typeof(NumericExtensionsBenchmark),
-			typeof(ObjectExtensionsBenchmark),
-			typeof(ObservableCollectionExtensionsCollectionBenchmark),
-			typeof(ReadOnlyCollectionExtensionsBenchmark),
-			typeof(ReadOnlySpanExtensionsBenchmark),
-			typeof(SortedDictionaryExtensionsBenchmark),
-			typeof(SortedSetExtensionsBenchmark),
-			typeof(StringBuilderExtensionsCounterBenchmark),
-			typeof(StringExtensionsBenchmark),
-			typeof(StringExtensionsCounterBenchmark),
-			typeof(TypeExtensionsBenchmark)
-		);
+		// Group 3: L–T - 11 hours, 943 benchmarks
+		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
+		//  typeof(ImmutableArrayExtensionsBenchmark),
+		//	typeof(LinqExtensionsBenchmark),
+		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
+		//	typeof(ListExtensionsCollectionBenchmark),
+		//	typeof(NumericExtensionsBenchmark),
+		//	typeof(ObjectExtensionsBenchmark),
+		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
+		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
+		//	typeof(ReadOnlySpanExtensionsBenchmark),
+		//	typeof(SortedDictionaryExtensionsBenchmark),
+		//	typeof(SortedSetExtensionsBenchmark),
+		//	typeof(StringBuilderExtensionsCounterBenchmark),
+		//	typeof(StringExtensionsBenchmark),
+		//	typeof(StringExtensionsCounterBenchmark),
+		//	typeof(TypeExtensionsBenchmark)
+		//);
 	}
 }

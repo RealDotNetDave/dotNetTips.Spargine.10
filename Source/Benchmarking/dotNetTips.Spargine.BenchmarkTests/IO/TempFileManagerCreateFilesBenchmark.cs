@@ -53,7 +53,7 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	/// Files are removed after each iteration by <see cref="IterationCleanupAttribute"/> to prevent accumulation.
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.CreateFile))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CreateFile()
 	{
 		var result = this._manager.CreateFile();
@@ -66,7 +66,7 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	/// Files are removed after each iteration by <see cref="IterationCleanupAttribute"/> to prevent accumulation.
 	/// </summary>
 	[Benchmark(Description = "CreateFiles-Parallel")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CreateFilesParallel()
 	{
 		var result = this._manager.CreateFiles(256);
@@ -79,7 +79,7 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	/// Files are removed after each iteration by <see cref="IterationCleanupAttribute"/> to prevent accumulation.
 	/// </summary>
 	[Benchmark(Description = "CreateFiles-Sequential")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CreateFilesSequential()
 	{
 		var result = this._manager.CreateFiles(2);

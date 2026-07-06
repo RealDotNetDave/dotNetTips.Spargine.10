@@ -1,0 +1,902 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorCopyFilesBenchmark-20260705-115824</title>
+
+<style type="text/css">
+    pre { margin: 0px; }
+    table { border-collapse:collapse; }
+    td.perMethod { border-top: 1px black solid; }
+    tr.evenMap td { background-color: #F5F5F5; }  
+</style>
+
+<style type='text/css'>
+    td.label:hover { cursor: pointer; background-color: yellow !important; }
+    td.highlighted { background-color: yellow !important; }
+</style></head><body>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>$(document).ready(function () {
+    var selectedIndex = 0;
+
+    function highlight() {
+        $('td.reference.highlighted').removeClass('highlighted');
+
+        var selectedLabel = $(this).attr('data-label');
+        if (selectedLabel) {
+            $('td.reference[data-reference=' + selectedLabel + ']').addClass('highlighted');
+        }
+        selectedIndex = 0;
+    }
+
+    function selectNext() {
+        var $highlighted = $('td.reference.highlighted');
+        var selected = $highlighted[selectedIndex++ % $highlighted.length];
+
+        if (selected) {
+            var selectedReference = $(selected).attr('id');
+            if (selectedReference) {
+                window.location.hash = '#' + selectedReference;
+            }
+        }
+    }
+
+    $('td.label').on('click', highlight);
+
+    $(document).on('keydown', function (event) {
+        if (event.keyCode == 114) { // F3
+            event.preventDefault();
+            // Remap F3 to some other key that the browser doesn't care about
+            selectNext();
+        }
+    });
+});</script>
+<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorCopyFilesBenchmark.CopyFiles()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,60</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-30],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqa   xmmword ptr [rbp-10],xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+140]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+148]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+138]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-30],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rbp-10],1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp-18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       r9,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp-28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8,[rbp-30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E898]; DotNetTips.Spargine.IO.FileProcessor.CopyFiles(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo>, System.IO.DirectoryInfo, Boolean ByRef, System.Threading.CancellationToken)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E880]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,60</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.FileProcessor.CopyFiles(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo>, System.IO.DirectoryInfo, Boolean ByRef, System.Threading.CancellationToken)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,0C0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+0C0]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-90],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-70],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqa   xmmword ptr [rbp-50],xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],r8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+28],r9</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rbp-88],3E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		destination = destination.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,1FB11010D18</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE695450</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9,1FB11000008</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE5AF378]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var list = PrepareList(files);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE695568</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E940]; DotNetTips.Spargine.IO.FileProcessor.PrepareList[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		if (list is null)
+		^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       qword ptr [rbp-40],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L00"><a href="#2_M01_L00"><pre><code>jne       short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE695888</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			return 0;
+			^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,0C0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		_ = destination.CheckExists(createDirectory: true);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L00" class="label" data-label="2_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       dword ptr [rbp-68],1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-70],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rdx,[rbp-68]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r8,[rbp-70]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+20]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r9,1FB11000008</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E970]; DotNetTips.Spargine.Core.Validator.CheckExists(System.IO.DirectoryInfo, Boolean ByRef, Boolean ByRef, System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp+20]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-80],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-80]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,7FFCDE695890</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-80]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp-80]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax+30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E988]; DotNetTips.Spargine.IO.PathHelper.EnsureTrailingSlash(System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-48],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var successCount = 0;
+		^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var listCount = list.Count;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE0F3548]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Count()</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-50],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var canBeCanceled = cancellationToken.CanBeCanceled;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rcx,[rbp+30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E9A0]; System.Threading.CancellationToken.get_CanBeCanceled()</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-54],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var psw = this.CreateStopwatch(nameof(this.CopyFiles));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,1FB11010D48</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E9B8]; DotNetTips.Spargine.IO.FileProcessor.CreateStopwatch(System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-60],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
+		     ^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-74],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L03"><a href="#2_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>			if (canBeCanceled)
+			^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L01" class="label" data-label="2_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>cmp       dword ptr [rbp-54],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L02"><a href="#2_M01_L02"><pre><code>je        short M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE695998</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>				cancellationToken.ThrowIfCancellationRequested();
+				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E9D0]; System.Threading.CancellationToken.ThrowIfCancellationRequested()</pre></code></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L02" class="label" data-label="2_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE69599C</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>			successCount += this.CopyFileItem(list[fileIndex], destinationPath, overwrite, psw);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,[rbp-74]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE0F3578]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Item(Int32)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-90],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp-60]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,[rbp-90]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp+28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     r9d,byte ptr [rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r8,[rbp-48]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63E9E8]; DotNetTips.Spargine.IO.FileProcessor.CopyFileItem(System.IO.FileInfo, System.String, Boolean, DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-74]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       eax,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-74],eax</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L03" class="label" data-label="2_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       eax,[rbp-88]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>dec       eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-88],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       dword ptr [rbp-88],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L04"><a href="#2_M01_L04"><pre><code>jg        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp-88]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,8C</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_PATCHPOINT</pre></code></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L04" class="label" data-label="2_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-74]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       eax,[rbp-50]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L01"><a href="#2_M01_L01"><pre><code>jl        near ptr M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6959A0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		return successCount;
+		^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,0C0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L05" class="label" data-label="2_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_OVERFLOW</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>int       3</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],edx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63F0D8]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE63F0A8]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Int32, System.Private.CoreLib]](Int32 ByRef)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorCopyFilesBenchmark.CopyFilesWithOriginalPath()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+50]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-20],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+140]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+148]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+138]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8,[rbp-28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9,[rbp-18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66DFB0]; DotNetTips.Spargine.IO.FileProcessor.CopyFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo> ByRef, System.IO.DirectoryInfo, System.Threading.CancellationToken)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66DF98]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.FileProcessor.CopyFilesWithOriginalPath(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo> ByRef, System.IO.DirectoryInfo, System.Threading.CancellationToken)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,0D0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+0D0]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-0A8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-0A0],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-80],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-60],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],r8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+28],r9</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rbp-98],3E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		destination = destination.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,1FC28FB0D18</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AC618</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9,1FC28FA0008</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE5DEA00]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var list = PrepareList(files);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rax]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AC730</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E058]; DotNetTips.Spargine.IO.FileProcessor.PrepareList[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		if (list is null)
+		^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       qword ptr [rbp-40],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M01_L00"><a href="#5_M01_L00"><pre><code>jne       short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6ACA50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			return 0;
+			^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,0D0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		_ = destination.CheckExists(createDirectory: true);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td id="5_M01_L00" class="label" data-label="5_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       dword ptr [rbp-70],1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-78],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rdx,[rbp-70]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       r8,[rbp-78]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+20]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r9,1FC28FA0008</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E088]; DotNetTips.Spargine.Core.Validator.CheckExists(System.IO.DirectoryInfo, Boolean ByRef, Boolean ByRef, System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp+20]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-90],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-90]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,7FFCDE6ACA58</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-90]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp-90]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rax+40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [rax+30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E0A0]; DotNetTips.Spargine.IO.PathHelper.EnsureTrailingSlash(System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-48],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var successCount = 0;
+		^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var psw = this.CreateStopwatch(nameof(this.CopyFilesWithOriginalPath));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,1FC28FB0D48</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E0B8]; DotNetTips.Spargine.IO.FileProcessor.CreateStopwatch(System.String)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-58],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var listCount = list.Count;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE123548]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Count()</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-5C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var canBeCanceled = cancellationToken.CanBeCanceled;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>lea       rcx,[rbp+28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E0D0]; System.Threading.CancellationToken.get_CanBeCanceled()</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-60],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		var createdDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,offset MT_System.Collections.Generic.HashSet<System.String></pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_NEWSFAST</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-88],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E0E8]; System.StringComparer.get_OrdinalIgnoreCase()</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-0A0],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,[rbp-0A0]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-88]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE2076D8]; System.Collections.Generic.HashSet`1[[System.__Canon, System.Private.CoreLib]]..ctor(System.Collections.Generic.IEqualityComparer`1<System.__Canon>)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp-88]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-68],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
+		     ^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-7C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M01_L03"><a href="#5_M01_L03"><pre><code>jmp       short M01_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>			if (canBeCanceled)
+			^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td id="5_M01_L01" class="label" data-label="5_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>cmp       dword ptr [rbp-60],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M01_L02"><a href="#5_M01_L02"><pre><code>je        short M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6ACB60</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>				cancellationToken.ThrowIfCancellationRequested();
+				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E100]; System.Threading.CancellationToken.ThrowIfCancellationRequested()</pre></code></td>
+</tr><tr class="evenMap">
+<td id="5_M01_L02" class="label" data-label="5_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6ACB64</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>			successCount += this.CopyFileItemWithOriginalPath(list[fileIndex], destinationPath, createdDirs, psw);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,[rbp-7C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE123578]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Item(Int32)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-0A8],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rax,[rbp-58]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,[rbp-0A8]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r8,[rbp-48]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r9,[rbp-68]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66E118]; DotNetTips.Spargine.IO.FileProcessor.CopyFileItemWithOriginalPath(System.IO.FileInfo, System.String, System.Collections.Generic.HashSet`1<System.String>, DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M01_L05"><a href="#5_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-7C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       eax,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M01_L05"><a href="#5_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-7C],eax</pre></code></td>
+</tr><tr class="">
+<td id="5_M01_L03" class="label" data-label="5_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       eax,[rbp-98]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>dec       eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-98],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       dword ptr [rbp-98],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="5" class="reference" data-reference="5_M01_L04"><a href="#5_M01_L04"><pre><code>jg        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp-98]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,98</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_PATCHPOINT</pre></code></td>
+</tr><tr class="evenMap">
+<td id="5_M01_L04" class="label" data-label="5_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-7C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       eax,[rbp-5C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="5" class="reference" data-reference="5_M01_L01"><a href="#5_M01_L01"><pre><code>jl        near ptr M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6ACB68</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>		return successCount;
+		^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,0D0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="5_M01_L05" class="label" data-label="5_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_OVERFLOW</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>int       3</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],edx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66F588]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE66F558]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Int32, System.Private.CoreLib]](Int32 ByRef)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,30</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+</body></html>

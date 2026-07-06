@@ -103,11 +103,11 @@ public class FileHelperUnGZipAsyncBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Benchmark for <see cref="FileHelper.UnGZipAsync(FileInfo, DirectoryInfo, System.Threading.CancellationToken)"/>.
+	/// Benchmark for <see cref="FileHelper.UnGZipAsync(FileInfo, DirectoryInfo, CancellationToken)"/>.
 	/// Gzip creation is isolated to <see cref="IterationSetupAttribute"/>; only decompression is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.UnGZipAsync))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public async Task UnGZipAsync()
 	{
 		await FileHelper.UnGZipAsync(this._gzipFile, this._outDir).ConfigureAwait(false);

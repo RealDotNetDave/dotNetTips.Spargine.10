@@ -4,7 +4,7 @@
 // Created          : 01-01-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-12-2026
+// Last Modified On : 07-05-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSet.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -383,7 +383,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// <returns><c>true</c> if <paramref name="item"/> is found in the <see cref="ConcurrentHashSet{T}"/>; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is null.</exception>
 	[DefaultValue(false)]
-	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Contains), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public bool Contains(T item)
 	{
 		if (item is null)
@@ -391,26 +391,18 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		// SUGGESTION FROM COPILOT SLOWER
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
-
-		// We must capture the _buckets field in a local variable. It is set to a new table on each table resize.
+		var comparer = this._comparer;
+		var hashCode = comparer.GetHashCode(item);
 		var tables = this._tables;
+		var buckets = tables._buckets;
+		var bucketNo = GetBucket(hashCode, buckets.Length);
 
-		var bucketNo = GetBucket(hashCode, tables._buckets.Length);
-
-		// We can get away w/out a lock here.
-		// The Volatile.Read ensures that the load of the fields of 'n' doesn't move before the load from buckets[i].
-		var current = Volatile.Read(ref tables._buckets[bucketNo]);
-
-		while (current is not null)
+		for (var current = Volatile.Read(ref buckets[bucketNo]); current is not null; current = current._next)
 		{
-			if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+			if (hashCode == current._hashCode && comparer.Equals(current._item, item))
 			{
 				return true;
 			}
-
-			current = current._next;
 		}
 
 		return false;
@@ -569,7 +561,7 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 	/// </remarks>
 	[DefaultValue(false)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryRemove), author: "David McCarter", createdOn: "7/28/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool TryRemove(T item)
 	{
 		if (item is null)
@@ -577,46 +569,38 @@ public sealed class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T
 			return false;
 		}
 
-		// SUGGESTION FROM COPILOT SLOWER
-		var hashCode = this._comparer?.GetHashCode(item) ?? throw new InvalidOperationException(Resources.ComparerHashcodeCannotBeNull);
+		var comparer = this._comparer;
+		var hashCode = comparer.GetHashCode(item);
 
 		while (true)
 		{
 			var tables = this._tables;
+			var buckets = tables._buckets;
+			var locks = tables._locks;
 
-			GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, tables._buckets.Length, tables._locks.Length);
+			GetBucketAndLockNo(hashCode, out var bucketNo, out var lockNo, buckets.Length, locks.Length);
 
-			lock (tables._locks[lockNo])
+			lock (locks[lockNo])
 			{
-				// If the table just got resized, we may not be holding the right lock, and must retry.
-				// This should be a rare occurrence.
 				if (tables != this._tables)
 				{
 					continue;
 				}
 
-				Node? previous = null;
+				ref var slot = ref buckets[bucketNo];
+				var current = slot;
 
-				for (var current = tables._buckets[bucketNo]; current is not null; current = current._next)
+				while (current is not null)
 				{
-					Debug.Assert((previous is null && current == tables._buckets[bucketNo]) || previous?._next == current);
-
-					if (hashCode == current._hashCode && this._comparer.Equals(current._item, item))
+					if (hashCode == current._hashCode && comparer.Equals(current._item, item))
 					{
-						if (previous is null)
-						{
-							Volatile.Write(ref tables._buckets[bucketNo]!, current._next);
-						}
-						else
-						{
-							previous._next = current._next;
-						}
-
+						Volatile.Write(ref slot, current._next);
 						tables._countPerLock[lockNo]--;
 						return true;
 					}
 
-					previous = current;
+					slot = ref current._next;
+					current = current._next;
 				}
 			}
 

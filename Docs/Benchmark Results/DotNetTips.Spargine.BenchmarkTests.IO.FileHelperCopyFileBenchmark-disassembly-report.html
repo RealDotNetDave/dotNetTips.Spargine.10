@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark-20260705-115426</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark-20260705-115426</th></tr>
+<tr>
+<th>CopyFileAsync .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark.CopyFileAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFCDE606100]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFCDE6060E8]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFCDE606118]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE60C888]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFCDE60C8A0]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark+<CopyFileAsync>d__6, DotNetTips.Spargine.BenchmarkTests]](<CopyFileAsync>d__6 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFCDE606130]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFCDE75BF4A
+mov       rcx,7FFCDE83EA60
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFCDE83EA64
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFCDE83EA60
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFCDE7ED278]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFCDE75C015
+ret
+xor       edx,edx
+jmp       qword ptr [7FFCDE60C8B8]
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

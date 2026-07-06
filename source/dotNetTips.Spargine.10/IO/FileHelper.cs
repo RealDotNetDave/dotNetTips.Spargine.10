@@ -4,13 +4,14 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-27-2026
+// Last Modified On : 07-06-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common methods for working with files.</summary>
 // ***********************************************************************
+using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -60,6 +61,11 @@ public static class FileHelper
 	/// The cached invalid file name characters used to avoid per-call array allocation in <see cref="FileHasInvalidChars"/>.
 	/// </summary>
 	private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars();
+
+	/// <summary>
+	/// Cached search values used to speed repeated invalid-character checks in file names.
+	/// </summary>
+	private static readonly SearchValues<char> _invalidFileNameSearchValues = SearchValues.Create(_invalidFileNameChars);
 
 	/// <summary>
 	/// Represents the method that will be called by a file copy operation to provide progress updates.
@@ -149,7 +155,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[Pure]
-	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CalculateTotalFileSize), author: "David McCarter", createdOn: "5/9/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static long CalculateTotalFileSize(ReadOnlySpan<FileInfo> files)
 	{
 		if (files.IsEmpty)
@@ -186,7 +192,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool CheckPermission([DisallowNull] FileInfo file, FileSystemRights permission = FileSystemRights.Read)
 	{
 		file = file.ArgumentNotNull();
@@ -222,7 +228,7 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static long CopyFile([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
@@ -230,19 +236,14 @@ public static class FileHelper
 		if (destination.CheckExists())
 		{
 			var newFileName = Path.Combine(destination.FullName, file.Name);
+			var fileLength = file.Length;
 
-			using var sourceStream = file.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
-
-			if (File.Exists(newFileName))
-			{
-				File.Delete(newFileName);
-			}
-
+			using var sourceStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan);
 			using var destinationStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan);
 
 			sourceStream.CopyTo(destinationStream);
 
-			return file.Length;
+			return fileLength;
 		}
 		else
 		{
@@ -275,22 +276,17 @@ public static class FileHelper
 	/// </example>
 	[OverloadResolutionPriority(1)]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool CopyFile([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, [DisallowNull] CopyProgressRoutine progressCallback)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
 		progressCallback = progressCallback.ArgumentNotNull();
 
-		if (destination.ArgumentNotNull().CheckExists(throwException: true))
-		{
-			var cancel = 0;
+		var cancel = 0;
+		var sourceFilePath = file.FullName;
+		var destinationFilePath = Path.Combine(destination.FullName, file.Name);
 
-			return LibraryImport.CopyFileEx(file.FullName, Path.Combine(destination.FullName, file.Name), progressCallback, IntPtr.Zero, ref cancel, CopyFileMode.Restartable | CopyFileMode.Restartable);
-		}
-		else
-		{
-			return false;
-		}
+		return LibraryImport.CopyFileEx(sourceFilePath, destinationFilePath, progressCallback, IntPtr.Zero, ref cancel, CopyFileMode.Restartable);
 	}
 
 	/// <summary>
@@ -312,24 +308,21 @@ public static class FileHelper
 	/// Console.WriteLine($"FileCopied file length: {fileLength}");
 	/// </code>
 	/// </example>
-	[Information(nameof(CopyFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFileAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<long> CopyFileAsync([DisallowNull] FileInfo file, [NotNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
 
-		var newFileName = Path.Combine(destination.FullName, file.Name);
+		var sourceFilePath = file.FullName;
+		var destinationFilePath = Path.Combine(destination.FullName, file.Name);
+		var fileLength = file.Length;
 
-		if (File.Exists(newFileName))
-		{
-			File.Delete(newFileName);
-		}
-
-		using var sourceStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
-		using var destinationStream = new FileStream(newFileName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+		using var sourceStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+		using var destinationStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 
 		await sourceStream.CopyToAsync(destinationStream, cancellationToken).ConfigureAwait(false);
 
-		return file.Length;
+		return fileLength;
 	}
 
 	/// <summary>
@@ -344,17 +337,18 @@ public static class FileHelper
 	/// successfully deleted and any error information.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static SimpleResult<ReadOnlyCollection<string>> DeleteFiles([DisallowNull] this ReadOnlyCollection<string> files, bool stopOnFirstError = false)
 	{
 		files = files.ArgumentNotNull();
 
 		var result = new SimpleResult<ReadOnlyCollection<string>>();
-		var filesDeleted = new List<string>(files.Count);
+		var fileCount = files.Count;
+		var filesDeleted = new List<string>(fileCount);
 
-		foreach (var fileName in files)
+		for (var fileIndex = 0; fileIndex < fileCount; fileIndex++)
 		{
-			if (ProcessFileDeletion(fileName, result, filesDeleted, stopOnFirstError))
+			if (ProcessFileDeletion(files[fileIndex], result, filesDeleted, stopOnFirstError))
 			{
 				break;
 			}
@@ -414,8 +408,8 @@ public static class FileHelper
 	/// await FileHelper.DownloadFileFromWebAsync(remoteFileUrl, destinationDir);
 	/// </code>
 	/// </example>
-	[Information(nameof(DownloadFileFromWebAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
-	public static async Task<SimpleResult<int>> DownloadFileFromWebAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
+	[Information(nameof(DownloadFileFromWebAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static Task<SimpleResult<int>> DownloadFileFromWebAsync([DisallowNull] Uri remoteUri, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		remoteUri = remoteUri.ArgumentNotNull();
 		destination = destination.ArgumentNotNull();
@@ -427,17 +421,16 @@ public static class FileHelper
 			ExceptionThrower.ThrowDirectoryNotFoundException(Resources.CouldNotCreateDirectory, destination);
 		}
 
-		var pathName = destination.FullName;
+		var fileName = Path.GetFileName(remoteUri.LocalPath);
 
-		return await ExecutionHelper.ProgressiveRetryAsync(async () =>
+		if (string.IsNullOrEmpty(fileName))
 		{
-			// ResponseHeadersRead starts streaming immediately instead of buffering the entire response body
-			using var response = await _httpClient.GetAsync(remoteUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-			using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
-			using var localStream = new FileStream(pathName, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+			fileName = remoteUri.Host;
+		}
 
-			await stream.CopyToAsync(localStream, cancellationToken).ConfigureAwait(false);
-		}, retryCount: 5, retryWaitMilliseconds: 50, cancellationToken: cancellationToken).ConfigureAwait(false);
+		var pathName = Path.Combine(destination.FullName, fileName);
+
+		return ExecutionHelper.ProgressiveRetryAsync(() => DownloadFileToPathAsync(remoteUri, pathName, cancellationToken), retryCount: 5, retryWaitMilliseconds: 50, cancellationToken: cancellationToken);
 	}
 
 	/// <summary>
@@ -449,12 +442,12 @@ public static class FileHelper
 	/// This method utilizes FileInfo.Name to retrieve the file's name and checks it against a list of invalid characters obtained from FileHelper.InvalidFileNameChars.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FileHasInvalidChars), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool FileHasInvalidChars([DisallowNull] FileInfo file)
 	{
 		file = file.ArgumentNotNull();
 
-		return file.Name.IndexOfAny(_invalidFileNameChars) != -1;
+		return file.Name.AsSpan().IndexOfAny(_invalidFileNameSearchValues) >= 0;
 	}
 
 	/// <summary>
@@ -478,7 +471,7 @@ public static class FileHelper
 	/// <exception cref="IOException">Thrown if an I/O error occurs during the move operation.</exception>
 	/// <exception cref="UnauthorizedAccessException">Thrown if the caller does not have the required permission.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(MoveFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(MoveFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool MoveFile([DisallowNull] FileInfo file, [DisallowNull] FileInfo destinationFile, bool replaceExisting = true, int retryCount = 1)
 	{
 		file = file.ArgumentNotNull();
@@ -487,16 +480,21 @@ public static class FileHelper
 
 		ValidateFileCreateDestinationDirectory(file, destinationFile.Directory!);
 
+		var sourcePath = file.FullName;
+		var destinationPath = destinationFile.FullName;
+
 		for (var retryIndex = 0; retryIndex < retryCount; retryIndex++)
 		{
-			if (TryMoveFileOnce(file.FullName, destinationFile.FullName, replaceExisting))
+			if (TryMoveFileOnce(sourcePath, destinationPath, replaceExisting))
 			{
-				destinationFile.Refresh();
-				return destinationFile.Exists;
+				return true;
 			}
 
-			// If something has a transient lock on the file waiting may resolve the issue
-			Thread.Sleep((retryIndex + 1) * 10);
+			if (retryIndex < retryCount - 1)
+			{
+				// If something has a transient lock on the file waiting may resolve the issue
+				Thread.Sleep((retryIndex + 1) * 10);
+			}
 		}
 
 		return false;
@@ -586,14 +584,16 @@ public static class FileHelper
 	/// </code>
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task</remarks>
-	[Information(nameof(UnGZipAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		ValidateFileCreateDestinationDirectory(file, destination);
 
-		var outputFilePath = Path.Combine(destination.FullName, Path.GetFileNameWithoutExtension(file.Name));
+		var sourceFilePath = file.FullName;
+		var destinationPath = destination.FullName;
+		var outputFilePath = Path.Combine(destinationPath, Path.GetFileNameWithoutExtension(file.Name));
 
-		using var gzipStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+		using var gzipStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 		using var expandedStream = new GZipStream(gzipStream, CompressionMode.Decompress);
 		using var targetFileStream = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
 
@@ -620,10 +620,11 @@ public static class FileHelper
 	/// </example>
 	/// <remarks>Make sure to call .Dispose on Task,</remarks>
 	[OverloadResolutionPriority(1)]
-	[Information(nameof(UnGZipAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UnGZipAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task UnGZipAsync([DisallowNull] FileInfo file, [DisallowNull] DirectoryInfo destination, bool deleteGZipFile, CancellationToken cancellationToken = default)
 	{
-		ValidateFileCreateDestinationDirectory(file, destination);
+		file = file.ArgumentNotNull();
+		destination = destination.ArgumentNotNull();
 
 		await UnGZipAsync(file, destination, cancellationToken).ConfigureAwait(false);
 
@@ -706,6 +707,22 @@ public static class FileHelper
 	}
 
 	/// <summary>
+	/// Downloads a remote file to a local destination path using streamed I/O.
+	/// </summary>
+	/// <param name="remoteUri">The remote URI to download.</param>
+	/// <param name="destinationFilePath">The full destination file path.</param>
+	/// <param name="cancellationToken">Cancellation token.</param>
+	private static async Task DownloadFileToPathAsync(Uri remoteUri, string destinationFilePath, CancellationToken cancellationToken)
+	{
+		// ResponseHeadersRead starts streaming immediately instead of buffering the entire response body
+		using var response = await _httpClient.GetAsync(remoteUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+		using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+		using var localStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+		await stream.CopyToAsync(localStream, cancellationToken).ConfigureAwait(false);
+	}
+
+	/// <summary>
 	/// Evaluates the access rules for the specified permission, returning <c>true</c> if access is allowed and not denied.
 	/// </summary>
 	/// <param name="rules">The collection of <see cref="AuthorizationRuleCollection"/> access rules to evaluate.</param>
@@ -772,23 +789,22 @@ public static class FileHelper
 	/// <param name="filesDeleted">The list that accumulates successfully deleted file paths.</param>
 	/// <param name="stopOnFirstError">Whether to signal the caller to stop on the first error.</param>
 	/// <returns><c>true</c> if the caller should stop iterating (i.e., an error occurred and <paramref name="stopOnFirstError"/> is <c>true</c>); otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static bool ProcessFileDeletion(string fileName, SimpleResult<ReadOnlyCollection<string>> result, List<string> filesDeleted, bool stopOnFirstError)
 	{
-		var deleted = TryDeleteFile(fileName, out var exception);
-
-		if (deleted)
+		if (TryDeleteFile(fileName, out var exception))
 		{
 			filesDeleted.Add(fileName);
 			return false;
 		}
 
-		if (exception is not null)
+		if (exception is null)
 		{
-			result.AddException(exception);
-			return stopOnFirstError;
+			return false;
 		}
 
-		return false;
+		result.AddException(exception);
+		return stopOnFirstError;
 	}
 
 	/// <summary>
@@ -854,13 +870,15 @@ public static class FileHelper
 	/// <returns><c>true</c> if the move succeeded; <c>false</c> if a transient exception was caught.</returns>
 	private static bool TryMoveFileOnce(string sourcePath, string destinationPath, bool replaceExisting)
 	{
-		if (!replaceExisting && File.Exists(destinationPath))
+		try
 		{
-			throw new IOException($"Cannot move '{sourcePath}' to '{destinationPath}': destination already exists and overwrite is disabled.");
+			File.Move(sourcePath, destinationPath, replaceExisting);
+			return true;
 		}
-
-		File.Move(sourcePath, destinationPath, replaceExisting);
-		return true;
+		catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+		{
+			return false;
+		}
 	}
 
 	/// <summary>

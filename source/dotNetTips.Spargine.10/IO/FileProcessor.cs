@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-03-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-27-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-06-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -90,7 +90,7 @@ public sealed class FileProcessor
 	/// fileProcessor.CopyFiles(filesToCopy, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		destination = destination.ArgumentNotNull();
@@ -105,14 +105,20 @@ public sealed class FileProcessor
 		_ = destination.CheckExists(createDirectory: true);
 
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
-
 		var successCount = 0;
+		var listCount = list.Count;
+		var canBeCanceled = cancellationToken.CanBeCanceled;
+
 		var psw = this.CreateStopwatch(nameof(this.CopyFiles));
 
-		foreach (var tempFile in list)
+		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			successCount += this.CopyFileItem(tempFile, destinationPath, overwrite, psw);
+			if (canBeCanceled)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+			}
+
+			successCount += this.CopyFileItem(list[fileIndex], destinationPath, overwrite, psw);
 		}
 
 		return successCount;
@@ -144,7 +150,7 @@ public sealed class FileProcessor
 	/// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir, cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CopyFilesWithOriginalPath), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int CopyFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, CancellationToken cancellationToken = default)
 	{
 		destination = destination.ArgumentNotNull();
@@ -159,17 +165,22 @@ public sealed class FileProcessor
 		_ = destination.CheckExists(createDirectory: true);
 
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
-
 		var successCount = 0;
 		var psw = this.CreateStopwatch(nameof(this.CopyFilesWithOriginalPath));
+		var listCount = list.Count;
+		var canBeCanceled = cancellationToken.CanBeCanceled;
 
 		// Track directories already created to avoid redundant filesystem stat calls.
 		var createdDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-		foreach (var tempFile in list)
+		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			successCount += this.CopyFileItemWithOriginalPath(tempFile, destinationPath, createdDirs, psw);
+			if (canBeCanceled)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+			}
+
+			successCount += this.CopyFileItemWithOriginalPath(list[fileIndex], destinationPath, createdDirs, psw);
 		}
 
 		return successCount;
@@ -200,7 +211,7 @@ public sealed class FileProcessor
 	/// fileProcessor.DeleteFiles(filesToDelete, cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFiles), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFiles(IEnumerable<FileInfo> files, CancellationToken cancellationToken = default)
 	{
 		var list = PrepareList(files);
@@ -212,11 +223,17 @@ public sealed class FileProcessor
 
 		var successCount = 0;
 		var psw = this.CreateStopwatch(nameof(this.DeleteFiles));
+		var listCount = list.Count;
+		var canBeCanceled = cancellationToken.CanBeCanceled;
 
-		foreach (var listItem in list)
+		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			successCount += this.DeleteFileItem(listItem, psw);
+			if (canBeCanceled)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+			}
+
+			successCount += this.DeleteFileItem(list[fileIndex], psw);
 		}
 
 		return successCount;
@@ -247,7 +264,7 @@ public sealed class FileProcessor
 	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		var list = PrepareList(folders);
@@ -295,7 +312,7 @@ public sealed class FileProcessor
 	/// fileProcessor.MoveFiles(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(MoveFiles), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFiles(IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		destination = destination.ArgumentNotNull();
@@ -310,14 +327,20 @@ public sealed class FileProcessor
 		_ = destination.CheckExists(createDirectory: true);
 
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
-
 		var successCount = 0;
+		var listCount = list.Count;
+		var canBeCanceled = cancellationToken.CanBeCanceled;
+
 		var psw = this.CreateStopwatch(nameof(this.MoveFiles));
 
-		foreach (var tempFile in list)
+		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			successCount += this.MoveFileItem(tempFile, destinationPath, overwrite, psw);
+			if (canBeCanceled)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+			}
+
+			successCount += this.MoveFileItem(list[fileIndex], destinationPath, overwrite, psw);
 		}
 
 		return successCount;
@@ -350,7 +373,7 @@ public sealed class FileProcessor
 	/// fileProcessor.MoveFilesWithOriginalPath(filesToMove, destinationDir, cancellationToken: cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(MoveFilesWithOriginalPath), author: "David McCarter", createdOn: "1/20/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int MoveFilesWithOriginalPath(in IEnumerable<FileInfo> files, [DisallowNull] DirectoryInfo destination, in bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		destination = destination.ArgumentNotNull();
@@ -365,17 +388,22 @@ public sealed class FileProcessor
 		_ = destination.CheckExists(createDirectory: true);
 
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
-
 		var successCount = 0;
 		var psw = this.CreateStopwatch(nameof(this.MoveFilesWithOriginalPath));
+		var listCount = list.Count;
+		var canBeCanceled = cancellationToken.CanBeCanceled;
 
 		// Track directories already created to avoid redundant filesystem stat calls.
 		var createdDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-		foreach (var tempFile in list)
+		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			successCount += this.MoveFileItemWithOriginalPath(tempFile, destinationPath, overwrite, createdDirs, psw);
+			if (canBeCanceled)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+			}
+
+			successCount += this.MoveFileItemWithOriginalPath(list[fileIndex], destinationPath, overwrite, createdDirs, psw);
 		}
 
 		return successCount;
@@ -466,24 +494,21 @@ public sealed class FileProcessor
 	}
 
 	/// <summary>
-	/// Starts the optional stopwatch, copies <paramref name="file"/> to <paramref name="newFilePath"/> using large-buffer sequential streams, then returns the elapsed time.
+	/// Starts the optional stopwatch, copies <paramref name="sourceFilePath"/> to <paramref name="newFilePath"/> using large-buffer sequential streams, then returns the elapsed time.
 	/// </summary>
-	/// <param name="file">The source file.</param>
+	/// <param name="sourceFilePath">The full source file path.</param>
 	/// <param name="newFilePath">The full destination path including the file name.</param>
 	/// <param name="psw">Optional stopwatch; <see langword="null"/> when no <see cref="Processed"/> subscribers exist.</param>
 	/// <returns>The elapsed time of the copy operation, or <see cref="TimeSpan.Zero"/> when <paramref name="psw"/> is <see langword="null"/>.</returns>
-	private static TimeSpan StreamCopyFile(FileInfo file, string newFilePath, PerformanceStopwatch? psw)
+	private static TimeSpan StreamCopyFile(string sourceFilePath, string newFilePath, PerformanceStopwatch? psw)
 	{
 		psw?.Start();
 
 		// Use an explicit large buffer + SequentialScan for throughput (FileInfo.CopyTo uses 4096 bytes).
-		using (var src = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan))
-		{
-			using (var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan))
-			{
-				src.CopyTo(dst);
-			}
-		}
+		using var src = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 81920, FileOptions.SequentialScan);
+		using var dst = new FileStream(newFilePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 81920, FileOptions.SequentialScan);
+
+		src.CopyTo(dst);
 
 		return psw?.StopReset() ?? TimeSpan.Zero;
 	}
@@ -498,32 +523,37 @@ public sealed class FileProcessor
 	/// <returns>1 if the file was copied successfully; otherwise 0.</returns>
 	private int CopyFileItem(FileInfo file, string destinationPath, bool overwrite, PerformanceStopwatch? psw)
 	{
+		var fileFullName = file.FullName;
+		long fileLength = 0;
+
 		if (!file.Exists)
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 
 		try
 		{
+			fileLength = file.Length;
+
 			var newFilePath = Path.Combine(destinationPath, file.Name);
 
 			if (IsOverwriteConflict(newFilePath, overwrite))
 			{
-				this.OnProcessed(new ProgressEventArgs { Message = Resources.FileAlreadyExists, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+				this.OnProcessed(new ProgressEventArgs { Message = Resources.FileAlreadyExists, Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 				return 0;
 			}
 
-			var perf = StreamCopyFile(file, newFilePath, psw);
+			var perf = StreamCopyFile(fileFullName, newFilePath, psw);
 
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = file.FullName, ProgressState = FileProgressState.FileCopied, Size = file.Length, SpeedInMilliseconds = perf.TotalMilliseconds });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = fileFullName, ProgressState = FileProgressState.FileCopied, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
 #pragma warning disable CA1031
 		catch (Exception ex) // Report all errors
 #pragma warning restore CA1031
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 	}
@@ -539,15 +569,20 @@ public sealed class FileProcessor
 	/// <returns>1 if the file was copied successfully; otherwise 0.</returns>
 	private int CopyFileItemWithOriginalPath(FileInfo file, string destinationPath, HashSet<string> createdDirs, PerformanceStopwatch? psw)
 	{
+		var fileFullName = file.FullName;
+		long fileLength = 0;
+
 		if (!file.Exists)
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 
 		try
 		{
-			var newFilePath = ComputeOriginalDestPath(file.FullName, destinationPath);
+			fileLength = file.Length;
+
+			var newFilePath = ComputeOriginalDestPath(fileFullName, destinationPath);
 			var dirPath = Path.GetDirectoryName(newFilePath)!;
 
 			if (createdDirs.Add(dirPath))
@@ -555,16 +590,16 @@ public sealed class FileProcessor
 				_ = Directory.CreateDirectory(dirPath);
 			}
 
-			var perf = StreamCopyFile(file, newFilePath, psw);
+			var perf = StreamCopyFile(fileFullName, newFilePath, psw);
 
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = file.FullName, ProgressState = FileProgressState.FileCopied, Size = file.Length, SpeedInMilliseconds = perf.TotalMilliseconds });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenCopied, Name = fileFullName, ProgressState = FileProgressState.FileCopied, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
 #pragma warning disable CA1031
 		catch (Exception ex) // Report all errors
 #pragma warning restore CA1031
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = file.Length });
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 	}
@@ -587,9 +622,11 @@ public sealed class FileProcessor
 	/// <returns>1 if the file was deleted successfully; otherwise 0.</returns>
 	private int DeleteFileItem(FileInfo file, PerformanceStopwatch? psw)
 	{
+		var fileFullName = file.FullName;
+
 		if (!file.Exists)
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = fileFullName, ProgressState = FileProgressState.Error });
 			return 0;
 		}
 
@@ -599,14 +636,14 @@ public sealed class FileProcessor
 		{
 			fileLength = file.Length;
 			var perf = ExecuteDelete(file, psw);
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenDeleted, Name = file.FullName, ProgressState = FileProgressState.FileDeleted, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenDeleted, Name = fileFullName, ProgressState = FileProgressState.FileDeleted, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
 #pragma warning disable CA1031
 		catch (Exception ex) // Report all errors
 #pragma warning restore CA1031
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 	}
@@ -657,9 +694,11 @@ public sealed class FileProcessor
 	/// <returns>1 if the file was moved successfully; otherwise 0.</returns>
 	private int MoveFileItem(FileInfo file, string destinationPath, bool overwrite, PerformanceStopwatch? psw)
 	{
+		var fileFullName = file.FullName;
+
 		if (!file.Exists)
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = fileFullName, ProgressState = FileProgressState.Error });
 			return 0;
 		}
 
@@ -671,14 +710,14 @@ public sealed class FileProcessor
 			var newFileName = Path.Combine(destinationPath, file.Name);
 			var perf = ExecuteMove(file, newFileName, overwrite, psw);
 
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = fileFullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
 #pragma warning disable CA1031
 		catch (Exception ex) // Report all errors
 #pragma warning restore CA1031
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 	}
@@ -695,9 +734,11 @@ public sealed class FileProcessor
 	/// <returns>1 if the file was moved successfully; otherwise 0.</returns>
 	private int MoveFileItemWithOriginalPath(FileInfo file, string destinationPath, bool overwrite, HashSet<string> createdDirs, PerformanceStopwatch? psw)
 	{
+		var fileFullName = file.FullName;
+
 		if (!file.Exists)
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = file.FullName, ProgressState = FileProgressState.Error });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileNotFound, Name = fileFullName, ProgressState = FileProgressState.Error });
 			return 0;
 		}
 
@@ -706,7 +747,7 @@ public sealed class FileProcessor
 		try
 		{
 			fileLength = file.Length;
-			var newFilePath = ComputeOriginalDestPath(file.FullName, destinationPath);
+			var newFilePath = ComputeOriginalDestPath(fileFullName, destinationPath);
 			var dirPath = Path.GetDirectoryName(newFilePath)!;
 
 			if (createdDirs.Add(dirPath))
@@ -716,14 +757,14 @@ public sealed class FileProcessor
 
 			var perf = ExecuteMove(file, newFilePath, overwrite, psw);
 
-			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = file.FullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
+			this.OnProcessed(new ProgressEventArgs { Message = Resources.FileHasBeenMoved, Name = fileFullName, ProgressState = FileProgressState.FileMoved, Size = fileLength, SpeedInMilliseconds = perf.TotalMilliseconds });
 			return 1;
 		}
 #pragma warning disable CA1031
 		catch (Exception ex) // Report all errors
 #pragma warning restore CA1031
 		{
-			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = file.FullName, ProgressState = FileProgressState.Error, Size = fileLength });
+			this.OnProcessed(new ProgressEventArgs { Message = ex.GetAllMessages(), Name = fileFullName, ProgressState = FileProgressState.Error, Size = fileLength });
 			return 0;
 		}
 	}

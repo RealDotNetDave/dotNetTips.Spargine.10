@@ -58,7 +58,7 @@ public class DirectoryHelperCopyDirectoryBenchmark : Benchmark
 	/// so only a clean copy is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.CopyDirectory))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CopyDirectory()
 	{
 		DirectoryHelper.CopyDirectory(this._sourcePath, this._copyDestinationPath, overwrite: true);

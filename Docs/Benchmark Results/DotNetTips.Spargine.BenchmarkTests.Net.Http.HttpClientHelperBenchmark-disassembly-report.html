@@ -1,0 +1,2366 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark-20260705-114354</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="2">DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark-20260705-114354</th></tr>
+<tr>
+<th>CreateOptimizedHttpClientDefaultOptions .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>CreateOptimizedHttpClientCustomOptions .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark.CreateOptimizedHttpClientDefaultOptions()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,30
+lea       rbp,[rsp+40]
+mov       rbx,rcx
+xor       ecx,ecx
+call      qword ptr [7FFCDE67E598]
+mov       rcx,rax
+mov       [rbp-20],rcx
+mov       rax,[rcx+40]
+mov       [rbp-18],rax
+mov       rax,[rbx+60]
+cmp       [rax],al
+lea       rcx,[rbp-18]
+call      qword ptr [7FFCDE704018]
+nop
+call      00007FFCDE76D535
+nop
+add       rsp,30
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+sub       rsp,28
+mov       rcx,[rbp-20]
+test      rcx,rcx
+je        near ptr 00007FFCDE76D64E
+mov       rax,offset MT_System.Net.Http.HttpClient
+cmp       [rcx],rax
+jne       near ptr 00007FFCDE76D654
+cmp       byte ptr [rcx+13],0
+jne       near ptr 00007FFCDE76D5FD
+mov       byte ptr [rcx+13],1
+mov       rbx,[rcx+18]
+cmp       byte ptr [rbx+24],0
+je        short 00007FFCDE76D57D
+mov       ecx,46
+call      qword ptr [7FFCDE70DED8]
+int       3
+cmp       dword ptr [rbx+20],0
+jne       short 00007FFCDE76D5D3
+lea       r11,[rbx+20]
+mov       edx,1
+xor       eax,eax
+lock cmpxchg [r11],edx
+test      eax,eax
+jne       short 00007FFCDE76D5D3
+mov       r11,[rbx+8]
+test      r11,r11
+je        short 00007FFCDE76D5B6
+xor       eax,eax
+mov       [rbx+8],rax
+mov       rcx,r11
+mov       r11,7FFCDDF70A88
+call      qword ptr [r11]
+mov       rax,[rbx+10]
+test      rax,rax
+je        short 00007FFCDE76D5C8
+mov       rcx,rax
+call      qword ptr [7FFCDE70DEF0]
+mov       rcx,rbx
+xor       edx,edx
+call      qword ptr [7FFCDE704090]
+mov       rcx,[rbp-20]
+mov       rbx,[rcx+18]
+mov       rcx,rbx
+mov       edx,1
+mov       rsi,[rbx]
+mov       rax,[rsi+40]
+call      qword ptr [rax+28]
+test      dword ptr [rsi],100000
+je        short 00007FFCDE76D5FD
+mov       rcx,rbx
+call      00007FFD3DC617C0
+mov       rcx,[rbp-20]
+cmp       byte ptr [rcx+10],0
+jne       short 00007FFCDE76D63A
+mov       byte ptr [rcx+10],1
+cmp       byte ptr [rcx+11],0
+je        short 00007FFCDE76D63A
+mov       rbx,[rcx+8]
+mov       rcx,rbx
+mov       edx,1
+mov       rax,[rbx]
+mov       rax,[rax+40]
+call      qword ptr [rax+30]
+mov       rcx,[rbx]
+test      dword ptr [rcx],100000
+je        short 00007FFCDE76D63A
+mov       rcx,rbx
+call      00007FFD3DC617C0
+mov       rcx,[rbp-20]
+mov       rax,[rcx]
+test      dword ptr [rax],100000
+je        short 00007FFCDE76D64E
+call      00007FFD3DC617C0
+nop
+add       rsp,28
+ret
+mov       r11,7FFCDDF70A80
+call      qword ptr [r11]
+jmp       short 00007FFCDE76D64E
+
+DotNetTips.Spargine.Net.Http.HttpClientHelper.CreateOptimizedHttpClient(DotNetTips.Spargine.Net.Http.HttpClientOptions)
+		options ??= _defaultHttpClientOptions;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var handler = new SocketsHttpHandler()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		{
+		 
+			MaxConnectionsPerServer = options.MaxConnectionsPerServer,
+			                                                          
+			KeepAlivePingPolicy = options.KeepAlivePingPolicy,
+			                                                  
+			KeepAlivePingTimeout = options.KeepAlivePingTimeout,
+			                                                    
+			PooledConnectionLifetime = options.PooledConnectionLifetime,
+			                                                            
+			PooledConnectionIdleTimeout = options.PooledConnectionIdleTimeout,
+			                                                                  
+			UseCookies = options.UseCookies,
+			                                
+			UseProxy = options.UseProxy,
+			                            
+			AllowAutoRedirect = options.AllowAutoRedirect,
+			                                              
+			MaxAutomaticRedirections = options.MaxAutomaticRedirections,
+			                                                            
+		};
+		  
+		var client = new HttpClient(handler, disposeHandler: true)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		{
+		 
+			Timeout = options.Timeout,
+			                          
+		};
+		  
+		_ = client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", options.UserAgent);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		client.DefaultRequestHeaders.AcceptEncoding.Add(_deflateEncoding);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return client;
+		^^^^^^^^^^^^^^
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,50
+xor       eax,eax
+mov       [rsp+28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+mov       rbx,rcx
+mov       rcx,19B61C00198
+test      rbx,rbx
+cmove     rbx,[rcx]
+mov       rcx,offset MT_System.Net.Http.SocketsHttpHandler
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Net.Http.HttpConnectionSettings
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       rcx,rdi
+call      qword ptr [7FFCDE67ED48]
+lea       rcx,[rsi+8]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,19B61C00200
+mov       rcx,[rcx]
+cmp       byte ptr [rcx+9D],0
+je        near ptr 00007FFCDE76D7D0
+mov       rcx,rsi
+call      qword ptr [7FFCDE1F6670]
+cmp       qword ptr [rax+10],0
+je        short 00007FFCDE76D746
+mov       rcx,[rax+10]
+mov       rcx,[rcx]
+test      rcx,rcx
+jne       near ptr 00007FFCDE76DB0C
+mov       rcx,rax
+call      qword ptr [7FFCDE1F5B78]
+mov       rdi,[rax+18]
+test      rdi,rdi
+je        near ptr 00007FFCDE76DB14
+mov       rcx,rsi
+call      00007FFD3DC3FEC0
+mov       ecx,eax
+test      ecx,ecx
+je        near ptr 00007FFCDE76DB2C
+call      qword ptr [7FFCDE2C76A8]
+mov       rbp,rax
+test      rdi,rdi
+je        short 00007FFCDE76D786
+cmp       dword ptr [rdi+8],0
+jne       near ptr 00007FFCDE76DB3C
+mov       rdx,rbp
+mov       rcx,1DBE0BB3288
+call      qword ptr [7FFCDE02D9C8]
+mov       r14,rax
+mov       rcx,19B61C00200
+mov       rcx,[rcx]
+mov       r8,1DBE0BA0008
+mov       [rsp+20],r8
+mov       r8,r14
+mov       edx,1
+mov       r9,1DBE0BAD470
+call      qword ptr [7FFCDE70EBC8]
+mov       edi,[rbx+18]
+test      edi,edi
+jle       near ptr 00007FFCDE76E1C9
+cmp       byte ptr [rsi+28],0
+jne       near ptr 00007FFCDE76E265
+cmp       qword ptr [rsi+10],0
+jne       near ptr 00007FFCDE76E1EA
+mov       rdx,[rsi+8]
+mov       [rdx+8C],edi
+mov       ecx,[rbx+10]
+mov       [rdx+98],ecx
+mov       rdx,[rbx+20]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67E7D8]
+mov       rdx,[rbx+30]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67E808]
+mov       rdx,[rbx+28]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67E838]
+movzx     ecx,byte ptr [rbx+1D]
+cmp       byte ptr [rsi+28],0
+jne       near ptr 00007FFCDE76E265
+cmp       qword ptr [rsi+10],0
+jne       near ptr 00007FFCDE76E217
+mov       rax,[rsi+8]
+mov       [rax+0A4],cl
+movzx     ecx,byte ptr [rbx+1E]
+mov       [rax+0A5],cl
+movzx     ecx,byte ptr [rbx+1C]
+mov       [rax+0A9],cl
+mov       edi,[rbx+14]
+test      edi,edi
+jle       near ptr 00007FFCDE76E244
+mov       [rax+88],edi
+mov       rcx,offset MT_System.Net.Http.HttpClient
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       rcx,rdi
+mov       rdx,rsi
+mov       r8d,1
+call      qword ptr [7FFCDE67E910]
+mov       rdx,[rbx+38]
+mov       rcx,rdi
+call      qword ptr [7FFCDE67E940]
+mov       rsi,[rdi+20]
+test      rsi,rsi
+je        near ptr 00007FFCDE76DBC6
+mov       rbp,rsi
+mov       rbx,[rbx+8]
+cmp       [rbp],bpl
+mov       rcx,1DBE0BB079C
+mov       [rsp+28],rcx
+mov       dword ptr [rsp+30],0A
+lea       rcx,[rsp+28]
+call      qword ptr [7FFCDE67F210]
+mov       r14,rax
+test      r14,r14
+je        near ptr 00007FFCDE76E274
+mov       rdx,[r14+8]
+mov       rcx,1DBE0BB0790
+cmp       rdx,rcx
+jne       near ptr 00007FFCDE76E26F
+test      r14,r14
+je        near ptr 00007FFCDE76E2A5
+mov       [rsp+48],r14
+mov       rcx,[rsp+48]
+test      rcx,rcx
+jne       near ptr 00007FFCDE76DBEF
+mov       ecx,10
+movzx     eax,byte ptr [rbp+14]
+test      eax,ecx
+jne       short 00007FFCDE76D945
+movzx     eax,byte ptr [rbp+15]
+test      eax,ecx
+je        near ptr 00007FFCDE76D9DF
+lea       rcx,[rsp+48]
+call      qword ptr [7FFCDE70EBE0]
+mov       [rsp+48],rax
+mov       rcx,[rsp+48]
+mov       rdx,1DBE0BA0008
+test      rbx,rbx
+cmove     rbx,rdx
+mov       [rsp+40],rcx
+mov       rcx,[rbp+8]
+mov       r14,rcx
+test      r14,r14
+je        short 00007FFCDE76D97E
+mov       rdx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [r14],rdx
+je        short 00007FFCDE76D97E
+xor       r14d,r14d
+test      r14,r14
+jne       near ptr 00007FFCDE76E2EF
+test      rcx,rcx
+jne       near ptr 00007FFCDE76E373
+inc       dword ptr [rsi+10]
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+mov       edx,4
+call      CORINFO_HELP_NEWARR_1_VC
+mov       r14,rax
+lea       rcx,[rsi+8]
+mov       rdx,r14
+call      CORINFO_HELP_ASSIGN_REF
+add       r14,10
+lea       rcx,[r14+8]
+mov       rdx,[rsp+40]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rsi,[r14]
+test      rsi,rsi
+jne       near ptr 00007FFCDE76E389
+mov       rcx,r14
+mov       rdx,rbx
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+mov       rbx,[rdi+20]
+test      rbx,rbx
+je        near ptr 00007FFCDE76DC0B
+cmp       [rbx],bl
+mov       rcx,19B61C00768
+mov       rsi,[rcx]
+test      rsi,rsi
+je        near ptr 00007FFCDE76E3EC
+cmp       qword ptr [rbx+18],0
+jne       short 00007FFCDE76DA2B
+mov       rcx,offset MT_System.Object[]
+mov       edx,0A
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rbx+18]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rbp,[rbx+18]
+cmp       dword ptr [rbp+8],2
+jbe       near ptr 00007FFCDE76E4D3
+mov       rdx,[rbp+20]
+test      rdx,rdx
+jne       short 00007FFCDE76DAA0
+mov       rcx,offset System.Net.Http.Headers.HttpRequestHeaders+<>c.<get_AcceptEncoding>b__20_0(System.Net.Http.Headers.HttpRequestHeaders)
+cmp       [rsi+18],rcx
+jne       near ptr 00007FFCDE76E435
+mov       rcx,19B61C002F8
+mov       rsi,[rcx]
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>
+call      CORINFO_HELP_NEWSFAST
+mov       r14,rax
+lea       rcx,[r14+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rbp
+mov       r8,r14
+mov       edx,2
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rdx,r14
+mov       rbx,rdx
+test      rbx,rbx
+je        short 00007FFCDE76DABB
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>
+cmp       [rbx],rcx
+jne       near ptr 00007FFCDE76E447
+mov       rdx,19B61C001A8
+mov       rsi,[rdx]
+cmp       [rbx],bl
+mov       rdx,[rbx+10]
+test      rdx,rdx
+jne       near ptr 00007FFCDE76DC34
+xor       edx,edx
+test      rdx,rdx
+je        near ptr 00007FFCDE76DC4C
+mov       rdx,[rdx+10]
+mov       rcx,19B61C00620
+cmp       rdx,[rcx]
+jne       near ptr 00007FFCDE76DC4C
+mov       rdx,rsi
+mov       rcx,offset MT_System.String
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
+int       3
+mov       rax,rcx
+jmp       near ptr 00007FFCDE76D74F
+lea       rdx,[rax+18]
+mov       rcx,rax
+xor       r8d,r8d
+call      qword ptr [7FFCDE1FD0F8]
+mov       rdi,rax
+jmp       near ptr 00007FFCDE76D75C
+mov       rcx,rsi
+call      qword ptr [7FFCDE1F7C90]
+mov       ecx,eax
+jmp       near ptr 00007FFCDE76D76E
+test      rbp,rbp
+je        short 00007FFCDE76DBAB
+cmp       dword ptr [rbp+8],0
+je        short 00007FFCDE76DBAB
+mov       ecx,[rdi+8]
+mov       eax,[rbp+8]
+lea       rcx,[rcx+rax+1]
+cmp       rcx,7FFFFFFF
+jg        short 00007FFCDE76DBA4
+movsxd    rcx,ecx
+call      qword ptr [7FFCDE026670]
+mov       r14,rax
+cmp       [r14],r14b
+lea       r15,[r14+0C]
+mov       rcx,r15
+mov       r8d,[rdi+8]
+add       r8,r8
+lea       rdx,[rdi+0C]
+call      qword ptr [7FFCDE025818]
+mov       edx,[rdi+8]
+lea       rdx,[r15+rdx*2]
+mov       word ptr [rdx],23
+mov       edx,[rdi+8]
+inc       edx
+mov       rcx,r14
+mov       r8,rbp
+call      qword ptr [7FFCDE70EBB0]
+jmp       near ptr 00007FFCDE76D79C
+call      qword ptr [7FFCDE2CEBC8]
+int       3
+mov       rcx,rdi
+mov       rdx,1DBE0BB3288
+call      qword ptr [7FFCDE02D9C8]
+mov       r14,rax
+jmp       near ptr 00007FFCDE76D79C
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       word ptr [rsi+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE76D8B0
+mov       rax,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rcx],rax
+jne       near ptr 00007FFCDE76D91C
+movzx     ecx,byte ptr [rcx+38]
+jmp       near ptr 00007FFCDE76D921
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       word ptr [rbx+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE76D9EC
+mov       rcx,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rdx],rcx
+jne       near ptr 00007FFCDE76DAD7
+jmp       near ptr 00007FFCDE76DAD9
+mov       rbp,[rbx+8]
+mov       rbx,[rbx+10]
+xor       r14d,r14d
+mov       rdx,[rbp+8]
+mov       r15,rdx
+test      r15,r15
+je        short 00007FFCDE76DC75
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [r15],rcx
+je        short 00007FFCDE76DC75
+xor       r15d,r15d
+test      r15,r15
+jne       near ptr 00007FFCDE76DD2A
+test      rdx,rdx
+je        short 00007FFCDE76DCB3
+mov       rcx,rdx
+test      rcx,rcx
+je        short 00007FFCDE76DCA5
+mov       rax,offset MT_System.Collections.Generic.Dictionary<System.Net.Http.Headers.HeaderDescriptor, System.Object>
+cmp       [rcx],rax
+je        short 00007FFCDE76DCA5
+mov       rcx,rax
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       rcx,rax
+mov       rdx,rbx
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE70DC68]
+mov       r14,rax
+test      r14,r14
+je        near ptr 00007FFCDE76DDB7
+mov       r15,[r14]
+test      r15,r15
+jne       near ptr 00007FFCDE76DE40
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+lea       rcx,[rbp+8]
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rbp
+mov       r8,r15
+call      00007FFD3DC49BA0
+cmp       rax,r15
+jne       near ptr 00007FFCDE76E45B
+mov       r15,rbp
+mov       rcx,rbx
+mov       rdx,r15
+call      qword ptr [7FFCDE67FFA8]
+add       r15,10
+cmp       qword ptr [r15],0
+jne       near ptr 00007FFCDE76DE58
+mov       rcx,r15
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE76DF1C
+xor       r13d,r13d
+cmp       dword ptr [rbp+10],0
+jle       short 00007FFCDE76DCB3
+cmp       [r15+8],r13d
+jle       near ptr 00007FFCDE76DCB3
+cmp       r13d,[r15+8]
+jae       near ptr 00007FFCDE76E4D3
+mov       rcx,r13
+shl       rcx,4
+mov       rdx,[r15+rcx+18]
+test      rbx,rbx
+je        short 00007FFCDE76DDA0
+mov       rcx,offset MT_System.String
+cmp       [rbx],rcx
+jne       short 00007FFCDE76DDA0
+test      rdx,rdx
+jne       near ptr 00007FFCDE76E44D
+xor       edx,edx
+mov       rcx,rbx
+mov       r8d,5
+call      qword ptr [7FFCDE1FD128]
+test      eax,eax
+je        short 00007FFCDE76DDA5
+mov       ecx,r13d
+cmp       ecx,[r15+8]
+jae       near ptr 00007FFCDE76E4D3
+shl       rcx,4
+lea       r14,[r15+rcx+10]
+jmp       near ptr 00007FFCDE76DCB3
+cmp       rbx,rdx
+je        short 00007FFCDE76DD85
+inc       r13d
+cmp       r13d,[rbp+10]
+jge       near ptr 00007FFCDE76DCB3
+jmp       near ptr 00007FFCDE76DD33
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       r15,rax
+mov       rax,[rbp+8]
+test      rax,rax
+je        short 00007FFCDE76DDE3
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [rax],rcx
+je        short 00007FFCDE76DDE3
+xor       eax,eax
+test      rax,rax
+je        short 00007FFCDE76DDF2
+mov       r14d,[rbp+10]
+cmp       [rax+8],r14d
+ja        short 00007FFCDE76DE0E
+mov       rcx,rbp
+mov       rdx,rbx
+call      qword ptr [7FFCDE67FE10]
+mov       rcx,rax
+mov       rdx,r15
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFCDE76DD0C
+cmp       r14d,[rax+8]
+jae       near ptr 00007FFCDE76E4D3
+mov       ecx,r14d
+shl       rcx,4
+lea       r14,[rax+rcx+10]
+mov       rcx,r14
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rbp+10]
+jmp       short 00007FFCDE76DE09
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+cmp       [r15],rcx
+jne       near ptr 00007FFCDE76DCC8
+jmp       near ptr 00007FFCDE76DD00
+mov       rdx,[r15]
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rbx,rax
+test      rbx,rbx
+jne       near ptr 00007FFCDE76DEF6
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,offset MT_System.Object[]
+mov       edx,2
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rbx+8]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,[r15]
+mov       r8,rdx
+test      r8,r8
+je        short 00007FFCDE76DECA
+mov       rcx,offset MT_System.Object
+cmp       [r8],rcx
+je        short 00007FFCDE76DECA
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       r8,rax
+inc       dword ptr [rbx+14]
+mov       rcx,[rbx+8]
+mov       edx,[rbx+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE76E475
+lea       eax,[rdx+1]
+mov       [rbx+10],eax
+movsxd    rdx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,r15
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rbx+14]
+mov       rcx,[rbx+8]
+mov       edx,[rbx+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE76E486
+lea       r8d,[rdx+1]
+mov       [rbx+10],r8d
+movsxd    rdx,edx
+mov       r8,rsi
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,[rdi+20]
+test      rcx,rcx
+je        short 00007FFCDE76DF72
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE67E9A0]
+mov       rdx,19B61C001A0
+mov       rbx,[rdx]
+cmp       [rax],al
+mov       rdx,[rax+10]
+test      rdx,rdx
+jne       short 00007FFCDE76DF9B
+xor       edx,edx
+test      rdx,rdx
+je        short 00007FFCDE76DFAC
+mov       rdx,[rdx+10]
+mov       rcx,19B61C00620
+cmp       rdx,[rcx]
+jne       short 00007FFCDE76DFAC
+mov       rdx,rbx
+mov       rcx,offset MT_System.String
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
+int       3
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       word ptr [rbx+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rbx
+jmp       short 00007FFCDE76DF25
+mov       rcx,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rdx],rcx
+jne       short 00007FFCDE76DF45
+jmp       short 00007FFCDE76DF47
+mov       rsi,[rax+8]
+mov       rbp,[rax+10]
+cmp       [rsi],sil
+mov       rcx,rsi
+mov       rdx,rbp
+call      qword ptr [7FFCDE67FF30]
+mov       r14,rax
+test      r14,r14
+jne       near ptr 00007FFCDE76E05F
+xor       ecx,ecx
+mov       [rsp+38],rcx
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       r15,rax
+mov       rax,[rsi+8]
+test      rax,rax
+je        short 00007FFCDE76E002
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [rax],rcx
+je        short 00007FFCDE76E002
+xor       eax,eax
+test      rax,rax
+je        short 00007FFCDE76E011
+mov       r14d,[rsi+10]
+cmp       [rax+8],r14d
+ja        short 00007FFCDE76E02D
+mov       rcx,rsi
+mov       rdx,rbp
+call      qword ptr [7FFCDE67FE10]
+mov       rcx,rax
+mov       rdx,r15
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFCDE76E0D1
+cmp       r14d,[rax+8]
+jae       near ptr 00007FFCDE76E4D3
+mov       ecx,r14d
+shl       rcx,4
+lea       r14,[rax+rcx+10]
+mov       rcx,r14
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+8]
+mov       rdx,rbp
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rsi+10]
+jmp       short 00007FFCDE76E028
+mov       r15,[r14]
+test      r15,r15
+je        short 00007FFCDE76E07B
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+cmp       [r15],rcx
+jne       short 00007FFCDE76E07B
+mov       rsi,r15
+jmp       short 00007FFCDE76E07D
+xor       esi,esi
+test      rsi,rsi
+je        short 00007FFCDE76E084
+jmp       short 00007FFCDE76E0B9
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+lea       rcx,[rsi+8]
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rsi
+mov       r8,r15
+call      00007FFD3DC49BA0
+cmp       rax,r15
+jne       near ptr 00007FFCDE76E497
+mov       [rsp+38],rsi
+mov       rcx,rbp
+mov       rdx,[rsp+38]
+call      qword ptr [7FFCDE67FFA8]
+mov       r15,[rsp+38]
+xor       edx,edx
+mov       [rsp+38],rdx
+add       r15,10
+cmp       qword ptr [r15],0
+je        near ptr 00007FFCDE76E1AC
+mov       rdx,[r15]
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rsi,rax
+test      rsi,rsi
+jne       near ptr 00007FFCDE76E184
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Object[]
+mov       edx,2
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rsi+8]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,[r15]
+mov       r8,rdx
+test      r8,r8
+je        short 00007FFCDE76E158
+mov       rcx,offset MT_System.Object
+cmp       [r8],rcx
+je        short 00007FFCDE76E158
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       r8,rax
+inc       dword ptr [rsi+14]
+mov       rcx,[rsi+8]
+mov       edx,[rsi+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE76E4B1
+lea       eax,[rdx+1]
+mov       [rsi+10],eax
+movsxd    rdx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,r15
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rsi+14]
+mov       rcx,[rsi+8]
+mov       edx,[rsi+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE76E4C2
+lea       r8d,[rdx+1]
+mov       [rsi+10],r8d
+movsxd    rdx,edx
+mov       r8,rbx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+jmp       short 00007FFCDE76E1B7
+mov       rcx,r15
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+mov       rax,rdi
+add       rsp,50
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+mov       ecx,1F09
+mov       rdx,7FFCDE3721C0
+call      qword ptr [7FFCDE02F228]
+mov       rdx,rax
+mov       ecx,edi
+call      qword ptr [7FFCDE70D728]
+int       3
+mov       rcx,offset MT_System.InvalidOperationException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+call      qword ptr [7FFCDE70DAB8]
+mov       rdx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3E7B70]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+mov       rcx,offset MT_System.InvalidOperationException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+call      qword ptr [7FFCDE70DAB8]
+mov       rdx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3E7B70]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+mov       ecx,1F09
+mov       rdx,7FFCDE3721C0
+call      qword ptr [7FFCDE02F228]
+mov       rdx,rax
+mov       ecx,edi
+call      qword ptr [7FFCDE70D728]
+int       3
+mov       rcx,rsi
+call      qword ptr [7FFCDE70D3E0]
+int       3
+test      rdx,rdx
+jne       short 00007FFCDE76E27C
+xor       r14d,r14d
+jmp       near ptr 00007FFCDE76D900
+cmp       dword ptr [rdx+8],0A
+jne       short 00007FFCDE76E274
+mov       rcx,1DBE0BB079C
+add       rdx,0C
+mov       r8d,0A
+call      qword ptr [7FFCDE70D1E8]
+test      eax,eax
+je        short 00007FFCDE76E274
+jmp       near ptr 00007FFCDE76D900
+mov       rcx,1DBE0BB079C
+mov       r8,19B61C001C0
+mov       r8,[r8]
+add       r8,8
+mov       edx,0A
+call      qword ptr [7FFCDE67EAF0]
+test      eax,eax
+je        short 00007FFCDE76E2DB
+xor       ecx,ecx
+mov       [rsp+48],rcx
+jmp       near ptr 00007FFCDE76D9DF
+mov       rcx,1DBE0BB0790
+mov       [rsp+48],rcx
+jmp       near ptr 00007FFCDE76D90E
+xor       esi,esi
+jmp       short 00007FFCDE76E30F
+mov       edx,esi
+shl       rdx,4
+mov       rdx,[r14+rdx+18]
+lea       rcx,[rsp+40]
+call      qword ptr [7FFCDE70EBF8]
+test      eax,eax
+jne       short 00007FFCDE76E31C
+inc       esi
+cmp       esi,[rbp+10]
+jge       short 00007FFCDE76E32C
+cmp       [r14+8],esi
+jg        short 00007FFCDE76E2F3
+jmp       short 00007FFCDE76E32C
+mov       ecx,esi
+shl       rcx,4
+lea       r14,[r14+rcx+10]
+jmp       near ptr 00007FFCDE76D9C8
+mov       esi,[rbp+10]
+inc       dword ptr [rbp+10]
+cmp       [r14+8],esi
+jbe       short 00007FFCDE76E35D
+mov       ecx,esi
+shl       rcx,4
+lea       rcx,[r14+rcx+18]
+mov       rdx,[rsp+40]
+call      CORINFO_HELP_ASSIGN_REF
+mov       ecx,esi
+shl       rcx,4
+lea       r14,[r14+rcx+10]
+jmp       near ptr 00007FFCDE76D9C8
+mov       rcx,rbp
+mov       rdx,[rsp+40]
+call      qword ptr [7FFCDE70DE18]
+mov       r14,rax
+jmp       near ptr 00007FFCDE76D9C8
+mov       rcx,rsi
+mov       rdx,[rsp+40]
+call      qword ptr [7FFCDE70DE30]
+mov       r14,rax
+jmp       near ptr 00007FFCDE76D9C8
+mov       rdx,rsi
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rbp,rax
+test      rbp,rbp
+jne       short 00007FFCDE76E3CC
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+lea       rcx,[rbp+8]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rbp
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+cmp       [rbp],bpl
+lea       r8,[rbp+8]
+mov       rdx,rbx
+mov       rcx,7FFCDE6F8C20
+call      qword ptr [7FFCDE67FDE0]
+jmp       near ptr 00007FFCDE76D9DF
+mov       rcx,offset MT_System.Func<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,19B61C00750
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset System.Net.Http.Headers.HttpRequestHeaders+<>c.<get_AcceptEncoding>b__20_0(System.Net.Http.Headers.HttpRequestHeaders)
+call      qword ptr [7FFCDE026BB0]
+mov       rcx,19B61C00768
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE76DA04
+mov       rdx,rbx
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r14,rax
+jmp       near ptr 00007FFCDE76DA8D
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
+int       3
+cmp       [rdx],rcx
+jne       near ptr 00007FFCDE76DD70
+jmp       near ptr 00007FFCDE76DD72
+mov       rdx,rax
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
+mov       r15,rax
+jmp       near ptr 00007FFCDE76DD00
+mov       rcx,rbx
+mov       rdx,r8
+call      qword ptr [7FFCDE0271C8]
+jmp       near ptr 00007FFCDE76DEEB
+mov       rcx,rbx
+mov       rdx,rsi
+call      qword ptr [7FFCDE0271C8]
+jmp       near ptr 00007FFCDE76DF1C
+mov       rdx,rax
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClass(Void*, System.Object)
+mov       rsi,rax
+jmp       near ptr 00007FFCDE76E0B9
+mov       rcx,rsi
+mov       rdx,r8
+call      qword ptr [7FFCDE0271C8]
+jmp       near ptr 00007FFCDE76E179
+mov       rcx,rsi
+mov       rdx,rbx
+call      qword ptr [7FFCDE0271C8]
+jmp       near ptr 00007FFCDE76E1B7
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+
+BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[System.TimeSpan, System.Private.CoreLib]](System.TimeSpan ByRef)
+ret
+
+System.Threading.CancellationTokenSource.ExecuteCallbackHandlers(Boolean)
+push      rbp
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,40
+lea       rbp,[rsp+60]
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   xmmword ptr [rbp-38],xmm4
+xor       eax,eax
+mov       [rbp-28],rax
+mov       [rbp+10],rcx
+mov       [rbp+18],edx
+lea       rax,[rcx+18]
+xor       edx,edx
+xchg      rdx,[rax]
+mov       [rbp-28],rdx
+test      rdx,rdx
+jne       short 00007FFCDE770FAD
+add       rcx,20
+mov       eax,2
+xchg      eax,[rcx]
+add       rsp,40
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       rbp
+ret
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       rdx,[rbp-28]
+mov       [rdx+30],eax
+xor       ecx,ecx
+mov       [rbp-30],rcx
+mov       rcx,[rbp-28]
+call      qword ptr [7FFCDE70EC28]
+nop
+mov       rcx,[rbp-28]
+mov       rbx,[rcx+10]
+test      rbx,rbx
+je        short 00007FFCDE77100D
+cmp       qword ptr [rbx+18],0
+je        short 00007FFCDE770FE8
+mov       rdx,[rbx+18]
+xor       eax,eax
+mov       [rdx+10],rax
+mov       rdx,[rbx+18]
+lea       rcx,[rcx+10]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,[rbx+40]
+mov       rsi,[rbp-28]
+mov       [rsi+28],rcx
+xor       ecx,ecx
+mov       [rbx+40],rcx
+mov       byte ptr [rsi+34],0
+jmp       short 00007FFCDE771017
+call      00007FFCDE771132
+jmp       near ptr 00007FFCDE7710E7
+cmp       qword ptr [rbx+38],0
+je        near ptr 00007FFCDE7710D9
+mov       rdi,[rbx+38]
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,19B61C00898
+mov       rdx,[rcx]
+test      rdx,rdx
+jne       short 00007FFCDE7710BC
+mov       rcx,offset MT_System.Threading.SendOrPostCallback
+call      CORINFO_HELP_NEWSFAST
+mov       r14,rax
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,19B61C00888
+mov       rdx,[rcx]
+test      rdx,rdx
+jne       short 00007FFCDE771081
+call      qword ptr [7FFCDE5FEAC0]
+int       3
+lea       rcx,[r14+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,7FFCDE709F50
+mov       [r14+18],rcx
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,19B61C00898
+mov       rdx,r14
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,r14
+mov       rcx,rdi
+mov       r8,rbx
+mov       rax,[rdi]
+mov       rax,[rax+40]
+call      qword ptr [rax+20]
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rsi+30],eax
+jmp       near ptr 00007FFCDE770FBF
+mov       rcx,rbx
+call      qword ptr [7FFCDE70DF98]
+jmp       near ptr 00007FFCDE770FBF
+mov       rcx,[rbp+10]
+mov       dword ptr [rcx+20],2
+mov       rcx,[rbp-28]
+add       rcx,28
+xor       eax,eax
+xchg      rax,[rcx]
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FFCDE770FA2
+mov       rcx,offset MT_System.AggregateException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,rbx
+mov       rdx,[rbp-30]
+call      qword ptr [7FFCDE70DFB0]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+sub       rsp,28
+mov       rcx,[rbp-28]
+mov       byte ptr [rcx+34],0
+add       rsp,28
+ret
+sub       rsp,28
+mov       rdx,rcx
+mov       rcx,offset MT_System.Exception
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+test      rax,rax
+jne       short 00007FFCDE771162
+xor       eax,eax
+jmp       short 00007FFCDE771170
+mov       [rbp-38],rax
+cmp       byte ptr [rbp+18],0
+sete      al
+movzx     eax,al
+add       rsp,28
+ret
+sub       rsp,28
+mov       rcx,[rbp-30]
+cmp       qword ptr [rbp-30],0
+jne       short 00007FFCDE7711A6
+mov       rcx,offset MT_System.Collections.Generic.List<System.Exception>
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3EC258]
+mov       [rbp-30],rbx
+mov       rcx,rbx
+inc       dword ptr [rcx+14]
+mov       r8,[rcx+8]
+mov       edx,[rcx+10]
+cmp       [r8+8],edx
+jbe       short 00007FFCDE7711CA
+lea       eax,[rdx+1]
+mov       [rcx+10],eax
+mov       rcx,r8
+mov       r8,[rbp-38]
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+jmp       short 00007FFCDE7711D4
+mov       rdx,[rbp-38]
+call      qword ptr [7FFCDE0271C8]
+lea       rax,[7FFCDE770FBF]
+add       rsp,28
+ret
+sub       rsp,28
+mov       rcx,[rbp+10]
+mov       dword ptr [rcx+20],2
+mov       rcx,[rbp-28]
+add       rcx,28
+xor       eax,eax
+xchg      rax,[rcx]
+add       rsp,28
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark.CreateOptimizedHttpClientCustomOptions()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,30
+lea       rbp,[rsp+40]
+mov       rbx,rcx
+mov       rcx,[rbx+138]
+call      qword ptr [7FFCDE67D8F0]
+mov       rcx,rax
+mov       [rbp-20],rcx
+mov       rax,[rcx+40]
+mov       [rbp-18],rax
+mov       rax,[rbx+60]
+cmp       [rax],al
+lea       rcx,[rbp-18]
+call      qword ptr [7FFCDE67F360]
+nop
+call      00007FFCDE7751EA
+nop
+add       rsp,30
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+sub       rsp,28
+mov       rcx,[rbp-20]
+test      rcx,rcx
+je        near ptr 00007FFCDE775303
+mov       rax,offset MT_System.Net.Http.HttpClient
+cmp       [rcx],rax
+jne       near ptr 00007FFCDE775309
+cmp       byte ptr [rcx+13],0
+jne       near ptr 00007FFCDE7752B2
+mov       byte ptr [rcx+13],1
+mov       rbx,[rcx+18]
+cmp       byte ptr [rbx+24],0
+je        short 00007FFCDE775232
+mov       ecx,46
+call      qword ptr [7FFCDE706E68]
+int       3
+cmp       dword ptr [rbx+20],0
+jne       short 00007FFCDE775288
+lea       r11,[rbx+20]
+mov       edx,1
+xor       eax,eax
+lock cmpxchg [r11],edx
+test      eax,eax
+jne       short 00007FFCDE775288
+mov       r11,[rbx+8]
+test      r11,r11
+je        short 00007FFCDE77526B
+xor       eax,eax
+mov       [rbx+8],rax
+mov       rcx,r11
+mov       r11,7FFCDDF80A08
+call      qword ptr [r11]
+mov       rax,[rbx+10]
+test      rax,rax
+je        short 00007FFCDE77527D
+mov       rcx,rax
+call      qword ptr [7FFCDE706E80]
+mov       rcx,rbx
+xor       edx,edx
+call      qword ptr [7FFCDE67F3D8]
+mov       rcx,[rbp-20]
+mov       rbx,[rcx+18]
+mov       rcx,rbx
+mov       edx,1
+mov       rsi,[rbx]
+mov       rax,[rsi+40]
+call      qword ptr [rax+28]
+test      dword ptr [rsi],100000
+je        short 00007FFCDE7752B2
+mov       rcx,rbx
+call      00007FFD3DC617C0
+mov       rcx,[rbp-20]
+cmp       byte ptr [rcx+10],0
+jne       short 00007FFCDE7752EF
+mov       byte ptr [rcx+10],1
+cmp       byte ptr [rcx+11],0
+je        short 00007FFCDE7752EF
+mov       rbx,[rcx+8]
+mov       rcx,rbx
+mov       edx,1
+mov       rax,[rbx]
+mov       rax,[rax+40]
+call      qword ptr [rax+30]
+mov       rcx,[rbx]
+test      dword ptr [rcx],100000
+je        short 00007FFCDE7752EF
+mov       rcx,rbx
+call      00007FFD3DC617C0
+mov       rcx,[rbp-20]
+mov       rax,[rcx]
+test      dword ptr [rax],100000
+je        short 00007FFCDE775303
+call      00007FFD3DC617C0
+nop
+add       rsp,28
+ret
+mov       r11,7FFCDDF80A00
+call      qword ptr [r11]
+jmp       short 00007FFCDE775303
+
+DotNetTips.Spargine.Net.Http.HttpClientHelper.CreateOptimizedHttpClient(DotNetTips.Spargine.Net.Http.HttpClientOptions)
+		options ??= _defaultHttpClientOptions;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var handler = new SocketsHttpHandler()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		{
+		 
+			MaxConnectionsPerServer = options.MaxConnectionsPerServer,
+			                                                          
+			KeepAlivePingPolicy = options.KeepAlivePingPolicy,
+			                                                  
+			KeepAlivePingTimeout = options.KeepAlivePingTimeout,
+			                                                    
+			PooledConnectionLifetime = options.PooledConnectionLifetime,
+			                                                            
+			PooledConnectionIdleTimeout = options.PooledConnectionIdleTimeout,
+			                                                                  
+			UseCookies = options.UseCookies,
+			                                
+			UseProxy = options.UseProxy,
+			                            
+			AllowAutoRedirect = options.AllowAutoRedirect,
+			                                              
+			MaxAutomaticRedirections = options.MaxAutomaticRedirections,
+			                                                            
+		};
+		  
+		var client = new HttpClient(handler, disposeHandler: true)
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		{
+		 
+			Timeout = options.Timeout,
+			                          
+		};
+		  
+		_ = client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", options.UserAgent);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		client.DefaultRequestHeaders.AcceptEncoding.Add(_deflateEncoding);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return client;
+		^^^^^^^^^^^^^^
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,50
+xor       eax,eax
+mov       [rsp+28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+mov       rbx,rcx
+mov       rcx,28BBC000180
+test      rbx,rbx
+cmove     rbx,[rcx]
+mov       rcx,offset MT_System.Net.Http.SocketsHttpHandler
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Net.Http.HttpConnectionSettings
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       rcx,rdi
+call      qword ptr [7FFCDE67DD28]
+lea       rcx,[rsi+8]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,28BBC000250
+mov       rcx,[rcx]
+cmp       byte ptr [rcx+9D],0
+je        near ptr 00007FFCDE775470
+mov       rcx,rsi
+call      qword ptr [7FFCDE2061D8]
+cmp       qword ptr [rax+10],0
+je        short 00007FFCDE7753E6
+mov       rcx,[rax+10]
+mov       rcx,[rcx]
+test      rcx,rcx
+jne       near ptr 00007FFCDE7757ED
+mov       rcx,rax
+call      qword ptr [7FFCDE2056E0]
+mov       rdi,[rax+18]
+test      rdi,rdi
+je        near ptr 00007FFCDE7757F5
+mov       rcx,rsi
+call      00007FFD3DC3FEC0
+mov       ecx,eax
+test      ecx,ecx
+je        near ptr 00007FFCDE77580D
+call      qword ptr [7FFCDE2C7210]
+mov       rbp,rax
+test      rdi,rdi
+je        short 00007FFCDE775426
+cmp       dword ptr [rdi+8],0
+jne       near ptr 00007FFCDE77581D
+mov       rdx,rbp
+mov       rcx,2CC3B0B3220
+call      qword ptr [7FFCDE03D9C8]
+mov       r14,rax
+mov       rcx,28BBC000250
+mov       rcx,[rcx]
+mov       r8,2CC3B0A0008
+mov       [rsp+20],r8
+mov       r8,r14
+mov       edx,1
+mov       r9,2CC3B0AD470
+call      qword ptr [7FFCDE707D50]
+mov       edi,[rbx+18]
+test      edi,edi
+jle       near ptr 00007FFCDE775E57
+cmp       byte ptr [rsi+28],0
+jne       near ptr 00007FFCDE775EF3
+cmp       qword ptr [rsi+10],0
+jne       near ptr 00007FFCDE775E78
+mov       rdx,[rsi+8]
+mov       [rdx+8C],edi
+mov       ecx,[rbx+10]
+mov       [rdx+98],ecx
+mov       rdx,[rbx+20]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67DB30]
+mov       rdx,[rbx+30]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67DB60]
+mov       rdx,[rbx+28]
+mov       rcx,rsi
+call      qword ptr [7FFCDE67DB90]
+movzx     ecx,byte ptr [rbx+1D]
+cmp       byte ptr [rsi+28],0
+jne       near ptr 00007FFCDE775EF3
+cmp       qword ptr [rsi+10],0
+jne       near ptr 00007FFCDE775EA5
+mov       rax,[rsi+8]
+mov       [rax+0A4],cl
+movzx     ecx,byte ptr [rbx+1E]
+mov       [rax+0A5],cl
+movzx     ecx,byte ptr [rbx+1C]
+mov       [rax+0A9],cl
+mov       edi,[rbx+14]
+test      edi,edi
+jle       near ptr 00007FFCDE775ED2
+mov       [rax+88],edi
+mov       rcx,offset MT_System.Net.Http.HttpClient
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       rcx,rdi
+mov       rdx,rsi
+mov       r8d,1
+call      qword ptr [7FFCDE67DC68]
+mov       rdx,[rbx+38]
+mov       rcx,rdi
+call      qword ptr [7FFCDE67DC98]
+mov       rsi,[rdi+20]
+test      rsi,rsi
+jne       short 00007FFCDE775570
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       word ptr [rsi+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rbp,rsi
+mov       rbx,[rbx+8]
+cmp       [rbp],bpl
+mov       rcx,2CC3B0B079C
+mov       [rsp+28],rcx
+mov       dword ptr [rsp+30],0A
+lea       rcx,[rsp+28]
+call      qword ptr [7FFCDE67E1F0]
+mov       r14,rax
+test      r14,r14
+je        near ptr 00007FFCDE775F02
+mov       rdx,[r14+8]
+mov       rcx,2CC3B0B0790
+cmp       rdx,rcx
+jne       near ptr 00007FFCDE775EFD
+test      r14,r14
+je        near ptr 00007FFCDE775F33
+mov       [rsp+48],r14
+mov       rcx,[rsp+48]
+test      rcx,rcx
+jne       near ptr 00007FFCDE7758A7
+mov       ecx,10
+movzx     eax,byte ptr [rbp+14]
+test      eax,ecx
+jne       short 00007FFCDE775605
+movzx     eax,byte ptr [rbp+15]
+test      eax,ecx
+je        near ptr 00007FFCDE77569F
+lea       rcx,[rsp+48]
+call      qword ptr [7FFCDE707D68]
+mov       [rsp+48],rax
+mov       rcx,[rsp+48]
+mov       rdx,2CC3B0A0008
+test      rbx,rbx
+cmove     rbx,rdx
+mov       [rsp+40],rcx
+mov       rcx,[rbp+8]
+mov       r14,rcx
+test      r14,r14
+je        short 00007FFCDE77563E
+mov       rdx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [r14],rdx
+je        short 00007FFCDE77563E
+xor       r14d,r14d
+test      r14,r14
+jne       near ptr 00007FFCDE775F7D
+test      rcx,rcx
+jne       near ptr 00007FFCDE776001
+inc       dword ptr [rsi+10]
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+mov       edx,4
+call      CORINFO_HELP_NEWARR_1_VC
+mov       r14,rax
+lea       rcx,[rsi+8]
+mov       rdx,r14
+call      CORINFO_HELP_ASSIGN_REF
+add       r14,10
+lea       rcx,[r14+8]
+mov       rdx,[rsp+40]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rsi,[r14]
+test      rsi,rsi
+jne       near ptr 00007FFCDE776017
+mov       rcx,r14
+mov       rdx,rbx
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+mov       rbx,[rdi+20]
+test      rbx,rbx
+jne       short 00007FFCDE7756CC
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       word ptr [rbx+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+cmp       [rbx],bl
+mov       rcx,28BBC000710
+mov       rsi,[rcx]
+test      rsi,rsi
+je        near ptr 00007FFCDE77607A
+cmp       qword ptr [rbx+18],0
+jne       short 00007FFCDE77570B
+mov       rcx,offset MT_System.Object[]
+mov       edx,0A
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rbx+18]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rbp,[rbx+18]
+cmp       dword ptr [rbp+8],2
+jbe       near ptr 00007FFCDE776164
+mov       rdx,[rbp+20]
+test      rdx,rdx
+jne       short 00007FFCDE775780
+mov       rcx,offset System.Net.Http.Headers.HttpRequestHeaders+<>c.<get_AcceptEncoding>b__20_0(System.Net.Http.Headers.HttpRequestHeaders)
+cmp       [rsi+18],rcx
+jne       near ptr 00007FFCDE7760C3
+mov       rcx,28BBC0002A0
+mov       rsi,[rcx]
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>
+call      CORINFO_HELP_NEWSFAST
+mov       r14,rax
+lea       rcx,[r14+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rbp
+mov       r8,r14
+mov       edx,2
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rdx,r14
+mov       rbx,rdx
+test      rbx,rbx
+je        short 00007FFCDE77579B
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>
+cmp       [rbx],rcx
+jne       near ptr 00007FFCDE7760D5
+mov       rdx,28BBC000190
+mov       rsi,[rdx]
+cmp       [rbx],bl
+mov       rdx,[rbx+10]
+test      rdx,rdx
+jne       near ptr 00007FFCDE7758C3
+xor       edx,edx
+test      rdx,rdx
+je        near ptr 00007FFCDE7758DB
+mov       rdx,[rdx+10]
+mov       rcx,28BBC0005C8
+cmp       rdx,[rcx]
+jne       near ptr 00007FFCDE7758DB
+mov       rdx,rsi
+mov       rcx,offset MT_System.String
+call      qword ptr [7FFCDE036328]
+int       3
+mov       rax,rcx
+jmp       near ptr 00007FFCDE7753EF
+lea       rdx,[rax+18]
+mov       rcx,rax
+xor       r8d,r8d
+call      qword ptr [7FFCDE20CC60]
+mov       rdi,rax
+jmp       near ptr 00007FFCDE7753FC
+mov       rcx,rsi
+call      qword ptr [7FFCDE2077F8]
+mov       ecx,eax
+jmp       near ptr 00007FFCDE77540E
+test      rbp,rbp
+je        short 00007FFCDE77588C
+cmp       dword ptr [rbp+8],0
+je        short 00007FFCDE77588C
+mov       ecx,[rdi+8]
+mov       eax,[rbp+8]
+lea       rcx,[rcx+rax+1]
+cmp       rcx,7FFFFFFF
+jg        short 00007FFCDE775885
+movsxd    rcx,ecx
+call      qword ptr [7FFCDE036670]
+mov       r14,rax
+cmp       [r14],r14b
+lea       r15,[r14+0C]
+mov       rcx,r15
+mov       r8d,[rdi+8]
+add       r8,r8
+lea       rdx,[rdi+0C]
+call      qword ptr [7FFCDE035818]
+mov       edx,[rdi+8]
+lea       rdx,[r15+rdx*2]
+mov       word ptr [rdx],23
+mov       edx,[rdi+8]
+inc       edx
+mov       rcx,r14
+mov       r8,rbp
+call      qword ptr [7FFCDE707D38]
+jmp       near ptr 00007FFCDE77543C
+call      qword ptr [7FFCDE706148]
+int       3
+mov       rcx,rdi
+mov       rdx,2CC3B0B3220
+call      qword ptr [7FFCDE03D9C8]
+mov       r14,rax
+jmp       near ptr 00007FFCDE77543C
+mov       rax,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rcx],rax
+jne       near ptr 00007FFCDE7755DC
+movzx     ecx,byte ptr [rcx+38]
+jmp       near ptr 00007FFCDE7755E1
+mov       rcx,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rdx],rcx
+jne       near ptr 00007FFCDE7757B7
+jmp       near ptr 00007FFCDE7757B9
+mov       rbp,[rbx+8]
+mov       rbx,[rbx+10]
+xor       r14d,r14d
+mov       rdx,[rbp+8]
+mov       r15,rdx
+test      r15,r15
+je        short 00007FFCDE775904
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [r15],rcx
+je        short 00007FFCDE775904
+xor       r15d,r15d
+test      r15,r15
+jne       near ptr 00007FFCDE7759B9
+test      rdx,rdx
+je        short 00007FFCDE775942
+mov       rcx,rdx
+test      rcx,rcx
+je        short 00007FFCDE775934
+mov       rax,offset MT_System.Collections.Generic.Dictionary<System.Net.Http.Headers.HeaderDescriptor, System.Object>
+cmp       [rcx],rax
+je        short 00007FFCDE775934
+mov       rcx,rax
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       rcx,rax
+mov       rdx,rbx
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE706BF8]
+mov       r14,rax
+test      r14,r14
+je        near ptr 00007FFCDE775A46
+mov       r15,[r14]
+test      r15,r15
+jne       near ptr 00007FFCDE775ACF
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+lea       rcx,[rbp+8]
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rbp
+mov       r8,r15
+call      00007FFD3DC49BA0
+cmp       rax,r15
+jne       near ptr 00007FFCDE7760EA
+mov       r15,rbp
+mov       rcx,rbx
+mov       rdx,r15
+call      qword ptr [7FFCDE67F300]
+add       r15,10
+cmp       qword ptr [r15],0
+jne       near ptr 00007FFCDE775AE7
+mov       rcx,r15
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE775BAB
+xor       r13d,r13d
+cmp       dword ptr [rbp+10],0
+jle       short 00007FFCDE775942
+cmp       [r15+8],r13d
+jle       near ptr 00007FFCDE775942
+cmp       r13d,[r15+8]
+jae       near ptr 00007FFCDE776164
+mov       rcx,r13
+shl       rcx,4
+mov       rdx,[r15+rcx+18]
+test      rbx,rbx
+je        short 00007FFCDE775A2F
+mov       rcx,offset MT_System.String
+cmp       [rbx],rcx
+jne       short 00007FFCDE775A2F
+test      rdx,rdx
+jne       near ptr 00007FFCDE7760DC
+xor       edx,edx
+mov       rcx,rbx
+mov       r8d,5
+call      qword ptr [7FFCDE20CC90]
+test      eax,eax
+je        short 00007FFCDE775A34
+mov       ecx,r13d
+cmp       ecx,[r15+8]
+jae       near ptr 00007FFCDE776164
+shl       rcx,4
+lea       r14,[r15+rcx+10]
+jmp       near ptr 00007FFCDE775942
+cmp       rbx,rdx
+je        short 00007FFCDE775A14
+inc       r13d
+cmp       r13d,[rbp+10]
+jge       near ptr 00007FFCDE775942
+jmp       near ptr 00007FFCDE7759C2
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       r15,rax
+mov       rax,[rbp+8]
+test      rax,rax
+je        short 00007FFCDE775A72
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [rax],rcx
+je        short 00007FFCDE775A72
+xor       eax,eax
+test      rax,rax
+je        short 00007FFCDE775A81
+mov       r14d,[rbp+10]
+cmp       [rax+8],r14d
+ja        short 00007FFCDE775A9D
+mov       rcx,rbp
+mov       rdx,rbx
+call      qword ptr [7FFCDE67EDF0]
+mov       rcx,rax
+mov       rdx,r15
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFCDE77599B
+cmp       r14d,[rax+8]
+jae       near ptr 00007FFCDE776164
+mov       ecx,r14d
+shl       rcx,4
+lea       r14,[rax+rcx+10]
+mov       rcx,r14
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rbp+10]
+jmp       short 00007FFCDE775A98
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+cmp       [r15],rcx
+jne       near ptr 00007FFCDE775957
+jmp       near ptr 00007FFCDE77598F
+mov       rdx,[r15]
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rbx,rax
+test      rbx,rbx
+jne       near ptr 00007FFCDE775B85
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,offset MT_System.Object[]
+mov       edx,2
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rbx+8]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,[r15]
+mov       r8,rdx
+test      r8,r8
+je        short 00007FFCDE775B59
+mov       rcx,offset MT_System.Object
+cmp       [r8],rcx
+je        short 00007FFCDE775B59
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       r8,rax
+inc       dword ptr [rbx+14]
+mov       rcx,[rbx+8]
+mov       edx,[rbx+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE776105
+lea       eax,[rdx+1]
+mov       [rbx+10],eax
+movsxd    rdx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,r15
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rbx+14]
+mov       rcx,[rbx+8]
+mov       edx,[rbx+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE776116
+lea       r8d,[rdx+1]
+mov       [rbx+10],r8d
+movsxd    rdx,edx
+mov       r8,rsi
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,[rdi+20]
+test      rcx,rcx
+jne       short 00007FFCDE775BDB
+mov       rcx,offset MT_System.Net.Http.Headers.HttpRequestHeaders
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       word ptr [rbx+14],413
+lea       rcx,[rdi+20]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,rbx
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE67DCF8]
+mov       rdx,28BBC000188
+mov       rbx,[rdx]
+cmp       [rax],al
+mov       rdx,[rax+10]
+test      rdx,rdx
+jne       short 00007FFCDE775C29
+xor       edx,edx
+test      rdx,rdx
+je        short 00007FFCDE775C3A
+mov       rdx,[rdx+10]
+mov       rcx,28BBC0005C8
+cmp       rdx,[rcx]
+jne       short 00007FFCDE775C3A
+mov       rdx,rbx
+mov       rcx,offset MT_System.String
+call      qword ptr [7FFCDE036328]
+int       3
+mov       rcx,offset MT_System.Net.Http.Headers.KnownHeader
+cmp       [rdx],rcx
+jne       short 00007FFCDE775BFB
+jmp       short 00007FFCDE775BFD
+mov       rsi,[rax+8]
+mov       rbp,[rax+10]
+cmp       [rsi],sil
+mov       rcx,rsi
+mov       rdx,rbp
+call      qword ptr [7FFCDE67F288]
+mov       r14,rax
+test      r14,r14
+jne       near ptr 00007FFCDE775CED
+xor       ecx,ecx
+mov       [rsp+38],rcx
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       r15,rax
+mov       rax,[rsi+8]
+test      rax,rax
+je        short 00007FFCDE775C90
+mov       rcx,offset MT_System.Net.Http.Headers.HeaderEntry[]
+cmp       [rax],rcx
+je        short 00007FFCDE775C90
+xor       eax,eax
+test      rax,rax
+je        short 00007FFCDE775C9F
+mov       r14d,[rsi+10]
+cmp       [rax+8],r14d
+ja        short 00007FFCDE775CBB
+mov       rcx,rsi
+mov       rdx,rbp
+call      qword ptr [7FFCDE67EDF0]
+mov       rcx,rax
+mov       rdx,r15
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+jmp       near ptr 00007FFCDE775D5F
+cmp       r14d,[rax+8]
+jae       near ptr 00007FFCDE776164
+mov       ecx,r14d
+shl       rcx,4
+lea       r14,[rax+rcx+10]
+mov       rcx,r14
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[r14+8]
+mov       rdx,rbp
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rsi+10]
+jmp       short 00007FFCDE775CB6
+mov       r15,[r14]
+test      r15,r15
+je        short 00007FFCDE775D09
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+cmp       [r15],rcx
+jne       short 00007FFCDE775D09
+mov       rsi,r15
+jmp       short 00007FFCDE775D0B
+xor       esi,esi
+test      rsi,rsi
+je        short 00007FFCDE775D12
+jmp       short 00007FFCDE775D47
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+lea       rcx,[rsi+8]
+mov       rdx,r15
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rsi
+mov       r8,r15
+call      00007FFD3DC49BA0
+cmp       rax,r15
+jne       near ptr 00007FFCDE776127
+mov       [rsp+38],rsi
+mov       rcx,rbp
+mov       rdx,[rsp+38]
+call      qword ptr [7FFCDE67F300]
+mov       r15,[rsp+38]
+xor       edx,edx
+mov       [rsp+38],rdx
+add       r15,10
+cmp       qword ptr [r15],0
+je        near ptr 00007FFCDE775E3A
+mov       rdx,[r15]
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rsi,rax
+test      rsi,rsi
+jne       near ptr 00007FFCDE775E12
+mov       rcx,offset MT_System.Collections.Generic.List<System.Object>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Object[]
+mov       edx,2
+call      CORINFO_HELP_NEWARR_1_PTR
+lea       rcx,[rsi+8]
+mov       rdx,rax
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,[r15]
+mov       r8,rdx
+test      r8,r8
+je        short 00007FFCDE775DE6
+mov       rcx,offset MT_System.Object
+cmp       [r8],rcx
+je        short 00007FFCDE775DE6
+call      System.Runtime.CompilerServices.CastHelpers.ChkCastClassSpecial(Void*, System.Object)
+mov       r8,rax
+inc       dword ptr [rsi+14]
+mov       rcx,[rsi+8]
+mov       edx,[rsi+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE776142
+lea       eax,[rdx+1]
+mov       [rsi+10],eax
+movsxd    rdx,edx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+mov       rcx,r15
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rsi+14]
+mov       rcx,[rsi+8]
+mov       edx,[rsi+10]
+cmp       [rcx+8],edx
+jbe       near ptr 00007FFCDE776153
+lea       r8d,[rdx+1]
+mov       [rsi+10],r8d
+movsxd    rdx,edx
+mov       r8,rbx
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+jmp       short 00007FFCDE775E45
+mov       rcx,r15
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+mov       rax,rdi
+add       rsp,50
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+mov       ecx,1F09
+mov       rdx,7FFCDE3504A8
+call      qword ptr [7FFCDE03F228]
+mov       rdx,rax
+mov       ecx,edi
+call      qword ptr [7FFCDE7066A0]
+int       3
+mov       rcx,offset MT_System.InvalidOperationException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+call      qword ptr [7FFCDE706A48]
+mov       rdx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3D61A8]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+mov       rcx,offset MT_System.InvalidOperationException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+call      qword ptr [7FFCDE706A48]
+mov       rdx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3D61A8]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+mov       ecx,1F09
+mov       rdx,7FFCDE3504A8
+call      qword ptr [7FFCDE03F228]
+mov       rdx,rax
+mov       ecx,edi
+call      qword ptr [7FFCDE7066A0]
+int       3
+mov       rcx,rsi
+call      qword ptr [7FFCDE706A00]
+int       3
+test      rdx,rdx
+jne       short 00007FFCDE775F0A
+xor       r14d,r14d
+jmp       near ptr 00007FFCDE7755C0
+cmp       dword ptr [rdx+8],0A
+jne       short 00007FFCDE775F02
+mov       rcx,2CC3B0B079C
+add       rdx,0C
+mov       r8d,0A
+call      qword ptr [7FFCDE705D58]
+test      eax,eax
+je        short 00007FFCDE775F02
+jmp       near ptr 00007FFCDE7755C0
+mov       rcx,2CC3B0B079C
+mov       r8,28BBC000748
+mov       r8,[r8]
+add       r8,8
+mov       edx,0A
+call      qword ptr [7FFCDE67EFE8]
+test      eax,eax
+je        short 00007FFCDE775F69
+xor       ecx,ecx
+mov       [rsp+48],rcx
+jmp       near ptr 00007FFCDE77569F
+mov       rcx,2CC3B0B0790
+mov       [rsp+48],rcx
+jmp       near ptr 00007FFCDE7755CE
+xor       esi,esi
+jmp       short 00007FFCDE775F9D
+mov       edx,esi
+shl       rdx,4
+mov       rdx,[r14+rdx+18]
+lea       rcx,[rsp+40]
+call      qword ptr [7FFCDE707D80]
+test      eax,eax
+jne       short 00007FFCDE775FAA
+inc       esi
+cmp       esi,[rbp+10]
+jge       short 00007FFCDE775FBA
+cmp       [r14+8],esi
+jg        short 00007FFCDE775F81
+jmp       short 00007FFCDE775FBA
+mov       ecx,esi
+shl       rcx,4
+lea       r14,[r14+rcx+10]
+jmp       near ptr 00007FFCDE775688
+mov       esi,[rbp+10]
+inc       dword ptr [rbp+10]
+cmp       [r14+8],esi
+jbe       short 00007FFCDE775FEB
+mov       ecx,esi
+shl       rcx,4
+lea       rcx,[r14+rcx+18]
+mov       rdx,[rsp+40]
+call      CORINFO_HELP_ASSIGN_REF
+mov       ecx,esi
+shl       rcx,4
+lea       r14,[r14+rcx+10]
+jmp       near ptr 00007FFCDE775688
+mov       rcx,rbp
+mov       rdx,[rsp+40]
+call      qword ptr [7FFCDE706DA8]
+mov       r14,rax
+jmp       near ptr 00007FFCDE775688
+mov       rcx,rsi
+mov       rdx,[rsp+40]
+call      qword ptr [7FFCDE706DC0]
+mov       r14,rax
+jmp       near ptr 00007FFCDE775688
+mov       rdx,rsi
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+mov       rbp,rax
+test      rbp,rbp
+jne       short 00007FFCDE77605A
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+lea       rcx,[rbp+8]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,r14
+mov       rdx,rbp
+call      CORINFO_HELP_CHECKED_ASSIGN_REF
+cmp       [rbp],bpl
+lea       r8,[rbp+8]
+mov       rdx,rbx
+mov       rcx,7FFCDE6E4B68
+call      qword ptr [7FFCDE67EDC0]
+jmp       near ptr 00007FFCDE77569F
+mov       rcx,offset MT_System.Func<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.StringWithQualityHeaderValue>>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,28BBC0006F8
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset System.Net.Http.Headers.HttpRequestHeaders+<>c.<get_AcceptEncoding>b__20_0(System.Net.Http.Headers.HttpRequestHeaders)
+call      qword ptr [7FFCDE036BB0]
+mov       rcx,28BBC000710
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FFCDE7756E4
+mov       rdx,rbx
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r14,rax
+jmp       near ptr 00007FFCDE77576D
+call      qword ptr [7FFCDE036328]
+int       3
+cmp       [rdx],rcx
+jne       near ptr 00007FFCDE7759FF
+jmp       near ptr 00007FFCDE775A01
+mov       rdx,rax
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      qword ptr [7FFCDE036328]
+mov       r15,rax
+jmp       near ptr 00007FFCDE77598F
+mov       rcx,rbx
+mov       rdx,r8
+call      qword ptr [7FFCDE0371C8]
+jmp       near ptr 00007FFCDE775B7A
+mov       rcx,rbx
+mov       rdx,rsi
+call      qword ptr [7FFCDE0371C8]
+jmp       near ptr 00007FFCDE775BAB
+mov       rdx,rax
+mov       rcx,offset MT_System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo
+call      qword ptr [7FFCDE036328]
+mov       rsi,rax
+jmp       near ptr 00007FFCDE775D47
+mov       rcx,rsi
+mov       rdx,r8
+call      qword ptr [7FFCDE0371C8]
+jmp       near ptr 00007FFCDE775E07
+mov       rcx,rsi
+mov       rdx,rbx
+call      qword ptr [7FFCDE0371C8]
+jmp       near ptr 00007FFCDE775E45
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+
+BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[System.TimeSpan, System.Private.CoreLib]](System.TimeSpan ByRef)
+ret
+
+System.Threading.CancellationTokenSource.ExecuteCallbackHandlers(Boolean)
+push      rbp
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,40
+lea       rbp,[rsp+60]
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   xmmword ptr [rbp-38],xmm4
+xor       eax,eax
+mov       [rbp-28],rax
+mov       [rbp+10],rcx
+mov       [rbp+18],edx
+lea       rax,[rcx+18]
+xor       edx,edx
+xchg      rdx,[rax]
+mov       [rbp-28],rdx
+test      rdx,rdx
+jne       short 00007FFCDE778C2D
+add       rcx,20
+mov       eax,2
+xchg      eax,[rcx]
+add       rsp,40
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       rbp
+ret
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       rdx,[rbp-28]
+mov       [rdx+30],eax
+xor       ecx,ecx
+mov       [rbp-30],rcx
+mov       rcx,[rbp-28]
+call      qword ptr [7FFCDE707DB0]
+nop
+mov       rcx,[rbp-28]
+mov       rbx,[rcx+10]
+test      rbx,rbx
+je        short 00007FFCDE778C8D
+cmp       qword ptr [rbx+18],0
+je        short 00007FFCDE778C68
+mov       rdx,[rbx+18]
+xor       eax,eax
+mov       [rdx+10],rax
+mov       rdx,[rbx+18]
+lea       rcx,[rcx+10]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,[rbx+40]
+mov       rsi,[rbp-28]
+mov       [rsi+28],rcx
+xor       ecx,ecx
+mov       [rbx+40],rcx
+mov       byte ptr [rsi+34],0
+jmp       short 00007FFCDE778C97
+call      00007FFCDE778DB2
+jmp       near ptr 00007FFCDE778D67
+cmp       qword ptr [rbx+38],0
+je        near ptr 00007FFCDE778D59
+mov       rdi,[rbx+38]
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,28BBC000800
+mov       rdx,[rcx]
+test      rdx,rdx
+jne       short 00007FFCDE778D3C
+mov       rcx,offset MT_System.Threading.SendOrPostCallback
+call      CORINFO_HELP_NEWSFAST
+mov       r14,rax
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,28BBC0007F0
+mov       rdx,[rcx]
+test      rdx,rdx
+jne       short 00007FFCDE778D01
+call      qword ptr [7FFCDE705F38]
+int       3
+lea       rcx,[r14+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       rcx,7FFCDE702EE0
+mov       [r14+18],rcx
+mov       rcx,offset MT_System.Threading.CancellationTokenSource+<>c
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,28BBC000800
+mov       rdx,r14
+call      CORINFO_HELP_ASSIGN_REF
+mov       rdx,r14
+mov       rcx,rdi
+mov       r8,rbx
+mov       rax,[rdi]
+mov       rax,[rax+40]
+call      qword ptr [rax+20]
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rsi+30],eax
+jmp       near ptr 00007FFCDE778C3F
+mov       rcx,rbx
+call      qword ptr [7FFCDE706F28]
+jmp       near ptr 00007FFCDE778C3F
+mov       rcx,[rbp+10]
+mov       dword ptr [rcx+20],2
+mov       rcx,[rbp-28]
+add       rcx,28
+xor       eax,eax
+xchg      rax,[rcx]
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FFCDE778C22
+mov       rcx,offset MT_System.AggregateException
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,rbx
+mov       rdx,[rbp-30]
+call      qword ptr [7FFCDE706F40]
+mov       rcx,rbx
+call      CORINFO_HELP_THROW
+int       3
+sub       rsp,28
+mov       rcx,[rbp-28]
+mov       byte ptr [rcx+34],0
+add       rsp,28
+ret
+sub       rsp,28
+mov       rdx,rcx
+mov       rcx,offset MT_System.Exception
+call      System.Runtime.CompilerServices.CastHelpers.IsInstanceOfClass(Void*, System.Object)
+test      rax,rax
+jne       short 00007FFCDE778DE2
+xor       eax,eax
+jmp       short 00007FFCDE778DF0
+mov       [rbp-38],rax
+cmp       byte ptr [rbp+18],0
+sete      al
+movzx     eax,al
+add       rsp,28
+ret
+sub       rsp,28
+mov       rcx,[rbp-30]
+cmp       qword ptr [rbp-30],0
+jne       short 00007FFCDE778E26
+mov       rcx,offset MT_System.Collections.Generic.List<System.Exception>
+call      CORINFO_HELP_NEWSFAST
+mov       rbx,rax
+mov       rcx,rbx
+call      qword ptr [7FFCDE3D6880]
+mov       [rbp-30],rbx
+mov       rcx,rbx
+inc       dword ptr [rcx+14]
+mov       r8,[rcx+8]
+mov       edx,[rcx+10]
+cmp       [r8+8],edx
+jbe       short 00007FFCDE778E4A
+lea       eax,[rdx+1]
+mov       [rcx+10],eax
+mov       rcx,r8
+mov       r8,[rbp-38]
+call      System.Runtime.CompilerServices.CastHelpers.StelemRef(System.Object[], IntPtr, System.Object)
+jmp       short 00007FFCDE778E54
+mov       rdx,[rbp-38]
+call      qword ptr [7FFCDE0371C8]
+lea       rax,[7FFCDE778C3F]
+add       rsp,28
+ret
+sub       rsp,28
+mov       rcx,[rbp+10]
+mov       dword ptr [rcx+20],2
+mov       rcx,[rbp-28]
+add       rcx,28
+xor       eax,eax
+xchg      rax,[rcx]
+add       rsp,28
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

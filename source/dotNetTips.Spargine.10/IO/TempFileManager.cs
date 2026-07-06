@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-23-2026
+// Last Modified On : 07-06-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -71,7 +71,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// </summary>
 	/// <returns>The path of the created temporary file.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public string CreateFile()
 	{
 		var file = GenerateRandomFile();
@@ -86,29 +86,35 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <param name="count">The number of temporary files to create.</param>
 	/// <returns>A read-only collection of the paths of the created temporary files.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public ReadOnlyCollection<string> CreateFiles(in int count)
 	{
-		_ = count.ArgumentInRange(min: 1);
+		var fileCount = count.ArgumentInRange(min: 1);
+		var parallelThreshold = Environment.ProcessorCount * 2;
 
-		// Avoid parallel overhead for very small counts.
-		return count <= 2
-			? this.CreateFilesSequential(count)
-			: this.CreateFilesParallel(count);
+		return fileCount < parallelThreshold
+			? this.CreateFilesSequential(fileCount)
+			: this.CreateFilesParallel(fileCount);
 	}
 
 	/// <summary>
 	/// Deletes all temporary files.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void DeleteAllFiles()
 	{
-		// Pass _files directly to avoid the ToReadOnlyCollection() intermediate allocation.
-		var snapshot = this._files.Count;
-		var filesDeletedResult = FileHelper.DeleteFiles(this._files.AsEnumerable().ToReadOnlyCollection());
+		var filesSnapshot = this._files.ToArray();
+		var fileCount = filesSnapshot.Length;
 
-		if (filesDeletedResult.Value.Count == snapshot)
+		if (fileCount == 0)
+		{
+			return;
+		}
+
+		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>(filesSnapshot));
+
+		if (filesDeletedResult.Value.Count == fileCount)
 		{
 			this._files.Clear();
 			return;
@@ -126,7 +132,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// If the file name is null or empty, the method returns without performing any action.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void DeleteFile(string fileName)
 	{
 		if (string.IsNullOrEmpty(fileName))
@@ -134,11 +140,9 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 			return;
 		}
 
-		var filesDeletedResult = FileHelper.DeleteFiles(new ReadOnlyCollection<string>([fileName]));
-
-		if (filesDeletedResult.Value.Count > 0)
+		if (TryDeleteFile(fileName))
 		{
-			this.DeleteFilesFromCache(filesDeletedResult.Value);
+			this.DeleteFileFromCache(fileName);
 		}
 	}
 
@@ -192,6 +196,35 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	}
 
 	/// <summary>
+	/// Attempts to delete the specified file.
+	/// </summary>
+	/// <param name="fileName">The full path of the file to delete.</param>
+	/// <returns><see langword="true"/> if the file was deleted; otherwise <see langword="false"/>.</returns>
+	private static bool TryDeleteFile(string fileName)
+	{
+		try
+		{
+			if (!File.Exists(fileName))
+			{
+				return false;
+			}
+
+			File.Delete(fileName);
+			return true;
+		}
+		catch (Exception ex) when (ex is ArgumentException or
+			ArgumentNullException or
+			System.IO.DirectoryNotFoundException or
+			IOException or
+			NotSupportedException or
+			PathTooLongException or
+			UnauthorizedAccessException)
+		{
+			return false;
+		}
+	}
+
+	/// <summary>
 	/// Creates multiple temporary files in parallel (for counts &gt; 2).
 	/// </summary>
 	/// <param name="count">The number of files to create.</param>
@@ -204,12 +237,12 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 
 		_ = Parallel.For(0, count, index => result[index] = GenerateRandomFile());
 
-		foreach (var file in result)
+		for (var fileIndex = 0; fileIndex < count; fileIndex++)
 		{
-			this._files.Add(file);
+			this._files.Add(result[fileIndex]);
 		}
 
-		return result.AsReadOnly();
+		return new ReadOnlyCollection<string>(result);
 	}
 
 	/// <summary>
@@ -232,16 +265,53 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	}
 
 	/// <summary>
+	/// Removes the specified file from the cache.
+	/// </summary>
+	/// <param name="fileName">The file path to remove from the cache.</param>
+	private void DeleteFileFromCache(string fileName)
+	{
+		if (string.IsNullOrEmpty(fileName) || this._files.IsEmpty)
+		{
+			return;
+		}
+
+		var tempBag = new ConcurrentBag<string>();
+		var fileCount = this._files.Count;
+
+		if (fileCount <= 50)
+		{
+			this.FilterSingleFileSequential(fileName, tempBag);
+		}
+		else
+		{
+			this.FilterSingleFileParallel(fileName, tempBag);
+		}
+
+		this._files = tempBag;
+	}
+
+	/// <summary>
 	/// Removes the specified files from the cache.
 	/// </summary>
 	/// <param name="files">A read-only collection of file paths to remove from the cache.</param>
 	private void DeleteFilesFromCache(ReadOnlyCollection<string> files)
 	{
+		if (files.Count == 0)
+		{
+			return;
+		}
+
+		var fileCount = this._files.Count;
+		if (fileCount == 0)
+		{
+			return;
+		}
+
 		var deletedSet = new HashSet<string>(files, StringComparer.OrdinalIgnoreCase);
 		var tempBag = new ConcurrentBag<string>();
 
 		// Parallel overhead is not worthwhile for small file counts.
-		if (this._files.Count <= 50)
+		if (fileCount <= 50)
 		{
 			this.FilterFilesSequential(deletedSet, tempBag);
 		}
@@ -298,6 +368,38 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 		foreach (var file in this._files)
 		{
 			if (!deletedSet.Contains(file))
+			{
+				tempBag.Add(file);
+			}
+		}
+	}
+
+	/// <summary>
+	/// Filters files in parallel, retaining those not equal to <paramref name="fileName"/>.
+	/// </summary>
+	/// <param name="fileName">The file path to remove from the cache.</param>
+	/// <param name="tempBag">The bag to add retained files to.</param>
+	private void FilterSingleFileParallel(string fileName, ConcurrentBag<string> tempBag)
+	{
+		_ = Parallel.ForEach(this._files, file =>
+				{
+					if (!string.Equals(file, fileName, StringComparison.OrdinalIgnoreCase))
+					{
+						tempBag.Add(file);
+					}
+				});
+	}
+
+	/// <summary>
+	/// Filters files sequentially, retaining those not equal to <paramref name="fileName"/>.
+	/// </summary>
+	/// <param name="fileName">The file path to remove from the cache.</param>
+	/// <param name="tempBag">The bag to add retained files to.</param>
+	private void FilterSingleFileSequential(string fileName, ConcurrentBag<string> tempBag)
+	{
+		foreach (var file in this._files)
+		{
+			if (!string.Equals(file, fileName, StringComparison.OrdinalIgnoreCase))
 			{
 				tempBag.Add(file);
 			}

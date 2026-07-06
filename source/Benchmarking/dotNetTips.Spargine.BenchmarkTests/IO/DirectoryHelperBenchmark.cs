@@ -54,7 +54,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.LoadFilesAsync"/> with <see cref="SearchOption.TopDirectoryOnly"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.LoadFilesAsync))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public async Task LoadFilesAsync()
 	{
 		var directories = new List<DirectoryInfo> { this._sourcePath };
@@ -69,7 +69,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.LoadOneDriveFolders"/> on Windows.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.LoadOneDriveFolders))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void LoadOneDriveFolders()
 	{
 		var result = DirectoryHelper.LoadOneDriveFolders();
@@ -81,7 +81,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.SafeDirectorySearch"/> with <see cref="SearchOption.TopDirectoryOnly"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.SafeDirectorySearch))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void SafeDirectorySearch()
 	{
 		var result = DirectoryHelper.SafeDirectorySearch(this._sourcePath, "*.*", SearchOption.TopDirectoryOnly);
@@ -93,7 +93,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.SafeFileSearch(DirectoryInfo, string, SearchOption)"/>.
 	/// </summary>
 	[Benchmark(Description = "SafeFileSearch(DirectoryInfo)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void SafeFileSearch()
 	{
 		var result = DirectoryHelper.SafeFileSearch(this._sourcePath, "*.*", SearchOption.TopDirectoryOnly);
@@ -105,7 +105,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.SafeFileSearch(IEnumerable{DirectoryInfo}, string, SearchOption)"/>.
 	/// </summary>
 	[Benchmark(Description = "SafeFileSearch(IEnumerable<DirectoryInfo>)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void SafeFileSearchEnumerable()
 	{
 		var directories = new List<DirectoryInfo> { this._sourcePath };
@@ -118,7 +118,7 @@ public class DirectoryHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="DirectoryHelper.SetFileAttributesToNormal"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(DirectoryHelper.SetFileAttributesToNormal))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void SetFileAttributesToNormal()
 	{
 		DirectoryHelper.SetFileAttributesToNormal(this._sourcePath);

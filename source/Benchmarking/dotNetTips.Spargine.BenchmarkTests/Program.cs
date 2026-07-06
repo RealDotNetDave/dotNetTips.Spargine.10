@@ -44,7 +44,9 @@ public static class Program
 		// Run Selected Tests
 		//BenchmarkHelper.RunBenchmarks(config, true,
 		//	typeof(DirectoryHelperBenchmark),
-		//	typeof(DirectoryHelperCopyDirectoryBenchmark)
+		//	typeof(DirectoryHelperCopyDirectoryBenchmark),
+		//	typeof(FileHelperBenchmark),
+		//	typeof(FileProcessorCopyFilesBenchmark)
 		//	);
 	}
 }

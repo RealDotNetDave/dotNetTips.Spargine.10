@@ -4,13 +4,14 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-23-2026
+// Last Modified On : 07-06-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>Common methods for path manipulation, encompassing handling invalid filter characters, invalid path names, and path separators.</summary>
 // ***********************************************************************
+using System.Buffers;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -43,6 +44,9 @@ public static class PathHelper
 	[SupportedOSPlatform("windows")]
 	private static readonly char[] InvalidFileNameChars = [.. FileHelper.InvalidFileNameChars.Except(['*', '|', '?'])];
 
+	[SupportedOSPlatform("windows")]
+	private static readonly SearchValues<char> InvalidFileNameSearchValues = SearchValues.Create(InvalidFileNameChars);
+
 	/// <summary>
 	/// The invalid path characters, excluding directory separator characters.
 	/// </summary>
@@ -53,6 +57,10 @@ public static class PathHelper
 	/// </remarks>
 	private static readonly char[] InvalidPathChars = [.. Path.GetInvalidPathChars().Except([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar])];
 
+	private static readonly SearchValues<char> InvalidPathSearchValues = SearchValues.Create(InvalidPathChars);
+
+	private static readonly SearchValues<char> WildcardSearchValues = SearchValues.Create(['*', '?']);
+
 	/// <summary>
 	/// Gets the path separators used in file paths.
 	/// </summary>
@@ -60,7 +68,7 @@ public static class PathHelper
 	/// A read-only collection of characters used as path separators, specifically the
 	/// <see cref="Path.DirectorySeparatorChar"/> and <see cref="Path.AltDirectorySeparatorChar"/>.
 	/// </value>
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<char> PathSeparators { get; } =
 		new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }.AsReadOnly();
 
@@ -187,7 +195,7 @@ public static class PathHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string EnsureTrailingSlash([DisallowNull] string path)
 	{
 		path = path.ArgumentNotNullOrEmpty();
@@ -215,12 +223,12 @@ public static class PathHelper
 	/// </example>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasInvalidFilterChars([DisallowNull] string filter)
 	{
 		filter = filter.ArgumentNotNullOrEmpty();
 
-		return filter.IndexOfAny(InvalidFileNameChars) != -1;
+		return filter.AsSpan().IndexOfAny(InvalidFileNameSearchValues) >= 0;
 	}
 
 	/// <summary>
@@ -239,7 +247,7 @@ public static class PathHelper
 	/// </example>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<char> InvalidFilterChars()
 	{
 		return InvalidFileNameChars.AsReadOnly();
@@ -260,7 +268,7 @@ public static class PathHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<char> InvalidPathNameChars()
 	{
 		return InvalidPathChars.AsReadOnly();
@@ -280,12 +288,12 @@ public static class PathHelper
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PathContainsWildcard), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(PathContainsWildcard), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool PathContainsWildcard([DisallowNull] string path)
 	{
 		path = path.ArgumentNotNullOrEmpty();
 
-		return path.Contains('*', StringComparison.Ordinal) || path.Contains('?', StringComparison.Ordinal);
+		return path.AsSpan().IndexOfAny(WildcardSearchValues) >= 0;
 	}
 
 	/// <summary>
@@ -298,12 +306,12 @@ public static class PathHelper
 	/// The invalid characters are obtained from <see cref="InvalidPathNameChars"/>, which excludes directory separator characters.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool PathHasInvalidChars([DisallowNull] string path)
 	{
 		path = path.ArgumentNotNullOrEmpty();
 
-		return path.IndexOfAny(InvalidPathChars) != -1;
+		return path.AsSpan().IndexOfAny(InvalidPathSearchValues) >= 0;
 	}
 
 	/// <summary>

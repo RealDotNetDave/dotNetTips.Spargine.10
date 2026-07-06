@@ -37,7 +37,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for CombinePaths with four paths.
 	/// </summary>
 	[Benchmark(Description = "CombinePaths(bool, string, string, string, string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CombinePathsFour()
 	{
 		var result = PathHelper.CombinePaths(false, "C:\\", "folder1", "folder2", "folder3");
@@ -49,7 +49,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for CombinePaths with params array (multiple paths).
 	/// </summary>
 	[Benchmark(Description = "CombinePaths(bool, params string[])")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CombinePathsParams()
 	{
 		var result = PathHelper.CombinePaths(false, "C:\\", "folder1", "folder2", "folder3");
@@ -61,7 +61,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for CombinePaths with three paths.
 	/// </summary>
 	[Benchmark(Description = "CombinePaths(bool, string, string, string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CombinePathsThree()
 	{
 		var result = PathHelper.CombinePaths(false, "C:\\", "folder1", "folder2");
@@ -73,7 +73,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for CombinePaths with two paths.
 	/// </summary>
 	[Benchmark(Description = "CombinePaths(bool, string, string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CombinePathsTwo()
 	{
 		var result = PathHelper.CombinePaths(false, "C:\\", "folder1");
@@ -85,7 +85,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for EnsureTrailingSlash with a path that already has a trailing slash.
 	/// </summary>
 	[Benchmark(Description = "EnsureTrailingSlash(string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void EnsureTrailingSlash()
 	{
 		var result = PathHelper.EnsureTrailingSlash(this._testPath);
@@ -97,7 +97,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for HasInvalidFilterChars with a path containing invalid characters.
 	/// </summary>
 	[Benchmark(Description = "HasInvalidFilterChars(string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void HasInvalidFilterChars()
 	{
 		var result = PathHelper.HasInvalidFilterChars(string.Concat(this.LongTestString, Path.DirectorySeparatorChar));
@@ -109,7 +109,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for HasInvalidFilterChars with a valid filter string.
 	/// </summary>
 	[Benchmark(Description = "HasInvalidFilterChars(string) - Valid")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void HasInvalidFilterCharsValid()
 	{
 		var result = PathHelper.HasInvalidFilterChars("validfilename.txt");
@@ -121,7 +121,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for InvalidFilterChars property method.
 	/// </summary>
 	[Benchmark(Description = "InvalidFilterChars()")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void InvalidFilterChars()
 	{
 		var result = PathHelper.InvalidFilterChars();
@@ -133,7 +133,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for InvalidPathNameChars property method.
 	/// </summary>
 	[Benchmark(Description = "InvalidPathNameChars()")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void InvalidPathNameChars()
 	{
 		var result = PathHelper.InvalidPathNameChars();
@@ -145,7 +145,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for PathContainsWildcard with a path containing a wildcard.
 	/// </summary>
 	[Benchmark(Description = "PathContainsWildcard(string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void PathContainsWildcard()
 	{
 		var result = PathHelper.PathContainsWildcard(this._pathWithWildcard);
@@ -157,7 +157,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for PathContainsWildcard with a path that does not contain a wildcard.
 	/// </summary>
 	[Benchmark(Description = "PathContainsWildcard(string) - NoWildcard")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void PathContainsWildcardNoWildcard()
 	{
 		var result = PathHelper.PathContainsWildcard(this._testPath);
@@ -169,7 +169,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for PathHasInvalidChars with a path containing invalid characters.
 	/// </summary>
 	[Benchmark(Description = "PathHasInvalidChars(string)")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void PathHasInvalidChars()
 	{
 		var result = PathHelper.PathHasInvalidChars(this._pathWithInvalidChars);
@@ -181,7 +181,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for PathHasInvalidChars with a valid path.
 	/// </summary>
 	[Benchmark(Description = "PathHasInvalidChars(string) - Valid")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void PathHasInvalidCharsValid()
 	{
 		var result = PathHelper.PathHasInvalidChars(this._testPath);
@@ -193,7 +193,7 @@ public class PathHelperBenchmark : Benchmark
 	/// Benchmark for PathSeparators property access.
 	/// </summary>
 	[Benchmark(Description = "PathSeparators property")]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void PathSeparators()
 	{
 		var result = PathHelper.PathSeparators;

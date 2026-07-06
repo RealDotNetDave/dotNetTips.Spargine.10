@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark-20260705-115639</title>
+
+<style type="text/css">
+    pre { margin: 0px; }
+    table { border-collapse:collapse; }
+    td.perMethod { border-top: 1px black solid; }
+    tr.evenMap td { background-color: #F5F5F5; }  
+</style>
+
+<style type='text/css'>
+    td.label:hover { cursor: pointer; background-color: yellow !important; }
+    td.highlighted { background-color: yellow !important; }
+</style></head><body>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>$(document).ready(function () {
+    var selectedIndex = 0;
+
+    function highlight() {
+        $('td.reference.highlighted').removeClass('highlighted');
+
+        var selectedLabel = $(this).attr('data-label');
+        if (selectedLabel) {
+            $('td.reference[data-reference=' + selectedLabel + ']').addClass('highlighted');
+        }
+        selectedIndex = 0;
+    }
+
+    function selectNext() {
+        var $highlighted = $('td.reference.highlighted');
+        var selected = $highlighted[selectedIndex++ % $highlighted.length];
+
+        if (selected) {
+            var selectedReference = $(selected).attr('id');
+            if (selectedReference) {
+                window.location.hash = '#' + selectedReference;
+            }
+        }
+    }
+
+    $('td.label').on('click', highlight);
+
+    $(document).on('keydown', function (event) {
+        if (event.keyCode == 114) { // F3
+            event.preventDefault();
+            // Remap F3 to some other key that the browser doesn't care about
+            selectNext();
+        }
+    });
+});</script>
+<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark.MoveFile()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,20</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rax+138]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rax+148]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8d,1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9d,1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE65E7F0]; DotNetTips.Spargine.IO.FileHelper.MoveFile(System.IO.FileInfo, System.IO.FileInfo, Boolean, Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,20</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.FileHelper.MoveFile(System.IO.FileInfo, System.IO.FileInfo, Boolean, Int32)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>		file = file.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		destinationFile = destinationFile.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		retryCount = retryCount.EnsureMinimum(1);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		ValidateFileCreateDestinationDirectory(file, destinationFile.Directory!);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var sourcePath = file.FullName;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var destinationPath = destinationFile.FullName;
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		for (var retryIndex = 0; retryIndex < retryCount; retryIndex++)
+		     ^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			if (TryMoveFileOnce(sourcePath, destinationPath, replaceExisting))
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>				return true;
+				^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			if (retryIndex < retryCount - 1)
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>				Thread.Sleep((retryIndex + 1) * 10);
+				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return false;
+		^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,0A0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+0A0]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp-70],ymm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqa   xmmword ptr [rbp-50],xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+28],r9d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rbp-68],3E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,2149C650B50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AE9E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9,2149C640008</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE5CF348]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,2149C650B70</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AE9E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r9,2149C640008</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE5CF348]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       ecx,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE654888]; DotNetTips.Spargine.Extensions.NumericExtensions.EnsureMinimum(Int32, Int32)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+28],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE65E820]; System.IO.FileInfo.get_Directory()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-70],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp-70]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE65E838]; DotNetTips.Spargine.IO.FileHelper.ValidateFileCreateDestinationDirectory(System.IO.FileInfo, System.IO.DirectoryInfo)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-58],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-58]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,7FFCDE6AEB18</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-58]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp-58]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+40]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [rax+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-40],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-60],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,7FFCDE6AEC20</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp-60]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+40]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [rax+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-48],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L03"><a href="#2_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L00" class="label" data-label="2_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>movzx     r8d,byte ptr [rbp+20]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp-40]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,[rbp-48]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFCDE65E850]; DotNetTips.Spargine.IO.FileHelper.TryMoveFileOnce(System.String, System.String, Boolean)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L01"><a href="#2_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AED28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,0A0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L01" class="label" data-label="2_M01_L01"><pre><code>M01_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       eax,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       eax,1</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        near ptr M01_L05</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rbp-4C],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L02"><a href="#2_M01_L02"><pre><code>jge       short M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AED2C</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       eax,1</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>imul      ecx,eax,0A</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFCDE257738]; System.Threading.Thread.Sleep(Int32)</pre></code></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L02" class="label" data-label="2_M01_L02"><pre><code>M01_L02</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AED30</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       eax,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jo        short M01_L05</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-4C],eax</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L03" class="label" data-label="2_M01_L03"><pre><code>M01_L03</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       eax,[rbp-68]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>dec       eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-68],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       dword ptr [rbp-68],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="2" class="reference" data-reference="2_M01_L04"><a href="#2_M01_L04"><pre><code>jg        short M01_L04</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp-68]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,6E</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_PATCHPOINT</pre></code></td>
+</tr><tr class="evenMap">
+<td id="2_M01_L04" class="label" data-label="2_M01_L04"><pre><code>M01_L04</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       eax,[rbp-4C]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       eax,[rbp+28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="2" class="reference" data-reference="2_M01_L00"><a href="#2_M01_L00"><pre><code>jl        near ptr M01_L00</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFCDE6AED34</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,0A0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="">
+<td id="2_M01_L05" class="label" data-label="2_M01_L05"><pre><code>M01_L05</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_OVERFLOW</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>int       3</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+</body></html>

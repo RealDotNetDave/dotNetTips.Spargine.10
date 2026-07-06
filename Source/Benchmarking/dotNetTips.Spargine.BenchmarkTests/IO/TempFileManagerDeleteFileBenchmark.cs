@@ -55,7 +55,7 @@ public class TempFileManagerDeleteFileBenchmark : Benchmark
 	/// Exactly one file is created in <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteFile))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void DeleteFile()
 	{
 		this._manager.DeleteFile(this._singleFile);

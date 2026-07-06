@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260705-133545</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260705-133545</th></tr>
+<tr>
+<th>DeleteFile .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark.DeleteFile()
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rdx,[rax+140]
+mov       rax,[rbp+10]
+mov       rcx,[rax+138]
+cmp       [rcx],ecx
+call      qword ptr [7FFCDE64E4C0]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)
+		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		if (TryDeleteFile(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			this.DeleteFileFromCache(fileName);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFCDE2AF240]
+test      eax,eax
+je        short 00007FFCDE73D2E6
+mov       rcx,7FFCDE878560
+call      CORINFO_HELP_COUNTPROFILE32
+nop
+add       rsp,20
+pop       rbp
+ret
+mov       rcx,[rbp+18]
+call      qword ptr [7FFCDE64E4D8]
+test      eax,eax
+je        short 00007FFCDE73D311
+mov       rcx,7FFCDE878564
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,[rbp+10]
+mov       rdx,[rbp+18]
+call      qword ptr [7FFCDE64E4F0]
+mov       rcx,7FFCDE878568
+call      CORINFO_HELP_COUNTPROFILE32
+nop
+add       rsp,20
+pop       rbp
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

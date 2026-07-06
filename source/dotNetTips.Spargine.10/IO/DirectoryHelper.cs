@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-01-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-04-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-05-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -157,7 +157,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(CopyDirectory), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void CopyDirectory([DisallowNull] DirectoryInfo source, [NotNull] DirectoryInfo destination, bool overwrite = true, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentExists();
@@ -281,7 +281,7 @@ public static class DirectoryHelper
 	/// </example>
 	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
 	{
 		using var oneDriveKey = RegistryHelper.GetRegistryKey(RegistryHelper.KeyCurrentUserOneDrive, RegistryHive.CurrentUser);
@@ -368,7 +368,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SafeDirectorySearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<DirectoryInfo> SafeDirectorySearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern = "*.*", SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
 		path = path.ArgumentExists();
@@ -407,7 +407,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="searchPattern"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<FileInfo> SafeFileSearch([DisallowNull] DirectoryInfo path, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		path = path.ArgumentExists();
@@ -432,7 +432,7 @@ public static class DirectoryHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="searchOption"/> is not a valid <see cref="SearchOption"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SafeFileSearch), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<FileInfo> SafeFileSearch([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, [DisallowNull] SearchOption searchOption = SearchOption.TopDirectoryOnly, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();
@@ -505,7 +505,7 @@ public static class DirectoryHelper
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(SetFileAttributesToNormal), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void SetFileAttributesToNormal([DisallowNull] DirectoryInfo path, CancellationToken cancellationToken = default)
 	{
 		path = path.ArgumentNotNull();

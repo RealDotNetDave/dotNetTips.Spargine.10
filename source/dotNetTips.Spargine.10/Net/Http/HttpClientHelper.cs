@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-11-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 06-12-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-06-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -38,6 +38,21 @@ public static class HttpClientHelper
 {
 
 	/// <summary>
+	/// The cached default options used when <see cref="CreateOptimizedHttpClient(HttpClientOptions?)"/> is invoked without explicit configuration.
+	/// </summary>
+	private static readonly HttpClientOptions _defaultHttpClientOptions = new();
+
+	/// <summary>
+	/// The cached accept-encoding header value for deflate.
+	/// </summary>
+	private static readonly StringWithQualityHeaderValue _deflateEncoding = new("deflate");
+
+	/// <summary>
+	/// The cached accept-encoding header value for gzip.
+	/// </summary>
+	private static readonly StringWithQualityHeaderValue _gzipEncoding = new("gzip");
+
+	/// <summary>
 	/// The format string used to indicate that a resource was not found.
 	/// </summary>
 	private static readonly CompositeFormat _resourceWasNotFound = CompositeFormat.Parse(Resources.ResourceWasNotFound);
@@ -57,10 +72,10 @@ public static class HttpClientHelper
 	/// The configuration options. When <c>null</c>, a default <see cref="HttpClientOptions"/> instance is used.
 	/// </param>
 	/// <returns>A fully configured <see cref="HttpClient"/> instance backed by a <see cref="SocketsHttpHandler"/>.</returns>
-	[Information(nameof(CreateOptimizedHttpClient), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CreateOptimizedHttpClient), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static HttpClient CreateOptimizedHttpClient(HttpClientOptions? options = null)
 	{
-		options ??= new HttpClientOptions();
+		options ??= _defaultHttpClientOptions;
 
 		// CA2000: HttpClient(handler, disposeHandler: true) takes ownership and will dispose the handler on disposal.
 #pragma warning disable CA2000
@@ -80,16 +95,15 @@ public static class HttpClientHelper
 
 		// IDISP014: This is a factory method; the caller is responsible for disposing the returned HttpClient.
 #pragma warning disable IDISP014
-		var client = new HttpClient(handler)
+		var client = new HttpClient(handler, disposeHandler: true)
 		{
 			Timeout = options.Timeout,
 		};
 #pragma warning restore IDISP014
 
-		// Optimize headers
-		client.DefaultRequestHeaders.Add("User-Agent", options.UserAgent);
-		client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-		client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+		_ = client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", options.UserAgent);
+		client.DefaultRequestHeaders.AcceptEncoding.Add(_gzipEncoding);
+		client.DefaultRequestHeaders.AcceptEncoding.Add(_deflateEncoding);
 
 		return client;
 	}

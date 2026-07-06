@@ -43,7 +43,7 @@ public class FileHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="FileHelper.CalculateTotalFileSize"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.CalculateTotalFileSize))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CalculateTotalFileSize()
 	{
 		var result = FileHelper.CalculateTotalFileSize(new ReadOnlySpan<FileInfo>(this._testFiles));
@@ -55,7 +55,7 @@ public class FileHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="FileHelper.CheckPermission"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.CheckPermission))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CheckPermission()
 	{
 		var result = FileHelper.CheckPermission(this._testFiles[0]);
@@ -77,7 +77,7 @@ public class FileHelperBenchmark : Benchmark
 	/// Benchmark for <see cref="FileHelper.FileHasInvalidChars"/>.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.FileHasInvalidChars))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void FileHasInvalidChars()
 	{
 		var result = FileHelper.FileHasInvalidChars(this._testFiles[0]);

@@ -75,7 +75,7 @@ public class FileHelperMoveFileBenchmark : Benchmark
 	/// forward move is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.MoveFile))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void MoveFile()
 	{
 		_ = FileHelper.MoveFile(this._sourceFile, this._destFile, replaceExisting: true);

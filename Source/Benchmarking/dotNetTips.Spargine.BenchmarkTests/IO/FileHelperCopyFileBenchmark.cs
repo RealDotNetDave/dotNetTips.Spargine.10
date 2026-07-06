@@ -26,7 +26,7 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 
 /// <summary>
 /// Benchmark tests for <see cref="FileHelper.CopyFile(FileInfo, DirectoryInfo)"/> and
-/// <see cref="FileHelper.CopyFileAsync(FileInfo, DirectoryInfo, System.Threading.CancellationToken)"/>.
+/// <see cref="FileHelper.CopyFileAsync(FileInfo, DirectoryInfo, CancellationToken)"/>.
 /// Uses <see cref="IterationCleanupAttribute"/> to delete the destination file after each iteration so that
 /// every iteration measures a clean copy with no pre-existing destination — avoiding the hidden
 /// <see cref="File.Delete"/> cost that the implementations perform when overwriting.
@@ -61,7 +61,7 @@ public class FileHelperCopyFileBenchmark : Benchmark
 	/// so only the copy itself is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.CopyFile))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CopyFile()
 	{
 		var result = FileHelper.CopyFile(this._singleFile, this._destinationPath);
@@ -70,12 +70,12 @@ public class FileHelperCopyFileBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Benchmark for <see cref="FileHelper.CopyFileAsync(FileInfo, DirectoryInfo, System.Threading.CancellationToken)"/>.
+	/// Benchmark for <see cref="FileHelper.CopyFileAsync(FileInfo, DirectoryInfo, CancellationToken)"/>.
 	/// The destination file is removed after each iteration by <see cref="IterationCleanupAttribute"/>
 	/// so only the async copy itself is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileHelper.CopyFileAsync))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public async Task CopyFileAsync()
 	{
 		var result = await FileHelper.CopyFileAsync(this._singleFile, this._destinationPath).ConfigureAwait(false);

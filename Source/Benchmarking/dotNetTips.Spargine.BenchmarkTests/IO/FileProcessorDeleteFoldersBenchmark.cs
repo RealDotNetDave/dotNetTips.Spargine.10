@@ -47,7 +47,7 @@ public class FileProcessorDeleteFoldersBenchmark : Benchmark
 	/// Target directories are pre-created in <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.DeleteFolders))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void DeleteFolders()
 	{
 		var result = this._fileProcessor.DeleteFolders(this._foldersToDelete, recursive: true);

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.LinqExtensionsBenchmark-20260705-174939</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7417/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                           </th><th>Count</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min</th><th>Q1</th><th>Q3</th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>64</td><td>10.79 ns</td><td>0.042 ns</td><td>0.035 ns</td><td>0.010 ns</td><td>10.80 ns</td><td>10.71 ns</td><td>10.78 ns</td><td>10.81 ns</td><td>10.86 ns</td><td>92,648,336.5</td><td>6.495 ns</td><td>13.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>128</td><td>10.60 ns</td><td>0.059 ns</td><td>0.052 ns</td><td>0.014 ns</td><td>10.60 ns</td><td>10.51 ns</td><td>10.57 ns</td><td>10.63 ns</td><td>10.70 ns</td><td>94,324,667.6</td><td>6.993 ns</td><td>14.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>256</td><td>10.64 ns</td><td>0.041 ns</td><td>0.036 ns</td><td>0.010 ns</td><td>10.63 ns</td><td>10.59 ns</td><td>10.61 ns</td><td>10.66 ns</td><td>10.70 ns</td><td>93,977,529.8</td><td>6.995 ns</td><td>14.00</td><td>No</td><td>0.0011</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>512</td><td>10.97 ns</td><td>0.170 ns</td><td>0.150 ns</td><td>0.040 ns</td><td>10.95 ns</td><td>10.74 ns</td><td>10.89 ns</td><td>11.06 ns</td><td>11.26 ns</td><td>91,131,424.5</td><td>6.980 ns</td><td>14.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>1024</td><td>10.85 ns</td><td>0.085 ns</td><td>0.075 ns</td><td>0.020 ns</td><td>10.83 ns</td><td>10.74 ns</td><td>10.81 ns</td><td>10.88 ns</td><td>11.00 ns</td><td>92,163,259.0</td><td>6.990 ns</td><td>14.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>2048</td><td>10.77 ns</td><td>0.072 ns</td><td>0.067 ns</td><td>0.017 ns</td><td>10.76 ns</td><td>10.69 ns</td><td>10.71 ns</td><td>10.82 ns</td><td>10.91 ns</td><td>92,883,165.2</td><td>7.491 ns</td><td>15.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>4096</td><td>11.02 ns</td><td>0.123 ns</td><td>0.115 ns</td><td>0.030 ns</td><td>11.01 ns</td><td>10.88 ns</td><td>10.94 ns</td><td>11.08 ns</td><td>11.28 ns</td><td>90,766,816.6</td><td>7.485 ns</td><td>15.00</td><td>No</td><td>0.0014</td><td>-</td><td>601 B</td><td>0.0000</td><td>0.0000</td><td>-</td>
+</tr><tr><td>&#39;If: should=false (passthrough)&#39;</td><td>8192</td><td>11.20 ns</td><td>0.191 ns</td><td>0.179 ns</td><td>0.046 ns</td><td>11.17 ns</td><td>10.91 ns</td><td>11.05 ns</td><td>11.35 ns</td><td>11.55 ns</td><td>89,312,900.8</td><td>7.477 ns</td><td>15.00</td><td>No</td><td>0.0013</td><td>-</td><td>592 B</td><td>0.0001</td><td>0.0001</td><td>253 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>64</td><td>45.00 ns</td><td>0.931 ns</td><td>1.243 ns</td><td>0.249 ns</td><td>45.37 ns</td><td>41.70 ns</td><td>45.14 ns</td><td>45.66 ns</td><td>46.27 ns</td><td>22,223,039.5</td><td>12.376 ns</td><td>25.00</td><td>No</td><td>0.0035</td><td>-</td><td>1,126 B</td><td>0.0001</td><td>0.0001</td><td>176 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>128</td><td>43.95 ns</td><td>0.902 ns</td><td>1.627 ns</td><td>0.254 ns</td><td>44.57 ns</td><td>41.79 ns</td><td>42.37 ns</td><td>45.22 ns</td><td>46.56 ns</td><td>22,752,399.2</td><td>20.373 ns</td><td>41.00</td><td>No</td><td>0.0044</td><td>-</td><td>1,129 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>256</td><td>46.03 ns</td><td>0.425 ns</td><td>0.398 ns</td><td>0.103 ns</td><td>45.77 ns</td><td>45.44 ns</td><td>45.72 ns</td><td>46.36 ns</td><td>46.66 ns</td><td>21,726,112.6</td><td>7.449 ns</td><td>15.00</td><td>No</td><td>0.0035</td><td>-</td><td>1,680 B</td><td>0.0001</td><td>0.0001</td><td>176 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>512</td><td>46.60 ns</td><td>0.722 ns</td><td>0.675 ns</td><td>0.174 ns</td><td>46.35 ns</td><td>45.80 ns</td><td>46.02 ns</td><td>47.22 ns</td><td>47.69 ns</td><td>21,457,354.7</td><td>7.413 ns</td><td>15.00</td><td>No</td><td>0.0036</td><td>-</td><td>1,683 B</td><td>0.0001</td><td>0.0001</td><td>176 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>1024</td><td>48.18 ns</td><td>0.624 ns</td><td>0.583 ns</td><td>0.151 ns</td><td>47.96 ns</td><td>47.57 ns</td><td>47.72 ns</td><td>48.58 ns</td><td>49.21 ns</td><td>20,755,611.8</td><td>7.425 ns</td><td>15.00</td><td>No</td><td>0.0035</td><td>-</td><td>1,683 B</td><td>0.0001</td><td>0.0001</td><td>176 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>2048</td><td>45.37 ns</td><td>0.928 ns</td><td>2.038 ns</td><td>0.268 ns</td><td>46.16 ns</td><td>41.29 ns</td><td>43.35 ns</td><td>46.84 ns</td><td>48.14 ns</td><td>22,039,493.4</td><td>28.866 ns</td><td>58.00</td><td>No</td><td>0.0058</td><td>-</td><td>1,126 B</td><td>-</td><td>-</td><td>176 B</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>4096</td><td>45.37 ns</td><td>0.939 ns</td><td>2.372 ns</td><td>0.274 ns</td><td>46.46 ns</td><td>42.55 ns</td><td>42.91 ns</td><td>47.34 ns</td><td>49.55 ns</td><td>22,039,252.3</td><td>37.363 ns</td><td>75.00</td><td>No</td><td>0.0024</td><td>-</td><td>1,126 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;If: should=true (multiple transforms)&#39;</td><td>8192</td><td>45.12 ns</td><td>0.926 ns</td><td>1.829 ns</td><td>0.264 ns</td><td>44.78 ns</td><td>42.78 ns</td><td>43.35 ns</td><td>46.54 ns</td><td>48.85 ns</td><td>22,162,837.1</td><td>23.868 ns</td><td>48.00</td><td>No</td><td>0.0011</td><td>-</td><td>1,676 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>64</td><td>21.24 ns</td><td>0.488 ns</td><td>1.438 ns</td><td>0.144 ns</td><td>20.27 ns</td><td>19.91 ns</td><td>20.17 ns</td><td>22.42 ns</td><td>24.36 ns</td><td>47,077,450.8</td><td>49.928 ns</td><td>100.00</td><td>No</td><td>0.0079</td><td>-</td><td>1,581 B</td><td>-</td><td>-</td><td>80 B</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>128</td><td>21.44 ns</td><td>0.459 ns</td><td>1.346 ns</td><td>0.135 ns</td><td>20.73 ns</td><td>20.33 ns</td><td>20.58 ns</td><td>22.40 ns</td><td>24.82 ns</td><td>46,641,440.8</td><td>49.432 ns</td><td>99.00</td><td>No</td><td>0.0079</td><td>-</td><td>1,581 B</td><td>-</td><td>-</td><td>80 B</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>256</td><td>23.40 ns</td><td>0.498 ns</td><td>0.775 ns</td><td>0.137 ns</td><td>23.12 ns</td><td>21.55 ns</td><td>22.78 ns</td><td>23.95 ns</td><td>24.94 ns</td><td>42,742,449.9</td><td>15.932 ns</td><td>32.00</td><td>No</td><td>0.0034</td><td>-</td><td>1,581 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>512</td><td>23.16 ns</td><td>0.495 ns</td><td>0.813 ns</td><td>0.137 ns</td><td>23.02 ns</td><td>21.94 ns</td><td>22.45 ns</td><td>23.89 ns</td><td>24.85 ns</td><td>43,169,035.2</td><td>17.431 ns</td><td>35.00</td><td>No</td><td>0.0036</td><td>-</td><td>1,581 B</td><td>0.0001</td><td>0.0001</td><td>-</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>1024</td><td>22.95 ns</td><td>0.480 ns</td><td>0.775 ns</td><td>0.133 ns</td><td>22.97 ns</td><td>21.62 ns</td><td>22.27 ns</td><td>23.65 ns</td><td>24.56 ns</td><td>43,571,307.8</td><td>16.934 ns</td><td>34.00</td><td>No</td><td>0.0027</td><td>-</td><td>1,581 B</td><td>0.0001</td><td>0.0001</td><td>80 B</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>2048</td><td>22.61 ns</td><td>0.482 ns</td><td>0.973 ns</td><td>0.138 ns</td><td>22.88 ns</td><td>21.26 ns</td><td>21.54 ns</td><td>23.42 ns</td><td>24.07 ns</td><td>44,235,472.7</td><td>24.931 ns</td><td>50.00</td><td>No</td><td>0.0027</td><td>-</td><td>1,581 B</td><td>-</td><td>-</td><td>80 B</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>4096</td><td>21.24 ns</td><td>0.426 ns</td><td>1.167 ns</td><td>0.125 ns</td><td>20.71 ns</td><td>20.32 ns</td><td>20.62 ns</td><td>21.04 ns</td><td>24.85 ns</td><td>47,074,360.0</td><td>43.437 ns</td><td>87.00</td><td>No</td><td>0.0078</td><td>-</td><td>1,583 B</td><td>-</td><td>-</td><td>80 B</td>
+</tr><tr><td>&#39;If: should=true (transform applied)&#39;</td><td>8192</td><td>25.52 ns</td><td>0.539 ns</td><td>0.806 ns</td><td>0.147 ns</td><td>25.48 ns</td><td>23.76 ns</td><td>24.99 ns</td><td>25.88 ns</td><td>27.38 ns</td><td>39,180,736.4</td><td>14.926 ns</td><td>30.00</td><td>No</td><td>0.0027</td><td>-</td><td>1,574 B</td><td>0.0001</td><td>0.0001</td><td>80 B</td>
+</tr></tbody></table>
+</body>
+</html>

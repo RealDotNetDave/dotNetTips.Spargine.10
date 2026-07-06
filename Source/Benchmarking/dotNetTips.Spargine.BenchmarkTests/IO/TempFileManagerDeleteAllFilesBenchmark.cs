@@ -53,7 +53,7 @@ public class TempFileManagerDeleteAllFilesBenchmark : Benchmark
 	/// Files are created in <see cref="IterationSetupAttribute"/>; only the delete is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(TempFileManager.DeleteAllFiles))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void DeleteAllFiles()
 	{
 		this._manager.DeleteAllFiles();

@@ -60,7 +60,7 @@ public class FileProcessorCopyFilesBenchmark : Benchmark
 	/// so only a clean copy is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.CopyFiles))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CopyFiles()
 	{
 		var result = this._fileProcessor.CopyFiles(this._sourceFiles, this._destinationPath, overwrite: true);
@@ -74,7 +74,7 @@ public class FileProcessorCopyFilesBenchmark : Benchmark
 	/// so only a clean copy is measured.
 	/// </summary>
 	[Benchmark(Description = nameof(FileProcessor.CopyFilesWithOriginalPath))]
-	[BenchmarkCategory(Categories.New)]
+	[BenchmarkCategory(Categories.IO)]
 	public void CopyFilesWithOriginalPath()
 	{
 		var result = this._fileProcessor.CopyFilesWithOriginalPath(this._sourceFiles, this._destinationPath);
