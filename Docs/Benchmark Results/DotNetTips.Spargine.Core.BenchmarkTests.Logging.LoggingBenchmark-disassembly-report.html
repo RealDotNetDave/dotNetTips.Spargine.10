@@ -1,0 +1,4107 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark-20260706-224446</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="22">DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark-20260706-224446</th></tr>
+<tr>
+<th>LogErrorFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogCriticalILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogDebugILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogErrorILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogInformationILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogTraceILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogWarningILoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogCriticalFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogCriticalFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogDebugFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogDebugFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogErrorFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogExceptionFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogExceptionFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogInformationFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogInformationFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogStoredProcedureErrorFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogStoredProcedureNoRecordsFoundFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogTraceFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogTraceFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogWarningFastLoggerExtensionsBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+<th>LogWarningFastLoggerBenchmark .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorFastLoggerBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA91DDE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA91DC8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA91D71
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA91D75
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA91DB1
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA91DFA
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA91D57
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,4
+call      qword ptr [7FF91CA5C5B8]
+test      eax,eax
+je        short 00007FF91CA91DA9
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,4
+call      qword ptr [7FF91CA5C5D0]
+test      eax,eax
+jne       short 00007FF91CA91D45
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA91D75
+jmp       short 00007FF91CA91D45
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA91D4D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA5C5E8]
+int       3
+mov       r11,7FF91C2C0B00
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA91D5E
+mov       rcx,rbx
+mov       r11,7FF91C2C0AF8
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA91D5E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA3AA58
+call      System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+mov       rsi,rax
+mov       rcx,229FEED0AD0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],12C
+mov       rcx,229FEED0A50
+mov       [rsp+38],rcx
+mov       rcx,229FEED0A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogErrorMessageStruct
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       r8,1E969C021F8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,4
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA91D66
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,1E969C00A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91CA879E5
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91CA879E5
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91CA879FD
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91CA879FD
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91CA8798F
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4EFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91C402021
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalILoggerBenchmark()
+push      rsi
+push      rbx
+sub       rsp,88
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqu   ymmword ptr [rsp+60],ymm4
+mov       [rsp+80],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+test      rbx,rbx
+je        near ptr 00007FF91C3F6CE3
+mov       rcx,1E864801AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+68],rdx
+mov       rdx,228F9910A50
+mov       [rsp+78],rdx
+mov       [rsp+70],rcx
+xor       ecx,ecx
+mov       [rsp+80],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9CEBB0
+call      qword ptr [7FF91C345920]
+xor       r8d,r8d
+mov       [rsp+58],r8
+mov       dword ptr [rsp+60],64
+vmovdqu   ymm0,ymmword ptr [rsp+68]
+vmovdqu   ymmword ptr [rsp+38],ymm0
+mov       [rsp+20],rsi
+mov       r8,1E87A8001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+58]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,5
+call      rax
+nop
+vzeroupper
+add       rsp,88
+pop       rbx
+pop       rsi
+ret
+mov       ecx,191
+mov       rdx,7FF91C71C7C0
+call      qword ptr [7FF91C5677B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA146A8]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,1E864800A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C3F7045
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C3F7045
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C3F705D
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C3F705D
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C3F6FEF
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4BFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugILoggerBenchmark()
+push      rbx
+sub       rsp,80
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+vmovdqu   ymmword ptr [rsp+50],ymm4
+vmovdqa   xmmword ptr [rsp+70],xmm4
+mov       rbx,[rcx+140]
+test      rbx,rbx
+je        near ptr 00007FF91C41844E
+mov       rcx,28326001AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+60],rdx
+mov       rdx,2C3BB140A50
+mov       [rsp+70],rdx
+mov       [rsp+68],rcx
+xor       ecx,ecx
+mov       [rsp+78],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9FFF38
+call      qword ptr [7FF91C365920]
+xor       r8d,r8d
+mov       [rsp+50],r8
+mov       dword ptr [rsp+58],64
+vmovdqu   ymm0,ymmword ptr [rsp+60]
+vmovdqu   ymmword ptr [rsp+30],ymm0
+mov       [rsp+20],r8
+mov       r8,283260021C8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+50]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       edx,1
+call      rax
+nop
+vzeroupper
+add       rsp,80
+pop       rbx
+ret
+mov       ecx,191
+mov       rdx,7FF91C73C7C0
+call      qword ptr [7FF91C5877B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA34738]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,28326000A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C4187A5
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C4187A5
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C4187BD
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C4187BD
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C41874F
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4DFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorILoggerBenchmark()
+push      rsi
+push      rbx
+sub       rsp,88
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqu   ymmword ptr [rsp+60],ymm4
+mov       [rsp+80],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+test      rbx,rbx
+je        near ptr 00007FF91C437900
+mov       rcx,25830C01AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+68],rdx
+mov       rdx,298C5AB0A50
+mov       [rsp+78],rdx
+mov       [rsp+70],rcx
+xor       ecx,ecx
+mov       [rsp+80],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA1FC28
+call      qword ptr [7FF91C385920]
+xor       r8d,r8d
+mov       [rsp+58],r8
+mov       [rsp+60],r8d
+vmovdqu   ymm0,ymmword ptr [rsp+68]
+vmovdqu   ymmword ptr [rsp+38],ymm0
+mov       [rsp+20],rsi
+mov       r8,25830C021C8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+58]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,4
+call      rax
+nop
+vzeroupper
+add       rsp,88
+pop       rbx
+pop       rsi
+ret
+mov       ecx,191
+mov       rdx,7FF91C75C7C0
+call      qword ptr [7FF91C5A77B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA54690]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,25830C00A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C437C45
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C437C45
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C437C5D
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C437C5D
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C437BEF
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4FFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationILoggerBenchmark()
+push      rsi
+push      rbx
+sub       rsp,88
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqu   ymmword ptr [rsp+60],ymm4
+mov       [rsp+80],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+test      rbx,rbx
+je        near ptr 00007FF91C407883
+mov       rcx,252D4C01AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+68],rdx
+mov       rdx,29369D60A50
+mov       [rsp+78],rdx
+mov       [rsp+70],rcx
+xor       ecx,ecx
+mov       [rsp+80],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9EFC38
+call      qword ptr [7FF91C355920]
+xor       r8d,r8d
+mov       [rsp+58],r8
+mov       dword ptr [rsp+60],64
+vmovdqu   ymm0,ymmword ptr [rsp+68]
+vmovdqu   ymmword ptr [rsp+38],ymm0
+mov       [rsp+20],rsi
+mov       r8,252D4C021C8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+58]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,2
+call      rax
+nop
+vzeroupper
+add       rsp,88
+pop       rbx
+pop       rsi
+ret
+mov       ecx,191
+mov       rdx,7FF91C72C7C0
+call      qword ptr [7FF91C5777B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA246D8]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,252D4C00A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C407BE5
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C407BE5
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C407BFD
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C407BFD
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C407B8F
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4CFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceILoggerBenchmark()
+push      rsi
+push      rbx
+sub       rsp,88
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqu   ymmword ptr [rsp+60],ymm4
+mov       [rsp+80],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+test      rbx,rbx
+je        near ptr 00007FF91C418240
+mov       rcx,235A4401AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+68],rdx
+mov       rdx,276393B0A50
+mov       [rsp+78],rdx
+mov       [rsp+70],rcx
+xor       ecx,ecx
+mov       [rsp+80],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA00568
+call      qword ptr [7FF91C365920]
+xor       r8d,r8d
+mov       [rsp+58],r8
+mov       dword ptr [rsp+60],64
+vmovdqu   ymm0,ymmword ptr [rsp+68]
+vmovdqu   ymmword ptr [rsp+38],ymm0
+mov       [rsp+20],rsi
+mov       r8,235BA4001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+58]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+xor       edx,edx
+call      rax
+nop
+vzeroupper
+add       rsp,88
+pop       rbx
+pop       rsi
+ret
+mov       ecx,191
+mov       rdx,7FF91C73C7C0
+call      qword ptr [7FF91C5877B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA34738]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,235A4400A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C4185A5
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C4185A5
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C4185BD
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C4185BD
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C41854F
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4DFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningILoggerBenchmark()
+push      rsi
+push      rbx
+sub       rsp,88
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqu   ymmword ptr [rsp+60],ymm4
+mov       [rsp+80],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+test      rbx,rbx
+je        near ptr 00007FF91C3F8243
+mov       rcx,177E1001AE8
+mov       rcx,[rcx]
+xor       edx,edx
+mov       [rsp+68],rdx
+mov       rdx,1B876010A50
+mov       [rsp+78],rdx
+mov       [rsp+70],rcx
+xor       ecx,ecx
+mov       [rsp+80],rcx
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9E0568
+call      qword ptr [7FF91C345920]
+xor       r8d,r8d
+mov       [rsp+58],r8
+mov       dword ptr [rsp+60],64
+vmovdqu   ymm0,ymmword ptr [rsp+68]
+vmovdqu   ymmword ptr [rsp+38],ymm0
+mov       [rsp+20],rsi
+mov       r8,177F70001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+58]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,3
+call      rax
+nop
+vzeroupper
+add       rsp,88
+pop       rbx
+pop       rsi
+ret
+mov       ecx,191
+mov       rdx,7FF91C71C7C0
+call      qword ptr [7FF91C5677B0]
+mov       rcx,rax
+call      qword ptr [7FF91CA14738]
+int       3
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+mov       rax,[rcx]
+mov       r10d,edx
+rol       r10d,5
+add       r10d,eax
+mov       r9d,r8d
+ror       r9d,5
+add       r10d,r9d
+mov       r9,177E1000A10
+mov       r9,[r9]
+mov       r9,[r9+8]
+movsxd    r11,r10d
+mov       rbx,9E3779B97F4A7C15
+imul      r11,rbx
+movzx     ebx,byte ptr [r9+10]
+shrx      r11,r11,rbx
+xor       ebx,ebx
+lea       esi,[r11+1]
+movsxd    rsi,esi
+imul      rsi,30
+lea       rsi,[r9+rsi+10]
+mov       edi,[rsi]
+mov       ebp,[rsi+8]
+mov       r14,[rsi+10]
+mov       r15,[rsi+18]
+mov       r13,[rsi+20]
+cmp       r10d,ebp
+jne       short 00007FF91C3F85A5
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rdx
+sub       r14,r15
+or        rbp,r14
+mov       r14,r8
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C3F85A5
+mov       rax,[rsi+28]
+and       edi,0FFFFFFFE
+cmp       edi,[rsi]
+jne       short 00007FF91C3F85BD
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      edi,edi
+je        short 00007FF91C3F85BD
+inc       ebx
+add       r11d,ebx
+mov       esi,[r9+8]
+add       esi,0FFFFFFFE
+and       r11d,esi
+cmp       ebx,8
+jl        short 00007FF91C3F854F
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4BFFA8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalFastLoggerBenchmark()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,58
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+xor       eax,eax
+mov       [rsp+50],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C41AC70
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C41AC57
+mov       rdi,[rcx+18]
+test      rdi,rdi
+je        short 00007FF91C41ABFF
+xor       ecx,ecx
+mov       [rsp+50],rcx
+xor       ebp,ebp
+mov       r14d,[rdi+8]
+cmp       r14d,ebp
+jg        short 00007FF91C41AC03
+cmp       qword ptr [rsp+50],0
+jne       short 00007FF91C41AC40
+cmp       r14d,ebp
+setg      dil
+movzx     edi,dil
+xor       ecx,ecx
+mov       [rsp+50],rcx
+test      edi,edi
+jne       near ptr 00007FF91C41AC8C
+add       rsp,58
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+xor       edi,edi
+jmp       short 00007FF91C41ABE3
+mov       ecx,ebp
+lea       rcx,[rcx+rcx*4]
+lea       r15,[rdi+rcx*8+10]
+mov       rcx,r15
+mov       edx,5
+call      qword ptr [7FF91CA35098]
+test      eax,eax
+je        short 00007FF91C41AC37
+mov       rdx,[r15]
+lea       r8,[rsp+50]
+mov       ecx,5
+call      qword ptr [7FF91CA350B0]
+test      eax,eax
+jne       short 00007FF91C41ABD0
+inc       ebp
+cmp       r14d,ebp
+jg        short 00007FF91C41AC03
+jmp       short 00007FF91C41ABD0
+mov       rcx,[rsp+50]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C41ABD8
+mov       rcx,[rsp+50]
+call      qword ptr [7FF91CA350C8]
+int       3
+mov       r11,7FF91C2B0A20
+mov       edx,5
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C41ABEA
+mov       rcx,rbx
+mov       r11,7FF91C2B0A18
+mov       edx,5
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C41ABEA
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9FF770
+call      qword ptr [7FF91C365920]
+mov       rdi,rax
+mov       rcx,27698900AE0
+mov       [rsp+40],rcx
+mov       dword ptr [rsp+48],38F
+mov       rcx,27698900A50
+mov       [rsp+30],rcx
+mov       rcx,27698900A88
+mov       [rsp+38],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogCriticalMessageStruct
+call      qword ptr [7FF91C365728]
+mov       r8,236198001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+40]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       [rsp+20],rsi
+mov       edx,5
+call      rdi
+jmp       near ptr 00007FF91C41ABF2
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,23603800A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C410586
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C410586
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C4105A6
+mov       rcx,7FF91CA44D00
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C4105A6
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C410517
+mov       rcx,7FF91CA44D04
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4DFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA81BA1
+ret
+jmp       qword ptr [7FF91C365C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogCriticalFastLoggerExtensionsBenchmark()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,58
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+xor       eax,eax
+mov       [rsp+50],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA70410
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA703F7
+mov       rdi,[rcx+18]
+test      rdi,rdi
+je        short 00007FF91CA7039F
+xor       ecx,ecx
+mov       [rsp+50],rcx
+xor       ebp,ebp
+mov       r14d,[rdi+8]
+cmp       r14d,ebp
+jg        short 00007FF91CA703A3
+cmp       qword ptr [rsp+50],0
+jne       short 00007FF91CA703E0
+cmp       r14d,ebp
+setg      dil
+movzx     edi,dil
+xor       ecx,ecx
+mov       [rsp+50],rcx
+test      edi,edi
+jne       near ptr 00007FF91CA7042C
+add       rsp,58
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+xor       edi,edi
+jmp       short 00007FF91CA70383
+mov       ecx,ebp
+lea       rcx,[rcx+rcx*4]
+lea       r15,[rdi+rcx*8+10]
+mov       rcx,r15
+mov       edx,5
+call      qword ptr [7FF91CA250F8]
+test      eax,eax
+je        short 00007FF91CA703D7
+mov       rdx,[r15]
+lea       r8,[rsp+50]
+mov       ecx,5
+call      qword ptr [7FF91CA25110]
+test      eax,eax
+jne       short 00007FF91CA70370
+inc       ebp
+cmp       r14d,ebp
+jg        short 00007FF91CA703A3
+jmp       short 00007FF91CA70370
+mov       rcx,[rsp+50]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA70378
+mov       rcx,[rsp+50]
+call      qword ptr [7FF91CA25128]
+int       3
+mov       r11,7FF91C2A0A20
+mov       edx,5
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91CA7038A
+mov       rcx,rbx
+mov       r11,7FF91C2A0A18
+mov       edx,5
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91CA7038A
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9F0118
+call      qword ptr [7FF91C355920]
+mov       rdi,rax
+mov       rcx,195A8990AF0
+mov       [rsp+40],rcx
+mov       dword ptr [rsp+48],38F
+mov       rcx,195A8990A50
+mov       [rsp+30],rcx
+mov       rcx,195A8990A88
+mov       [rsp+38],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogCriticalMessageStruct
+call      qword ptr [7FF91C355728]
+mov       r8,155298001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+40]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       [rsp+20],rsi
+mov       edx,5
+call      rdi
+jmp       near ptr 00007FF91CA70392
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,15513800A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C400FA6
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C400FA6
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C400FC6
+mov       rcx,7FF91CA35270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C400FC6
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C400F37
+mov       rcx,7FF91CA35274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4CFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA72441
+ret
+jmp       qword ptr [7FF91C355C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CAA03FE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CAA03E8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CAA0391
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CAA0395
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CAA03D1
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CAA041A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CAA0377
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,1
+call      qword ptr [7FF91CA550F8]
+test      eax,eax
+je        short 00007FF91CAA03C9
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,1
+call      qword ptr [7FF91CA55110]
+test      eax,eax
+jne       short 00007FF91CAA0365
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CAA0395
+jmp       short 00007FF91CAA0365
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CAA036D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA55128]
+int       3
+mov       r11,7FF91C2D0A18
+mov       edx,1
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CAA037E
+mov       rcx,rbx
+mov       r11,7FF91C2D0A10
+mov       edx,1
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CAA037E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA1FA70
+call      qword ptr [7FF91C385920]
+mov       rsi,rax
+mov       rcx,1D3FF3E8258
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],0C8
+mov       rcx,1D3FF3F0A50
+mov       [rsp+38],rcx
+mov       rcx,1D3FF3F0A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogDebugMessageStruct
+call      qword ptr [7FF91C385728]
+mov       r8,193804001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,1
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CAA0386
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,1936A400A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C430F66
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C430F66
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C430F86
+mov       rcx,7FF91CA65270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C430F86
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C430EF7
+mov       rcx,7FF91CA65274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4FFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CAA25A1
+ret
+jmp       qword ptr [7FF91C385C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogDebugFastLoggerBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA603FE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA603E8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA60391
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA60395
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA603D1
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA6041A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA60377
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,1
+call      qword ptr [7FF91CA150F8]
+test      eax,eax
+je        short 00007FF91CA603C9
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,1
+call      qword ptr [7FF91CA15110]
+test      eax,eax
+jne       short 00007FF91CA60365
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA60395
+jmp       short 00007FF91CA60365
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA6036D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA15128]
+int       3
+mov       r11,7FF91C290A20
+mov       edx,1
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA6037E
+mov       rcx,rbx
+mov       r11,7FF91C290A18
+mov       edx,1
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA6037E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9E0118
+call      qword ptr [7FF91C345920]
+mov       rsi,rax
+mov       rcx,21621038258
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],0C8
+mov       rcx,21621040A50
+mov       [rsp+38],rcx
+mov       rcx,21621040A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogDebugMessageStruct
+call      qword ptr [7FF91C345728]
+mov       r8,1D5A20001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,1
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA60386
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,1D58C000A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C3F0F06
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C3F0F06
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C3F0F26
+mov       rcx,7FF91CA25270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C3F0F26
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C3F0E97
+mov       rcx,7FF91CA25274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4BFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA623C1
+ret
+jmp       qword ptr [7FF91C345C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogErrorFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA903FE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA903E8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA90391
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA90395
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA903D1
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA9041A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA90377
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,4
+call      qword ptr [7FF91CA450E0]
+test      eax,eax
+je        short 00007FF91CA903C9
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,4
+call      qword ptr [7FF91CA450F8]
+test      eax,eax
+jne       short 00007FF91CA90365
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA90395
+jmp       short 00007FF91CA90365
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA9036D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA45110]
+int       3
+mov       r11,7FF91C2C0A18
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA9037E
+mov       rcx,rbx
+mov       r11,7FF91C2C0A10
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA9037E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA0FA70
+call      qword ptr [7FF91C375920]
+mov       rsi,rax
+mov       rcx,29225C50AE0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],12C
+mov       rcx,29225C50A50
+mov       [rsp+38],rcx
+mov       rcx,29225C50A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogErrorMessageStruct
+call      qword ptr [7FF91C375728]
+mov       r8,251A6C001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,4
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA90386
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,25190C00A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C420F46
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C420F46
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C420F66
+mov       rcx,7FF91CA55270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C420F66
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C420ED7
+mov       rcx,7FF91CA55274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4EFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA92421
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogExceptionFastLoggerBenchmark()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,58
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+xor       eax,eax
+mov       [rsp+50],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA80410
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA803F7
+mov       rdi,[rcx+18]
+test      rdi,rdi
+je        short 00007FF91CA8039F
+xor       ecx,ecx
+mov       [rsp+50],rcx
+xor       ebp,ebp
+mov       r14d,[rdi+8]
+cmp       r14d,ebp
+jg        short 00007FF91CA803A3
+cmp       qword ptr [rsp+50],0
+jne       short 00007FF91CA803E0
+cmp       r14d,ebp
+setg      dil
+movzx     edi,dil
+xor       ecx,ecx
+mov       [rsp+50],rcx
+test      edi,edi
+jne       near ptr 00007FF91CA8042C
+add       rsp,58
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+xor       edi,edi
+jmp       short 00007FF91CA80383
+mov       ecx,ebp
+lea       rcx,[rcx+rcx*4]
+lea       r15,[rdi+rcx*8+10]
+mov       rcx,r15
+mov       edx,4
+call      qword ptr [7FF91CA35110]
+test      eax,eax
+je        short 00007FF91CA803D7
+mov       rdx,[r15]
+lea       r8,[rsp+50]
+mov       ecx,4
+call      qword ptr [7FF91CA35128]
+test      eax,eax
+jne       short 00007FF91CA80370
+inc       ebp
+cmp       r14d,ebp
+jg        short 00007FF91CA803A3
+jmp       short 00007FF91CA80370
+mov       rcx,[rsp+50]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA80378
+mov       rcx,[rsp+50]
+call      qword ptr [7FF91CA35140]
+int       3
+mov       r11,7FF91C2B0A18
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91CA8038A
+mov       rcx,rbx
+mov       r11,7FF91C2B0A10
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91CA8038A
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9FFA70
+call      qword ptr [7FF91C365920]
+mov       rdi,rax
+mov       rcx,26494800AD8
+mov       [rsp+40],rcx
+mov       dword ptr [rsp+48],1F4
+mov       rcx,26494800A50
+mov       [rsp+30],rcx
+mov       rcx,26494800A80
+mov       [rsp+38],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogExceptionMessageStruct
+call      qword ptr [7FF91C365728]
+mov       r8,224158001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+40]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       [rsp+20],rsi
+mov       edx,4
+call      rdi
+jmp       near ptr 00007FF91CA80392
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,223FF800A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C410FA6
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C410FA6
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C410FC6
+mov       rcx,7FF91CA45260
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C410FC6
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C410F37
+mov       rcx,7FF91CA45264
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4DFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA82441
+ret
+jmp       qword ptr [7FF91C365C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogExceptionFastLoggerExtensionsBenchmark()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,58
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+xor       eax,eax
+mov       [rsp+50],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C3FA070
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C3FA057
+mov       rdi,[rcx+18]
+test      rdi,rdi
+je        short 00007FF91C3F9FFF
+xor       ecx,ecx
+mov       [rsp+50],rcx
+xor       ebp,ebp
+mov       r14d,[rdi+8]
+cmp       r14d,ebp
+jg        short 00007FF91C3FA003
+cmp       qword ptr [rsp+50],0
+jne       short 00007FF91C3FA040
+cmp       r14d,ebp
+setg      dil
+movzx     edi,dil
+xor       ecx,ecx
+mov       [rsp+50],rcx
+test      edi,edi
+jne       near ptr 00007FF91C3FA08C
+add       rsp,58
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+xor       edi,edi
+jmp       short 00007FF91C3F9FE3
+mov       ecx,ebp
+lea       rcx,[rcx+rcx*4]
+lea       r15,[rdi+rcx*8+10]
+mov       rcx,r15
+mov       edx,4
+call      qword ptr [7FF91C99E580]
+test      eax,eax
+je        short 00007FF91C3FA037
+mov       rdx,[r15]
+lea       r8,[rsp+50]
+mov       ecx,4
+call      qword ptr [7FF91C99E598]
+test      eax,eax
+jne       short 00007FF91C3F9FD0
+inc       ebp
+cmp       r14d,ebp
+jg        short 00007FF91C3FA003
+jmp       short 00007FF91C3F9FD0
+mov       rcx,[rsp+50]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C3F9FD8
+mov       rcx,[rsp+50]
+call      qword ptr [7FF91C99E5B0]
+int       3
+mov       r11,7FF91C2B08D0
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C3F9FEA
+mov       rcx,rbx
+mov       r11,7FF91C2B08C8
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C3F9FEA
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9BAF38
+call      qword ptr [7FF91C365920]
+mov       rdi,rax
+mov       rcx,21A93700AE8
+mov       [rsp+40],rcx
+mov       dword ptr [rsp+48],1F4
+mov       rcx,21A93700A50
+mov       [rsp+30],rcx
+mov       rcx,21A93700A80
+mov       [rsp+38],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogExceptionMessageStruct
+call      qword ptr [7FF91C365728]
+mov       r8,1DA148001A8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+40]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       [rsp+20],rsi
+mov       edx,4
+call      rdi
+jmp       near ptr 00007FF91C3F9FF2
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+call      qword ptr [7FF96DF65C30]
+mov       rcx,[rax]
+add       rcx,8
+mov       rax,[rdi]
+mov       r8d,ebx
+rol       r8d,5
+add       r8d,eax
+mov       edx,esi
+ror       edx,5
+add       r8d,edx
+mov       rdx,[rcx]
+movsxd    r10,r8d
+mov       r9,9E3779B97F4A7C15
+imul      r10,r9
+movzx     ecx,byte ptr [rdx+10]
+shr       r10,cl
+xor       ecx,ecx
+lea       r9d,[r10+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       r8d,ebp
+jne       short 00007FF96D5096E4
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF96D5096E4
+mov       rax,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF96D5096FE
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF96D5096FE
+inc       ecx
+add       r10d,ecx
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r10d,r9d
+cmp       ecx,8
+jl        short 00007FF96D509686
+mov       r8,rsi
+mov       rcx,rdi
+mov       rdx,rbx
+lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [rax]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91C404D81
+ret
+jmp       qword ptr [7FF91C365C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationFastLoggerBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C42AC7E
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C42AC68
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91C42AC11
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91C42AC15
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91C42AC51
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91C42AC9A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91C42ABF7
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,2
+call      qword ptr [7FF91CA450B0]
+test      eax,eax
+je        short 00007FF91C42AC49
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,2
+call      qword ptr [7FF91CA450C8]
+test      eax,eax
+jne       short 00007FF91C42ABE5
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91C42AC15
+jmp       short 00007FF91C42ABE5
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C42ABED
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA450E0]
+int       3
+mov       r11,7FF91C2C0A20
+mov       edx,2
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91C42ABFE
+mov       rcx,rbx
+mov       r11,7FF91C2C0A18
+mov       edx,2
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91C42ABFE
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA0F1D8
+call      qword ptr [7FF91C375920]
+mov       rsi,rax
+mov       rcx,239D71F0AD8
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],190
+mov       rcx,239D71F0A50
+mov       [rsp+38],rcx
+mov       rcx,239D71F0A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogInformationMessageStruct
+call      qword ptr [7FF91C375728]
+mov       r8,1F9584001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,2
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91C42AC06
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,1F942400A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C4205E6
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C4205E6
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C420606
+mov       rcx,7FF91CA54D38
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C420606
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C420577
+mov       rcx,7FF91CA54D3C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4EFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA91D81
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogInformationFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C409DBE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C409DA8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91C409D51
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91C409D55
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91C409D91
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91C409DDA
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91C409D37
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,2
+call      qword ptr [7FF91C9AE568]
+test      eax,eax
+je        short 00007FF91C409D89
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,2
+call      qword ptr [7FF91C9AE580]
+test      eax,eax
+jne       short 00007FF91C409D25
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91C409D55
+jmp       short 00007FF91C409D25
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C409D2D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91C9AE598]
+int       3
+mov       r11,7FF91C2C08D0
+mov       edx,2
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91C409D3E
+mov       rcx,rbx
+mov       r11,7FF91C2C08C8
+mov       edx,2
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91C409D3E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9CA8D0
+call      qword ptr [7FF91C375920]
+mov       rsi,rax
+mov       rcx,1E2C2C90AF0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],190
+mov       rcx,1E2C2C90A50
+mov       [rsp+38],rcx
+mov       rcx,1E2C2C90A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogInformationMessageStruct
+call      qword ptr [7FF91C375728]
+mov       r8,1A243C001A8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,2
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91C409D46
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+call      qword ptr [7FF96DF65C30]
+mov       rcx,[rax]
+add       rcx,8
+mov       rax,[rdi]
+mov       r8d,ebx
+rol       r8d,5
+add       r8d,eax
+mov       edx,esi
+ror       edx,5
+add       r8d,edx
+mov       rdx,[rcx]
+movsxd    r10,r8d
+mov       r9,9E3779B97F4A7C15
+imul      r10,r9
+movzx     ecx,byte ptr [rdx+10]
+shr       r10,cl
+xor       ecx,ecx
+lea       r9d,[r10+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       r8d,ebp
+jne       short 00007FF96D5096E4
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF96D5096E4
+mov       rax,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF96D5096FE
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF96D5096FE
+inc       ecx
+add       r10d,ecx
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r10d,r9d
+cmp       ecx,8
+jl        short 00007FF96D509686
+mov       r8,rsi
+mov       rcx,rdi
+mov       rdx,rbx
+lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [rax]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91C414BC1
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogStoredProcedureErrorFastLoggerExtensionsBenchmark()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,58
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+xor       eax,eax
+mov       [rsp+50],rax
+mov       rbx,[rcx+140]
+mov       rsi,[rcx+138]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C42B170
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C42B157
+mov       rdi,[rcx+18]
+test      rdi,rdi
+je        short 00007FF91C42B0FF
+xor       ecx,ecx
+mov       [rsp+50],rcx
+xor       ebp,ebp
+mov       r14d,[rdi+8]
+cmp       r14d,ebp
+jg        short 00007FF91C42B103
+cmp       qword ptr [rsp+50],0
+jne       short 00007FF91C42B140
+cmp       r14d,ebp
+setg      dil
+movzx     edi,dil
+xor       ecx,ecx
+mov       [rsp+50],rcx
+test      edi,edi
+jne       near ptr 00007FF91C42B18C
+add       rsp,58
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+xor       edi,edi
+jmp       short 00007FF91C42B0E3
+mov       ecx,ebp
+lea       rcx,[rcx+rcx*4]
+lea       r15,[rdi+rcx*8+10]
+mov       rcx,r15
+mov       edx,4
+call      qword ptr [7FF91CA45020]
+test      eax,eax
+je        short 00007FF91C42B137
+mov       rdx,[r15]
+lea       r8,[rsp+50]
+mov       ecx,4
+call      qword ptr [7FF91CA45038]
+test      eax,eax
+jne       short 00007FF91C42B0D0
+inc       ebp
+cmp       r14d,ebp
+jg        short 00007FF91C42B103
+jmp       short 00007FF91C42B0D0
+mov       rcx,[rsp+50]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C42B0D8
+mov       rcx,[rsp+50]
+call      qword ptr [7FF91CA45050]
+int       3
+mov       r11,7FF91C2C0A20
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C42B0EA
+mov       rcx,rbx
+mov       r11,7FF91C2C0A18
+mov       edx,4
+call      qword ptr [r11]
+mov       edi,eax
+jmp       near ptr 00007FF91C42B0EA
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA10118
+call      qword ptr [7FF91C375920]
+mov       rdi,rax
+mov       rcx,1F1DE410B08
+mov       [rsp+40],rcx
+mov       dword ptr [rsp+48],2BC
+mov       rcx,1F1DE410A50
+mov       [rsp+30],rcx
+mov       rcx,1F1DE410A88
+mov       [rsp+38],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogStoredProcedureErrorStruct
+call      qword ptr [7FF91C375728]
+mov       r8,1B1494021C8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+40]
+lea       r9,[rsp+30]
+mov       rcx,rbx
+mov       [rsp+20],rsi
+mov       edx,4
+call      rdi
+jmp       near ptr 00007FF91C42B0F2
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,1B149400A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C420A46
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C420A46
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C420A66
+mov       rcx,7FF91CA55818
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C420A66
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C4209D7
+mov       rcx,7FF91CA5581C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4EFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA91E81
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogStoredProcedureNoRecordsFoundFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C40A07E
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C40A068
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91C40A011
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91C40A015
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91C40A051
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91C40A09A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91C409FF7
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,4
+call      qword ptr [7FF91C9AE5B0]
+test      eax,eax
+je        short 00007FF91C40A049
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,4
+call      qword ptr [7FF91C9AE5C8]
+test      eax,eax
+jne       short 00007FF91C409FE5
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91C40A015
+jmp       short 00007FF91C409FE5
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C409FED
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91C9AE5E0]
+int       3
+mov       r11,7FF91C2C08D0
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91C409FFE
+mov       rcx,rbx
+mov       r11,7FF91C2C08C8
+mov       edx,4
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91C409FFE
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9CA8D0
+call      qword ptr [7FF91C375920]
+mov       rsi,rax
+mov       rcx,26D3D7B0B18
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],2BD
+mov       rcx,26D3D7B0A50
+mov       [rsp+38],rcx
+mov       rcx,26D3D7B0A88
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogStoredProcedureNoRecordsFoundStruct
+call      qword ptr [7FF91C375728]
+mov       r8,22CBE8001A8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,4
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91C40A006
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+call      qword ptr [7FF96DF65C30]
+mov       rcx,[rax]
+add       rcx,8
+mov       rax,[rdi]
+mov       r8d,ebx
+rol       r8d,5
+add       r8d,eax
+mov       edx,esi
+ror       edx,5
+add       r8d,edx
+mov       rdx,[rcx]
+movsxd    r10,r8d
+mov       r9,9E3779B97F4A7C15
+imul      r10,r9
+movzx     ecx,byte ptr [rdx+10]
+shr       r10,cl
+xor       ecx,ecx
+lea       r9d,[r10+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       r8d,ebp
+jne       short 00007FF96D5096E4
+mov       rbp,rax
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF96D5096E4
+mov       rax,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF96D5096FE
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF96D5096FE
+inc       ecx
+add       r10d,ecx
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r10d,r9d
+cmp       ecx,8
+jl        short 00007FF96D509686
+mov       r8,rsi
+mov       rcx,rdi
+mov       rdx,rbx
+lea       rax,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [rax]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91C414D01
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceFastLoggerBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA603F5
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA603E2
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA60391
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA60395
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA603CB
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA6040E
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA60377
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+xor       edx,edx
+call      qword ptr [7FF91CA150E0]
+test      eax,eax
+je        short 00007FF91CA603C3
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+xor       ecx,ecx
+call      qword ptr [7FF91CA150F8]
+test      eax,eax
+jne       short 00007FF91CA60365
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA60395
+jmp       short 00007FF91CA60365
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA6036D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA15110]
+int       3
+mov       r11,7FF91C290A18
+xor       edx,edx
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA6037E
+mov       rcx,rbx
+mov       r11,7FF91C290A10
+xor       edx,edx
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA6037E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9E0118
+call      qword ptr [7FF91C345920]
+mov       rsi,rax
+mov       rcx,2894BFE0AD0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],64
+mov       rcx,2894BFE0A50
+mov       [rsp+38],rcx
+mov       rcx,2894BFE0A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogTraceMessageStruct
+call      qword ptr [7FF91C345728]
+mov       r8,248CD0001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+xor       edx,edx
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA60386
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,248B7000A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C3F0F46
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C3F0F46
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C3F0F66
+mov       rcx,7FF91CA25260
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C3F0F66
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C3F0ED7
+mov       rcx,7FF91CA25264
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4BFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA623E1
+ret
+jmp       qword ptr [7FF91C345C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogTraceFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA903F5
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA903E2
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA90391
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA90395
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA903CB
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA9040E
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA90377
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+xor       edx,edx
+call      qword ptr [7FF91CA45098]
+test      eax,eax
+je        short 00007FF91CA903C3
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+xor       ecx,ecx
+call      qword ptr [7FF91CA450B0]
+test      eax,eax
+jne       short 00007FF91CA90365
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA90395
+jmp       short 00007FF91CA90365
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA9036D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA450C8]
+int       3
+mov       r11,7FF91C2C0A20
+xor       edx,edx
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA9037E
+mov       rcx,rbx
+mov       r11,7FF91C2C0A18
+xor       edx,edx
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA9037E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91CA10118
+call      qword ptr [7FF91C375920]
+mov       rsi,rax
+mov       rcx,1D1B98B0AE0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],64
+mov       rcx,1D1B98B0A50
+mov       [rsp+38],rcx
+mov       rcx,1D1B98B0A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogTraceMessageStruct
+call      qword ptr [7FF91C375728]
+mov       r8,1913A8001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+xor       edx,edx
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA90386
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,19124800A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C420FA6
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C420FA6
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C420FC6
+mov       rcx,7FF91CA55270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C420FC6
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C420F37
+mov       rcx,7FF91CA55274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4EFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA923E1
+ret
+jmp       qword ptr [7FF91C375C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningFastLoggerExtensionsBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91CA707FE
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91CA707E8
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91CA70791
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91CA70795
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91CA707D1
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91CA7081A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91CA70777
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,3
+call      qword ptr [7FF91CA25098]
+test      eax,eax
+je        short 00007FF91CA707C9
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,3
+call      qword ptr [7FF91CA250B0]
+test      eax,eax
+jne       short 00007FF91CA70765
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91CA70795
+jmp       short 00007FF91CA70765
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91CA7076D
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA250C8]
+int       3
+mov       r11,7FF91C2A0A18
+mov       edx,3
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91CA7077E
+mov       rcx,rbx
+mov       r11,7FF91C2A0A10
+mov       edx,3
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91CA7077E
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9F0118
+call      qword ptr [7FF91C355920]
+mov       rsi,rax
+mov       rcx,24172540AE8
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],258
+mov       rcx,24172540A50
+mov       [rsp+38],rcx
+mov       rcx,24172540A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogWarningMessageStruct
+call      qword ptr [7FF91C355728]
+mov       r8,200F34001D0
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,3
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91CA70786
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,200DD400A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C400F26
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C400F26
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C400F46
+mov       rcx,7FF91CA35270
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C400F46
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C400EB7
+mov       rcx,7FF91CA35274
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4CFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA727C1
+ret
+jmp       qword ptr [7FF91C355C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark.LogWarningFastLoggerBenchmark()
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,60
+xor       eax,eax
+mov       [rsp+38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+mov       rbx,[rcx+140]
+mov       rcx,offset MT_Microsoft.Extensions.Logging.Logger<DotNetTips.Spargine.Core.BenchmarkTests.Logging.LoggingBenchmark>
+cmp       [rbx],rcx
+jne       near ptr 00007FF91C3FAC5E
+mov       rcx,[rbx+8]
+mov       rdx,offset MT_Microsoft.Extensions.Logging.Logger
+cmp       [rcx],rdx
+jne       near ptr 00007FF91C3FAC48
+mov       rsi,[rcx+18]
+test      rsi,rsi
+je        short 00007FF91C3FABF1
+xor       ecx,ecx
+mov       [rsp+58],rcx
+xor       edi,edi
+mov       ebp,[rsi+8]
+cmp       ebp,edi
+jg        short 00007FF91C3FABF5
+cmp       qword ptr [rsp+58],0
+jne       short 00007FF91C3FAC31
+cmp       ebp,edi
+setg      sil
+movzx     esi,sil
+xor       ecx,ecx
+mov       [rsp+58],rcx
+test      esi,esi
+jne       near ptr 00007FF91C3FAC7A
+add       rsp,60
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+ret
+xor       esi,esi
+jmp       short 00007FF91C3FABD7
+mov       ecx,edi
+lea       rcx,[rcx+rcx*4]
+lea       r14,[rsi+rcx*8+10]
+mov       rcx,r14
+mov       edx,3
+call      qword ptr [7FF91CA15068]
+test      eax,eax
+je        short 00007FF91C3FAC29
+mov       rdx,[r14]
+lea       r8,[rsp+58]
+mov       ecx,3
+call      qword ptr [7FF91CA15080]
+test      eax,eax
+jne       short 00007FF91C3FABC5
+inc       edi
+cmp       ebp,edi
+jg        short 00007FF91C3FABF5
+jmp       short 00007FF91C3FABC5
+mov       rcx,[rsp+58]
+cmp       dword ptr [rcx+10],0
+jle       short 00007FF91C3FABCD
+mov       rcx,[rsp+58]
+call      qword ptr [7FF91CA15098]
+int       3
+mov       r11,7FF91C290A20
+mov       edx,3
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF91C3FABDE
+mov       rcx,rbx
+mov       r11,7FF91C290A18
+mov       edx,3
+call      qword ptr [r11]
+mov       esi,eax
+jmp       near ptr 00007FF91C3FABDE
+mov       rcx,rbx
+mov       rdx,offset MT_Microsoft.Extensions.Logging.ILogger
+mov       r8,7FF91C9DF770
+call      qword ptr [7FF91C345920]
+mov       rsi,rax
+mov       rcx,2CD5E110AD0
+mov       [rsp+48],rcx
+mov       dword ptr [rsp+50],258
+mov       rcx,2CD5E110A50
+mov       [rsp+38],rcx
+mov       rcx,2CD5E110A80
+mov       [rsp+40],rcx
+mov       rcx,offset MT_DotNetTips.Spargine.Core.Logging.FastLoggerExtensions+__LogWarningMessageStruct
+call      qword ptr [7FF91C345728]
+mov       r8,28CC90021C8
+mov       r8,[r8]
+mov       [rsp+28],r8
+lea       r8,[rsp+48]
+lea       r9,[rsp+38]
+mov       rcx,rbx
+mov       edx,3
+xor       eax,eax
+mov       [rsp+20],rax
+call      rsi
+jmp       near ptr 00007FF91C3FABE6
+
+System.Runtime.CompilerServices.VirtualDispatchHelpers.VirtualFunctionPointer(System.Object, IntPtr, IntPtr)
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,20
+mov       rdi,rcx
+mov       rbx,rdx
+mov       rsi,r8
+mov       rcx,[rdi]
+mov       eax,ebx
+rol       eax,5
+add       eax,ecx
+mov       edx,esi
+ror       edx,5
+add       eax,edx
+mov       rdx,28CC9000A10
+mov       rdx,[rdx]
+mov       rdx,[rdx+8]
+movsxd    r8,eax
+mov       r10,9E3779B97F4A7C15
+imul      r8,r10
+movzx     r10d,byte ptr [rdx+10]
+shrx      r8,r8,r10
+xor       r10d,r10d
+lea       r9d,[r8+1]
+movsxd    r9,r9d
+imul      r9,30
+lea       r9,[rdx+r9+10]
+mov       r11d,[r9]
+mov       ebp,[r9+8]
+mov       r14,[r9+10]
+mov       r15,[r9+18]
+mov       r13,[r9+20]
+cmp       eax,ebp
+jne       short 00007FF91C3F0546
+mov       rbp,rcx
+sub       rbp,r14
+mov       r14,rbx
+sub       r14,r15
+or        rbp,r14
+mov       r14,rsi
+sub       r14,r13
+or        rbp,r14
+jne       short 00007FF91C3F0546
+mov       rbp,[r9+28]
+and       r11d,0FFFFFFFE
+cmp       r11d,[r9]
+jne       short 00007FF91C3F0566
+mov       rcx,7FF91CA24D00
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rbp
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+ret
+test      r11d,r11d
+je        short 00007FF91C3F0566
+inc       r10d
+add       r8d,r10d
+mov       r9d,[rdx+8]
+add       r9d,0FFFFFFFE
+and       r8d,r9d
+cmp       r10d,8
+jl        near ptr 00007FF91C3F04D7
+mov       rcx,7FF91CA24D04
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rdi
+mov       rdx,rbx
+mov       r8,rsi
+add       rsp,20
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+jmp       qword ptr [7FF91C4BFFA8]
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF91CA61A41
+ret
+jmp       qword ptr [7FF91C345C38]
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

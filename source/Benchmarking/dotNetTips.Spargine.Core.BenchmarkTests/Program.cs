@@ -10,7 +10,7 @@
 //     David McCarter
 // </copyright>
 // <summary>
-// Benchmark Runtime: 11:45
+// Benchmark Runtime: 12:15
 // Benchmark count: 1,348 benchmarks.
 // </summary>
 // ***********************************************************************
@@ -39,9 +39,7 @@ internal sealed class Program
 
 		var config = DefaultConfig.Instance
 			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
-			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
-
-		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
+			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond)).WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
 		BenchmarkHelper.RunAllBenchmarks(config);
