@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using DotNetTips.Spargine.Core;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -210,7 +211,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetOrAdd), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] TValue value)
 	where TKey : notnull
 	where TValue : notnull
@@ -219,6 +220,18 @@ public static class DictionaryExtensions
 		key = key.ArgumentNotNull();
 		collection = collection.ArgumentNotNull();
 
+		if (collection is Dictionary<TKey, TValue> dictionary)
+		{
+			ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(dictionary, key, out var exists);
+			if (exists)
+			{
+				return entry!;
+			}
+
+			entry = value;
+			return value;
+		}
+
 		if (collection.TryGetValue(key, out var item) is false)
 		{
 			collection.Add(key, value);
@@ -226,6 +239,51 @@ public static class DictionaryExtensions
 		}
 
 		return item;
+	}
+
+	/// <summary>
+	/// Gets the value associated with the specified key, or adds a newly created value from <paramref name="valueFactory"/>.
+	/// </summary>
+	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary to search or add to.</param>
+	/// <param name="key">The key of the value to get or add.</param>
+	/// <param name="valueFactory">A factory used to create the value when the key is missing.</param>
+	/// <returns>The existing value for <paramref name="key"/>, or the newly created value.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/>, <paramref name="key"/>, or <paramref name="valueFactory"/> is null.</exception>
+	[Pure]
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetOrAdd), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFactory)
+	where TKey : notnull
+	where TValue : notnull
+	{
+		collection = collection.ArgumentNotNull();
+		key = key.ArgumentNotNull();
+		valueFactory = valueFactory.ArgumentNotNull();
+
+		if (collection is Dictionary<TKey, TValue> dictionary)
+		{
+			ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(dictionary, key, out var exists);
+			if (exists)
+			{
+				return entry!;
+			}
+
+			var createdValue = valueFactory(key).ArgumentNotNull();
+			entry = createdValue;
+			return createdValue;
+		}
+
+		if (collection.TryGetValue(key, out var existingValue))
+		{
+			return existingValue;
+		}
+
+		var value = valueFactory(key).ArgumentNotNull();
+		collection.Add(key, value);
+		return value;
 	}
 
 	/// <summary>
@@ -751,7 +809,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information("Original code by Simon Painter.", author: "David McCarter", createdOn: "1/3/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public static TValue TryGetValue<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFunction)
 	where TKey : notnull
 	where TValue : notnull
@@ -772,6 +830,55 @@ public static class DictionaryExtensions
 		collection[key] = newValue; // Use indexer which is faster than Add for this scenario
 
 		return newValue;
+	}
+
+	/// <summary>
+	/// Gets the value associated with the specified key, or returns <paramref name="defaultValue"/> when the key is not found.
+	/// </summary>
+	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary to read from.</param>
+	/// <param name="key">The key to find.</param>
+	/// <param name="defaultValue">The fallback value to return when the key is missing.</param>
+	/// <returns>The value associated with <paramref name="key"/>, or <paramref name="defaultValue"/> when missing.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="key"/> is null.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryGetValueOrDefault), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TValue? TryGetValueOrDefault<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, TValue? defaultValue = default)
+	where TKey : notnull
+	{
+		collection = collection.ArgumentNotNull();
+		key = key.ArgumentNotNull();
+
+		return collection.TryGetValue(key, out var value) ? value : defaultValue;
+	}
+
+	/// <summary>
+	/// Attempts to remove the value with the specified key and returns the removed value when found.
+	/// </summary>
+	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+	/// <param name="collection">The dictionary to remove from.</param>
+	/// <param name="key">The key to remove.</param>
+	/// <param name="value">When this method returns, contains the removed value if found; otherwise the default value.</param>
+	/// <returns><c>true</c> if the key existed and was removed; otherwise, <c>false</c>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="key"/> is null.</exception>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryRemoveAndReturn), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool TryRemoveAndReturn<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, out TValue? value)
+	where TKey : notnull
+	{
+		collection = collection.ArgumentNotNull();
+		key = key.ArgumentNotNull();
+
+		if (collection.TryGetValue(key, out value) is false)
+		{
+			value = default;
+			return false;
+		}
+
+		return collection.Remove(key);
 	}
 
 	/// <summary>

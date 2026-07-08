@@ -12,13 +12,11 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -423,6 +421,42 @@ public class DictionaryExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd(person.Id, nullPerson));
+	}
+
+	[TestMethod]
+	public void GetOrAddFactory_WithExistingKey_ReturnsExistingValue()
+	{
+		var dictionary = new Dictionary<string, int> { ["key1"] = 123 };
+		var invoked = false;
+
+		var result = dictionary.GetOrAdd("key1", key =>
+		{
+			invoked = true;
+			return 999;
+		});
+
+		Assert.AreEqual(123, result);
+		Assert.IsFalse(invoked);
+	}
+
+	[TestMethod]
+	public void GetOrAddFactory_WithMissingKey_AddsAndReturnsValue()
+	{
+		var dictionary = new Dictionary<string, int>();
+
+		var result = dictionary.GetOrAdd("key1", key => 456);
+
+		Assert.AreEqual(456, result);
+		Assert.AreEqual(456, dictionary["key1"]);
+	}
+
+	[TestMethod]
+	public void GetOrAddFactory_WithNullFactory_ThrowsArgumentNullException()
+	{
+		var dictionary = new Dictionary<string, int>();
+		Func<string, int> valueFactory = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.GetOrAdd("key1", valueFactory));
 	}
 
 	[TestMethod]
@@ -1054,6 +1088,66 @@ public class DictionaryExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValue(null, func));
+	}
+
+	[TestMethod]
+	public void TryGetValueOrDefault_WithExistingKey_ReturnsValue()
+	{
+		var dictionary = new Dictionary<string, int> { ["key1"] = 10 };
+
+		var result = dictionary.TryGetValueOrDefault("key1", 99);
+
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void TryGetValueOrDefault_WithMissingKey_ReturnsProvidedDefault()
+	{
+		var dictionary = new Dictionary<string, int> { ["key1"] = 10 };
+
+		var result = dictionary.TryGetValueOrDefault("key2", 99);
+
+		Assert.AreEqual(99, result);
+	}
+
+	[TestMethod]
+	public void TryGetValueOrDefault_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		IDictionary<string, int> dictionary = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryGetValueOrDefault("key1", 0));
+	}
+
+	[TestMethod]
+	public void TryRemoveAndReturn_WithExistingKey_RemovesAndReturnsValue()
+	{
+		var dictionary = new Dictionary<string, int> { ["key1"] = 42 };
+
+		var removed = dictionary.TryRemoveAndReturn("key1", out var value);
+
+		Assert.IsTrue(removed);
+		Assert.AreEqual(42, value);
+		Assert.IsFalse(dictionary.ContainsKey("key1"));
+	}
+
+	[TestMethod]
+	public void TryRemoveAndReturn_WithMissingKey_ReturnsFalse()
+	{
+		var dictionary = new Dictionary<string, int> { ["key1"] = 42 };
+
+		var removed = dictionary.TryRemoveAndReturn("key2", out var value);
+
+		Assert.IsFalse(removed);
+		Assert.AreEqual(0, value);
+		Assert.IsTrue(dictionary.ContainsKey("key1"));
+	}
+
+	[TestMethod]
+	public void TryRemoveAndReturn_WithNullDictionary_ThrowsArgumentNullException()
+	{
+		IDictionary<string, int> dictionary = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => dictionary.TryRemoveAndReturn("key1", out _));
 	}
 
 	[TestMethod]
