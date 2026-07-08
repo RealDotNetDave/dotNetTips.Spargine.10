@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,10 +14,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -27,6 +25,24 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class DirectoryInfoExtensionsTests
 {
+
+	[TestMethod]
+	public void CreateTempFileThenMove_CreatesAndWritesDestinationFile()
+	{
+		var directory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			var result = directory.CreateTempFileThenMove("temp-write.txt", "directory-content");
+
+			Assert.IsTrue(result.Exists);
+			Assert.AreEqual("directory-content", File.ReadAllText(result.FullName));
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
+	}
 
 	[TestMethod]
 	public void GetSize_AllDirectories_IncludesSubdirectories()
@@ -215,6 +231,49 @@ public class DirectoryInfoExtensionsTests
 				File.Delete(file);
 			}
 		}
+	}
+
+	[TestMethod]
+	public void ReadAllTextSafe_WhenMissingFile_ReturnsFallback()
+	{
+		var directory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			var text = directory.ReadAllTextSafe("missing.txt", "fallback");
+
+			Assert.AreEqual("fallback", text);
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public void WriteAllTextAtomic_CreatesAndReadsBackText()
+	{
+		var directory = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			_ = directory.WriteAllTextAtomic("atomic.txt", "hello");
+			var text = directory.ReadAllTextSafe("atomic.txt");
+
+			Assert.AreEqual("hello", text);
+		}
+		finally
+		{
+			directory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public void WriteAllTextAtomic_WithNullDirectory_ThrowsArgumentNullException()
+	{
+		DirectoryInfo directory = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => directory.WriteAllTextAtomic("atomic.txt", "value"));
 	}
 
 }
