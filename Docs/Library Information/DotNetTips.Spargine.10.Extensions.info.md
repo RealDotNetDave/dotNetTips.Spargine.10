@@ -2,7 +2,7 @@
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
-### T[] AddFirst(T[] array, T[] item)
+### T AddFirst(T array, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -13,7 +13,7 @@
 * **Description:** AddFirst
 * **Modified By:** David McCarter
 
-### T[] AddIf(T[] array, T[] item, System.Boolean condition)
+### T AddIf(T array, T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Not Required
@@ -24,7 +24,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] AddLast(T[] array, T[] item)
+### T AddLast(T array, T item)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -35,7 +35,7 @@
 * **Description:** AddLast
 * **Modified By:** David McCarter
 
-### System.Boolean AreEqual(T[] array, T[] arrayToCheck)
+### System.Boolean AreEqual(T array, T arrayToCheck)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -46,7 +46,7 @@
 * **Description:** AreEqual
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan(T[] array)
+### T AsReadOnlySpan(T array)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -68,7 +68,7 @@
 * **Description:** BytesToString
 * **Modified By:** David McCarter
 
-### T[] FastClone(T[] array)
+### T FastClone(T array)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -90,7 +90,7 @@
 * **Description:** FastHashData
 * **Modified By:** David McCarter
 
-### System.Int64 FastLongCount(T[] array)
+### System.Int64 FastLongCount(T array)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -101,7 +101,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Void FastProcessor(T[] array, T[] action)
+### System.Void FastProcessor(T array, T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -112,7 +112,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastSelectItems(T[] array, System.Int32 startIndex, System.Int32 count)
+### T FastSelectItems(T array, System.Int32 startIndex, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -123,7 +123,7 @@
 * **Description:** FastSelectItems
 * **Modified By:** David McCarter
 
-### T[] FastSliceToMemory(T[] array, System.Int32 start, System.Int32 length)
+### T FastSliceToMemory(T array, System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -134,7 +134,7 @@
 * **Description:** FastSliceToMemory
 * **Modified By:** David McCarter
 
-### T[] FastSliceToReadOnlyMemory(T[] array, System.Int32 start, System.Int32 length)
+### T FastSliceToReadOnlyMemory(T array, System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -145,7 +145,7 @@
 * **Description:** FastSliceToReadOnlyMemory
 * **Modified By:** David McCarter
 
-### T[] FastSliceToReadOnlySpan(T[] array, System.Int32 start, System.Int32 length)
+### T FastSliceToReadOnlySpan(T array, System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -156,7 +156,7 @@
 * **Description:** FastSliceToReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] FastSliceToSpan(T[] array, System.Int32 start, System.Int32 length)
+### T FastSliceToSpan(T array, System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -167,7 +167,7 @@
 * **Description:** FastSliceToSpan
 * **Modified By:** David McCarter
 
-### System.Int32 GenerateHashCode(T[] array)
+### System.Int32 GenerateHashCode(T array)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -178,7 +178,7 @@
 * **Description:** GenerateHashCode
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] array, T[] item)
+### System.Int32 IndexOf(T array, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -189,7 +189,7 @@
 * **Description:** IndexOf
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] array)
+### System.Boolean IsNotEmpty(T array)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -200,7 +200,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] array, T[] actionFunction)
+### System.Boolean IsNotEmpty(T array, T actionFunction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -211,7 +211,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] array, System.Int32 count)
+### System.Boolean IsNotEmpty(T array, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -222,7 +222,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Int32 LastIndexOf(T[] array, T[] item)
+### System.Int32 LastIndexOf(T array, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -233,7 +233,7 @@
 * **Description:** LastIndexOf
 * **Modified By:** David McCarter
 
-### System.Void PerformAction(T[] array, T[] action)
+### System.Void PerformAction(T array, T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -244,7 +244,7 @@
 * **Description:** PerformAction
 * **Modified By:** David McCarter
 
-### T[] RemoveFirst(T[] array)
+### T RemoveFirst(T array)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -255,7 +255,7 @@
 * **Description:** RemoveFirst
 * **Modified By:** David McCarter
 
-### T[] RemoveLast(T[] array)
+### T RemoveLast(T array)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -266,7 +266,7 @@
 * **Description:** RemoveLast
 * **Modified By:** David McCarter
 
-### T[] ToDistinct(T[] array, T[] comparer)
+### T ToDistinct(T array, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -277,7 +277,7 @@
 * **Description:** ToDistinct
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] array, T[] comparer)
+### T ToFrozenSet(T array, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -288,7 +288,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] Upsert(T[] array, T[] item)
+### T Upsert(T array, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -302,7 +302,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ArrayExtensions.<G>$51ABFD8B8D8A5142371F514AE52D9AA9<$T0>
 
-### T[] AddFirst(T[] item)
+### T AddFirst(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -313,7 +313,7 @@
 * **Description:** AddFirst
 * **Modified By:** David McCarter
 
-### T[] AddIf(T[] item, System.Boolean condition)
+### T AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Not Required
@@ -324,7 +324,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] AddLast(T[] item)
+### T AddLast(T item)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -335,7 +335,7 @@
 * **Description:** AddLast
 * **Modified By:** David McCarter
 
-### System.Boolean AreEqual(T[] arrayToCheck)
+### System.Boolean AreEqual(T arrayToCheck)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -346,7 +346,7 @@
 * **Description:** AreEqual
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan()
+### T AsReadOnlySpan()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -357,7 +357,7 @@
 * **Description:** AsReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] FastClone()
+### T FastClone()
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -379,7 +379,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Void FastProcessor(T[] action)
+### System.Void FastProcessor(T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -390,7 +390,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastSelectItems(System.Int32 startIndex, System.Int32 count)
+### T FastSelectItems(System.Int32 startIndex, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -401,7 +401,7 @@
 * **Description:** FastSelectItems
 * **Modified By:** David McCarter
 
-### T[] FastSliceToMemory(System.Int32 start, System.Int32 length)
+### T FastSliceToMemory(System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -412,7 +412,7 @@
 * **Description:** FastSliceToMemory
 * **Modified By:** David McCarter
 
-### T[] FastSliceToReadOnlyMemory(System.Int32 start, System.Int32 length)
+### T FastSliceToReadOnlyMemory(System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -423,7 +423,7 @@
 * **Description:** FastSliceToReadOnlyMemory
 * **Modified By:** David McCarter
 
-### T[] FastSliceToReadOnlySpan(System.Int32 start, System.Int32 length)
+### T FastSliceToReadOnlySpan(System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -434,7 +434,7 @@
 * **Description:** FastSliceToReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] FastSliceToSpan(System.Int32 start, System.Int32 length)
+### T FastSliceToSpan(System.Int32 start, System.Int32 length)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -456,7 +456,7 @@
 * **Description:** GenerateHashCode
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] item)
+### System.Int32 IndexOf(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -478,7 +478,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] actionFunction)
+### System.Boolean IsNotEmpty(T actionFunction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -500,7 +500,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Int32 LastIndexOf(T[] item)
+### System.Int32 LastIndexOf(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -511,7 +511,7 @@
 * **Description:** LastIndexOf
 * **Modified By:** David McCarter
 
-### System.Void PerformAction(T[] action)
+### System.Void PerformAction(T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -522,7 +522,7 @@
 * **Description:** PerformAction
 * **Modified By:** David McCarter
 
-### T[] RemoveFirst()
+### T RemoveFirst()
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -533,7 +533,7 @@
 * **Description:** RemoveFirst
 * **Modified By:** David McCarter
 
-### T[] RemoveLast()
+### T RemoveLast()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -544,7 +544,7 @@
 * **Description:** RemoveLast
 * **Modified By:** David McCarter
 
-### T[] ToDistinct(T[] comparer)
+### T ToDistinct(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -555,7 +555,7 @@
 * **Description:** ToDistinct
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] comparer)
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -566,7 +566,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] Upsert(T[] item)
+### T Upsert(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -627,7 +627,7 @@
 * **Description:** GetAllTypes
 * **Modified By:** David McCarter
 
-### T[] GetInstances(System.Reflection.Assembly assembly)
+### T GetInstances(System.Reflection.Assembly assembly)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -674,7 +674,7 @@
 * **Description:** GetAllTypes
 * **Modified By:** David McCarter
 
-### T[] GetInstances()
+### T GetInstances()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -863,7 +863,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.CollectionExtensions
 
-### System.Void AddIf(T[] collection, T[] item, System.Boolean condition)
+### System.Void AddIf(T collection, T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -874,7 +874,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### System.Boolean AddIfNotExists(T[] collection, T[] item, T[] comparer)
+### System.Boolean AddIfNotExists(T collection, T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -885,7 +885,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Boolean AddRange(T[] collection, T[] items, System.Boolean ensureUnique, T[] comparer)
+### System.Boolean AddRange(T collection, T items, System.Boolean ensureUnique, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -896,7 +896,7 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan(T[] collection)
+### T AsReadOnlySpan(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -907,7 +907,7 @@
 * **Description:** AsReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] AsSpan(T[] collection)
+### T AsSpan(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -918,7 +918,7 @@
 * **Description:** AsSpan
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] collection, T[] comparer)
+### T ToFrozenSet(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -929,7 +929,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] collection, T[] item)
+### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -940,7 +940,7 @@
 * **Description:** Upsert
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] collection, T[] item)
+### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -954,7 +954,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.CollectionExtensions.<G>$847CB318C385471B1F4E7BD0A197DBCA<$T0>
 
-### System.Void AddIf(T[] item, System.Boolean condition)
+### System.Void AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -965,7 +965,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### System.Boolean AddIfNotExists(T[] item, T[] comparer)
+### System.Boolean AddIfNotExists(T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -976,7 +976,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Boolean AddRange(T[] items, System.Boolean ensureUnique, T[] comparer)
+### System.Boolean AddRange(T items, System.Boolean ensureUnique, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -987,7 +987,7 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan()
+### T AsReadOnlySpan()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -998,7 +998,7 @@
 * **Description:** AsReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] AsSpan()
+### T AsSpan()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1009,7 +1009,7 @@
 * **Description:** AsSpan
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] comparer)
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1020,7 +1020,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] item)
+### System.Void Upsert(T item)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1062,7 +1062,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ConcurrentBagExtensions
 
-### System.Void AddRange(T[] bag, T[] items)
+### System.Void AddRange(T bag, T items)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1073,7 +1073,7 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
-### T[] RemoveRange(T[] bag, T[] items, T[] comparer)
+### T RemoveRange(T bag, T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1084,7 +1084,7 @@
 * **Description:** RemoveRange
 * **Modified By:** David McCarter
 
-### T[] ToList(T[] bag)
+### T ToList(T bag)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1098,7 +1098,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ConcurrentBagExtensions.<G>$1D90C0F02B06BBD557137A5910AAF907<$T0>
 
-### System.Void AddRange(T[] items)
+### System.Void AddRange(T items)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1109,7 +1109,7 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
-### T[] RemoveRange(T[] items, T[] comparer)
+### T RemoveRange(T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1120,7 +1120,7 @@
 * **Description:** RemoveRange
 * **Modified By:** David McCarter
 
-### T[] ToList()
+### T ToList()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1134,7 +1134,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.DataContextExtensions
 
-### System.Threading.Tasks.Task<System.Int32> DeleteCollectionAsync(LinqToDB.DataContext context, T[] entities, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> DeleteCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1167,7 +1167,7 @@
 * **Description:** GetRecordCountAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(LinqToDB.DataContext context, T[] predicate, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(LinqToDB.DataContext context, T predicate, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1178,7 +1178,7 @@
 * **Description:** GetRecordCountAsync
 * **Modified By:** Copilot Agent
 
-### T[] GetTrackedObjects(LinqToDB.DataContext context)
+### T GetTrackedObjects(LinqToDB.DataContext context)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1200,7 +1200,7 @@
 * **Description:** HasRecordsAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(LinqToDB.DataContext context, T[] predicate, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(LinqToDB.DataContext context, T predicate, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1211,7 +1211,7 @@
 * **Description:** HasRecordsAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Int32> InsertCollectionAsync(LinqToDB.DataContext context, T[] entities, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> InsertCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1222,7 +1222,7 @@
 * **Description:** InsertCollectionAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Int32> UpsertCollectionAsync(LinqToDB.DataContext context, T[] entities, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> UpsertCollectionAsync(LinqToDB.DataContext context, T entities, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1605,7 +1605,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.DbContextExtensions
 
-### System.Threading.Tasks.Task<System.Int32> AddAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T[] entities, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> AddAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T entities, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1616,7 +1616,7 @@
 * **Description:** AddAndSaveAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Int32> DeleteAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T[] entities, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> DeleteAndSaveAsync(Microsoft.EntityFrameworkCore.DbContext context, T entities, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1638,7 +1638,7 @@
 * **Description:** ExecuteInTransactionAsync
 * **Modified By:** Copilot Agent
 
-### T[] GetChangedEntities(Microsoft.EntityFrameworkCore.DbContext context, Microsoft.EntityFrameworkCore.EntityState state)
+### T GetChangedEntities(Microsoft.EntityFrameworkCore.DbContext context, Microsoft.EntityFrameworkCore.EntityState state)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1660,7 +1660,7 @@
 * **Description:** GetRecordCountAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(Microsoft.EntityFrameworkCore.DbContext context, T[] predicate, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> GetRecordCountAsync(Microsoft.EntityFrameworkCore.DbContext context, T predicate, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1693,7 +1693,7 @@
 * **Description:** HasRecordsAsync
 * **Modified By:** Copilot Agent
 
-### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(Microsoft.EntityFrameworkCore.DbContext context, T[] predicate, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Boolean> HasRecordsAsync(Microsoft.EntityFrameworkCore.DbContext context, T predicate, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -1707,7 +1707,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.DictionaryExtensions
 
-### System.Boolean AddIfNotExists(T[] collection, T[] key, T[] value)
+### System.Boolean AddIfNotExists(T collection, T key, T value)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1718,7 +1718,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Boolean AddRange(T[] collection, T[] items, T[] keyFunction, T[] valueFunction)
+### System.Boolean AddRange(T collection, T items, T keyFunction, T valueFunction)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1740,7 +1740,7 @@
 * **Description:** DisposeCollection
 * **Modified By:** David McCarter
 
-### T[] GetOrAdd(T[] collection, T[] key, T[] value)
+### T GetOrAdd(T collection, T key, T value)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1751,7 +1751,7 @@
 * **Description:** GetOrAdd
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1762,7 +1762,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### T[] ToConcurrentDictionary(T[] collection, T[] comparer)
+### T ToConcurrentDictionary(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1773,7 +1773,7 @@
 * **Description:** ToConcurrentDictionary
 * **Modified By:** David McCarter
 
-### System.String ToDelimitedString(T[] collection, System.Char delimiter)
+### System.String ToDelimitedString(T collection, System.Char delimiter)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1784,7 +1784,7 @@
 * **Description:** ToDelimitedString
 * **Modified By:** David McCarter
 
-### T[] ToFrozen(T[] list, T[] comparer)
+### T ToFrozen(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1795,7 +1795,7 @@
 * **Description:** ToFrozen
 * **Modified By:** David McCarter
 
-### T[] ToFrozenDictionary(T[] list)
+### T ToFrozenDictionary(T list)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1806,7 +1806,7 @@
 * **Description:** ToFrozenDictionary
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] collection, T[] keyComparer)
+### T ToImmutable(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1817,7 +1817,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] ToImmutableDictionary(T[] collection)
+### T ToImmutableDictionary(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1828,7 +1828,7 @@
 * **Description:** ToImmutableDictionary
 * **Modified By:** David McCarter
 
-### T[] ToImmutableSorted(T[] collection, T[] keyComparer)
+### T ToImmutableSorted(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1839,7 +1839,7 @@
 * **Description:** ToImmutableSorted
 * **Modified By:** David McCarter
 
-### T[] ToImmutableSortedDictionary(T[] collection)
+### T ToImmutableSortedDictionary(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1850,7 +1850,7 @@
 * **Description:** ToImmutableSortedDictionary
 * **Modified By:** David McCarter
 
-### T[] ToLookupWithDefault(T[] collection, T[] defaultValue)
+### T ToLookupWithDefault(T collection, T defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1861,7 +1861,7 @@
 * **Description:** Original code by Simon Painter.
 * **Modified By:** David McCarter
 
-### T[] ToReadOnly(T[] dictionary)
+### T ToReadOnly(T dictionary)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1872,7 +1872,7 @@
 * **Description:** ToReadOnly
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyCollection(T[] dictionary)
+### T ToReadOnlyCollection(T dictionary)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1883,7 +1883,7 @@
 * **Description:** ToReadOnlyCollection
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyDictionary(T[] collection)
+### T ToReadOnlyDictionary(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1894,7 +1894,7 @@
 * **Description:** ToReadOnlyDictionary
 * **Modified By:** David McCarter
 
-### T[] ToSorted(T[] collection)
+### T ToSorted(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1905,7 +1905,7 @@
 * **Description:** ToSorted
 * **Modified By:** David McCarter
 
-### T[] ToSorted(T[] collection, T[] comparer)
+### T ToSorted(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1913,7 +1913,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToSorted
 
-### T[] ToSortedDictionary(T[] collection)
+### T ToSortedDictionary(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1924,7 +1924,7 @@
 * **Description:** ToSortedDictionary
 * **Modified By:** David McCarter
 
-### T[] ToSortedDictionary(T[] collection, T[] comparer)
+### T ToSortedDictionary(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1932,7 +1932,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToSortedDictionary
 
-### T[] TryGetValue(T[] collection, T[] key, T[] valueFunction)
+### T TryGetValue(T collection, T key, T valueFunction)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1943,7 +1943,7 @@
 * **Description:** Original code by Simon Painter.
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] collection, T[] item)
+### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1954,7 +1954,7 @@
 * **Description:** Upsert
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] collection, T[] key, T[] item)
+### System.Void Upsert(T collection, T key, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2007,7 +2007,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumerableExtensions
 
-### T[] AddDistinct(T[] collection, T[] items)
+### T AddDistinct(T collection, T items)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2018,7 +2018,7 @@
 * **Description:** AddDistinct
 * **Modified By:** David McCarter
 
-### T[] AddFirst(T[] collection, T[] item)
+### T AddFirst(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2029,7 +2029,7 @@
 * **Description:** AddFirst
 * **Modified By:** David McCarter
 
-### T[] AddIf(T[] collection, T[] item, System.Boolean condition)
+### T AddIf(T collection, T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2040,7 +2040,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] AddLast(T[] collection, T[] item)
+### T AddLast(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2051,7 +2051,7 @@
 * **Description:** AddLast
 * **Modified By:** David McCarter
 
-### System.Boolean ContainsAny(T[] collection, T[] items)
+### System.Boolean ContainsAny(T collection, T items)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2062,7 +2062,7 @@
 * **Description:** ContainsAny
 * **Modified By:** David McCarter
 
-### System.Threading.Tasks.Task<System.Int32> CountAsync(T[] collection, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Int32> CountAsync(T collection, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2073,7 +2073,7 @@
 * **Description:** CountAsync
 * **Modified By:** David McCarter
 
-### System.Boolean FastAny(T[] collection, T[] accumulatorPredicate)
+### System.Boolean FastAny(T collection, T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2084,7 +2084,7 @@
 * **Description:** FastAny
 * **Modified By:** David McCarter
 
-### System.Boolean FastContains(T[] list, T[] searchItem, T[] comparer)
+### System.Boolean FastContains(T list, T searchItem, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2095,7 +2095,7 @@
 * **Description:** FastContains
 * **Modified By:** David McCarter
 
-### T[] FastDistinct(T[] collection, T[] comparer)
+### T FastDistinct(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2106,7 +2106,7 @@
 * **Description:** FastDistinct
 * **Modified By:** David McCarter
 
-### System.Int64 FastLongCount(T[] collection)
+### System.Int64 FastLongCount(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2117,7 +2117,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Int64 FastLongCount(T[] collection, T[] accumulatorPredicate)
+### System.Int64 FastLongCount(T collection, T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2128,7 +2128,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Void FastProcessor(T[] collection, T[] action)
+### System.Void FastProcessor(T collection, T action)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2139,7 +2139,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastProcessor(T[] collection, T[] action)
+### T FastProcessor(T collection, T action)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2150,7 +2150,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastShuffle(T[] collection, System.Int32 count)
+### T FastShuffle(T collection, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2161,7 +2161,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### T[] FastShuffle(T[] collection)
+### T FastShuffle(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2172,7 +2172,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### T[] FirstOrDefault(T[] collection, T[] alternate)
+### T FirstOrDefault(T collection, T alternate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2183,7 +2183,7 @@
 * **Description:** FirstOrDefault
 * **Modified By:** David McCarter
 
-### T[] FirstOrDefault(T[] collection, T[] accumulatorPredicate, T[] alternate)
+### T FirstOrDefault(T collection, T accumulatorPredicate, T alternate)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2194,7 +2194,7 @@
 * **Description:** FirstOrDefault
 * **Modified By:** David McCarter
 
-### T[] FirstOrNull(T[] collection, T[] accumulatorPredicate)
+### T FirstOrNull(T collection, T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2205,7 +2205,7 @@
 * **Description:** FirstOrNull
 * **Modified By:** David McCarter
 
-### System.Boolean HasDuplicates(T[] collection, T[] comparer)
+### System.Boolean HasDuplicates(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2216,7 +2216,7 @@
 * **Description:** HasDuplicates
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] collection, T[] item, T[] comparer)
+### System.Int32 IndexOf(T collection, T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2227,7 +2227,7 @@
 * **Description:** IndexOf
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] collection, T[] accumulatorPredicate)
+### System.Int32 IndexOf(T collection, T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2235,7 +2235,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Original code by Simon Painter.
 
-### System.Boolean IsEmpty(T[] collection)
+### System.Boolean IsEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2246,7 +2246,7 @@
 * **Description:** IsEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, System.Int32& count)
+### System.Boolean IsNotEmpty(T collection, System.Int32& count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2257,7 +2257,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection)
+### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2268,7 +2268,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNullOrEmpty(T[] collection)
+### System.Boolean IsNullOrEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2279,7 +2279,7 @@
 * **Description:** IsNullOrEmpty
 * **Modified By:** David McCarter
 
-### System.String Join(T[] collection, System.String separator)
+### System.String Join(T collection, System.String separator)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2290,7 +2290,7 @@
 * **Description:** Join
 * **Modified By:** David McCarter
 
-### T[] OrderBy(T[] collection, System.String sortExpression)
+### T OrderBy(T collection, System.String sortExpression)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2301,7 +2301,7 @@
 * **Description:** OrderBy
 * **Modified By:** David McCarter
 
-### T[] OrderByOrdinal(T[] collection, T[] accumulatorFunction)
+### T OrderByOrdinal(T collection, T accumulatorFunction)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2312,7 +2312,7 @@
 * **Description:** OrderByOrdinal
 * **Modified By:** David McCarter
 
-### T[] PageAsync(T[] collection, System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
+### T PageAsync(T collection, System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2323,7 +2323,7 @@
 * **Description:** PageAsync
 * **Modified By:** David McCarter
 
-### T[] Partition(T[] collection, System.Int32 pageCount)
+### T Partition(T collection, System.Int32 pageCount)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2334,7 +2334,7 @@
 * **Description:** Partition
 * **Modified By:** David McCarter
 
-### T[] PickRandom(T[] collection)
+### T PickRandom(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2345,7 +2345,7 @@
 * **Description:** PickRandom
 * **Modified By:** David McCarter
 
-### T[] RemoveDuplicates(T[] collection)
+### T RemoveDuplicates(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2356,7 +2356,7 @@
 * **Description:** RemoveDuplicates
 * **Modified By:** David McCarter
 
-### T[] RemoveNulls(T[] collection)
+### T RemoveNulls(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2367,7 +2367,7 @@
 * **Description:** RemoveNulls
 * **Modified By:** David McCarter
 
-### T[] ReplaceIf(T[] collection, T[] accumulatorPredicate, T[] replacement)
+### T ReplaceIf(T collection, T accumulatorPredicate, T replacement)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2375,7 +2375,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Original code by Simon Painter.
 
-### System.Boolean StartsWith(T[] collection, T[] second)
+### System.Boolean StartsWith(T collection, T second)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2386,7 +2386,7 @@
 * **Description:** StartsWith
 * **Modified By:** David McCarter
 
-### System.Boolean StructuralSequenceEqual(T[] collection, T[] second)
+### System.Boolean StructuralSequenceEqual(T collection, T second)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2397,7 +2397,7 @@
 * **Description:** StructuralSequenceEqual
 * **Modified By:** David McCarter
 
-### T[] ToBlockingCollection(T[] collection)
+### T ToBlockingCollection(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2408,7 +2408,7 @@
 * **Description:** ToBlockingCollection
 * **Modified By:** David McCarter
 
-### T[] ToCollection(T[] collection)
+### T ToCollection(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2419,7 +2419,7 @@
 * **Description:** ToCollection
 * **Modified By:** David McCarter
 
-### System.String ToDelimitedString(T[] collection, System.Char delimiter)
+### System.String ToDelimitedString(T collection, System.Char delimiter)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2430,7 +2430,7 @@
 * **Description:** ToDelimitedString
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] collection, T[] comparer)
+### T ToFrozenSet(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2441,7 +2441,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutableArray(T[] collection)
+### T ToImmutableArray(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2452,7 +2452,7 @@
 * **Description:** ToImmutableArray
 * **Modified By:** David McCarter
 
-### T[] ToLinkedList(T[] collection)
+### T ToLinkedList(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2463,7 +2463,7 @@
 * **Description:** ToLinkedList
 * **Modified By:** David McCarter
 
-### T[] ToListAsync(T[] collection, System.Threading.CancellationToken cancellationToken)
+### T ToListAsync(T collection, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2474,7 +2474,7 @@
 * **Description:** ToListAsync
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyCollection(T[] collection)
+### T ToReadOnlyCollection(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2485,7 +2485,7 @@
 * **Description:** ToReadOnlyCollection
 * **Modified By:** David McCarter
 
-### T[] ToUniqueCollection(T[] collection, T[] comparer)
+### T ToUniqueCollection(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2496,7 +2496,7 @@
 * **Description:** ToUniqueCollection
 * **Modified By:** David McCarter
 
-### T[] Upsert(T[] collection, T[] item, T[] comparer)
+### T Upsert(T collection, T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2510,7 +2510,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumerableExtensions.<G>$80073E1EF8BFBE3894A8F13DEEA08DF4<$T0>
 
-### T[] PageAsync(System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
+### T PageAsync(System.Int32 pageSize, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2524,7 +2524,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumerableExtensions.<G>$9F2EA1267A6B318485A46F259A84D27C<$T0>
 
-### System.Boolean FastContains(T[] searchItem, T[] comparer)
+### System.Boolean FastContains(T searchItem, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2538,7 +2538,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumerableExtensions.<G>$E09FCB5EB13C1AE2FC524F6744DE5322<$T0>
 
-### T[] AddDistinct(T[] items)
+### T AddDistinct(T items)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2549,7 +2549,7 @@
 * **Description:** AddDistinct
 * **Modified By:** David McCarter
 
-### T[] AddFirst(T[] item)
+### T AddFirst(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2560,7 +2560,7 @@
 * **Description:** AddFirst
 * **Modified By:** David McCarter
 
-### T[] AddIf(T[] item, System.Boolean condition)
+### T AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2571,7 +2571,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] AddLast(T[] item)
+### T AddLast(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2582,7 +2582,7 @@
 * **Description:** AddLast
 * **Modified By:** David McCarter
 
-### System.Boolean ContainsAny(T[] items)
+### System.Boolean ContainsAny(T items)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2604,7 +2604,7 @@
 * **Description:** CountAsync
 * **Modified By:** David McCarter
 
-### System.Boolean FastAny(T[] accumulatorPredicate)
+### System.Boolean FastAny(T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2615,7 +2615,7 @@
 * **Description:** FastAny
 * **Modified By:** David McCarter
 
-### T[] FastDistinct(T[] comparer)
+### T FastDistinct(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2637,7 +2637,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Int64 FastLongCount(T[] accumulatorPredicate)
+### System.Int64 FastLongCount(T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2648,7 +2648,7 @@
 * **Description:** FastLongCount
 * **Modified By:** David McCarter
 
-### System.Void FastProcessor(T[] action)
+### System.Void FastProcessor(T action)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2659,7 +2659,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastProcessor(T[] action)
+### T FastProcessor(T action)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2670,7 +2670,7 @@
 * **Description:** FastProcessor
 * **Modified By:** David McCarter
 
-### T[] FastShuffle(System.Int32 count)
+### T FastShuffle(System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2681,7 +2681,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### T[] FastShuffle()
+### T FastShuffle()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2692,7 +2692,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### T[] FirstOrDefault(T[] alternate)
+### T FirstOrDefault(T alternate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2703,7 +2703,7 @@
 * **Description:** FirstOrDefault
 * **Modified By:** David McCarter
 
-### T[] FirstOrDefault(T[] accumulatorPredicate, T[] alternate)
+### T FirstOrDefault(T accumulatorPredicate, T alternate)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2714,7 +2714,7 @@
 * **Description:** FirstOrDefault
 * **Modified By:** David McCarter
 
-### T[] FirstOrNull(T[] accumulatorPredicate)
+### T FirstOrNull(T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2725,7 +2725,7 @@
 * **Description:** FirstOrNull
 * **Modified By:** David McCarter
 
-### System.Boolean HasDuplicates(T[] comparer)
+### System.Boolean HasDuplicates(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2736,7 +2736,7 @@
 * **Description:** HasDuplicates
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] item, T[] comparer)
+### System.Int32 IndexOf(T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2747,7 +2747,7 @@
 * **Description:** IndexOf
 * **Modified By:** David McCarter
 
-### System.Int32 IndexOf(T[] accumulatorPredicate)
+### System.Int32 IndexOf(T accumulatorPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2810,7 +2810,7 @@
 * **Description:** Join
 * **Modified By:** David McCarter
 
-### T[] OrderBy(System.String sortExpression)
+### T OrderBy(System.String sortExpression)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2821,7 +2821,7 @@
 * **Description:** OrderBy
 * **Modified By:** David McCarter
 
-### T[] OrderByOrdinal(T[] accumulatorFunction)
+### T OrderByOrdinal(T accumulatorFunction)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2832,7 +2832,7 @@
 * **Description:** OrderByOrdinal
 * **Modified By:** David McCarter
 
-### T[] Partition(System.Int32 pageCount)
+### T Partition(System.Int32 pageCount)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2843,7 +2843,7 @@
 * **Description:** Partition
 * **Modified By:** David McCarter
 
-### T[] PickRandom()
+### T PickRandom()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2854,7 +2854,7 @@
 * **Description:** PickRandom
 * **Modified By:** David McCarter
 
-### T[] RemoveDuplicates()
+### T RemoveDuplicates()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2865,7 +2865,7 @@
 * **Description:** RemoveDuplicates
 * **Modified By:** David McCarter
 
-### T[] RemoveNulls()
+### T RemoveNulls()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2876,7 +2876,7 @@
 * **Description:** RemoveNulls
 * **Modified By:** David McCarter
 
-### T[] ReplaceIf(T[] accumulatorPredicate, T[] replacement)
+### T ReplaceIf(T accumulatorPredicate, T replacement)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2884,7 +2884,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Original code by Simon Painter.
 
-### System.Boolean StartsWith(T[] second)
+### System.Boolean StartsWith(T second)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2895,7 +2895,7 @@
 * **Description:** StartsWith
 * **Modified By:** David McCarter
 
-### System.Boolean StructuralSequenceEqual(T[] second)
+### System.Boolean StructuralSequenceEqual(T second)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2906,7 +2906,7 @@
 * **Description:** StructuralSequenceEqual
 * **Modified By:** David McCarter
 
-### T[] ToBlockingCollection()
+### T ToBlockingCollection()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2917,7 +2917,7 @@
 * **Description:** ToBlockingCollection
 * **Modified By:** David McCarter
 
-### T[] ToCollection()
+### T ToCollection()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2939,7 +2939,7 @@
 * **Description:** ToDelimitedString
 * **Modified By:** David McCarter
 
-### T[] ToFrozenSet(T[] comparer)
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2950,7 +2950,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutableArray()
+### T ToImmutableArray()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2961,7 +2961,7 @@
 * **Description:** ToImmutableArray
 * **Modified By:** David McCarter
 
-### T[] ToLinkedList()
+### T ToLinkedList()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2972,7 +2972,7 @@
 * **Description:** ToLinkedList
 * **Modified By:** David McCarter
 
-### T[] ToListAsync(System.Threading.CancellationToken cancellationToken)
+### T ToListAsync(System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -2983,7 +2983,7 @@
 * **Description:** ToListAsync
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyCollection()
+### T ToReadOnlyCollection()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2994,7 +2994,7 @@
 * **Description:** ToReadOnlyCollection
 * **Modified By:** David McCarter
 
-### T[] ToUniqueCollection(T[] comparer)
+### T ToUniqueCollection(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3005,7 +3005,7 @@
 * **Description:** ToUniqueCollection
 * **Modified By:** David McCarter
 
-### T[] Upsert(T[] item, T[] comparer)
+### T Upsert(T item, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3019,7 +3019,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.EnumExtensions
 
-### T[] GetAttribute(System.Enum input)
+### T GetAttribute(System.Enum input)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3027,7 +3027,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAttribute
 
-### System.String GetDescription(T[] input)
+### System.String GetDescription(T input)
 
 * **Status:** Available
 * **Optimization Status:** Not Required
@@ -3051,7 +3051,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetDisplayName
 
-### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems(T[] input)
+### System.Collections.ObjectModel.ReadOnlyCollection<System.ValueTuple<System.String, System.Int32>> GetItems(T input)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3083,7 +3083,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Next
 
-### T[] Parse(System.String name)
+### T Parse(System.String name)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3145,7 +3145,7 @@
 * **Unit Test Status:** Completed
 * **Description:** get_FlagCount
 
-### T[] GetAttribute()
+### T GetAttribute()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3231,7 +3231,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.HashSetExtensions
 
-### System.Void AddIf(T[] collection, T[] item, System.Boolean condition)
+### System.Void AddIf(T collection, T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3242,7 +3242,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] ToConcurrent(T[] collection)
+### T ToConcurrent(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3253,7 +3253,7 @@
 * **Description:** ToConcurrent
 * **Modified By:** David McCarter
 
-### T[] ToConcurrentHashSet(T[] collection)
+### T ToConcurrentHashSet(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3264,7 +3264,7 @@
 * **Description:** ToConcurrentHashSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] collection, T[] comparer)
+### T ToImmutable(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3275,7 +3275,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] ToImmutableHashSet(T[] collection)
+### T ToImmutableHashSet(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3286,7 +3286,7 @@
 * **Description:** ToImmutableHashSet
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] collection, T[] item)
+### System.Void Upsert(T collection, T item)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3300,7 +3300,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.HashSetExtensions.<G>$48D993973B7F81786721B9597BB507D2<$T0>
 
-### System.Void AddIf(T[] item, System.Boolean condition)
+### System.Void AddIf(T item, System.Boolean condition)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3311,7 +3311,7 @@
 * **Description:** AddIf
 * **Modified By:** David McCarter
 
-### T[] ToConcurrent()
+### T ToConcurrent()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3322,7 +3322,7 @@
 * **Description:** ToConcurrent
 * **Modified By:** David McCarter
 
-### T[] ToConcurrentHashSet()
+### T ToConcurrentHashSet()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3333,7 +3333,7 @@
 * **Description:** ToConcurrentHashSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] comparer)
+### T ToImmutable(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3344,7 +3344,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] ToImmutableHashSet()
+### T ToImmutableHashSet()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3355,7 +3355,7 @@
 * **Description:** ToImmutableHashSet
 * **Modified By:** David McCarter
 
-### System.Void Upsert(T[] item)
+### System.Void Upsert(T item)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3369,7 +3369,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.HttpClientExtensions
 
-### T[] DeleteAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T DeleteAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3385,7 +3385,7 @@
 * **Unit Test Status:** Completed
 * **Description:** DownloadToStreamAsync
 
-### T[] GetAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T GetAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3396,7 +3396,7 @@
 * **Description:** Original code from: https://ardalis.com/keep-tests-short-and-dry-with-extensions
 * **Modified By:** David McCarter
 
-### T[] GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, T[] typeInfo, System.Threading.CancellationToken cancellationToken)
+### T GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, T typeInfo, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3404,7 +3404,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAndDeserializeFromStreamAsync
 
-### T[] GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T GetAndDeserializeFromStreamAsync(System.Net.Http.HttpClient client, System.Uri url, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3428,7 +3428,7 @@
 * **Unit Test Status:** Completed
 * **Description:** HeadersAsync
 
-### T[] PatchAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T PatchAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3436,7 +3436,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PatchAndDeserializeAsync
 
-### T[] PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3444,7 +3444,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PostAndDeserializeAsync
 
-### T[] PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, T[] requestTypeInfo, T[] responseTypeInfo, System.Threading.CancellationToken cancellationToken)
+### T PostAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, T requestTypeInfo, T responseTypeInfo, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3452,7 +3452,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PostAndDeserializeAsync
 
-### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, T[] requestTypeInfo, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T request, T requestTypeInfo, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3460,7 +3460,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PostAndEnsureSuccessAsync
 
-### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<System.Net.HttpStatusCode> PostAndEnsureSuccessAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3468,7 +3468,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PostAndEnsureSuccessAsync
 
-### T[] PutAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T[] request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
+### T PutAndDeserializeAsync(System.Net.Http.HttpClient client, System.Uri url, T request, System.Text.Json.JsonSerializerOptions options, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3636,7 +3636,7 @@
 * **Description:** IsContentType
 * **Modified By:** David McCarter
 
-### System.Boolean TryGetBody(Microsoft.AspNetCore.Http.HttpRequest request, T[] value)
+### System.Boolean TryGetBody(Microsoft.AspNetCore.Http.HttpRequest request, T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3658,7 +3658,7 @@
 * **Description:** TryGetBody
 * **Modified By:** David McCarter
 
-### System.Boolean TryGetBody(Microsoft.AspNetCore.Http.HttpRequest request, T[] typeInfo, T[] value)
+### System.Boolean TryGetBody(Microsoft.AspNetCore.Http.HttpRequest request, T typeInfo, T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3752,7 +3752,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ImmutableArrayExtensions
 
-### T[] FastShuffle(T[] collection)
+### T FastShuffle(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -3763,7 +3763,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection)
+### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3774,7 +3774,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3785,7 +3785,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, System.Int32 count)
+### System.Boolean IsNotEmpty(T collection, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3799,7 +3799,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ImmutableArrayExtensions.<G>$B0784DA6F5DE9D376CAEFA40F4909FA5<$T0>
 
-### T[] FastShuffle()
+### T FastShuffle()
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -3821,7 +3821,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] actionPredicate)
+### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3846,7 +3846,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.LinqExtensions
 
-### T[] If(T[] input, System.Boolean should, T[] transformsFunction)
+### T If(T input, System.Boolean should, T transformsFunction)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3857,7 +3857,7 @@
 * **Description:** Original code from https://github.com/exceptionnotfound/ConditionalLinqQueryEngine
 * **Modified By:** David McCarter
 
-### T[] If(T[] input, System.Boolean should, T[] transformsFunction)
+### T If(T input, System.Boolean should, T transformsFunction)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3871,7 +3871,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ListExtensions
 
-### System.Void AddFirst(T[] list, T[] item)
+### System.Void AddFirst(T list, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3882,7 +3882,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Void AddLast(T[] list, T[] item)
+### System.Void AddLast(T list, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3893,7 +3893,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Void AddRangeIfNotExists(T[] list, T[] items, T[] comparer)
+### System.Void AddRangeIfNotExists(T list, T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3904,7 +3904,7 @@
 * **Description:** AddRangeIfNotExists
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan(T[] list)
+### T AsReadOnlySpan(T list)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3915,7 +3915,7 @@
 * **Description:** AsReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] AsSpan(T[] list)
+### T AsSpan(T list)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3926,7 +3926,7 @@
 * **Description:** AsSpan
 * **Modified By:** David McCarter
 
-### System.Boolean ClearNulls(T[] list)
+### System.Boolean ClearNulls(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3937,7 +3937,7 @@
 * **Description:** ClearNulls
 * **Modified By:** David McCarter
 
-### System.Int32 FastCount(T[] list)
+### System.Int32 FastCount(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3948,7 +3948,7 @@
 * **Description:** FastCount
 * **Modified By:** David McCarter
 
-### T[] FastShuffle(T[] list)
+### T FastShuffle(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3959,7 +3959,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### System.Int32 GenerateHashCode(T[] list, T[] comparer)
+### System.Int32 GenerateHashCode(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3970,7 +3970,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### T[] IndexAtLooped(T[] list, System.Int32& index)
+### T IndexAtLooped(T list, System.Int32& index)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3981,7 +3981,7 @@
 * **Description:** IndexAtLooped
 * **Modified By:** David McCarter
 
-### System.Boolean IsEqualTo(T[] list, T[] collectionToCheck, T[] comparer)
+### System.Boolean IsEqualTo(T list, T collectionToCheck, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3992,7 +3992,7 @@
 * **Description:** IsEqualTo
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] list)
+### System.Boolean IsNotEmpty(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4003,7 +4003,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] list, T[] action)
+### System.Boolean IsNotEmpty(T list, T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4014,7 +4014,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] list, System.Int32& count)
+### System.Boolean IsNotEmpty(T list, System.Int32& count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4025,7 +4025,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Void PerformAction(T[] list, T[] action)
+### System.Void PerformAction(T list, T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4036,7 +4036,7 @@
 * **Description:** PerformAction
 * **Modified By:** David McCarter
 
-### System.Boolean RemoveFirst(T[] list, T[] item)
+### System.Boolean RemoveFirst(T list, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4047,7 +4047,7 @@
 * **Description:** RemoveFirst
 * **Modified By:** David McCarter
 
-### System.Boolean RemoveLast(T[] list, T[] item)
+### System.Boolean RemoveLast(T list, T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4058,7 +4058,7 @@
 * **Description:** RemoveLast
 * **Modified By:** David McCarter
 
-### T[] Split(T[] list, System.Int32 size)
+### T Split(T list, System.Int32 size)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4069,7 +4069,7 @@
 * **Description:** Split
 * **Modified By:** David McCarter
 
-### T[] ToCollection(T[] list)
+### T ToCollection(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4080,7 +4080,7 @@
 * **Description:** ToCollection
 * **Modified By:** David McCarter
 
-### T[] ToDistinctBlockingCollection(T[] list, System.Boolean completeAdding)
+### T ToDistinctBlockingCollection(T list, System.Boolean completeAdding)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4091,7 +4091,7 @@
 * **Description:** ToDistinctBlockingCollection
 * **Modified By:** David McCarter
 
-### T[] ToDistinctConcurrentBag(T[] list)
+### T ToDistinctConcurrentBag(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4102,7 +4102,7 @@
 * **Description:** ToDistinctConcurrentBag
 * **Modified By:** David McCarter
 
-### T[] ToFastSortedList(T[] list)
+### T ToFastSortedList(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4113,7 +4113,7 @@
 * **Description:** ToFastSortedList
 * **Modified By:** David McCarter
 
-### T[] ToFastSortedList(T[] list, T[] comparer)
+### T ToFastSortedList(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4121,7 +4121,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToFastSortedList
 
-### T[] ToFrozenSet(T[] list, T[] comparer)
+### T ToFrozenSet(T list, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4132,7 +4132,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutableArray(T[] list)
+### T ToImmutableArray(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4143,7 +4143,7 @@
 * **Description:** ToImmutableArray
 * **Modified By:** David McCarter
 
-### T[] ToListAsync(T[] list, System.Threading.CancellationToken cancellationToken)
+### T ToListAsync(T list, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4154,7 +4154,7 @@
 * **Description:** ToListAsync
 * **Modified By:** David McCarter
 
-### T[] ToObservable(T[] list)
+### T ToObservable(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4165,7 +4165,7 @@
 * **Description:** ToObservable
 * **Modified By:** David McCarter
 
-### T[] ToObservableCollection(T[] list)
+### T ToObservableCollection(T list)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4176,7 +4176,7 @@
 * **Description:** ToObservableCollection
 * **Modified By:** David McCarter
 
-### T[] ToObservableList(T[] list)
+### T ToObservableList(T list)
 
 * **Status:** Not Used
 * **Optimization Status:** Completed
@@ -4187,7 +4187,7 @@
 * **Description:** ToObservableList
 * **Modified By:** David McCarter
 
-### T[] ToReadOnly(T[] list)
+### T ToReadOnly(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4198,7 +4198,7 @@
 * **Description:** ToReadOnly
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyList(T[] list)
+### T ToReadOnlyList(T list)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4209,7 +4209,7 @@
 * **Description:** ToReadOnlyList
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyObservableCollection(T[] list)
+### T ToReadOnlyObservableCollection(T list)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4223,7 +4223,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ListExtensions.<G>$64B67F85FE78DDA587BDEEBA2FF0A5A2<$T0>
 
-### System.Void AddFirst(T[] item)
+### System.Void AddFirst(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4234,7 +4234,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Void AddLast(T[] item)
+### System.Void AddLast(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4245,7 +4245,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### System.Void AddRangeIfNotExists(T[] items, T[] comparer)
+### System.Void AddRangeIfNotExists(T items, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4256,7 +4256,7 @@
 * **Description:** AddRangeIfNotExists
 * **Modified By:** David McCarter
 
-### T[] AsReadOnlySpan()
+### T AsReadOnlySpan()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4267,7 +4267,7 @@
 * **Description:** AsReadOnlySpan
 * **Modified By:** David McCarter
 
-### T[] AsSpan()
+### T AsSpan()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4300,7 +4300,7 @@
 * **Description:** FastCount
 * **Modified By:** David McCarter
 
-### T[] FastShuffle()
+### T FastShuffle()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4311,7 +4311,7 @@
 * **Description:** FastShuffle
 * **Modified By:** David McCarter
 
-### System.Int32 GenerateHashCode(T[] comparer)
+### System.Int32 GenerateHashCode(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4322,7 +4322,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### T[] IndexAtLooped(System.Int32& index)
+### T IndexAtLooped(System.Int32& index)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4333,7 +4333,7 @@
 * **Description:** IndexAtLooped
 * **Modified By:** David McCarter
 
-### System.Boolean IsEqualTo(T[] collectionToCheck, T[] comparer)
+### System.Boolean IsEqualTo(T collectionToCheck, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4355,7 +4355,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] action)
+### System.Boolean IsNotEmpty(T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4377,7 +4377,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Void PerformAction(T[] action)
+### System.Void PerformAction(T action)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4388,7 +4388,7 @@
 * **Description:** PerformAction
 * **Modified By:** David McCarter
 
-### System.Boolean RemoveFirst(T[] item)
+### System.Boolean RemoveFirst(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4399,7 +4399,7 @@
 * **Description:** RemoveFirst
 * **Modified By:** David McCarter
 
-### System.Boolean RemoveLast(T[] item)
+### System.Boolean RemoveLast(T item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4410,7 +4410,7 @@
 * **Description:** RemoveLast
 * **Modified By:** David McCarter
 
-### T[] Split(System.Int32 size)
+### T Split(System.Int32 size)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4421,7 +4421,7 @@
 * **Description:** Split
 * **Modified By:** David McCarter
 
-### T[] ToCollection()
+### T ToCollection()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4432,7 +4432,7 @@
 * **Description:** ToCollection
 * **Modified By:** David McCarter
 
-### T[] ToDistinctBlockingCollection(System.Boolean completeAdding)
+### T ToDistinctBlockingCollection(System.Boolean completeAdding)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4443,7 +4443,7 @@
 * **Description:** ToDistinctBlockingCollection
 * **Modified By:** David McCarter
 
-### T[] ToDistinctConcurrentBag()
+### T ToDistinctConcurrentBag()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4454,7 +4454,7 @@
 * **Description:** ToDistinctConcurrentBag
 * **Modified By:** David McCarter
 
-### T[] ToFastSortedList()
+### T ToFastSortedList()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4465,7 +4465,7 @@
 * **Description:** ToFastSortedList
 * **Modified By:** David McCarter
 
-### T[] ToFastSortedList(T[] comparer)
+### T ToFastSortedList(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4473,7 +4473,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToFastSortedList
 
-### T[] ToFrozenSet(T[] comparer)
+### T ToFrozenSet(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4484,7 +4484,7 @@
 * **Description:** ToFrozenSet
 * **Modified By:** David McCarter
 
-### T[] ToImmutableArray()
+### T ToImmutableArray()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4495,7 +4495,7 @@
 * **Description:** ToImmutableArray
 * **Modified By:** David McCarter
 
-### T[] ToListAsync(System.Threading.CancellationToken cancellationToken)
+### T ToListAsync(System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4506,7 +4506,7 @@
 * **Description:** ToListAsync
 * **Modified By:** David McCarter
 
-### T[] ToObservable()
+### T ToObservable()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4517,7 +4517,7 @@
 * **Description:** ToObservable
 * **Modified By:** David McCarter
 
-### T[] ToObservableCollection()
+### T ToObservableCollection()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4528,7 +4528,7 @@
 * **Description:** ToObservableCollection
 * **Modified By:** David McCarter
 
-### T[] ToObservableList()
+### T ToObservableList()
 
 * **Status:** Not Used
 * **Optimization Status:** Completed
@@ -4539,7 +4539,7 @@
 * **Description:** ToObservableList
 * **Modified By:** David McCarter
 
-### T[] ToReadOnly()
+### T ToReadOnly()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4550,7 +4550,7 @@
 * **Description:** ToReadOnly
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyList()
+### T ToReadOnlyList()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4561,7 +4561,7 @@
 * **Description:** ToReadOnlyList
 * **Modified By:** David McCarter
 
-### T[] ToReadOnlyObservableCollection()
+### T ToReadOnlyObservableCollection()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4710,7 +4710,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.MemoryExtensions
 
-### System.Boolean IsEqualTo(T[] memory, T[] other, T[] comparer)
+### System.Boolean IsEqualTo(T memory, T other, T comparer)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4721,7 +4721,7 @@
 * **Description:** IsEqualTo
 * **Modified By:** Copilot Agent
 
-### System.Boolean IsNotEmpty(T[] memory)
+### System.Boolean IsNotEmpty(T memory)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4732,7 +4732,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** Copilot Agent
 
-### T[] ToArrayIfNeeded(T[] memory)
+### T ToArrayIfNeeded(T memory)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4743,7 +4743,7 @@
 * **Description:** ToArrayIfNeeded
 * **Modified By:** Copilot Agent
 
-### System.Boolean TryGetArraySegment(T[] memory, T[] segment)
+### System.Boolean TryGetArraySegment(T memory, T segment)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4757,7 +4757,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.MemoryExtensions.<G>$193157265A52AD952DC093DB64F5C131<$T0>
 
-### System.Boolean IsEqualTo(T[] other, T[] comparer)
+### System.Boolean IsEqualTo(T other, T comparer)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4779,7 +4779,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** Copilot Agent
 
-### T[] ToArrayIfNeeded()
+### T ToArrayIfNeeded()
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4790,7 +4790,7 @@
 * **Description:** ToArrayIfNeeded
 * **Modified By:** Copilot Agent
 
-### System.Boolean TryGetArraySegment(T[] segment)
+### System.Boolean TryGetArraySegment(T segment)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4804,7 +4804,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.MessagePackExtensions
 
-### T[] FromMessagePack(System.Byte[] bytes)
+### T FromMessagePack(System.Byte[] bytes)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -4815,7 +4815,7 @@
 * **Description:** FromMessagePack
 * **Modified By:** Copilot Agent
 
-### System.Byte[] ToMessagePackBytes(T[] value)
+### System.Byte[] ToMessagePackBytes(T value)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -5388,7 +5388,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** AppendPropertiesPairs
 
-### T[] As(System.Object obj)
+### T As(System.Object obj)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5460,7 +5460,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** BuildSelectedPropertiesDictionary
 
-### System.String ComputeSha256Hash(System.Object obj, T[] typeInfo)
+### System.String ComputeSha256Hash(System.Object obj, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5484,7 +5484,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** DisposeAllFields
 
-### System.Void DisposeCollection(T[] items)
+### System.Void DisposeCollection(T items)
 
 * **Status:** Available
 * **Optimization Status:** Not Required
@@ -5492,7 +5492,7 @@
 * **Unit Test Status:** Completed
 * **Description:** DisposeCollection
 
-### System.Void DisposeEachItem(T[] items)
+### System.Void DisposeEachItem(T items)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5524,7 +5524,7 @@
 * **Unit Test Status:** None
 * **Description:** DisposeObjectInternal
 
-### T[] FastBinaryClone(System.Object obj)
+### T FastBinaryClone(System.Object obj)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5532,7 +5532,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastBinaryClone
 
-### T[] FastBinaryClone(System.Object obj, MessagePack.MessagePackSerializerOptions options)
+### T FastBinaryClone(System.Object obj, MessagePack.MessagePackSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5540,7 +5540,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastBinaryClone
 
-### T[] FastClone(System.Object obj, T[] typeInfo)
+### T FastClone(System.Object obj, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5548,7 +5548,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastClone
 
-### T[] FastClone(System.Object obj, System.Text.Json.JsonSerializerOptions options)
+### T FastClone(System.Object obj, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5556,7 +5556,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastClone
 
-### T[] FastClone(System.Object obj)
+### T FastClone(System.Object obj)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5618,7 +5618,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** FilterEmptyPropertiesDict
 
-### T[] FromJson(System.String json)
+### T FromJson(System.String json)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5629,7 +5629,7 @@
 * **Description:** FromJson
 * **Modified By:** David McCarter
 
-### T[] FromJson(System.String json, System.Text.Json.JsonSerializerOptions options)
+### T FromJson(System.String json, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5637,7 +5637,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FromJson
 
-### T[] FromJson(System.String json, T[] typeInfo)
+### T FromJson(System.String json, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5709,7 +5709,7 @@
 * **Unit Test Status:** Completed
 * **Description:** IsString
 
-### T[] Max(System.Object obj, T[] obj2)
+### T Max(System.Object obj, T obj2)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5757,7 +5757,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** MergePropertyValueToResult
 
-### T[] Min(System.Object obj, T[] obj2)
+### T Min(System.Object obj, T obj2)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5765,7 +5765,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Min
 
-### System.Void ProcessCollectionToDispose(T[] items)
+### System.Void ProcessCollectionToDispose(T items)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5886,7 +5886,7 @@
 * **Unit Test Status:** Completed
 * **Description:** StripNull
 
-### System.String ToJson(System.Object obj, T[] typeInfo)
+### System.String ToJson(System.Object obj, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5910,7 +5910,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToJson
 
-### System.Void ToJsonFile(System.Object obj, System.IO.FileInfo file, T[] typeInfo)
+### System.Void ToJsonFile(System.Object obj, System.IO.FileInfo file, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -5926,7 +5926,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToJsonFile
 
-### T[] ToLazy(T[] value)
+### T ToLazy(T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5996,7 +5996,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ObjectExtensions.<G>$C43E2675C7BBF9284AF22FB8A9BF0280
 
-### T[] As()
+### T As()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6004,7 +6004,7 @@
 * **Unit Test Status:** Completed
 * **Description:** As
 
-### System.String ComputeSha256Hash(T[] typeInfo)
+### System.String ComputeSha256Hash(T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6020,7 +6020,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ComputeSha256Hash
 
-### T[] FastBinaryClone()
+### T FastBinaryClone()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6028,7 +6028,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastBinaryClone
 
-### T[] FastBinaryClone(MessagePack.MessagePackSerializerOptions options)
+### T FastBinaryClone(MessagePack.MessagePackSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6036,7 +6036,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastBinaryClone
 
-### T[] FastClone(T[] typeInfo)
+### T FastClone(T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6044,7 +6044,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastClone
 
-### T[] FastClone(System.Text.Json.JsonSerializerOptions options)
+### T FastClone(System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6052,7 +6052,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FastClone
 
-### T[] FastClone()
+### T FastClone()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6154,7 +6154,7 @@
 * **Unit Test Status:** Completed
 * **Description:** IsString
 
-### T[] Max(T[] obj2)
+### T Max(T obj2)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6162,7 +6162,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Max
 
-### T[] Min(T[] obj2)
+### T Min(T obj2)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6211,7 +6211,7 @@
 * **Unit Test Status:** Completed
 * **Description:** StripNull
 
-### System.String ToJson(T[] typeInfo)
+### System.String ToJson(T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6235,7 +6235,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToJson
 
-### System.Void ToJsonFile(System.IO.FileInfo file, T[] typeInfo)
+### System.Void ToJsonFile(System.IO.FileInfo file, T typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6254,7 +6254,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ObservableCollectionExtensions
 
-### System.Boolean IsNotEmpty(T[] collection)
+### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6265,7 +6265,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6276,7 +6276,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, System.Int32& count)
+### System.Boolean IsNotEmpty(T collection, System.Int32& count)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6301,7 +6301,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] actionPredicate)
+### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6322,6 +6322,31 @@
 * **CreatedOn:** 11/21/2020
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
+
+*****
+## DotNetTips.Spargine.Extensions.OpenTelemetryExtensions
+
+### System.Diagnostics.Activity AddTagsIfPresent(System.Diagnostics.Activity activity, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String, System.Object>> tags)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** AddTagsIfPresent
+* **Modified By:** Copilot Agent
+
+### System.Diagnostics.Activity SetStatusIfError(System.Diagnostics.Activity activity, System.Exception exception)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** SetStatusIfError
+* **Modified By:** Copilot Agent
 
 *****
 ## DotNetTips.Spargine.Extensions.ProcessExtensions
@@ -6384,7 +6409,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyCollectionExtensions
 
-### System.Int32 GenerateHashCode(T[] collection, T[] comparer)
+### System.Int32 GenerateHashCode(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6395,7 +6420,7 @@
 * **Description:** GenerateHashCode
 * **Modified By:** David McCarter
 
-### T[] GetValueOrDefault(T[] collection, System.Int32 index, T[] defaultValue)
+### T GetValueOrDefault(T collection, System.Int32 index, T defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6406,7 +6431,7 @@
 * **Description:** GetValueOrDefault
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6417,7 +6442,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean TryGetValue(T[] collection, System.Int32 index, T[] value)
+### System.Boolean TryGetValue(T collection, System.Int32 index, T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6431,7 +6456,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyCollectionExtensions.<G>$DC550F3D42D3085FE7D720396E05FB19<$T0>
 
-### System.Int32 GenerateHashCode(T[] comparer)
+### System.Int32 GenerateHashCode(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6442,7 +6467,7 @@
 * **Description:** GenerateHashCode
 * **Modified By:** David McCarter
 
-### T[] GetValueOrDefault(System.Int32 index, T[] defaultValue)
+### T GetValueOrDefault(System.Int32 index, T defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6453,7 +6478,7 @@
 * **Description:** GetValueOrDefault
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] actionPredicate)
+### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6464,7 +6489,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean TryGetValue(System.Int32 index, T[] value)
+### System.Boolean TryGetValue(System.Int32 index, T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6478,7 +6503,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyMemoryExtensions
 
-### System.Boolean IsEqualTo(T[] memory, T[] other, T[] comparer)
+### System.Boolean IsEqualTo(T memory, T other, T comparer)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6489,7 +6514,7 @@
 * **Description:** IsEqualTo
 * **Modified By:** Copilot Agent
 
-### System.Boolean IsNotEmpty(T[] memory)
+### System.Boolean IsNotEmpty(T memory)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6500,7 +6525,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** Copilot Agent
 
-### T[] ToArrayIfNeeded(T[] memory)
+### T ToArrayIfNeeded(T memory)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6511,7 +6536,7 @@
 * **Description:** ToArrayIfNeeded
 * **Modified By:** Copilot Agent
 
-### System.Boolean TryGetArraySegment(T[] memory, T[] segment)
+### System.Boolean TryGetArraySegment(T memory, T segment)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6525,7 +6550,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.ReadOnlyMemoryExtensions.<G>$3387D7F181FA234A9158DADA9224047F<$T0>
 
-### System.Boolean IsEqualTo(T[] other, T[] comparer)
+### System.Boolean IsEqualTo(T other, T comparer)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6547,7 +6572,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** Copilot Agent
 
-### T[] ToArrayIfNeeded()
+### T ToArrayIfNeeded()
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6558,7 +6583,7 @@
 * **Description:** ToArrayIfNeeded
 * **Modified By:** Copilot Agent
 
-### System.Boolean TryGetArraySegment(T[] segment)
+### System.Boolean TryGetArraySegment(T segment)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -6583,7 +6608,7 @@
 * **Description:** BytesToString
 * **Modified By:** David McCarter
 
-### T[] PickRandom(T[] span)
+### T PickRandom(T span)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6688,7 +6713,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.SortedDictionaryExtensions
 
-### System.Boolean IsEmpty(T[] collection)
+### System.Boolean IsEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6699,7 +6724,7 @@
 * **Description:** IsEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection)
+### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6710,7 +6735,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6721,7 +6746,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, System.Int32 count)
+### System.Boolean IsNotEmpty(T collection, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6732,7 +6757,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] collection, T[] keyComparer)
+### T ToImmutable(T collection, T keyComparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6743,7 +6768,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] Upsert(T[] collection, T[] key, T[] value)
+### T Upsert(T collection, T key, T value)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6757,7 +6782,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.SortedSetExtensions
 
-### System.Boolean IsNotEmpty(T[] collection)
+### System.Boolean IsNotEmpty(T collection)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6768,7 +6793,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] collection, T[] actionPredicate)
+### System.Boolean IsNotEmpty(T collection, T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6779,7 +6804,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] collection, T[] comparer)
+### T ToImmutable(T collection, T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6790,7 +6815,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] ToImmutableSortedSet(T[] collection)
+### T ToImmutableSortedSet(T collection)
 
 * **Status:** Not Used
 * **Optimization Status:** Completed
@@ -6815,7 +6840,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean IsNotEmpty(T[] actionPredicate)
+### System.Boolean IsNotEmpty(T actionPredicate)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6826,7 +6851,7 @@
 * **Description:** IsNotEmpty
 * **Modified By:** David McCarter
 
-### T[] ToImmutable(T[] comparer)
+### T ToImmutable(T comparer)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6837,7 +6862,7 @@
 * **Description:** ToImmutable
 * **Modified By:** David McCarter
 
-### T[] ToImmutableSortedSet()
+### T ToImmutableSortedSet()
 
 * **Status:** Not Used
 * **Optimization Status:** Completed
@@ -6953,7 +6978,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T[] values, T[] joinAction)
+### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T values, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6964,7 +6989,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T[] values, T[] param, T[] joinAction)
+### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T values, T param, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6975,7 +7000,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T[] values, T[] param1, T[] param2, T[] joinAction)
+### System.Void AppendValues(System.Text.StringBuilder sb, System.String separator, T values, T param1, T param2, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -7055,7 +7080,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.String separator, T[] values, T[] joinAction)
+### System.Void AppendValues(System.String separator, T values, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -7066,7 +7091,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.String separator, T[] values, T[] param, T[] joinAction)
+### System.Void AppendValues(System.String separator, T values, T param, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -7077,7 +7102,7 @@
 * **Description:** AppendValues
 * **Modified By:** David McCarter
 
-### System.Void AppendValues(System.String separator, T[] values, T[] param1, T[] param2, T[] joinAction)
+### System.Void AppendValues(System.String separator, T values, T param1, T param2, T joinAction)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -7960,7 +7985,7 @@
 * **Description:** GetAllStaticMethods
 * **Modified By:** David McCarter
 
-### T[] GetAttribute(System.Reflection.MethodInfo methodInfo)
+### T GetAttribute(System.Reflection.MethodInfo methodInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7971,7 +7996,7 @@
 * **Description:** GetAttribute
 * **Modified By:** David McCarter
 
-### T[] GetAttribute(System.Reflection.PropertyInfo propertyInfo)
+### T GetAttribute(System.Reflection.PropertyInfo propertyInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7982,7 +8007,7 @@
 * **Description:** Original Code from: https://github.com/dotnet/BenchmarkDotNet.
 * **Modified By:** David McCarter
 
-### T[] GetAttribute(System.Reflection.FieldInfo fieldInfo)
+### T GetAttribute(System.Reflection.FieldInfo fieldInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7993,7 +8018,7 @@
 * **Description:** Original Code from: https://github.com/dotnet/BenchmarkDotNet.
 * **Modified By:** David McCarter
 
-### T[] GetAttribute(System.Type type)
+### T GetAttribute(System.Type type)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -8232,7 +8257,7 @@
 * **Description:** GetAllStaticMethods
 * **Modified By:** David McCarter
 
-### T[] GetAttribute()
+### T GetAttribute()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -8348,7 +8373,7 @@
 *****
 ## DotNetTips.Spargine.Extensions.WebClientExtensions
 
-### T[] ConvertFrom(System.Net.WebClient client, System.Uri url)
+### T ConvertFrom(System.Net.WebClient client, System.Uri url)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -8357,4 +8382,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/8/2026 4:53:27 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/8/2026 5:27:09 PM UTC**
