@@ -4,7 +4,7 @@
 // Created          : 01-16-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="TaskExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -14,9 +14,7 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -29,18 +27,12 @@ public class TaskExtensionsTests
 
 	private string _fireResult = string.Empty;
 
-	private async Task FireAsync(string input)
+	[TestMethod]
+	public void FireAndForgetNullTaskTest()
 	{
-		this._fireResult = input;
+		Task task = null;
 
-		Console.WriteLine(input);
-
-		await Task.Delay(1).ConfigureAwait(false);
-	}
-
-	private static Task FaultingTask()
-	{
-		return Task.FromException(new InvalidOperationException("Test exception"));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => task.FireAndForget());
 	}
 
 	[TestMethod]
@@ -65,11 +57,23 @@ public class TaskExtensionsTests
 	}
 
 	[TestMethod]
-	public void FireAndForgetNullTaskTest()
+	public async Task FireAndForgetWithActionFaultingTaskTest()
 	{
-		Task task = null;
+		Exception caughtException = null;
+		var tcs = new TaskCompletionSource<bool>();
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => task.FireAndForget());
+		Action<Exception> exceptionHandler = (Exception ex) =>
+		{
+			caughtException = ex;
+			tcs.TrySetResult(true);
+		};
+
+		FaultingTask().FireAndForget(exceptionHandler);
+
+		await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+
+		Assert.IsNotNull(caughtException);
+		Assert.IsInstanceOfType<AggregateException>(caughtException);
 	}
 
 	[TestMethod]
@@ -91,23 +95,114 @@ public class TaskExtensionsTests
 	}
 
 	[TestMethod]
-	public async Task FireAndForgetWithActionFaultingTaskTest()
+	public async Task IgnoreCancellation_CanceledTask_DoesNotThrow()
 	{
-		Exception caughtException = null;
-		var tcs = new TaskCompletionSource<bool>();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
 
-		Action<Exception> exceptionHandler = (Exception ex) =>
-		{
-			caughtException = ex;
-			tcs.TrySetResult(true);
-		};
+		await Task.FromCanceled(cts.Token).IgnoreCancellation().ConfigureAwait(false);
+	}
 
-		FaultingTask().FireAndForget(exceptionHandler);
+	[TestMethod]
+	public async Task IgnoreCancellation_NullTask_ThrowsArgumentNullException()
+	{
+		Task task = null;
 
-		await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => task.IgnoreCancellation()).ConfigureAwait(false);
+	}
 
-		Assert.IsNotNull(caughtException);
-		Assert.IsInstanceOfType<AggregateException>(caughtException);
+	[TestMethod]
+	public async Task IgnoreCancellation_WithFaultedTask_PropagatesException()
+	{
+		var task = Task.FromException(new InvalidOperationException("boom"));
+
+		_ = await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => task.IgnoreCancellation()).ConfigureAwait(false);
+	}
+
+	[TestMethod]
+	public void UnwrapAggregate_WithMultipleInner_ReturnsFlattenedAggregate()
+	{
+		var aggregate = new AggregateException(new InvalidOperationException("first"), new ArgumentException("second"));
+
+		var result = aggregate.UnwrapAggregate();
+
+		Assert.IsInstanceOfType<AggregateException>(result);
+		Assert.AreEqual(2, ((AggregateException)result).InnerExceptions.Count);
+	}
+
+	[TestMethod]
+	public void UnwrapAggregate_WithNonAggregate_ReturnsSameInstance()
+	{
+		var exception = new InvalidOperationException("no-wrap");
+
+		var result = exception.UnwrapAggregate();
+
+		Assert.AreSame(exception, result);
+	}
+
+	[TestMethod]
+	public void UnwrapAggregate_WithNullException_ThrowsArgumentNullException()
+	{
+		Exception exception = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => exception.UnwrapAggregate());
+	}
+
+	[TestMethod]
+	public void UnwrapAggregate_WithSingleInner_ReturnsInnerException()
+	{
+		var inner = new InvalidOperationException("inner");
+		var aggregate = new AggregateException(inner);
+
+		var result = aggregate.UnwrapAggregate();
+
+		Assert.AreSame(inner, result);
+	}
+
+	[TestMethod]
+	public async Task WithTimeoutAsync_GenericTask_CompletesAndReturnsResult()
+	{
+		var task = Task.FromResult(42);
+
+		var result = await task.WithTimeoutAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+
+		Assert.AreEqual(42, result);
+	}
+
+	[TestMethod]
+	public void WithTimeoutAsync_NullTask_ThrowsArgumentNullException()
+	{
+		Task task = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => task.WithTimeoutAsync(TimeSpan.FromSeconds(1)));
+	}
+
+	[TestMethod]
+	public async Task WithTimeoutAsync_TaskCompletesWithinTimeout_DoesNotThrow()
+	{
+		await Task.Delay(10).WithTimeoutAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+	}
+
+	[TestMethod]
+	public async Task WithTimeoutAsync_TaskTimesOut_ThrowsTimeoutException()
+	{
+		var task = Task.Delay(TimeSpan.FromSeconds(2));
+
+		_ = await Assert.ThrowsExactlyAsync<TimeoutException>(() => task.WithTimeoutAsync(TimeSpan.FromMilliseconds(50))).ConfigureAwait(false);
+	}
+
+	private static Task FaultingTask()
+	{
+		return Task.FromException(new InvalidOperationException("Test exception"));
+	}
+
+	private async Task FireAsync(string input)
+	{
+		this._fireResult = input;
+
+		Console.WriteLine(input);
+
+		await Task.Delay(1).ConfigureAwait(false);
 	}
 
 }
