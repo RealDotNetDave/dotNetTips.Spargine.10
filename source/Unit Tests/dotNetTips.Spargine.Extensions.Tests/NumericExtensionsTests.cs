@@ -15,7 +15,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Extensions.Tests;
@@ -249,6 +248,21 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void Average_ZeroInts_ReturnsZero()
+	{
+		// Arrange
+		int a = 0;
+		int b = 0;
+		int expectedResult = 0;
+
+		// Act
+		int result = NumericExtensions.Average(a, b);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "The average of 0 and 0 should be 0.");
+	}
+
+	[TestMethod]
 	public void Average_ZeroLongs_ReturnsZero()
 	{
 		// Arrange
@@ -315,6 +329,62 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void Clamp_ValueAboveMaximum_ReturnsMaximum()
+	{
+		var result = 25.Clamp(0, 10);
+
+		Assert.AreEqual(10, result);
+	}
+
+	[TestMethod]
+	public void Clamp_ValueBelowMinimum_ReturnsMinimum()
+	{
+		var result = (-5).Clamp(0, 10);
+
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void Clamp_ValueInRange_ReturnsValue()
+	{
+		var result = 5.Clamp(0, 10);
+
+		Assert.AreEqual(5, result);
+	}
+
+	[TestMethod]
+	public void Clamp_WithInvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => 5.Clamp(10, 0));
+	}
+
+	[TestMethod]
+	public void Decrement_BelowLowerBound_ReturnsLowerBound()
+	{
+		// Arrange
+		var testValue = 3;
+
+		// Act
+		var result = testValue.Decrement(lowerBound: 0, step: 5);
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void Decrement_DefaultParameters_Decrements()
+	{
+		// Arrange
+		var testValue = 10;
+
+		// Act
+		var result = testValue.Decrement();
+
+		// Assert
+		Assert.AreEqual(9, result);
+	}
+
+	[TestMethod]
 	public void DecrementTest()
 	{
 		var testValue = 256234;
@@ -353,6 +423,19 @@ public class NumericExtensionsTests : UnitTester
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Decimal));
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.Hexadecimal));
 
+	}
+
+	[TestMethod]
+	public void EnsureMinimum_ValueAboveMinimum_ReturnsValue()
+	{
+		// Arrange
+		var testValue = RandomData.GenerateInteger(200, 500);
+
+		// Act
+		var result = testValue.EnsureMinimum(100);
+
+		// Assert
+		Assert.AreEqual(testValue, result);
 	}
 
 	[TestMethod]
@@ -417,6 +500,16 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void FormatSize_NegativeValue_ReturnsInvalidSize()
+	{
+		// Act
+		var result = NumericExtensions.FormatSize(-1L);
+
+		// Assert
+		Assert.AreEqual("Invalid size", result);
+	}
+
+	[TestMethod]
 	public void FormatSize_Petabytes_ReturnsPB()
 	{
 		// Act
@@ -441,6 +534,26 @@ public class NumericExtensionsTests : UnitTester
 	{
 		// Act
 		var result = NumericExtensions.FormatSize(0);
+
+		// Assert
+		Assert.AreEqual("0 Bytes", result);
+	}
+
+	[TestMethod]
+	public void FormatSizeDouble_KilobytesRange_ReturnsKB()
+	{
+		// Act
+		var result = 5000.0.FormatSize();
+
+		// Assert
+		Assert.AreEqual("4.88 KB", result);
+	}
+
+	[TestMethod]
+	public void FormatSizeDouble_Zero_ReturnsZeroBytes()
+	{
+		// Act
+		var result = 0.0.FormatSize();
 
 		// Assert
 		Assert.AreEqual("0 Bytes", result);
@@ -474,6 +587,192 @@ public class NumericExtensionsTests : UnitTester
 
 		// Assert
 		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_ExactlyOneMillisecond_ReturnsSingular()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(1.0);
+
+		// Assert
+		Assert.AreEqual("1 millisecond", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_HoursMinutesSeconds_ReturnsFull()
+	{
+		// Act - 3661000ms = 1 hour 1 minute 1 second
+		var result = NumericExtensions.FormatTime(3661000.0);
+
+		// Assert
+		Assert.AreEqual("1 hour 1 minute 1 second", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_LessThan1000_ReturnsMilliseconds()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(500.0);
+
+		// Assert
+		Assert.AreEqual("500 milliseconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_MinutesAndSeconds_ReturnsMinutesSeconds()
+	{
+		// Act - 90000ms = 1 minute 30 seconds
+		var result = NumericExtensions.FormatTime(90000.0);
+
+		// Assert
+		Assert.AreEqual("1 minute 30 seconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_MultipleHours_ReturnsPlural()
+	{
+		// Act - 7320000ms = 2 hours 2 minutes
+		var result = NumericExtensions.FormatTime(7320000.0);
+
+		// Assert
+		Assert.AreEqual("2 hours 2 minutes", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_OneSecond_ReturnsSingular()
+	{
+		// Act - 1000ms = 1 second
+		var result = NumericExtensions.FormatTime(1000.0);
+
+		// Assert
+		Assert.AreEqual("1 second", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_OnlySeconds_ReturnsSeconds()
+	{
+		// Act - 5000ms = 5 seconds
+		var result = NumericExtensions.FormatTime(5000.0);
+
+		// Assert
+		Assert.AreEqual("5 seconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Double_ZeroMilliseconds_ReturnsZeroMilliseconds()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(0.0);
+
+		// Assert
+		Assert.AreEqual("0 milliseconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_ExactlyOneMillisecond_ReturnsSingular()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(1L);
+
+		// Assert
+		Assert.AreEqual("1 millisecond", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_HoursMinutesSeconds_ReturnsFull()
+	{
+		// Act - 3661000ms = 1 hour 1 minute 1 second
+		var result = NumericExtensions.FormatTime(3661000L);
+
+		// Assert
+		Assert.AreEqual("1 hour 1 minute 1 second", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_LessThan1000_ReturnsMilliseconds()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(500L);
+
+		// Assert
+		Assert.AreEqual("500 milliseconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_MinutesAndSeconds_ReturnsMinutesSeconds()
+	{
+		// Act - 90000ms = 1 minute 30 seconds
+		var result = NumericExtensions.FormatTime(90000L);
+
+		// Assert
+		Assert.AreEqual("1 minute 30 seconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_MultipleHours_ReturnsPlural()
+	{
+		// Act - 7320000ms = 2 hours 2 minutes
+		var result = NumericExtensions.FormatTime(7320000L);
+
+		// Assert
+		Assert.AreEqual("2 hours 2 minutes", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_OneSecond_ReturnsSingular()
+	{
+		// Act - 1000ms = 1 second
+		var result = NumericExtensions.FormatTime(1000L);
+
+		// Assert
+		Assert.AreEqual("1 second", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_OnlySeconds_ReturnsSeconds()
+	{
+		// Act - 5000ms = 5 seconds
+		var result = NumericExtensions.FormatTime(5000L);
+
+		// Assert
+		Assert.AreEqual("5 seconds", result);
+	}
+
+	[TestMethod]
+	public void FormatTime_Long_ZeroMilliseconds_ReturnsZeroMilliseconds()
+	{
+		// Act
+		var result = NumericExtensions.FormatTime(0L);
+
+		// Assert
+		Assert.AreEqual("0 milliseconds", result);
+	}
+
+	[TestMethod]
+	public void Increment_DefaultParameters_Increments()
+	{
+		// Arrange
+		var testValue = 10;
+
+		// Act
+		var result = testValue.Increment();
+
+		// Assert
+		Assert.AreEqual(11, result);
+	}
+
+	[TestMethod]
+	public void Increment_ExceedsUpperBound_ReturnsUpperBound()
+	{
+		// Arrange
+		var testValue = 98;
+
+		// Act
+		var result = testValue.Increment(upperBound: 100, step: 5);
+
+		// Assert
+		Assert.AreEqual(100, result);
 	}
 
 	[TestMethod]
@@ -606,6 +905,46 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void IsInRange_Decimal_OutOfRange_ReturnsFalse()
+	{
+		// Arrange
+		decimal testValue = 100m;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsInRange(200m, 300m));
+	}
+
+	[TestMethod]
+	public void IsInRange_Double_OutOfRange_ReturnsFalse()
+	{
+		// Arrange
+		double testValue = 100.0;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsInRange(200.0, 300.0));
+	}
+
+	[TestMethod]
+	public void IsInRange_Int_OutOfRange_ReturnsFalse()
+	{
+		// Arrange
+		int testValue = 100;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsInRange(200, 300));
+	}
+
+	[TestMethod]
+	public void IsInRange_Long_OutOfRange_ReturnsFalse()
+	{
+		// Arrange
+		long testValue = 100L;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsInRange(200L, 300L));
+	}
+
+	[TestMethod]
 	public void IsInRangeTest()
 	{
 		int testValue1 = 100;
@@ -659,6 +998,76 @@ public class NumericExtensionsTests : UnitTester
 		Assert.IsTrue(testValue.IsIntervalThrowsException(100, "test"));
 
 		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.IsIntervalThrowsException(99, "test"));
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Decimal_ReturnsFalse()
+	{
+		// Arrange
+		decimal testValue = 0m;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Double_ReturnsFalse()
+	{
+		// Arrange
+		double testValue = 0.0;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Float_ReturnsFalse()
+	{
+		// Arrange
+		float testValue = 0f;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Int_ReturnsFalse()
+	{
+		// Arrange
+		int testValue = 0;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Long_ReturnsFalse()
+	{
+		// Arrange
+		long testValue = 0L;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Sbyte_ReturnsFalse()
+	{
+		// Arrange
+		sbyte testValue = 0;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
+	}
+
+	[TestMethod]
+	public void IsNegative_Zero_Short_ReturnsFalse()
+	{
+		// Arrange
+		short testValue = 0;
+
+		// Act & Assert
+		Assert.IsFalse(testValue.IsNegative());
 	}
 
 	[TestMethod]
@@ -787,6 +1196,26 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void MillisecondsToString_NegativeInt_ThrowsException()
+	{
+		// Arrange
+		int time = -1;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => time.MillisecondsToString());
+	}
+
+	[TestMethod]
+	public void MillisecondsToString_NegativeLong_ThrowsException()
+	{
+		// Arrange
+		long time = -1;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => time.MillisecondsToString());
+	}
+
+	[TestMethod]
 	public void MillisecondsToStringIntTest()
 	{
 		int time = 99999999;
@@ -811,6 +1240,46 @@ public class NumericExtensionsTests : UnitTester
 		var result = time.MillisecondsToString();
 
 		Assert.AreEqual("36:55:35", result);
+	}
+
+	[TestMethod]
+	public void RoundToNearestMultiple_RoundsToClosestMultiple()
+	{
+		var result = 13.RoundToNearestMultiple(5);
+
+		Assert.AreEqual(15, result);
+	}
+
+	[TestMethod]
+	public void RoundToNearestMultiple_WithInvalidMultiple_ThrowsArgumentOutOfRangeException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => 13.RoundToNearestMultiple(0));
+	}
+
+	[TestMethod]
+	public void RoundToPowerOf2_AlreadyPowerOf2_ReturnsSameValue()
+	{
+		// Arrange
+		var testValue = 256;
+
+		// Act
+		var result = testValue.RoundToPowerOf2();
+
+		// Assert
+		Assert.AreEqual(256, result);
+	}
+
+	[TestMethod]
+	public void RoundToPowerOf2_ValueOfOne_ReturnsTwo()
+	{
+		// Arrange
+		var testValue = 1;
+
+		// Act
+		var result = testValue.RoundToPowerOf2();
+
+		// Assert
+		Assert.AreEqual(2, result);
 	}
 
 	[TestMethod]
@@ -866,6 +1335,84 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToPositiveValue_PositiveDecimal_ReturnsSame()
+	{
+		// Arrange
+		decimal testValue = 100m;
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
+	public void ToPositiveValue_PositiveInt_ReturnsSame()
+	{
+		// Arrange
+		var testValue = RandomData.GenerateInteger(1, 1000);
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
+	public void ToPositiveValue_PositiveLong_ReturnsSame()
+	{
+		// Arrange
+		long testValue = 100L;
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
+	public void ToPositiveValue_ZeroDecimal_ReturnsZero()
+	{
+		// Arrange
+		decimal testValue = 0m;
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(0m, result);
+	}
+
+	[TestMethod]
+	public void ToPositiveValue_ZeroInt_ReturnsZero()
+	{
+		// Arrange
+		int testValue = 0;
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void ToPositiveValue_ZeroLong_ReturnsZero()
+	{
+		// Arrange
+		long testValue = 0L;
+
+		// Act
+		var result = testValue.ToPositiveValue();
+
+		// Assert
+		Assert.AreEqual(0L, result);
+	}
+
+	[TestMethod]
 	public void ToPositiveValueDecimalTest()
 	{
 		decimal testValue = -100;
@@ -890,11 +1437,68 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToRomanNumeral_KnownValues_ReturnsCorrect()
+	{
+		Assert.AreEqual("I", 1.ToRomanNumeral());
+		Assert.AreEqual("IV", 4.ToRomanNumeral());
+		Assert.AreEqual("IX", 9.ToRomanNumeral());
+		Assert.AreEqual("XLII", 42.ToRomanNumeral());
+		Assert.AreEqual("MCMXCIX", 1999.ToRomanNumeral());
+		Assert.AreEqual("MMMCMXCIX", 3999.ToRomanNumeral());
+	}
+
+	[TestMethod]
+	public void ToRomanNumeral_OutOfRange_High_ThrowsException()
+	{
+		// Arrange
+		var number = 4000;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => number.ToRomanNumeral());
+	}
+
+	[TestMethod]
+	public void ToRomanNumeral_OutOfRange_Low_ThrowsException()
+	{
+		// Arrange
+		var number = 0;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => number.ToRomanNumeral());
+	}
+
+	[TestMethod]
 	public void ToRomanNumeralTest()
 	{
 		var number = 1010;
 
 		Assert.IsNotNull(number.ToRomanNumeral());
+	}
+
+	[TestMethod]
+	public void ToStringOrEmpty_BelowLowerLimit_ReturnsDefaultText()
+	{
+		// Arrange
+		var testValue = 50;
+
+		// Act
+		var result = testValue.ToStringOrEmpty(lowerLimit: 100, upperLimit: 9000, defaultText: OutOfRange);
+
+		// Assert
+		Assert.AreEqual(OutOfRange, result);
+	}
+
+	[TestMethod]
+	public void ToStringOrEmpty_DefaultParameters_ReturnsValue()
+	{
+		// Arrange
+		var testValue = 500;
+
+		// Act
+		var result = testValue.ToStringOrEmpty();
+
+		// Assert
+		Assert.AreEqual("500", result);
 	}
 
 	[TestMethod]
@@ -908,6 +1512,67 @@ public class NumericExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToWords_Hundred_ReturnsCorrect()
+	{
+		// Act
+		var result = 100.ToWords();
+
+		// Assert
+		Assert.IsTrue(result.Contains("Hundred"));
+	}
+
+	[TestMethod]
+	public void ToWords_Millions_ReturnsCorrect()
+	{
+		// Act
+		var result = 1000000.ToWords();
+
+		// Assert
+		Assert.IsTrue(result.Contains("Million"));
+	}
+
+	[TestMethod]
+	public void ToWords_NegativeValue_ReturnsMinusPrefix()
+	{
+		// Act
+		var result = (-5).ToWords();
+
+		// Assert
+		Assert.IsTrue(result.StartsWith("Minus", StringComparison.Ordinal));
+	}
+
+	[TestMethod]
+	public void ToWords_ValueUnder20_ReturnsUnitWord()
+	{
+		// Act
+		var result = 7.ToWords();
+
+		// Assert
+		Assert.AreEqual("Seven", result);
+	}
+
+	[TestMethod]
+	public void ToWords_ValueWithTens_ReturnsCorrect()
+	{
+		// Act - 42 should have tens + units
+		var result = 42.ToWords();
+
+		// Assert
+		Assert.IsTrue(result.HasValue());
+		Assert.IsTrue(result.Contains('-'));
+	}
+
+	[TestMethod]
+	public void ToWords_Zero_ReturnsZero()
+	{
+		// Act
+		var result = 0.ToWords();
+
+		// Assert
+		Assert.AreEqual("Zero", result);
+	}
+
+	[TestMethod]
 	public void ToWordsTest()
 	{
 		var testValue = 54928;
@@ -915,6 +1580,50 @@ public class NumericExtensionsTests : UnitTester
 		Assert.IsTrue(testValue.ToWords().HasValue());
 
 		Assert.AreEqual(49, testValue.ToWords().Length);
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_DecimalSpan_Valid_ReturnsTrueAndValue()
+	{
+		var input = "12345.67".AsSpan();
+
+		var success = input.TryParseInvariant(out decimal value);
+
+		Assert.IsTrue(success);
+		Assert.AreEqual(12345.67m, value);
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_DoubleSpan_Valid_ReturnsTrueAndValue()
+	{
+		var input = "12345.67".AsSpan();
+
+		var success = input.TryParseInvariant(out double value);
+
+		Assert.IsTrue(success);
+		Assert.AreEqual(12345.67d, value);
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_IntSpan_Invalid_ReturnsFalse()
+	{
+		var input = "12abc".AsSpan();
+
+		var success = input.TryParseInvariant(out int value);
+
+		Assert.IsFalse(success);
+		Assert.AreEqual(0, value);
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_IntSpan_Valid_ReturnsTrueAndValue()
+	{
+		var input = "12345".AsSpan();
+
+		var success = input.TryParseInvariant(out int value);
+
+		Assert.IsTrue(success);
+		Assert.AreEqual(12345, value);
 	}
 
 	[TestMethod]
@@ -1038,628 +1747,6 @@ public class NumericExtensionsTests : UnitTester
 
 		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => testValue.ToFormattedString(NumericFormat.RoundTrip));
 
-	}
-
-	[TestMethod]
-	public void Average_ZeroInts_ReturnsZero()
-	{
-		// Arrange
-		int a = 0;
-		int b = 0;
-		int expectedResult = 0;
-
-		// Act
-		int result = NumericExtensions.Average(a, b);
-
-		// Assert
-		Assert.AreEqual(expectedResult, result, "The average of 0 and 0 should be 0.");
-	}
-
-	[TestMethod]
-	public void Decrement_BelowLowerBound_ReturnsLowerBound()
-	{
-		// Arrange
-		var testValue = 3;
-
-		// Act
-		var result = testValue.Decrement(lowerBound: 0, step: 5);
-
-		// Assert
-		Assert.AreEqual(0, result);
-	}
-
-	[TestMethod]
-	public void Decrement_DefaultParameters_Decrements()
-	{
-		// Arrange
-		var testValue = 10;
-
-		// Act
-		var result = testValue.Decrement();
-
-		// Assert
-		Assert.AreEqual(9, result);
-	}
-
-	[TestMethod]
-	public void EnsureMinimum_ValueAboveMinimum_ReturnsValue()
-	{
-		// Arrange
-		var testValue = RandomData.GenerateInteger(200, 500);
-
-		// Act
-		var result = testValue.EnsureMinimum(100);
-
-		// Assert
-		Assert.AreEqual(testValue, result);
-	}
-
-	[TestMethod]
-	public void FormatSize_NegativeValue_ReturnsInvalidSize()
-	{
-		// Act
-		var result = NumericExtensions.FormatSize(-1L);
-
-		// Assert
-		Assert.AreEqual("Invalid size", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_LessThan1000_ReturnsMilliseconds()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(500.0);
-
-		// Assert
-		Assert.AreEqual("500 milliseconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_ExactlyOneMillisecond_ReturnsSingular()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(1.0);
-
-		// Assert
-		Assert.AreEqual("1 millisecond", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_OnlySeconds_ReturnsSeconds()
-	{
-		// Act - 5000ms = 5 seconds
-		var result = NumericExtensions.FormatTime(5000.0);
-
-		// Assert
-		Assert.AreEqual("5 seconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_OneSecond_ReturnsSingular()
-	{
-		// Act - 1000ms = 1 second
-		var result = NumericExtensions.FormatTime(1000.0);
-
-		// Assert
-		Assert.AreEqual("1 second", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_MinutesAndSeconds_ReturnsMinutesSeconds()
-	{
-		// Act - 90000ms = 1 minute 30 seconds
-		var result = NumericExtensions.FormatTime(90000.0);
-
-		// Assert
-		Assert.AreEqual("1 minute 30 seconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_HoursMinutesSeconds_ReturnsFull()
-	{
-		// Act - 3661000ms = 1 hour 1 minute 1 second
-		var result = NumericExtensions.FormatTime(3661000.0);
-
-		// Assert
-		Assert.AreEqual("1 hour 1 minute 1 second", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_MultipleHours_ReturnsPlural()
-	{
-		// Act - 7320000ms = 2 hours 2 minutes
-		var result = NumericExtensions.FormatTime(7320000.0);
-
-		// Assert
-		Assert.AreEqual("2 hours 2 minutes", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_LessThan1000_ReturnsMilliseconds()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(500L);
-
-		// Assert
-		Assert.AreEqual("500 milliseconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_ExactlyOneMillisecond_ReturnsSingular()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(1L);
-
-		// Assert
-		Assert.AreEqual("1 millisecond", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_OnlySeconds_ReturnsSeconds()
-	{
-		// Act - 5000ms = 5 seconds
-		var result = NumericExtensions.FormatTime(5000L);
-
-		// Assert
-		Assert.AreEqual("5 seconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_OneSecond_ReturnsSingular()
-	{
-		// Act - 1000ms = 1 second
-		var result = NumericExtensions.FormatTime(1000L);
-
-		// Assert
-		Assert.AreEqual("1 second", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_MinutesAndSeconds_ReturnsMinutesSeconds()
-	{
-		// Act - 90000ms = 1 minute 30 seconds
-		var result = NumericExtensions.FormatTime(90000L);
-
-		// Assert
-		Assert.AreEqual("1 minute 30 seconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_HoursMinutesSeconds_ReturnsFull()
-	{
-		// Act - 3661000ms = 1 hour 1 minute 1 second
-		var result = NumericExtensions.FormatTime(3661000L);
-
-		// Assert
-		Assert.AreEqual("1 hour 1 minute 1 second", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_MultipleHours_ReturnsPlural()
-	{
-		// Act - 7320000ms = 2 hours 2 minutes
-		var result = NumericExtensions.FormatTime(7320000L);
-
-		// Assert
-		Assert.AreEqual("2 hours 2 minutes", result);
-	}
-
-	[TestMethod]
-	public void Increment_ExceedsUpperBound_ReturnsUpperBound()
-	{
-		// Arrange
-		var testValue = 98;
-
-		// Act
-		var result = testValue.Increment(upperBound: 100, step: 5);
-
-		// Assert
-		Assert.AreEqual(100, result);
-	}
-
-	[TestMethod]
-	public void Increment_DefaultParameters_Increments()
-	{
-		// Arrange
-		var testValue = 10;
-
-		// Act
-		var result = testValue.Increment();
-
-		// Assert
-		Assert.AreEqual(11, result);
-	}
-
-	[TestMethod]
-	public void IsInRange_Int_OutOfRange_ReturnsFalse()
-	{
-		// Arrange
-		int testValue = 100;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsInRange(200, 300));
-	}
-
-	[TestMethod]
-	public void IsInRange_Long_OutOfRange_ReturnsFalse()
-	{
-		// Arrange
-		long testValue = 100L;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsInRange(200L, 300L));
-	}
-
-	[TestMethod]
-	public void IsInRange_Double_OutOfRange_ReturnsFalse()
-	{
-		// Arrange
-		double testValue = 100.0;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsInRange(200.0, 300.0));
-	}
-
-	[TestMethod]
-	public void IsInRange_Decimal_OutOfRange_ReturnsFalse()
-	{
-		// Arrange
-		decimal testValue = 100m;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsInRange(200m, 300m));
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Int_ReturnsFalse()
-	{
-		// Arrange
-		int testValue = 0;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Double_ReturnsFalse()
-	{
-		// Arrange
-		double testValue = 0.0;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Long_ReturnsFalse()
-	{
-		// Arrange
-		long testValue = 0L;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Decimal_ReturnsFalse()
-	{
-		// Arrange
-		decimal testValue = 0m;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Float_ReturnsFalse()
-	{
-		// Arrange
-		float testValue = 0f;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Sbyte_ReturnsFalse()
-	{
-		// Arrange
-		sbyte testValue = 0;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void IsNegative_Zero_Short_ReturnsFalse()
-	{
-		// Arrange
-		short testValue = 0;
-
-		// Act & Assert
-		Assert.IsFalse(testValue.IsNegative());
-	}
-
-	[TestMethod]
-	public void MillisecondsToString_NegativeLong_ThrowsException()
-	{
-		// Arrange
-		long time = -1;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => time.MillisecondsToString());
-	}
-
-	[TestMethod]
-	public void MillisecondsToString_NegativeInt_ThrowsException()
-	{
-		// Arrange
-		int time = -1;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => time.MillisecondsToString());
-	}
-
-	[TestMethod]
-	public void RoundToPowerOf2_AlreadyPowerOf2_ReturnsSameValue()
-	{
-		// Arrange
-		var testValue = 256;
-
-		// Act
-		var result = testValue.RoundToPowerOf2();
-
-		// Assert
-		Assert.AreEqual(256, result);
-	}
-
-	[TestMethod]
-	public void RoundToPowerOf2_ValueOfOne_ReturnsTwo()
-	{
-		// Arrange
-		var testValue = 1;
-
-		// Act
-		var result = testValue.RoundToPowerOf2();
-
-		// Assert
-		Assert.AreEqual(2, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_PositiveInt_ReturnsSame()
-	{
-		// Arrange
-		var testValue = RandomData.GenerateInteger(1, 1000);
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(testValue, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_PositiveLong_ReturnsSame()
-	{
-		// Arrange
-		long testValue = 100L;
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(testValue, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_PositiveDecimal_ReturnsSame()
-	{
-		// Arrange
-		decimal testValue = 100m;
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(testValue, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_ZeroInt_ReturnsZero()
-	{
-		// Arrange
-		int testValue = 0;
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(0, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_ZeroLong_ReturnsZero()
-	{
-		// Arrange
-		long testValue = 0L;
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(0L, result);
-	}
-
-	[TestMethod]
-	public void ToPositiveValue_ZeroDecimal_ReturnsZero()
-	{
-		// Arrange
-		decimal testValue = 0m;
-
-		// Act
-		var result = testValue.ToPositiveValue();
-
-		// Assert
-		Assert.AreEqual(0m, result);
-	}
-
-	[TestMethod]
-	public void ToRomanNumeral_OutOfRange_Low_ThrowsException()
-	{
-		// Arrange
-		var number = 0;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => number.ToRomanNumeral());
-	}
-
-	[TestMethod]
-	public void ToRomanNumeral_OutOfRange_High_ThrowsException()
-	{
-		// Arrange
-		var number = 4000;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => number.ToRomanNumeral());
-	}
-
-	[TestMethod]
-	public void ToRomanNumeral_KnownValues_ReturnsCorrect()
-	{
-		Assert.AreEqual("I", 1.ToRomanNumeral());
-		Assert.AreEqual("IV", 4.ToRomanNumeral());
-		Assert.AreEqual("IX", 9.ToRomanNumeral());
-		Assert.AreEqual("XLII", 42.ToRomanNumeral());
-		Assert.AreEqual("MCMXCIX", 1999.ToRomanNumeral());
-		Assert.AreEqual("MMMCMXCIX", 3999.ToRomanNumeral());
-	}
-
-	[TestMethod]
-	public void ToStringOrEmpty_BelowLowerLimit_ReturnsDefaultText()
-	{
-		// Arrange
-		var testValue = 50;
-
-		// Act
-		var result = testValue.ToStringOrEmpty(lowerLimit: 100, upperLimit: 9000, defaultText: OutOfRange);
-
-		// Assert
-		Assert.AreEqual(OutOfRange, result);
-	}
-
-	[TestMethod]
-	public void ToStringOrEmpty_DefaultParameters_ReturnsValue()
-	{
-		// Arrange
-		var testValue = 500;
-
-		// Act
-		var result = testValue.ToStringOrEmpty();
-
-		// Assert
-		Assert.AreEqual("500", result);
-	}
-
-	[TestMethod]
-	public void ToWords_Zero_ReturnsZero()
-	{
-		// Act
-		var result = 0.ToWords();
-
-		// Assert
-		Assert.AreEqual("Zero", result);
-	}
-
-	[TestMethod]
-	public void ToWords_NegativeValue_ReturnsMinusPrefix()
-	{
-		// Act
-		var result = (-5).ToWords();
-
-		// Assert
-		Assert.IsTrue(result.StartsWith("Minus", StringComparison.Ordinal));
-	}
-
-	[TestMethod]
-	public void ToWords_ValueUnder20_ReturnsUnitWord()
-	{
-		// Act
-		var result = 7.ToWords();
-
-		// Assert
-		Assert.AreEqual("Seven", result);
-	}
-
-	[TestMethod]
-	public void ToWords_ValueWithTens_ReturnsCorrect()
-	{
-		// Act - 42 should have tens + units
-		var result = 42.ToWords();
-
-		// Assert
-		Assert.IsTrue(result.HasValue());
-		Assert.IsTrue(result.Contains('-'));
-	}
-
-	[TestMethod]
-	public void ToWords_Millions_ReturnsCorrect()
-	{
-		// Act
-		var result = 1000000.ToWords();
-
-		// Assert
-		Assert.IsTrue(result.Contains("Million"));
-	}
-
-	[TestMethod]
-	public void ToWords_Hundred_ReturnsCorrect()
-	{
-		// Act
-		var result = 100.ToWords();
-
-		// Assert
-		Assert.IsTrue(result.Contains("Hundred"));
-	}
-
-	[TestMethod]
-	public void FormatSizeDouble_Zero_ReturnsZeroBytes()
-	{
-		// Act
-		var result = 0.0.FormatSize();
-
-		// Assert
-		Assert.AreEqual("0 Bytes", result);
-	}
-
-	[TestMethod]
-	public void FormatSizeDouble_KilobytesRange_ReturnsKB()
-	{
-		// Act
-		var result = 5000.0.FormatSize();
-
-		// Assert
-		Assert.AreEqual("4.88 KB", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Long_ZeroMilliseconds_ReturnsZeroMilliseconds()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(0L);
-
-		// Assert
-		Assert.AreEqual("0 milliseconds", result);
-	}
-
-	[TestMethod]
-	public void FormatTime_Double_ZeroMilliseconds_ReturnsZeroMilliseconds()
-	{
-		// Act
-		var result = NumericExtensions.FormatTime(0.0);
-
-		// Assert
-		Assert.AreEqual("0 milliseconds", result);
 	}
 
 }

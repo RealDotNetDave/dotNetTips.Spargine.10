@@ -47,6 +47,31 @@ public static class DateTimeExtensions
 {
 
 	/// <summary>
+	/// Clamps a <see cref="DateTime"/> to the inclusive range defined by <paramref name="minimum"/> and <paramref name="maximum"/>.
+	/// </summary>
+	/// <param name="value">The value to clamp.</param>
+	/// <param name="minimum">The inclusive lower bound.</param>
+	/// <param name="maximum">The inclusive upper bound.</param>
+	/// <returns>The clamped <see cref="DateTime"/>.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum"/> is greater than <paramref name="maximum"/>.</exception>
+	[Pure]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTime Clamp(this in DateTime value, in DateTime minimum, in DateTime maximum)
+	{
+		if (minimum > maximum)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(minimum));
+		}
+
+		if (value < minimum)
+		{
+			return minimum;
+		}
+
+		return value > maximum ? maximum : value;
+	}
+
+	/// <summary>
 	/// Converts a <see cref="long" /> value representing the time in milliseconds since
 	/// the Unix epoch (January 1, 1970, 00:00:00 UTC) back into a <see cref="DateTime" /> object.
 	/// </summary>
@@ -359,6 +384,29 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
+	/// Rounds a <see cref="DateTime"/> to the nearest multiple of <paramref name="multiple"/>.
+	/// </summary>
+	/// <param name="value">The value to round.</param>
+	/// <param name="multiple">The rounding multiple. Must be greater than <see cref="TimeSpan.Zero"/>.</param>
+	/// <returns>The rounded <see cref="DateTime"/>.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple"/> is less than or equal to <see cref="TimeSpan.Zero"/>.</exception>
+	[Pure]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTime RoundToNearestMultiple(this in DateTime value, in TimeSpan multiple)
+	{
+		if (multiple <= TimeSpan.Zero)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(multiple));
+		}
+
+		var ticks = value.Ticks;
+		var multipleTicks = multiple.Ticks;
+		var roundedTicks = (long)(Math.Round((double)ticks / multipleTicks, MidpointRounding.AwayFromZero) * multipleTicks);
+
+		return new DateTime(roundedTicks, value.Kind);
+	}
+
+	/// <summary>
 	/// Determines how long until the next hour starts.
 	/// </summary>
 	/// <param name="dateTime">The DateTime to check.</param>
@@ -548,6 +596,18 @@ public static class DateTimeExtensions
 		var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		return Convert.ToInt64((date - epoch).TotalMilliseconds);
+	}
+
+	/// <summary>
+	/// Attempts to parse a <see cref="DateTime"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// </summary>
+	/// <param name="input">The input span to parse.</param>
+	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise default.</param>
+	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out DateTime value)
+	{
+		return DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 	}
 
 	/// <summary>

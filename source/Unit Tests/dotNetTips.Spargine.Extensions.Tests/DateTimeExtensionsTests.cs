@@ -15,7 +15,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Devices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -25,6 +24,40 @@ namespace DotNetTips.Spargine.Extensions.Tests;
 [TestClass]
 public class DateTimeExtensionsTests
 {
+
+	[TestMethod]
+	public void DateTimeClamp_ValueAboveMaximum_ReturnsMaximum()
+	{
+		var value = new DateTime(2026, 2, 1);
+		var minimum = new DateTime(2026, 1, 1);
+		var maximum = new DateTime(2026, 1, 31);
+
+		var result = value.Clamp(minimum, maximum);
+
+		Assert.AreEqual(maximum, result);
+	}
+
+	[TestMethod]
+	public void DateTimeClamp_ValueBelowMinimum_ReturnsMinimum()
+	{
+		var value = new DateTime(2025, 12, 31);
+		var minimum = new DateTime(2026, 1, 1);
+		var maximum = new DateTime(2026, 1, 31);
+
+		var result = value.Clamp(minimum, maximum);
+
+		Assert.AreEqual(minimum, result);
+	}
+
+	[TestMethod]
+	public void DateTimeClamp_WithInvalidRange_ThrowsArgumentOutOfRangeException()
+	{
+		var value = new DateTime(2026, 1, 15);
+		var minimum = new DateTime(2026, 2, 1);
+		var maximum = new DateTime(2026, 1, 1);
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => value.Clamp(minimum, maximum));
+	}
 
 	[TestMethod]
 	public void DateTimeIntersectsTest()
@@ -579,6 +612,24 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void RoundToNearestMultiple_DateTime_RoundsToNearestInterval()
+	{
+		var input = new DateTime(2026, 1, 1, 10, 7, 0, DateTimeKind.Utc);
+
+		var result = input.RoundToNearestMultiple(TimeSpan.FromMinutes(15));
+
+		Assert.AreEqual(new DateTime(2026, 1, 1, 10, 0, 0, DateTimeKind.Utc), result);
+	}
+
+	[TestMethod]
+	public void RoundToNearestMultiple_WithInvalidMultiple_ThrowsArgumentOutOfRangeException()
+	{
+		var input = DateTime.UtcNow;
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => input.RoundToNearestMultiple(TimeSpan.Zero));
+	}
+
+	[TestMethod]
 	public void Subtract_Works()
 	{
 		var now = DateTime.UtcNow;
@@ -956,6 +1007,30 @@ public class DateTimeExtensionsTests
 		Assert.IsTrue(convertedTime >= currentTime.Subtract(new TimeSpan(0, 5, 0)));
 
 		//PrintResult(convertedTime, nameof(this.ToFromMilliEpochTimeTest));
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_DateTimeSpan_Invalid_ReturnsFalse()
+	{
+		var input = "not-a-date".AsSpan();
+
+		var success = input.TryParseInvariant(out DateTime value);
+
+		Assert.IsFalse(success);
+		Assert.AreEqual(default, value);
+	}
+
+	[TestMethod]
+	public void TryParseInvariant_DateTimeSpan_Valid_ReturnsTrueAndValue()
+	{
+		var input = "2026-07-08T10:30:00".AsSpan();
+
+		var success = input.TryParseInvariant(out DateTime value);
+
+		Assert.IsTrue(success);
+		Assert.AreEqual(2026, value.Year);
+		Assert.AreEqual(7, value.Month);
+		Assert.AreEqual(8, value.Day);
 	}
 
 }

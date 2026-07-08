@@ -153,6 +153,32 @@ public static class NumericExtensions
 	}
 
 	/// <summary>
+	/// Clamps an <see cref="int"/> to the inclusive range defined by <paramref name="minimum"/> and <paramref name="maximum"/>.
+	/// </summary>
+	/// <param name="value">The value to clamp.</param>
+	/// <param name="minimum">The inclusive lower bound.</param>
+	/// <param name="maximum">The inclusive upper bound.</param>
+	/// <returns>The clamped value.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum"/> is greater than <paramref name="maximum"/>.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static int Clamp(this int value, int minimum, int maximum)
+	{
+		if (minimum > maximum)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(minimum));
+		}
+
+		if (value < minimum)
+		{
+			return minimum;
+		}
+
+		return value > maximum ? maximum : value;
+	}
+
+	/// <summary>
 	/// Decrements the specified value by a given step, not going below a specified lower bound.
 	/// </summary>
 	/// <param name="value">The value to decrement.</param>
@@ -702,6 +728,26 @@ public static class NumericExtensions
 	}
 
 	/// <summary>
+	/// Rounds an <see cref="int"/> to the nearest multiple of <paramref name="multiple"/> using midpoint rounding away from zero.
+	/// </summary>
+	/// <param name="value">The value to round.</param>
+	/// <param name="multiple">The multiple to round to. Must be greater than zero.</param>
+	/// <returns>The rounded value.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple"/> is less than or equal to zero.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static int RoundToNearestMultiple(this int value, int multiple)
+	{
+		if (multiple <= 0)
+		{
+			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(multiple));
+		}
+
+		return (int)(Math.Round((double)value / multiple, MidpointRounding.AwayFromZero) * multiple);
+	}
+
+	/// <summary>
 	/// Rounds the given integer value up to the nearest power of two.
 	/// </summary>
 	/// <param name="value">The integer value to round.</param>
@@ -1090,5 +1136,44 @@ public static class NumericExtensions
 		{
 			_stringBuilderPool.Value.Return(sb.Clear());
 		}
+	}
+
+	/// <summary>
+	/// Attempts to parse an <see cref="int"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// </summary>
+	/// <param name="input">The input span to parse.</param>
+	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
+	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out int value)
+	{
+		return int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out value);
+	}
+
+	/// <summary>
+	/// Attempts to parse a <see cref="double"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// </summary>
+	/// <param name="input">The input span to parse.</param>
+	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
+	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out double value)
+	{
+		return double.TryParse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out value);
+	}
+
+	/// <summary>
+	/// Attempts to parse a <see cref="decimal"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// </summary>
+	/// <param name="input">The input span to parse.</param>
+	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
+	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out decimal value)
+	{
+		return decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
 	}
 }
