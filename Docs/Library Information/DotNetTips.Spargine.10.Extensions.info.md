@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.7.1
+# DotNetTips.Spargine.10.Extensions - 2026.10.7.2
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -900,7 +900,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -911,7 +911,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -991,7 +991,7 @@
 
 * **Status:** Available
 * **Optimization Status:** None
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -1002,7 +1002,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Completed
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
@@ -1044,6 +1044,20 @@
 * **CreatedOn:** 1/1/2015
 * **Description:** Average
 * **Modified By:** David McCarter
+
+*****
+## DotNetTips.Spargine.Extensions.CompositeFormatCache
+
+### System.Text.CompositeFormat GetOrAdd(System.String format)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** GetOrAdd
+* **Modified By:** Copilot Agent
 
 *****
 ## DotNetTips.Spargine.Extensions.ConcurrentBagExtensions
@@ -4669,6 +4683,100 @@
 * **Modified By:** David McCarter
 
 *****
+## DotNetTips.Spargine.Extensions.MemoryExtensions
+
+### System.Boolean IsEqualTo(T memory, T other, T comparer)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsEqualTo
+* **Modified By:** Copilot Agent
+
+### System.Boolean IsNotEmpty(T memory)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsNotEmpty
+* **Modified By:** Copilot Agent
+
+### T ToArrayIfNeeded(T memory)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** ToArrayIfNeeded
+* **Modified By:** Copilot Agent
+
+### System.Boolean TryGetArraySegment(T memory, T segment)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** TryGetArraySegment
+* **Modified By:** Copilot Agent
+
+*****
+## DotNetTips.Spargine.Extensions.MemoryExtensions.<G>$193157265A52AD952DC093DB64F5C131<$T0>
+
+### System.Boolean IsEqualTo(T other, T comparer)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsEqualTo
+* **Modified By:** Copilot Agent
+
+### System.Boolean IsNotEmpty()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsNotEmpty
+* **Modified By:** Copilot Agent
+
+### T ToArrayIfNeeded()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** ToArrayIfNeeded
+* **Modified By:** Copilot Agent
+
+### System.Boolean TryGetArraySegment(T segment)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** TryGetArraySegment
+* **Modified By:** Copilot Agent
+
+*****
 ## DotNetTips.Spargine.Extensions.NumericExtensions
 
 ### System.Double Average(System.Double& a, System.Double& b)
@@ -6318,6 +6426,100 @@
 * **Modified By:** David McCarter
 
 *****
+## DotNetTips.Spargine.Extensions.ReadOnlyMemoryExtensions
+
+### System.Boolean IsEqualTo(T memory, T other, T comparer)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsEqualTo
+* **Modified By:** Copilot Agent
+
+### System.Boolean IsNotEmpty(T memory)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsNotEmpty
+* **Modified By:** Copilot Agent
+
+### T ToArrayIfNeeded(T memory)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** ToArrayIfNeeded
+* **Modified By:** Copilot Agent
+
+### System.Boolean TryGetArraySegment(T memory, T segment)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** TryGetArraySegment
+* **Modified By:** Copilot Agent
+
+*****
+## DotNetTips.Spargine.Extensions.ReadOnlyMemoryExtensions.<G>$3387D7F181FA234A9158DADA9224047F<$T0>
+
+### System.Boolean IsEqualTo(T other, T comparer)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsEqualTo
+* **Modified By:** Copilot Agent
+
+### System.Boolean IsNotEmpty()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** IsNotEmpty
+* **Modified By:** Copilot Agent
+
+### T ToArrayIfNeeded()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** ToArrayIfNeeded
+* **Modified By:** Copilot Agent
+
+### System.Boolean TryGetArraySegment(T segment)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** TryGetArraySegment
+* **Modified By:** Copilot Agent
+
+*****
 ## DotNetTips.Spargine.Extensions.ReadOnlySpanExtensions
 
 ### System.String BytesToString(System.ReadOnlySpan<System.Byte> array)
@@ -6998,6 +7200,28 @@
 * **Unit Test Status:** Completed
 * **Description:** FastReplace
 
+### System.String FormatCurrentCulture(System.String format, System.Object[] args)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** FormatCurrentCulture
+* **Modified By:** Copilot Agent
+
+### System.String FormatInvariant(System.String format, System.Object[] args)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** FormatInvariant
+* **Modified By:** Copilot Agent
+
 ### System.String FromBase64(System.String base64Input)
 
 * **Status:** Available
@@ -7249,6 +7473,17 @@
 * **BenchMarkStatus:** None
 * **Unit Test Status:** Completed
 * **Description:** IsValidString
+
+### System.String JoinFormatted(System.String format, System.String delimiter, System.Object[] args)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Check Performance
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/8/2026
+* **Description:** JoinFormatted
+* **Modified By:** Copilot Agent
 
 ### System.String RemoveCRLF(System.String input, System.String replacement)
 
@@ -8028,4 +8263,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/6/2026 12:13:31 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/8/2026 3:40:31 PM UTC**

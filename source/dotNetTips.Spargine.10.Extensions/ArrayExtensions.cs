@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-06-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -111,7 +111,7 @@ public static class ArrayExtensions
 		/// <returns>A new array with the item prepended. Returns the original array unchanged when <paramref name="item"/> is null.</returns>
 		/// <remarks>
 		/// Allocates a new array of length + 1, places <paramref name="item"/> at index 0, then copies
-		/// the original elements using <see cref="MemoryExtensions.AsSpan{T}(T[])"/> for efficient bulk transfer.
+		/// the original elements using <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/> for efficient bulk transfer.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		/// <example>
@@ -152,7 +152,7 @@ public static class ArrayExtensions
 		/// The zero-based index of the first occurrence of <paramref name="item"/> within the entire array, if found; otherwise, -1.
 		/// </returns>
 		/// <remarks>
-		/// This method uses <see cref="MemoryExtensions.IndexOf{T}(Span{T}, T)"/> for optimal performance,
+		/// This method uses <see cref="System.MemoryExtensions.IndexOf{T}(Span{T}, T)"/> for optimal performance,
 		/// which leverages vectorization when possible and provides better performance than <see cref="Array.IndexOf{T}(T[], T)"/>,
 		/// especially for larger arrays.
 		/// The method performs an equality comparison using <see cref="EqualityComparer{T}.Default"/>.
@@ -191,7 +191,7 @@ public static class ArrayExtensions
 		/// </returns>
 		/// <remarks>
 		/// Uses <see cref="Array.LastIndexOf{T}(T[], T)"/> which benchmarks faster than
-		/// <see cref="MemoryExtensions.LastIndexOf{T}(Span{T}, T)"/> for reference-type arrays.
+		/// <see cref="System.MemoryExtensions.LastIndexOf{T}(Span{T}, T)"/> for reference-type arrays.
 		/// The array is searched backward from the last element to the first.
 		/// Equality is determined using <see cref="EqualityComparer{T}.Default"/>; if <typeparamref name="T"/>
 		/// overrides <see cref="object.Equals(object)"/> that override is applied.
@@ -296,7 +296,7 @@ public static class ArrayExtensions
 		/// <returns>A new array with <paramref name="item"/> appended. Returns the original array unchanged when <paramref name="item"/> is null.</returns>
 		/// <remarks>
 		/// Allocates a new array of length + 1, copies the original elements using
-		/// <see cref="MemoryExtensions.AsSpan{T}(T[])"/>, then assigns <paramref name="item"/> to the last slot.
+		/// <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/>, then assigns <paramref name="item"/> to the last slot.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		/// <example>
@@ -335,7 +335,7 @@ public static class ArrayExtensions
 		/// <param name="arrayToCheck">The array to compare against the current array.</param>
 		/// <returns><see langword="true"/> if both arrays have identical length and elements; otherwise <see langword="false"/>. Also returns <see langword="false"/> when either array is null.</returns>
 		/// <remarks>
-		/// Uses <see cref="MemoryExtensions.SequenceEqual{T}(Span{T}, ReadOnlySpan{T})"/> for element-wise
+		/// Uses <see cref="System.MemoryExtensions.SequenceEqual{T}(Span{T}, ReadOnlySpan{T})"/> for element-wise
 		/// comparison. <see cref="MethodImplOptions.NoInlining"/> and <see cref="MethodImplOptions.NoOptimization"/>
 		/// are applied to prevent JIT inlining of this method at call sites.
 		/// <para><b>⚠ This method is NOT suitable for timing-sensitive security comparisons</b> (e.g., HMAC
@@ -397,7 +397,7 @@ public static class ArrayExtensions
 		/// <returns>A new array containing all elements of the original array in the same order.</returns>
 		/// <remarks>
 		/// Allocates a new array of the same length, then copies all elements using
-		/// <see cref="MemoryExtensions.AsSpan{T}(T[])"/> for efficient bulk transfer without boxing.
+		/// <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/> for efficient bulk transfer without boxing.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
 		/// <example>
@@ -570,7 +570,7 @@ public static class ArrayExtensions
 		/// Also returns <see langword="false"/> when the array or <paramref name="actionFunction"/> is null.
 		/// </returns>
 		/// <remarks>
-		/// Iterates the array using <see cref="MemoryExtensions.AsSpan{T}(T[])"/> for allocation-free
+		/// Iterates the array using <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/> for allocation-free
 		/// enumeration, short-circuiting on the first element that matches the predicate.
 		/// Suitable for defensive programming patterns because it does not throw when either argument is null.
 		/// </remarks>
@@ -634,7 +634,7 @@ public static class ArrayExtensions
 		/// </summary>
 		/// <param name="action">The action to perform on each element.</param>
 		/// <remarks>
-		/// This method iterates sequentially over the array using <see cref="MemoryExtensions.AsSpan{T}(T[])"/>
+		/// This method iterates sequentially over the array using <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/>
 		/// for efficient, bounds-checked access. The action delegate is invoked once per element in array order.
 		/// For higher-throughput iteration that bypasses bounds checking, consider using <c>FastProcessor</c> instead.
 		/// </remarks>
@@ -668,7 +668,7 @@ public static class ArrayExtensions
 		/// <returns>A new array containing all elements except the first.</returns>
 		/// <remarks>
 		/// Allocates a new array of length - 1 and copies elements starting from index 1 using
-		/// <see cref="MemoryExtensions.AsSpan{T}(T[], int, int)"/> for efficient bulk transfer.
+		/// <see cref="System.MemoryExtensions.AsSpan{T}(T[], int, int)"/> for efficient bulk transfer.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null or empty.</exception>
 		/// <example>
@@ -700,7 +700,7 @@ public static class ArrayExtensions
 		/// <returns>A new array containing all elements except the last.</returns>
 		/// <remarks>
 		/// Allocates a new array of length - 1 and copies elements from index 0 through length - 2 using
-		/// <see cref="MemoryExtensions.AsSpan{T}(T[], int, int)"/> for efficient bulk transfer.
+		/// <see cref="System.MemoryExtensions.AsSpan{T}(T[], int, int)"/> for efficient bulk transfer.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null or empty.</exception>
 		/// <example>
@@ -738,7 +738,7 @@ public static class ArrayExtensions
 		/// <returns>A new array with duplicate elements removed.</returns>
 		/// <remarks>
 		/// Internally uses a <see cref="HashSet{T}"/> pre-allocated to the source array's length to
-		/// track seen elements. Elements are iterated via <see cref="MemoryExtensions.AsSpan{T}(T[])"/>
+		/// track seen elements. Elements are iterated via <see cref="System.MemoryExtensions.AsSpan{T}(T[])"/>
 		/// to avoid enumerator allocation. Insertion order is not guaranteed.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the array is null.</exception>
@@ -929,7 +929,7 @@ public static class ArrayExtensions
 		/// <param name="item">The item to insert or update. When null, the original array is returned unchanged.</param>
 		/// <returns>A new array with <paramref name="item"/> updated in-place if it already exists, or appended if it does not.</returns>
 		/// <remarks>
-		/// Uses <see cref="MemoryExtensions.IndexOf{T}(Span{T}, T)"/> to locate an existing element.
+		/// Uses <see cref="System.MemoryExtensions.IndexOf{T}(Span{T}, T)"/> to locate an existing element.
 		/// When found, the result array is a copy with the element at that index replaced by <paramref name="item"/>.
 		/// When not found, delegates to <see cref="AddLast"/> to append <paramref name="item"/>.
 		/// </remarks>

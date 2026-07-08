@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-27-2026
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -12,20 +12,15 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Security.AccessControl;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.IO;
@@ -140,6 +135,31 @@ public class DirectoryHelperTests
 		// Cleanup
 		sourceDirectory.Delete(true);
 		destinationDirectory.Delete(true);
+	}
+
+	[TestMethod]
+	public void CopyDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.CopyDirectory(source, destination, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (source.Exists)
+			{ source.Delete(true); }
+			if (destination.Exists)
+			{ destination.Delete(true); }
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -356,6 +376,28 @@ public class DirectoryHelperTests
 
 		// Assert
 		Assert.IsFalse(Directory.Exists(tempDirectoryPath), "The directory should have been deleted.");
+	}
+
+	[TestMethod]
+	public void DeleteDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.DeleteDirectory(dir, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists)
+			{ dir.Delete(true); }
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
@@ -859,6 +901,31 @@ public class DirectoryHelperTests
 	}
 
 	[TestMethod]
+	public void MoveDirectory_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.MoveDirectory(source, destination, cancellationToken: cts.Token);
+			});
+		}
+		finally
+		{
+			if (source.Exists)
+			{ source.Delete(true); }
+			if (destination.Exists)
+			{ destination.Delete(true); }
+		}
+	}
+
+	[TestMethod]
 	public void MoveDirectory_WithRetriesMaxByte_ValidMove_Succeeds()
 	{
 		// Arrange
@@ -1225,6 +1292,32 @@ public class DirectoryHelperTests
 		}
 	}
 
+	[TestMethod]
+	public void SafeDirectorySearch_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				foreach (var _ in DirectoryHelper.SafeDirectorySearch(dir, "*.*", SearchOption.TopDirectoryOnly, cts.Token))
+				{
+					// iteration triggers the check
+				}
+			});
+		}
+		finally
+		{
+			if (dir.Exists)
+			{ dir.Delete(true); }
+		}
+	}
+
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void SafeDirectorySearchAllDirectoriesReturnsSubdirectories()
@@ -1235,14 +1328,15 @@ public class DirectoryHelperTests
 		try
 		{
 			var subDir = Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "SubFolder"));
-			File.WriteAllText(Path.Combine(tempDirectory.FullName, "top.txt"), "top content");
-			File.WriteAllText(Path.Combine(subDir.FullName, "sub.txt"), "sub content");
+			var matchingTopDir = Directory.CreateDirectory(Path.Combine(tempDirectory.FullName, "Logs.txt"));
+			var matchingNestedDir = Directory.CreateDirectory(Path.Combine(subDir.FullName, "Archive.txt"));
 
 			// Act
 			var result = DirectoryHelper.SafeDirectorySearch(tempDirectory, "*.txt", SearchOption.AllDirectories).ToList();
 
 			// Assert
-			Assert.IsTrue(result.Count >= 2, "AllDirectories should return both top-level and subdirectory.");
+			Assert.IsTrue(result.Any(d => string.Equals(d.FullName, matchingTopDir.FullName, StringComparison.OrdinalIgnoreCase)), "AllDirectories should include matching top-level directories.");
+			Assert.IsTrue(result.Any(d => string.Equals(d.FullName, matchingNestedDir.FullName, StringComparison.OrdinalIgnoreCase)), "AllDirectories should include matching nested directories.");
 		}
 		finally
 		{
@@ -1335,6 +1429,29 @@ public class DirectoryHelperTests
 		}
 	}
 
+	[TestMethod]
+	public void SafeFileSearch_DirectoryInfo_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				_ = DirectoryHelper.SafeFileSearch(dir, "*.txt", SearchOption.TopDirectoryOnly, cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists)
+			{ dir.Delete(true); }
+		}
+	}
+
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void SafeFileSearch_IEnumerable_AllDirectories_ReturnsSubdirectoryFiles()
@@ -1396,6 +1513,29 @@ public class DirectoryHelperTests
 		finally
 		{
 			directory.Delete(true);
+		}
+	}
+
+	[TestMethod]
+	public void SafeFileSearch_IEnumerable_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				_ = DirectoryHelper.SafeFileSearch(new List<DirectoryInfo> { dir }, "*.txt", SearchOption.TopDirectoryOnly, cts.Token).ToList();
+			});
+		}
+		finally
+		{
+			if (dir.Exists)
+			{ dir.Delete(true); }
 		}
 	}
 
@@ -1929,6 +2069,29 @@ public class DirectoryHelperTests
 		directory.Delete(true);
 	}
 
+	[TestMethod]
+	public void SetFileAttributesToNormal_WithCancelledToken_ThrowsOperationCanceledException()
+	{
+		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
+
+		try
+		{
+			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
+			using var cts = new CancellationTokenSource();
+			cts.Cancel();
+
+			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
+			{
+				DirectoryHelper.SetFileAttributesToNormal(dir, cts.Token);
+			});
+		}
+		finally
+		{
+			if (dir.Exists)
+			{ dir.Delete(true); }
+		}
+	}
+
 	[SupportedOSPlatform("windows")]
 	[TestMethod]
 	public void SetFileAttributesToNormalEmptyDirectoryDoesNotThrow()
@@ -2021,163 +2184,5 @@ public class DirectoryHelperTests
 
 		// Cleanup
 		directory.Delete(true);
-	}
-
-	[TestMethod]
-	public void CopyDirectory_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				DirectoryHelper.CopyDirectory(source, destination, cancellationToken: cts.Token);
-			});
-		}
-		finally
-		{
-			if (source.Exists) { source.Delete(true); }
-			if (destination.Exists) { destination.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void DeleteDirectory_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				DirectoryHelper.DeleteDirectory(dir, cancellationToken: cts.Token);
-			});
-		}
-		finally
-		{
-			if (dir.Exists) { dir.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void MoveDirectory_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var source = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-		var destination = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				DirectoryHelper.MoveDirectory(source, destination, cancellationToken: cts.Token);
-			});
-		}
-		finally
-		{
-			if (source.Exists) { source.Delete(true); }
-			if (destination.Exists) { destination.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void SafeDirectorySearch_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				foreach (var _ in DirectoryHelper.SafeDirectorySearch(dir, "*.*", SearchOption.TopDirectoryOnly, cts.Token))
-				{
-					// iteration triggers the check
-				}
-			});
-		}
-		finally
-		{
-			if (dir.Exists) { dir.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void SafeFileSearch_DirectoryInfo_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				_ = DirectoryHelper.SafeFileSearch(dir, "*.txt", SearchOption.TopDirectoryOnly, cts.Token);
-			});
-		}
-		finally
-		{
-			if (dir.Exists) { dir.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void SafeFileSearch_IEnumerable_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				_ = DirectoryHelper.SafeFileSearch(new List<DirectoryInfo> { dir }, "*.txt", SearchOption.TopDirectoryOnly, cts.Token).ToList();
-			});
-		}
-		finally
-		{
-			if (dir.Exists) { dir.Delete(true); }
-		}
-	}
-
-	[TestMethod]
-	public void SetFileAttributesToNormal_WithCancelledToken_ThrowsOperationCanceledException()
-	{
-		var dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()));
-
-		try
-		{
-			File.WriteAllText(Path.Combine(dir.FullName, "file.txt"), "content");
-			using var cts = new CancellationTokenSource();
-			cts.Cancel();
-
-			_ = Assert.ThrowsExactly<OperationCanceledException>(() =>
-			{
-				DirectoryHelper.SetFileAttributesToNormal(dir, cts.Token);
-			});
-		}
-		finally
-		{
-			if (dir.Exists) { dir.Delete(true); }
-		}
 	}
 }

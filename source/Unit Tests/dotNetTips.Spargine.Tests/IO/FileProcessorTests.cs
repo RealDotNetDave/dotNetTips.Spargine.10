@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-15-2026
+// Last Modified On : 07-08-2026
 
 // ***********************************************************************
 // <copyright file="FileProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
@@ -13,15 +13,11 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Threading;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.IO;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.IO;
@@ -303,8 +299,11 @@ public class FileProcessorTests
 
 		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyNonExistent"));
 
-		// Act & Assert - FileProcessor accesses file.Length in the error path which throws for non-existent files
-		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFiles(files, destination));
+		// Act
+		var copiedCount = processor.CopyFiles(files, destination);
+
+		// Assert - non-existent files are reported through events/error states and skipped
+		Assert.AreEqual(0, copiedCount);
 
 		// Cleanup
 		if (destination.Exists)
@@ -539,8 +538,11 @@ public class FileProcessorTests
 
 		var destination = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), "CopyOriginalNonExistent"));
 
-		// Act & Assert - FileProcessor accesses file.Length in the error path which throws for non-existent files
-		Assert.ThrowsExactly<FileNotFoundException>(() => processor.CopyFilesWithOriginalPath(files, destination));
+		// Act
+		var copiedCount = processor.CopyFilesWithOriginalPath(files, destination);
+
+		// Assert - non-existent files are reported through events/error states and skipped
+		Assert.AreEqual(0, copiedCount);
 
 		// Cleanup
 		if (destination.Exists)
@@ -737,6 +739,26 @@ public class FileProcessorTests
 
 		// Assert
 		Assert.IsTrue(exceptionThrown);
+	}
+
+	[TestMethod]
+	public void DeleteFiles_WithoutEventHandler_DeletesSuccessfully()
+	{
+		// Arrange — no Processed handler attached, so psw will be null inside ExecuteDelete.
+		var processor = new FileProcessor();
+		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
+		var files = new List<FileInfo>();
+
+		foreach (var file in generateFiles.Files)
+		{
+			files.Add(new FileInfo(file));
+		}
+
+		// Act
+		var deletedCount = processor.DeleteFiles(files);
+
+		// Assert
+		Assert.AreEqual(3, deletedCount);
 	}
 
 	/// <summary>
@@ -1994,26 +2016,6 @@ public class FileProcessorTests
 	/// <param name="sender">The source of the event.</param>
 	/// <param name="e">The <see cref="ProgressEventArgs"/> instance containing the event data.</param>
 	private void Processor_Processed(object? sender, ProgressEventArgs e) => Trace.WriteLine(e.Name + ":" + e.Message + ":" + e.ProgressState + ":" + e.Size);
-
-	[TestMethod]
-	public void DeleteFiles_WithoutEventHandler_DeletesSuccessfully()
-	{
-		// Arrange — no Processed handler attached, so psw will be null inside ExecuteDelete.
-		var processor = new FileProcessor();
-		var generateFiles = RandomData.GenerateFiles(3, fileExtension: "processor.test");
-		var files = new List<FileInfo>();
-
-		foreach (var file in generateFiles.Files)
-		{
-			files.Add(new FileInfo(file));
-		}
-
-		// Act
-		var deletedCount = processor.DeleteFiles(files);
-
-		// Assert
-		Assert.AreEqual(3, deletedCount);
-	}
 
 	//[TestMethod]
 	//public void TEMPDeleteFoldersTest()

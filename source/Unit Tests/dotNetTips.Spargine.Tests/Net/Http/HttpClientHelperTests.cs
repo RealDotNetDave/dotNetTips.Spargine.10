@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-12-2026
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -160,7 +160,7 @@ public class HttpClientHelperTests
 	public async Task GetStreamAsync_ValidUrl_ReturnsStream()
 	{
 		// Arrange
-		var url = new Uri("https://httpbin.org/stream/1");
+		var url = new Uri("https://www.example.com/");
 
 		// Act
 #pragma warning disable CS0618 // Type or member is obsolete

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -536,6 +536,38 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 
 		return input.Replace(oldValue, newValue, StringComparison.Ordinal);
+	}
+
+	/// <summary>
+	/// Formats the specified composite <paramref name="format"/> using <see cref="CultureInfo.CurrentCulture"/> and cached <see cref="CompositeFormat"/> parsing.
+	/// </summary>
+	/// <param name="format">The composite format string to apply.</param>
+	/// <param name="args">The arguments to format.</param>
+	/// <returns>The formatted string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	public static string FormatCurrentCulture([DisallowNull] this string format, [DisallowNull] params object?[] args)
+	{
+		format = format.ArgumentNotNullOrEmpty();
+		args = args.ArgumentNotNull();
+
+		return string.Format(CultureInfo.CurrentCulture, CompositeFormatCache.GetOrAdd(format), args);
+	}
+
+	/// <summary>
+	/// Formats the specified composite <paramref name="format"/> using <see cref="CultureInfo.InvariantCulture"/> and cached <see cref="CompositeFormat"/> parsing.
+	/// </summary>
+	/// <param name="format">The composite format string to apply.</param>
+	/// <param name="args">The arguments to format.</param>
+	/// <returns>The formatted string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	public static string FormatInvariant([DisallowNull] this string format, [DisallowNull] params object?[] args)
+	{
+		format = format.ArgumentNotNullOrEmpty();
+		args = args.ArgumentNotNull();
+
+		return string.Format(CultureInfo.InvariantCulture, CompositeFormatCache.GetOrAdd(format), args);
 	}
 
 	/// <summary>
@@ -1163,6 +1195,30 @@ public static class StringExtensions
 	public static bool IsValidString([DisallowNull] this string input)
 	{
 		return RegexProcessor.IsValidString(input);
+	}
+
+	/// <summary>
+	/// Formats each value in <paramref name="args"/> using the specified composite <paramref name="format"/> and joins the results using <paramref name="delimiter"/>.
+	/// </summary>
+	/// <param name="format">The composite format string used for each value.</param>
+	/// <param name="delimiter">The delimiter inserted between formatted values.</param>
+	/// <param name="args">The values to format and join.</param>
+	/// <returns>A joined string of formatted values, or <see cref="string.Empty"/> when <paramref name="args"/> is empty.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	public static string JoinFormatted([DisallowNull] this string format, [ConstantExpected] string delimiter = ControlChars.CommaSpace, [DisallowNull] params object?[] args)
+	{
+		format = format.ArgumentNotNullOrEmpty();
+		args = args.ArgumentNotNull();
+
+		if (args.Length == 0)
+		{
+			return string.Empty;
+		}
+
+		delimiter = string.IsNullOrEmpty(delimiter) ? ControlChars.CommaSpace : delimiter;
+
+		return JoinFormattedCore(CompositeFormatCache.GetOrAdd(format), CultureInfo.InvariantCulture, delimiter, args);
 	}
 
 	/// <summary>
@@ -1851,6 +1907,33 @@ public static class StringExtensions
 		finally
 		{
 			ArrayPool<byte>.Shared.Return(rentedBuffer);
+		}
+	}
+
+	/// <summary>
+	/// Formats each value in <paramref name="args"/> with the supplied <paramref name="compositeFormat"/> and joins the results with <paramref name="delimiter"/>.
+	/// </summary>
+	private static string JoinFormattedCore(CompositeFormat compositeFormat, IFormatProvider formatProvider, string delimiter, object?[] args)
+	{
+		var pooledSb = _stringBuilderPool.Value.Get().Clear();
+
+		try
+		{
+			for (var index = 0; index < args.Length; index++)
+			{
+				if (index > 0)
+				{
+					_ = pooledSb.Append(delimiter);
+				}
+
+				_ = pooledSb.AppendFormat(formatProvider, compositeFormat, args[index]);
+			}
+
+			return pooledSb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Value.Return(pooledSb);
 		}
 	}
 

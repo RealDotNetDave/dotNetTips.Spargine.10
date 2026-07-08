@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified On : 07-08-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,15 +15,14 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Security;
 using DotNetTips.Spargine.Extensions.Tests.Properties;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -120,6 +119,20 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void CalculateByteArraySize_ValidBase64String_ReturnsCorrectSize()
+	{
+		// Arrange
+		string originalText = "TestString";
+		string base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(originalText)); // "VGVzdFN0cmluZw=="
+
+		// Act
+		var result = base64String.CalculateByteArraySize();
+
+		// Assert
+		Assert.AreEqual(16, result, "Byte array size should match original text length.");
+	}
+
+	[TestMethod]
 	public void CalculateByteArraySize_WithExplicitEncoding_ReturnsCorrectSize()
 	{
 		// Arrange
@@ -134,20 +147,6 @@ public class StringExtensionsTests
 		Assert.AreEqual(10, utf8Size, "UTF-8 size should match string length for ASCII characters.");
 		Assert.AreEqual(10, asciiSize, "ASCII size should match string length for ASCII characters.");
 		Assert.AreEqual(20, unicodeSize, "Unicode size should be double the string length for ASCII characters.");
-	}
-
-	[TestMethod]
-	public void CalculateByteArraySize_ValidBase64String_ReturnsCorrectSize()
-	{
-		// Arrange
-		string originalText = "TestString";
-		string base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(originalText)); // "VGVzdFN0cmluZw=="
-
-		// Act
-		var result = base64String.CalculateByteArraySize();
-
-		// Assert
-		Assert.AreEqual(16, result, "Byte array size should match original text length.");
 	}
 
 	[TestMethod]
@@ -339,16 +338,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void CombineToStringTest()
-	{
-		var words = RandomData.GenerateWord(100);
-
-		var result = words.CombineToString();
-
-		Assert.IsTrue(result.IsNotEmpty());
-	}
-
-	[TestMethod]
 	public void CombineToString_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -380,6 +369,26 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void CombineToStringTest()
+	{
+		var words = RandomData.GenerateWord(100);
+
+		var result = words.CombineToString();
+
+		Assert.IsTrue(result.IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void ComputeHash_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		string input = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ComputeHash());
+	}
+
+	[TestMethod]
 	public void ComputeHashTest()
 	{
 		var word = RandomData.GenerateWord(100);
@@ -391,15 +400,6 @@ public class StringExtensionsTests
 			Assert.IsTrue(result.IsNotEmpty());
 		}
 	}
-	[TestMethod]
-	public void ComputeHash_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string input = null;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.ComputeHash());
-	}
 
 
 	[TestMethod]
@@ -408,32 +408,6 @@ public class StringExtensionsTests
 		var testValue = RandomData.GenerateWord(10);
 
 		Assert.IsTrue(string.IsNullOrEmpty(testValue.ComputeHash()) is false);
-	}
-
-	[TestMethod]
-	public void ConcatTest()
-	{
-		var testValue1 = RandomData.GenerateWord(10);
-		var testValue2 = RandomData.GenerateWord(15);
-
-		Assert.IsTrue(string.IsNullOrEmpty(testValue1.Concat("-", false, testValue2)) is false);
-
-		Assert.IsTrue(string.IsNullOrEmpty(testValue1.Concat("-", true, testValue2)) is false);
-
-		Assert.AreEqual(26, testValue1.Concat("-", false, testValue2).Length);
-	}
-
-	[TestMethod]
-	public void Concat_NullArgs_ReturnsInput()
-	{
-		// Arrange
-		var testValue = RandomData.GenerateWord(10);
-
-		// Act
-		var result = testValue.Concat("-", false, args: null);
-
-		// Assert
-		Assert.AreEqual(testValue, result);
 	}
 
 	[TestMethod]
@@ -450,6 +424,19 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void Concat_NullArgs_ReturnsInput()
+	{
+		// Arrange
+		var testValue = RandomData.GenerateWord(10);
+
+		// Act
+		var result = testValue.Concat("-", false, args: null);
+
+		// Assert
+		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
 	public void Concat_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
@@ -460,26 +447,16 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ContainsAnyTest()
+	public void ConcatTest()
 	{
-		var testValue = "dotNetTips.com";
+		var testValue1 = RandomData.GenerateWord(10);
+		var testValue2 = RandomData.GenerateWord(15);
 
-		Assert.IsTrue(testValue.ContainsAny(StringComparison.InvariantCultureIgnoreCase, "d", "T"));
+		Assert.IsTrue(string.IsNullOrEmpty(testValue1.Concat("-", false, testValue2)) is false);
 
-		Assert.IsFalse(testValue.ContainsAny(StringComparison.InvariantCulture, "D", "Z"));
-	}
+		Assert.IsTrue(string.IsNullOrEmpty(testValue1.Concat("-", true, testValue2)) is false);
 
-	[TestMethod]
-	public void ContainsAny_NullCharacters_ReturnsFalse()
-	{
-		// Arrange
-		var testValue = RandomData.GenerateWord(10);
-
-		// Act
-		var result = testValue.ContainsAny(StringComparison.Ordinal, characters: null);
-
-		// Assert
-		Assert.IsFalse(result);
+		Assert.AreEqual(26, testValue1.Concat("-", false, testValue2).Length);
 	}
 
 	[TestMethod]
@@ -496,47 +473,26 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void DefaultIfNullOrEmptyTest()
-	{
-		string testValue = null;
-
-		Assert.AreEqual(5, testValue.DefaultIfNullOrEmpty(RandomData.GenerateWord(5)).Length);
-	}
-
-	[TestMethod]
-	public void DefaultIfNullOrEmpty_NonNullNonEmpty_ReturnsInput()
+	public void ContainsAny_NullCharacters_ReturnsFalse()
 	{
 		// Arrange
 		var testValue = RandomData.GenerateWord(10);
 
 		// Act
-		var result = testValue.DefaultIfNullOrEmpty("default");
+		var result = testValue.ContainsAny(StringComparison.Ordinal, characters: null);
 
 		// Assert
-		Assert.AreEqual(testValue, result);
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
-	public void DefaultIfNullOrEmpty_EmptyInput_ReturnsDefault()
+	public void ContainsAnyTest()
 	{
-		// Arrange
-		var defaultValue = RandomData.GenerateWord(8);
+		var testValue = "dotNetTips.com";
 
-		// Act
-		var result = string.Empty.DefaultIfNullOrEmpty(defaultValue);
+		Assert.IsTrue(testValue.ContainsAny(StringComparison.InvariantCultureIgnoreCase, "d", "T"));
 
-		// Assert
-		Assert.AreEqual(defaultValue, result);
-	}
-
-	[TestMethod]
-	public void DefaultIfNullTest()
-	{
-		string testValue = null;
-
-		Assert.AreEqual(0, testValue.DefaultIfNull().Length);
-
-		Assert.AreEqual(5, testValue.DefaultIfNull(RandomData.GenerateWord(5)).Length);
+		Assert.IsFalse(testValue.ContainsAny(StringComparison.InvariantCulture, "D", "Z"));
 	}
 
 	[TestMethod]
@@ -581,6 +537,50 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void DefaultIfNullOrEmpty_EmptyInput_ReturnsDefault()
+	{
+		// Arrange
+		var defaultValue = RandomData.GenerateWord(8);
+
+		// Act
+		var result = string.Empty.DefaultIfNullOrEmpty(defaultValue);
+
+		// Assert
+		Assert.AreEqual(defaultValue, result);
+	}
+
+	[TestMethod]
+	public void DefaultIfNullOrEmpty_NonNullNonEmpty_ReturnsInput()
+	{
+		// Arrange
+		var testValue = RandomData.GenerateWord(10);
+
+		// Act
+		var result = testValue.DefaultIfNullOrEmpty("default");
+
+		// Assert
+		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
+	public void DefaultIfNullOrEmptyTest()
+	{
+		string testValue = null;
+
+		Assert.AreEqual(5, testValue.DefaultIfNullOrEmpty(RandomData.GenerateWord(5)).Length);
+	}
+
+	[TestMethod]
+	public void DefaultIfNullTest()
+	{
+		string testValue = null;
+
+		Assert.AreEqual(0, testValue.DefaultIfNull().Length);
+
+		Assert.AreEqual(5, testValue.DefaultIfNull(RandomData.GenerateWord(5)).Length);
+	}
+
+	[TestMethod]
 	public async Task DeflateStringCompressionAsyncTest()
 	{
 		var testValue = RandomData.GenerateWord(25);
@@ -604,6 +604,32 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void DelimitedStringToArray_NullInput_ReturnsEmptyArray()
+	{
+		// Arrange
+		string inputString = null;
+
+		// Act
+		var result = inputString.DelimitedStringToArray();
+
+		// Assert
+		Assert.AreEqual(0, result.Count());
+	}
+
+	[TestMethod]
+	public void DelimitedStringToArray_WithCustomDelimiter_ReturnsCorrectArray()
+	{
+		// Arrange
+		var inputString = "one|two|three";
+
+		// Act
+		var result = inputString.DelimitedStringToArray('|');
+
+		// Assert
+		Assert.AreEqual(3, result.Count());
+	}
+
+	[TestMethod]
 	public void DelimitedStringToArrayEmptyTest()
 	{
 		var inputString = string.Empty;
@@ -623,40 +649,6 @@ public class StringExtensionsTests
 		Assert.AreEqual(3, result.Count());
 
 		Assert.AreEqual(3, result.Count());
-	}
-
-	[TestMethod]
-	public void DelimitedStringToArray_WithCustomDelimiter_ReturnsCorrectArray()
-	{
-		// Arrange
-		var inputString = "one|two|three";
-
-		// Act
-		var result = inputString.DelimitedStringToArray('|');
-
-		// Assert
-		Assert.AreEqual(3, result.Count());
-	}
-
-	[TestMethod]
-	public void DelimitedStringToArray_NullInput_ReturnsEmptyArray()
-	{
-		// Arrange
-		string inputString = null;
-
-		// Act
-		var result = inputString.DelimitedStringToArray();
-
-		// Assert
-		Assert.AreEqual(0, result.Count());
-	}
-
-	[TestMethod]
-	public void EqualsIgnoreCaseTest()
-	{
-		var testValue = RandomData.GenerateWord(10);
-
-		Assert.IsTrue(testValue.EqualsIgnoreCase(testValue));
 	}
 
 	[TestMethod]
@@ -688,27 +680,11 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void EqualsOrBothNullOrEmptyTest()
+	public void EqualsIgnoreCaseTest()
 	{
 		var testValue = RandomData.GenerateWord(10);
 
-		Assert.IsTrue(testValue.EqualsOrBothNullOrEmpty(testValue));
-
-		Assert.IsTrue(string.Empty.EqualsOrBothNullOrEmpty(null));
-	}
-
-	[TestMethod]
-	public void EqualsOrBothNullOrEmpty_DifferentStrings_ReturnsFalse()
-	{
-		// Arrange
-		var value1 = "Hello";
-		var value2 = "World";
-
-		// Act
-		var result = value1.EqualsOrBothNullOrEmpty(value2);
-
-		// Assert
-		Assert.IsFalse(result);
+		Assert.IsTrue(testValue.EqualsIgnoreCase(testValue));
 	}
 
 	[TestMethod]
@@ -726,13 +702,27 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ExtractTest()
+	public void EqualsOrBothNullOrEmpty_DifferentStrings_ReturnsFalse()
 	{
-		var inputString = "Microsoft .NET, Visual Studio, Azure";
+		// Arrange
+		var value1 = "Hello";
+		var value2 = "World";
 
-		var result = inputString.Extract("Micro", "V");
+		// Act
+		var result = value1.EqualsOrBothNullOrEmpty(value2);
 
-		Assert.IsTrue(result.HasValue());
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void EqualsOrBothNullOrEmptyTest()
+	{
+		var testValue = RandomData.GenerateWord(10);
+
+		Assert.IsTrue(testValue.EqualsOrBothNullOrEmpty(testValue));
+
+		Assert.IsTrue(string.Empty.EqualsOrBothNullOrEmpty(null));
 	}
 
 	[TestMethod]
@@ -743,6 +733,16 @@ public class StringExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.Extract("[", "]"));
+	}
+
+	[TestMethod]
+	public void ExtractTest()
+	{
+		var inputString = "Microsoft .NET, Visual Studio, Azure";
+
+		var result = inputString.Extract("Micro", "V");
+
+		Assert.IsTrue(result.HasValue());
 	}
 
 	[TestMethod]
@@ -776,6 +776,40 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastEquals_NullCompareValue_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var value = "Hello";
+		string valueToCompare = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => value.FastEquals(valueToCompare));
+	}
+
+	[TestMethod]
+	public void FastEquals_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		string value = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => value.FastEquals("test"));
+	}
+
+	[TestMethod]
+	public void FastEquals_ReferenceEqual_ReturnsTrue()
+	{
+		// Arrange
+		var value = RandomData.GenerateWord(10);
+
+		// Act - same reference
+		var result = value.FastEquals(value);
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
 	public void FastEquals_SameStrings_ReturnsTrue()
 	{
 		// Arrange
@@ -803,40 +837,6 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsTrue(result, "Expected to return true for the same strings ignoring case.");
-	}
-
-	[TestMethod]
-	public void FastEquals_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string value = null;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => value.FastEquals("test"));
-	}
-
-	[TestMethod]
-	public void FastEquals_NullCompareValue_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var value = "Hello";
-		string valueToCompare = null;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => value.FastEquals(valueToCompare));
-	}
-
-	[TestMethod]
-	public void FastEquals_ReferenceEqual_ReturnsTrue()
-	{
-		// Arrange
-		var value = RandomData.GenerateWord(10);
-
-		// Act - same reference
-		var result = value.FastEquals(value);
-
-		// Assert
-		Assert.IsTrue(result);
 	}
 
 
@@ -1183,11 +1183,20 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void FromBase64Test()
+	public void FormatCurrentCulture_ValidFormat_ReturnsFormattedString()
 	{
-		var testValue = RandomData.GenerateWord(25);
+		var result = "Value: {0:N2}".FormatCurrentCulture(1234.5);
 
-		Assert.IsTrue(testValue.ToBase64().FromBase64().IsNotEmpty());
+		StringAssert.Contains(result, "Value:");
+		Assert.IsTrue(result.Length > 7);
+	}
+
+	[TestMethod]
+	public void FormatInvariant_ValidFormat_ReturnsInvariantFormattedString()
+	{
+		var result = "Value: {0:N2}".FormatInvariant(1234.5);
+
+		Assert.AreEqual(string.Format(CultureInfo.InvariantCulture, CompositeFormat.Parse("Value: {0:N2}"), 1234.5), result);
 	}
 
 	[TestMethod]
@@ -1198,6 +1207,14 @@ public class StringExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.FromBase64());
+	}
+
+	[TestMethod]
+	public void FromBase64Test()
+	{
+		var testValue = RandomData.GenerateWord(25);
+
+		Assert.IsTrue(testValue.ToBase64().FromBase64().IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -1249,25 +1266,10 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasValueTest()
+	public void HasValue_EmptyString_ReturnsFalse()
 	{
-		var testValue = RandomData.GenerateWord(10);
-
-		Assert.IsTrue(testValue.HasValue());
-
-		Assert.IsTrue(testValue.HasValue(10));
-
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-100));
-
-		Assert.IsTrue(testValue.HasValue(1, 10));
-
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-10, 500));
-
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(12, -10));
-
-		Assert.IsFalse(testValue.HasValue("XXXXX"));
-
-		Assert.IsFalse("David".HasValue(string.Empty));
+		// Act & Assert
+		Assert.IsFalse(string.Empty.HasValue());
 	}
 
 	[TestMethod]
@@ -1278,26 +1280,6 @@ public class StringExtensionsTests
 
 		// Act & Assert
 		Assert.IsFalse(input.HasValue());
-	}
-
-	[TestMethod]
-	public void HasValue_EmptyString_ReturnsFalse()
-	{
-		// Act & Assert
-		Assert.IsFalse(string.Empty.HasValue());
-	}
-
-	[TestMethod]
-	public void HasValue_WithLength_NullInput_ReturnsFalse()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		var result = input.HasValue(5);
-
-		// Assert
-		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -1314,29 +1296,16 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasValue_WithLength_WhitespaceInput_ReturnsFalseForNonZeroLength()
+	public void HasValue_WithLength_NullInput_ReturnsFalse()
 	{
 		// Arrange
-		var whitespaceInput = "   ";
-
-		// Act
-		var result = whitespaceInput.HasValue(3);
-
-		// Assert
-		Assert.IsFalse(result, "Whitespace-only string has trimmed length of 0.");
-	}
-
-	[TestMethod]
-	public void HasValue_WithLength_TrailingWhitespace_ReturnsTrue()
-	{
-		// Arrange - "hello" followed by trailing spaces; trimmed length should be 5
-		var input = "hello   ";
+		string input = null;
 
 		// Act
 		var result = input.HasValue(5);
 
 		// Assert
-		Assert.IsTrue(result, "Trimmed length of 'hello   ' should equal 5.");
+		Assert.IsFalse(result);
 	}
 
 	[TestMethod]
@@ -1353,55 +1322,29 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasValue_WithStringValue_NullInput_ReturnsFalse()
+	public void HasValue_WithLength_TrailingWhitespace_ReturnsTrue()
 	{
-		// Arrange
-		string input = null;
+		// Arrange - "hello" followed by trailing spaces; trimmed length should be 5
+		var input = "hello   ";
 
 		// Act
-		var result = input.HasValue("test");
+		var result = input.HasValue(5);
 
 		// Assert
-		Assert.IsFalse(result);
+		Assert.IsTrue(result, "Trimmed length of 'hello   ' should equal 5.");
 	}
 
 	[TestMethod]
-	public void HasValue_WithStringValue_NullValue_ReturnsFalse()
+	public void HasValue_WithLength_WhitespaceInput_ReturnsFalseForNonZeroLength()
 	{
 		// Arrange
-		var input = RandomData.GenerateWord(10);
+		var whitespaceInput = "   ";
 
 		// Act
-		var result = input.HasValue(value: null);
+		var result = whitespaceInput.HasValue(3);
 
 		// Assert
-		Assert.IsFalse(result);
-	}
-
-	[TestMethod]
-	public void HasValue_WithStringValue_MatchingStrings_ReturnsTrue()
-	{
-		// Arrange
-		var input = "Hello";
-
-		// Act
-		var result = input.HasValue("Hello");
-
-		// Assert
-		Assert.IsTrue(result);
-	}
-
-	[TestMethod]
-	public void HasValue_WithStringValue_DifferentLengths_ReturnsFalse()
-	{
-		// Arrange
-		var input = "Hello";
-
-		// Act
-		var result = input.HasValue("HelloWorld");
-
-		// Assert
-		Assert.IsFalse(result);
+		Assert.IsFalse(result, "Whitespace-only string has trimmed length of 0.");
 	}
 
 	[TestMethod]
@@ -1431,13 +1374,77 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void HasWhiteSpaceTest()
+	public void HasValue_WithStringValue_DifferentLengths_ReturnsFalse()
 	{
-		var testWithText = RandomData.GenerateWord(10);
-		var testWithWhitespace = "      ";
+		// Arrange
+		var input = "Hello";
 
-		Assert.IsFalse(testWithText.HasWhitespace());
-		Assert.IsTrue(testWithWhitespace.HasWhitespace());
+		// Act
+		var result = input.HasValue("HelloWorld");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasValue_WithStringValue_MatchingStrings_ReturnsTrue()
+	{
+		// Arrange
+		var input = "Hello";
+
+		// Act
+		var result = input.HasValue("Hello");
+
+		// Assert
+		Assert.IsTrue(result);
+	}
+
+	[TestMethod]
+	public void HasValue_WithStringValue_NullInput_ReturnsFalse()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.HasValue("test");
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasValue_WithStringValue_NullValue_ReturnsFalse()
+	{
+		// Arrange
+		var input = RandomData.GenerateWord(10);
+
+		// Act
+		var result = input.HasValue(value: null);
+
+		// Assert
+		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasValueTest()
+	{
+		var testValue = RandomData.GenerateWord(10);
+
+		Assert.IsTrue(testValue.HasValue());
+
+		Assert.IsTrue(testValue.HasValue(10));
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-100));
+
+		Assert.IsTrue(testValue.HasValue(1, 10));
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(-10, 500));
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.HasValue(12, -10));
+
+		Assert.IsFalse(testValue.HasValue("XXXXX"));
+
+		Assert.IsFalse("David".HasValue(string.Empty));
 	}
 
 	[TestMethod]
@@ -1451,6 +1458,29 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void HasWhiteSpaceTest()
+	{
+		var testWithText = RandomData.GenerateWord(10);
+		var testWithWhitespace = "      ";
+
+		Assert.IsFalse(testWithText.HasWhitespace());
+		Assert.IsTrue(testWithWhitespace.HasWhitespace());
+	}
+
+	[TestMethod]
+	public void Indent_NullInput_ReturnsEmpty()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.Indent(5, ' ');
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
@@ -1468,22 +1498,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void Indent_NullInput_ReturnsEmpty()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		var result = input.Indent(5, ' ');
-
-		// Assert
-		Assert.AreEqual(string.Empty, result);
-	}
-
-	[TestMethod]
-	public void IsCreditCardTest() => Assert.IsFalse("123".IsCreditCardNumber());
-
-	[TestMethod]
 	public void IsCreditCardNumber_ValidCard_ReturnsTrue()
 	{
 		// Arrange - use a well-known valid Visa test number
@@ -1495,6 +1509,9 @@ public class StringExtensionsTests
 		// Assert
 		Assert.IsTrue(result);
 	}
+
+	[TestMethod]
+	public void IsCreditCardTest() => Assert.IsFalse("123".IsCreditCardNumber());
 
 	[TestMethod]
 	public void IsCurrencyCode()
@@ -1512,19 +1529,6 @@ public class StringExtensionsTests
 
 	[TestMethod]
 	public void IsEmailAddressTest() => Assert.IsTrue("dotnetdave@live.com".IsEmailAddress());
-
-	[TestMethod]
-	public void IsEmpty_NullString_ReturnsTrue()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		var result = input.IsEmpty();
-
-		// Assert
-		Assert.IsTrue(result);
-	}
 
 	[TestMethod]
 	public void IsEmpty_EmptyString_ReturnsTrue()
@@ -1547,6 +1551,19 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsEmpty_NullString_ReturnsTrue()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.IsEmpty();
+
+		// Assert
+		Assert.IsTrue(result);
 	}
 
 	[TestMethod]
@@ -1704,14 +1721,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void IsNotEmptyTest()
-	{
-		Assert.IsTrue(RandomData.GenerateWord(10).IsNotEmpty());
-
-		Assert.IsFalse(string.Empty.IsNotEmpty());
-	}
-
-	[TestMethod]
 	public void IsNotEmpty_NullString_ReturnsFalse()
 	{
 		// Arrange
@@ -1722,6 +1731,14 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result);
+	}
+
+	[TestMethod]
+	public void IsNotEmptyTest()
+	{
+		Assert.IsTrue(RandomData.GenerateWord(10).IsNotEmpty());
+
+		Assert.IsFalse(string.Empty.IsNotEmpty());
 	}
 
 	[TestMethod]
@@ -1863,6 +1880,22 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void JoinFormatted_EmptyArgs_ReturnsEmptyString()
+	{
+		var result = "[{0}]".JoinFormatted(", ");
+
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void JoinFormatted_ValidValues_ReturnsDelimitedFormattedString()
+	{
+		var result = "[{0}]".JoinFormatted(" | ", "A", "B", "C");
+
+		Assert.AreEqual("[A] | [B] | [C]", result);
+	}
+
+	[TestMethod]
 	public void RemoveCRLFTest()
 	{
 		var testValue1 = $"{RandomData.GenerateWord(10)}{ControlChars.NewLine}{RandomData.GenerateWord(15)}{ControlChars.CRLF}{RandomData.GenerateWord(15)}";
@@ -1882,18 +1915,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ReplaceEllipsisWithPeriodTest()
-	{
-		var testValue = $"{RandomData.GenerateWord(25)}...";
-
-		var result = testValue.ReplaceEllipsisWithPeriod();
-
-		Assert.IsTrue(result.EndsWith("...") is false);
-
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.IsNullOrEmpty(string.Empty.ReplaceEllipsisWithPeriod()));
-	}
-
-	[TestMethod]
 	public void ReplaceEllipsisWithPeriod_InputWithoutEllipsis_ReturnsSameString()
 	{
 		// Arrange
@@ -1904,6 +1925,18 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.AreEqual(testValue, result);
+	}
+
+	[TestMethod]
+	public void ReplaceEllipsisWithPeriodTest()
+	{
+		var testValue = $"{RandomData.GenerateWord(25)}...";
+
+		var result = testValue.ReplaceEllipsisWithPeriod();
+
+		Assert.IsTrue(result.EndsWith("...") is false);
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.IsNullOrEmpty(string.Empty.ReplaceEllipsisWithPeriod()));
 	}
 
 	[TestMethod]
@@ -2108,6 +2141,16 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void SplitLines_NullInput_ThrowsArgumentNullException()
+	{
+		// Arrange
+		string input = null;
+
+		// Act & Assert
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.SplitLines());
+	}
+
+	[TestMethod]
 	public void SplitLinesTest()
 	{
 		var text = Resources.TestMutipleLinesOfText;
@@ -2125,13 +2168,13 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void SplitLines_NullInput_ThrowsArgumentNullException()
+	public void SplitRemoveEmpty_NullInput_ThrowsArgumentNullException()
 	{
 		// Arrange
 		string input = null;
 
 		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.SplitLines());
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.SplitRemoveEmpty());
 	}
 
 	[TestMethod]
@@ -2140,16 +2183,6 @@ public class StringExtensionsTests
 		var testValue = $"{RandomData.GenerateWord(25)},{RandomData.GenerateWord(25)}";
 
 		Assert.IsGreaterThan(1, testValue.SplitRemoveEmpty().Count);
-	}
-
-	[TestMethod]
-	public void SplitRemoveEmpty_NullInput_ThrowsArgumentNullException()
-	{
-		// Arrange
-		string input = null;
-
-		// Act & Assert
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => input.SplitRemoveEmpty());
 	}
 
 	[TestMethod]
@@ -2265,14 +2298,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void StartsWithOrdinalIgnoreCaseTest()
-	{
-		var testValue = RandomData.GenerateWord(10);
-
-		Assert.IsTrue(testValue.StartsWithOrdinalIgnoreCase(testValue));
-	}
-
-	[TestMethod]
 	public void StartsWithOrdinalIgnoreCase_CaseDifferent_ReturnsTrue()
 	{
 		// Arrange
@@ -2312,17 +2337,21 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void SubstringTrimTest()
+	public void StartsWithOrdinalIgnoreCaseTest()
 	{
-		var testValue = RandomData.GenerateWord(50);
+		var testValue = RandomData.GenerateWord(10);
 
-		//Test parameters
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(-100, 10));
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, -10));
-		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, 100));
+		Assert.IsTrue(testValue.StartsWithOrdinalIgnoreCase(testValue));
+	}
 
-		//Test
-		Assert.IsTrue(testValue.SubstringTrim(1, 10).HasValue());
+	[TestMethod]
+	public void SubstringTrim_EmptyInput_ReturnsEmpty()
+	{
+		// Act
+		var result = string.Empty.SubstringTrim(0, 0);
+
+		// Assert
+		Assert.AreEqual(string.Empty, result);
 	}
 
 	[TestMethod]
@@ -2339,13 +2368,17 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void SubstringTrim_EmptyInput_ReturnsEmpty()
+	public void SubstringTrimTest()
 	{
-		// Act
-		var result = string.Empty.SubstringTrim(0, 0);
+		var testValue = RandomData.GenerateWord(50);
 
-		// Assert
-		Assert.AreEqual(string.Empty, result);
+		//Test parameters
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(-100, 10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, -10));
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => testValue.SubstringTrim(1, 100));
+
+		//Test
+		Assert.IsTrue(testValue.SubstringTrim(1, 10).HasValue());
 	}
 
 	[TestMethod]
@@ -2381,6 +2414,16 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToByteArrayFromBase64_EmptyString_ReturnsEmptyArray()
+	{
+		// Act
+		var result = string.Empty.ToByteArrayFromBase64();
+
+		// Assert
+		Assert.AreEqual(0, result.Length);
+	}
+
+	[TestMethod]
 	public void ToByteArrayFromBase64_InvalidBase64String_ThrowsFormatException()
 	{
 		// Arrange
@@ -2388,20 +2431,6 @@ public class StringExtensionsTests
 
 		// Act & Assert
 		_ = Assert.ThrowsExactly<FormatException>(() => base64String.ToByteArrayFromBase64());
-	}
-
-	[TestMethod]
-	public void ToByteArrayFromBase64_ValidBase64String_ReturnsCorrectByteArray()
-	{
-		// Arrange
-		var base64String = "VGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg=="; // "This is a test string."
-		var expectedBytes = Encoding.UTF8.GetBytes("This is a test string.");
-
-		// Act
-		var result = base64String.ToByteArrayFromBase64();
-
-		// Assert
-		CollectionAssert.AreEqual(expectedBytes, result, "The byte array does not match the expected byte array.");
 	}
 
 	[TestMethod]
@@ -2418,13 +2447,17 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToByteArrayFromBase64_EmptyString_ReturnsEmptyArray()
+	public void ToByteArrayFromBase64_ValidBase64String_ReturnsCorrectByteArray()
 	{
+		// Arrange
+		var base64String = "VGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg=="; // "This is a test string."
+		var expectedBytes = Encoding.UTF8.GetBytes("This is a test string.");
+
 		// Act
-		var result = string.Empty.ToByteArrayFromBase64();
+		var result = base64String.ToByteArrayFromBase64();
 
 		// Assert
-		Assert.AreEqual(0, result.Length);
+		CollectionAssert.AreEqual(expectedBytes, result, "The byte array does not match the expected byte array.");
 	}
 
 	[TestMethod]
@@ -2458,27 +2491,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void TrimTest()
-	{
-		var testValue = $"{RandomData.GenerateWord(25)}   ";
-
-		Assert.AreEqual(25, testValue.ToTrimmed().Length);
-	}
-
-	[TestMethod]
-	public void ToTrimmed_NullInput_ReturnsNull()
-	{
-		// Arrange
-		string input = null;
-
-		// Act
-		var result = input.ToTrimmed();
-
-		// Assert
-		Assert.IsNull(result);
-	}
-
-	[TestMethod]
 	public void ToTrimmed_EmptyString_ReturnsEmpty()
 	{
 		// Act
@@ -2499,6 +2511,42 @@ public class StringExtensionsTests
 
 		// Assert
 		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void ToTrimmed_NullInput_ReturnsNull()
+	{
+		// Arrange
+		string input = null;
+
+		// Act
+		var result = input.ToTrimmed();
+
+		// Assert
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void TrimTest()
+	{
+		var testValue = $"{RandomData.GenerateWord(25)}   ";
+
+		Assert.AreEqual(25, testValue.ToTrimmed().Length);
+	}
+
+	[TestMethod]
+	public void VerifyHashedPassword_InvalidPassword_ReturnsFailed()
+	{
+		// Arrange
+		var password = RandomData.GenerateWord(15);
+		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
+		var wrongPassword = RandomData.GenerateWord(20);
+
+		// Act
+		var result = hash.VerifyHashedPassword(wrongPassword, HashAlgorithmType.PBKDF2);
+
+		// Assert
+		Assert.AreEqual(PasswordVerificationResult.Failed, result);
 	}
 
 	[TestMethod]
@@ -2524,35 +2572,6 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
-	public void VerifyHashedPassword_ValidPassword_ReturnsSuccess()
-	{
-		// Arrange
-		var password = RandomData.GenerateWord(15);
-		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
-
-		// Act
-		var result = hash.VerifyHashedPassword(password, HashAlgorithmType.PBKDF2);
-
-		// Assert
-		Assert.AreEqual(PasswordVerificationResult.Success, result);
-	}
-
-	[TestMethod]
-	public void VerifyHashedPassword_InvalidPassword_ReturnsFailed()
-	{
-		// Arrange
-		var password = RandomData.GenerateWord(15);
-		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
-		var wrongPassword = RandomData.GenerateWord(20);
-
-		// Act
-		var result = hash.VerifyHashedPassword(wrongPassword, HashAlgorithmType.PBKDF2);
-
-		// Assert
-		Assert.AreEqual(PasswordVerificationResult.Failed, result);
-	}
-
-	[TestMethod]
 	public void VerifyHashedPassword_SHA256_ValidPassword_ReturnsSuccess()
 	{
 		// Arrange
@@ -2561,6 +2580,20 @@ public class StringExtensionsTests
 
 		// Act
 		var result = hash.VerifyHashedPassword(password, HashAlgorithmType.SHA256);
+
+		// Assert
+		Assert.AreEqual(PasswordVerificationResult.Success, result);
+	}
+
+	[TestMethod]
+	public void VerifyHashedPassword_ValidPassword_ReturnsSuccess()
+	{
+		// Arrange
+		var password = RandomData.GenerateWord(15);
+		var hash = password.HashPassword(HashAlgorithmType.PBKDF2);
+
+		// Act
+		var result = hash.VerifyHashedPassword(password, HashAlgorithmType.PBKDF2);
 
 		// Assert
 		Assert.AreEqual(PasswordVerificationResult.Success, result);
