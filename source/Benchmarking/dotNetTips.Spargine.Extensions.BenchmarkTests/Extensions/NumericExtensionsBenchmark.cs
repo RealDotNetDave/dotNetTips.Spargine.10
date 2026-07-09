@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 09-02-2024
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="NumericExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -60,7 +60,7 @@ public class NumericExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + "_Double_Hours")]
+	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + " Double_Hours")]
 	public void FormatTimeDoubleHours()
 	{
 		var result = this._testDoubleMilliseconds.FormatTime();
@@ -68,7 +68,7 @@ public class NumericExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + "_Double_Milliseconds")]
+	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + " Double_Milliseconds")]
 	public void FormatTimeDoubleMilliseconds()
 	{
 		var result = this._testSubSecondMilliseconds.FormatTime();
@@ -76,7 +76,7 @@ public class NumericExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + "_Long_Hours")]
+	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + " Long_Hours")]
 	public void FormatTimeLongHours()
 	{
 		var result = this._testLongMilliseconds.FormatTime();
@@ -84,7 +84,7 @@ public class NumericExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + "_Long_Milliseconds")]
+	[Benchmark(Description = nameof(NumericExtensions.FormatTime) + " Long_Milliseconds")]
 	public void FormatTimeLongMilliseconds()
 	{
 		var result = ((long)500).FormatTime();

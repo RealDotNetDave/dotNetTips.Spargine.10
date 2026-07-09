@@ -4,7 +4,7 @@
 // Created          : 06-02-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-21-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -45,7 +45,7 @@ public class EnumHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumHelper.GetItems) + "_FixNames_False")]
+	[Benchmark(Description = nameof(EnumHelper.GetItems) + " FixNames_False")]
 	public void GetItems_FixNamesFalse()
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(false);
@@ -53,7 +53,7 @@ public class EnumHelperBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(EnumHelper.GetItems) + "_FixNames_True")]
+	[Benchmark(Description = nameof(EnumHelper.GetItems) + " FixNames_True")]
 	public void GetItems_FixNamesTrue()
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(true);
