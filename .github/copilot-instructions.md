@@ -10,7 +10,7 @@ Before marking any task as complete, you MUST perform ALL of the following steps
 2. Read the `./.editorconfig` file at the repo root and verify all code changes adhere to its rules and the existing coding style conventions.
 3. Run the build and verify it succeeds with no errors.
 4. Check the build output for warnings. Compare against pre-existing warnings and ensure your changes introduced zero new warnings. If new warnings are found, fix them before proceeding.
-5. If a unit test project exists, add new tests or update existing tests to cover your changes as appropriate.
+5. If a unit test project exists, add new tests or update existing tests to cover your changes as appropriate. **Note: Include unit tests for changed or added production code, and call out when tests are omitted for `ResourceFormatCache`.**
 6. Run all unit tests and verify none are broken. If any tests fail due to your changes, fix them before proceeding.
 7. Whenever a plan is implemented, always run the full solution unit test suite to verify no regressions were introduced.
 
