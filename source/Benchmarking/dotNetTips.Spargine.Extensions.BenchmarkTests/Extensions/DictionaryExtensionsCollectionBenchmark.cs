@@ -32,6 +32,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 {
+	private const string MissingKey = "__missing__";
+
 	private KeyValuePair<string, Person> _personRef;
 	private Dictionary<string, Person> _personRefDictionary = default!;
 
@@ -138,6 +140,22 @@ public class DictionaryExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var people = this._personRefDictionary;
 
 		var result = people.TryGetValue(this._personRef.Key, key => this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.TryGetValueOrDefault) + ": Existing Key")]
+	public void TryGetValueOrDefaultExistingKey()
+	{
+		var result = this._personRefDictionary.TryGetValueOrDefault(this._personRef.Key, this.PersonRef02);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.TryGetValueOrDefault) + ": Missing Key")]
+	public void TryGetValueOrDefaultMissingKey()
+	{
+		var result = this._personRefDictionary.TryGetValueOrDefault(MissingKey, this.PersonRef02);
 
 		this.Consume(result);
 	}

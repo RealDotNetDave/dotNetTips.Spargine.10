@@ -4,7 +4,7 @@
 // Created          : 07-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="OpenTelemetryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,7 @@ public static class OpenTelemetryExtensions
 	/// <param name="activity">The target activity.</param>
 	/// <param name="tags">The tags to add.</param>
 	/// <returns>The original <paramref name="activity"/> for fluent chaining.</returns>
-	[Information(nameof(AddTagsIfPresent), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(AddTagsIfPresent), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Activity? AddTagsIfPresent([AllowNull] this Activity activity, [AllowNull] IEnumerable<KeyValuePair<string, object?>> tags)
 	{
 		if (activity is null || tags is null)
@@ -62,7 +62,7 @@ public static class OpenTelemetryExtensions
 	/// <param name="activity">The target activity.</param>
 	/// <param name="exception">The exception that indicates an error.</param>
 	/// <returns>The original <paramref name="activity"/> for fluent chaining.</returns>
-	[Information(nameof(SetStatusIfError), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(SetStatusIfError), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Activity? SetStatusIfError([AllowNull] this Activity activity, Exception? exception)
 	{
 		if (activity is null || exception is null)

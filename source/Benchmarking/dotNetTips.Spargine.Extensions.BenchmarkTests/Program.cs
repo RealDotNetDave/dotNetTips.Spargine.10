@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -57,13 +57,19 @@ internal sealed class Program
 		//	typeof(CollectionExtensionsCollectionBenchmark),
 		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
 		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
+		//	typeof(DataContextExtensionsBenchmark),
 		//	typeof(DataReaderExtensionsBenchmark),
+		//	typeof(DataTableExtensionsBenchmark),
+		//	typeof(DateTimeExtensionsBenchmark),
+		//	typeof(DbContextExtensionsBenchmark),
 		//	typeof(DictionaryExtensionsCollectionBenchmark),
-		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark)
+		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark),
+		//	typeof(DirectoryInfoExtensionsBenchmark)
 		//);
 
 		// Group 2: E–H - 10:05 hours, 926 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(EfCoreModelBuilderExtensionsBenchmark),
 		// typeof(EnumExtensionsBenchmark),
 		//	typeof(EnumerableExtensionsCollectionBenchmark),
 		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
@@ -71,7 +77,10 @@ internal sealed class Program
 		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
 		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
 		//	typeof(ExceptionExtensionsBenchmark),
+		//	typeof(FileInfoExtensionsBenchmark),
 		//	typeof(HashSetExtensionsCollectionBenchmark),
+		//	typeof(HttpClientExtensionsBenchmark),
+		//	typeof(HttpRequestExtensionsBenchmark),
 		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
 		//);
 
@@ -81,16 +90,20 @@ internal sealed class Program
 		//	typeof(LinqExtensionsBenchmark),
 		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
 		//	typeof(ListExtensionsCollectionBenchmark),
+		//	typeof(MessagePackExtensionsBenchmark),
 		//	typeof(NumericExtensionsBenchmark),
 		//	typeof(ObjectExtensionsBenchmark),
+		//	typeof(OpenTelemetryExtensionsBenchmark),
 		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
 		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
 		//	typeof(ReadOnlySpanExtensionsBenchmark),
 		//	typeof(SortedDictionaryExtensionsBenchmark),
 		//	typeof(SortedSetExtensionsBenchmark),
+		//	typeof(StreamExtensionsBenchmark),
 		//	typeof(StringBuilderExtensionsCounterBenchmark),
 		//	typeof(StringExtensionsBenchmark),
 		//	typeof(StringExtensionsCounterBenchmark),
+		//	typeof(TaskExtensionsBenchmark),
 		//	typeof(TypeExtensionsBenchmark)
 		//);
 	}

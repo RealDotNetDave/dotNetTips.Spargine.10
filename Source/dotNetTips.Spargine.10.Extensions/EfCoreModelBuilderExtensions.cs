@@ -4,7 +4,7 @@
 // Created          : 07-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="EfCoreModelBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ public static class EfCoreModelBuilderExtensions
 	/// <param name="modelBuilder">The EF Core model builder.</param>
 	/// <returns>The same <see cref="ModelBuilder"/> instance for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="modelBuilder"/> is <see langword="null"/>.</exception>
-	[Information(nameof(RegisterEnumAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterEnumAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ModelBuilder RegisterEnumAsStringConverters([DisallowNull] this ModelBuilder modelBuilder)
 	{
 		modelBuilder = modelBuilder.ArgumentNotNull();
@@ -69,7 +69,7 @@ public static class EfCoreModelBuilderExtensions
 	/// <param name="modelBuilder">The EF Core model builder.</param>
 	/// <returns>The same <see cref="ModelBuilder"/> instance for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="modelBuilder"/> is <see langword="null"/>.</exception>
-	[Information(nameof(RegisterGuidAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterGuidAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ModelBuilder RegisterGuidAsStringConverters([DisallowNull] this ModelBuilder modelBuilder)
 	{
 		modelBuilder = modelBuilder.ArgumentNotNull();

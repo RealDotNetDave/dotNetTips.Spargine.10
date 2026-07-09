@@ -14,7 +14,7 @@ Before marking any task as complete, you MUST perform ALL of the following steps
 6. Run all unit tests and verify none are broken. If any tests fail due to your changes, fix them before proceeding.
 7. Whenever a plan is implemented, always run the full solution unit test suite to verify no regressions were introduced.
 
-Do NOT consider the task done until all seven steps pass. Keep iterating until they do.
+Do NOT consider the task done until all seven steps pass.
 
 ## **1. Spargine-Specific Rules**
 
@@ -33,24 +33,21 @@ Do NOT consider the task done until all seven steps pass. Keep iterating until t
   - Use the correct **current date** for "Created" and "Last Modified On" fields. Do not use incorrect or fabricated dates.
 - When adding or removing methods and properties to a class, update the `<summary>` XML tag in the file header.
 - When creating a **new file**, use this exact header template:
-  ```
-  // ***********************************************************************
-  // Assembly         : <AssemblyName>
-  // Author           : Copilot Agent
-  // Created          : <MM-DD-YYYY>
-  //
-  // Last Modified By : Copilot Agent
-  // Last Modified On : <MM-DD-YYYY>
-  // ***********************************************************************
-  // <copyright file="<FileName>.cs" company="dotNetTips.com - McCarter Consulting">
-  //     McCarter Consulting (David McCarter)
-  // </copyright>
-  // <summary>
-  // <Brief description of the class/type.>
-  // </summary>
-  // ***********************************************************************
-  ```
-- **Trimming attributes** — when code uses reflection or calls methods that do:
+// ***********************************************************************
+// Assembly         : <AssemblyName>
+// Author           : Copilot Agent
+// Created          : <MM-DD-YYYY>
+//
+// Last Modified By : Copilot Agent
+// Last Modified On : <MM-DD-YYYY>
+// ***********************************************************************
+// <copyright file="<FileName>.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary>
+// <Brief description of the class/type.>
+// </summary>
+// ***********************************************************************- **Trimming attributes** — when code uses reflection or calls methods that do:
   - Add `[RequiresUnreferencedCode("...")]` with a **descriptive, method-specific message** explaining *what* reflection the method performs (e.g., `"Enumerates assembly types via Assembly.GetTypes()."` or `"Uses XmlSerializer which requires unreferenced code for type metadata."`). **Never** use the generic default message `"This method uses reflection to discover types at runtime."`.
   - Add `[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "...")]` with a **meaningful justification** explaining why the suppression is safe. **Never** leave the justification as `"<Pending>"`. Replace `"IL2026"` with the actual diagnostic ID that applies (e.g., `"IL2026"`, `"IL2070"`, `"IL2067"`).
   - Add `[DynamicallyAccessedMembers(...)]` to generic type parameters when the method constrains which members are accessed via reflection.
@@ -239,6 +236,7 @@ string message = string.Format(CultureInfo.InvariantCulture, _rangeError, min, m
 - **Never suggest or apply performance optimizations** unless benchmarked before and after the change.
 - After optimizing a method, update its `[Information]` attribute to `BenchmarkStatus = BenchmarkStatus.CheckPerformance`.
 - Do NOT declare field initializers as `= null!`; leave them without an initializer if they are set in `Setup()`.
+- When adding new benchmark classes in this repository, update `source/Benchmarking/dotNetTips.Spargine.Extensions.BenchmarkTests/Program.cs` in the proper benchmark group so the new benchmarks are runnable.
 
 ---
 

@@ -4,7 +4,7 @@
 // Created          : 11-25-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="TaskExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -81,7 +81,7 @@ public static class TaskExtensions
 	/// <returns>A task that completes when the source task completes or is canceled.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IgnoreCancellation), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(IgnoreCancellation), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task IgnoreCancellation([DisallowNull] this Task task)
 	{
 		task = task.ArgumentNotNull();
@@ -102,7 +102,7 @@ public static class TaskExtensions
 	/// <returns>The unwrapped exception when possible; otherwise the original exception.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="exception"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(UnwrapAggregate), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(UnwrapAggregate), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Exception UnwrapAggregate([DisallowNull] this Exception exception)
 	{
 		exception = exception.ArgumentNotNull();
@@ -129,7 +129,7 @@ public static class TaskExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	/// <exception cref="TimeoutException">Thrown when the task does not complete within <paramref name="timeout"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Task WithTimeoutAsync([DisallowNull] this Task task, TimeSpan timeout, CancellationToken cancellationToken = default)
 	{
 		task = task.ArgumentNotNull();
@@ -148,7 +148,7 @@ public static class TaskExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	/// <exception cref="TimeoutException">Thrown when the task does not complete within <paramref name="timeout"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Task<T> WithTimeoutAsync<T>([DisallowNull] this Task<T> task, TimeSpan timeout, CancellationToken cancellationToken = default)
 	{
 		task = task.ArgumentNotNull();

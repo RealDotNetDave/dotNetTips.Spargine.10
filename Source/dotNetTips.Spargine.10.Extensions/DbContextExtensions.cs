@@ -4,7 +4,7 @@
 // Created          : 04-13-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="DbContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -53,7 +53,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of state entries written to the database.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
-	[Information(nameof(AddAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(AddAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> AddAndSaveAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
@@ -75,7 +75,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of state entries written to the database.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
-	[Information(nameof(DeleteAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(DeleteAndSaveAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> DeleteAndSaveAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
@@ -97,7 +97,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="action"/> is null.</exception>
-	[Information(nameof(ExecuteInTransactionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ExecuteInTransactionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task ExecuteInTransactionAsync([DisallowNull] this DbContext context, [DisallowNull] Func<DbContext, CancellationToken, Task> action, CancellationToken cancellationToken = default)
 	{
 		context = context.ArgumentNotNull();
@@ -131,7 +131,7 @@ public static class DbContextExtensions
 	/// <returns>A read-only collection of entities matching the specified state.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="state"/> is not a defined <see cref="EntityState"/> value.</exception>
-	[Information(nameof(GetChangedEntities), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetChangedEntities), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<T> GetChangedEntities<T>([DisallowNull] this DbContext context, EntityState state)
 		where T : class
 	{
@@ -165,7 +165,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records in the table.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> GetRecordCountAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
@@ -184,7 +184,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records matching the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> GetRecordCountAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
@@ -201,7 +201,7 @@ public static class DbContextExtensions
 	/// <param name="context">The <see cref="DbContext"/> to check.</param>
 	/// <returns><c>true</c> if there are unsaved changes; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(HasChanges), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(HasChanges), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasChanges([DisallowNull] this DbContext context)
 	{
 		context = context.ArgumentNotNull();
@@ -218,7 +218,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if the table contains any records; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<bool> HasRecordsAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
@@ -237,7 +237,7 @@ public static class DbContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if any records match the predicate; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<bool> HasRecordsAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] T>([DisallowNull] this DbContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{

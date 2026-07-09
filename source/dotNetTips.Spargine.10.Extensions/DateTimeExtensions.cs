@@ -55,7 +55,7 @@ public static class DateTimeExtensions
 	/// <returns>The clamped <see cref="DateTime"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum"/> is greater than <paramref name="maximum"/>.</exception>
 	[Pure]
-	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTime Clamp(this in DateTime value, in DateTime minimum, in DateTime maximum)
 	{
 		if (minimum > maximum)
@@ -391,7 +391,7 @@ public static class DateTimeExtensions
 	/// <returns>The rounded <see cref="DateTime"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple"/> is less than or equal to <see cref="TimeSpan.Zero"/>.</exception>
 	[Pure]
-	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTime RoundToNearestMultiple(this in DateTime value, in TimeSpan multiple)
 	{
 		if (multiple <= TimeSpan.Zero)
@@ -604,7 +604,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The input span to parse.</param>
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise default.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out DateTime value)
 	{
 		return DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);

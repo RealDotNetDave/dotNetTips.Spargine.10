@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
 	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
 	<PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.7.37220.1" />
   </ItemGroup>
   <ItemGroup>

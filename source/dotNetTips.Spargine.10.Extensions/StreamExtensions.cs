@@ -4,7 +4,7 @@
 // Created          : 07-22-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="StreamExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,7 @@ public static class StreamExtensions
 	/// <param name="destination">The destination stream to write to.</param>
 	/// <param name="cancellationToken">A cancellation token used to cancel the copy operation.</param>
 	/// <returns>The total number of bytes copied.</returns>
-	[Information(nameof(CopyToAsyncPooled), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CopyToAsyncPooled), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Task<long> CopyToAsyncPooled([DisallowNull] this Stream source, [DisallowNull] Stream destination, CancellationToken cancellationToken = default)
 	{
 		return source.CopyToAsyncPooled(destination, DefaultCopyBufferSize, cancellationToken);
@@ -51,7 +51,7 @@ public static class StreamExtensions
 	/// <param name="bufferSize">The pooled buffer size to use for the transfer.</param>
 	/// <param name="cancellationToken">A cancellation token used to cancel the copy operation.</param>
 	/// <returns>The total number of bytes copied.</returns>
-	[Information(nameof(CopyToAsyncPooled), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CopyToAsyncPooled), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<long> CopyToAsyncPooled([DisallowNull] this Stream source, [DisallowNull] Stream destination, int bufferSize, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentNotNull();
@@ -112,7 +112,7 @@ public static class StreamExtensions
 	/// <param name="cancellationToken">A cancellation token used to cancel the read operation.</param>
 	/// <returns>The total number of bytes read, which equals <paramref name="buffer"/> length when successful.</returns>
 	/// <exception cref="EndOfStreamException">Thrown when the stream ends before the buffer is filled.</exception>
-	[Information(nameof(ReadExactlyAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ReadExactlyAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<int> ReadExactlyAsync([DisallowNull] this Stream stream, Memory<byte> buffer, CancellationToken cancellationToken = default)
 	{
 		stream = stream.ArgumentNotNull();
@@ -146,7 +146,7 @@ public static class StreamExtensions
 	/// <param name="buffer">The source buffer to write.</param>
 	/// <param name="cancellationToken">A cancellation token used to cancel the write operation.</param>
 	/// <returns>The total number of bytes written.</returns>
-	[Information(nameof(WriteAllAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(WriteAllAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<int> WriteAllAsync([DisallowNull] this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
 	{
 		stream = stream.ArgumentNotNull();

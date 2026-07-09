@@ -37,6 +37,9 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 [TailCallDiagnoser]
 public class DictionaryExtensionsMutatingCollectionBenchmark : LargeCollectionBenchmark
 {
+	private const string MissingKey = "__missing__";
+
+	private string _existingKey = string.Empty;
 	private Dictionary<string, Person> _personRefDictionary = default!;
 	private Dictionary<string, Person> _personRefDictionaryToInsert = default!;
 
@@ -48,11 +51,27 @@ public class DictionaryExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd))]
+	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd) + ": Value")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void GetOrAdd()
 	{
 		var result = this._personRefDictionary.GetOrAdd(this.PersonRef01.Id, this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd) + ": Value Factory Existing Key")]
+	public void GetOrAddValueFactoryExistingKey()
+	{
+		var result = this._personRefDictionary.GetOrAdd(this._existingKey, key => this.PersonRef01);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.GetOrAdd) + ": Value Factory Missing Key")]
+	public void GetOrAddValueFactoryMissingKey()
+	{
+		var result = this._personRefDictionary.GetOrAdd(MissingKey, key => this.PersonRef01);
 
 		this.Consume(result);
 	}
@@ -65,6 +84,7 @@ public class DictionaryExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 	public void Reset()
 	{
 		this._personRefDictionary = this.GetPersonRefDictionary();
+		this._existingKey = this._personRefDictionary.Last().Key;
 	}
 
 	/// <summary>
@@ -75,7 +95,26 @@ public class DictionaryExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		base.Setup();
 
 		this._personRefDictionary = this.GetPersonRefDictionary();
+		this._existingKey = this._personRefDictionary.Last().Key;
 		this._personRefDictionaryToInsert = this.GetPersonRefCollectionToInsert().ToDictionary(p => p.Id);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.TryRemoveAndReturn) + ": Existing Key")]
+	public void TryRemoveAndReturnExistingKey()
+	{
+		var removed = this._personRefDictionary.TryRemoveAndReturn(this._existingKey, out var removedValue);
+
+		this.Consume(removed);
+		this.Consume(removedValue);
+	}
+
+	[Benchmark(Description = nameof(DictionaryExtensions.TryRemoveAndReturn) + ": Missing Key")]
+	public void TryRemoveAndReturnMissingKey()
+	{
+		var removed = this._personRefDictionary.TryRemoveAndReturn(MissingKey, out var removedValue);
+
+		this.Consume(removed);
+		this.Consume(removedValue);
 	}
 
 	[Benchmark(Description = nameof(DictionaryExtensions.Upsert))]

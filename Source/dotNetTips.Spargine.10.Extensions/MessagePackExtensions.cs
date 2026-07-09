@@ -4,7 +4,7 @@
 // Created          : 07-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="MessagePackExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ public static class MessagePackExtensions
 	/// <exception cref="ArgumentException">Thrown when <paramref name="bytes"/> is empty.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FromMessagePack), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FromMessagePack), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static T FromMessagePack<T>([DisallowNull] this byte[] bytes)
 	{
 		bytes = bytes.ArgumentNotNull();
@@ -61,7 +61,7 @@ public static class MessagePackExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToMessagePackBytes), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToMessagePackBytes), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static byte[] ToMessagePackBytes<T>([DisallowNull] this T value)
 	{
 		value = value.ArgumentNotNull();

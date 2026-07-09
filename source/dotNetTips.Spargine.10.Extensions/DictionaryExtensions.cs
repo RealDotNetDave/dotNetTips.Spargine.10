@@ -254,7 +254,7 @@ public static class DictionaryExtensions
 	[Pure]
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetOrAdd), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetOrAdd), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TValue GetOrAdd<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, [DisallowNull] Func<TKey, TValue> valueFactory)
 	where TKey : notnull
 	where TValue : notnull
@@ -844,7 +844,7 @@ public static class DictionaryExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="key"/> is null.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryGetValueOrDefault), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryGetValueOrDefault), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TValue? TryGetValueOrDefault<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, TValue? defaultValue = default)
 	where TKey : notnull
 	{
@@ -865,7 +865,7 @@ public static class DictionaryExtensions
 	/// <returns><c>true</c> if the key existed and was removed; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="collection"/> or <paramref name="key"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryRemoveAndReturn), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(TryRemoveAndReturn), author: "Copilot Agent", createdOn: "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool TryRemoveAndReturn<TKey, TValue>([DisallowNull] this IDictionary<TKey, TValue> collection, [DisallowNull] TKey key, out TValue? value)
 	where TKey : notnull
 	{
