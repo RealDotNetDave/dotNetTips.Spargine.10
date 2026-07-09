@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-01-2018
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -152,7 +152,7 @@ public static class HttpRequestExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A <see cref="Task{TResult}"/> whose result is the raw body as a <see cref="byte"/> array.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
-	[Information(nameof(GetRawBodyBytesAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetRawBodyBytesAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<byte[]> GetRawBodyBytesAsync([DisallowNull] this HttpRequest request, CancellationToken cancellationToken = default)
 	{
 		request = request.ArgumentNotNull();
@@ -174,7 +174,7 @@ public static class HttpRequestExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A <see cref="Task{TResult}"/> whose result is the raw body as a <see cref="string"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> or <paramref name="encoding"/> is null.</exception>
-	[Information(nameof(GetRawBodyStringAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetRawBodyStringAsync), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<string> GetRawBodyStringAsync([DisallowNull] this HttpRequest request, [DisallowNull] Encoding encoding, CancellationToken cancellationToken = default)
 	{
 		request = request.ArgumentNotNull();
@@ -237,7 +237,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
 	/// <remarks>Original code by Jerry Nixon. For trim-safe deserialization, use the <see cref="JsonTypeInfo{T}"/> overload.</remarks>
 	[RequiresUnreferencedCode("JSON deserialization might require types that cannot be statically analyzed. Use the JsonTypeInfo<T> overload in trimmed apps.")]
-	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, out T? value)
 	{
 		request = request.ArgumentNotNull();
@@ -273,7 +273,7 @@ public static class HttpRequestExtensions
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="request"/> is null.</exception>
 	/// <exception cref="ArgumentException">Thrown if the <see cref="HttpRequest"/> body is empty.</exception>
 	/// <remarks>Original code by Jerry Nixon. The body must be buffered (e.g., via <c>EnableBuffering</c>) before calling this method, as evidenced by the <c>Length</c> check.</remarks>
-	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryGetBody), "David McCarter", "11/07/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody([DisallowNull] this HttpRequest request, out byte[] value)
 	{
 		request = request.ArgumentNotNull();
@@ -328,7 +328,7 @@ public static class HttpRequestExtensions
 	/// }
 	/// </code>
 	/// </example>
-	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryGetBody), "David McCarter", "5/12/2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryGetBody<T>([DisallowNull] this HttpRequest request, [DisallowNull] JsonTypeInfo<T> typeInfo, out T? value)
 	{
 		request = request.ArgumentNotNull();
