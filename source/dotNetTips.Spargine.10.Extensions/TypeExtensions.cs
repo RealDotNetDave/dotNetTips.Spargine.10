@@ -44,6 +44,7 @@ public static class TypeExtensions
 	/// <returns>The custom attribute of type <typeparamref name="TAttribute"/> if found; otherwise, null.</returns>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover attributes at runtime.")]
 	[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this MethodInfo methodInfo) where TAttribute : Attribute
 	{
@@ -59,6 +60,7 @@ public static class TypeExtensions
 	/// <exception cref="ArgumentNullException">Thrown when the propertyInfo is null.</exception>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover attributes at runtime.")]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this PropertyInfo propertyInfo) where TAttribute : Attribute
 	{
@@ -78,6 +80,7 @@ public static class TypeExtensions
 	/// </exception>
 	[return: MaybeNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[RequiresUnreferencedCode("This method uses reflection to discover attributes at runtime.")]
 	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static TAttribute GetAttribute<TAttribute>([DisallowNull] this FieldInfo fieldInfo) where TAttribute : Attribute
 	{
@@ -257,6 +260,7 @@ public static class TypeExtensions
 		[return: MaybeNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[Information(nameof(GetAttribute), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[RequiresUnreferencedCode("This method uses reflection to discover attributes at runtime.")]
 		public TAttribute GetAttribute<TAttribute>() where TAttribute : Attribute
 		{
 			return TypeHelper.GetAttribute<TAttribute>(type);

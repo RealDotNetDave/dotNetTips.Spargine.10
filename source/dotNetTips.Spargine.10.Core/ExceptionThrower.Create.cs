@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-13-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-21-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="ExceptionThrower.Create.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -64,5 +64,28 @@ public static partial class ExceptionThrower
 	public static FileNotFoundException CreateFileNotFoundException([AllowNull] string message, [DisallowNull] string fileName, Exception ex)
 	{
 		return new(message ?? Resources.ErrorFileNotFound, fileName, ex);
+	}
+
+	/// <summary>
+	/// Creates an <see cref="InvalidCastException"/> optionally including the parameter name.
+	/// Centralizes creation so callers avoid duplicating message construction.
+	/// </summary>
+	/// <param name="message">Optional custom message.</param>
+	/// <param name="paramName">Optional parameter name to include in the message.</param>
+	/// <returns>An <see cref="InvalidCastException"/> instance.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[ExcludeFromCodeCoverage(Justification = "Not needed for this pass-through method.")]
+	[Information(nameof(CreateInvalidCastException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+	public static InvalidCastException CreateInvalidCastException([AllowNull] string message, [AllowNull] string paramName)
+	{
+		if (string.IsNullOrEmpty(paramName))
+		{
+			return new InvalidCastException(message ?? Resources.ErrorInvalidCast);
+		}
+
+		// Include param name in message for better diagnostics
+		var finalMessage = (message ?? Resources.ErrorInvalidCast) + " ParamName: " + paramName;
+		return new InvalidCastException(finalMessage);
 	}
 }

@@ -693,6 +693,7 @@ public static class ObjectExtensions
 	/// <summary>Returns <c>true</c> when <paramref name="property"/> should be included in a properties dictionary.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ShouldIncludeProperty), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[RequiresUnreferencedCode("This method calls reflection-based attribute helpers and can break when trimming.")]
 	private static bool ShouldIncludeProperty(PropertyInfo property)
 	{
 		return property.GetAttribute<JsonIgnoreAttribute>() == null && property.GetIndexParameters().Length == 0 && property.CanRead;

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 03-13-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="ControlChars.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -106,7 +106,7 @@ public static class ControlChars
 	/// <summary>
 	/// The double quote character (").
 	/// </summary>
-	public const string DoubleQuote = "''";
+	public const string DoubleQuote = "\"";
 
 	/// <summary>
 	/// An empty string.

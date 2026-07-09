@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-28-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 01-02-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="ExceptionThrower.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -300,7 +300,7 @@ public static partial class ExceptionThrower
 	[Information(nameof(ThrowInvalidCastException), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static void ThrowInvalidCastException([AllowNull] string message, [DisallowNull] string paramName)
 	{
-		throw new InvalidCastException($"{message ?? Resources.ErrorInvalidCast} ParamName: {paramName}");
+		throw CreateInvalidCastException(message, paramName);
 	}
 
 	/// <summary>

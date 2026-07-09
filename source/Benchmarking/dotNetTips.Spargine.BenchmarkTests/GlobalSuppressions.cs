@@ -14,4 +14,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>", Scope = "member", Target = "~M:DotNetTips.Spargine.BenchmarkTests.Program.Main")]
+[assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Top-level benchmark runner purposely catches all exception types to log and return a non-zero exit code; broad catch is intentional for diagnostics.", Scope = "member", Target = "~M:DotNetTips.Spargine.BenchmarkTests.Program.Main")]

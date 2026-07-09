@@ -57,9 +57,27 @@ public static partial class Validator
 	{
 		input = input.ArgumentNotNull();
 
-		if (!input.TryGetNonEnumeratedCount(out var count))
+		// Prefer fast-paths to avoid full enumeration: TryGetNonEnumeratedCount, ICollection<T>, IReadOnlyCollection<T>
+		int count;
+		if (input.TryGetNonEnumeratedCount(out var tmpCount))
 		{
-			count = input.Count();
+			count = tmpCount;
+		}
+		else if (input is ICollection<T> coll)
+		{
+			count = coll.Count;
+		}
+		else if (input is IReadOnlyCollection<T> roColl)
+		{
+			count = roColl.Count;
+		}
+		else
+		{
+			// Last resort: materialize once to avoid multiple enumerations
+			var list = input as IList<T> ?? input.ToList();
+			count = list.Count;
+			// If we materialized, reassign input to the list to avoid re-enumeration by callers
+			input = list;
 		}
 
 		if (count < min || count > max)

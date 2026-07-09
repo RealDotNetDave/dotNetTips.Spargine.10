@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-27-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-03-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -684,4 +684,5 @@ public static class FastStringBuilder
 
 		return estimatedCapacity;
 	}
+
 }
