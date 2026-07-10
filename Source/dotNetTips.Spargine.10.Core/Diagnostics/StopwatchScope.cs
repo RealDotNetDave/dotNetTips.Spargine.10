@@ -3,7 +3,7 @@
 // Author           : Copilot Agent
 // Created          : 07-09-2026
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="StopwatchScope.cs" company="dotNetTips.com - McCarter Consulting">
@@ -37,7 +37,7 @@ public sealed class StopwatchScope : IDisposable
 	/// </summary>
 	/// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public StopwatchScope([AllowNull] Action<TimeSpan>? onDispose = null)
 	{
 		this._stopwatch = Stopwatch.StartNew();
@@ -55,7 +55,7 @@ public sealed class StopwatchScope : IDisposable
 	/// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 	/// <returns>A started stopwatch scope.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static StopwatchScope Start([AllowNull] Action<TimeSpan>? onDispose = null) => new(onDispose);
 
 	/// <summary>

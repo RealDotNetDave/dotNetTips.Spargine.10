@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="ValidatorBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -78,6 +78,69 @@ public class ValidatorBenchmark : Benchmark
 	public void CheckItemsExists_Validation_Inlining()
 	{
 		_ = this.ValidateItemsExist_Validation_Inlining(this._people);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureCountInRange))]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureCountInRange()
+	{
+		var result = this._people.EnsureCountInRange(1, int.MaxValue);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureInRange) + ": double")]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureInRangeDouble()
+	{
+		var result = 50.5d.EnsureInRange(0d, 100d);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureInRange) + ": int")]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureInRangeInt()
+	{
+		var result = 50.EnsureInRange(0, 100);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureInRange) + ": long")]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureInRangeLong()
+	{
+		var result = 50L.EnsureInRange(0L, 100L);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureNotEmpty))]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureNotEmpty()
+	{
+		var result = this._people.EnsureNotEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureNotNullOrEmpty))]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureNotNullOrEmpty()
+	{
+		var result = TestString.EnsureNotNullOrEmpty();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(Validator.EnsureNotNullOrWhiteSpace))]
+	[BenchmarkCategory(Categories.Validation)]
+	public void EnsureNotNullOrWhiteSpace()
+	{
+		var result = TestString.EnsureNotNullOrWhiteSpace();
+
+		this.Consume(result);
 	}
 
 	private string ValidateIsNullOrEmpty_Test_NoValidation(string input)

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="SerializationBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -47,6 +47,24 @@ public class SerializationBenchmark : Benchmark
 	private string _xmlPersonRecord = default!;
 	private string _xmlPersonRef = default!;
 	private FileInfo _xmlSerializeToFile = default!;
+
+	[Benchmark(Description = nameof(JsonSerialization.CreateDefaultOptions))]
+	[BenchmarkCategory(Categories.JSON)]
+	public void CreateDefaultOptions()
+	{
+		var result = JsonSerialization.CreateDefaultOptions();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(JsonSerialization.CreateDefaultOptions) + ": Indented + DateOnly Converters")]
+	[BenchmarkCategory(Categories.JSON)]
+	public void CreateDefaultOptionsIndentedWithConverters()
+	{
+		var result = JsonSerialization.CreateDefaultOptions(writeIndented: true, includeDateOnlyConverters: true);
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = "Deserialize JSON: JsonSerializer + Generator - Person")]
 	[BenchmarkCategory(Categories.JSON, "JsonSerializer")]

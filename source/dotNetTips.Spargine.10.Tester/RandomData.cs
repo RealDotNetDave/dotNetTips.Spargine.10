@@ -336,7 +336,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateBoolean), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateBoolean), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static bool GenerateBoolean()
 	{
 		return RandomNumberGenerator.GetInt32(0, 2) == 1;
@@ -424,7 +424,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A random company name string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCompanyName), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateCompanyName), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateCompanyName()
 	{
 		var suffixes = new[] { "Inc", "Corp", "LLC", "Ltd", "Group", "Solutions", "Technologies", "Systems", "Industries", "Enterprises" };
@@ -524,7 +524,7 @@ public static class RandomData
 	/// <param name="maxValue">The maximum value. Default is 10000.00.</param>
 	/// <returns>A random currency amount with 2 decimal places.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCurrencyAmount), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateCurrencyAmount), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static decimal GenerateCurrencyAmount(decimal minValue = 0.01m, decimal maxValue = 10000.00m)
 	{
 		return GenerateDecimal(minValue, maxValue, 2);
@@ -543,7 +543,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateOnly GenerateDateOnly(DateOnly? minValue = null, DateOnly? maxValue = null)
 	{
 		var min = minValue ?? new DateOnly(2000, 1, 1);
@@ -574,7 +574,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTimeOffset GenerateDateTimeOffset(DateTimeOffset? minValue = null, DateTimeOffset? maxValue = null)
 	{
 		var min = minValue ?? new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
@@ -718,7 +718,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TEnum GenerateEnum<TEnum>() where TEnum : struct, Enum
 	{
 		var values = Enum.GetValues<TEnum>();
@@ -832,7 +832,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A new <see cref="Guid"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Guid GenerateGuid()
 	{
 		return Guid.NewGuid();
@@ -844,7 +844,7 @@ public static class RandomData
 	/// <param name="length">The length of the hash string in characters. Must be at least 1 and at most 128. Default is 32.</param>
 	/// <returns>A random hexadecimal hash string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateHashString), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateHashString), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateHashString(int length = 32)
 	{
 		length = length.ArgumentInRange(min: 1, max: 128, defaultValue: 32);
@@ -878,7 +878,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A string representing a random IPv4 address (e.g., "192.168.1.100").</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateIPv4Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateIPv4Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateIPv4Address()
 	{
 		Span<byte> octets = stackalloc byte[4];
@@ -892,7 +892,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A string representing a random IPv6 address (e.g., "2001:0db8:85a3:0000:0000:8a2e:0370:7334").</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateIPv6Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateIPv6Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateIPv6Address()
 	{
 		Span<byte> bytes = stackalloc byte[16];
@@ -907,7 +907,7 @@ public static class RandomData
 	/// <param name="propertyCount">The number of properties in the JSON object. Must be at least 1. Default is 5.</param>
 	/// <returns>A random JSON object string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateJsonObject), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateJsonObject), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateJsonObject(int propertyCount = 5)
 	{
 		propertyCount = propertyCount.ArgumentInRange(min: 1, defaultValue: 5);
@@ -1085,7 +1085,7 @@ public static class RandomData
 	/// <param name="wordsPerSentence">The number of words per sentence. Must be at least 1. Default is 10.</param>
 	/// <returns>A random paragraph with multiple sentences.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateParagraph), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateParagraph), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateParagraph(int sentenceCount = 5, int wordsPerSentence = 10)
 	{
 		sentenceCount = sentenceCount.ArgumentInRange(min: 1, defaultValue: 5);
@@ -1424,7 +1424,7 @@ public static class RandomData
 	/// <param name="wordCount">The number of words in the sentence. Must be at least 1. Default is 10.</param>
 	/// <returns>A random sentence with proper capitalization and punctuation.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateSentence), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateSentence), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string GenerateSentence(int wordCount = 10)
 	{
 		wordCount = wordCount.ArgumentInRange(min: 1, defaultValue: 10);
@@ -1511,7 +1511,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TimeOnly GenerateTimeOnly(TimeOnly? minValue = null, TimeOnly? maxValue = null)
 	{
 		var min = minValue ?? TimeOnly.MinValue;
@@ -1545,7 +1545,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TimeSpan GenerateTimeSpan(TimeSpan? minValue = null, TimeSpan? maxValue = null)
 	{
 		var min = minValue ?? TimeSpan.Zero;

@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-08-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -154,6 +154,15 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddRangeIfNotExistsNewItems()
+	{
+		var result = this._peopleRefCollection.AddRangeIfNotExists(this.GetPersonRefCollectionToInsert());
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(CollectionExtensions.AddRange) + ": List")]
 	public void AddRangeList()
 	{
@@ -166,6 +175,15 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 	public void AddRangeListNonUnique()
 	{
 		var result = this._peopleRefList.AddRange(this.GetPersonRefCollectionToInsert(), false);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.RemoveWhere))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void RemoveWhere()
+	{
+		var result = this._peopleRefCollection.RemoveWhere(static person => person is not null);
 
 		this.Consume(result);
 	}

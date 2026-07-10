@@ -4,7 +4,7 @@
 // Created          : 07-09-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,9 @@ public class DateTimeExtensionsBenchmark : Benchmark
 	private DateTime _clampValueAboveRange;
 	private DateTime _clampValueBelowRange;
 	private DateTime _clampValueWithinRange;
+	private DateTimeOffset _offsetValue;
 	private DateTime _roundValue;
+	private DateTime _timeValue;
 
 	[Benchmark(Description = nameof(DateTimeExtensions.Clamp) + ": value above maximum")]
 	public void ClampAboveMaximum()
@@ -57,6 +59,20 @@ public class DateTimeExtensionsBenchmark : Benchmark
 	public void ClampWithinRange()
 	{
 		var result = this._clampValueWithinRange.Clamp(this._clampMinimum, this._clampMaximum);
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.EndOfDay) + ": DateTime")]
+	public void EndOfDayDateTime()
+	{
+		var result = this._timeValue.EndOfDay();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.EndOfDay) + ": DateTimeOffset")]
+	public void EndOfDayDateTimeOffset()
+	{
+		var result = this._offsetValue.EndOfDay();
 		this.Consume(result);
 	}
 
@@ -80,6 +96,36 @@ public class DateTimeExtensionsBenchmark : Benchmark
 		this._clampValueBelowRange = new DateTime(2026, 6, 30, 23, 59, 59, DateTimeKind.Utc);
 		this._clampValueAboveRange = new DateTime(2026, 8, 1, 0, 0, 0, DateTimeKind.Utc);
 		this._roundValue = new DateTime(2026, 7, 9, 13, 44, 31, DateTimeKind.Utc);
+		this._timeValue = new DateTime(2026, 7, 9, 13, 45, 30, DateTimeKind.Utc);
+		this._offsetValue = new DateTimeOffset(2026, 7, 9, 13, 45, 30, TimeSpan.FromHours(-8));
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.StartOfDay) + ": DateTime")]
+	public void StartOfDayDateTime()
+	{
+		var result = this._timeValue.StartOfDay();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.StartOfDay) + ": DateTimeOffset")]
+	public void StartOfDayDateTimeOffset()
+	{
+		var result = this._offsetValue.StartOfDay();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.ToDateOnly))]
+	public void ToDateOnly()
+	{
+		var result = this._timeValue.ToDateOnly();
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(DateTimeExtensions.ToTimeOnly))]
+	public void ToTimeOnly()
+	{
+		var result = this._timeValue.ToTimeOnly();
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(DateTimeExtensions.TryParseInvariant) + ": invalid input")]

@@ -39,7 +39,7 @@ internal static class ResourceFormatCache
 	/// <param name="format">The composite format string to look up or parse. Must not be <see langword="null"/> or empty.</param>
 	/// <returns>A <see cref="CompositeFormat"/> instance parsed from <paramref name="format"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="format"/> is <see langword="null"/> or empty.</exception>
-	[Information(nameof(GetOrAdd), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetOrAdd), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	internal static CompositeFormat GetOrAdd([DisallowNull] string format)
 	{
 		format = format.ArgumentNotNullOrEmpty();

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-02-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-09-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="EnumHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -27,6 +27,16 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests;
 [MemoryDiagnoser]
 public class EnumHelperBenchmark : Benchmark
 {
+
+	private const AttributeTargets FlagsValue = AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field;
+
+	[Benchmark(Description = nameof(EnumHelper.FlagCount))]
+	public void FlagCount()
+	{
+		var result = EnumHelper.FlagCount(FlagsValue);
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(EnumHelper.GetDescription))]
 	public void GetDescription()
@@ -57,6 +67,14 @@ public class EnumHelperBenchmark : Benchmark
 	public void GetItems_FixNamesTrue()
 	{
 		var result = EnumHelper.GetItems<RequestCacheLevel>(true);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(EnumHelper.GetSetFlags))]
+	public void GetSetFlags()
+	{
+		var result = EnumHelper.GetSetFlags(FlagsValue);
 
 		this.Consume(result);
 	}

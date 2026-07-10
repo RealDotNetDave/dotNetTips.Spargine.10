@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-28-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -111,5 +111,14 @@ public class CollectionExtensionsCollectionBenchmark : LargeCollectionBenchmark
 		var result = this._peopleRefCollection.ToFrozenSet();
 
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.TryGetFirst))]
+	public void TryGetFirst()
+	{
+		var result = this._peopleRefCollection.TryGetFirst(out var first);
+
+		this.Consume(result);
+		this.Consume(first);
 	}
 }

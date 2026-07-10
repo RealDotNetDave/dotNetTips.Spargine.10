@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// <returns>A read-only collection containing the names of active network interfaces.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetActiveNetworkInterfaceNames), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetActiveNetworkInterfaceNames), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ReadOnlyCollection<string> GetActiveNetworkInterfaceNames()
 	{
 		var connections = GetNetworkConnections();

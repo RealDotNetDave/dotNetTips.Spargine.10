@@ -4,7 +4,7 @@
 // Created          : 03-06-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -45,6 +45,24 @@ public class FastStringBuilderBenchmark : Benchmark
 		var result = sb.AppendFormat("Word1 {0}, Word2 {1}, Word3 {1}", this._words);
 
 		this.Consume(result.ToString());
+	}
+
+	[Benchmark(Description = nameof(FastStringBuilder.FormatCurrentCulture))]
+	[BenchmarkCategory(Categories.Strings, Categories.Globalization)]
+	public void FormatCurrentCulture()
+	{
+		var result = FastStringBuilder.FormatCurrentCulture("Word1 {0}, Word2 {1}, Word3 {1}", this._words);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(FastStringBuilder.FormatInvariant))]
+	[BenchmarkCategory(Categories.Strings, Categories.Globalization)]
+	public void FormatInvariant()
+	{
+		var result = FastStringBuilder.FormatInvariant("Word1 {0}, Word2 {1}, Word3 {1}", this._words);
+
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(FastStringBuilder.Remove))]

@@ -79,7 +79,7 @@ public static class DateTimeExtensions
 	/// <returns>The final tick of the day (23:59:59.9999999).</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTime EndOfDay(this in DateTime value)
 	{
 		return value.Date.AddDays(1).AddTicks(-1);
@@ -92,7 +92,7 @@ public static class DateTimeExtensions
 	/// <returns>The final tick of the day using the original offset.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTimeOffset EndOfDay(this in DateTimeOffset value)
 	{
 		return new DateTimeOffset(value.Date.AddDays(1).AddTicks(-1), value.Offset);
@@ -440,7 +440,7 @@ public static class DateTimeExtensions
 	/// <returns>The date at midnight.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTime StartOfDay(this in DateTime value) => value.Date;
 
 	/// <summary>
@@ -450,7 +450,7 @@ public static class DateTimeExtensions
 	/// <returns>The date at midnight using the original offset.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateTimeOffset StartOfDay(this in DateTimeOffset value) =>
 		new(value.Year, value.Month, value.Day, 0, 0, 0, value.Offset);
 
@@ -517,7 +517,7 @@ public static class DateTimeExtensions
 	/// <returns>The date component as a <see cref="DateOnly"/>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDateOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToDateOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static DateOnly ToDateOnly(this in DateTime value) => DateOnly.FromDateTime(value);
 
 	/// <summary>
@@ -663,7 +663,7 @@ public static class DateTimeExtensions
 	/// <returns>The time component as a <see cref="TimeOnly"/>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToTimeOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ToTimeOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static TimeOnly ToTimeOnly(this in DateTime value) => TimeOnly.FromDateTime(value);
 
 	/// <summary>

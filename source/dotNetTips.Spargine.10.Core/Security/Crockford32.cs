@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 05-14-2026
 //
-// Last Modified By : David McCarter
+// Last Modified By : Copilot Agent
 // Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="Crockford32.cs" company="dotNetTips.com - McCarter Consulting">
@@ -46,7 +46,7 @@ public static class Crockford32
 	/// </returns>
 	/// <exception cref="FormatException">Thrown when the input contains a character that is not valid in the Crockford Base32 alphabet.</exception>
 	[Pure]
-	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static byte[] Decode(string text)
 	{
 		if (string.IsNullOrWhiteSpace(text))
@@ -92,7 +92,7 @@ public static class Crockford32
 	/// or <see cref="string.Empty"/> if <paramref name="data"/> is empty.
 	/// </returns>
 	[Pure]
-	[Information(nameof(Encode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Encode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string Encode(ReadOnlySpan<byte> data)
 	{
 		if (data.Length == 0)

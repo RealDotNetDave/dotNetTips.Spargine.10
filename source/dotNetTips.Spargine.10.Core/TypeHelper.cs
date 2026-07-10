@@ -1411,7 +1411,7 @@ public static class TypeHelper
 	/// </summary>
 	/// <param name="type">The type to inspect.</param>
 	/// <returns>The underlying non-nullable type if <paramref name="type"/> is nullable; otherwise, <see langword="null"/>.</returns>
-	[Information(nameof(GetUnderlyingType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetUnderlyingType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static Type? GetUnderlyingType([AllowNull] Type? type)
 	{
 		return type is null ? null : Nullable.GetUnderlyingType(type);

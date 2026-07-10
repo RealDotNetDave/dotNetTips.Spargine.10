@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="TypeHelperBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -43,6 +43,7 @@ public class TypeHelperBenchmark : Benchmark
 {
 
 	private readonly int _collectionCount = 50;
+	private readonly Type _nullableType = typeof(int?);
 	private string _jsonPersonRef = default!;
 	private List<Person> _people = default!;
 
@@ -456,6 +457,15 @@ public class TypeHelperBenchmark : Benchmark
 	public void GetTypeMembersWithAttribute()
 	{
 		var result = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(TypeHelper.GetUnderlyingType))]
+	[BenchmarkCategory(Categories.Reflection)]
+	public void GetUnderlyingType()
+	{
+		var result = TypeHelper.GetUnderlyingType(this._nullableType);
 
 		this.Consume(result);
 	}
