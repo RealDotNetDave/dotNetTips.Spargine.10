@@ -3402,7 +3402,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -3413,7 +3413,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -3545,7 +3545,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -3583,7 +3583,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -4371,7 +4371,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -4382,7 +4382,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -4888,7 +4888,7 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** GetActiveNetworkInterfaceNames
 
@@ -5530,9 +5530,9 @@
 ### System.Text.CompositeFormat GetOrAdd(System.String format)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** None
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Not Required
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
 * **Description:** GetOrAdd
@@ -5570,7 +5570,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -5581,7 +5581,7 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -5762,7 +5762,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -6154,7 +6154,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -6177,7 +6177,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Check Performance
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
@@ -6532,7 +6532,7 @@
 
 * **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** GetUnderlyingType
 
@@ -7439,7 +7439,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureCountInRange
 
@@ -7447,7 +7447,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureInRange
 
@@ -7455,7 +7455,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureInRange
 
@@ -7463,7 +7463,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureInRange
 
@@ -7471,7 +7471,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureNotEmpty
 
@@ -7479,7 +7479,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureNotNullOrEmpty
 
@@ -7487,7 +7487,7 @@
 
 * **Status:** Available
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Completed
 * **Unit Test Status:** None
 * **Description:** EnsureNotNullOrWhiteSpace
 
@@ -7525,4 +7525,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/10/2026 7:47:25 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/10/2026 8:12:03 PM UTC**
