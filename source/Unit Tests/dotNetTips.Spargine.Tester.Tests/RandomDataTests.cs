@@ -330,6 +330,29 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateBoolean_ReturnsTrueOrFalse()
+	{
+		var trueCount = 0;
+		var falseCount = 0;
+		const int iterations = 100;
+
+		for (var iteration = 0; iteration < iterations; iteration++)
+		{
+			if (RandomData.GenerateBoolean())
+			{
+				trueCount++;
+			}
+			else
+			{
+				falseCount++;
+			}
+		}
+
+		Assert.IsTrue(trueCount > 0);
+		Assert.IsTrue(falseCount > 0);
+	}
+
+	[TestMethod]
 	public void GenerateByteArray_InvalidCount_UsesDefaultValue()
 	{
 		var result = RandomData.GenerateByteArray(0);
@@ -389,6 +412,26 @@ public class RandomDataTests
 		var character = RandomData.GenerateCharacter('A', 'C');
 
 		Assert.IsNotNull(character);
+	}
+
+	[TestMethod]
+	public void GenerateCompanyName_ReturnsUniqueValues()
+	{
+		var name1 = RandomData.GenerateCompanyName();
+		var name2 = RandomData.GenerateCompanyName();
+
+		Assert.AreNotEqual(name1, name2);
+	}
+
+	[TestMethod]
+	public void GenerateCompanyName_ReturnsValidCompanyName()
+	{
+		var companyName = RandomData.GenerateCompanyName();
+
+		Assert.IsNotNull(companyName);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(companyName));
+		Assert.IsTrue(companyName.Contains(' '));
+		Assert.IsTrue(char.IsUpper(companyName[0]));
 	}
 
 	[TestMethod]
@@ -520,6 +563,68 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateCurrencyAmount_CustomRange_ReturnsValueInRange()
+	{
+		var amount = RandomData.GenerateCurrencyAmount(100.00m, 200.00m);
+
+		Assert.IsTrue(amount >= 100.00m);
+		Assert.IsTrue(amount <= 200.00m);
+	}
+
+	[TestMethod]
+	public void GenerateCurrencyAmount_DefaultRange_ReturnsValueInRange()
+	{
+		var amount = RandomData.GenerateCurrencyAmount();
+
+		Assert.IsTrue(amount >= 0.01m);
+		Assert.IsTrue(amount <= 10000.00m);
+	}
+
+	[TestMethod]
+	public void GenerateDateOnly_CustomRange_ReturnsDateInRange()
+	{
+		var minDate = new DateOnly(2020, 6, 1);
+		var maxDate = new DateOnly(2020, 6, 30);
+		var date = RandomData.GenerateDateOnly(minDate, maxDate);
+
+		Assert.IsTrue(date >= minDate);
+		Assert.IsTrue(date <= maxDate);
+	}
+
+	[TestMethod]
+	public void GenerateDateOnly_DefaultRange_ReturnsValidDate()
+	{
+		var date = RandomData.GenerateDateOnly();
+		var minDate = new DateOnly(2000, 1, 1);
+		var maxDate = new DateOnly(2099, 12, 31);
+
+		Assert.IsTrue(date >= minDate);
+		Assert.IsTrue(date <= maxDate);
+	}
+
+	[TestMethod]
+	public void GenerateDateTimeOffset_CustomRange_ReturnsDateTimeInRange()
+	{
+		var minDateTime = new DateTimeOffset(2020, 6, 1, 0, 0, 0, TimeSpan.Zero);
+		var maxDateTime = new DateTimeOffset(2020, 6, 30, 23, 59, 59, TimeSpan.Zero);
+		var dateTime = RandomData.GenerateDateTimeOffset(minDateTime, maxDateTime);
+
+		Assert.IsTrue(dateTime >= minDateTime);
+		Assert.IsTrue(dateTime <= maxDateTime);
+	}
+
+	[TestMethod]
+	public void GenerateDateTimeOffset_DefaultRange_ReturnsValidDateTime()
+	{
+		var dateTime = RandomData.GenerateDateTimeOffset();
+		var minDateTime = new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
+		var maxDateTime = new DateTimeOffset(2099, 12, 31, 23, 59, 59, TimeSpan.Zero);
+
+		Assert.IsTrue(dateTime >= minDateTime);
+		Assert.IsTrue(dateTime <= maxDateTime);
+	}
+
+	[TestMethod]
 	public void GenerateDecimal_ZeroDecimalPlaces_ReturnsWholeNumber()
 	{
 		var decimalValue = RandomData.GenerateDecimal(0, 100, 0);
@@ -571,6 +676,29 @@ public class RandomDataTests
 		var stringValue = RandomData.GenerateEmailAddress();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateEnum_DayOfWeek_ReturnsValidDayOfWeek()
+	{
+		var day = RandomData.GenerateEnum<DayOfWeek>();
+		var validDays = Enum.GetValues<DayOfWeek>();
+
+		Assert.IsTrue(validDays.Contains(day));
+	}
+
+	[TestMethod]
+	public void GenerateEnum_ReturnsDistinctValues()
+	{
+		var results = new HashSet<DayOfWeek>();
+		const int iterations = 100;
+
+		for (var iteration = 0; iteration < iterations; iteration++)
+		{
+			_ = results.Add(RandomData.GenerateEnum<DayOfWeek>());
+		}
+
+		Assert.IsTrue(results.Count > 1);
 	}
 
 	[TestMethod]
@@ -734,6 +862,35 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateHashString_CustomLength_ReturnsCorrectLength()
+	{
+		var hash = RandomData.GenerateHashString(64);
+
+		Assert.IsNotNull(hash);
+		Assert.AreEqual(64, hash.Length);
+		Assert.IsTrue(hash.All(c => char.IsAsciiHexDigitLower(c)));
+	}
+
+	[TestMethod]
+	public void GenerateHashString_DefaultLength_Returns32CharHexString()
+	{
+		var hash = RandomData.GenerateHashString();
+
+		Assert.IsNotNull(hash);
+		Assert.AreEqual(32, hash.Length);
+		Assert.IsTrue(hash.All(c => char.IsAsciiHexDigitLower(c)));
+	}
+
+	[TestMethod]
+	public void GenerateHashString_ReturnsUniqueValues()
+	{
+		var hash1 = RandomData.GenerateHashString();
+		var hash2 = RandomData.GenerateHashString();
+
+		Assert.AreNotEqual(hash1, hash2);
+	}
+
+	[TestMethod]
 	public void GenerateInteger_DefaultParameters_ReturnsValue()
 	{
 		var intValue = RandomData.GenerateInteger();
@@ -748,6 +905,80 @@ public class RandomDataTests
 
 		Assert.IsGreaterThanOrEqualTo(0, intValue);
 		Assert.IsLessThanOrEqualTo(1000, intValue);
+	}
+
+	[TestMethod]
+	public void GenerateIPv4Address_ReturnsUniqueValues()
+	{
+		var ip1 = RandomData.GenerateIPv4Address();
+		var ip2 = RandomData.GenerateIPv4Address();
+
+		Assert.AreNotEqual(ip1, ip2);
+	}
+
+	[TestMethod]
+	public void GenerateIPv4Address_ReturnsValidFormat()
+	{
+		var ipv4 = RandomData.GenerateIPv4Address();
+
+		Assert.IsNotNull(ipv4);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(ipv4));
+
+		var parts = ipv4.Split('.');
+		Assert.AreEqual(4, parts.Length);
+
+		foreach (var part in parts)
+		{
+			Assert.IsTrue(byte.TryParse(part, out _));
+		}
+	}
+
+	[TestMethod]
+	public void GenerateIPv6Address_ReturnsUniqueValues()
+	{
+		var ip1 = RandomData.GenerateIPv6Address();
+		var ip2 = RandomData.GenerateIPv6Address();
+
+		Assert.AreNotEqual(ip1, ip2);
+	}
+
+	[TestMethod]
+	public void GenerateIPv6Address_ReturnsValidFormat()
+	{
+		var ipv6 = RandomData.GenerateIPv6Address();
+
+		Assert.IsNotNull(ipv6);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(ipv6));
+
+		var parts = ipv6.Split(':');
+		Assert.AreEqual(8, parts.Length);
+
+		foreach (var part in parts)
+		{
+			Assert.AreEqual(4, part.Length);
+			Assert.IsTrue(part.All(c => char.IsAsciiHexDigit(c)));
+		}
+	}
+
+	[TestMethod]
+	public void GenerateJsonObject_CustomPropertyCount_ReturnsCorrectNumberOfProperties()
+	{
+		var json = RandomData.GenerateJsonObject(3);
+
+		Assert.IsNotNull(json);
+		var colonCount = json.Count(c => c == ':');
+		Assert.AreEqual(3, colonCount);
+	}
+
+	[TestMethod]
+	public void GenerateJsonObject_DefaultPropertyCount_ReturnsValidJson()
+	{
+		var json = RandomData.GenerateJsonObject();
+
+		Assert.IsNotNull(json);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(json));
+		Assert.IsTrue(json.StartsWith('{'));
+		Assert.IsTrue(json.EndsWith('}'));
 	}
 
 	[TestMethod]
@@ -1008,6 +1239,35 @@ public class RandomDataTests
 		Assert.IsNotNull(stringValue);
 
 		Assert.AreEqual(15, stringValue.Length);
+	}
+
+	[TestMethod]
+	public void GenerateParagraph_CustomParameters_ReturnsCorrectSentenceCount()
+	{
+		var paragraph = RandomData.GenerateParagraph(3, 5);
+
+		Assert.IsNotNull(paragraph);
+		var sentenceCount = paragraph.Count(c => c == '.');
+		Assert.AreEqual(3, sentenceCount);
+	}
+
+	[TestMethod]
+	public void GenerateParagraph_DefaultParameters_ReturnsValidParagraph()
+	{
+		var paragraph = RandomData.GenerateParagraph();
+
+		Assert.IsNotNull(paragraph);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(paragraph));
+		Assert.IsTrue(char.IsUpper(paragraph[0]));
+	}
+
+	[TestMethod]
+	public void GenerateParagraph_ReturnsUniqueValues()
+	{
+		var paragraph1 = RandomData.GenerateParagraph();
+		var paragraph2 = RandomData.GenerateParagraph();
+
+		Assert.AreNotEqual(paragraph1, paragraph2);
 	}
 
 	[TestMethod]
@@ -1492,6 +1752,36 @@ public class RandomDataTests
 	}
 
 	[TestMethod]
+	public void GenerateSentence_CustomWordCount_ReturnsCorrectWordCount()
+	{
+		var sentence = RandomData.GenerateSentence(5);
+
+		Assert.IsNotNull(sentence);
+		var wordCount = sentence.TrimEnd('.').Split(' ').Length;
+		Assert.AreEqual(5, wordCount);
+	}
+
+	[TestMethod]
+	public void GenerateSentence_DefaultWordCount_ReturnsValidSentence()
+	{
+		var sentence = RandomData.GenerateSentence();
+
+		Assert.IsNotNull(sentence);
+		Assert.IsFalse(string.IsNullOrWhiteSpace(sentence));
+		Assert.IsTrue(char.IsUpper(sentence[0]));
+		Assert.IsTrue(sentence.EndsWith('.'));
+	}
+
+	[TestMethod]
+	public void GenerateSentence_ReturnsUniqueValues()
+	{
+		var sentence1 = RandomData.GenerateSentence();
+		var sentence2 = RandomData.GenerateSentence();
+
+		Assert.AreNotEqual(sentence1, sentence2);
+	}
+
+	[TestMethod]
 	public void GenerateTempFile_DefaultLength_ReturnsFile()
 	{
 		var filePath = RandomData.GenerateTempFile();
@@ -1519,6 +1809,46 @@ public class RandomDataTests
 		Assert.AreEqual(FileLength, tempFile.Length);
 
 		tempFile.Delete();
+	}
+
+	[TestMethod]
+	public void GenerateTimeOnly_CustomRange_ReturnsTimeInRange()
+	{
+		var minTime = new TimeOnly(9, 0, 0);
+		var maxTime = new TimeOnly(17, 0, 0);
+		var time = RandomData.GenerateTimeOnly(minTime, maxTime);
+
+		Assert.IsTrue(time >= minTime);
+		Assert.IsTrue(time <= maxTime);
+	}
+
+	[TestMethod]
+	public void GenerateTimeOnly_DefaultRange_ReturnsValidTime()
+	{
+		var time = RandomData.GenerateTimeOnly();
+
+		Assert.IsTrue(time >= TimeOnly.MinValue);
+		Assert.IsTrue(time <= TimeOnly.MaxValue);
+	}
+
+	[TestMethod]
+	public void GenerateTimeSpan_CustomRange_ReturnsTimeSpanInRange()
+	{
+		var minTimeSpan = TimeSpan.FromHours(1);
+		var maxTimeSpan = TimeSpan.FromHours(24);
+		var timeSpan = RandomData.GenerateTimeSpan(minTimeSpan, maxTimeSpan);
+
+		Assert.IsTrue(timeSpan >= minTimeSpan);
+		Assert.IsTrue(timeSpan <= maxTimeSpan);
+	}
+
+	[TestMethod]
+	public void GenerateTimeSpan_DefaultRange_ReturnsValidTimeSpan()
+	{
+		var timeSpan = RandomData.GenerateTimeSpan();
+
+		Assert.IsTrue(timeSpan >= TimeSpan.Zero);
+		Assert.IsTrue(timeSpan <= TimeSpan.FromDays(365));
 	}
 
 	[TestMethod]

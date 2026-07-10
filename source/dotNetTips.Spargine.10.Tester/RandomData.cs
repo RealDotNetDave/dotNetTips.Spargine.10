@@ -127,6 +127,11 @@ public static class RandomData
 	private static readonly Lazy<string[]> _domainExtensions = Resources.DomainExtentions.Split(Core.ControlChars.Comma, StringSplitOptions.RemoveEmptyEntries).ToLazy();
 
 	/// <summary>
+	/// Cached composite format for the enum-without-values error message.
+	/// </summary>
+	private static readonly CompositeFormat _errorEnumHasNoDefinedValues = CompositeFormat.Parse(Resources.ErrorEnumHasNoDefinedValues);
+
+	/// <summary>
 	/// Cached composite format for the "type not supported by method" error message.
 	/// </summary>
 	private static readonly CompositeFormat _errorTypeNotSupportedByMethod = CompositeFormat.Parse(Resources.ErrorTypeNotSupportedByMethod);
@@ -321,6 +326,23 @@ public static class RandomData
 	}
 
 	/// <summary>
+	/// Generates a random boolean value.
+	/// </summary>
+	/// <returns><c>true</c> or <c>false</c> with equal probability.</returns>
+	/// <example>
+	/// <code>
+	/// bool randomBool = RandomData.GenerateBoolean();
+	/// // Output: true or false
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateBoolean), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static bool GenerateBoolean()
+	{
+		return RandomNumberGenerator.GetInt32(0, 2) == 1;
+	}
+
+	/// <summary>
 	/// Generates a byte array of a specified size filled with cryptographically secure random data.
 	/// </summary>
 	/// <param name="count">The number of bytes to generate in the array. Must be at least 1.</param>
@@ -395,6 +417,20 @@ public static class RandomData
 	public static char GenerateCharacter(char minValue, char maxValue)
 	{
 		return (char)GenerateInteger(minValue, maxValue);
+	}
+
+	/// <summary>
+	/// Generates a random company name.
+	/// </summary>
+	/// <returns>A random company name string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateCompanyName), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateCompanyName()
+	{
+		var suffixes = new[] { "Inc", "Corp", "LLC", "Ltd", "Group", "Solutions", "Technologies", "Systems", "Industries", "Enterprises" };
+		var word = GenerateWord(5, 12, 'a', 'z');
+
+		return $"{char.ToUpperInvariant(word[0])}{word.AsSpan(1)} {suffixes[RandomNumberGenerator.GetInt32(0, suffixes.Length)]}";
 	}
 
 	/// <summary>
@@ -479,6 +515,84 @@ public static class RandomData
 		count = count.ArgumentInRange(min: 1, defaultValue: 2);
 
 		return RandomCreditCardNumberGenerator.GetCreditCardNumbers(count).ToReadOnlyCollection();
+	}
+
+	/// <summary>
+	/// Generates a random currency amount with the specified decimal places.
+	/// </summary>
+	/// <param name="minValue">The minimum value. Default is 0.01.</param>
+	/// <param name="maxValue">The maximum value. Default is 10000.00.</param>
+	/// <returns>A random currency amount with 2 decimal places.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateCurrencyAmount), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static decimal GenerateCurrencyAmount(decimal minValue = 0.01m, decimal maxValue = 10000.00m)
+	{
+		return GenerateDecimal(minValue, maxValue, 2);
+	}
+
+	/// <summary>
+	/// Generates a random <see cref="DateOnly"/> within a specified range.
+	/// </summary>
+	/// <param name="minValue">The minimum date. Defaults to January 1, 2000.</param>
+	/// <param name="maxValue">The maximum date. Defaults to December 31, 2099.</param>
+	/// <returns>A random <see cref="DateOnly"/> between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
+	/// <example>
+	/// <code>
+	/// DateOnly randomDate = RandomData.GenerateDateOnly();
+	/// // Output: 2045-07-15
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateOnly GenerateDateOnly(DateOnly? minValue = null, DateOnly? maxValue = null)
+	{
+		var min = minValue ?? new DateOnly(2000, 1, 1);
+		var max = maxValue ?? new DateOnly(2099, 12, 31);
+
+		var range = max.DayNumber - min.DayNumber;
+
+		if (range <= 0)
+		{
+			return min;
+		}
+
+		var randomDays = RandomNumberGenerator.GetInt32(0, range + 1);
+
+		return min.AddDays(randomDays);
+	}
+
+	/// <summary>
+	/// Generates a random <see cref="DateTimeOffset"/> within a specified range.
+	/// </summary>
+	/// <param name="minValue">The minimum date/time. Defaults to January 1, 2000 at midnight UTC.</param>
+	/// <param name="maxValue">The maximum date/time. Defaults to December 31, 2099 at 23:59:59 UTC.</param>
+	/// <returns>A random <see cref="DateTimeOffset"/> between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
+	/// <example>
+	/// <code>
+	/// DateTimeOffset randomDateTime = RandomData.GenerateDateTimeOffset();
+	/// // Output: 2045-07-15T14:32:18+00:00
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTimeOffset GenerateDateTimeOffset(DateTimeOffset? minValue = null, DateTimeOffset? maxValue = null)
+	{
+		var min = minValue ?? new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
+		var max = maxValue ?? new DateTimeOffset(2099, 12, 31, 23, 59, 59, TimeSpan.Zero);
+
+		var range = (max - min).Ticks;
+
+		if (range <= 0)
+		{
+			return min;
+		}
+
+		// Generate a cryptographically secure random long by combining two 32-bit integers
+		Span<byte> buffer = stackalloc byte[8];
+		RandomNumberGenerator.Fill(buffer);
+		var randomValue = Math.Abs(BitConverter.ToInt64(buffer)) % (range + 1);
+
+		return min.AddTicks(randomValue);
 	}
 
 	/// <summary>
@@ -592,6 +706,34 @@ public static class RandomData
 	}
 
 	/// <summary>
+	/// Generates a random value from the specified enum type.
+	/// </summary>
+	/// <typeparam name="TEnum">The enum type to generate a random value from.</typeparam>
+	/// <returns>A random value from <typeparamref name="TEnum"/>.</returns>
+	/// <exception cref="InvalidOperationException">Thrown when the enum has no defined values.</exception>
+	/// <example>
+	/// <code>
+	/// DayOfWeek randomDay = RandomData.GenerateEnum&lt;DayOfWeek&gt;();
+	/// // Output: Wednesday
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TEnum GenerateEnum<TEnum>() where TEnum : struct, Enum
+	{
+		var values = Enum.GetValues<TEnum>();
+
+		if (values.Length == 0)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(string.Format(CultureInfo.InvariantCulture, _errorEnumHasNoDefinedValues, Array.Empty<object>()));
+		}
+
+		var randomIndex = RandomNumberGenerator.GetInt32(0, values.Length);
+
+		return values[randomIndex];
+	}
+
+	/// <summary>
 	/// Generates a file with random content.
 	/// </summary>
 	/// <param name="fileName">The name of the file to generate.</param>
@@ -690,10 +832,28 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A new <see cref="Guid"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static Guid GenerateGuid()
 	{
 		return Guid.NewGuid();
+	}
+
+	/// <summary>
+	/// Generates a random hexadecimal hash string of the specified length.
+	/// </summary>
+	/// <param name="length">The length of the hash string in characters. Must be at least 1 and at most 128. Default is 32.</param>
+	/// <returns>A random hexadecimal hash string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateHashString), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateHashString(int length = 32)
+	{
+		length = length.ArgumentInRange(min: 1, max: 128, defaultValue: 32);
+
+		var byteCount = (length + 1) / 2;
+		Span<byte> bytes = stackalloc byte[byteCount];
+		RandomNumberGenerator.Fill(bytes);
+
+		return Convert.ToHexStringLower(bytes)[..length];
 	}
 
 	/// <summary>
@@ -711,6 +871,80 @@ public static class RandomData
 		max = max.EnsureMinimum(min + 1);
 
 		return RandomNumberGenerator.GetInt32(min, max);
+	}
+
+	/// <summary>
+	/// Generates a random IPv4 address string.
+	/// </summary>
+	/// <returns>A string representing a random IPv4 address (e.g., "192.168.1.100").</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateIPv4Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateIPv4Address()
+	{
+		Span<byte> octets = stackalloc byte[4];
+		RandomNumberGenerator.Fill(octets);
+
+		return $"{octets[0]}.{octets[1]}.{octets[2]}.{octets[3]}";
+	}
+
+	/// <summary>
+	/// Generates a random IPv6 address string.
+	/// </summary>
+	/// <returns>A string representing a random IPv6 address (e.g., "2001:0db8:85a3:0000:0000:8a2e:0370:7334").</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateIPv6Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateIPv6Address()
+	{
+		Span<byte> bytes = stackalloc byte[16];
+		RandomNumberGenerator.Fill(bytes);
+
+		return $"{bytes[0]:x2}{bytes[1]:x2}:{bytes[2]:x2}{bytes[3]:x2}:{bytes[4]:x2}{bytes[5]:x2}:{bytes[6]:x2}{bytes[7]:x2}:{bytes[8]:x2}{bytes[9]:x2}:{bytes[10]:x2}{bytes[11]:x2}:{bytes[12]:x2}{bytes[13]:x2}:{bytes[14]:x2}{bytes[15]:x2}";
+	}
+
+	/// <summary>
+	/// Generates a random JSON object string with the specified number of properties.
+	/// </summary>
+	/// <param name="propertyCount">The number of properties in the JSON object. Must be at least 1. Default is 5.</param>
+	/// <returns>A random JSON object string.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateJsonObject), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateJsonObject(int propertyCount = 5)
+	{
+		propertyCount = propertyCount.ArgumentInRange(min: 1, defaultValue: 5);
+
+		var sb = _stringBuilderPool.Get();
+
+		try
+		{
+			_ = sb.Append(Core.ControlChars.StartBrace);
+
+			for (var propertyIndex = 0; propertyIndex < propertyCount; propertyIndex++)
+			{
+				if (propertyIndex > 0)
+				{
+					_ = sb.Append(Core.ControlChars.Comma);
+				}
+
+				var key = GenerateWord(5, 10, 'a', 'z');
+				var value = GenerateWord(5, 15, 'a', 'z');
+
+				_ = sb.Append(Core.ControlChars.Quote);
+				_ = sb.Append(key);
+				_ = sb.Append(Core.ControlChars.Quote);
+				_ = sb.Append(Core.ControlChars.Colon);
+				_ = sb.Append(Core.ControlChars.Quote);
+				_ = sb.Append(value);
+				_ = sb.Append(Core.ControlChars.Quote);
+			}
+
+			_ = sb.Append(Core.ControlChars.EndBrace);
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
 	}
 
 	/// <summary>
@@ -841,6 +1075,41 @@ public static class RandomData
 			{
 				ArrayPool<char>.Shared.Return(rentedChars);
 			}
+		}
+	}
+
+	/// <summary>
+	/// Generates a random paragraph with the specified number of sentences.
+	/// </summary>
+	/// <param name="sentenceCount">The number of sentences in the paragraph. Must be at least 1. Default is 5.</param>
+	/// <param name="wordsPerSentence">The number of words per sentence. Must be at least 1. Default is 10.</param>
+	/// <returns>A random paragraph with multiple sentences.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateParagraph), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateParagraph(int sentenceCount = 5, int wordsPerSentence = 10)
+	{
+		sentenceCount = sentenceCount.ArgumentInRange(min: 1, defaultValue: 5);
+		wordsPerSentence = wordsPerSentence.ArgumentInRange(min: 1, defaultValue: 10);
+
+		var sb = _stringBuilderPool.Get();
+
+		try
+		{
+			for (var sentenceIndex = 0; sentenceIndex < sentenceCount; sentenceIndex++)
+			{
+				if (sentenceIndex > 0)
+				{
+					_ = sb.Append(Core.ControlChars.Space);
+				}
+
+				_ = sb.Append(GenerateSentence(wordsPerSentence));
+			}
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -1150,6 +1419,47 @@ public static class RandomData
 	}
 
 	/// <summary>
+	/// Generates a random sentence with the specified number of words.
+	/// </summary>
+	/// <param name="wordCount">The number of words in the sentence. Must be at least 1. Default is 10.</param>
+	/// <returns>A random sentence with proper capitalization and punctuation.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateSentence), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static string GenerateSentence(int wordCount = 10)
+	{
+		wordCount = wordCount.ArgumentInRange(min: 1, defaultValue: 10);
+
+		var sb = _stringBuilderPool.Get();
+
+		try
+		{
+			for (var wordIndex = 0; wordIndex < wordCount; wordIndex++)
+			{
+				var word = GenerateWord(3, 10, 'a', 'z');
+
+				if (wordIndex == 0)
+				{
+					_ = sb.Append(char.ToUpperInvariant(word[0]));
+					_ = sb.Append(word.AsSpan(1));
+				}
+				else
+				{
+					_ = sb.Append(Core.ControlChars.Space);
+					_ = sb.Append(word);
+				}
+			}
+
+			_ = sb.Append(Core.ControlChars.Dot);
+
+			return sb.ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
+	}
+
+	/// <summary>
 	/// Generates a temporary file with random content.
 	/// </summary>
 	/// <param name="fileLength">The length of the file in characters. Default is <see cref="DefaultFileLength"/>.</param>
@@ -1186,6 +1496,74 @@ public static class RandomData
 		}
 
 		return fileName;
+	}
+
+	/// <summary>
+	/// Generates a random <see cref="TimeOnly"/> within a specified range.
+	/// </summary>
+	/// <param name="minValue">The minimum time. Defaults to midnight (00:00:00).</param>
+	/// <param name="maxValue">The maximum time. Defaults to 23:59:59.9999999.</param>
+	/// <returns>A random <see cref="TimeOnly"/> between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
+	/// <example>
+	/// <code>
+	/// TimeOnly randomTime = RandomData.GenerateTimeOnly();
+	/// // Output: 14:32:18
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TimeOnly GenerateTimeOnly(TimeOnly? minValue = null, TimeOnly? maxValue = null)
+	{
+		var min = minValue ?? TimeOnly.MinValue;
+		var max = maxValue ?? TimeOnly.MaxValue;
+
+		var range = max.Ticks - min.Ticks;
+
+		if (range <= 0)
+		{
+			return min;
+		}
+
+		// Generate a cryptographically secure random long by combining two 32-bit integers
+		Span<byte> buffer = stackalloc byte[8];
+		RandomNumberGenerator.Fill(buffer);
+		var randomValue = Math.Abs(BitConverter.ToInt64(buffer)) % (range + 1);
+
+		return min.Add(TimeSpan.FromTicks(randomValue));
+	}
+
+	/// <summary>
+	/// Generates a random <see cref="TimeSpan"/> within a specified range.
+	/// </summary>
+	/// <param name="minValue">The minimum time span. Defaults to <see cref="TimeSpan.Zero"/>.</param>
+	/// <param name="maxValue">The maximum time span. Defaults to 365 days.</param>
+	/// <returns>A random <see cref="TimeSpan"/> between <paramref name="minValue"/> and <paramref name="maxValue"/>.</returns>
+	/// <example>
+	/// <code>
+	/// TimeSpan randomDuration = RandomData.GenerateTimeSpan();
+	/// // Output: 15.07:32:18.1234567
+	/// </code>
+	/// </example>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TimeSpan GenerateTimeSpan(TimeSpan? minValue = null, TimeSpan? maxValue = null)
+	{
+		var min = minValue ?? TimeSpan.Zero;
+		var max = maxValue ?? TimeSpan.FromDays(365);
+
+		var range = (max - min).Ticks;
+
+		if (range <= 0)
+		{
+			return min;
+		}
+
+		// Generate a cryptographically secure random long by combining two 32-bit integers
+		Span<byte> buffer = stackalloc byte[8];
+		RandomNumberGenerator.Fill(buffer);
+		var randomValue = Math.Abs(BitConverter.ToInt64(buffer)) % (range + 1);
+
+		return min.Add(TimeSpan.FromTicks(randomValue));
 	}
 
 	/// <summary>

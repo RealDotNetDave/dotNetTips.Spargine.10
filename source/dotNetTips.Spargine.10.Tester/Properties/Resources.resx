@@ -178,6 +178,9 @@
   <data name="ErrorDateTextIsNullOrEmpty" xml:space="preserve">
     <value>Date text is null or empty.</value>
   </data>
+  <data name="ErrorEnumHasNoDefinedValues" xml:space="preserve">
+    <value>The specified enum type has no defined values.</value>
+  </data>
   <data name="ErrorInvalidDateFormat" xml:space="preserve">
     <value>Invalid date format.</value>
   </data>

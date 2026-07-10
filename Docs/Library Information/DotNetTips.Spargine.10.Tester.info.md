@@ -1344,6 +1344,17 @@
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
 
+### System.Boolean GenerateBoolean()
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateBoolean
+* **Modified By:** Copilot Agent
+
 ### System.Byte[] GenerateByteArray(System.Int32 count)
 
 * **Status:** Available
@@ -1376,6 +1387,17 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateCharacter
 * **Modified By:** David McCarter
+
+### System.String GenerateCompanyName()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateCompanyName
+* **Modified By:** Copilot Agent
 
 ### T GenerateCoordinate()
 
@@ -1421,6 +1443,39 @@
 * **Description:** GenerateCreditCard
 * **Modified By:** David McCarter
 
+### System.Decimal GenerateCurrencyAmount(System.Decimal minValue, System.Decimal maxValue)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateCurrencyAmount
+* **Modified By:** Copilot Agent
+
+### System.DateOnly GenerateDateOnly(System.Nullable<System.DateOnly> minValue, System.Nullable<System.DateOnly> maxValue)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateDateOnly
+* **Modified By:** Copilot Agent
+
+### System.DateTimeOffset GenerateDateTimeOffset(System.Nullable<System.DateTimeOffset> minValue, System.Nullable<System.DateTimeOffset> maxValue)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateDateTimeOffset
+* **Modified By:** Copilot Agent
+
 ### System.Decimal GenerateDecimal(System.Decimal& minValue, System.Decimal& maxValue, System.Int32 decimalPlaces)
 
 * **Status:** Available
@@ -1453,6 +1508,17 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateEmailAddress
 * **Modified By:** David McCarter
+
+### T GenerateEnum()
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateEnum
+* **Modified By:** Copilot Agent
 
 ### System.String GenerateFile(System.String fileName, System.Int32 fileLength)
 
@@ -1500,13 +1566,24 @@
 
 ### System.Guid GenerateGuid()
 
-* **Status:** Available
+* **Status:** New
 * **Optimization Status:** Completed
-* **BenchMarkStatus:** Not Required
-* **Unit Test Status:** Not Required
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/10/2026
 * **Description:** GenerateGuid
+* **Modified By:** Copilot Agent
+
+### System.String GenerateHashString(System.Int32 length)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateHashString
 * **Modified By:** Copilot Agent
 
 ### System.Int32 GenerateInteger(System.Int32& min, System.Int32 max)
@@ -1519,6 +1596,39 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateInteger
 * **Modified By:** David McCarter
+
+### System.String GenerateIPv4Address()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateIPv4Address
+* **Modified By:** Copilot Agent
+
+### System.String GenerateIPv6Address()
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateIPv6Address
+* **Modified By:** Copilot Agent
+
+### System.String GenerateJsonObject(System.Int32 propertyCount)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateJsonObject
+* **Modified By:** Copilot Agent
 
 ### System.String GenerateKey()
 
@@ -1563,6 +1673,17 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateNumber
 * **Modified By:** David McCarter
+
+### System.String GenerateParagraph(System.Int32 sentenceCount, System.Int32 wordsPerSentence)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateParagraph
+* **Modified By:** Copilot Agent
 
 ### T GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
@@ -1736,6 +1857,17 @@
 * **Description:** GenerateRelativeUrl
 * **Modified By:** David McCarter
 
+### System.String GenerateSentence(System.Int32 wordCount)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateSentence
+* **Modified By:** Copilot Agent
+
 ### System.String GenerateTempFile(System.Int32 fileLength)
 
 * **Status:** Available
@@ -1746,6 +1878,28 @@
 * **CreatedOn:** 1/19/2019
 * **Description:** GenerateTempFile
 * **Modified By:** David McCarter
+
+### System.TimeOnly GenerateTimeOnly(System.Nullable<System.TimeOnly> minValue, System.Nullable<System.TimeOnly> maxValue)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateTimeOnly
+* **Modified By:** Copilot Agent
+
+### System.TimeSpan GenerateTimeSpan(System.Nullable<System.TimeSpan> minValue, System.Nullable<System.TimeSpan> maxValue)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/10/2026
+* **Description:** GenerateTimeSpan
+* **Modified By:** Copilot Agent
 
 ### System.String GenerateUrl()
 
@@ -2072,4 +2226,4 @@
 * **Description:** SaveToFileAsync
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/10/2026 1:23:38 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/10/2026 4:29:07 PM UTC**
