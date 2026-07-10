@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-01-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="UnitTester.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)

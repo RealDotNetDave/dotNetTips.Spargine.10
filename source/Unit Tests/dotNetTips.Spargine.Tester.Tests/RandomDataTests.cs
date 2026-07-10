@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="RandomDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,22 +14,18 @@
 using System;
 using System.Buffers;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -722,6 +718,19 @@ public class RandomDataTests
 		var stringValue = RandomData.GenerateUrlHostName();
 
 		Assert.IsNotNull(stringValue);
+	}
+
+	[TestMethod]
+	public void GenerateGuid_ReturnsValidAndUniqueGuids()
+	{
+		var g1 = RandomData.GenerateGuid();
+		var g2 = RandomData.GenerateGuid();
+
+		Assert.IsNotNull(g1);
+		Assert.IsNotNull(g2);
+		Assert.AreNotEqual(Guid.Empty, g1);
+		Assert.AreNotEqual(Guid.Empty, g2);
+		Assert.AreNotEqual(g1, g2);
 	}
 
 	[TestMethod]

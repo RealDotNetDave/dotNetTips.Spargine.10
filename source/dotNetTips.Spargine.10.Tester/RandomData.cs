@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : David McCarter
-// Last Modified On : 05-13-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -683,6 +683,17 @@ public static class RandomData
 		var names = _firstNames.Value;
 
 		return names[GenerateInteger(0, names.Length - 1)];
+	}
+
+	/// <summary>
+	/// Generates a new GUID value.
+	/// </summary>
+	/// <returns>A new <see cref="Guid"/>.</returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static Guid GenerateGuid()
+	{
+		return Guid.NewGuid();
 	}
 
 	/// <summary>
