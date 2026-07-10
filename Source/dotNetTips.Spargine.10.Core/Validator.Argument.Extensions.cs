@@ -26,6 +26,26 @@ public static partial class Validator
 {
 
 	/// <summary>
+	/// Ensures the sequence count is within the inclusive range. Returns the original sequence when valid.
+	/// </summary>
+	/// <typeparam name="T">Element type.</typeparam>
+	/// <param name="source">The sequence to validate.</param>
+	/// <param name="minInclusive">Minimum item count.</param>
+	/// <param name="maxInclusive">Maximum item count.</param>
+	/// <param name="errorMessage">Optional custom error message.</param>
+	/// <param name="paramName">The parameter name (auto-filled by compiler).</param>
+	/// <returns>The original sequence when valid.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EnsureCountInRange), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static IEnumerable<T> EnsureCountInRange<T>([DisallowNull] this IEnumerable<T>? source, int minInclusive, int maxInclusive, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(source))] string paramName = ControlChars.EmptyString)
+	{
+		source = source.ArgumentNotNull();
+
+		return source.ArgumentCountInRange(minInclusive, maxInclusive, errorMessage, paramName);
+	}
+
+	/// <summary>
 	/// Ensures the integer value is within the inclusive range. Returns the original value when valid.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -157,6 +177,28 @@ public static partial class Validator
 		}
 
 		_ = paramName;
+
+		return input;
+	}
+
+	/// <summary>
+	/// Ensures the input string is not null or whitespace. Returns the original string when valid.
+	/// </summary>
+	/// <param name="input">The string to validate.</param>
+	/// <param name="errorMessage">Optional custom error message.</param>
+	/// <param name="paramName">The parameter name (auto-filled by compiler).</param>
+	/// <returns>The original string when valid.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EnsureNotNullOrWhiteSpace), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static string EnsureNotNullOrWhiteSpace([DisallowNull] this string? input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
+	{
+		input = input.ArgumentNotNull();
+
+		if (string.IsNullOrWhiteSpace(input))
+		{
+			ExceptionThrower.ThrowArgumentInvalidException(CreateExceptionMessage(errorMessage, Resources.ErrorStringIsNotValid), paramName);
+		}
 
 		return input;
 	}

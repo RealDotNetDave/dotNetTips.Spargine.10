@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-14-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="Crockford32.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -17,6 +17,7 @@
 // ***********************************************************************
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -30,15 +31,10 @@ namespace DotNetTips.Spargine.Core.Security;
 /// to produce human-readable, case-insensitive, URL-safe encoded strings.
 /// Ambiguous characters (I, L → 1; O → 0) are automatically normalized during decoding.
 /// </summary>
-internal static class Crockford32
+[Information(nameof(Crockford32), Status = Status.New)]
+public static class Crockford32
 {
-	// Alphabet: 0..9 A..Z without I, L, O, U
 	private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-
-	/// <summary>
-	/// Lookup table mapping ASCII character codes to their 5-bit Crockford Base32 values.
-	/// Values are -1 for characters that are not part of the alphabet.
-	/// </summary>
 	private static readonly sbyte[] Map = BuildMap();
 
 	/// <summary>
@@ -49,6 +45,8 @@ internal static class Crockford32
 	/// A <see cref="byte"/> array containing the decoded data, or an empty array if <paramref name="text"/> is <see langword="null"/>, empty, or whitespace.
 	/// </returns>
 	/// <exception cref="FormatException">Thrown when the input contains a character that is not valid in the Crockford Base32 alphabet.</exception>
+	[Pure]
+	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static byte[] Decode(string text)
 	{
 		if (string.IsNullOrWhiteSpace(text))
@@ -57,15 +55,16 @@ internal static class Crockford32
 		}
 
 		Span<char> norm = stackalloc char[text.Length];
-		var n = NormalizeChars(text, norm);
+		var nc = NormalizeChars(text, norm);
 
 		int buffer = 0, bitsLeft = 0;
-		var bytes = new List<byte>((int)Math.Floor(n * 5 / 8.0));
+		var bytes = new List<byte>((int)Math.Floor(nc * 5 / 8.0));
 
-		for (var i = 0; i < n; i++)
+		for (var index = 0; index < nc; index++)
 		{
-			var c = norm[i];
+			var c = norm[index];
 			var v = c < 128 ? Map[c] : -1;
+
 			if (v < 0)
 			{
 				throw new FormatException($"Invalid Base32 character '{c}'.");
@@ -92,6 +91,8 @@ internal static class Crockford32
 	/// A Crockford Base32 encoded <see cref="string"/> representing the input bytes,
 	/// or <see cref="string.Empty"/> if <paramref name="data"/> is empty.
 	/// </returns>
+	[Pure]
+	[Information(nameof(Encode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
 	public static string Encode(ReadOnlySpan<byte> data)
 	{
 		if (data.Length == 0)
@@ -101,10 +102,12 @@ internal static class Crockford32
 
 		var sb = new StringBuilder((int)Math.Ceiling(data.Length * 8 / 5.0));
 		int buffer = 0, bitsLeft = 0;
-		foreach (var b in data)
+
+		foreach (var byteIndex in data)
 		{
-			buffer = (buffer << 8) | b;
+			buffer = (buffer << 8) | byteIndex;
 			bitsLeft += 8;
+
 			while (bitsLeft >= 5)
 			{
 				var index = (buffer >> (bitsLeft - 5)) & 31;
@@ -112,11 +115,13 @@ internal static class Crockford32
 				bitsLeft -= 5;
 			}
 		}
+
 		if (bitsLeft > 0)
 		{
 			var index = (buffer << (5 - bitsLeft)) & 31;
 			_ = sb.Append(Alphabet[index]);
 		}
+
 		return sb.ToString();
 	}
 
@@ -129,22 +134,27 @@ internal static class Crockford32
 	private static sbyte[] BuildMap()
 	{
 		var map = Enumerable.Repeat<sbyte>(-1, 128).ToArray();
-		for (var i = 0; i < Alphabet.Length; i++)
+
+		for (var @char = 0; @char < Alphabet.Length; @char++)
 		{
-			map[Alphabet[i]] = (sbyte)i;
+			map[Alphabet[@char]] = (sbyte)@char;
 		}
+
 		// Ambiguity aliases
 		map['I'] = map['1'] = map['L'] = map['1'];
 		map['O'] = map['0'] = map['0'];
+
 		// Lowercase support
-		for (var c = 'a'; c <= 'z'; c++)
+		for (var @char = 'a'; @char <= 'z'; @char++)
 		{
-			var up = char.ToUpperInvariant(c);
-			if (up < 128 && map[up] >= 0)
+			var upchar = char.ToUpperInvariant(@char);
+
+			if (upchar < 128 && map[upchar] >= 0)
 			{
-				map[c] = map[up];
+				map[@char] = map[upchar];
 			}
 		}
+
 		return map;
 	}
 
@@ -157,7 +167,7 @@ internal static class Crockford32
 	/// <returns>The number of significant characters written to <paramref name="norm"/>.</returns>
 	private static int NormalizeChars(string text, Span<char> norm)
 	{
-		var n = 0;
+		var number = 0;
 
 		foreach (var ch in text)
 		{
@@ -177,10 +187,10 @@ internal static class Crockford32
 				c = '0';
 			}
 
-			norm[n++] = c;
+			norm[number++] = c;
 		}
 
-		return n;
+		return number;
 	}
 }
 

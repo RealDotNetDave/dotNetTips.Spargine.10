@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-10-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -25,6 +25,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions.Properties;
 
@@ -69,6 +70,32 @@ public static class DateTimeExtensions
 		}
 
 		return value > maximum ? maximum : value;
+	}
+
+	/// <summary>
+	/// Returns the last tick of the day for the specified <see cref="DateTime"/>.
+	/// </summary>
+	/// <param name="value">The date and time value.</param>
+	/// <returns>The final tick of the day (23:59:59.9999999).</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTime EndOfDay(this in DateTime value)
+	{
+		return value.Date.AddDays(1).AddTicks(-1);
+	}
+
+	/// <summary>
+	/// Returns the last tick of the day for the specified <see cref="DateTimeOffset"/>, preserving the original UTC offset.
+	/// </summary>
+	/// <param name="value">The date and time offset value.</param>
+	/// <returns>The final tick of the day using the original offset.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTimeOffset EndOfDay(this in DateTimeOffset value)
+	{
+		return new DateTimeOffset(value.Date.AddDays(1).AddTicks(-1), value.Offset);
 	}
 
 	/// <summary>
@@ -407,6 +434,27 @@ public static class DateTimeExtensions
 	}
 
 	/// <summary>
+	/// Returns midnight (00:00:00) of the specified <see cref="DateTime"/>.
+	/// </summary>
+	/// <param name="value">The date and time value.</param>
+	/// <returns>The date at midnight.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTime StartOfDay(this in DateTime value) => value.Date;
+
+	/// <summary>
+	/// Returns midnight (00:00:00) of the specified <see cref="DateTimeOffset"/>, preserving the original UTC offset.
+	/// </summary>
+	/// <param name="value">The date and time offset value.</param>
+	/// <returns>The date at midnight using the original offset.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateTimeOffset StartOfDay(this in DateTimeOffset value) =>
+		new(value.Year, value.Month, value.Day, 0, 0, 0, value.Offset);
+
+	/// <summary>
 	/// Determines how long until the next hour starts.
 	/// </summary>
 	/// <param name="dateTime">The DateTime to check.</param>
@@ -461,6 +509,16 @@ public static class DateTimeExtensions
 
 		return nextMinute - dateTime;
 	}
+
+	/// <summary>
+	/// Converts a <see cref="DateTime"/> to a <see cref="DateOnly"/> representing only the date component.
+	/// </summary>
+	/// <param name="value">The value to convert.</param>
+	/// <returns>The date component as a <see cref="DateOnly"/>.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToDateOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static DateOnly ToDateOnly(this in DateTime value) => DateOnly.FromDateTime(value);
 
 	/// <summary>
 	/// Converts <see cref="DateTime" /> to a formatted string.
@@ -597,6 +655,16 @@ public static class DateTimeExtensions
 
 		return Convert.ToInt64((date - epoch).TotalMilliseconds);
 	}
+
+	/// <summary>
+	/// Converts a <see cref="DateTime"/> to a <see cref="TimeOnly"/> representing only the time component.
+	/// </summary>
+	/// <param name="value">The value to convert.</param>
+	/// <returns>The time component as a <see cref="TimeOnly"/>.</returns>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ToTimeOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TimeOnly ToTimeOnly(this in DateTime value) => TimeOnly.FromDateTime(value);
 
 	/// <summary>
 	/// Attempts to parse a <see cref="DateTime"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.

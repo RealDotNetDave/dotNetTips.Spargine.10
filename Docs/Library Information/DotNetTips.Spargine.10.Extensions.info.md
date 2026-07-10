@@ -896,6 +896,17 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
+### System.Int32 AddRangeIfNotExists(T collection, T items)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** AddRangeIfNotExists
+* **Modified By:** David McCarter
+
 ### T AsReadOnlySpan(T collection)
 
 * **Status:** Available
@@ -918,6 +929,17 @@
 * **Description:** AsSpan
 * **Modified By:** David McCarter
 
+### System.Int32 RemoveWhere(T collection, T match)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** RemoveWhere
+* **Modified By:** David McCarter
+
 ### T ToFrozenSet(T collection, T comparer)
 
 * **Status:** Available
@@ -927,6 +949,17 @@
 * **Author:** David McCarter
 * **CreatedOn:** 6/3/2024
 * **Description:** ToFrozenSet
+* **Modified By:** David McCarter
+
+### System.Boolean TryGetFirst(T source, T first)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** TryGetFirst
 * **Modified By:** David McCarter
 
 ### System.Void Upsert(T collection, T item)
@@ -987,6 +1020,17 @@
 * **Description:** AddRange
 * **Modified By:** David McCarter
 
+### System.Int32 AddRangeIfNotExists(T items)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** AddRangeIfNotExists
+* **Modified By:** David McCarter
+
 ### T AsReadOnlySpan()
 
 * **Status:** Available
@@ -1009,6 +1053,17 @@
 * **Description:** AsSpan
 * **Modified By:** David McCarter
 
+### System.Int32 RemoveWhere(T match)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** RemoveWhere
+* **Modified By:** David McCarter
+
 ### T ToFrozenSet(T comparer)
 
 * **Status:** Available
@@ -1029,6 +1084,20 @@
 * **Author:** David McCarter
 * **CreatedOn:** 11/21/2020
 * **Description:** Upsert
+* **Modified By:** David McCarter
+
+*****
+## DotNetTips.Spargine.Extensions.CollectionExtensions.<G>$E09FCB5EB13C1AE2FC524F6744DE5322<$T0>
+
+### System.Boolean TryGetFirst(T first)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** TryGetFirst
 * **Modified By:** David McCarter
 
 *****
@@ -1286,6 +1355,28 @@
 * **Description:** Clamp
 * **Modified By:** Copilot Agent
 
+### System.DateTime EndOfDay(System.DateTime& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** EndOfDay
+* **Modified By:** David McCarter
+
+### System.DateTimeOffset EndOfDay(System.DateTimeOffset& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** EndOfDay
+* **Modified By:** David McCarter
+
 ### System.DateTime FromMilliEpochTime(System.Int64& epochTime)
 
 * **Status:** Available
@@ -1525,6 +1616,28 @@
 * **Description:** RoundToNearestMultiple
 * **Modified By:** Copilot Agent
 
+### System.DateTime StartOfDay(System.DateTime& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** StartOfDay
+* **Modified By:** David McCarter
+
+### System.DateTimeOffset StartOfDay(System.DateTimeOffset& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** StartOfDay
+* **Modified By:** David McCarter
+
 ### System.TimeSpan TimeUntilNextHour(System.DateTime& dateTime)
 
 * **Status:** Available
@@ -1568,6 +1681,17 @@
 * **CreatedOn:** 3/3/2025
 * **Description:** TimeUntilNextMinute
 * **Modified By:** GitHub Copilot
+
+### System.DateOnly ToDateOnly(System.DateTime& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** ToDateOnly
+* **Modified By:** David McCarter
 
 ### System.String ToFormattedString(System.DateTime& input, DotNetTips.Spargine.Core.DateTimeFormat format)
 
@@ -1622,6 +1746,17 @@
 * **Author:** David McCarter
 * **CreatedOn:** 3/24/2017
 * **Description:** ToMilliEpochTime
+* **Modified By:** David McCarter
+
+### System.TimeOnly ToTimeOnly(System.DateTime& value)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** David McCarter
+* **CreatedOn:** 7/10/2026
+* **Description:** ToTimeOnly
 * **Modified By:** David McCarter
 
 ### System.Boolean TryParseInvariant(System.ReadOnlySpan<System.Char> input, System.DateTime& value)
@@ -8616,4 +8751,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/9/2026 4:12:12 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/10/2026 12:38:22 PM UTC**

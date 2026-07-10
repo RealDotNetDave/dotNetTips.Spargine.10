@@ -15,13 +15,11 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -35,7 +33,6 @@ using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -1972,6 +1969,30 @@ public class TypeHelperTests : UnitTester
 		var members = TypeHelper.GetTypeMembersWithAttribute<InformationAttribute>(typeof(TypeHelper));
 		Assert.IsNotNull(members);
 		Assert.IsTrue(members.Any());
+	}
+
+	[TestMethod]
+	public void GetUnderlyingType_ReturnsNullableUnderlyingType()
+	{
+		var result = TypeHelper.GetUnderlyingType(typeof(int?));
+
+		Assert.AreEqual(typeof(int), result);
+	}
+
+	[TestMethod]
+	public void GetUnderlyingType_ReturnsNullForNonNullableType()
+	{
+		var result = TypeHelper.GetUnderlyingType(typeof(int));
+
+		Assert.IsNull(result);
+	}
+
+	[TestMethod]
+	public void GetUnderlyingType_ReturnsNullForNullType()
+	{
+		var result = TypeHelper.GetUnderlyingType(null);
+
+		Assert.IsNull(result);
 	}
 
 	[TestMethod]

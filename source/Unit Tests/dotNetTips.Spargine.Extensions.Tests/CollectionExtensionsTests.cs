@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -20,7 +19,6 @@ using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -214,6 +212,28 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
+	public void AddRangeIfNotExists_AddsOnlyUniqueItems()
+	{
+		ICollection<int> collection = new List<int> { 1, 2 };
+
+		var added = collection.AddRangeIfNotExists([2, 3, 4]);
+
+		Assert.AreEqual(2, added);
+		CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, (List<int>)collection);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_AllExist_ReturnsZero()
+	{
+		ICollection<int> collection = new List<int> { 1, 2, 3 };
+
+		var added = collection.AddRangeIfNotExists([1, 2, 3]);
+
+		Assert.AreEqual(0, added);
+		Assert.AreEqual(3, collection.Count);
+	}
+
+	[TestMethod]
 	public void AddRangeTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(500).ToList();
@@ -248,17 +268,6 @@ public class CollectionExtensionsTests
 	}
 
 	[TestMethod]
-	public void AsSpanTest()
-	{
-		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
-		var collection = new Collection<Person>(people);
-
-		var span = collection.AsSpan();
-		Assert.AreEqual(collection.Count, span.Length);
-		Assert.IsTrue(span.SequenceEqual(collection.AsReadOnlySpan()));
-	}
-
-	[TestMethod]
 	public void AsSpan_WithArray_ReturnsSpanOverSameStorage()
 	{
 		var values = new[] { 1, 2, 3 };
@@ -278,6 +287,39 @@ public class CollectionExtensionsTests
 		span[1] = 99;
 
 		Assert.AreEqual(99, values[1]);
+	}
+
+	[TestMethod]
+	public void AsSpanTest()
+	{
+		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var collection = new Collection<Person>(people);
+
+		var span = collection.AsSpan();
+		Assert.AreEqual(collection.Count, span.Length);
+		Assert.IsTrue(span.SequenceEqual(collection.AsReadOnlySpan()));
+	}
+
+	[TestMethod]
+	public void RemoveWhere_NoMatches_ReturnsZero()
+	{
+		var collection = new List<int> { 1, 3, 5 };
+
+		var removed = collection.RemoveWhere(value => value % 2 == 0);
+
+		Assert.AreEqual(0, removed);
+		Assert.AreEqual(3, collection.Count);
+	}
+
+	[TestMethod]
+	public void RemoveWhere_RemovesMatchingItems()
+	{
+		var collection = new List<int> { 1, 2, 3, 4, 5 };
+
+		var removed = collection.RemoveWhere(value => value % 2 == 0);
+
+		Assert.AreEqual(2, removed);
+		CollectionAssert.AreEquivalent(new[] { 1, 3, 5 }, collection);
 	}
 
 	[TestMethod]
@@ -352,6 +394,39 @@ public class CollectionExtensionsTests
 		{
 			Assert.Contains(person, frozenSet);
 		}
+	}
+
+	[TestMethod]
+	public void TryGetFirst_Empty_ReturnsFalse()
+	{
+		IEnumerable<int> source = Array.Empty<int>();
+
+		var result = source.TryGetFirst(out var first);
+
+		Assert.IsFalse(result);
+		Assert.AreEqual(default(int), first);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_HasItems_ReturnsFirstItem()
+	{
+		IEnumerable<int> source = new[] { 42, 100 };
+
+		var result = source.TryGetFirst(out var first);
+
+		Assert.IsTrue(result);
+		Assert.AreEqual(42, first);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_List_ReturnsFirstItemFast()
+	{
+		var source = new List<string> { "alpha", "beta", "gamma" };
+
+		var result = source.TryGetFirst(out var first);
+
+		Assert.IsTrue(result);
+		Assert.AreEqual("alpha", first);
 	}
 
 	[TestMethod]

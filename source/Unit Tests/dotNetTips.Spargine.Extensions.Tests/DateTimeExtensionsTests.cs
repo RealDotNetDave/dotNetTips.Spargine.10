@@ -348,6 +348,26 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void EndOfDay_ReturnsLastTickForDateTime()
+	{
+		var value = new DateTime(2026, 7, 9, 13, 14, 15, DateTimeKind.Utc);
+
+		var result = value.EndOfDay();
+
+		Assert.AreEqual(new DateTime(2026, 7, 9, 23, 59, 59, 999, DateTimeKind.Utc).AddTicks(9999), result);
+	}
+
+	[TestMethod]
+	public void EndOfDay_ReturnsLastTickForDateTimeOffset()
+	{
+		var value = new DateTimeOffset(2026, 7, 9, 13, 14, 15, TimeSpan.FromHours(-4));
+
+		var result = value.EndOfDay();
+
+		Assert.AreEqual(new DateTimeOffset(2026, 7, 9, 23, 59, 59, 999, TimeSpan.FromHours(-4)).AddTicks(9999), result);
+	}
+
+	[TestMethod]
 	public void GetLastDayOfWeek_InputDayLessThanOrEqualTarget_Works()
 	{
 		// Monday (DayOfWeek=1) looking for Friday (DayOfWeek=5): input <= target, hits else branch
@@ -630,6 +650,26 @@ public class DateTimeExtensionsTests
 	}
 
 	[TestMethod]
+	public void StartOfDay_ReturnsMidnightForDateTime()
+	{
+		var value = new DateTime(2026, 7, 9, 13, 14, 15, DateTimeKind.Utc);
+
+		var result = value.StartOfDay();
+
+		Assert.AreEqual(new DateTime(2026, 7, 9, 0, 0, 0, DateTimeKind.Utc), result);
+	}
+
+	[TestMethod]
+	public void StartOfDay_ReturnsMidnightForDateTimeOffset()
+	{
+		var value = new DateTimeOffset(2026, 7, 9, 13, 14, 15, TimeSpan.FromHours(-4));
+
+		var result = value.StartOfDay();
+
+		Assert.AreEqual(new DateTimeOffset(2026, 7, 9, 0, 0, 0, TimeSpan.FromHours(-4)), result);
+	}
+
+	[TestMethod]
 	public void Subtract_Works()
 	{
 		var now = DateTime.UtcNow;
@@ -663,6 +703,16 @@ public class DateTimeExtensionsTests
 		Assert.IsTrue(min.TotalSeconds <= 60 && min.TotalSeconds > 0);
 		Assert.IsTrue(hourDto.TotalMinutes <= 60 && hourDto.TotalMinutes > 0);
 		Assert.IsTrue(minDto.TotalSeconds <= 60 && minDto.TotalSeconds > 0);
+	}
+
+	[TestMethod]
+	public void ToDateOnly_ReturnsDateComponent()
+	{
+		var value = new DateTime(2026, 7, 9, 13, 14, 15, DateTimeKind.Utc);
+
+		var result = value.ToDateOnly();
+
+		Assert.AreEqual(new DateOnly(2026, 7, 9), result);
 	}
 
 	[TestMethod]
@@ -1007,6 +1057,16 @@ public class DateTimeExtensionsTests
 		Assert.IsTrue(convertedTime >= currentTime.Subtract(new TimeSpan(0, 5, 0)));
 
 		//PrintResult(convertedTime, nameof(this.ToFromMilliEpochTimeTest));
+	}
+
+	[TestMethod]
+	public void ToTimeOnly_ReturnsTimeComponent()
+	{
+		var value = new DateTime(2026, 7, 9, 13, 14, 15, 123, DateTimeKind.Utc);
+
+		var result = value.ToTimeOnly();
+
+		Assert.AreEqual(new TimeOnly(13, 14, 15, 123), result);
 	}
 
 	[TestMethod]

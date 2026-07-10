@@ -319,6 +319,62 @@ public static class FastStringBuilder
 	}
 
 	/// <summary>
+	/// Formats a composite format string using the current culture and cached <see cref="CompositeFormat"/> parsing.
+	/// </summary>
+	/// <param name="format">The composite format string.</param>
+	/// <param name="args">The format arguments.</param>
+	/// <returns>The formatted string.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static string FormatCurrentCulture(string format, params object?[] args)
+	{
+		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)
+		{
+			return ControlChars.EmptyString;
+		}
+
+		var sb = _stringBuilderPool.Get();
+
+		try
+		{
+			return sb.AppendFormat(CultureInfo.CurrentCulture, ResourceFormatCache.GetOrAdd(format), args).ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
+	}
+
+	/// <summary>
+	/// Formats a composite format string using the invariant culture and cached <see cref="CompositeFormat"/> parsing.
+	/// </summary>
+	/// <param name="format">The composite format string.</param>
+	/// <param name="args">The format arguments.</param>
+	/// <returns>The formatted string.</returns>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	public static string FormatInvariant(string format, params object?[] args)
+	{
+		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)
+		{
+			return ControlChars.EmptyString;
+		}
+
+		var sb = _stringBuilderPool.Get();
+
+		try
+		{
+			return sb.AppendFormat(CultureInfo.InvariantCulture, ResourceFormatCache.GetOrAdd(format), args).ToString();
+		}
+		finally
+		{
+			_stringBuilderPool.Return(sb.Clear());
+		}
+	}
+
+	/// <summary>
 	/// Joins a sequence of strings into a single string using a single-character delimiter.
 	/// </summary>
 	/// <param name="values">The strings to join. Must not be <c>null</c>.</param>

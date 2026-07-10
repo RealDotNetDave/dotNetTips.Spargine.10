@@ -13,10 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -28,26 +25,6 @@ public class TaskHelperTests
 {
 
 	private string _fireResult = string.Empty;
-
-	private async Task Fire(string input)
-	{
-		this._fireResult = input;
-
-		Console.WriteLine(input);
-
-		await Task.Delay(1).ConfigureAwait(false);
-	}
-
-	private async Task<string> FireWithReturn(string input)
-	{
-		this._fireResult = input;
-
-		Console.WriteLine(input);
-
-		await Task.Delay(1).ConfigureAwait(false);
-
-		return input;
-	}
 
 	[TestMethod]
 	public void RunSync10()
@@ -147,6 +124,75 @@ public class TaskHelperTests
 		var result = TaskHelper.RunSync(() => this.FireWithReturn(testInput), cancelToken, TaskCreationOptions.PreferFairness, TaskContinuationOptions.None, TaskScheduler.Default);
 
 		Assert.AreEqual(testInput, result);
+	}
+
+	[TestMethod]
+	public void RunSync30()
+	{
+		TaskHelper.RunSync(() => this.FireValue(nameof(this.RunSync30)));
+
+		Assert.AreEqual(nameof(this.RunSync30), this._fireResult);
+	}
+
+	[TestMethod]
+	public void RunSync31()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => TaskHelper.RunSync((Func<ValueTask>)null));
+	}
+
+	[TestMethod]
+	public void RunSync40()
+	{
+		var result = TaskHelper.RunSync(() => this.FireValueWithReturn(nameof(this.RunSync40)));
+
+		Assert.AreEqual(nameof(this.RunSync40), result);
+		Assert.AreEqual(nameof(this.RunSync40), this._fireResult);
+	}
+
+	[TestMethod]
+	public void RunSync41()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => TaskHelper.RunSync((Func<ValueTask<string>>)null));
+	}
+
+	private async Task Fire(string input)
+	{
+		this._fireResult = input;
+
+		Console.WriteLine(input);
+
+		await Task.Delay(1).ConfigureAwait(false);
+	}
+
+	private async ValueTask FireValue(string input)
+	{
+		this._fireResult = input;
+
+		Console.WriteLine(input);
+
+		await Task.Delay(1).ConfigureAwait(false);
+	}
+
+	private async ValueTask<string> FireValueWithReturn(string input)
+	{
+		this._fireResult = input;
+
+		Console.WriteLine(input);
+
+		await Task.Delay(1).ConfigureAwait(false);
+
+		return input;
+	}
+
+	private async Task<string> FireWithReturn(string input)
+	{
+		this._fireResult = input;
+
+		Console.WriteLine(input);
+
+		await Task.Delay(1).ConfigureAwait(false);
+
+		return input;
 	}
 
 }

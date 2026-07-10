@@ -35,16 +35,37 @@ namespace DotNetTips.Spargine.Core;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static partial class EnumHelper
 {
-
-	/// <summary>
-	/// The description cache
-	/// </summary>
 	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();
+	private static readonly ConcurrentDictionary<(Type, bool), ReadOnlyCollection<EnumValue>> _itemsCache = new();
 
 	/// <summary>
-	/// Cache for enum items to avoid repeated reflection and processing
+	/// Gets the count of individual flags set on the specified flags enumeration value.
 	/// </summary>
-	private static readonly ConcurrentDictionary<(Type, bool), ReadOnlyCollection<EnumValue>> _itemsCache = new();
+	/// <typeparam name="TEnum">The flags enum type.</typeparam>
+	/// <param name="input">The flags value to inspect.</param>
+	/// <returns>The number of individual flags set; or <c>1</c> for non-flags enumerations.</returns>
+	[Information(nameof(FlagCount), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static int FlagCount<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
+		where TEnum : struct, Enum
+	{
+		var type = typeof(TEnum);
+
+		if (type.IsDefined(typeof(FlagsAttribute), false) is false)
+		{
+			return 1;
+		}
+
+		var count = 0;
+		var value = Convert.ToUInt64(input, CultureInfo.InvariantCulture);
+
+		while (value != 0)
+		{
+			count += (int)(value & 1);
+			value >>= 1;
+		}
+
+		return count;
+	}
 
 	/// <summary>
 	/// Gets the description of the enum value by checking multiple attributes in this order:
@@ -193,6 +214,41 @@ public static partial class EnumHelper
 		_ = _itemsCache.TryAdd(cacheKey, readOnlyResult);
 
 		return readOnlyResult;
+	}
+
+	/// <summary>
+	/// Gets the individual flags set on the specified flags enumeration value.
+	/// </summary>
+	/// <typeparam name="TEnum">The flags enum type.</typeparam>
+	/// <param name="input">The flags value to inspect.</param>
+	/// <returns>A read-only collection of the individual flags that are set.</returns>
+	/// <exception cref="ArgumentException">Thrown when <typeparamref name="TEnum"/> is not a flags enumeration.</exception>
+	[return: NotNull]
+	[Information(nameof(GetSetFlags), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static ReadOnlyCollection<TEnum> GetSetFlags<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
+		where TEnum : struct, Enum
+	{
+		var type = typeof(TEnum);
+
+		if (type.IsDefined(typeof(FlagsAttribute), false) is false)
+		{
+			throw new ArgumentException($"Enum type {type.Name} is not a flags enumeration.", nameof(input));
+		}
+
+		var values = Enum.GetValues<TEnum>();
+		var items = new List<TEnum>(values.Length);
+
+		for (var index = 0; index < values.Length; index++)
+		{
+			var value = values[index];
+
+			if (input.HasFlag(value) && Convert.ToUInt64(value, CultureInfo.InvariantCulture) != 0)
+			{
+				items.Add(value);
+			}
+		}
+
+		return new ReadOnlyCollection<TEnum>(items);
 	}
 
 	/// <summary>

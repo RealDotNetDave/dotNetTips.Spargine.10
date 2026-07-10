@@ -37,6 +37,26 @@ public static class NetworkHelper
 new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
 	/// <summary>
+	/// Gets the names of active network interfaces.
+	/// </summary>
+	/// <returns>A read-only collection containing the names of active network interfaces.</returns>
+	[Pure]
+	[return: NotNull]
+	[Information(nameof(GetActiveNetworkInterfaceNames), OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+	public static ReadOnlyCollection<string> GetActiveNetworkInterfaceNames()
+	{
+		var connections = GetNetworkConnections();
+		var names = new List<string>(connections.Count);
+
+		foreach (var networkInterface in connections)
+		{
+			names.Add(networkInterface.Name);
+		}
+
+		return names.AsReadOnly();
+	}
+
+	/// <summary>
 	/// Gets the DNS server addresses configured for the active network interfaces.
 	/// </summary>
 	/// <returns>A read-only collection of DNS server IP addresses.</returns>

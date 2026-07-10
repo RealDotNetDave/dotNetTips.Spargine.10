@@ -54,6 +54,35 @@ public static class JsonSerialization
 	}
 
 	/// <summary>
+	/// Creates a default <see cref="JsonSerializerOptions"/> instance configured for Spargine JSON helpers.
+	/// </summary>
+	/// <param name="writeIndented">Whether the serialized JSON should be indented.</param>
+	/// <param name="includeDateOnlyConverters">Whether DateOnly/TimeOnly converters should be added.</param>
+	/// <returns>A configured and read-only <see cref="JsonSerializerOptions"/> instance.</returns>
+	[Pure]
+	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "This helper intentionally uses DefaultJsonTypeInfoResolver to preserve the same reflection-based default behavior as the existing JsonSerialization APIs.")]
+	[Information(nameof(CreateDefaultOptions), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static JsonSerializerOptions CreateDefaultOptions(bool writeIndented = false, bool includeDateOnlyConverters = false)
+	{
+		var options = new JsonSerializerOptions
+		{
+			NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+			TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+			WriteIndented = writeIndented,
+		};
+
+		if (includeDateOnlyConverters)
+		{
+			options.Converters.Add(new DateOnlyJsonConverter());
+			options.Converters.Add(new TimeOnlyJsonConverter());
+		}
+
+		options.MakeReadOnly();
+
+		return options;
+	}
+
+	/// <summary>
 	/// Converts a specified JSON string into its corresponding object representation using the provided <see cref="JsonSerializerOptions"/>.
 	/// </summary>
 	/// <typeparam name="TResult">The type of the object to deserialize to.</typeparam>

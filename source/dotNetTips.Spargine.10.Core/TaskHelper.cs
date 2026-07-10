@@ -46,6 +46,23 @@ public static class TaskHelper
 	}
 
 	/// <summary>
+	/// Executes the specified asynchronous ValueTask synchronously on a background thread.
+	/// </summary>
+	/// <param name="taskFunction">The asynchronous ValueTask function to execute.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="taskFunction"/> is null.</exception>
+	/// <example>
+	/// TaskHelper.RunSync(() =&gt; SomeType.FireValueAsync());
+	/// </example>
+	[return: NotNull]
+	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static void RunSync([DisallowNull] Func<ValueTask> taskFunction)
+	{
+		taskFunction = taskFunction.ArgumentNotNull();
+
+		_taskFactory.StartNew(() => taskFunction().AsTask().GetAwaiter().GetResult(), CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).GetAwaiter().GetResult();
+	}
+
+	/// <summary>
 	/// Executes an async Task&lt;T&gt; method which has a TResult return type synchronously.
 	/// </summary>
 	/// <typeparam name="TResult">The return type of the taskFunction.</typeparam>
@@ -63,6 +80,35 @@ public static class TaskHelper
 
 		var result = _taskFactory.StartNew(taskFunction, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
 			.Unwrap()
+			.GetAwaiter()
+			.GetResult();
+
+		if (result is null)
+		{
+			ExceptionThrower.ThrowInvalidOperationException(Resources.TheTaskFunctionReturnedNullWhichIsNotAllow);
+		}
+
+		return result;
+	}
+
+	/// <summary>
+	/// Executes the specified asynchronous ValueTask method synchronously with support for cancellation and custom taskFunction configuration.
+	/// </summary>
+	/// <typeparam name="TResult">The return type of the ValueTask function.</typeparam>
+	/// <param name="taskFunction">The asynchronous ValueTask function to execute.</param>
+	/// <returns>The result of type TResult.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="taskFunction"/> is null.</exception>
+	/// <example>
+	/// var cancelToken = new CancellationTokenSource().Token;
+	/// var result = TaskHelper.RunSync(() =&gt; SomeType.CalculateValueAsync(), cancelToken);
+	/// </example>
+	[return: NotNull]
+	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static TResult RunSync<TResult>([DisallowNull] this Func<ValueTask<TResult>> taskFunction)
+	{
+		taskFunction = taskFunction.ArgumentNotNull();
+
+		var result = _taskFactory.StartNew(() => taskFunction().AsTask().GetAwaiter().GetResult(), CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
 			.GetAwaiter()
 			.GetResult();
 

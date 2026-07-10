@@ -3396,6 +3396,31 @@
 * **Modified By:** David McCarter
 
 *****
+## DotNetTips.Spargine.Core.Diagnostics.StopwatchScope
+
+### DotNetTips.Spargine.Core.Diagnostics.StopwatchScope (System.Action<System.TimeSpan> onDispose)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** StopwatchScope
+* **Modified By:** Copilot Agent
+
+### DotNetTips.Spargine.Core.Diagnostics.StopwatchScope Start(System.Action<System.TimeSpan> onDispose)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** Start
+* **Modified By:** Copilot Agent
+
+*****
 ## DotNetTips.Spargine.Core.DisplayNameOptions
 
 ### System.Boolean Equals(System.Object obj)
@@ -3516,6 +3541,17 @@
 *****
 ## DotNetTips.Spargine.Core.EnumHelper
 
+### System.Int32 FlagCount(T input)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** FlagCount
+* **Modified By:** Copilot Agent
+
 ### System.String GetDescription(System.Enum input)
 
 * **Status:** Available
@@ -3542,6 +3578,17 @@
 * **CreatedOn:** 1/1/2020
 * **Description:** GetItems
 * **Modified By:** David McCarter
+
+### T GetSetFlags(T input)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** GetSetFlags
+* **Modified By:** Copilot Agent
 
 ### System.Boolean TryParse(System.String name, T result)
 
@@ -4320,6 +4367,28 @@
 * **Description:** Format
 * **Modified By:** David McCarter
 
+### System.String FormatCurrentCulture(System.String format, System.Object[] args)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** FormatCurrentCulture
+* **Modified By:** Copilot Agent
+
+### System.String FormatInvariant(System.String format, System.Object[] args)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** FormatInvariant
+* **Modified By:** Copilot Agent
+
 ### System.String Join(System.Collections.Generic.IEnumerable<System.String> values, System.Char delimiter)
 
 * **Status:** Available
@@ -4814,6 +4883,14 @@
 
 *****
 ## DotNetTips.Spargine.Core.Network.NetworkHelper
+
+### System.Collections.ObjectModel.ReadOnlyCollection<System.String> GetActiveNetworkInterfaceNames()
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** GetActiveNetworkInterfaceNames
 
 ### System.Collections.ObjectModel.ReadOnlyCollection<System.Net.IPAddress> GetDnsServerAddresses()
 
@@ -5450,7 +5527,7 @@
 *****
 ## DotNetTips.Spargine.Core.ResourceFormatCache
 
-### System.String GetOrAddString(System.String format)
+### System.Text.CompositeFormat GetOrAdd(System.String format)
 
 * **Status:** New
 * **Optimization Status:** Optimize
@@ -5458,7 +5535,7 @@
 * **Unit Test Status:** None
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/9/2026
-* **Description:** GetOrAddString
+* **Description:** GetOrAdd
 * **Modified By:** Copilot Agent
 
 *****
@@ -5485,6 +5562,31 @@
 * **CreatedOn:** 4/1/2026
 * **Description:** ValidateHmacBarcode
 * **Modified By:** David McCarter
+
+*****
+## DotNetTips.Spargine.Core.Security.Crockford32
+
+### System.Byte[] Decode(System.String text)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** Decode
+* **Modified By:** Copilot Agent
+
+### System.String Encode(System.ReadOnlySpan<System.Byte> data)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** Encode
+* **Modified By:** Copilot Agent
 
 *****
 ## DotNetTips.Spargine.Core.Security.EncryptionHelper
@@ -5651,7 +5753,21 @@
 * **Modified By:** David McCarter
 
 *****
+## DotNetTips.Spargine.Core.Serialization.DateOnlyJsonConverter
+
+*****
 ## DotNetTips.Spargine.Core.Serialization.JsonSerialization
+
+### System.Text.Json.JsonSerializerOptions CreateDefaultOptions(System.Boolean writeIndented, System.Boolean includeDateOnlyConverters)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** CreateDefaultOptions
+* **Modified By:** Copilot Agent
 
 ### T Deserialize(System.String json, System.Text.Json.JsonSerializerOptions options)
 
@@ -5762,6 +5878,9 @@
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Description:** SerializeToFile
+
+*****
+## DotNetTips.Spargine.Core.Serialization.TimeOnlyJsonConverter
 
 *****
 ## DotNetTips.Spargine.Core.Serialization.XmlSerialization
@@ -6031,6 +6150,17 @@
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
 
+### System.Void RunSync(System.Func<System.Threading.Tasks.ValueTask> taskFunction)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** RunSync
+* **Modified By:** Copilot Agent
+
 ### T RunSync(T taskFunction)
 
 * **Status:** Available
@@ -6042,6 +6172,17 @@
 * **Description:** Original code from: https://weblog.west-wind.com/posts/2021/Jul/07/Thoughts-on-AsyncAwait-Conversion-in-a-Desktop-App
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
+
+### T RunSync(T taskFunction)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Author:** Copilot Agent
+* **CreatedOn:** 7/9/2026
+* **Description:** RunSync
+* **Modified By:** Copilot Agent
 
 ### T RunSync(T taskFunction, System.Threading.CancellationToken cancellationToken, System.Threading.Tasks.TaskCreationOptions taskCreation, System.Threading.Tasks.TaskContinuationOptions taskContinuation, System.Threading.Tasks.TaskScheduler taskScheduler)
 
@@ -6386,6 +6527,14 @@
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** GetTypeMembersWithAttribute
+
+### System.Type GetUnderlyingType(System.Type type)
+
+* **Status:** New
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** GetUnderlyingType
 
 ### System.Boolean HasAttribute(System.Reflection.MethodInfo methodInfo)
 
@@ -7286,6 +7435,14 @@
 * **Description:** CheckTypeEquals
 * **Modified By:** David McCarter
 
+### T EnsureCountInRange(T source, System.Int32 minInclusive, System.Int32 maxInclusive, System.String errorMessage, System.String paramName)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Description:** EnsureCountInRange
+
 ### System.Int32 EnsureInRange(System.Int32 value, System.Int32 minInclusive, System.Int32 maxInclusive, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
@@ -7326,6 +7483,14 @@
 * **Unit Test Status:** None
 * **Description:** EnsureNotNullOrEmpty
 
+### System.String EnsureNotNullOrWhiteSpace(System.String input, System.String errorMessage, System.String paramName)
+
+* **Status:** Available
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** None
+* **Description:** EnsureNotNullOrWhiteSpace
+
 *****
 ## DotNetTips.Spargine.Core.Web.WebHelper
 
@@ -7360,4 +7525,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 7/9/2026 4:12:12 PM UTC**
+**Generated by Spargine - dotNetTips.com on 7/10/2026 12:38:22 PM UTC**

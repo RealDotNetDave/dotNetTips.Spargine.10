@@ -20,7 +20,6 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using DotNetTips.Spargine.Core.Network;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Core.Tests.Network;
@@ -56,6 +55,18 @@ public class NetworkHelperTests : UnitTester
 		var result = NetworkHelper.GetNetworkConnections();
 
 		Assert.IsInstanceOfType(result, typeof(ReadOnlyCollection<NetworkInterface>), "The result should be a ReadOnlyCollection.");
+	}
+
+	[TestMethod]
+	public void GetActiveNetworkInterfaceNames_ReturnsActiveInterfaceNames()
+	{
+		var result = NetworkHelper.GetActiveNetworkInterfaceNames();
+		var activeInterfaces = NetworkInterface.GetAllNetworkInterfaces().Where(ni => ni.OperationalStatus == OperationalStatus.Up);
+
+		foreach (var networkInterface in activeInterfaces)
+		{
+			Assert.Contains(networkInterface.Name, result, "Each active network interface name should be returned.");
+		}
 	}
 
 	[TestMethod]

@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace DotNetTips.Spargine.Core.Tests;
 
@@ -26,16 +27,7 @@ public class ResourceFormatCacheTests
 {
 
 	[TestMethod]
-	public void GetOrAddString_Empty_ThrowsArgumentException()
-	{
-		var method = GetMethod();
-		var ex = Assert.ThrowsExactly<TargetInvocationException>(() => method.Invoke(null, new object[] { string.Empty }));
-
-		Assert.IsInstanceOfType(ex.InnerException, typeof(ArgumentException));
-	}
-
-	[TestMethod]
-	public void GetOrAddString_Null_ThrowsArgumentNullException()
+	public void GetOrAdd_Null_ThrowsArgumentNullException()
 	{
 		var method = GetMethod();
 		var ex = Assert.ThrowsExactly<TargetInvocationException>(() => method.Invoke(null, new object?[] { null }));
@@ -44,7 +36,7 @@ public class ResourceFormatCacheTests
 	}
 
 	[TestMethod]
-	public void GetOrAddString_SameValueReturnsCachedInstance()
+	public void GetOrAdd_SameValueReturnsCachedInstance()
 	{
 		var method = GetMethod();
 		var firstFormat = new string("Value: {0:N2}".ToCharArray());
@@ -56,6 +48,16 @@ public class ResourceFormatCacheTests
 		Assert.IsNotNull(first);
 		Assert.IsNotNull(second);
 		Assert.AreSame(first, second);
+		Assert.IsInstanceOfType(first, typeof(CompositeFormat));
+	}
+
+	[TestMethod]
+	public void GetOrAddString_Empty_ThrowsArgumentException()
+	{
+		var method = GetMethod();
+		var ex = Assert.ThrowsExactly<TargetInvocationException>(() => method.Invoke(null, new object[] { string.Empty }));
+
+		Assert.IsInstanceOfType(ex.InnerException, typeof(ArgumentException));
 	}
 
 	private static MethodInfo GetMethod()
@@ -66,8 +68,8 @@ public class ResourceFormatCacheTests
 
 		Assert.IsNotNull(cacheType, "ResourceFormatCache type should be present in loaded assemblies.");
 
-		var method = cacheType.GetMethod("GetOrAddString", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
-		Assert.IsNotNull(method, "GetOrAddString method should be found on ResourceFormatCache.");
+		var method = cacheType.GetMethod("GetOrAdd", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public);
+		Assert.IsNotNull(method, "GetOrAdd method should be found on ResourceFormatCache.");
 
 		return method;
 	}

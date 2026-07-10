@@ -305,5 +305,105 @@ public static class CollectionExtensions
 			CollectionExtensionsHelper.ThrowIfArray(collection);
 			CollectionExtensionsHelper.DispatchUpsert(collection, item);
 		}
+
+		/// <summary>
+		/// Adds items from <paramref name="items"/> to the collection only when they do not already exist.
+		/// </summary>
+		/// <param name="items">The items to conditionally add.</param>
+		/// <returns>The count of items actually added.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is <see langword="null"/>.</exception>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AddRangeIfNotExists), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public int AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
+		{
+			items = items.ArgumentNotNull();
+
+			var added = 0;
+
+			foreach (var item in items)
+			{
+				if (collection.Contains(item))
+				{
+					continue;
+				}
+
+				collection.Add(item);
+				added++;
+			}
+
+			return added;
+		}
+
+		/// <summary>
+		/// Removes each item from the collection that satisfies the supplied <paramref name="match"/> predicate.
+		/// </summary>
+		/// <param name="match">The predicate used to identify items to remove.</param>
+		/// <returns>The count of items removed.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="match"/> is <see langword="null"/>.</exception>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(RemoveWhere), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public int RemoveWhere([DisallowNull] Predicate<T> match)
+		{
+			match = match.ArgumentNotNull();
+
+			var itemsToRemove = new List<T>();
+
+			foreach (var item in collection)
+			{
+				if (match(item))
+				{
+					itemsToRemove.Add(item);
+				}
+			}
+
+			var removed = 0;
+
+			foreach (var item in itemsToRemove)
+			{
+				if (collection.Remove(item))
+				{
+					removed++;
+				}
+			}
+
+			return removed;
+		}
+	}
+
+	extension<T>([DisallowNull] IEnumerable<T> source)
+	{
+		/// <summary>
+		/// Tries to get the first item in the sequence without throwing or allocating an enumerator
+		/// when the source is an <see cref="IList{T}"/>.
+		/// </summary>
+		/// <param name="first">
+		/// When this method returns <see langword="true"/>, contains the first element;
+		/// otherwise the default value for <typeparamref name="T"/>.
+		/// </param>
+		/// <returns><see langword="true"/> when a first item was found; otherwise <see langword="false"/>.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when the source sequence is <see langword="null"/>.</exception>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(TryGetFirst), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		public bool TryGetFirst([MaybeNullWhen(false)] out T first)
+		{
+			source = source.ArgumentNotNull();
+
+			if (source is IList<T> list && list.Count > 0)
+			{
+				first = list[0];
+				return true;
+			}
+
+			using var enumerator = source.GetEnumerator();
+
+			if (!enumerator.MoveNext())
+			{
+				first = default;
+				return false;
+			}
+
+			first = enumerator.Current;
+			return true;
+		}
 	}
 }

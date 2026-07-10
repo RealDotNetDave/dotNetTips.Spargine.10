@@ -22,6 +22,32 @@ namespace DotNetTips.Spargine.Core.Tests;
 [TestClass]
 public class ValidatorArgumentExtensionsTests
 {
+
+	[TestMethod]
+	public void EnsureCountInRange_InRange_ReturnsSource()
+	{
+		var list = new List<int> { 1, 2 };
+
+		var result = Validator.EnsureCountInRange(list, 1, 3);
+
+		Assert.AreSame(list, result);
+	}
+
+	[TestMethod]
+	public void EnsureCountInRange_Null_ThrowsArgumentNullException()
+	{
+		IEnumerable<int>? source = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => Validator.EnsureCountInRange(source, 1, 3));
+	}
+
+	[TestMethod]
+	public void EnsureCountInRange_OutOfRange_ThrowsArgumentOutOfRangeException()
+	{
+		var list = new List<int> { 1 };
+
+		_ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => Validator.EnsureCountInRange(list, 2, 3));
+	}
 	[TestMethod]
 	public void EnsureInRange_Double_InRange_ReturnsValue()
 	{
@@ -112,6 +138,24 @@ public class ValidatorArgumentExtensionsTests
 		var input = "value";
 
 		var result = Validator.EnsureNotNullOrEmpty(input);
+
+		Assert.AreEqual(input, result);
+	}
+
+	[TestMethod]
+	public void EnsureNotNullOrWhiteSpace_InputIsWhiteSpace_ThrowsArgumentInvalidException()
+	{
+		var input = "   ";
+
+		_ = Assert.ThrowsExactly<ArgumentInvalidException>(() => Validator.EnsureNotNullOrWhiteSpace(input));
+	}
+
+	[TestMethod]
+	public void EnsureNotNullOrWhiteSpace_Valid_ReturnsInput()
+	{
+		var input = "value";
+
+		var result = Validator.EnsureNotNullOrWhiteSpace(input);
 
 		Assert.AreEqual(input, result);
 	}

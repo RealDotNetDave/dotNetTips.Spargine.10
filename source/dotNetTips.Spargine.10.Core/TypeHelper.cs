@@ -1407,6 +1407,17 @@ public static class TypeHelper
 	}
 
 	/// <summary>
+	/// Gets the underlying type for a nullable type.
+	/// </summary>
+	/// <param name="type">The type to inspect.</param>
+	/// <returns>The underlying non-nullable type if <paramref name="type"/> is nullable; otherwise, <see langword="null"/>.</returns>
+	[Information(nameof(GetUnderlyingType), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static Type? GetUnderlyingType([AllowNull] Type? type)
+	{
+		return type is null ? null : Nullable.GetUnderlyingType(type);
+	}
+
+	/// <summary>
 	/// Determines whether the specified method has an attribute of type <typeparamref name="T"/>.
 	/// </summary>
 	/// <typeparam name="T">The type of the attribute to check for. Must inherit from <see cref="Attribute"/>.</typeparam>
