@@ -29,7 +29,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// <summary>
 /// Provides helper methods for network-related operations.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNetworkHelper")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineNetworkHelper")]
 public static class NetworkHelper
 {
 
@@ -42,7 +42,7 @@ new DefaultObjectPoolProvider().CreateStringBuilderPool();
 	/// <returns>A read-only collection containing the names of active network interfaces.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(GetActiveNetworkInterfaceNames), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetActiveNetworkInterfaceNames), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> GetActiveNetworkInterfaceNames()
 	{
 		var connections = GetNetworkConnections();

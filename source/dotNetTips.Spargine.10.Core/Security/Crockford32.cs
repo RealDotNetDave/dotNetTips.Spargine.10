@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-14-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-11-2026
 // ***********************************************************************
 // <copyright file="Crockford32.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// to produce human-readable, case-insensitive, URL-safe encoded strings.
 /// Ambiguous characters (I, L → 1; O → 0) are automatically normalized during decoding.
 /// </summary>
-[Information(nameof(Crockford32), Status = Status.New)]
+[Information(nameof(Crockford32), Status = Status.NeedsDocumentation)]
 public static class Crockford32
 {
 	private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
@@ -46,7 +46,7 @@ public static class Crockford32
 	/// </returns>
 	/// <exception cref="FormatException">Thrown when the input contains a character that is not valid in the Crockford Base32 alphabet.</exception>
 	[Pure]
-	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] Decode(string text)
 	{
 		if (string.IsNullOrWhiteSpace(text))
@@ -92,7 +92,7 @@ public static class Crockford32
 	/// or <see cref="string.Empty"/> if <paramref name="data"/> is empty.
 	/// </returns>
 	[Pure]
-	[Information(nameof(Encode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(Encode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string Encode(ReadOnlySpan<byte> data)
 	{
 		if (data.Length == 0)

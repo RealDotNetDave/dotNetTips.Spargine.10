@@ -4,7 +4,7 @@
 // Created          : 07-09-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-10-2026
+// Last Modified On : 07-11-2026
 // ***********************************************************************
 // <copyright file="DateOnlyJsonConverter.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// <summary>
 /// Converts <see cref="DateOnly"/> values to and from JSON using an ISO-style invariant format.
 /// </summary>
-[Information(nameof(DateOnlyJsonConverter), Status = Status.New)]
+[Information(nameof(DateOnlyJsonConverter), Status = Status.Available)]
 internal sealed class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {
 	private const string Format = "yyyy-MM-dd";

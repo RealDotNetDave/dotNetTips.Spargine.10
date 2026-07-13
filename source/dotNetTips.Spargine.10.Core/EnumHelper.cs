@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core;
 /// Provides utility methods for working with enumerations, such as converting between names and values,
 /// adjusting naming conventions, and extracting metadata. This class cannot be inherited.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static partial class EnumHelper
 {
 	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();
@@ -44,7 +44,7 @@ public static partial class EnumHelper
 	/// <typeparam name="TEnum">The flags enum type.</typeparam>
 	/// <param name="input">The flags value to inspect.</param>
 	/// <returns>The number of individual flags set; or <c>1</c> for non-flags enumerations.</returns>
-	[Information(nameof(FlagCount), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FlagCount), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int FlagCount<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
 		where TEnum : struct, Enum
 	{
@@ -224,7 +224,7 @@ public static partial class EnumHelper
 	/// <returns>A read-only collection of the individual flags that are set.</returns>
 	/// <exception cref="ArgumentException">Thrown when <typeparamref name="TEnum"/> is not a flags enumeration.</exception>
 	[return: NotNull]
-	[Information(nameof(GetSetFlags), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GetSetFlags), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<TEnum> GetSetFlags<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
 		where TEnum : struct, Enum
 	{

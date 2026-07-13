@@ -10,8 +10,7 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Lightweight timing scope that measures elapsed time and optionally reports
-// it when disposed.
+// Lightweight timing scope that measures elapsed time and optionally reports.
 // </summary>
 // ***********************************************************************
 using System;
@@ -26,7 +25,7 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// <summary>
 /// Measures elapsed time for a scoped operation and optionally reports the result on dispose.
 /// </summary>
-[Information(nameof(StopwatchScope), Status = Status.New)]
+[Information(nameof(StopwatchScope), Status = Status.NeedsDocumentation)]
 public sealed class StopwatchScope : IDisposable
 {
 	private readonly Action<TimeSpan>? _onDispose;
@@ -37,7 +36,7 @@ public sealed class StopwatchScope : IDisposable
 	/// </summary>
 	/// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public StopwatchScope([AllowNull] Action<TimeSpan>? onDispose = null)
 	{
 		this._stopwatch = Stopwatch.StartNew();
@@ -55,7 +54,7 @@ public sealed class StopwatchScope : IDisposable
 	/// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 	/// <returns>A started stopwatch scope.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static StopwatchScope Start([AllowNull] Action<TimeSpan>? onDispose = null) => new(onDispose);
 
 	/// <summary>
