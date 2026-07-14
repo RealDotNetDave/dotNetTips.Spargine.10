@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// (<c>TryGetArraySegment</c>), conditional array materialization (<c>ToArrayIfNeeded</c>), and
 /// low-allocation equality comparison (<c>IsEqualTo</c>) performed over the underlying <see cref="ReadOnlySpan{T}"/>.
 /// </remarks>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class ReadOnlyMemoryExtensions
 {
 	/// <summary>

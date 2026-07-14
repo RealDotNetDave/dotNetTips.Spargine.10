@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for <see cref="FileInfo"/> that support atomic writes and resilient reads.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class FileInfoExtensions
 {
 	/// <summary>

@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides common <see cref="ModelBuilder"/> helpers for registering EF Core <see cref="ValueConverter"/> instances.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class EfCoreModelBuilderExtensions
 {
 

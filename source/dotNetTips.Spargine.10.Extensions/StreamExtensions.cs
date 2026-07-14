@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for <c>Stream</c> covering pooled async I/O and flush-and-close operations.
 /// </summary>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", Status = Status.Available)]
+[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", Status = Status.UpdateDocumentation)]
 public static class StreamExtensions
 {
 	private const int DefaultCopyBufferSize = 81920;

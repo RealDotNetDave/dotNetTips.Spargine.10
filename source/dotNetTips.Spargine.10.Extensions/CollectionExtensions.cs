@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// They include features such as adding items conditionally, ensuring items are unique before adding them, and converting collections to different types.
 /// These utilities can significantly reduce boilerplate code and improve performance in scenarios involving collection manipulation.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineCollectionExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineCollectionExtensions")]
 public static class CollectionExtensions
 {
 

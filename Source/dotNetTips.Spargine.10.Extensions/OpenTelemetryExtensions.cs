@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides null-safe helper extensions for OpenTelemetry-style activity tagging and status assignment.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class OpenTelemetryExtensions
 {
 	/// <summary>

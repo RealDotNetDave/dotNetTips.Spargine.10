@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// and performing manipulations like concatenation, extraction, and indentation. Methods favor ordinal comparisons,
 /// spans, pooled <see cref="StringBuilder"/> instances, and guard clauses for minimal GC pressure.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.UpdateDocumentation)]
 public static class StringExtensions
 {
 	private const string UrlSeparator = "://";

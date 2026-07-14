@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
 /// safely skipping files that raise <see cref="IOException" />.
 /// </remarks>
-[Information(Status = Status.Available)]
+[Information(Status = Status.UpdateDocumentation)]
 public static class DirectoryInfoExtensions
 {
 	/// <summary>
@@ -119,7 +119,7 @@ public static class DirectoryInfoExtensions
 	}
 
 	/// <summary>
-	/// Writes text atomically to a file within this directory.
+	/// Writes text atomically to a file within the directory.
 	/// </summary>
 	/// <param name="directory">The target directory.</param>
 	/// <param name="fileName">The destination file name (not full path).</param>

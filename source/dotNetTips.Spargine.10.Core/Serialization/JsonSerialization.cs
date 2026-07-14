@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// Utilizes the System.Text.Json namespace for efficient processing. This class supports custom serialization
 /// options and aims to simplify the use of JSON serialization in .NET applications.
 /// </summary>
-[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/SpargineJsonSerialization", Status = Status.UpdateDocumentation)]
 public static class JsonSerialization
 {
 	/// <summary>
@@ -61,7 +61,7 @@ public static class JsonSerialization
 	/// <returns>A configured and read-only <see cref="JsonSerializerOptions"/> instance.</returns>
 	[Pure]
 	[UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "This helper intentionally uses DefaultJsonTypeInfoResolver to preserve the same reflection-based default behavior as the existing JsonSerialization APIs.")]
-	[Information(nameof(CreateDefaultOptions), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(CreateDefaultOptions), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static JsonSerializerOptions CreateDefaultOptions(bool writeIndented = false, bool includeDateOnlyConverters = false)
 	{
 		var options = new JsonSerializerOptions

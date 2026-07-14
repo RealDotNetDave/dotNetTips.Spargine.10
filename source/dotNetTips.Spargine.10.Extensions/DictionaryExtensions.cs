@@ -46,7 +46,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// </list>
 /// Obsolete methods are retained with deprecation notices that redirect to their modern replacements.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDictionaryExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDictionaryExtensions")]
 public static class DictionaryExtensions
 {
 	/// <summary>

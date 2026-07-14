@@ -42,30 +42,30 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ArrayExtensionsCollectionBenchmark),
-			typeof(AssemblyExtensionsBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	typeof(ArrayExtensionsCollectionBenchmark),
+		//	typeof(AssemblyExtensionsBenchmark)
+		//);
 
 		// Group 1: A–D - 8:30 hours, 882 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(ArrayExtensionsCollectionBenchmark),
-		// typeof(ArrayExtensionsSliceBenchmark),
-		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
-		//	typeof(AssemblyExtensionsBenchmark),
-		//	typeof(CharacterExtensionsBenchmark),
-		//	typeof(CollectionExtensionsCollectionBenchmark),
-		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
-		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
-		//	typeof(DataContextExtensionsBenchmark),
-		//	typeof(DataReaderExtensionsBenchmark),
-		//	typeof(DataTableExtensionsBenchmark),
-		//	typeof(DateTimeExtensionsBenchmark),
-		//	typeof(DbContextExtensionsBenchmark),
-		//	typeof(DictionaryExtensionsCollectionBenchmark),
-		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark),
-		//	typeof(DirectoryInfoExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(ArrayExtensionsCollectionBenchmark),
+		 typeof(ArrayExtensionsSliceBenchmark),
+			typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark),
+			typeof(CharacterExtensionsBenchmark),
+			typeof(CollectionExtensionsCollectionBenchmark),
+			typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			typeof(ConcurrentBagExtensionsCollectionBenchmark),
+			typeof(DataContextExtensionsBenchmark),
+			typeof(DataReaderExtensionsBenchmark),
+			typeof(DataTableExtensionsBenchmark),
+			typeof(DateTimeExtensionsBenchmark),
+			typeof(DbContextExtensionsBenchmark),
+			typeof(DictionaryExtensionsCollectionBenchmark),
+			typeof(DictionaryExtensionsMutatingCollectionBenchmark),
+			typeof(DirectoryInfoExtensionsBenchmark)
+		);
 
 		// Group 2: E–H - 10:05 hours, 926 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,

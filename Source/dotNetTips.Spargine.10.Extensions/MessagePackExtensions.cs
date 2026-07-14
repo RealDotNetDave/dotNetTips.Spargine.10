@@ -26,7 +26,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides thin wrapper extension methods for MessagePack serialization and deserialization.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class MessagePackExtensions
 {
 	/// <summary>

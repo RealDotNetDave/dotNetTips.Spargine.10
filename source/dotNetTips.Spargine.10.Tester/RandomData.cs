@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Tester;
 /// Utilizes <see cref="RandomNumberGenerator"/> for generating cryptographically secure random data where necessary.
 /// This class is designed to be thread-safe and efficient in generating large volumes of random data.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineTester")]
 public static class RandomData
 {
 
@@ -589,7 +589,9 @@ public static class RandomData
 
 		// Generate a cryptographically secure random long by combining two 32-bit integers
 		Span<byte> buffer = stackalloc byte[8];
+
 		RandomNumberGenerator.Fill(buffer);
+
 		var randomValue = Math.Abs(BitConverter.ToInt64(buffer)) % (range + 1);
 
 		return min.AddTicks(randomValue);

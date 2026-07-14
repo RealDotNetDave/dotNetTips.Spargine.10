@@ -23,7 +23,7 @@ namespace DotNetTips.Spargine.Core.Serialization;
 /// <summary>
 /// Converts <see cref="TimeOnly"/> values to and from JSON using an invariant time format.
 /// </summary>
-[Information(nameof(TimeOnlyJsonConverter), Status = Status.New)]
+[Information(nameof(TimeOnlyJsonConverter), Status = Status.Available)]
 internal sealed class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
 {
 	private const string Format = "HH:mm:ss.fff";

@@ -46,7 +46,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <item><description><b>Conversion:</b> <c>BytesToMegabytes</c>, <c>RoundToPowerOf2</c>, <c>ToRomanNumeral</c>, <c>ToWords</c>.</description></item>
 /// </list>
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNumericExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineNumericExtensions")]
 public static class NumericExtensions
 {
 
