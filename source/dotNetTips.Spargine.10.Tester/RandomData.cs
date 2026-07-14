@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-10-2026
+// Last Modified On : 07-14-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -336,7 +336,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateBoolean), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateBoolean), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static bool GenerateBoolean()
 	{
 		return RandomNumberGenerator.GetInt32(0, 2) == 1;
@@ -543,7 +543,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static DateOnly GenerateDateOnly(DateOnly? minValue = null, DateOnly? maxValue = null)
 	{
 		var min = minValue ?? new DateOnly(2000, 1, 1);
@@ -574,7 +574,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static DateTimeOffset GenerateDateTimeOffset(DateTimeOffset? minValue = null, DateTimeOffset? maxValue = null)
 	{
 		var min = minValue ?? new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
@@ -720,7 +720,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static TEnum GenerateEnum<TEnum>() where TEnum : struct, Enum
 	{
 		var values = Enum.GetValues<TEnum>();
@@ -834,7 +834,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A new <see cref="Guid"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Guid GenerateGuid()
 	{
 		return Guid.NewGuid();
@@ -1513,7 +1513,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static TimeOnly GenerateTimeOnly(TimeOnly? minValue = null, TimeOnly? maxValue = null)
 	{
 		var min = minValue ?? TimeOnly.MinValue;
@@ -1547,7 +1547,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static TimeSpan GenerateTimeSpan(TimeSpan? minValue = null, TimeSpan? maxValue = null)
 	{
 		var min = minValue ?? TimeSpan.Zero;

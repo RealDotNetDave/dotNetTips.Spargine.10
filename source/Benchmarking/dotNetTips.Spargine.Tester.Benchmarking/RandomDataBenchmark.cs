@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-14-2026
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -247,6 +247,126 @@ public class RandomDataBenchmark : Benchmark
 		var fileName = RandomData.GenerateUrlHostNameNoSubDomain();
 
 		this.Consume(fileName);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateBoolean))]
+	public void GenerateBoolean()
+	{
+		var result = RandomData.GenerateBoolean();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateCompanyName))]
+	public void GenerateCompanyName()
+	{
+		var result = RandomData.GenerateCompanyName();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateCurrencyAmount))]
+	public void GenerateCurrencyAmount()
+	{
+		var result = RandomData.GenerateCurrencyAmount();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateDateOnly))]
+	public void GenerateDateOnly()
+	{
+		var result = RandomData.GenerateDateOnly();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateDateTimeOffset))]
+	public void GenerateDateTimeOffset()
+	{
+		var result = RandomData.GenerateDateTimeOffset();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateEnum) + ": DayOfWeek")]
+	public void GenerateEnum()
+	{
+		var result = RandomData.GenerateEnum<DayOfWeek>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateGuid))]
+	public void GenerateGuid()
+	{
+		var result = RandomData.GenerateGuid();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateHashString))]
+	public void GenerateHashString()
+	{
+		var result = RandomData.GenerateHashString();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateIPv4Address))]
+	public void GenerateIPv4Address()
+	{
+		var result = RandomData.GenerateIPv4Address();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateIPv6Address))]
+	public void GenerateIPv6Address()
+	{
+		var result = RandomData.GenerateIPv6Address();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateJsonObject))]
+	public void GenerateJsonObject()
+	{
+		var result = RandomData.GenerateJsonObject();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateParagraph))]
+	public void GenerateParagraph()
+	{
+		var result = RandomData.GenerateParagraph();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateSentence))]
+	public void GenerateSentence()
+	{
+		var result = RandomData.GenerateSentence();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateTimeOnly))]
+	public void GenerateTimeOnly()
+	{
+		var result = RandomData.GenerateTimeOnly();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateTimeSpan))]
+	public void GenerateTimeSpan()
+	{
+		var result = RandomData.GenerateTimeSpan();
+
+		this.Consume(result);
 	}
 
 	[Benchmark(Description = nameof(PersonExtensions.get_Age))]

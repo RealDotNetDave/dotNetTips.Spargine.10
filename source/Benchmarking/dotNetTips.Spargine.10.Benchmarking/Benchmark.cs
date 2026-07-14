@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-14-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -292,6 +292,78 @@ public abstract class Benchmark
 	/// </summary>
 	/// <value>The test unique identifier.</value>
 	public Guid TestGuid { get; internal set; }
+
+	/// <summary>
+	/// Gets a random boolean value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="bool"/> value.</value>
+	public bool TestBoolean { get; private set; }
+
+	/// <summary>
+	/// Gets a random company name generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated company name string.</value>
+	public string TestCompanyName { get; private set; }
+
+	/// <summary>
+	/// Gets a random currency amount generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="decimal"/> currency amount with 2 decimal places.</value>
+	public decimal TestCurrencyAmount { get; private set; }
+
+	/// <summary>
+	/// Gets a random <see cref="DateOnly"/> value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="DateOnly"/> between January 1, 2000 and December 31, 2099.</value>
+	public DateOnly TestDateOnly { get; private set; }
+
+	/// <summary>
+	/// Gets a random <see cref="DateTimeOffset"/> value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="DateTimeOffset"/> between January 1, 2000 and December 31, 2099 UTC.</value>
+	public DateTimeOffset TestDateTimeOffset { get; private set; }
+
+	/// <summary>
+	/// Gets a random <see cref="DayOfWeek"/> value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly selected <see cref="DayOfWeek"/> enum value.</value>
+	public DayOfWeek TestDayOfWeek { get; private set; }
+
+	/// <summary>
+	/// Gets a random hexadecimal hash string generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A 32-character randomly generated hexadecimal string.</value>
+	public string TestHashString { get; private set; }
+
+	/// <summary>
+	/// Gets a random IPv4 address string generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated IPv4 address string (e.g., "192.168.1.100").</value>
+	public string TestIPv4Address { get; private set; }
+
+	/// <summary>
+	/// Gets a random IPv6 address string generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated IPv6 address string.</value>
+	public string TestIPv6Address { get; private set; }
+
+	/// <summary>
+	/// Gets a random sentence generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated sentence string with default word count.</value>
+	public string TestSentence { get; private set; }
+
+	/// <summary>
+	/// Gets a random <see cref="TimeOnly"/> value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="TimeOnly"/> between midnight and 23:59:59.</value>
+	public TimeOnly TestTimeOnly { get; private set; }
+
+	/// <summary>
+	/// Gets a random <see cref="TimeSpan"/> value generated during setup for use in benchmark tests.
+	/// </summary>
+	/// <value>A randomly generated <see cref="TimeSpan"/> between <see cref="TimeSpan.Zero"/> and 365 days.</value>
+	public TimeSpan TestTimeSpan { get; private set; }
 
 	/// <summary>
 	/// Gets the consumer used for consuming objects in benchmark operations.
@@ -594,7 +666,19 @@ public abstract class Benchmark
 		this.PersonVal01 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.PersonVal02 = RandomData.GeneratePerson<Tester.Models.ValueTypes.Person>();
 		this.StringToTrim = $"          {this.LongTestString}          ";
-		this.TestGuid = Guid.NewGuid();
+		this.TestBoolean = RandomData.GenerateBoolean();
+		this.TestCompanyName = RandomData.GenerateCompanyName();
+		this.TestCurrencyAmount = RandomData.GenerateCurrencyAmount();
+		this.TestDateOnly = RandomData.GenerateDateOnly();
+		this.TestDateTimeOffset = RandomData.GenerateDateTimeOffset();
+		this.TestDayOfWeek = RandomData.GenerateEnum<DayOfWeek>();
+		this.TestGuid = RandomData.GenerateGuid();
+		this.TestHashString = RandomData.GenerateHashString();
+		this.TestIPv4Address = RandomData.GenerateIPv4Address();
+		this.TestIPv6Address = RandomData.GenerateIPv6Address();
+		this.TestSentence = RandomData.GenerateSentence();
+		this.TestTimeOnly = RandomData.GenerateTimeOnly();
+		this.TestTimeSpan = RandomData.GenerateTimeSpan();
 	}
 
 	/// <summary>
