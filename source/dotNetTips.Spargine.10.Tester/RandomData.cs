@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-19-2019
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 07-14-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">

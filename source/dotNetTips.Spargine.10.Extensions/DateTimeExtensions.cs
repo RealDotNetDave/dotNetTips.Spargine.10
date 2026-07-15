@@ -43,7 +43,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// friendly and formatted string output, and UTC offset conversion.
 /// These methods are designed to simplify common date and time operations, making code more readable and efficient.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
 public static class DateTimeExtensions
 {
 

@@ -1,0 +1,35 @@
+flowchart LR
+    nDotNetTips_Spargine_Tester_BenchmarkTests["DotNetTips.Spargine.Tester.BenchmarkTests"]
+    nDotNetTips_Spargine_Core_BenchmarkTests["DotNetTips.Spargine.Core.BenchmarkTests"]
+    nDotNetTips_Spargine_Extensions_BenchmarkTests["DotNetTips.Spargine.Extensions.BenchmarkTests"]
+    nDotNetTips_Spargine_10_Benchmarking["DotNetTips.Spargine.10.Benchmarking"]
+    nDotNetTips_Spargine_10_Extensions["DotNetTips.Spargine.10.Extensions"]
+    nDotNetTips_Spargine_10_Tester["DotNetTips.Spargine.10.Tester"]
+    nDotNetTips_Spargine_10_Core["DotNetTips.Spargine.10.Core"]
+    nDotNetTips_Spargine_10["DotNetTips.Spargine.10"]
+    nDotNetTips_Spargine_BenchmarkTests["DotNetTips.Spargine.BenchmarkTests"]
+    nDotNetTips_Spargine_Tester_BenchmarkTests --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_Tester_BenchmarkTests --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_Tester_BenchmarkTests --> nDotNetTips_Spargine_10_Tester
+    nDotNetTips_Spargine_Tester_BenchmarkTests --> nDotNetTips_Spargine_10_Benchmarking
+    nDotNetTips_Spargine_Core_BenchmarkTests --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_Core_BenchmarkTests --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_Core_BenchmarkTests --> nDotNetTips_Spargine_10_Tester
+    nDotNetTips_Spargine_Core_BenchmarkTests --> nDotNetTips_Spargine_10_Benchmarking
+    nDotNetTips_Spargine_Extensions_BenchmarkTests --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_Extensions_BenchmarkTests --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_Extensions_BenchmarkTests --> nDotNetTips_Spargine_10_Tester
+    nDotNetTips_Spargine_Extensions_BenchmarkTests --> nDotNetTips_Spargine_10_Benchmarking
+    nDotNetTips_Spargine_10_Benchmarking --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_10_Benchmarking --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_10_Benchmarking --> nDotNetTips_Spargine_10_Tester
+    nDotNetTips_Spargine_10_Extensions --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_10_Tester --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_10_Tester --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_10 --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_10 --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_BenchmarkTests --> nDotNetTips_Spargine_10_Core
+    nDotNetTips_Spargine_BenchmarkTests --> nDotNetTips_Spargine_10_Extensions
+    nDotNetTips_Spargine_BenchmarkTests --> nDotNetTips_Spargine_10_Tester
+    nDotNetTips_Spargine_BenchmarkTests --> nDotNetTips_Spargine_10
+    nDotNetTips_Spargine_BenchmarkTests --> nDotNetTips_Spargine_10_Benchmarking
