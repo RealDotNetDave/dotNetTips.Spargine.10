@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-16-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -74,8 +74,10 @@ public static partial class Validator
 		else
 		{
 			// Last resort: materialize once to avoid multiple enumerations
-			var list = input as IList<T> ?? input.ToList();
+			var list = input as IList<T> ?? [.. input];
+
 			count = list.Count;
+
 			// If we materialized, reassign input to the list to avoid re-enumeration by callers
 			input = list;
 		}

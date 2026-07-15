@@ -3,15 +3,13 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="FileInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Extension methods for <see cref="System.IO.FileInfo"/> that provide atomic write and safe read helpers.
-// </summary>
+// <summary>Extension methods for <see cref="System.IO.FileInfo"/> that provide atomic write and safe read helpers.</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -86,12 +84,7 @@ public static class FileInfoExtensions
 
 		try
 		{
-			if (file.Exists is false)
-			{
-				return fallback;
-			}
-
-			return File.ReadAllText(file.FullName, encoding ?? Encoding.UTF8);
+			return file.Exists is false ? fallback : File.ReadAllText(file.FullName, encoding ?? Encoding.UTF8);
 		}
 		catch (IOException)
 		{

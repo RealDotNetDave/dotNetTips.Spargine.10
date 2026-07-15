@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-10-2026
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -64,12 +64,7 @@ public static class DateTimeExtensions
 			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(minimum));
 		}
 
-		if (value < minimum)
-		{
-			return minimum;
-		}
-
-		return value > maximum ? maximum : value;
+		return value < minimum ? minimum : value > maximum ? maximum : value;
 	}
 
 	/// <summary>

@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -170,12 +170,7 @@ public static class NumericExtensions
 			ExceptionThrower.ThrowArgumentOutOfRangeException(nameof(minimum));
 		}
 
-		if (value < minimum)
-		{
-			return minimum;
-		}
-
-		return value > maximum ? maximum : value;
+		return value < minimum ? minimum : value > maximum ? maximum : value;
 	}
 
 	/// <summary>

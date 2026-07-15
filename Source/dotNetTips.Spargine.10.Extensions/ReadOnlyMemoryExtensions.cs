@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="ReadOnlyMemoryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -123,14 +123,11 @@ public static class ReadOnlyMemoryExtensions
 		[Information(nameof(ToArrayIfNeeded), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 		public T[] ToArrayIfNeeded()
 		{
-			if (MemoryMarshal.TryGetArray(memory, out var segment) &&
+			return MemoryMarshal.TryGetArray(memory, out var segment) &&
 				segment.Offset == 0 &&
-				segment.Count == segment.Array!.Length)
-			{
-				return segment.Array;
-			}
-
-			return memory.ToArray();
+				segment.Count == segment.Array!.Length
+				? segment.Array
+				: memory.ToArray();
 		}
 
 		/// <summary>

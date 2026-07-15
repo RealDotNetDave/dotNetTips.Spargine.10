@@ -4,7 +4,7 @@
 // Created          : 05-21-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-24-2026
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -104,11 +104,7 @@ internal static class ListExtensionsHelper
 	internal static bool ReferenceOrCountMismatch<T>(List<T> a, List<T> b, out bool sameRef)
 	{
 		sameRef = ReferenceEquals(a, b);
-		if (sameRef)
-		{
-			return true;
-		}
 
-		return a.Count != b.Count;
+		return sameRef ? true : a.Count != b.Count;
 	}
 }

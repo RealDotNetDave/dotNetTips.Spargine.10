@@ -4,7 +4,7 @@
 // Created          : 04-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-29-2026
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="BarCodeGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -108,17 +108,11 @@ public static class BarcodeGenerator
 			return false;
 		}
 
-		if (!TryDecodeSignature(sigPart, out var providedSig))
-		{
-			return false;
-		}
-
-		if (!CheckExpiry(fields, maxSkew, pastExpiryGrace))
-		{
-			return false;
-		}
-
-		return keysByKid is null ? false : VerifySignature(payload, providedSig, fields, keysByKid, macLenBytes);
+		return !TryDecodeSignature(sigPart, out var providedSig)
+			? false
+			: !CheckExpiry(fields, maxSkew, pastExpiryGrace)
+			? false
+			: keysByKid is null ? false : VerifySignature(payload, providedSig, fields, keysByKid, macLenBytes);
 	}
 
 	/// <summary>

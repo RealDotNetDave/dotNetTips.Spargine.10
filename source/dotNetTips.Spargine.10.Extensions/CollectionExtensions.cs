@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -221,12 +221,9 @@ public static class CollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			if (collection is T[] array)
-			{
-				return System.MemoryExtensions.AsSpan(array);
-			}
-
-			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
+			return collection is T[] array
+				? System.MemoryExtensions.AsSpan(array)
+				: collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
 		}
 
 		/// <summary>
@@ -247,12 +244,9 @@ public static class CollectionExtensions
 		{
 			collection = collection.ArgumentNotNull();
 
-			if (collection is T[] array)
-			{
-				return System.MemoryExtensions.AsSpan(array);
-			}
-
-			return collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
+			return collection is T[] array
+				? System.MemoryExtensions.AsSpan(array)
+				: collection is List<T> list ? CollectionsMarshal.AsSpan(list) : new([.. collection]);
 		}
 
 		/// <summary>
@@ -399,10 +393,12 @@ public static class CollectionExtensions
 			if (!enumerator.MoveNext())
 			{
 				first = default;
+
 				return false;
 			}
 
 			first = enumerator.Current;
+
 			return true;
 		}
 	}

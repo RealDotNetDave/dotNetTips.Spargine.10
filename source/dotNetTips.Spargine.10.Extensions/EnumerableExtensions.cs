@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-21-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 06-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-15-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -237,12 +237,9 @@ public static class EnumerableExtensions
 			return concurrentBag.IsEmpty;
 		}
 
-		if (collection is ConcurrentQueue<T> concurrentQueue)
-		{
-			return concurrentQueue.IsEmpty;
-		}
-
-		return collection is ConcurrentStack<T> concurrentStack ? concurrentStack.IsEmpty : null;
+		return collection is ConcurrentQueue<T> concurrentQueue
+			? concurrentQueue.IsEmpty
+			: collection is ConcurrentStack<T> concurrentStack ? concurrentStack.IsEmpty : null;
 	}
 
 	/// <summary>
