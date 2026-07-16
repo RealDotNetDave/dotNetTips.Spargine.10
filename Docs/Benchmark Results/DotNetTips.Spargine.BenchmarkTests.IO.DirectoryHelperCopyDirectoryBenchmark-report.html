@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.DirectoryHelperCopyDirectoryBenchmark-20260705-115051</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.DirectoryHelperCopyDirectoryBenchmark-20260715-165103</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,20 +13,20 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7417/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host]     : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
-Categories=**NEW**,IO  
+Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method </th><th>Mean     </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+<thead><tr><th>Method </th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CopyDirectory</td><td>70,601,122.0 ns</td><td>1,409,020.3 ns</td><td>2,065,323.8 ns</td><td>383,521.0 ns</td><td>68,647,787.5 ns</td><td>69,135,450.0 ns</td><td>69,546,462.5 ns</td><td>72,337,312.5 ns</td><td>75,595,825.0 ns</td><td>14.16</td><td>-191,746.0 ns</td><td>29.00</td><td>No</td><td>14,707 B</td><td>-</td><td>326.07 KB</td>
+</thead><tbody><tr><td>CopyDirectory</td><td>70,857,911.5 ns</td><td>397,990.5 ns</td><td>332,340.1 ns</td><td>92,174.6 ns</td><td>70,404,000.0 ns</td><td>70,617,487.5 ns</td><td>70,704,987.5 ns</td><td>71,023,925.0 ns</td><td>71,577,175.0 ns</td><td>14.11</td><td>-46,080.8 ns</td><td>13.00</td><td>No</td><td>14,732 B</td><td>-</td><td>328.38 KB</td>
 </tr></tbody></table>
 </body>
 </html>

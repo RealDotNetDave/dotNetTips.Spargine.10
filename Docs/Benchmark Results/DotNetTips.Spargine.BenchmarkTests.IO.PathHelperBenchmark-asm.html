@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark-20260705-132417</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark-20260715-182802</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -48,7 +48,7 @@
         }
     });
 });</script>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.CombinePathsParams()</th><th></th></tr>
@@ -79,7 +79,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rsi,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.String[]</pre></code></td>
 </tr><tr class="">
@@ -89,29 +89,33 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A33D8B0760</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2218F060AF8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A33D8B0780</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2218F060B18</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+18],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A33D8B07A8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2218F060B40</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+20],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,2A33D8B07D0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2218F060B68</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+28],rcx</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>xor       ebp,ebp</pre></code></td>
-</tr><tr class="">
-<td></td><td id="1" class="reference" data-reference="1_M00_L04"><a href="#1_M00_L04"><pre><code>jmp       short M00_L04</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="1_M00_L00" class="label" data-label="1_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
+<td></td><td><pre><code>movsxd    rcx,ebp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rcx,4</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="1" class="reference" data-reference="1_M00_L04"><a href="#1_M00_L04"><pre><code>jge       near ptr M00_L04</pre></code></a></td>
+</tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       ebp,4</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="1" class="reference" data-reference="1_M00_L11"><a href="#1_M00_L11"><pre><code>jae       near ptr M00_L11</pre></code></a></td>
@@ -172,16 +176,12 @@
 <td></td><td><pre><code>add       ebp,1</pre></code></td>
 </tr><tr class="">
 <td></td><td id="1" class="reference" data-reference="1_M00_L12"><a href="#1_M00_L12"><pre><code>jo        near ptr M00_L12</pre></code></a></td>
+</tr><tr class="">
+<td></td><td id="1" class="reference" data-reference="1_M00_L00"><a href="#1_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="1_M00_L04" class="label" data-label="1_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>movsxd    rcx,ebp</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       rcx,4</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="1" class="reference" data-reference="1_M00_L00"><a href="#1_M00_L00"><pre><code>jl        near ptr M00_L00</pre></code></a></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>add       rdi,10</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.IO.DirectoryInfo</pre></code></td>
@@ -196,7 +196,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rsp+28]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE61E0D0]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E578D0]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -208,7 +208,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE28FDE0]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6FEA0]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -236,7 +236,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+38],rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rsp+38]</pre></code></td>
 </tr><tr class="evenMap">
@@ -276,14 +276,14 @@
 <td id="1_M00_L06" class="label" data-label="1_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,2A33D8A0008</pre></code></td>
+<td></td><td><pre><code>mov       rdx,2218F050008</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="1" class="reference" data-reference="1_M00_L03"><a href="#1_M00_L03"><pre><code>jmp       near ptr M00_L03</pre></code></a></td>
 </tr><tr class="">
 <td id="1_M00_L07" class="label" data-label="1_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6A57B8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6268]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -294,7 +294,7 @@
 <td id="1_M00_L08" class="label" data-label="1_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6A57B8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6268]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -307,7 +307,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6A7CC0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6DD8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
@@ -316,15 +316,15 @@
 <td id="1_M00_L10" class="label" data-label="1_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF34000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFFF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6C030]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58E688]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E5F2B8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -368,7 +368,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovdqa   xmmword ptr [rbp+30],xmm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,3BFE0A6EB001</pre></code></td>
+<td></td><td><pre><code>mov       rax,27BA6B0C304F</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+8],rax</pre></code></td>
 </tr><tr class="">
@@ -623,7 +623,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFF5818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1845818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="evenMap">
@@ -676,7 +676,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rax,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       r8,3BFE0A6EB001</pre></code></td>
+<td></td><td><pre><code>mov       r8,27BA6B0C304F</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rbp+8],r8</pre></code></td>
 </tr><tr class="">
@@ -776,7 +776,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFF5818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1845818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="">
@@ -787,13 +787,13 @@
 <td id="2_M01_L20" class="label" data-label="2_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,262A8800C88</pre></code></td>
+<td></td><td><pre><code>mov       rcx,1E0FA000C90</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2C0D10]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1B2D5A0]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L13"><a href="#2_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
@@ -807,15 +807,15 @@
 <td id="2_M01_L22" class="label" data-label="2_M01_L22"><pre><code>M01_L22</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1C4AC</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1C4AE</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF34000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFFF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6C030]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58E688]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E5F2B8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -828,7 +828,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58F708]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DEC720]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M01_L06"><a href="#2_M01_L06"><pre><code>jmp       near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -864,7 +864,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58F708]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DEC720]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M01_L19"><a href="#2_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -875,7 +875,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,5C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6AC090]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6E98]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L08"><a href="#2_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
 </tr><tr class="">
@@ -911,21 +911,21 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58F708]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DEC720]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L10"><a href="#2_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td id="2_M01_L29" class="label" data-label="2_M01_L29"><pre><code>M01_L29</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE41DA88]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C7DE00]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
 <td id="2_M01_L30" class="label" data-label="2_M01_L30"><pre><code>M01_L30</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE1CF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C19B7198]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -970,7 +970,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE28FDF8]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6FEB8]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -982,7 +982,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE28FE28]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6FEE8]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -994,7 +994,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE28FE58]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6FF18]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -1002,7 +1002,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE28FE70]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6FF30]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="3" class="reference" data-reference="3_M02_L01"><a href="#3_M02_L01"><pre><code>jmp       short M02_L01</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -1027,15 +1027,15 @@
 <td id="3_M02_L02" class="label" data-label="3_M02_L02"><pre><code>M02_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF34000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFFF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6C030]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE58E688]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E5F2B8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -1048,15 +1048,15 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6A7DB0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6F28]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFCDDF34000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFFF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6C030]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="">
@@ -1064,7 +1064,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE376FD0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BD7090]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
@@ -1081,15 +1081,15 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6A7DC8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF6F40]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF34000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFFF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6C030]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1097,7 +1097,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE376FD0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BD7090]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
@@ -1106,7 +1106,7 @@
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.CombinePathsFour()</th><th></th></tr>
@@ -1137,7 +1137,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rsi,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.String[]</pre></code></td>
 </tr><tr class="">
@@ -1147,19 +1147,19 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,1F3EA150760</pre></code></td>
+<td></td><td><pre><code>mov       rcx,21EEB530AF8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,1F3EA150780</pre></code></td>
+<td></td><td><pre><code>mov       rcx,21EEB530B18</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+18],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,1F3EA1507A8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,21EEB530B40</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+20],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,1F3EA1507D0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,21EEB530B68</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+28],rcx</pre></code></td>
 </tr><tr class="">
@@ -1254,7 +1254,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rsp+28]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE63DAA0]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8E1C0]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1266,7 +1266,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2AF000]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A9F018]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1294,7 +1294,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+38],rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rsp+38]</pre></code></td>
 </tr><tr class="evenMap">
@@ -1334,14 +1334,14 @@
 <td id="4_M00_L06" class="label" data-label="4_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,1F3EA140008</pre></code></td>
+<td></td><td><pre><code>mov       rdx,21EEB520008</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="4" class="reference" data-reference="4_M00_L03"><a href="#4_M00_L03"><pre><code>jmp       near ptr M00_L03</pre></code></a></td>
 </tr><tr class="">
 <td id="4_M00_L07" class="label" data-label="4_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4A68]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F25098]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -1352,7 +1352,7 @@
 <td id="4_M00_L08" class="label" data-label="4_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4A68]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F25098]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -1365,7 +1365,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4A80]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F250B0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
@@ -1374,15 +1374,15 @@
 <td id="4_M00_L10" class="label" data-label="4_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF54000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C17B4000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE01F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A97798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4240]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F24870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -1426,7 +1426,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovdqa   xmmword ptr [rbp+30],xmm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,0C8600339D74</pre></code></td>
+<td></td><td><pre><code>mov       rax,15FDCF730CE9</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+8],rax</pre></code></td>
 </tr><tr class="">
@@ -1681,7 +1681,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE015818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1875818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="evenMap">
@@ -1734,7 +1734,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rax,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       r8,0C8600339D74</pre></code></td>
+<td></td><td><pre><code>mov       r8,15FDCF730CE9</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rbp+8],r8</pre></code></td>
 </tr><tr class="">
@@ -1834,7 +1834,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE015818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1875818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="">
@@ -1845,13 +1845,13 @@
 <td id="5_M01_L20" class="label" data-label="5_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,1B355000C88</pre></code></td>
+<td></td><td><pre><code>mov       rcx,1DE56400C88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2E0D10]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1B2FB50]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="5" class="reference" data-reference="5_M01_L13"><a href="#5_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
@@ -1865,15 +1865,15 @@
 <td id="5_M01_L22" class="label" data-label="5_M01_L22"><pre><code>M01_L22</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1C4AC</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1C4AE</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF54000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C17B4000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE01F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A97798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4240]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F24870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -1886,7 +1886,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE59F270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DFF120]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="5" class="reference" data-reference="5_M01_L06"><a href="#5_M01_L06"><pre><code>jmp       near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -1922,7 +1922,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE59F270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DFF120]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="5" class="reference" data-reference="5_M01_L19"><a href="#5_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -1933,7 +1933,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,5C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D5308]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F25998]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="5" class="reference" data-reference="5_M01_L08"><a href="#5_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
 </tr><tr class="">
@@ -1969,21 +1969,21 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE59F270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DFF120]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="5" class="reference" data-reference="5_M01_L10"><a href="#5_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td id="5_M01_L29" class="label" data-label="5_M01_L29"><pre><code>M01_L29</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE42CCA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C8CF90]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
 <td id="5_M01_L30" class="label" data-label="5_M01_L30"><pre><code>M01_L30</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE1EF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C19E7198]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -2028,7 +2028,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2AF018]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A9F030]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -2040,7 +2040,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2AF048]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A9F060]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -2052,7 +2052,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2AF078]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A9F090]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -2060,7 +2060,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2AF090]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A9F0A8]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="6" class="reference" data-reference="6_M02_L01"><a href="#6_M02_L01"><pre><code>jmp       short M02_L01</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -2085,15 +2085,15 @@
 <td id="6_M02_L02" class="label" data-label="6_M02_L02"><pre><code>M02_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF54000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C17B4000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE01F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A97798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4240]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F24870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -2106,15 +2106,15 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4CA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F252D8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFCDDF54000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C17B4000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE01F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A97798]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="">
@@ -2122,7 +2122,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3961F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BF6208]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
@@ -2139,15 +2139,15 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4CC0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F252F0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF54000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C17B4000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE01F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A97798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -2155,7 +2155,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3961F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BF6208]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
@@ -2164,7 +2164,7 @@
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.CombinePathsThree()</th><th></th></tr>
@@ -2193,7 +2193,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rsi,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.String[]</pre></code></td>
 </tr><tr class="">
@@ -2203,29 +2203,25 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,30A49200760</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2FBB4390AF8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,30A49200780</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2FBB4390B18</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+18],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,30A492007A8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2FBB4390B40</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+20],rcx</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>xor       ebp,ebp</pre></code></td>
+</tr><tr class="">
+<td></td><td id="7" class="reference" data-reference="7_M00_L04"><a href="#7_M00_L04"><pre><code>jmp       short M00_L04</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="7_M00_L00" class="label" data-label="7_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>movsxd    rcx,ebp</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       rcx,3</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="7" class="reference" data-reference="7_M00_L04"><a href="#7_M00_L04"><pre><code>jge       near ptr M00_L04</pre></code></a></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       ebp,3</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="7" class="reference" data-reference="7_M00_L11"><a href="#7_M00_L11"><pre><code>jae       near ptr M00_L11</pre></code></a></td>
@@ -2284,12 +2280,16 @@
 <td></td><td><pre><code>add       ebp,1</pre></code></td>
 </tr><tr class="">
 <td></td><td id="7" class="reference" data-reference="7_M00_L12"><a href="#7_M00_L12"><pre><code>jo        near ptr M00_L12</pre></code></a></td>
-</tr><tr class="">
-<td></td><td id="7" class="reference" data-reference="7_M00_L00"><a href="#7_M00_L00"><pre><code>jmp       near ptr M00_L00</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="7_M00_L04" class="label" data-label="7_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
+<td></td><td><pre><code>movsxd    rcx,ebp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       rcx,3</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="7" class="reference" data-reference="7_M00_L00"><a href="#7_M00_L00"><pre><code>jl        short M00_L00</pre></code></a></td>
+</tr><tr class="evenMap">
 <td></td><td><pre><code>add       rdi,10</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_System.IO.DirectoryInfo</pre></code></td>
@@ -2304,7 +2304,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE65DA70]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E5E178]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -2316,7 +2316,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2CF000]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6F018]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -2344,7 +2344,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+30],rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rsp+30]</pre></code></td>
 </tr><tr class="evenMap">
@@ -2382,14 +2382,14 @@
 <td id="7_M00_L06" class="label" data-label="7_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,30A491F0008</pre></code></td>
+<td></td><td><pre><code>mov       rdx,2FBB4380008</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="7" class="reference" data-reference="7_M00_L03"><a href="#7_M00_L03"><pre><code>jmp       near ptr M00_L03</pre></code></a></td>
 </tr><tr class="">
 <td id="7_M00_L07" class="label" data-label="7_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4A68]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5050]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -2400,7 +2400,7 @@
 <td id="7_M00_L08" class="label" data-label="7_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4A68]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5050]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -2413,7 +2413,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4A80]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5068]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
@@ -2422,15 +2422,15 @@
 <td id="7_M00_L10" class="label" data-label="7_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF74000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE03F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A67798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4210]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4828]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -2474,7 +2474,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovdqa   xmmword ptr [rbp+30],xmm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,9B9EDDC2430</pre></code></td>
+<td></td><td><pre><code>mov       rax,894B915CB117</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+8],rax</pre></code></td>
 </tr><tr class="">
@@ -2729,7 +2729,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE035818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1845818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="evenMap">
@@ -2782,7 +2782,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rax,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       r8,9B9EDDC2430</pre></code></td>
+<td></td><td><pre><code>mov       r8,894B915CB117</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rbp+8],r8</pre></code></td>
 </tr><tr class="">
@@ -2882,7 +2882,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE035818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1845818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="">
@@ -2893,13 +2893,13 @@
 <td id="8_M01_L20" class="label" data-label="8_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,2C9B4400C88</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2BB1F400C88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE300D10]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1AFFB50]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="8" class="reference" data-reference="8_M01_L13"><a href="#8_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
 </tr><tr class="">
@@ -2913,15 +2913,15 @@
 <td id="8_M01_L22" class="label" data-label="8_M01_L22"><pre><code>M01_L22</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1C4AC</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1C4AE</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF74000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE03F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A67798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4210]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4828]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -2934,7 +2934,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5BF270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DCF108]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="8" class="reference" data-reference="8_M01_L06"><a href="#8_M01_L06"><pre><code>jmp       near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -2970,7 +2970,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5BF270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DCF108]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="8" class="reference" data-reference="8_M01_L19"><a href="#8_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -2981,7 +2981,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,5C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F5368]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5950]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="8" class="reference" data-reference="8_M01_L08"><a href="#8_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
 </tr><tr class="">
@@ -3017,21 +3017,21 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5BF270]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DCF108]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="8" class="reference" data-reference="8_M01_L10"><a href="#8_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td id="8_M01_L29" class="label" data-label="8_M01_L29"><pre><code>M01_L29</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE44CCA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C5CF90]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
 <td id="8_M01_L30" class="label" data-label="8_M01_L30"><pre><code>M01_L30</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE20F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C19B7198]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -3076,7 +3076,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2CF018]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6F030]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -3088,7 +3088,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2CF048]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6F060]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -3100,7 +3100,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2CF078]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6F090]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -3108,7 +3108,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2CF090]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A6F0A8]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="9" class="reference" data-reference="9_M02_L01"><a href="#9_M02_L01"><pre><code>jmp       short M02_L01</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -3133,15 +3133,15 @@
 <td id="9_M02_L02" class="label" data-label="9_M02_L02"><pre><code>M02_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF74000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE03F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A67798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4210]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4828]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -3154,15 +3154,15 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4CA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5290]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFCDDF74000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE03F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A67798]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="">
@@ -3170,7 +3170,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3B61F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BC6208]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
@@ -3187,15 +3187,15 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F4CC0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF52A8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF74000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1784000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE03F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A67798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -3203,7 +3203,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3B61F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BC6208]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
@@ -3212,7 +3212,7 @@
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.CombinePathsTwo()</th><th></th></tr>
@@ -3241,7 +3241,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rsi,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.String[]</pre></code></td>
 </tr><tr class="">
@@ -3251,11 +3251,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,28161640760</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2194FB00AF8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,28161640780</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2194FB00B18</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rdi+18],rcx</pre></code></td>
 </tr><tr class="">
@@ -3348,7 +3348,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE64DA58]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E7E658]; System.IO.Path.Combine(System.ReadOnlySpan`1<System.String>)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -3360,7 +3360,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2BF000]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A7F018]; System.IO.Path.GetFullPath(System.String)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -3388,7 +3388,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+30],rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rsp+30]</pre></code></td>
 </tr><tr class="evenMap">
@@ -3426,14 +3426,14 @@
 <td id="10_M00_L06" class="label" data-label="10_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,28161630008</pre></code></td>
+<td></td><td><pre><code>mov       rdx,2194FAF0008</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="10" class="reference" data-reference="10_M00_L03"><a href="#10_M00_L03"><pre><code>jmp       near ptr M00_L03</pre></code></a></td>
 </tr><tr class="">
 <td id="10_M00_L07" class="label" data-label="10_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E4A20]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05098]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -3444,7 +3444,7 @@
 <td id="10_M00_L08" class="label" data-label="10_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E4A20]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05098]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -3457,7 +3457,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E4A38]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F050B0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
@@ -3466,15 +3466,15 @@
 <td id="10_M00_L10" class="label" data-label="10_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF64000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1794000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE02F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A77798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E41F8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F04870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -3518,7 +3518,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovdqa   xmmword ptr [rbp+30],xmm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,0FB41431104D2</pre></code></td>
+<td></td><td><pre><code>mov       rax,0E240B3B1E2F5</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+8],rax</pre></code></td>
 </tr><tr class="">
@@ -3565,11 +3565,11 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       r9d,5C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L15"><a href="#11_M01_L15"><pre><code>je        near ptr M01_L15</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L14"><a href="#11_M01_L14"><pre><code>je        near ptr M01_L14</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       r9d,2F</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L15"><a href="#11_M01_L15"><pre><code>je        near ptr M01_L15</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L14"><a href="#11_M01_L14"><pre><code>je        near ptr M01_L14</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L01" class="label" data-label="11_M01_L01"><pre><code>M01_L01</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -3599,7 +3599,7 @@
 <tr class="evenMap">
 <td></td><td><pre><code>test      r9d,r9d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L16"><a href="#11_M01_L16"><pre><code>je        near ptr M01_L16</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L15"><a href="#11_M01_L15"><pre><code>je        near ptr M01_L15</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r14d,ecx</pre></code></td>
 </tr><tr class="evenMap">
@@ -3667,7 +3667,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       edi,esi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L12"><a href="#11_M01_L12"><pre><code>jge       near ptr M01_L12</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>jge       near ptr M01_L11</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L07" class="label" data-label="11_M01_L07"><pre><code>M01_L07</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -3676,193 +3676,17 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       dword ptr [r14+8],0</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>je        near ptr M01_L11</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>je        short M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r15d,[rbp+28]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      r15d,r15d</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L17"><a href="#11_M01_L17"><pre><code>je        near ptr M01_L17</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L16"><a href="#11_M01_L16"><pre><code>jne       near ptr M01_L16</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>lea       ecx,[r15-1]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       ecx,[rbp+38]</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L32"><a href="#11_M01_L32"><pre><code>jae       near ptr M01_L32</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rdx,[rbp+30]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>movzx     ecx,word ptr [rdx+rcx*2]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       ecx,5C</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L08"><a href="#11_M01_L08"><pre><code>je        short M01_L08</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       ecx,2F</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L26"><a href="#11_M01_L26"><pre><code>jne       near ptr M01_L26</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="11_M01_L08" class="label" data-label="11_M01_L08"><pre><code>M01_L08</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       r14,[rbx+rdi*8]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>test      r14,r14</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>je        short M01_L11</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       edx,[rbp+28]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r15d,[r14+8]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       r15d,1</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L28"><a href="#11_M01_L28"><pre><code>je        near ptr M01_L28</pre></code></a></td>
-</tr><tr class="">
-<td id="11_M01_L09" class="label" data-label="11_M01_L09"><pre><code>M01_L09</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       r13d,[rbp+28]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       edx,[rbp+38]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>sub       edx,r15d</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       edx,r13d</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L29"><a href="#11_M01_L29"><pre><code>jl        near ptr M01_L29</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="11_M01_L10" class="label" data-label="11_M01_L10"><pre><code>M01_L10</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>cmp       r13d,[rbp+38]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L31"><a href="#11_M01_L31"><pre><code>ja        near ptr M01_L31</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r8,[rbp+30]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       edx,r13d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>lea       rcx,[r8+rdx*2]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r8d,[rbp+38]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>sub       r8d,r13d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       r15d,r8d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L30"><a href="#11_M01_L30"><pre><code>ja        near ptr M01_L30</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r8d,r15d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       r8,r8</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE025818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>add       r15d,[rbp+28]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       [rbp+28],r15d</pre></code></td>
-</tr><tr class="">
-<td id="11_M01_L11" class="label" data-label="11_M01_L11"><pre><code>M01_L11</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>inc       edi</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       edi,esi</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L07"><a href="#11_M01_L07"><pre><code>jl        near ptr M01_L07</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="11_M01_L12" class="label" data-label="11_M01_L12"><pre><code>M01_L12</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>mov       r15d,[rbp+28]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,r15d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       ecx,[rbp+38]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L31"><a href="#11_M01_L31"><pre><code>ja        near ptr M01_L31</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,[rbp+30]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       [rbp+10],rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       [rbp+18],ecx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>lea       rcx,[rbp+10]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>call      System.String.Ctor(System.ReadOnlySpan`1<Char>)</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rbx,rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,[rbp+20]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>vxorps    ymm0,ymm0,ymm0</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp+20],ymm0</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L20"><a href="#11_M01_L20"><pre><code>jne       near ptr M01_L20</pre></code></a></td>
-</tr><tr class="">
-<td id="11_M01_L13" class="label" data-label="11_M01_L13"><pre><code>M01_L13</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       rax,rbx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       r8,0FB41431104D2</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       [rbp+8],r8</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L14"><a href="#11_M01_L14"><pre><code>je        short M01_L14</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      CORINFO_HELP_FAIL_FAST</pre></code></td>
-</tr><tr class="evenMap">
-<td id="11_M01_L14" class="label" data-label="11_M01_L14"><pre><code>M01_L14</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>nop</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>lea       rsp,[rbp+40]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rsi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rdi</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       r13</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       r14</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       r15</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbp</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="">
-<td id="11_M01_L15" class="label" data-label="11_M01_L15"><pre><code>M01_L15</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
-<td></td><td><pre><code>mov       r9d,1</pre></code></td>
-</tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L02"><a href="#11_M01_L02"><pre><code>jmp       near ptr M01_L02</pre></code></a></td>
-</tr><tr class="evenMap">
-<td id="11_M01_L16" class="label" data-label="11_M01_L16"><pre><code>M01_L16</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
-<td></td><td><pre><code>add       edi,[rdx+8]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L03"><a href="#11_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
-</tr><tr class="">
-<td id="11_M01_L17" class="label" data-label="11_M01_L17"><pre><code>M01_L17</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="">
 <td></td><td><pre><code>test      r14,r14</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>je        near ptr M01_L11</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>je        short M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,r15d</pre></code></td>
 </tr><tr class="">
@@ -3872,7 +3696,7 @@
 </tr><tr class="">
 <td></td><td id="11" class="reference" data-reference="11_M01_L24"><a href="#11_M01_L24"><pre><code>je        near ptr M01_L24</pre></code></a></td>
 </tr><tr class="evenMap">
-<td id="11_M01_L18" class="label" data-label="11_M01_L18"><pre><code>M01_L18</pre></code></td>
+<td id="11_M01_L08" class="label" data-label="11_M01_L08"><pre><code>M01_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       edx,[rbp+38]</pre></code></td>
@@ -3883,7 +3707,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="11" class="reference" data-reference="11_M01_L25"><a href="#11_M01_L25"><pre><code>jl        near ptr M01_L25</pre></code></a></td>
 </tr><tr class="">
-<td id="11_M01_L19" class="label" data-label="11_M01_L19"><pre><code>M01_L19</pre></code></td>
+<td id="11_M01_L09" class="label" data-label="11_M01_L09"><pre><code>M01_L09</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>cmp       r15d,[rbp+38]</pre></code></td>
@@ -3910,26 +3734,202 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[r14+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE025818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1855818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       r13d,[rbp+28]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+28],r13d</pre></code></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L10" class="label" data-label="11_M01_L10"><pre><code>M01_L10</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>inc       edi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       edi,esi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L07"><a href="#11_M01_L07"><pre><code>jl        short M01_L07</pre></code></a></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>jmp       near ptr M01_L11</pre></code></a></td>
+<td id="11_M01_L11" class="label" data-label="11_M01_L11"><pre><code>M01_L11</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       r15d,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       ecx,r15d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       ecx,[rbp+38]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L31"><a href="#11_M01_L31"><pre><code>ja        near ptr M01_L31</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      System.String.Ctor(System.ReadOnlySpan`1<Char>)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    ymm0,ymm0,ymm0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   ymmword ptr [rbp+20],ymm0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rdx,rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L20"><a href="#11_M01_L20"><pre><code>jne       near ptr M01_L20</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L12" class="label" data-label="11_M01_L12"><pre><code>M01_L12</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rax,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       r8,0E240B3B1E2F5</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       [rbp+8],r8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L13"><a href="#11_M01_L13"><pre><code>je        short M01_L13</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_FAIL_FAST</pre></code></td>
+</tr><tr class="">
+<td id="11_M01_L13" class="label" data-label="11_M01_L13"><pre><code>M01_L13</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rsp,[rbp+40]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rdi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       r13</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       r14</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       r15</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L14" class="label" data-label="11_M01_L14"><pre><code>M01_L14</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       r9d,1</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L02"><a href="#11_M01_L02"><pre><code>jmp       near ptr M01_L02</pre></code></a></td>
+</tr><tr class="">
+<td id="11_M01_L15" class="label" data-label="11_M01_L15"><pre><code>M01_L15</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>add       edi,[rdx+8]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L03"><a href="#11_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L16" class="label" data-label="11_M01_L16"><pre><code>M01_L16</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>lea       ecx,[r15-1]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       ecx,[rbp+38]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L32"><a href="#11_M01_L32"><pre><code>jae       near ptr M01_L32</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,[rbp+30]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     ecx,word ptr [rdx+rcx*2]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       ecx,5C</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L17"><a href="#11_M01_L17"><pre><code>je        short M01_L17</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       ecx,2F</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L26"><a href="#11_M01_L26"><pre><code>jne       near ptr M01_L26</pre></code></a></td>
+</tr><tr class="">
+<td id="11_M01_L17" class="label" data-label="11_M01_L17"><pre><code>M01_L17</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       r15,[rbx+rdi*8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r15,r15</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>je        near ptr M01_L10</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r14d,[r15+8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r14d,1</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L28"><a href="#11_M01_L28"><pre><code>je        near ptr M01_L28</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L18" class="label" data-label="11_M01_L18"><pre><code>M01_L18</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       r13d,[rbp+28]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,[rbp+38]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>sub       edx,r14d</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       edx,r13d</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="11" class="reference" data-reference="11_M01_L29"><a href="#11_M01_L29"><pre><code>jl        near ptr M01_L29</pre></code></a></td>
+</tr><tr class="">
+<td id="11_M01_L19" class="label" data-label="11_M01_L19"><pre><code>M01_L19</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>cmp       r13d,[rbp+38]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L31"><a href="#11_M01_L31"><pre><code>ja        near ptr M01_L31</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8,[rbp+30]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,r13d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rcx,[r8+rdx*2]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8d,[rbp+38]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       r8d,r13d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r14d,r8d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L30"><a href="#11_M01_L30"><pre><code>ja        near ptr M01_L30</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8d,r14d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r8,r8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[r15+0C]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FF9C1855818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       r14d,[rbp+28]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+28],r14d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="11_M01_L20" class="label" data-label="11_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,240CC800C88</pre></code></td>
+<td></td><td><pre><code>mov       rcx,1D8BAC00C88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2F0D10]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1B0FB50]; Precode of System.Buffers.SharedArrayPool`1[[System.Char, System.Private.CoreLib]].Return(Char[], Boolean)</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L13"><a href="#11_M01_L13"><pre><code>jmp       near ptr M01_L13</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L12"><a href="#11_M01_L12"><pre><code>jmp       near ptr M01_L12</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L21" class="label" data-label="11_M01_L21"><pre><code>M01_L21</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -3941,15 +3941,15 @@
 <td id="11_M01_L22" class="label" data-label="11_M01_L22"><pre><code>M01_L22</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1C4AC</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1C4AE</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF64000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1794000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE02F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A77798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E41F8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F04870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -3962,7 +3962,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5AF258]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DDF5D0]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="11" class="reference" data-reference="11_M01_L06"><a href="#11_M01_L06"><pre><code>jmp       near ptr M01_L06</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -3971,7 +3971,7 @@
 <tr class="evenMap">
 <td></td><td><pre><code>cmp       edx,[rbp+38]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L18"><a href="#11_M01_L18"><pre><code>jae       near ptr M01_L18</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L08"><a href="#11_M01_L08"><pre><code>jae       near ptr M01_L08</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       edx,[rbp+38]</pre></code></td>
 </tr><tr class="evenMap">
@@ -3989,7 +3989,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp+28],edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>jmp       near ptr M01_L11</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L25" class="label" data-label="11_M01_L25"><pre><code>M01_L25</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -3998,30 +3998,32 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5AF258]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DDF5D0]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L19"><a href="#11_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L09"><a href="#11_M01_L09"><pre><code>jmp       near ptr M01_L09</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="11_M01_L26" class="label" data-label="11_M01_L26"><pre><code>M01_L26</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,[rbp+30]</pre></code></td>
+<td></td><td><pre><code>mov       ecx,r15d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       edx,[rbp+38]</pre></code></td>
+<td></td><td><pre><code>mov       rdx,[rbp+30]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       r15d,edx</pre></code></td>
+<td></td><td><pre><code>mov       eax,[rbp+38]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       ecx,eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="11" class="reference" data-reference="11_M01_L27"><a href="#11_M01_L27"><pre><code>jae       short M01_L27</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       edx,r15d</pre></code></td>
+<td></td><td><pre><code>mov       eax,ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       word ptr [rcx+rdx*2],5C</pre></code></td>
+<td></td><td><pre><code>mov       word ptr [rdx+rax*2],5C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>inc       r15d</pre></code></td>
+<td></td><td><pre><code>inc       ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       [rbp+28],r15d</pre></code></td>
+<td></td><td><pre><code>mov       [rbp+28],ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L08"><a href="#11_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L17"><a href="#11_M01_L17"><pre><code>jmp       near ptr M01_L17</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L27" class="label" data-label="11_M01_L27"><pre><code>M01_L27</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -4030,16 +4032,16 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,5C</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E5308]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05998]</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L08"><a href="#11_M01_L08"><pre><code>jmp       near ptr M01_L08</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L17"><a href="#11_M01_L17"><pre><code>jmp       near ptr M01_L17</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="11_M01_L28" class="label" data-label="11_M01_L28"><pre><code>M01_L28</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>cmp       edx,[rbp+38]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L09"><a href="#11_M01_L09"><pre><code>jae       near ptr M01_L09</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L18"><a href="#11_M01_L18"><pre><code>jae       near ptr M01_L18</pre></code></a></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       edx,[rbp+38]</pre></code></td>
 </tr><tr class="evenMap">
@@ -4049,7 +4051,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       eax,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>movzx     r8d,word ptr [r14+0C]</pre></code></td>
+<td></td><td><pre><code>movzx     r8d,word ptr [r15+0C]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rcx+rax*2],r8w</pre></code></td>
 </tr><tr class="evenMap">
@@ -4057,30 +4059,30 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp+28],edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="11" class="reference" data-reference="11_M01_L11"><a href="#11_M01_L11"><pre><code>jmp       near ptr M01_L11</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
 </tr><tr class="">
 <td id="11_M01_L29" class="label" data-label="11_M01_L29"><pre><code>M01_L29</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       edx,r15d</pre></code></td>
+<td></td><td><pre><code>mov       edx,r14d</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE5AF258]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1DDF5D0]; System.Text.ValueStringBuilder.Grow(Int32)</pre></code></td>
 </tr><tr class="">
-<td></td><td id="11" class="reference" data-reference="11_M01_L10"><a href="#11_M01_L10"><pre><code>jmp       near ptr M01_L10</pre></code></a></td>
+<td></td><td id="11" class="reference" data-reference="11_M01_L19"><a href="#11_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="11_M01_L30" class="label" data-label="11_M01_L30"><pre><code>M01_L30</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE43CCA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C6CF90]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
 <td id="11_M01_L31" class="label" data-label="11_M01_L31"><pre><code>M01_L31</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE1FF228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C19C7198]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="evenMap">
@@ -4125,7 +4127,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2BF018]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A7F030]; System.IO.PathInternal.IsEffectivelyEmpty(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -4137,7 +4139,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2BF048]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A7F060]; System.SpanHelpers.NonPackedContainsValueType[[System.Int16, System.Private.CoreLib]](Int16 ByRef, Int16, Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -4149,7 +4151,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rsp+20]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2BF078]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A7F090]; System.IO.PathInternal.IsExtended(System.ReadOnlySpan`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -4157,7 +4159,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE2BF090]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A7F0A8]; System.IO.PathHelper.Normalize(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td id="12" class="reference" data-reference="12_M02_L01"><a href="#12_M02_L01"><pre><code>jmp       short M02_L01</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -4182,15 +4184,15 @@
 <td id="12_M02_L02" class="label" data-label="12_M02_L02"><pre><code>M02_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF64000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1794000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE02F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A77798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E41F8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F04870]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -4203,15 +4205,15 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E4C60]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F052D8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFCDDF64000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1794000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE02F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A77798]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="">
@@ -4219,7 +4221,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3A61F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BD6208]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
@@ -4236,15 +4238,15 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E4C78]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F052F0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       ecx,1AC3C</pre></code></td>
+<td></td><td><pre><code>mov       ecx,1AC3E</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFCDDF64000</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FF9C1794000</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE02F228]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A77798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -4252,7 +4254,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE3A61F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1BD6208]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="evenMap">
@@ -4261,16 +4263,16 @@
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.HasInvalidFilterCharsValid()</th><th></th></tr>
 <tr class="">
 <td></td><td><pre><code>sub       rsp,28</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,1AEB36E076C</pre></code></td>
+<td></td><td><pre><code>mov       rdx,16B9F3D0B04</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,16E34800188</pre></code></td>
+<td></td><td><pre><code>mov       rax,12B0A4021A0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
 </tr><tr class="">
@@ -4286,11 +4288,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmova     r8,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0E9C60]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C1908640]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpminuw   ymm2,ymm1,[r8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpminuw   ymm1,ymm1,[7FFCDE0E9C80]</pre></code></td>
+<td></td><td><pre><code>vpminuw   ymm1,ymm1,[7FF9C1908660]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpackuswb ymm1,ymm2,ymm1</pre></code></td>
 </tr><tr class="">
@@ -4298,9 +4300,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>vpsrld    ymm1,ymm1,4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpand     ymm1,ymm1,[7FFCDE0E9CA0]</pre></code></td>
+<td></td><td><pre><code>vpand     ymm1,ymm1,[7FF9C1908680]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastsd ymm2,qword ptr [7FFCDE0E9CC0]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm2,qword ptr [7FF9C19086A0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpshufb   ymm1,ymm2,ymm1</pre></code></td>
 </tr><tr class="">
@@ -4323,13 +4325,13 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rsp+20],dl</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,[rcx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rcx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rdx,[rsp+20]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE65E4C0]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E7F0D8]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="evenMap">
@@ -4382,7 +4384,7 @@
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.PathContainsWildcardNoWildcard()</th><th></th></tr>
@@ -4397,7 +4399,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,[rbx+148]</pre></code></td>
+<td></td><td><pre><code>mov       rsi,[rbx+1A8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
@@ -4415,7 +4417,7 @@
 </tr><tr class="">
 <td></td><td id="15" class="reference" data-reference="15_M00_L06"><a href="#15_M00_L06"><pre><code>jge       near ptr M00_L06</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -4434,7 +4436,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="15" class="reference" data-reference="15_M00_L07"><a href="#15_M00_L07"><pre><code>jge       near ptr M00_L07</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -4454,7 +4456,7 @@
 <td id="15_M00_L02" class="label" data-label="15_M00_L02"><pre><code>M00_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       r8,1C4B00001A0</pre></code></td>
+<td></td><td><pre><code>mov       r8,15554802190</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[r8]</pre></code></td>
 </tr><tr class="evenMap">
@@ -4462,13 +4464,13 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>movsx     rdx,word ptr [rdx+8]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE29C6A8]; System.PackedSpanHelpers.IndexOfAny[[System.SpanHelpers+DontNegate`1[[System.Int16, System.Private.CoreLib]], System.Private.CoreLib],[System.PackedSpanHelpers+NopTransform, System.Private.CoreLib]](Int16 ByRef, Int16, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A8C630]; System.PackedSpanHelpers.IndexOfAny[[System.SpanHelpers+DontNegate`1[[System.Int16, System.Private.CoreLib]], System.Private.CoreLib],[System.PackedSpanHelpers+NopTransform, System.Private.CoreLib]](Int16 ByRef, Int16, Int16, Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>not       eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rcx+4C],al</pre></code></td>
 </tr><tr class="evenMap">
@@ -4494,7 +4496,7 @@
 <td id="15_M00_L04" class="label" data-label="15_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE414480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C747E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -4502,7 +4504,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="15" class="reference" data-reference="15_M00_L05"><a href="#15_M00_L05"><pre><code>jne       short M00_L05</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F6928]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F46AC0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -4519,9 +4521,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,2052EDC7DF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,195E96D7DF8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F5908]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F459C8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -4532,7 +4534,7 @@
 <td id="15_M00_L06" class="label" data-label="15_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55C0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F456E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -4543,7 +4545,7 @@
 <td id="15_M00_L07" class="label" data-label="15_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55C0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F456E0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -4556,7 +4558,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55D8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F456F8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -4951,7 +4953,7 @@
 <td></td><td id="16" class="reference" data-reference="16_M01_L03"><a href="#16_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.PathHasInvalidCharsValid()</th><th></th></tr>
@@ -4966,7 +4968,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,[rbx+148]</pre></code></td>
+<td></td><td><pre><code>mov       rsi,[rbx+1A8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
@@ -4984,7 +4986,7 @@
 </tr><tr class="">
 <td></td><td id="17" class="reference" data-reference="17_M00_L10"><a href="#17_M00_L10"><pre><code>jge       near ptr M00_L10</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -5003,7 +5005,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="17" class="reference" data-reference="17_M00_L11"><a href="#17_M00_L11"><pre><code>jge       near ptr M00_L11</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -5023,7 +5025,7 @@
 <td id="17_M00_L02" class="label" data-label="17_M00_L02"><pre><code>M00_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,299C7800198</pre></code></td>
+<td></td><td><pre><code>mov       rdx,1C99E800190</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rdx]</pre></code></td>
 </tr><tr class="evenMap">
@@ -5055,7 +5057,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rax,[r8+rcx*2]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0CA580]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C190F3E0]</pre></code></td>
 </tr><tr class="">
 <td id="17_M00_L03" class="label" data-label="17_M00_L03"><pre><code>M00_L03</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -5070,9 +5072,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>vpsrld    ymm2,ymm2,4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpand     ymm2,ymm2,[7FFCDE0CA5A0]</pre></code></td>
+<td></td><td><pre><code>vpand     ymm2,ymm2,[7FF9C190F400]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastsd ymm4,qword ptr [7FFCDE0CA5C0]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm4,qword ptr [7FF9C190F420]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpshufb   ymm2,ymm4,ymm2</pre></code></td>
 </tr><tr class="">
@@ -5101,7 +5103,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmova     r9,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0CA580]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C190F3E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpminuw   ymm2,ymm1,[r9]</pre></code></td>
 </tr><tr class="evenMap">
@@ -5113,9 +5115,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpsrld    ymm1,ymm1,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpand     ymm1,ymm1,[7FFCDE0CA5A0]</pre></code></td>
+<td></td><td><pre><code>vpand     ymm1,ymm1,[7FF9C190F400]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastsd ymm2,qword ptr [7FFCDE0CA5C0]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm2,qword ptr [7FF9C190F420]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   ymm1,ymm2,ymm1</pre></code></td>
 </tr><tr class="evenMap">
@@ -5137,7 +5139,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rcx+4C],al</pre></code></td>
 </tr><tr class="evenMap">
@@ -5165,7 +5167,7 @@
 <td id="17_M00_L08" class="label" data-label="17_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE424480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C847E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5173,7 +5175,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="17" class="reference" data-reference="17_M00_L09"><a href="#17_M00_L09"><pre><code>jne       short M00_L09</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE7069E8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8FCC0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -5190,9 +5192,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,2DA46857DF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,20A1D677DF8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE7059C8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8FCD8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -5203,7 +5205,7 @@
 <td id="17_M00_L10" class="label" data-label="17_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE7055F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F810]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5214,7 +5216,7 @@
 <td id="17_M00_L11" class="label" data-label="17_M00_L11"><pre><code>M00_L11</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE7055F0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F810]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -5227,7 +5229,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE705608]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F828]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5373,21 +5375,21 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vmovups   xmm1,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FFCDE0CA5D0]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FF9C190F430]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vmovups   xmm2,[rdx]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FFCDE0CA5D0]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FF9C190F430]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpackuswb xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpsrld    xmm2,xmm1,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpand     xmm2,xmm2,[7FFCDE0CA5A0]</pre></code></td>
+<td></td><td><pre><code>vpand     xmm2,xmm2,[7FF9C190F400]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   xmm0,xmm0,xmm1</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FFCDE0CA5C0]</pre></code></td>
+<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FF9C190F420]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="evenMap">
@@ -5427,7 +5429,7 @@
 <td></td><td id="17" class="reference" data-reference="17_M00_L06"><a href="#17_M00_L06"><pre><code>jmp       near ptr M00_L06</pre></code></a></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.PathSeparators()</th><th></th></tr>
@@ -5436,13 +5438,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,10</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,1E75D4001A8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,29741C021C0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rdx]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+8],rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rbx,[rcx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rcx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rsp+8]</pre></code></td>
 </tr><tr class="">
@@ -5461,7 +5463,7 @@
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.EnsureTrailingSlash()</th><th></th></tr>
@@ -5490,7 +5492,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,[rbx+148]</pre></code></td>
+<td></td><td><pre><code>mov       rsi,[rbx+1A8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
@@ -5508,7 +5510,7 @@
 </tr><tr class="">
 <td></td><td id="19" class="reference" data-reference="19_M00_L06"><a href="#19_M00_L06"><pre><code>jge       near ptr M00_L06</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -5527,7 +5529,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="19" class="reference" data-reference="19_M00_L07"><a href="#19_M00_L07"><pre><code>jge       near ptr M00_L07</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -5564,7 +5566,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,offset MT_System.String</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      00007FFD3DCAA1D0</pre></code></td>
+<td></td><td><pre><code>call      00007FFA214E50F0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       r14,rax</pre></code></td>
 </tr><tr class="">
@@ -5582,7 +5584,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE015818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1845818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rax,[r15+rbp*2]</pre></code></td>
 </tr><tr class="">
@@ -5606,7 +5608,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rsp+20]</pre></code></td>
 </tr><tr class="">
@@ -5639,7 +5641,7 @@
 <td id="19_M00_L04" class="label" data-label="19_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE424480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C547E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5647,7 +5649,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="19" class="reference" data-reference="19_M00_L05"><a href="#19_M00_L05"><pre><code>jne       short M00_L05</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D5938]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF5F80]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -5664,9 +5666,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,1A0D5AD7DF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,2D43F5C7DF8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4BD0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF50F8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -5677,7 +5679,7 @@
 <td id="19_M00_L06" class="label" data-label="19_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4738]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4D50]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5688,7 +5690,7 @@
 <td id="19_M00_L07" class="label" data-label="19_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4738]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4D50]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -5701,7 +5703,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6D4750]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1EF4D68]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -5710,14 +5712,14 @@
 <td id="19_M00_L09" class="label" data-label="19_M00_L09"><pre><code>M00_L09</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       r14,1A0D5AD0008</pre></code></td>
+<td></td><td><pre><code>mov       r14,2D43F5C0008</pre></code></td>
 </tr><tr class="">
 <td></td><td id="19" class="reference" data-reference="19_M00_L02"><a href="#19_M00_L02"><pre><code>jmp       near ptr M00_L02</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="19_M00_L10" class="label" data-label="19_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE42CCA8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C5CF90]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -5939,10 +5941,10 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [7FFCDE0166E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FF9C18466E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.HasInvalidFilterChars()</th><th></th></tr>
@@ -5979,7 +5981,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,1</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      00007FFD3DCAA1D0</pre></code></td>
+<td></td><td><pre><code>call      00007FFA214E50F0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbp,rax</pre></code></td>
 </tr><tr class="">
@@ -6013,7 +6015,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rdi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      00007FFD3DCAA1D0</pre></code></td>
+<td></td><td><pre><code>call      00007FFA214E50F0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
@@ -6027,7 +6029,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[rsi+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFF5818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1835818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ecx,r13d</pre></code></td>
 </tr><tr class="">
@@ -6039,7 +6041,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[rbp+0C]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDDFF5818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1835818]; System.SpanHelpers.Memmove(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td id="21_M00_L00" class="label" data-label="21_M00_L00"><pre><code>M00_L00</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -6056,7 +6058,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="21" class="reference" data-reference="21_M00_L13"><a href="#21_M00_L13"><pre><code>jge       near ptr M00_L13</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -6075,7 +6077,7 @@
 </tr><tr class="">
 <td></td><td id="21" class="reference" data-reference="21_M00_L14"><a href="#21_M00_L14"><pre><code>jge       near ptr M00_L14</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -6095,7 +6097,7 @@
 <td id="21_M00_L03" class="label" data-label="21_M00_L03"><pre><code>M00_L03</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rdx,1FF27C00188</pre></code></td>
+<td></td><td><pre><code>mov       rdx,1C0DF4021A0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rdx]</pre></code></td>
 </tr><tr class="">
@@ -6127,11 +6129,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rax,[r8+rcx*2]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0A8B30]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C18E7B10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastss ymm2,dword ptr [7FFCDE0A8B34]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm2,dword ptr [7FF9C18E7B14]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastsd ymm3,qword ptr [7FFCDE0A8B38]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm3,qword ptr [7FF9C18E7B18]</pre></code></td>
 </tr><tr class="evenMap">
 <td id="21_M00_L04" class="label" data-label="21_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -6207,7 +6209,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rbx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rcx+4C],al</pre></code></td>
 </tr><tr class="">
@@ -6236,7 +6238,7 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       r15d,[rbp+8]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,23FA6A90008</pre></code></td>
+<td></td><td><pre><code>mov       rcx,201743F0008</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      r15d,r15d</pre></code></td>
 </tr><tr class="evenMap">
@@ -6256,14 +6258,14 @@
 <td id="21_M00_L10" class="label" data-label="21_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E51B8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05848]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
 <td id="21_M00_L11" class="label" data-label="21_M00_L11"><pre><code>M00_L11</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE404480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C447E0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -6271,7 +6273,7 @@
 </tr><tr class="">
 <td></td><td id="21" class="reference" data-reference="21_M00_L12"><a href="#21_M00_L12"><pre><code>jne       short M00_L12</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E6520]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F06BE0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -6288,9 +6290,9 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,23FA6AA0710</pre></code></td>
+<td></td><td><pre><code>mov       rdx,20174400AF8</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E57D0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05E90]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="evenMap">
@@ -6301,7 +6303,7 @@
 <td id="21_M00_L13" class="label" data-label="21_M00_L13"><pre><code>M00_L13</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E5518]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05BA8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -6312,7 +6314,7 @@
 <td id="21_M00_L14" class="label" data-label="21_M00_L14"><pre><code>M00_L14</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E5518]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05BA8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -6325,7 +6327,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6E5530]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F05BC0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdi,rax</pre></code></td>
 </tr><tr class="">
@@ -6408,7 +6410,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmova     r9,rax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0A8B30]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C18E7B10]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpminuw   ymm3,ymm1,[r9]</pre></code></td>
 </tr><tr class="evenMap">
@@ -6420,11 +6422,11 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpsrld    ymm1,ymm1,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm2,dword ptr [7FFCDE0A8B34]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm2,dword ptr [7FF9C18E7B14]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpand     ymm1,ymm1,ymm2</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastsd ymm3,qword ptr [7FFCDE0A8B38]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm3,qword ptr [7FF9C18E7B18]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   ymm1,ymm3,ymm1</pre></code></td>
 </tr><tr class="evenMap">
@@ -6491,21 +6493,21 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovups   xmm1,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FFCDE0A8B40]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FF9C18E7B20]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vmovups   xmm2,[rdx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FFCDE0A8B40]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FF9C18E7B20]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpackuswb xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpsrld    xmm2,xmm1,4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vpand     xmm2,xmm2,[7FFCDE0A8B50]</pre></code></td>
+<td></td><td><pre><code>vpand     xmm2,xmm2,[7FF9C18E7B30]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpshufb   xmm0,xmm0,xmm1</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FFCDE0A8B38]</pre></code></td>
+<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FF9C18E7B18]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpshufb   xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="">
@@ -6748,10 +6750,10 @@
 </tr><tr class="">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>jmp       qword ptr [7FFCDDFF66E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FF9C18366E8]; System.Buffer.MemmoveInternal(Byte ByRef, Byte ByRef, UIntPtr)</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.InvalidFilterChars()</th><th></th></tr>
@@ -6774,7 +6776,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,15E4B800180</pre></code></td>
+<td></td><td><pre><code>mov       rcx,1A0A5802198</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rcx]</pre></code></td>
 </tr><tr class="">
@@ -6784,7 +6786,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rsp+20]</pre></code></td>
 </tr><tr class="">
@@ -6805,7 +6807,7 @@
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.InvalidPathNameChars()</th><th></th></tr>
@@ -6828,7 +6830,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,1C47F800190</pre></code></td>
+<td></td><td><pre><code>mov       rcx,25DBC8021A8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rcx]</pre></code></td>
 </tr><tr class="">
@@ -6838,7 +6840,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rbx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rbx,[rbx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rsp+20]</pre></code></td>
 </tr><tr class="">
@@ -6859,7 +6861,7 @@
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.PathContainsWildcard()</th><th></th></tr>
@@ -6874,7 +6876,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,[rbx+140]</pre></code></td>
+<td></td><td><pre><code>mov       rsi,[rbx+1A0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
@@ -6892,7 +6894,7 @@
 </tr><tr class="">
 <td></td><td id="25" class="reference" data-reference="25_M00_L06"><a href="#25_M00_L06"><pre><code>jge       near ptr M00_L06</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -6911,7 +6913,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="25" class="reference" data-reference="25_M00_L07"><a href="#25_M00_L07"><pre><code>jge       near ptr M00_L07</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -6931,7 +6933,7 @@
 <td id="25_M00_L02" class="label" data-label="25_M00_L02"><pre><code>M00_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       r8,1DDCC4001A0</pre></code></td>
+<td></td><td><pre><code>mov       r8,1E6970021B8</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[r8]</pre></code></td>
 </tr><tr class="evenMap">
@@ -6939,13 +6941,13 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>movsx     rdx,word ptr [rdx+8]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE29C6A8]; System.PackedSpanHelpers.IndexOfAny[[System.SpanHelpers+DontNegate`1[[System.Int16, System.Private.CoreLib]], System.Private.CoreLib],[System.PackedSpanHelpers+NopTransform, System.Private.CoreLib]](Int16 ByRef, Int16, Int16, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1A8C630]; System.PackedSpanHelpers.IndexOfAny[[System.SpanHelpers+DontNegate`1[[System.Int16, System.Private.CoreLib]], System.Private.CoreLib],[System.PackedSpanHelpers+NopTransform, System.Private.CoreLib]](Int16 ByRef, Int16, Int16, Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>not       eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rbx+88]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rcx+4C],al</pre></code></td>
 </tr><tr class="evenMap">
@@ -6971,7 +6973,7 @@
 <td id="25_M00_L04" class="label" data-label="25_M00_L04"><pre><code>M00_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE414480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C747E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -6979,7 +6981,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="25" class="reference" data-reference="25_M00_L05"><a href="#25_M00_L05"><pre><code>jne       short M00_L05</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F6940]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F37000]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -6996,9 +6998,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,21E4B4E7DF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,2272BEC7DF8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F5908]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F35FC8]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -7009,7 +7011,7 @@
 <td id="25_M00_L06" class="label" data-label="25_M00_L06"><pre><code>M00_L06</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55C0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F35C20]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -7020,7 +7022,7 @@
 <td id="25_M00_L07" class="label" data-label="25_M00_L07"><pre><code>M00_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55C0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F35C20]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -7033,7 +7035,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55D8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1F35C38]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -7041,8 +7043,6 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.PackedSpanHelpers.IndexOfAny[[System.SpanHelpers+DontNegate`1[[System.Int16, System.Private.CoreLib]], System.Private.CoreLib],[System.PackedSpanHelpers+NopTransform, System.Private.CoreLib]](Int16 ByRef, Int16, Int16, Int32)</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>push      rbx</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>cmp       r9d,8</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L05"><a href="#26_M01_L05"><pre><code>jl        near ptr M01_L05</pre></code></a></td>
@@ -7051,7 +7051,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       r9d,10</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L21"><a href="#26_M01_L21"><pre><code>jle       near ptr M01_L21</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L20"><a href="#26_M01_L20"><pre><code>jle       near ptr M01_L20</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>vmovd     xmm0,edx</pre></code></td>
 </tr><tr class="">
@@ -7083,9 +7083,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>vptest    ymm2,ymm2</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L20"><a href="#26_M01_L20"><pre><code>jne       near ptr M01_L20</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>jne       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>nop       dword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>nop       dword ptr [rax+rax]</pre></code></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L00" class="label" data-label="26_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7110,7 +7110,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="26" class="reference" data-reference="26_M01_L00"><a href="#26_M01_L00"><pre><code>je        short M01_L00</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L20"><a href="#26_M01_L20"><pre><code>jmp       near ptr M01_L20</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>jmp       near ptr M01_L19</pre></code></a></td>
 </tr><tr class="">
 <td id="26_M01_L01" class="label" data-label="26_M01_L01"><pre><code>M01_L01</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7137,7 +7137,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vptest    ymm0,ymm0</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>je        near ptr M01_L19</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L18"><a href="#26_M01_L18"><pre><code>je        near ptr M01_L18</pre></code></a></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpermq    ymm0,ymm0,0D8</pre></code></td>
 </tr><tr class="">
@@ -7163,8 +7163,6 @@
 <tr class="">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L04" class="label" data-label="26_M01_L04"><pre><code>M01_L04</pre></code></td>
@@ -7179,7 +7177,7 @@
 <td id="26_M01_L05" class="label" data-label="26_M01_L05"><pre><code>M01_L05</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+<td></td><td><pre><code>xor       r10d,r10d</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       r9d,4</pre></code></td>
 </tr><tr class="">
@@ -7187,19 +7185,25 @@
 </tr><tr class="">
 <td></td><td><pre><code>add       r9d,0FFFFFFFC</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>movsx     r10,word ptr [rcx]</pre></code></td>
+<td></td><td><pre><code>movsx     r11,word ptr [rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>movsx     r11,dx</pre></code></td>
+<td></td><td><pre><code>movsx     r10,dx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,r11d</pre></code></td>
+<td></td><td><pre><code>cmp       r11d,r10d</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L06"><a href="#26_M01_L06"><pre><code>je        short M01_L06</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>movsx     rbx,r8w</pre></code></td>
+<td></td><td><pre><code>movsx     rax,r8w</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,ebx</pre></code></td>
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L07"><a href="#26_M01_L07"><pre><code>jne       short M01_L07</pre></code></a></td>
+<td></td><td><pre><code>sete      r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     r11d,r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r11d,r11d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="26" class="reference" data-reference="26_M01_L07"><a href="#26_M01_L07"><pre><code>je        short M01_L07</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L06" class="label" data-label="26_M01_L06"><pre><code>M01_L06</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7208,22 +7212,30 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="">
 <td id="26_M01_L07" class="label" data-label="26_M01_L07"><pre><code>M01_L07</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>movsx     r10,word ptr [rcx+2]</pre></code></td>
+<td></td><td><pre><code>movsx     r11,word ptr [rcx+2]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,r11d</pre></code></td>
+<td></td><td><pre><code>movsx     rax,dx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L08"><a href="#26_M01_L08"><pre><code>je        short M01_L08</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,ebx</pre></code></td>
+<td></td><td><pre><code>movsx     rax,r8w</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L09"><a href="#26_M01_L09"><pre><code>jne       short M01_L09</pre></code></a></td>
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sete      r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     r11d,r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r11d,r11d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="26" class="reference" data-reference="26_M01_L09"><a href="#26_M01_L09"><pre><code>je        short M01_L09</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L08" class="label" data-label="26_M01_L08"><pre><code>M01_L08</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7232,22 +7244,30 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="">
 <td id="26_M01_L09" class="label" data-label="26_M01_L09"><pre><code>M01_L09</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>movsx     r10,word ptr [rcx+4]</pre></code></td>
+<td></td><td><pre><code>movsx     r11,word ptr [rcx+4]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,r11d</pre></code></td>
+<td></td><td><pre><code>movsx     rax,dx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L10"><a href="#26_M01_L10"><pre><code>je        short M01_L10</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,ebx</pre></code></td>
+<td></td><td><pre><code>movsx     rax,r8w</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L11"><a href="#26_M01_L11"><pre><code>jne       short M01_L11</pre></code></a></td>
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sete      r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     r11d,r11b</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      r11d,r11d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="26" class="reference" data-reference="26_M01_L11"><a href="#26_M01_L11"><pre><code>je        short M01_L11</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L10" class="label" data-label="26_M01_L10"><pre><code>M01_L10</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7256,22 +7276,30 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vzeroupper</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>pop       rbx</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="">
 <td id="26_M01_L11" class="label" data-label="26_M01_L11"><pre><code>M01_L11</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>movsx     r10,word ptr [rcx+6]</pre></code></td>
+<td></td><td><pre><code>movsx     r11,word ptr [rcx+6]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,r11d</pre></code></td>
+<td></td><td><pre><code>movsx     rax,dx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L12"><a href="#26_M01_L12"><pre><code>je        short M01_L12</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       r10d,ebx</pre></code></td>
+<td></td><td><pre><code>movsx     rax,r8w</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L13"><a href="#26_M01_L13"><pre><code>jne       short M01_L13</pre></code></a></td>
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sete      al</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>movzx     eax,al</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="26" class="reference" data-reference="26_M01_L13"><a href="#26_M01_L13"><pre><code>je        short M01_L13</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L12" class="label" data-label="26_M01_L12"><pre><code>M01_L12</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -7283,145 +7311,144 @@
 <td id="26_M01_L13" class="label" data-label="26_M01_L13"><pre><code>M01_L13</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       eax,4</pre></code></td>
+<td></td><td><pre><code>mov       r10d,4</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L17"><a href="#26_M01_L17"><pre><code>jmp       short M01_L17</pre></code></a></td>
+<td></td><td><pre><code>test      r9d,r9d</pre></code></td>
+</tr><tr class="">
+<td></td><td id="26" class="reference" data-reference="26_M01_L18"><a href="#26_M01_L18"><pre><code>jle       short M01_L18</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L14" class="label" data-label="26_M01_L14"><pre><code>M01_L14</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>movsx     rbx,r8w</pre></code></td>
+<td></td><td><pre><code>dec       r9d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       r10d,ebx</pre></code></td>
+<td></td><td><pre><code>movsx     r11,word ptr [rcx+r10*2]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L16"><a href="#26_M01_L16"><pre><code>jne       short M01_L16</pre></code></a></td>
+<td></td><td><pre><code>movsx     rax,dx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="26" class="reference" data-reference="26_M01_L15"><a href="#26_M01_L15"><pre><code>je        short M01_L15</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movsx     rax,r8w</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       r11d,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>sete      al</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>movzx     eax,al</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>test      eax,eax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="26" class="reference" data-reference="26_M01_L16"><a href="#26_M01_L16"><pre><code>je        short M01_L16</pre></code></a></td>
 </tr><tr class="">
 <td id="26_M01_L15" class="label" data-label="26_M01_L15"><pre><code>M01_L15</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
+<td></td><td><pre><code>mov       eax,r10d</pre></code></td>
+</tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L03"><a href="#26_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L16" class="label" data-label="26_M01_L16"><pre><code>M01_L16</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>inc       rax</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>test      r9d,r9d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L18"><a href="#26_M01_L18"><pre><code>jg        short M01_L18</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>jmp       short M01_L19</pre></code></a></td>
+<td></td><td><pre><code>inc       r10</pre></code></td>
 </tr><tr class="">
 <td id="26_M01_L17" class="label" data-label="26_M01_L17"><pre><code>M01_L17</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
 <td></td><td><pre><code>test      r9d,r9d</pre></code></td>
 </tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>jle       short M01_L19</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L14"><a href="#26_M01_L14"><pre><code>jg        short M01_L14</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L18" class="label" data-label="26_M01_L18"><pre><code>M01_L18</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>dec       r9d</pre></code></td>
+<td></td><td><pre><code>mov       eax,0FFFFFFFF</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>movsx     r10,word ptr [rcx+rax*2]</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>movsx     r11,dx</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td><pre><code>cmp       r10d,r11d</pre></code></td>
-</tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L15"><a href="#26_M01_L15"><pre><code>je        short M01_L15</pre></code></a></td>
-</tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L14"><a href="#26_M01_L14"><pre><code>jmp       short M01_L14</pre></code></a></td>
+<td></td><td id="26" class="reference" data-reference="26_M01_L03"><a href="#26_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
 </tr><tr class="">
 <td id="26_M01_L19" class="label" data-label="26_M01_L19"><pre><code>M01_L19</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       eax,0FFFFFFFF</pre></code></td>
+<td></td><td><pre><code>sub       rax,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>shr       rax,1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vpermq    ymm0,ymm2,0D8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vpmovmskb r9d,ymm0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>tzcnt     ecx,r9d</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       eax,ecx</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L03"><a href="#26_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
 </tr><tr class="evenMap">
 <td id="26_M01_L20" class="label" data-label="26_M01_L20"><pre><code>M01_L20</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>sub       rax,rcx</pre></code></td>
+<td></td><td><pre><code>vmovd     xmm0,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>shr       rax,1</pre></code></td>
+<td></td><td><pre><code>vpbroadcastb xmm0,xmm0</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpermq    ymm0,ymm2,0D8</pre></code></td>
+<td></td><td><pre><code>vmovd     xmm1,r8d</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpmovmskb r9d,ymm0</pre></code></td>
+<td></td><td><pre><code>vpbroadcastb xmm1,xmm1</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>xor       ecx,ecx</pre></code></td>
+<td></td><td><pre><code>lea       eax,[r9-8]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>tzcnt     ecx,r9d</pre></code></td>
+<td></td><td><pre><code>movsxd    r9,eax</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>add       eax,ecx</pre></code></td>
+<td></td><td><pre><code>lea       rax,[rcx+r9*2]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td id="26" class="reference" data-reference="26_M01_L03"><a href="#26_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
+<td></td><td><pre><code>cmp       rcx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rcx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmova     rdx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vmovups   xmm2,[rdx]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vpackuswb xmm2,xmm2,[rax]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vpcmpeqb  xmm0,xmm0,xmm2</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vpcmpeqb  xmm1,xmm1,xmm2</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vpor      xmm0,xmm1,xmm0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vptest    xmm0,xmm0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="26" class="reference" data-reference="26_M01_L18"><a href="#26_M01_L18"><pre><code>je        short M01_L18</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>vpmovmskb r8d,xmm0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>tzcnt     r8d,r8d</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>cmp       r8d,8</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td id="26" class="reference" data-reference="26_M01_L21"><a href="#26_M01_L21"><pre><code>jl        short M01_L21</pre></code></a></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,rax</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       r8d,0FFFFFFF8</pre></code></td>
 </tr><tr class="">
 <td id="26_M01_L21" class="label" data-label="26_M01_L21"><pre><code>M01_L21</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>vmovd     xmm0,edx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpbroadcastb xmm0,xmm0</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vmovd     xmm1,r8d</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpbroadcastb xmm1,xmm1</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>lea       eax,[r9-8]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>movsxd    r9,eax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>lea       rax,[rcx+r9*2]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       rcx,rax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rdx,rcx</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmova     rdx,rax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vmovups   xmm2,[rdx]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpackuswb xmm2,xmm2,[rax]</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpcmpeqb  xmm0,xmm0,xmm2</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpcmpeqb  xmm1,xmm1,xmm2</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpor      xmm0,xmm1,xmm0</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>vptest    xmm0,xmm0</pre></code></td>
-</tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L19"><a href="#26_M01_L19"><pre><code>je        short M01_L19</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>vpmovmskb r8d,xmm0</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>tzcnt     r8d,r8d</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>cmp       r8d,8</pre></code></td>
-</tr><tr class="">
-<td></td><td id="26" class="reference" data-reference="26_M01_L22"><a href="#26_M01_L22"><pre><code>jl        short M01_L22</pre></code></a></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rdx,rax</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>add       r8d,0FFFFFFF8</pre></code></td>
-</tr><tr class="evenMap">
-<td id="26_M01_L22" class="label" data-label="26_M01_L22"><pre><code>M01_L22</pre></code></td>
-<td>&nbsp;</td></tr>
-<tr class="evenMap">
 <td></td><td><pre><code>sub       rdx,rcx</pre></code></td>
-</tr><tr class="evenMap">
+</tr><tr class="">
 <td></td><td><pre><code>shr       rdx,1</pre></code></td>
-</tr><tr class="evenMap">
+</tr><tr class="">
 <td></td><td><pre><code>lea       eax,[rdx+r8]</pre></code></td>
-</tr><tr class="evenMap">
+</tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M01_L03"><a href="#26_M01_L03"><pre><code>jmp       near ptr M01_L03</pre></code></a></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
-<h2>.NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3</h2>
+<h2>.NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)</h3>
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.PathHelperBenchmark.PathHasInvalidChars()</th><th></th></tr>
@@ -7436,7 +7463,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rsi,[rbx+138]</pre></code></td>
+<td></td><td><pre><code>mov       rsi,[rbx+198]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
@@ -7454,7 +7481,7 @@
 </tr><tr class="">
 <td></td><td id="27" class="reference" data-reference="27_M00_L10"><a href="#27_M00_L10"><pre><code>jge       near ptr M00_L10</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="">
@@ -7473,7 +7500,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="27" class="reference" data-reference="27_M00_L11"><a href="#27_M00_L11"><pre><code>jge       near ptr M00_L11</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rax,7FFD3CE06148</pre></code></td>
+<td></td><td><pre><code>mov       rax,7FF9E8766B88</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      byte ptr [rax+rcx],80</pre></code></td>
 </tr><tr class="evenMap">
@@ -7493,7 +7520,7 @@
 <td id="27_M00_L02" class="label" data-label="27_M00_L02"><pre><code>M00_L02</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,21B3BC00198</pre></code></td>
+<td></td><td><pre><code>mov       rdx,139F4000190</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rdx]</pre></code></td>
 </tr><tr class="evenMap">
@@ -7525,7 +7552,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>lea       rax,[r8+rcx*2]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0B9640]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C190E320]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpminuw   ymm2,ymm1,[r8]</pre></code></td>
 </tr><tr class="evenMap">
@@ -7537,11 +7564,11 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpsrld    ymm2,ymm2,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastss ymm4,dword ptr [7FFCDE0B9644]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm4,dword ptr [7FF9C190E324]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpand     ymm2,ymm2,ymm4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vbroadcastsd ymm5,qword ptr [7FFCDE0B9648]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm5,qword ptr [7FF9C190E328]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   ymm2,ymm5,ymm2</pre></code></td>
 </tr><tr class="evenMap">
@@ -7604,7 +7631,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmova     r9,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FFCDE0B9640]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm1,dword ptr [7FF9C190E320]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpminuw   ymm5,ymm1,[r9]</pre></code></td>
 </tr><tr class="">
@@ -7616,11 +7643,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>vpsrld    ymm1,ymm1,4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastss ymm4,dword ptr [7FFCDE0B9644]</pre></code></td>
+<td></td><td><pre><code>vbroadcastss ymm4,dword ptr [7FF9C190E324]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpand     ymm1,ymm1,ymm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vbroadcastsd ymm5,qword ptr [7FFCDE0B9648]</pre></code></td>
+<td></td><td><pre><code>vbroadcastsd ymm5,qword ptr [7FF9C190E328]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vpshufb   ymm1,ymm5,ymm1</pre></code></td>
 </tr><tr class="">
@@ -7662,7 +7689,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>shr       eax,1F</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,[rbx+60]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,[rbx+88]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rcx+4C],al</pre></code></td>
 </tr><tr class="">
@@ -7681,7 +7708,7 @@
 <td id="27_M00_L08" class="label" data-label="27_M00_L08"><pre><code>M00_L08</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE414480]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1C847E0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -7689,7 +7716,7 @@
 </tr><tr class="evenMap">
 <td></td><td id="27" class="reference" data-reference="27_M00_L09"><a href="#27_M00_L09"><pre><code>jne       short M00_L09</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F66D0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F9D8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rbx,rax</pre></code></td>
 </tr><tr class="">
@@ -7706,9 +7733,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,25BBAAE7DF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,17A72FB7DF8</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F58D8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F9F0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rsi</pre></code></td>
 </tr><tr class="">
@@ -7719,7 +7746,7 @@
 <td id="27_M00_L10" class="label" data-label="27_M00_L10"><pre><code>M00_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55A8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F798]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
@@ -7730,7 +7757,7 @@
 <td id="27_M00_L11" class="label" data-label="27_M00_L11"><pre><code>M00_L11</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55A8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F798]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -7743,7 +7770,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,3</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFCDE6F55C0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FF9C1E8F7B0]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rsi,rax</pre></code></td>
 </tr><tr class="evenMap">
@@ -7877,21 +7904,21 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vmovups   xmm1,[rcx]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FFCDE0B9650]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm1,xmm1,[7FF9C190E330]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vmovups   xmm2,[rdx]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FFCDE0B9650]</pre></code></td>
+<td></td><td><pre><code>vpminuw   xmm2,xmm2,[7FF9C190E330]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpackuswb xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpsrld    xmm2,xmm1,4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vpand     xmm2,xmm2,[7FFCDE0B9660]</pre></code></td>
+<td></td><td><pre><code>vpand     xmm2,xmm2,[7FF9C190E340]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   xmm0,xmm0,xmm1</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FFCDE0B9648]</pre></code></td>
+<td></td><td><pre><code>vmovsd    xmm1,qword ptr [7FF9C190E328]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>vpshufb   xmm1,xmm1,xmm2</pre></code></td>
 </tr><tr class="evenMap">

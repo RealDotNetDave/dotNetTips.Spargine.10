@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesWithOriginalPathBenchmark-20260705-120203</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesWithOriginalPathBenchmark-20260715-170239</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,20 +13,20 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7417/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 .NET SDK 10.0.204
-  [Host]     : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
-InvocationCount=1  UnrollFactor=1  Categories=**NEW**,IO  
+InvocationCount=1  UnrollFactor=1  Categories=IO  
 </code></pre>
 
 <table>
 <thead><tr><th>Method             </th><th>Mean         </th><th>Error       </th><th>StdDev       </th><th>StdErr      </th><th>Min      </th><th>Q1       </th><th>Median       </th><th>Q3           </th><th>Max          </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>MoveFilesWithOriginalPath</td><td>20,438,853,854.0 ns</td><td>5,449,065,034.3 ns</td><td>16,066,692,363.4 ns</td><td>1,606,669,236.3 ns</td><td>87,099,000.0 ns</td><td>92,871,025.0 ns</td><td>21,437,024,200.0 ns</td><td>33,383,862,825.0 ns</td><td>48,227,096,300.0 ns</td><td>0.0489</td><td>-803,334,568.2 ns</td><td>100.0</td><td>No</td><td>1000.0000</td><td>256.0000</td><td>12,023 B</td><td>128.48 MB</td>
+</thead><tbody><tr><td>MoveFilesWithOriginalPath</td><td>21,135,107,329.0 ns</td><td>5,612,972,553.2 ns</td><td>16,549,977,416.2 ns</td><td>1,654,997,741.6 ns</td><td>86,056,500.0 ns</td><td>90,403,075.0 ns</td><td>22,326,253,600.0 ns</td><td>34,663,551,000.0 ns</td><td>49,991,301,900.0 ns</td><td>0.0473</td><td>-827,498,820.8 ns</td><td>100.0</td><td>No</td><td>1000.0000</td><td>256.0000</td><td>11,798 B</td><td>128.48 MB</td>
 </tr></tbody></table>
 </body>
 </html>

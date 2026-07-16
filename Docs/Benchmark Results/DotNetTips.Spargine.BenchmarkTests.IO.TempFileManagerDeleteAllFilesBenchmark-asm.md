@@ -1,4 +1,4 @@
-## .NET 10.0.9 (10.0.9, 10.0.926.27113), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
+## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
 
 ```assembly
 ; DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteAllFilesBenchmark.DeleteAllFiles()
@@ -7,9 +7,9 @@
        lea       rbp,[rsp+20]
        mov       [rbp+10],rcx
        mov       rax,[rbp+10]
-       mov       rcx,[rax+138]
+       mov       rcx,[rax+198]
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE6B41C8]; DotNetTips.Spargine.IO.TempFileManager.DeleteAllFiles()
+       call      qword ptr [7FF9C1F24CF0]; DotNetTips.Spargine.IO.TempFileManager.DeleteAllFiles()
        nop
        add       rsp,20
        pop       rbp
@@ -31,7 +31,7 @@
        mov       rax,[rbp+10]
        mov       rcx,[rax+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE643DE0]; Precode of System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].ToArray()
+       call      qword ptr [7FF9C1EBBE30]; Precode of System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].ToArray()
        mov       [rbp-8],rax
 ; 		var fileCount = filesSnapshot.Length;
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -53,19 +53,19 @@ M01_L00:
        mov       [rbp-20],rax
        mov       rcx,[rbp-20]
        mov       rdx,[rbp-8]
-       call      qword ptr [7FFCDE437468]; System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]]..ctor(System.Collections.Generic.IList`1<System.__Canon>)
+       call      qword ptr [7FF9C1CA76F0]; System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]]..ctor(System.Collections.Generic.IList`1<System.__Canon>)
        mov       rcx,[rbp-20]
        xor       edx,edx
-       call      qword ptr [7FFCDE6B4258]; DotNetTips.Spargine.IO.FileHelper.DeleteFiles(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>, Boolean)
+       call      qword ptr [7FF9C1F24D80]; DotNetTips.Spargine.IO.FileHelper.DeleteFiles(System.Collections.ObjectModel.ReadOnlyCollection`1<System.String>, Boolean)
        mov       [rbp-18],rax
 ; 		if (filesDeletedResult.Value.Count == fileCount)
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
        mov       rcx,[rbp-18]
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE6B4270]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()
+       call      qword ptr [7FF9C1F24D98]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()
        mov       rcx,rax
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE473040]; Precode of System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]].get_Count()
+       call      qword ptr [7FF9C1CE4EB8]; Precode of System.Collections.ObjectModel.ReadOnlyCollection`1[[System.__Canon, System.Private.CoreLib]].get_Count()
        cmp       eax,[rbp-0C]
        jne       short M01_L01
 ; 			this._files.Clear();
@@ -73,7 +73,7 @@ M01_L00:
        mov       rax,[rbp+10]
        mov       rcx,[rax+8]
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE6B4288]; System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].Clear()
+       call      qword ptr [7FF9C1F24DB0]; System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].Clear()
        nop
        add       rsp,50
        pop       rbp
@@ -83,11 +83,11 @@ M01_L00:
 M01_L01:
        mov       rcx,[rbp-18]
        cmp       [rcx],ecx
-       call      qword ptr [7FFCDE6B4270]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()
+       call      qword ptr [7FF9C1F24D98]; DotNetTips.Spargine.Core.SimpleResult`1[[System.__Canon, System.Private.CoreLib]].get_Value()
        mov       [rbp-28],rax
        mov       rdx,[rbp-28]
        mov       rcx,[rbp+10]
-       call      qword ptr [7FFCDE6B42A0]
+       call      qword ptr [7FF9C1F24DC8]
        nop
        add       rsp,50
        pop       rbp
