@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-05-2026
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,11 +36,11 @@ namespace DotNetTips.Spargine.IO;
 /// loading files asynchronously, managing OneDrive folders, and conducting safe directory and path searches. These methods
 /// are designed to extend the capabilities of the <see cref="DirectoryInfo"/> class and simplify common path system operations.
 /// </remarks>
+[SupportedOSPlatform("windows")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDirectoryHelper")]
 public static class DirectoryHelper
 {
 	private const string LocalAppData = "LOCALAPPDATA";
-
 	private static readonly ReadOnlyCollection<OneDriveFolder> _emptyOneDriveFolders = new List<OneDriveFolder>(0).AsReadOnly();
 
 	/// <summary>
@@ -102,7 +102,6 @@ public static class DirectoryHelper
 	/// </summary>
 	/// <returns>The path to the application data folder.</returns>
 	/// <exception cref="InvalidOperationException">Thrown when the user path environment variable is not set.</exception>
-	[SupportedOSPlatform("macos")]
 	[Information(nameof(AppDataFolder), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string AppDataFolder()
 	{
@@ -130,7 +129,6 @@ public static class DirectoryHelper
 	/// Console.WriteLine($"Has read permission: {hasReadPermission}");
 	/// </code></example>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directory"/> is null.</exception>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(CheckPermission), author: "David McCarter", createdOn: "6/17/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static bool CheckPermission([DisallowNull] DirectoryInfo directory, FileSystemRights permission = FileSystemRights.Read)
@@ -279,7 +277,6 @@ public static class DirectoryHelper
 	/// }
 	/// </code>
 	/// </example>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadOneDriveFolders), "David McCarter", "2/14/2018", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFolders()
@@ -288,7 +285,6 @@ public static class DirectoryHelper
 
 		return oneDriveKey is null ? _emptyOneDriveFolders : LoadOneDriveFoldersFromKey(oneDriveKey);
 	}
-
 
 	/// <summary>
 	/// Moves a directory to a new location with retry support.
@@ -552,7 +548,6 @@ public static class DirectoryHelper
 	/// <param name="directory">The existing directory whose ACL is read.</param>
 	/// <param name="permission">The permission flag to test.</param>
 	/// <returns><c>true</c> if the permission is in at least one Allow rule and in no Deny rules; otherwise <c>false</c>.</returns>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static bool EvaluatePermission(DirectoryInfo directory, FileSystemRights permission)
 	{
@@ -611,7 +606,6 @@ public static class DirectoryHelper
 	/// </summary>
 	/// <param name="accountKey">The open registry key for the OneDrive Accounts node.</param>
 	/// <param name="folders">The list to which discovered folders are appended.</param>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadOneDriveAccounts), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void LoadOneDriveAccounts(RegistryKey accountKey, List<OneDriveFolder> folders)
@@ -637,7 +631,6 @@ public static class DirectoryHelper
 	/// </summary>
 	/// <param name="oneDriveKey">The open OneDrive registry key.</param>
 	/// <returns>A read-only collection of discovered OneDrive folders.</returns>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(LoadOneDriveFoldersFromKey), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static ReadOnlyCollection<OneDriveFolder> LoadOneDriveFoldersFromKey(RegistryKey oneDriveKey)
@@ -664,7 +657,6 @@ public static class DirectoryHelper
 	/// </summary>
 	/// <param name="key">The open registry sub-key for a single OneDrive account. May be <see langword="null"/>.</param>
 	/// <returns>A populated <see cref="OneDriveFolder"/>, or <see langword="null"/> if the key is invalid or has no user folder.</returns>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ParseOneDriveFolder), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static OneDriveFolder? ParseOneDriveFolder(RegistryKey? key)
@@ -726,7 +718,6 @@ public static class DirectoryHelper
 	/// Sets <see cref="OneDriveFolder.AccountName"/> and <see cref="OneDriveFolder.AccountType"/> based on
 	/// whether a display name exists in the registry key.
 	/// </summary>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SetOneDriveFolderAccount), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void SetOneDriveFolderAccount(RegistryKey key, OneDriveFolder folder, string displayNameKey)
@@ -747,7 +738,6 @@ public static class DirectoryHelper
 	/// <summary>
 	/// Sets the <see cref="OneDriveFolder.UserEmail"/> if a non-null value exists in the registry key.
 	/// </summary>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(SetOneDriveFolderEmail), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void SetOneDriveFolderEmail(RegistryKey key, OneDriveFolder folder, string emailKey)

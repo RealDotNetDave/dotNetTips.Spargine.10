@@ -4,7 +4,7 @@
 // Created          : 11-02-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-22-2025
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="CopyFileMode.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
-
 
 namespace DotNetTips.Spargine.IO;
 
@@ -53,4 +52,3 @@ public enum CopyFileMode : uint
 	/// </summary>
 	NoBuffering = 0x00001000
 }
-

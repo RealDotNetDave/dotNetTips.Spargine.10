@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-22-2025
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="CopyProgressResult.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,4 +44,3 @@ public enum CopyProgressResult : uint
 	/// </summary>
 	Quiet = 3
 }
-

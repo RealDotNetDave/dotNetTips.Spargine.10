@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-06-2026
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="PathHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -30,6 +30,7 @@ namespace DotNetTips.Spargine.IO;
 /// This class offers a variety of static methods to assist with common path manipulation tasks such as combining paths, ensuring paths end with a directory separator,
 /// and validating paths for invalid characters. It is designed to simplify file system operations by abstracting complex checks and operations into straightforward method calls.
 /// </remarks>
+[SupportedOSPlatform("windows")]
 [Information(nameof(PathHelper), Documentation = "https://bit.ly/SparginePathHelper", Status = Status.Available)]
 public static class PathHelper
 {
@@ -41,10 +42,8 @@ public static class PathHelper
 	/// This array is derived from <see cref="FileHelper.InvalidFileNameChars"/> by filtering out specific characters.
 	/// It is used to validate file names by checking against characters that are not allowed in file names according to the file system.
 	/// </remarks>
-	[SupportedOSPlatform("windows")]
 	private static readonly char[] InvalidFileNameChars = [.. FileHelper.InvalidFileNameChars.Except(['*', '|', '?'])];
 
-	[SupportedOSPlatform("windows")]
 	private static readonly SearchValues<char> InvalidFileNameSearchValues = SearchValues.Create(InvalidFileNameChars);
 
 	/// <summary>
@@ -221,7 +220,6 @@ public static class PathHelper
 	/// Console.WriteLine(result); // Output: True
 	/// </code>
 	/// </example>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool HasInvalidFilterChars([DisallowNull] string filter)
@@ -245,7 +243,6 @@ public static class PathHelper
 	/// }
 	/// </code>
 	/// </example>
-	[SupportedOSPlatform("windows")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<char> InvalidFilterChars()

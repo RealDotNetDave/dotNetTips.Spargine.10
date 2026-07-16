@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-16-2026
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Loggers;
@@ -108,6 +109,7 @@ public static class BenchmarkHelper
 	/// }
 	/// </code>
 	/// </example>
+	[SupportedOSPlatform("windows")]
 	[Information(description: nameof(PlayErrorBeep), Status = Status.Available)]
 	public static void PlayErrorBeep()
 	{
@@ -136,6 +138,7 @@ public static class BenchmarkHelper
 	/// }
 	/// </code>
 	/// </example>
+	[SupportedOSPlatform("windows")]
 	[Information(description: nameof(PlaySuccessBeep), Status = Status.Available)]
 	public static void PlaySuccessBeep()
 	{
@@ -456,14 +459,20 @@ public static class BenchmarkHelper
 				SaveReportToFile(config, summary, filePrefix);
 			}
 
-			PlaySuccessBeep();
+			if (OperatingSystem.IsWindows())
+			{
+				PlaySuccessBeep();
+			}
 		}
 		catch (Exception ex)
 		{
 			ConsoleLogger.Default.WriteLineError(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
 			ConsoleLogger.Default.WriteLineError(ex.ToString());
 
-			PlayErrorBeep();
+			if (OperatingSystem.IsWindows())
+			{
+				PlayErrorBeep();
+			}
 		}
 	}
 

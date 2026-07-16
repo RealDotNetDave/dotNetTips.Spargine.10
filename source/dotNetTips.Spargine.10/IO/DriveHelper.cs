@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-02-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="DriveHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Management;
 using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 
@@ -33,7 +32,6 @@ namespace DotNetTips.Spargine.IO;
 /// Utilizing the Windows Management Instrumentation (WMI) for some of its operations, it provides a simple interface for drive management tasks.
 /// Note: These methods are intended to be used on Windows platforms only.
 /// </remarks>
-[SupportedOSPlatform("windows")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDriveHelper")]
 public static class DriveHelper
 {

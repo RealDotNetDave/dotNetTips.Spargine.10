@@ -1646,8 +1646,8 @@ dotnet_diagnostic.IDE0021.severity = silent
 dotnet_diagnostic.IDE0022.severity = silent
 
 # Use expression body for operators
-dotnet_diagnostic.IDE0023.severity = suggestion
-dotnet_diagnostic.IDE0024.severity = suggestion
+dotnet_diagnostic.IDE0023.severity = silent
+dotnet_diagnostic.IDE0024.severity = silent
 
 # Use expression body for properties
 dotnet_diagnostic.IDE0025.severity = silent

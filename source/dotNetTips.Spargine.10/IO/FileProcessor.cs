@@ -4,7 +4,7 @@
 // Created          : 03-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-06-2026
+// Last Modified On : 07-16-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@
 // </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Versioning;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Diagnostics;
 using DotNetTips.Spargine.Extensions;
@@ -50,7 +49,6 @@ namespace DotNetTips.Spargine.IO;
 /// fileProcessor.CopyFilesWithOriginalPath(filesToCopy, destinationDir);
 /// </code>
 /// </remarks>
-[SupportedOSPlatform("windows")]
 [Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineFileProcessor")]
 public sealed class FileProcessor
 {
