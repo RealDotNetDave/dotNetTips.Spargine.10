@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <c>GetUserClaim</c> looks up a claim value from the authenticated user;
 /// and <c>IsAuthenticated</c> checks whether the current user is authenticated.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class HttpContextExtensions
 {
 
