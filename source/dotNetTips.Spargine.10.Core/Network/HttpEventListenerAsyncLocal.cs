@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 12-24-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-18-2026
 // ***********************************************************************
 // <copyright file="HttpEventListenerAsyncLocal.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core.Logging;
+using DotNetTips.Spargine.Core.Properties;
 using Microsoft.Extensions.Logging;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -75,34 +76,69 @@ public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 
 	/// <summary>
 	/// Called whenever an event has been written by an event source for which the event listener has enabled events.
-	/// This method processes the event data, extracting relevant information for logging purposes.
-	/// Specifically, it handles "RequestStart" and "RequestStop" events to track and log the execution time of HTTP requests.
+	/// This method processes HTTP events by event name, logs request timing for start and stop events,
+	/// and logs additional handled and unhandled HTTP events for diagnostics.
 	/// </summary>
 	/// <param name="eventData">The event arguments that describe the event. This includes details such as the event ID and payload.</param>
 	protected override void OnEventWritten([DisallowNull] EventWrittenEventArgs eventData)
 	{
 		eventData = eventData.ArgumentNotNull();
 
-		if (eventData.EventId == 1) // eventData.EventName == "RequestStart"
+		if (eventData.EventSource.Name != "System.Net.Http")
 		{
-			if (eventData.Payload != null &&
-				eventData.Payload.Count >= 4 &&
-				eventData.Payload[0] is string scheme &&
-				eventData.Payload[1] is string host &&
-				eventData.Payload[2] is int port &&
-				eventData.Payload[3] is string pathAndQuery)
-			{
-				this._currentRequest.Value = new Request($"{scheme}://{host}:{port}{pathAndQuery}", Stopwatch.StartNew());
-			}
+			return;
 		}
-		else if (eventData.EventId == 2) // eventData.EventName == "RequestStop"
-		{
-			var currentRequest = this._currentRequest.Value;
 
-			if (currentRequest != null)
-			{
-				this.LogMessage($"HTTP Request: {currentRequest.Url} executed in {currentRequest.ExecutionTime.ElapsedMilliseconds:F1}ms");
-			}
+		switch (eventData.EventName)
+		{
+			case "RequestStart":
+				this.LogRequestStart(eventData);
+				break;
+
+			case "RequestStop":
+				var currentRequest = this._currentRequest.Value;
+
+				if (currentRequest != null)
+				{
+					this.LogMessage($"HTTP Request: {currentRequest.Url} executed in {currentRequest.ExecutionTime.ElapsedMilliseconds:F1}ms");
+				}
+				break;
+
+			case "RequestFailed":
+			case "RequestLeftQueue":
+			case "ConnectionEstablished":
+			case "ConnectionClosed":
+			case "RequestHeadersStart":
+			case "RequestHeadersStop":
+			case "ResponseHeadersStart":
+			case "ResponseHeadersStop":
+			case "RequestContentStart":
+			case "RequestContentStop":
+			case "ResponseContentStart":
+			case "ResponseContentStop":
+				this.LogMessage($"HTTP {eventData.EventName}: {eventData.ActivityId}");
+				break;
+
+			default:
+				this.LogMessage($"HTTP Unhandled Event: ID={eventData.EventId}, Name={eventData.EventName ?? "(null)"}, Source={eventData.EventSource.Name}, PayloadCount={eventData.Payload?.Count ?? 0}");
+				break;
+		}
+	}
+
+	private void LogRequestStart(EventWrittenEventArgs eventData)
+	{
+		if (eventData.Payload is null || eventData.Payload.Count < 4)
+		{
+			this.LogMessage(Resources.EventDataPayloadIsNullOrDoesNotContainTheExpectedNumberOfElements);
+			return;
+		}
+
+		if (eventData.Payload[0] is string scheme &&
+			eventData.Payload[1] is string host &&
+			eventData.Payload[2] is int port &&
+			eventData.Payload[3] is string pathAndQuery)
+		{
+			this._currentRequest.Value = new Request($"{scheme}://{host}:{port}{pathAndQuery}", Stopwatch.StartNew());
 		}
 	}
 

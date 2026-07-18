@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-18-2026
 // ***********************************************************************
 // <copyright file="HttpRequestsObserver.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -18,6 +18,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DotNetTips.Spargine.Core.Logging;
 using Microsoft.Extensions.Logging;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -91,19 +92,48 @@ public sealed class HttpRequestsObserver(ILogger logger) : IDisposable, IObserve
 	}
 
 	/// <summary>
+	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
+	/// </summary>
+	/// <param name="message">The message to log.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void LogMessage(string message)
+	{
+		logger?.LogInformationMessage(message);
+
+		Debug.WriteLine("TEST:" + message);
+
+		Trace.WriteLine(message);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void LogNotification(string? details = null, [CallerMemberName] string? memberName = null)
+	{
+		if (string.IsNullOrEmpty(details))
+		{
+			this.LogMessage(memberName ?? ControlChars.EmptyString);
+			return;
+		}
+
+		this.LogMessage(string.Concat(memberName ?? ControlChars.EmptyString, details));
+	}
+
+	/// <summary>
 	/// Notifies the observer that the provider has finished sending push-based notifications.
-	/// This method is intentionally left empty because this observer does not need to handle completion notifications.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void OnCompleted() { }
+	public void OnCompleted() => this.LogNotification();
 
 	/// <summary>
 	/// Notifies the observer that the provider has experienced an error condition.
-	/// This method is intentionally left empty because this observer does not need to handle error notifications.
 	/// </summary>
 	/// <param name="error">An object that provides additional information about the error.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void OnError(Exception error) { }
+	public void OnError(Exception error)
+	{
+		error = error.ArgumentNotNull();
+
+		this.LogNotification(error.Message);
+	}
 
 	/// <summary>
 	/// Provides the observer with new data by subscribing to the specified <see cref="DiagnosticListener"/>.
@@ -111,11 +141,20 @@ public sealed class HttpRequestsObserver(ILogger logger) : IDisposable, IObserve
 	/// <param name="value">The <see cref="DiagnosticListener"/> instance to observe.</param>
 	public void OnNext([DisallowNull] DiagnosticListener value)
 	{
-		if (value.ArgumentNotNull().Name is nameof(HttpHandlerDiagnosticListener))
-		{
-			Debug.Assert(this._subscription == null);
+		value = value.ArgumentNotNull();
 
-			this._subscription = value.Subscribe(new HttpHandlerDiagnosticListener(logger)!);
+		switch (value.Name)
+		{
+			case nameof(HttpHandlerDiagnosticListener):
+				Debug.Assert(this._subscription == null);
+
+				this._subscription = value.Subscribe(new HttpHandlerDiagnosticListener(logger)!);
+				this.LogMessage($"HTTP Diagnostic Listener: {value.Name} subscribed.");
+				break;
+
+			default:
+				this.LogMessage($"HTTP Diagnostic Listener Unhandled: {value.Name}");
+				break;
 		}
 	}
 }

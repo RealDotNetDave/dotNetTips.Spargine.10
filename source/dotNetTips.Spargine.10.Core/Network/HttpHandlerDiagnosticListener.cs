@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-18-2026
 // ***********************************************************************
 // <copyright file="HttpHandlerDiagnosticListener.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -113,6 +113,8 @@ public sealed class HttpHandlerDiagnosticListener(ILogger logger) : IObserver<Ke
 	{
 		logger?.LogInformationMessage(message);
 
+		Debug.WriteLine("TEST:" + message);
+
 		Trace.WriteLine(message);
 	}
 
@@ -141,26 +143,45 @@ public sealed class HttpHandlerDiagnosticListener(ILogger logger) : IObserver<Ke
 	{
 		value = value.ArgumentNotNull();
 
-		// note: Legacy applications can use "System.Net.Http.HttpRequest" and "System.Net.Http.Response"
-		if (string.Equals(value.Key, "System.Net.Http.HttpRequestOut.Start", StringComparison.OrdinalIgnoreCase))
+		switch (value.Key)
 		{
-			// The type is private, so we need to use reflection to access it.
-			var request = _requestAccessor(value.Value);
-			this.LogMessage($"HTTP Diagnostic: {request.Method} {request.RequestUri} {request.Version} UserAgent: {request.Headers.UserAgent}");
-		}
-		else if (value.Key.Equals("System.Net.Http.HttpRequestOut.Stop", StringComparison.OrdinalIgnoreCase))
-		{
-			// The type is private, so we need to use reflection to access it.
-			var response = _responseAccessor(value.Value);
+			case "System.Net.Http.HttpRequestOut.Start":
+			case "System.Net.Http.HttpRequest.Start":
+				this.LogRequestStart(value.Value);
+				break;
 
-			if (response?.RequestMessage?.RequestUri != null)
-			{
-				this.LogMessage($"HTTP Diagnostic: {response.StatusCode} {response.RequestMessage.RequestUri}");
-			}
-			else
-			{
-				this.LogMessage(Resources.HTTPDiagnosticResponseOrRequestUriIsNull);
-			}
+			case "System.Net.Http.HttpRequestOut.Stop":
+			case "System.Net.Http.HttpRequest.Stop":
+				this.LogRequestStop(value.Value);
+				break;
+
+			case "System.Net.Http.Exception":
+				this.LogMessage($"HTTP Diagnostic: {value.Key}");
+				break;
+
+			default:
+				this.LogMessage($"HTTP Diagnostic Unhandled Event: Name={value.Key}, PayloadType={value.Value.GetType().FullName}");
+				break;
+		}
+	}
+
+	private void LogRequestStart(object payload)
+	{
+		var request = _requestAccessor(payload);
+		this.LogMessage($"HTTP Diagnostic: {request.Method} {request.RequestUri} {request.Version} UserAgent: {request.Headers.UserAgent}");
+	}
+
+	private void LogRequestStop(object payload)
+	{
+		var response = _responseAccessor(payload);
+
+		if (response?.RequestMessage?.RequestUri != null)
+		{
+			this.LogMessage($"HTTP Diagnostic: {response.StatusCode} {response.RequestMessage.RequestUri}");
+		}
+		else
+		{
+			this.LogMessage(Resources.HTTPDiagnosticResponseOrRequestUriIsNull);
 		}
 	}
 

@@ -44,9 +44,11 @@ public class HttpEventListenersTests : IDisposable
 	{
 		try
 		{
+			var result = string.Empty;
+
 			using (var listener = new HttpEventListenerAsyncLocal(this._logger))
 			{
-				_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
+				result = await this._httpClient.GetStringAsync("https://dotnettips.com");
 			}
 		}
 		catch
@@ -60,10 +62,14 @@ public class HttpEventListenersTests : IDisposable
 	{
 		try
 		{
+			var result = string.Empty;
+
 			using (var listener = new HttpEventListener(this._logger))
 			{
-				_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
+				result = await this._httpClient.GetStringAsync("https://dotnettips.com");
 			}
+
+			Trace.WriteLine(result);
 		}
 		catch
 		{
@@ -76,11 +82,13 @@ public class HttpEventListenersTests : IDisposable
 	{
 		try
 		{
+			var result = string.Empty;
+
 			using (var observer = new HttpRequestsObserver(this._logger))
 			{
 				using (DiagnosticListener.AllListeners.Subscribe(observer))
 				{
-					_ = await this._httpClient.GetStringAsync("https://c-sharpcorner.com");
+					result = await this._httpClient.GetStringAsync("https://dotnettips.com");
 				}
 			}
 		}

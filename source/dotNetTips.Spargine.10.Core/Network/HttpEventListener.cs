@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-20-2025
+// Last Modified By : Copilot Agent
+// Last Modified On : 07-18-2026
 // ***********************************************************************
 // <copyright file="HttpEventListener.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -95,7 +95,7 @@ public sealed class HttpEventListener(ILogger logger) : EventListener
 
 	/// <summary>
 	/// Called whenever an event has been written by an event source for which the event listener has enabled events.
-	/// This method processes the event data, extracting relevant information for logging purposes.
+	/// This method processes HTTP request start and stop events and ignores all unrelated events.
 	/// </summary>
 	/// <param name="eventData">The event arguments that describe the event. This includes details such as the event ID and payload.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="eventData"/> is null, ensuring that event processing does not proceed with null event data.</exception>
@@ -103,29 +103,61 @@ public sealed class HttpEventListener(ILogger logger) : EventListener
 	{
 		eventData = eventData.ArgumentNotNull();
 
-		// Ensure Payload is not null and has the expected number of elements
-		if (eventData.Payload != null && eventData.Payload.Count >= 7)
+		if (eventData.EventSource.Name != "System.Net.Http")
 		{
-			if (eventData.EventId == 1) // eventData.EventName == "RequestStart"
-			{
-				var scheme = eventData.Payload[0] as string ?? string.Empty;
-				var host = eventData.Payload[1] as string ?? string.Empty;
-				var port = eventData.Payload[2] as int? ?? 0;
-				var pathAndQuery = eventData.Payload[3] as string ?? string.Empty;
-				var versionMajor = eventData.Payload[4] as byte? ?? 0;
-				var versionMinor = eventData.Payload[5] as byte? ?? 0;
-				var policy = eventData.Payload[6] as HttpVersionPolicy? ?? HttpVersionPolicy.RequestVersionOrHigher;
-
-				this.LogMessage($"HTTP {eventData.EventName}: {eventData.ActivityId} {scheme}://{host}:{port}{pathAndQuery} HTTP/{versionMajor}.{versionMinor} POLICY: {policy}");
-			}
-			else if (eventData.EventId == 2) // eventData.EventName == "RequestStop"
-			{
-				this.LogMessage($"HTTP {eventData.EventName}: {eventData.ActivityId}");
-			}
+			return;
 		}
-		else
+
+		if (string.Equals(eventData.EventName, "RequestStart", StringComparison.Ordinal))
+		{
+			this.LogRequestStart(eventData);
+			return;
+		}
+
+		if (IsHandledHttpEvent(eventData.EventName))
+		{
+			this.LogMessage($"HTTP {eventData.EventName}: {eventData.ActivityId}");
+			return;
+		}
+
+		this.LogMessage($"HTTP Unhandled Event: ID={eventData.EventId}, Name={eventData.EventName ?? "(null)"}, Source={eventData.EventSource.Name}, PayloadCount={eventData.Payload?.Count ?? 0}");
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static bool IsHandledHttpEvent(string? eventName) => eventName switch
+	{
+		"RequestStop" => true,
+		"RequestLeftQueue" => true,
+		"RequestFailed" => true,
+		"ConnectionEstablished" => true,
+		"ConnectionClosed" => true,
+		"RequestHeadersStart" => true,
+		"RequestHeadersStop" => true,
+		"ResponseHeadersStart" => true,
+		"ResponseHeadersStop" => true,
+		"RequestContentStart" => true,
+		"RequestContentStop" => true,
+		"ResponseContentStart" => true,
+		"ResponseContentStop" => true,
+		_ => false,
+	};
+
+	private void LogRequestStart(EventWrittenEventArgs eventData)
+	{
+		if (eventData.Payload is null || eventData.Payload.Count < 7)
 		{
 			this.LogMessage(Resources.EventDataPayloadIsNullOrDoesNotContainTheExpectedNumberOfElements);
+			return;
 		}
+
+		var scheme = eventData.Payload[0] as string ?? string.Empty;
+		var host = eventData.Payload[1] as string ?? string.Empty;
+		var port = eventData.Payload[2] as int? ?? 0;
+		var pathAndQuery = eventData.Payload[3] as string ?? string.Empty;
+		var versionMajor = eventData.Payload[4] as byte? ?? 0;
+		var versionMinor = eventData.Payload[5] as byte? ?? 0;
+		var policy = eventData.Payload[6] as HttpVersionPolicy? ?? HttpVersionPolicy.RequestVersionOrHigher;
+
+		this.LogMessage($"HTTP {eventData.EventName}: {eventData.ActivityId} {scheme}://{host}:{port}{pathAndQuery} HTTP/{versionMajor}.{versionMinor} POLICY: {policy}");
 	}
 }
