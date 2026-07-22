@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-01-2018
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-22-2026
 // ***********************************************************************
 // <copyright file="HttpRequestExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -43,7 +43,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// (annotated with <see cref="RequiresUnreferencedCodeAttribute"/>) and a trim-safe overload that
 /// accepts <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation ="ADD URL")]
 public static class HttpRequestExtensions
 {
 	/// <summary>
