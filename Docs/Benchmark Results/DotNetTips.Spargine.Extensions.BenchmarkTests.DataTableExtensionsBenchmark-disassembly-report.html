@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark-20260723-045505</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="5">DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark-20260723-045505</th></tr>
+<tr>
+<th>HasRowsEmptyTable .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>HasRowsNullTable .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>HasRowsWithRows .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>IsDBNullDbNullValue .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>IsDBNullNonDbNullValue .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.HasRowsEmptyTable()
+mov       rax,[rcx+198]
+test      rax,rax
+je        short 00007FFD9F4776D1
+mov       rax,[rax+28]
+test      rax,rax
+je        short 00007FFD9F4776D1
+mov       rax,[rax+10]
+mov       eax,[rax+28]
+dec       eax
+test      eax,eax
+setg      al
+movzx     eax,al
+mov       rcx,[rcx+88]
+mov       [rcx+4C],al
+ret
+xor       eax,eax
+jmp       short 00007FFD9F4776C6
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.HasRowsNullTable()
+mov       rax,[rcx+88]
+mov       byte ptr [rax+4C],0
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.HasRowsWithRows()
+mov       rax,[rcx+1A0]
+test      rax,rax
+je        short 00007FFD9ED823B1
+mov       rax,[rax+28]
+test      rax,rax
+je        short 00007FFD9ED823B1
+mov       rax,[rax+10]
+mov       eax,[rax+28]
+dec       eax
+test      eax,eax
+setg      al
+movzx     eax,al
+mov       rcx,[rcx+88]
+mov       [rcx+4C],al
+ret
+xor       eax,eax
+jmp       short 00007FFD9ED823A6
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.IsDBNullDbNullValue()
+mov       rax,[rcx+88]
+mov       byte ptr [rax+4C],1
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.IsDBNullNonDbNullValue()
+mov       rax,1FEC6000238
+mov       rdx,23F5AF54EE8
+cmp       [rax],rdx
+sete      al
+movzx     eax,al
+mov       rcx,[rcx+88]
+mov       [rcx+4C],al
+ret
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

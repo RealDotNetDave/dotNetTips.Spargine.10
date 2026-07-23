@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20260723-062950</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.204
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method          </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>CreateTempFileThenMove</td><td>1,407,300.0 ns</td><td>27,571.2 ns</td><td>39,541.7 ns</td><td>7,472.7 ns</td><td>1,406,750.0 ns</td><td>1,328,900.0 ns</td><td>1,390,675.0 ns</td><td>1,436,225.0 ns</td><td>1,470,200.0 ns</td><td>710.6</td><td>-3,722.3 ns</td><td>28.00</td><td>No</td><td>563 B</td><td>-</td><td>1.52 KB</td>
+</tr><tr><td>ReadAllTextSafe</td><td>618,840.2 ns</td><td>20,416.2 ns</td><td>54,141.0 ns</td><td>5,978.9 ns</td><td>614,400.0 ns</td><td>497,000.0 ns</td><td>588,275.0 ns</td><td>640,550.0 ns</td><td>807,400.0 ns</td><td>1,615.9</td><td>-2,948.4 ns</td><td>82.00</td><td>No</td><td>484 B</td><td>-</td><td>8.39 KB</td>
+</tr><tr><td>WriteAllTextAtomic</td><td>1,532,853.3 ns</td><td>82,082.1 ns</td><td>231,514.0 ns</td><td>24,137.0 ns</td><td>1,421,050.0 ns</td><td>1,296,250.0 ns</td><td>1,372,475.0 ns</td><td>1,669,425.0 ns</td><td>2,273,350.0 ns</td><td>652.4</td><td>-12,022.5 ns</td><td>92.00</td><td>No</td><td>12,932 B</td><td>-</td><td>1.55 KB</td>
+</tr></tbody></table>
+</body>
+</html>
