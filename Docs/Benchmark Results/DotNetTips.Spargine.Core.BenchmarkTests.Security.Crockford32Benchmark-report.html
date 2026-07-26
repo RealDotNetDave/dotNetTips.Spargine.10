@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260720-192547</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260725-161323</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -23,10 +23,10 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>Decode</td><td>24,756.7 ns</td><td>71.31 ns</td><td>63.22 ns</td><td>16.90 ns</td><td>24,654.6 ns</td><td>24,729.0 ns</td><td>24,768.2 ns</td><td>24,792.7 ns</td><td>24,888.1 ns</td><td>40,393.0</td><td>-1.448 ns</td><td>14.00</td><td>No</td><td>0.2747</td><td>819 B</td><td>-</td><td>-</td><td>-</td><td>8272 B</td>
-</tr><tr><td>Encode</td><td>11,331.2 ns</td><td>109.95 ns</td><td>91.81 ns</td><td>25.46 ns</td><td>11,081.6 ns</td><td>11,309.7 ns</td><td>11,345.9 ns</td><td>11,375.3 ns</td><td>11,472.7 ns</td><td>88,251.7</td><td>-6.232 ns</td><td>13.00</td><td>No</td><td>1.4801</td><td>NA</td><td>-</td><td>0.0305</td><td>0.0153</td><td>-</td>
+</thead><tbody><tr><td>Decode</td><td>24,817.6 ns</td><td>79.29 ns</td><td>74.17 ns</td><td>19.15 ns</td><td>24,730.4 ns</td><td>24,754.5 ns</td><td>24,827.2 ns</td><td>24,869.4 ns</td><td>24,972.4 ns</td><td>40,293.9</td><td>-2.075 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.2747</td><td>819 B</td><td>-</td><td>-</td><td>8.08 KB</td>
+</tr><tr><td>Encode</td><td>11,241.9 ns</td><td>213.31 ns</td><td>189.10 ns</td><td>50.54 ns</td><td>10,855.7 ns</td><td>11,155.3 ns</td><td>11,242.4 ns</td><td>11,328.5 ns</td><td>11,655.3 ns</td><td>88,952.8</td><td>-18.269 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.9155</td><td>NA</td><td>0.0305</td><td>0.0305</td><td>25.7 KB</td>
 </tr></tbody></table>
 </body>
 </html>

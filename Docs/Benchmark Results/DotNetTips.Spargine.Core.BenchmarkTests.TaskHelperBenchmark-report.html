@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.TaskHelperBenchmark-20260720-182646</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.TaskHelperBenchmark-20260725-151333</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -25,8 +25,8 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 <table>
 <thead><tr><th>Method                                       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Gen0</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;RunSync(Func&lt;ValueTask&lt;TResult&gt;&gt;) - returns value&#39;</td><td>1,310.3 ns</td><td>5.11 ns</td><td>4.53 ns</td><td>1.21 ns</td><td>1,303.0 ns</td><td>1,308.6 ns</td><td>1,309.7 ns</td><td>1,311.7 ns</td><td>1,319.0 ns</td><td>763,157.5</td><td>6.395 ns</td><td>14.00</td><td>No</td><td>2,412 B</td><td>-</td><td>0.0076</td><td>264 B</td>
-</tr><tr><td>RunSync(Func&lt;ValueTask&gt;)</td><td>1,315.9 ns</td><td>21.93 ns</td><td>20.52 ns</td><td>5.30 ns</td><td>1,287.0 ns</td><td>1,298.7 ns</td><td>1,322.3 ns</td><td>1,327.7 ns</td><td>1,356.6 ns</td><td>759,962.0</td><td>4.851 ns</td><td>15.00</td><td>No</td><td>NA</td><td>-</td><td>0.0076</td><td>248 B</td>
+</thead><tbody><tr><td>&#39;RunSync(Func&lt;ValueTask&lt;TResult&gt;&gt;) - returns value&#39;</td><td>1,313.4 ns</td><td>5.14 ns</td><td>4.81 ns</td><td>1.24 ns</td><td>1,303.0 ns</td><td>1,310.7 ns</td><td>1,313.6 ns</td><td>1,316.4 ns</td><td>1,322.6 ns</td><td>761,355.6</td><td>6.879 ns</td><td>15.00</td><td>No</td><td>2,412 B</td><td>-</td><td>0.0076</td><td>264 B</td>
+</tr><tr><td>RunSync(Func&lt;ValueTask&gt;)</td><td>1,315.4 ns</td><td>3.98 ns</td><td>3.72 ns</td><td>0.96 ns</td><td>1,311.0 ns</td><td>1,312.7 ns</td><td>1,314.3 ns</td><td>1,317.6 ns</td><td>1,322.8 ns</td><td>760,205.5</td><td>7.019 ns</td><td>15.00</td><td>No</td><td>NA</td><td>-</td><td>0.0076</td><td>248 B</td>
 </tr></tbody></table>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.ExecutionHelperBenchmark-20260720-163345</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.ExecutionHelperBenchmark-20260725-132658</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -25,10 +25,10 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 <table>
 <thead><tr><th>Method                         </th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Min      </th><th>Q1       </th><th>Median   </th><th>Q3       </th><th>Max      </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Gen0</th><th>Gen1</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;ProgressiveRetry: Success&#39;</td><td>892.6 ns</td><td>2.91 ns</td><td>2.72 ns</td><td>0.70 ns</td><td>888.9 ns</td><td>890.6 ns</td><td>891.7 ns</td><td>894.3 ns</td><td>897.1 ns</td><td>1,120,378.77</td><td>7.149 ns</td><td>15.00</td><td>No</td><td>-</td><td>-</td><td>0.0000</td><td>4,913 B</td><td>0.0668</td><td>0.0219</td><td>2 KB</td>
-</tr><tr><td>&#39;ProgressiveRetry: With Retries&#39;</td><td>30,926,098.4 ns</td><td>54,224.60 ns</td><td>48,068.69 ns</td><td>12,846.90 ns</td><td>30,804,581.2 ns</td><td>30,916,729.7 ns</td><td>30,924,868.8 ns</td><td>30,950,362.5 ns</td><td>31,005,668.8 ns</td><td>32.34</td><td>-6,416.449 ns</td><td>14.00</td><td>No</td><td>2.0000</td><td>-</td><td>-</td><td>4,990 B</td><td>-</td><td>-</td><td>2.88 KB</td>
-</tr><tr><td>&#39;ProgressiveRetryAsync: Success&#39;</td><td>901.1 ns</td><td>3.93 ns</td><td>3.68 ns</td><td>0.95 ns</td><td>895.7 ns</td><td>898.2 ns</td><td>900.8 ns</td><td>902.5 ns</td><td>908.5 ns</td><td>1,109,781.36</td><td>7.025 ns</td><td>15.00</td><td>No</td><td>-</td><td>-</td><td>0.0000</td><td>1,490 B</td><td>0.0696</td><td>0.0229</td><td>2.07 KB</td>
-</tr><tr><td>&#39;ProgressiveRetryAsync: With Retries&#39;</td><td>30,960,151.8 ns</td><td>42,666.96 ns</td><td>37,823.15 ns</td><td>10,108.66 ns</td><td>30,881,568.8 ns</td><td>30,940,979.7 ns</td><td>30,965,775.0 ns</td><td>30,989,877.3 ns</td><td>31,013,084.4 ns</td><td>32.30</td><td>-5,047.331 ns</td><td>14.00</td><td>No</td><td>2.0000</td><td>2.0000</td><td>-</td><td>1,872 B</td><td>-</td><td>-</td><td>3.91 KB</td>
+</thead><tbody><tr><td>&#39;ProgressiveRetry: Success&#39;</td><td>808.5 ns</td><td>3.80 ns</td><td>3.37 ns</td><td>0.90 ns</td><td>803.3 ns</td><td>806.8 ns</td><td>808.1 ns</td><td>810.5 ns</td><td>814.2 ns</td><td>1,236,795.10</td><td>6.550 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>0.0000</td><td>4,913 B</td><td>0.0677</td><td>0.0010</td><td>2 KB</td>
+</tr><tr><td>&#39;ProgressiveRetry: With Retries&#39;</td><td>30,967,128.3 ns</td><td>57,959.99 ns</td><td>54,215.81 ns</td><td>13,998.46 ns</td><td>30,893,881.2 ns</td><td>30,926,503.1 ns</td><td>30,959,931.2 ns</td><td>30,994,414.1 ns</td><td>31,067,140.6 ns</td><td>32.29</td><td>-6,991.731 ns</td><td>15.00</td><td>No</td><td>2.0000</td><td>-</td><td>-</td><td>4,990 B</td><td>-</td><td>-</td><td>2.88 KB</td>
+</tr><tr><td>&#39;ProgressiveRetryAsync: Success&#39;</td><td>833.2 ns</td><td>3.73 ns</td><td>3.49 ns</td><td>0.90 ns</td><td>828.1 ns</td><td>831.1 ns</td><td>833.1 ns</td><td>834.8 ns</td><td>839.8 ns</td><td>1,200,134.45</td><td>7.050 ns</td><td>15.00</td><td>No</td><td>-</td><td>-</td><td>0.0000</td><td>1,490 B</td><td>0.0696</td><td>0.0010</td><td>2.07 KB</td>
+</tr><tr><td>&#39;ProgressiveRetryAsync: With Retries&#39;</td><td>30,956,344.3 ns</td><td>66,346.29 ns</td><td>62,060.36 ns</td><td>16,023.92 ns</td><td>30,862,317.2 ns</td><td>30,904,696.9 ns</td><td>30,957,876.6 ns</td><td>30,995,545.3 ns</td><td>31,083,501.6 ns</td><td>32.30</td><td>-8,004.458 ns</td><td>15.00</td><td>No</td><td>2.0000</td><td>2.0000</td><td>-</td><td>1,880 B</td><td>-</td><td>-</td><td>3.91 KB</td>
 </tr></tbody></table>
 </body>
 </html>
