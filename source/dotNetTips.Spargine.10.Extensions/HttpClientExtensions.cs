@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-26-2026
 // ***********************************************************************
 // <copyright file="HttpClientExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// Reflection-based overloads are annotated with <see cref="RequiresUnreferencedCodeAttribute"/>;
 /// trim-safe alternatives accept <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineHttpClientExtensions")]
 public static class HttpClientExtensions
 {
 
