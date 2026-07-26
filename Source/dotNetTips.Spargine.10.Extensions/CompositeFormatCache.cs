@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-26-2026
 // ***********************************************************************
 // <copyright file="CompositeFormatCache.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -33,7 +33,7 @@ internal static class CompositeFormatCache
 	/// <returns>The cached <see cref="CompositeFormat"/> instance.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="format"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ArgumentException">Thrown when <paramref name="format"/> is empty or whitespace.</exception>
-	[Information(nameof(GetOrAdd), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
+	[Information(nameof(GetOrAdd), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	internal static CompositeFormat GetOrAdd([DisallowNull] string format)
 	{
 		format = format.ArgumentNotNullOrEmpty();
