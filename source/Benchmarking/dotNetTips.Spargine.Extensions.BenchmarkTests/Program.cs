@@ -42,10 +42,10 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(ArrayExtensionsCollectionBenchmark),
-		//	typeof(AssemblyExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(ArrayExtensionsCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark)
+		);
 
 		// Group 1: A–D - 9:30 hours, 991 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
@@ -67,24 +67,24 @@ internal sealed class Program
 		//	typeof(DirectoryInfoExtensionsBenchmark)
 		//);
 
-		// Group 2: E–H - 10:05 hours, 926 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(EfCoreModelBuilderExtensionsBenchmark),
-		 typeof(EnumExtensionsBenchmark),
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsConvertingCollectionBenchmark),
-			typeof(EnumerableExtensionsCountCollectionBenchmark),
-			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
-			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-			typeof(ExceptionExtensionsBenchmark),
-			typeof(FileInfoExtensionsBenchmark),
-			typeof(HashSetExtensionsCollectionBenchmark),
-			typeof(HttpClientExtensionsBenchmark),
-			typeof(HttpRequestExtensionsBenchmark),
-			typeof(HashSetExtensionsMutatingCollectionBenchmark)
-		);
+		// Group 2: E–H - 10:30 hours, 950 benchmarks
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(EfCoreModelBuilderExtensionsBenchmark),
+		// typeof(EnumExtensionsBenchmark),
+		//	typeof(EnumerableExtensionsCollectionBenchmark),
+		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
+		//	typeof(EnumerableExtensionsCountCollectionBenchmark),
+		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+		//	typeof(ExceptionExtensionsBenchmark),
+		//	typeof(FileInfoExtensionsBenchmark),
+		//	typeof(HashSetExtensionsCollectionBenchmark),
+		//	typeof(HttpClientExtensionsBenchmark),
+		//	typeof(HttpRequestExtensionsBenchmark),
+		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
+		//);
 
-		// Group 3: L–T - 11 hours, 943 benchmarks
+		// Group 3: L–T - 11 hours, 1,372 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
 		//  typeof(ImmutableArrayExtensionsBenchmark),
 		//	typeof(LinqExtensionsBenchmark),
