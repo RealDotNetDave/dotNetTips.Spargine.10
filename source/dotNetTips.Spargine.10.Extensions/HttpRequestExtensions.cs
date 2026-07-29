@@ -43,7 +43,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// (annotated with <see cref="RequiresUnreferencedCodeAttribute"/>) and a trim-safe overload that
 /// accepts <see cref="JsonTypeInfo{T}"/>.
 /// </remarks>
-[Information(Status = Status.Available, Documentation ="ADD URL")]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class HttpRequestExtensions
 {
 	/// <summary>
