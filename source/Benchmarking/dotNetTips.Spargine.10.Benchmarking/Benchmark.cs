@@ -287,13 +287,6 @@ public abstract class Benchmark
 	public virtual string StringToTrim { get; private set; }
 
 	/// <summary>
-	/// Retrieves a Guid generated at startup for testing purposes.
-	/// This property is used in benchmarks that require a unique identifier for each test instance.
-	/// </summary>
-	/// <value>The test unique identifier.</value>
-	public Guid TestGuid { get; internal set; }
-
-	/// <summary>
 	/// Gets a random boolean value generated during setup for use in benchmark tests.
 	/// </summary>
 	/// <value>A randomly generated <see cref="bool"/> value.</value>
@@ -328,6 +321,13 @@ public abstract class Benchmark
 	/// </summary>
 	/// <value>A randomly selected <see cref="DayOfWeek"/> enum value.</value>
 	public DayOfWeek TestDayOfWeek { get; private set; }
+
+	/// <summary>
+	/// Retrieves a Guid generated at startup for testing purposes.
+	/// This property is used in benchmarks that require a unique identifier for each test instance.
+	/// </summary>
+	/// <value>The test unique identifier.</value>
+	public Guid TestGuid { get; internal set; }
 
 	/// <summary>
 	/// Gets a random hexadecimal hash string generated during setup for use in benchmark tests.
