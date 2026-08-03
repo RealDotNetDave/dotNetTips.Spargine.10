@@ -4,7 +4,7 @@
 // Created          : 07-09-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,7 +37,7 @@ public static partial class Validator
 	/// <returns>The original sequence when valid.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureCountInRange), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureCountInRange), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<T> EnsureCountInRange<T>([DisallowNull] this IEnumerable<T>? source, int minInclusive, int maxInclusive, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(source))] string paramName = ControlChars.EmptyString)
 	{
 		source = source.ArgumentNotNull();
@@ -49,7 +49,7 @@ public static partial class Validator
 	/// Ensures the integer value is within the inclusive range. Returns the original value when valid.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int EnsureInRange(this int value, int minInclusive, int maxInclusive, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(value))] string paramName = ControlChars.EmptyString)
 	{
 		if (!value.CheckIsInRange(minInclusive, maxInclusive, true, errorMessage))
@@ -66,7 +66,7 @@ public static partial class Validator
 	/// Ensures the long value is within the inclusive range. Returns the original value when valid.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static long EnsureInRange(this long value, long minInclusive, long maxInclusive, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(value))] string paramName = ControlChars.EmptyString)
 	{
 		if (!value.CheckIsInRange(minInclusive, maxInclusive, true, errorMessage))
@@ -83,7 +83,7 @@ public static partial class Validator
 	/// Ensures the double value is within the inclusive range. Returns the original value when valid.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureInRange), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static double EnsureInRange(this double value, double minInclusive, double maxInclusive, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(value))] string paramName = ControlChars.EmptyString)
 	{
 		if (!value.CheckIsInRange(minInclusive, maxInclusive, true, errorMessage))
@@ -106,7 +106,7 @@ public static partial class Validator
 	/// <returns>The original sequence when valid.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureNotEmpty), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureNotEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<T> EnsureNotEmpty<T>([DisallowNull] this IEnumerable<T>? source, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(source))] string paramName = ControlChars.EmptyString)
 	{
 		source = source.ArgumentNotNull();
@@ -166,7 +166,7 @@ public static partial class Validator
 	/// <returns>The original string when valid.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureNotNullOrEmpty), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureNotNullOrEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string EnsureNotNullOrEmpty([DisallowNull] this string? input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();
@@ -190,7 +190,7 @@ public static partial class Validator
 	/// <returns>The original string when valid.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureNotNullOrWhiteSpace), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureNotNullOrWhiteSpace), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string EnsureNotNullOrWhiteSpace([DisallowNull] this string? input, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(input))] string paramName = ControlChars.EmptyString)
 	{
 		input = input.ArgumentNotNull();

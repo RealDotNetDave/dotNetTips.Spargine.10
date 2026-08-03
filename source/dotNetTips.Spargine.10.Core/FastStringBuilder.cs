@@ -4,7 +4,7 @@
 // Created          : 12-27-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -326,7 +326,7 @@ public static class FastStringBuilder
 	/// <returns>The formatted string.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatCurrentCulture(string format, params object?[] args)
 	{
 		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)
@@ -354,7 +354,7 @@ public static class FastStringBuilder
 	/// <returns>The formatted string.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatInvariant), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatInvariant(string format, params object?[] args)
 	{
 		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)

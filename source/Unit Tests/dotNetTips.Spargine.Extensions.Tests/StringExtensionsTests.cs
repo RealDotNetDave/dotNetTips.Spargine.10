@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -1183,12 +1183,83 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void FormatCurrentCulture_EmptyFormat_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.FormatCurrentCulture(1234.5));
+	}
+
+	[TestMethod]
+	public void FormatCurrentCulture_FormatsUsingCurrentCulture()
+	{
+		var originalCulture = CultureInfo.CurrentCulture;
+
+		try
+		{
+			CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
+
+			var result = "{0:N1}".FormatCurrentCulture(1234.5);
+
+			Assert.AreEqual("1 234,5", result);
+		}
+		finally
+		{
+			CultureInfo.CurrentCulture = originalCulture;
+		}
+	}
+
+	[TestMethod]
+	public void FormatCurrentCulture_NullArguments_ThrowsArgumentNullException()
+	{
+		object[] args = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.FormatCurrentCulture("{0}", args));
+	}
+
+	[TestMethod]
+	public void FormatCurrentCulture_NullFormat_ThrowsArgumentNullException()
+	{
+		string format = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.FormatCurrentCulture(format, 1234.5));
+	}
+
+	[TestMethod]
 	public void FormatCurrentCulture_ValidFormat_ReturnsFormattedString()
 	{
 		var result = "Value: {0:N2}".FormatCurrentCulture(1234.5);
 
 		StringAssert.Contains(result, "Value:");
 		Assert.IsTrue(result.Length > 7);
+	}
+
+	[TestMethod]
+	public void FormatInvariant_EmptyFormat_ThrowsArgumentNullException()
+	{
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => string.Empty.FormatInvariant(1234.5));
+	}
+
+	[TestMethod]
+	public void FormatInvariant_FormatsUsingInvariantCulture()
+	{
+		var result = "{0:N1}".FormatInvariant(1234.5);
+
+		Assert.AreEqual("1,234.5", result);
+	}
+
+	[TestMethod]
+	public void FormatInvariant_NullArguments_ThrowsArgumentNullException()
+	{
+		object[] args = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.FormatInvariant("{0}", args));
+	}
+
+	[TestMethod]
+	public void FormatInvariant_NullFormat_ThrowsArgumentNullException()
+	{
+		string format = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.FormatInvariant(format, 1234.5));
 	}
 
 	[TestMethod]
@@ -1880,11 +1951,51 @@ public class StringExtensionsTests
 	}
 
 	[TestMethod]
+	public void JoinFormatted_CustomDelimiter_ReturnsJoinedFormattedValues()
+	{
+		var result = "{0:D2}".JoinFormatted("|", 1, 2, 3);
+
+		Assert.AreEqual("01|02|03", result);
+	}
+
+	[TestMethod]
 	public void JoinFormatted_EmptyArgs_ReturnsEmptyString()
 	{
 		var result = "[{0}]".JoinFormatted(", ");
 
 		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void JoinFormatted_EmptyDelimiter_UsesDefaultDelimiter()
+	{
+		var result = "{0:D2}".JoinFormatted(string.Empty, 1, 2);
+
+		Assert.AreEqual("01, 02", result);
+	}
+
+	[TestMethod]
+	public void JoinFormatted_EmptyValues_ReturnsEmptyString()
+	{
+		var result = "{0:D2}".JoinFormatted();
+
+		Assert.AreEqual(string.Empty, result);
+	}
+
+	[TestMethod]
+	public void JoinFormatted_NullArguments_ThrowsArgumentNullException()
+	{
+		object[] args = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.JoinFormatted("{0}", ControlChars.CommaSpace, args));
+	}
+
+	[TestMethod]
+	public void JoinFormatted_NullFormat_ThrowsArgumentNullException()
+	{
+		string format = null;
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => StringExtensions.JoinFormatted(format, ControlChars.CommaSpace, 1));
 	}
 
 	[TestMethod]

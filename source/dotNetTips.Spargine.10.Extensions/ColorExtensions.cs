@@ -4,7 +4,7 @@
 // Created          : 07-29-2018
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="ColorExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -44,7 +44,7 @@ public static class ColorExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="colors"/> is null or contains no elements.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(Average), "David McCarter", "1/1/2015", UnitTestStatus = UnitTestStatus.None, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(Average), "David McCarter", "1/1/2015", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Color Average([DisallowNull] this IEnumerable<Color> colors)
 	{
 		colors = colors.ArgumentItemsExists();

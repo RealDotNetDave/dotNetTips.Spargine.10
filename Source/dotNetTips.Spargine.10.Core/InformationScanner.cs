@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-09-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="InformationScanner.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,7 +36,7 @@ public static class InformationScanner
 	/// <returns>Enumeration of InformationMetadata items for each annotated member.</returns>
 	[RequiresUnreferencedCode("Scans assembly types and members via reflection; trimming may remove members required by consumers.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public static IEnumerable<InformationMetadata> GetInformationMetadata([AllowNull] Assembly? assembly = null)
 	{
 		assembly ??= Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();

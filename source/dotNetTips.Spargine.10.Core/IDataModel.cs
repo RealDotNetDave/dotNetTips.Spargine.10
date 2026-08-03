@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 02-05-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 02-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="IDataModel.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ public interface IDataModel<TSelf, TKey> :
 	/// <summary>
 	/// Gets a value indicating whether this instance is transient (i.e., has the default <see cref="Id"/> value).
 	/// </summary>
-	[Information(UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	bool IsTransient => EqualityComparer<TKey>.Default.Equals(this.Id, default);
 
 	/// <summary>
