@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-26-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="MemoryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -60,7 +60,7 @@ public static class MemoryExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(IsNotEmpty), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public bool IsNotEmpty()
 		{
 			return !memory.IsEmpty;
@@ -87,7 +87,7 @@ public static class MemoryExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(TryGetArraySegment), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(TryGetArraySegment), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public bool TryGetArraySegment(out ArraySegment<T> segment)
 		{
 			return MemoryMarshal.TryGetArray((ReadOnlyMemory<T>)memory, out segment);
@@ -120,7 +120,7 @@ public static class MemoryExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToArrayIfNeeded), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(ToArrayIfNeeded), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public T[] ToArrayIfNeeded()
 		{
 			return MemoryMarshal.TryGetArray((ReadOnlyMemory<T>)memory, out var segment) &&
@@ -149,7 +149,7 @@ public static class MemoryExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEqualTo), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+		[Information(nameof(IsEqualTo), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 		public bool IsEqualTo(Memory<T> other, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			return memory.Span.SequenceEqual(other.Span, comparer);

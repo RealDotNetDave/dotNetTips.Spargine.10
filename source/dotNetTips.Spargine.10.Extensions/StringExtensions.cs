@@ -545,7 +545,7 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string FormatCurrentCulture([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -561,7 +561,7 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string FormatInvariant([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -1205,7 +1205,7 @@ public static class StringExtensions
 	/// <param name="args">The values to format and join.</param>
 	/// <returns>A joined string of formatted values, or <see cref="string.Empty"/> when <paramref name="args"/> is empty.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static string JoinFormatted([DisallowNull] this string format, [ConstantExpected] string delimiter = ControlChars.CommaSpace, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -1304,7 +1304,7 @@ public static class StringExtensions
 	/// <param name="delimiter">The character to use as a delimiter. Defaults to <see cref="ControlChars.Comma"/>.</param>
 	/// <returns>A <see cref="ReadOnlyCollection{String}"/> of strings split from the input string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> Split([DisallowNull] this string input, [DisallowNull] StringSplitOptions options, int count, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		input = input.ArgumentNotNullOrEmpty();

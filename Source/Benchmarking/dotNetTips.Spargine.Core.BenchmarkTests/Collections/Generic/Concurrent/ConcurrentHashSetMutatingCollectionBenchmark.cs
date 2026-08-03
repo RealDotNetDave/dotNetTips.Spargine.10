@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -16,9 +16,11 @@
 // </summary>
 // ***********************************************************************
 
+using System.Collections.ObjectModel;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
+using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -37,9 +39,17 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent
 [ThreadingDiagnoser]
 public class ConcurrentHashSetMutatingCollectionBenchmark : LargeCollectionBenchmark
 {
+	private ReadOnlyCollection<Person> _newPeople = default!;
 	private ConcurrentHashSet<Person> _personRefConcurrentHashSet = default!;
 
-	[Benchmark(Description = "Clear")]
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.AddRange))]
+	[BenchmarkCategory(Categories.Async)]
+	public void AddRange()
+	{
+		this.Consume(this._personRefConcurrentHashSet.AddRange(this._newPeople));
+	}
+
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Clear))]
 	[BenchmarkCategory(Categories.Async)]
 	public void Clear()
 	{
@@ -48,7 +58,7 @@ public class ConcurrentHashSetMutatingCollectionBenchmark : LargeCollectionBench
 		this.Consume(this._personRefConcurrentHashSet);
 	}
 
-	[Benchmark(Description = "Remove")]
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Remove))]
 	[BenchmarkCategory(Categories.Async)]
 	public void Remove()
 	{
@@ -73,9 +83,20 @@ public class ConcurrentHashSetMutatingCollectionBenchmark : LargeCollectionBench
 		base.Setup();
 
 		this._personRefConcurrentHashSet = [.. this.GetPersonRefArray()];
+		this._newPeople = RandomData.GeneratePersonRefCollection(10);
 	}
 
-	[Benchmark(Description = "TryRemove")]
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.TryAdd))]
+	[BenchmarkCategory(Categories.Async)]
+	public void TryAdd()
+	{
+		foreach (var person in this._newPeople)
+		{
+			this.Consume(this._personRefConcurrentHashSet.TryAdd(person));
+		}
+	}
+
+	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.TryRemove))]
 	[BenchmarkCategory(Categories.Async)]
 	public void TryRemove()
 	{

@@ -3,8 +3,8 @@
 // Author           : david
 // Created          : 10-03-2024
 //
-// Last Modified By : David McCarter
-// Last Modified On : 06-21-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,6 +15,8 @@ using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.Cache;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -24,10 +26,15 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Cache;
 [ThreadingDiagnoser]
 public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 {
-	private InMemoryCache _cache = default!;
-	private string _cacheId = default!;
-	private PersonRecord[] _personRecordArray = default!;
-	private Person[] _personRefArray = default!;
+	private static readonly PostEvictionDelegate _noopPostEvictionCallback = static (_, _, _, _) => { };
+
+	private IDictionary<string, Person> _batchItems = new Dictionary<string, Person>();
+	private string[] _batchKeys = [];
+	private InMemoryCache _cache = InMemoryCache.Instance;
+	private string _cacheId = string.Empty;
+	private string _dependencyKey = string.Empty;
+	private PersonRecord[] _personRecordArray = [];
+	private Person[] _personRefArray = [];
 
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem))]
 	[BenchmarkCategory(Categories.Collections)]
@@ -160,6 +167,15 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this.Consume(cache);
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemBatch))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemBatch()
+	{
+		this._cache.AddCacheItemBatch(this._batchItems);
+
+		this.Consume(this._cache);
+	}
+
 	[Benchmark(Description = nameof(InMemoryCache.AddCacheItem) + ": DateTimeOffset")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void AddCacheItemDateTimeOffset()
@@ -263,6 +279,108 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this.Consume(cache);
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithCallback))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithCallback()
+	{
+		var timeout = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithCallback(item.Email + "_callback", item, timeout, _noopPostEvictionCallback);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithChangeToken))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithChangeToken()
+	{
+		using var tokenSource = new CancellationTokenSource();
+		var timeout = TimeSpan.FromMinutes(20);
+		var changeToken = new CancellationChangeToken(tokenSource.Token);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithChangeToken(item.Email + "_token", item, timeout, changeToken);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithCombinedExpiration))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithCombinedExpiration()
+	{
+		var slidingExpiration = TimeSpan.FromMinutes(5);
+		var absoluteExpiration = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithCombinedExpiration(item.Email + "_combined", item, slidingExpiration, absoluteExpiration);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithDependency))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithDependency()
+	{
+		using var dependencyTokenSource = new CancellationTokenSource();
+		var timeout = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithDependency(item.Email + "_dependency", item, timeout, dependencyTokenSource);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithPriority))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithPriority()
+	{
+		var timeout = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithPriority(item.Email + "_priority", item, timeout, CacheItemPriority.High);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithSize))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithSize()
+	{
+		var timeout = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithSize(item.Email + "_size", item, timeout, 1);
+		}
+
+		this.Consume(this._cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.AddCacheItemWithSlidingExpiration))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddCacheItemWithSlidingExpiration()
+	{
+		var slidingExpiration = TimeSpan.FromMinutes(20);
+
+		foreach (var item in this._personRefArray)
+		{
+			this._cache.AddCacheItemWithSlidingExpiration(item.Email + "_sliding", item, slidingExpiration);
+		}
+
+		this.Consume(this._cache);
+	}
+
 	[Benchmark(Description = nameof(InMemoryCache.Clear))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void Clear()
@@ -293,6 +411,29 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		}
 
 		cache.Compact(0.5);
+
+		this.Consume(cache);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.CreateCacheDependency))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void CreateCacheDependency()
+	{
+		var dependencyKey = this._dependencyKey + "_create";
+		_ = this._cache.InvalidateDependentCacheItems(dependencyKey);
+
+		using var dependency = this._cache.CreateCacheDependency(dependencyKey);
+
+		this.Consume(dependency);
+
+		_ = this._cache.InvalidateDependentCacheItems(dependencyKey);
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.CreateCacheWithLimit))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void CreateCacheWithLimit()
+	{
+		using var cache = InMemoryCache.CreateCacheWithLimit(10_000);
 
 		this.Consume(cache);
 	}
@@ -332,6 +473,13 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this.Consume(this._cache.GetCacheItemBatch<Person>(keys));
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.GetCacheStatistics))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void GetCacheStatistics()
+	{
+		this.Consume(this._cache.GetCacheStatistics());
+	}
+
 	[Benchmark(Description = nameof(InMemoryCache.GetOrCreateAsync))]
 	[BenchmarkCategory(Categories.Collections)]
 	public async Task GetOrCreateAsync()
@@ -346,11 +494,65 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 			TimeSpan.FromMinutes(20)).ConfigureAwait(false));
 	}
 
+	[Benchmark(Description = nameof(InMemoryCache.GetOrCreateAsync) + ": DateTimeOffset")]
+	[BenchmarkCategory(Categories.Collections)]
+	public async Task GetOrCreateAsyncDateTimeOffsetAsync()
+	{
+		var key = this._cacheId + "_factory_absolute";
+
+		_ = this._cache.RemoveCacheItem(key);
+
+		this.Consume(await this._cache.GetOrCreateAsync(
+			key,
+			_ => Task.FromResult(this.PersonRef01),
+			DateTimeOffset.UtcNow.AddMinutes(20)).ConfigureAwait(false));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.InvalidateDependentCacheItems))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void InvalidateDependentCacheItems()
+	{
+		using var dependency = this._cache.CreateCacheDependency(this._dependencyKey);
+		this._cache.AddCacheItemWithDependency(this._cacheId + "_dependent", this.PersonRef01, TimeSpan.FromMinutes(20), dependency);
+
+		this.Consume(this._cache.InvalidateDependentCacheItems(this._dependencyKey));
+	}
+
 	[Benchmark(Description = nameof(InMemoryCache.PeekCacheItem))]
 	[BenchmarkCategory(Categories.Collections)]
 	public void PeekCacheItem()
 	{
 		this.Consume(this._cache.PeekCacheItem<Person>(this._cacheId, out _));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.RefreshCacheItem))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void RefreshCacheItem()
+	{
+		var key = this._cacheId + "_refresh";
+		this._cache.AddCacheItem(key, this.PersonRef01, TimeSpan.FromMinutes(10));
+
+		this.Consume(this._cache.RefreshCacheItem(key, TimeSpan.FromMinutes(20)));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.RemoveCacheItemBatch))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void RemoveCacheItemBatch()
+	{
+		this._cache.AddCacheItemBatch(this._batchItems);
+
+		this.Consume(this._cache.RemoveCacheItemBatch(this._batchKeys));
+	}
+
+	[Benchmark(Description = nameof(InMemoryCache.ResetStatistics))]
+	[BenchmarkCategory(Categories.Collections)]
+	public void ResetStatistics()
+	{
+		_ = this._cache.TryGetValue<Person>(this._cacheId, out _);
+		_ = this._cache.TryGetValue<Person>(this._cacheId + "_missing", out _);
+
+		this._cache.ResetStatistics();
+		this.Consume(this._cache.GetCacheStatistics());
 	}
 
 	public override void Setup()
@@ -359,12 +561,20 @@ public class InMemoryCacheBenchmark : LargeCollectionBenchmark
 		this._personRefArray = this.GetPersonRefArray();
 		this._personRecordArray = this.GetPersonRecordArray();
 		this._cache = InMemoryCache.Instance;
-		this._cache.AddCacheItem(this.PersonRef01.Id, this.PersonRef01);
 		this._cacheId = this.PersonRef01.Id;
+		this._dependencyKey = $"{this._cacheId}_dependency";
+		this._batchItems = new Dictionary<string, Person>(this._personRefArray.Length);
+		this._batchKeys = new string[this._personRefArray.Length];
+		this._cache.AddCacheItem(this._cacheId, this.PersonRef01);
 
-		foreach (var item in this._personRefArray)
+		for (var arrayIndex = 0; arrayIndex < this._personRefArray.Length; arrayIndex++)
 		{
-			this._cache.AddCacheItem(item.Email, item);
+			var person = this._personRefArray[arrayIndex];
+			this._cache.AddCacheItem(person.Email, person);
+
+			var batchKey = person.Id + "_batch";
+			this._batchKeys[arrayIndex] = batchKey;
+			this._batchItems[batchKey] = person;
 		}
 	}
 

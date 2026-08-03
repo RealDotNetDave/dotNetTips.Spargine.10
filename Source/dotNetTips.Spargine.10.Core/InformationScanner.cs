@@ -36,7 +36,7 @@ public static class InformationScanner
 	/// <returns>Enumeration of InformationMetadata items for each annotated member.</returns>
 	[RequiresUnreferencedCode("Scans assembly types and members via reflection; trimming may remove members required by consumers.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<InformationMetadata> GetInformationMetadata([AllowNull] Assembly? assembly = null)
 	{
 		assembly ??= Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();

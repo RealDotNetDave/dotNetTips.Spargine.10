@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-01-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-15-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="BarCodeGenerator.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -56,7 +56,7 @@ public static class BarcodeGenerator
 	/// <returns>A pipe-delimited barcode string with an appended HMAC signature.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="ticketId"/>, <paramref name="performanceId"/>, <paramref name="issuer"/>, or <paramref name="kid"/> is null or empty.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="key"/> length or <paramref name="macLenBytes"/> is out of range.</exception>
-	[Information(nameof(BuildHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(BuildHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string BuildHmacBarcode(string ticketId, string performanceId, DateTimeOffset expiresUtc, string issuer, byte[] key, string kid, int macLenBytes = DefaultMacLenBytes)
 	{
 		ticketId = ticketId.ArgumentNotNullOrEmpty();
@@ -86,7 +86,7 @@ public static class BarcodeGenerator
 	/// <param name="maxSkew">Optional maximum clock skew tolerance added to the current time.</param>
 	/// <param name="pastExpiryGrace">Optional grace period added to the expiry time for recently-expired barcodes.</param>
 	/// <returns><see langword="true"/> if the barcode is valid; otherwise, <see langword="false"/>.</returns>
-	[Information(nameof(ValidateHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.None, Status = Status.Available)]
+	[Information(nameof(ValidateHmacBarcode), "David McCarter", "04/01/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ValidateHmacBarcode(string barcode, IReadOnlyDictionary<string, byte[]> keysByKid, out Dictionary<string, string> fields, int macLenBytes = DefaultMacLenBytes, TimeSpan? maxSkew = null, TimeSpan? pastExpiryGrace = null)
 	{
 		fields = new(StringComparer.OrdinalIgnoreCase);

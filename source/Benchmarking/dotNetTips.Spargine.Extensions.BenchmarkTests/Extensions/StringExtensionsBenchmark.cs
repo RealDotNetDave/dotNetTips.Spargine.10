@@ -4,7 +4,7 @@
 // Created          : 08-03-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 06-10-2026
+// Last Modified On : 08-03-2026
 // ***********************************************************************
 // <copyright file="StringExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -41,6 +41,7 @@ public class StringExtensionsBenchmark : Benchmark
 	private readonly string _delimitedString = RandomData.GenerateWords(100).ToDelimitedString();
 	private readonly string _domainAddress = "www.dotnettips.com";
 	private readonly string _emailAddress = RandomData.GenerateEmailAddress();
+	private readonly object?[] _formatArgs = ["David", 42, 123.45M];
 	private readonly string _hashCode = RandomData.GenerateWord(100).ComputeHash();
 	private readonly string _isbn = "0525505997";
 	private readonly string _nullTestString = null!;
@@ -200,6 +201,24 @@ public class StringExtensionsBenchmark : Benchmark
 	{
 		var input = "Hello World";
 		var result = input.FastReplace("Hello", "Googbye");
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.FormatCurrentCulture))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void FormatCurrentCulture()
+	{
+		var result = "Name: {0}, Age: {1}, Score: {2}".FormatCurrentCulture(this._formatArgs);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.FormatInvariant))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void FormatInvariant()
+	{
+		var result = "Name: {0}, Age: {1}, Score: {2}".FormatInvariant(this._formatArgs);
 
 		this.Consume(result);
 	}
@@ -418,6 +437,15 @@ public class StringExtensionsBenchmark : Benchmark
 	public void IsValidString()
 	{
 		var result = this.LongTestString.IsValidString();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(StringExtensions.JoinFormatted))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void JoinFormatted()
+	{
+		var result = "{0}".JoinFormatted(" | ", this._formatArgs);
 
 		this.Consume(result);
 	}
