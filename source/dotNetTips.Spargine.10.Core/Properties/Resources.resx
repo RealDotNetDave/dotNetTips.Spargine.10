@@ -117,7 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="AESDecryptionFailed" xml:space="preserve">
     <value>AES Decryption Failed.</value>
   </data>
@@ -151,6 +150,7 @@
   <data name="ComparerHashcodeCannotBeNull" xml:space="preserve">
     <value>Comparer hashcode cannot be null.</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CountryPhonePostalInfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CountryPhonePostalInfo.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -333,5 +333,8 @@
   </data>
   <data name="UserUnknown" xml:space="preserve">
     <value>UNKNOWN</value>
+  </data>
+  <data name="TheOperationCouldNotBeQueuedToTheThreadPool" xml:space="preserve">
+    <value>The operation could not be queued to the thread pool.</value>
   </data>
 </root>

@@ -16,6 +16,7 @@
 
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Benchmarking.Configs;
 using DotNetTips.Spargine.Core.Security;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -23,6 +24,7 @@ using DotNetTips.Spargine.Core.Security;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
 [MemoryDiagnoser]
+[Config(typeof(ReturnValueColumnConfig))]
 public class BarCodeGeneratorBenchmark : Benchmark
 {
 	private const string Issuer = "dotNetTips";

@@ -638,6 +638,15 @@ namespace DotNetTips.Spargine.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The operation could not be queued to the thread pool..
+        /// </summary>
+        internal static string TheOperationCouldNotBeQueuedToTheThreadPool {
+            get {
+                return ResourceManager.GetString("TheOperationCouldNotBeQueuedToTheThreadPool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The property &apos;Request&apos; could not be found on the type &apos;System.Net.Http.DiagnosticsHandler+ActivityStartData&apos;..
         /// </summary>
         internal static string ThePropertyRequestCouldNotBeFoundOnTheType {

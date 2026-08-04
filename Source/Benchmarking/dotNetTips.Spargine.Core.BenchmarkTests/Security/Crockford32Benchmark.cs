@@ -16,6 +16,7 @@
 using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Benchmarking.Configs;
 using DotNetTips.Spargine.Core.Security;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -23,21 +24,22 @@ using DotNetTips.Spargine.Core.Security;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Security;
 
 [MemoryDiagnoser]
+[Config(typeof(ReturnValueColumnConfig))]
 public class Crockford32Benchmark : Benchmark
 {
 	private byte[] _data = Array.Empty<byte>();
 	private string _encoded = string.Empty;
 
 	[Benchmark(Description = nameof(Crockford32.Decode))]
-	public byte[] Decode()
+	public int Decode()
 	{
-		return Crockford32.Decode(this._encoded);
+		return Crockford32.Decode(this._encoded).Length;
 	}
 
 	[Benchmark(Description = nameof(Crockford32.Encode))]
-	public string Encode()
+	public int Encode()
 	{
-		return Crockford32.Encode(this._data);
+		return Crockford32.Encode(this._data).Length;
 	}
 
 	public override void Setup()
