@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260725-161323</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260804-170323</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -53,9 +53,17 @@
 <table><tbody>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark.Decode()</th><th></th></tr>
 <tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx+1A0]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>jmp       qword ptr [7FF8AC04E508]; DotNetTips.Spargine.Core.Security.Crockford32.Decode(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E400]; DotNetTips.Spargine.Core.Security.Crockford32.Decode(System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       eax,[rax+8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Core.Security.Crockford32.Decode(System.String)</th><th></th></tr>
 <tr class="">
@@ -89,7 +97,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>vmovdqa   xmmword ptr [rbp+30],xmm4</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,28FB5EB976E7</pre></code></td>
+<td></td><td><pre><code>mov       rax,33AB87EDD2BD</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp],rax</pre></code></td>
 </tr><tr class="">
@@ -100,7 +108,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8AC045968]; System.String.IsNullOrWhiteSpace(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC358D8]; System.String.IsNullOrWhiteSpace(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
@@ -160,7 +168,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8AC04E580]; DotNetTips.Spargine.Core.Security.Crockford32.NormalizeChars(System.String, System.Span`1<Char>)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E478]; DotNetTips.Spargine.Core.Security.Crockford32.NormalizeChars(System.String, System.Span`1<Char>)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ebx,eax</pre></code></td>
 </tr><tr class="">
@@ -188,17 +196,17 @@
 </tr><tr class="">
 <td></td><td><pre><code>vcvtsi2sd xmm0,xmm0,eax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vmulsd    xmm0,xmm0,qword ptr [7FF8ABABD900]</pre></code></td>
+<td></td><td><pre><code>vmulsd    xmm0,xmm0,qword ptr [7FFECC6ABF00]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vroundsd  xmm0,xmm0,xmm0,9</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8ABA25938]; System.Math.ConvertToInt32Checked(Double)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECC615938]; System.Math.ConvertToInt32Checked(Double)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,r13</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8AC04E598]; System.Collections.Generic.List`1[[System.Byte, System.Private.CoreLib]]..ctor(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E490]; System.Collections.Generic.List`1[[System.Byte, System.Private.CoreLib]]..ctor(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>		for (var index = 0; index < nc; index++)
 		     ^^^^^^^^^^^^^</pre></code></td>
@@ -217,9 +225,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,r13</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8AC04E5E0]; System.Collections.Generic.List`1[[System.Byte, System.Private.CoreLib]].ToArray()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E4D8]; System.Collections.Generic.List`1[[System.Byte, System.Private.CoreLib]].ToArray()</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r8,28FB5EB976E7</pre></code></td>
+<td></td><td><pre><code>mov       r8,33AB87EDD2BD</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rbp],r8</pre></code></td>
 </tr><tr class="evenMap">
@@ -260,14 +268,14 @@
 <td id="2_M01_L04" class="label" data-label="2_M01_L04"><pre><code>M01_L04</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>test      byte ptr [7FF8ABDFD368],1</pre></code></td>
+<td></td><td><pre><code>test      byte ptr [7FFECC9FD368],1</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L12"><a href="#2_M01_L12"><pre><code>je        near ptr M01_L12</pre></code></a></td>
 </tr><tr class="">
 <td id="2_M01_L05" class="label" data-label="2_M01_L05"><pre><code>M01_L05</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rcx,1D960C01EB0</pre></code></td>
+<td></td><td><pre><code>mov       rcx,2E3F6401EB0</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
@@ -291,7 +299,7 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,r13</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8AC04E5B0]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E4A8]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>				bitsLeft -= 8;
 				^^^^^^^^^^^^^^</pre></code></td>
@@ -394,9 +402,9 @@
 <td id="2_M01_L10" class="label" data-label="2_M01_L10"><pre><code>M01_L10</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rax,219F5D162A0</pre></code></td>
+<td></td><td><pre><code>mov       rax,3248B2162A0</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       r8,28FB5EB976E7</pre></code></td>
+<td></td><td><pre><code>mov       r8,33AB87EDD2BD</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>cmp       [rbp],r8</pre></code></td>
 </tr><tr class="evenMap">
@@ -436,7 +444,7 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,offset MT_DotNetTips.Spargine.Core.Security.Crockford32</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8ABA25728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECC615728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L05"><a href="#2_M01_L05"><pre><code>jmp       near ptr M01_L05</pre></code></a></td>
 </tr><tr class="evenMap">
@@ -452,7 +460,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8d,1</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8ABC44E70]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler..ctor(Int32, Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECC834E70]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler..ctor(Int32, Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ecx,[rbp+28]</pre></code></td>
 </tr><tr class="">
@@ -474,11 +482,11 @@
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M01_L14"><a href="#2_M01_L14"><pre><code>jb        short M01_L14</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>vmovups   ymm0,[7FF8ABABD920]</pre></code></td>
+<td></td><td><pre><code>vmovups   ymm0,[7FFECC6ABF20]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vmovups   [rdx],ymm0</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>vmovups   xmm0,[7FF8ABABD940]</pre></code></td>
+<td></td><td><pre><code>vmovups   xmm0,[7FFECC6ABF40]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>vmovups   [rdx+20],xmm0</pre></code></td>
 </tr><tr class="">
@@ -497,9 +505,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,219F5D20AF8</pre></code></td>
+<td></td><td><pre><code>mov       rdx,3248B220AF8</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8AC047F00]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC37E28]</pre></code></td>
 </tr><tr class="">
 <td id="2_M01_L15" class="label" data-label="2_M01_L15"><pre><code>M01_L15</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -508,7 +516,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,[rbp+44]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8AC0460D0]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[[System.Char, System.Private.CoreLib]](Char)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC35FF8]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[[System.Char, System.Private.CoreLib]](Char)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       ecx,[rbp+28]</pre></code></td>
 </tr><tr class="">
@@ -519,7 +527,7 @@
 <td id="2_M01_L16" class="label" data-label="2_M01_L16"><pre><code>M01_L16</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8ABB97198]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECC787198]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>int       3</pre></code></td>
 </tr><tr class="">
@@ -555,9 +563,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>lea       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,219F5D20B48</pre></code></td>
+<td></td><td><pre><code>mov       rdx,3248B220B48</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FF8AC047F00]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC37E28]</pre></code></td>
 </tr><tr class="">
 <td id="2_M01_L19" class="label" data-label="2_M01_L19"><pre><code>M01_L19</pre></code></td>
 <td>&nbsp;</td></tr>
@@ -570,13 +578,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8ABC44EA0]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECC834EA0]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,r13</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FF8AC04E5C8]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFECCC3E4C0]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,r13</pre></code></td>
 </tr><tr class="">

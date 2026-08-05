@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-04-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -21,6 +21,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.Core.BenchmarkTests.Security;
+using DotNetTips.Spargine.Core.BenchmarkTests.Threading;
 using Perfolizer.Horology;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -46,7 +47,7 @@ internal sealed class Program
 		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		BenchmarkHelper.RunBenchmarks(config, true, typeof(BarCodeGeneratorBenchmark), typeof(Crockford32Benchmark));
+		BenchmarkHelper.RunBenchmarks(config, true, typeof(BarCodeGeneratorBenchmark), typeof(Crockford32Benchmark), typeof(ThreadPoolHelperBenchmark));
 
 	}
 }

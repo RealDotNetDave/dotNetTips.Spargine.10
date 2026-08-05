@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 08-04-2026
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 08-04-2026
 // ***********************************************************************
 // <copyright file="ThreadPoolHelper.cs" company="dotNetTips.com - McCarter Consulting">
@@ -37,7 +37,7 @@ public static class ThreadPoolHelper
 	/// Gets a point-in-time snapshot of the managed thread pool statistics.
 	/// </summary>
 	/// <returns>A <see cref="ThreadPoolStatistics" /> value containing the current thread pool metrics.</returns>
-	[Information(nameof(GetStatistics), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetStatistics), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static ThreadPoolStatistics GetStatistics()
 	{
 		ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
@@ -68,7 +68,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when the operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.None, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<TResult> RunAsync<TResult>([DisallowNull] Func<CancellationToken, TResult> operation, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operation = operation.ArgumentNotNull();
@@ -93,7 +93,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when any operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<TResult[]> RunAsync<TResult>([DisallowNull] IReadOnlyCollection<Func<CancellationToken, TResult>> operations, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operations = operations.ArgumentNotNull();
@@ -137,7 +137,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when the operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<TResult> RunAsync<TResult>([DisallowNull] Func<CancellationToken, Task<TResult>> operation, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operation = operation.ArgumentNotNull();
@@ -161,7 +161,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when the operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task RunAsync([DisallowNull] Action<CancellationToken> operation, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operation = operation.ArgumentNotNull();
@@ -169,7 +169,7 @@ public static class ThreadPoolHelper
 
 		cancellationToken.ThrowIfCancellationRequested();
 
-		var operationTask = RunOnThreadPoolAsync<bool>(token =>
+		var operationTask = RunOnThreadPoolAsync(token =>
 		{
 			operation(token);
 			return true;
@@ -191,7 +191,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxDegreeOfParallelism" /> or <paramref name="millisecondsTimeOut" /> is out of range.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when any operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(RunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<TResult[]> RunAsync<TResult>([DisallowNull] IReadOnlyCollection<Func<CancellationToken, TResult>> operations, int maxDegreeOfParallelism, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operations = operations.ArgumentNotNull();
@@ -244,7 +244,7 @@ public static class ThreadPoolHelper
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000, or when <paramref name="operations" /> is empty.</exception>
 	/// <exception cref="InvalidOperationException">Thrown when any operation cannot be queued to the thread pool.</exception>
 	/// <exception cref="OperationCanceledException">Thrown when the <paramref name="cancellationToken" /> is canceled.</exception>
-	[Information(nameof(RunWhenAnyAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(RunWhenAnyAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<TResult> RunWhenAnyAsync<TResult>([DisallowNull] IReadOnlyCollection<Func<CancellationToken, TResult>> operations, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operations = operations.ArgumentNotNull();
@@ -277,7 +277,7 @@ public static class ThreadPoolHelper
 	/// <returns>A task that contains a <see cref="SimpleResult{T}" /> describing success (with the value) or failure (with the exception).</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="operation" /> is <see langword="null" />.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
-	[Information(nameof(TryRunAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(TryRunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
 	public static async Task<SimpleResult<TResult>> TryRunAsync<TResult>([DisallowNull] Func<CancellationToken, TResult> operation, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operation = operation.ArgumentNotNull();
