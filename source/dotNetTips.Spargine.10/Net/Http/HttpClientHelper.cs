@@ -4,7 +4,7 @@
 // Created          : 01-11-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Net.Http;
 /// to be used statically, with a shared instance of <see cref="HttpClient"/> that is configured with a default timeout value. This approach helps to
 /// avoid the common pitfalls associated with managing the lifecycle of <see cref="HttpClient"/> instances.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineHttpClientExtensions")]
 public static class HttpClientHelper
 {
 

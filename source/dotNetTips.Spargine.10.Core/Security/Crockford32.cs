@@ -4,7 +4,7 @@
 // Created          : 05-14-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-11-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="Crockford32.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Security;
 /// to produce human-readable, case-insensitive, URL-safe encoded strings.
 /// Ambiguous characters (I, L → 1; O → 0) are automatically normalized during decoding.
 /// </summary>
-[Information(nameof(Crockford32), Status = Status.NeedsDocumentation)]
+[Information(nameof(Crockford32), Status = Status.Available, Documentation = "NEEDS URL")]
 public static class Crockford32
 {
 	private const string Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
