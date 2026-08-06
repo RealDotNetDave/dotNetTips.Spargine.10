@@ -4,7 +4,7 @@
 // Created          : 07-08-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="FileInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,7 @@ public static class FileInfoExtensions
 	/// <param name="content">The content to write.</param>
 	/// <param name="encoding">The text encoding to use. Defaults to UTF-8.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="file"/> or <paramref name="content"/> is null.</exception>
-	[Information(nameof(CreateTempFileThenMove), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(CreateTempFileThenMove), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void CreateTempFileThenMove([DisallowNull] this FileInfo file, [DisallowNull] string content, Encoding? encoding = null)
 	{
 		file = file.ArgumentNotNull();
@@ -77,7 +77,7 @@ public static class FileInfoExtensions
 	/// <returns>The file contents, or <paramref name="fallback"/> when unavailable.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="file"/> is null.</exception>
 	[Pure]
-	[Information(nameof(ReadAllTextSafe), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ReadAllTextSafe), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ReadAllTextSafe([DisallowNull] this FileInfo file, string fallback = "", Encoding? encoding = null)
 	{
 		file = file.ArgumentNotNull();
@@ -103,7 +103,7 @@ public static class FileInfoExtensions
 	/// <param name="content">The content to write.</param>
 	/// <param name="encoding">The text encoding to use. Defaults to UTF-8.</param>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="file"/> or <paramref name="content"/> is null.</exception>
-	[Information(nameof(WriteAllTextAtomic), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(WriteAllTextAtomic), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void WriteAllTextAtomic([DisallowNull] this FileInfo file, [DisallowNull] string content, Encoding? encoding = null)
 	{
 		file = file.ArgumentNotNull();

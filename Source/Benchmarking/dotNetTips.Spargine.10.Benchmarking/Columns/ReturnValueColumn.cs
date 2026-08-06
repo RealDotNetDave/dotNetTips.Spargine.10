@@ -4,7 +4,7 @@
 // Created          : 08-03-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-03-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="ReturnValueColumn.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Benchmarking.Columns
 	/// invoke the workload method, and then execute <c>Cleanup</c>. If a return value
 	/// cannot be resolved safely, <c>N/A</c> is displayed.
 	/// </remarks>
-	[Information(nameof(ReturnValueColumn), Status = Status.New)]
+	[Information(nameof(ReturnValueColumn), Status = Status.Available)]
 	public sealed class ReturnValueColumn : IColumn
 	{
 		private const string NotAvailable = "N/A";

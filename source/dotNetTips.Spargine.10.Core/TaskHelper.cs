@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-25-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="TaskHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -54,7 +54,7 @@ public static class TaskHelper
 	/// TaskHelper.RunSync(() =&gt; SomeType.FireValueAsync());
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static void RunSync([DisallowNull] Func<ValueTask> taskFunction)
 	{
 		taskFunction = taskFunction.ArgumentNotNull();
@@ -103,7 +103,7 @@ public static class TaskHelper
 	/// var result = TaskHelper.RunSync(() =&gt; SomeType.CalculateValueAsync(), cancelToken);
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(RunSync), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TResult RunSync<TResult>([DisallowNull] this Func<ValueTask<TResult>> taskFunction)
 	{
 		taskFunction = taskFunction.ArgumentNotNull();

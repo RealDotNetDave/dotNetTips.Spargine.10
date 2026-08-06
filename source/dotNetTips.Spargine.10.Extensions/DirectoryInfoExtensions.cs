@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
 /// safely skipping files that raise <see cref="IOException" />.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class DirectoryInfoExtensions
 {
 	/// <summary>
@@ -45,7 +45,7 @@ public static class DirectoryInfoExtensions
 	/// <param name="encoding">The text encoding to use. Defaults to UTF-8.</param>
 	/// <returns>The destination <see cref="FileInfo"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directory"/>, <paramref name="destinationFileName"/>, or <paramref name="content"/> is null.</exception>
-	[Information(nameof(CreateTempFileThenMove), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(CreateTempFileThenMove), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static FileInfo CreateTempFileThenMove([DisallowNull] this DirectoryInfo directory, [DisallowNull] string destinationFileName, [DisallowNull] string content, Encoding? encoding = null)
 	{
 		directory = directory.ArgumentNotNull();
@@ -108,7 +108,7 @@ public static class DirectoryInfoExtensions
 	/// <returns>The file contents, or <paramref name="fallback"/> when unavailable.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directory"/> or <paramref name="fileName"/> is null.</exception>
 	[Pure]
-	[Information(nameof(ReadAllTextSafe), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ReadAllTextSafe), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string ReadAllTextSafe([DisallowNull] this DirectoryInfo directory, [DisallowNull] string fileName, string fallback = "", Encoding? encoding = null)
 	{
 		directory = directory.ArgumentNotNull();
@@ -127,7 +127,7 @@ public static class DirectoryInfoExtensions
 	/// <param name="encoding">The text encoding to use. Defaults to UTF-8.</param>
 	/// <returns>The destination <see cref="FileInfo"/>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directory"/>, <paramref name="fileName"/>, or <paramref name="content"/> is null.</exception>
-	[Information(nameof(WriteAllTextAtomic), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(WriteAllTextAtomic), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static FileInfo WriteAllTextAtomic([DisallowNull] this DirectoryInfo directory, [DisallowNull] string fileName, [DisallowNull] string content, Encoding? encoding = null)
 	{
 		directory = directory.ArgumentNotNull();

@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides cached access to parsed <see cref="CompositeFormat"/> instances.
 /// </summary>
-[Information(Status = Status.New)]
+[Information(Status = Status.Available)]
 internal static class CompositeFormatCache
 {
 	private static readonly ConcurrentDictionary<string, CompositeFormat> _cache = new(StringComparer.Ordinal);
@@ -33,7 +33,7 @@ internal static class CompositeFormatCache
 	/// <returns>The cached <see cref="CompositeFormat"/> instance.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="format"/> is <see langword="null"/>.</exception>
 	/// <exception cref="ArgumentException">Thrown when <paramref name="format"/> is empty or whitespace.</exception>
-	[Information(nameof(GetOrAdd), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetOrAdd), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	internal static CompositeFormat GetOrAdd([DisallowNull] string format)
 	{
 		format = format.ArgumentNotNullOrEmpty();

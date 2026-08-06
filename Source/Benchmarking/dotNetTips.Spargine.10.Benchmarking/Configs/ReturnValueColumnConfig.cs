@@ -4,7 +4,7 @@
 // Created          : 08-03-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-03-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="ReturnValueColumnConfig.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -24,7 +24,7 @@ namespace DotNetTips.Spargine.Benchmarking.Configs;
 /// Provides a <see cref="ManualConfig"/> that adds the <see cref="ReturnValueColumn"/>
 /// to BenchmarkDotNet output.
 /// </summary>
-[Information(nameof(ReturnValueColumnConfig), Status = Status.New)]
+[Information(nameof(ReturnValueColumnConfig), Status = Status.NeedsDocumentation)]
 public sealed class ReturnValueColumnConfig : ManualConfig
 {
 	/// <summary>

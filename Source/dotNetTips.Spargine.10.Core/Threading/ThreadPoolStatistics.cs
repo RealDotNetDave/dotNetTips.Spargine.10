@@ -25,5 +25,5 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// <param name="MinCompletionPortThreads">The minimum number of asynchronous I/O threads the thread pool creates on demand.</param>
 /// <param name="MaxCompletionPortThreads">The maximum number of asynchronous I/O threads in the thread pool.</param>
 /// <param name="AvailableCompletionPortThreads">The number of additional asynchronous I/O threads that can be started.</param>
-[Information(description: nameof(ThreadPoolStatistics), Status = Status.New)]
+[Information(description: nameof(ThreadPoolStatistics), Status = Status.NeedsDocumentation)]
 public readonly record struct ThreadPoolStatistics(int ThreadCount, long PendingWorkItemCount, long CompletedWorkItemCount, int MinWorkerThreads, int MaxWorkerThreads, int AvailableWorkerThreads, int MinCompletionPortThreads, int MaxCompletionPortThreads, int AvailableCompletionPortThreads);
