@@ -4,7 +4,7 @@
 // Created          : 06-18-2022
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="NetworkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// Provides helper methods for network-related operations.
 /// </summary>
 [SupportedOSPlatform("windows")]
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineNetworkHelper")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNetworkHelper")]
 public static class NetworkHelper
 {
 

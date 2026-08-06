@@ -37,8 +37,9 @@ namespace DotNetTips.Spargine.Extensions;
 /// generating hash codes for arrays, removing elements, and more. These methods are designed to be efficient and
 /// are optimized for performance where applicable.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineArrayExtensions")]
-public static class ArrayExtensions
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineArrayExtensions")]
+public static class
+	ArrayExtensions
 {
 	/// <summary>
 	/// Provides extension methods for <see cref="byte"/> arrays.

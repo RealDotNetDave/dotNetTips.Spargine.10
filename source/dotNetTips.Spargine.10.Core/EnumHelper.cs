@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-13-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Core;
 /// Provides utility methods for working with enumerations, such as converting between names and values,
 /// adjusting naming conventions, and extracting metadata. This class cannot be inherited.
 /// </summary>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineEnumHandling")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineEnumHandling")]
 public static partial class EnumHelper
 {
 	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();

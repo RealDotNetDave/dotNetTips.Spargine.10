@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -36,17 +36,9 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for .NET numeric types that supplement the built-in numeric APIs.
 /// </summary>
-/// <remarks>
-/// Methods are grouped by purpose:
-/// <list type="bullet">
-/// <item><description><b>Arithmetic helpers:</b> <c>Average</c> (for <c>int</c>, <c>long</c>, <c>double</c>, <c>decimal</c>).</description></item>
-/// <item><description><b>Bounds clamping:</b> <c>Decrement</c>, <c>Increment</c>, <c>EnsureMinimum</c>, <c>ToPositiveValue</c>.</description></item>
-/// <item><description><b>Range and parity checks:</b> <c>IsInRange</c>, <c>IsInRangeThrowsException</c>, <c>IsInterval</c>, <c>IsIntervalThrowsException</c>, <c>IsEven</c>, <c>IsNegative</c>.</description></item>
-/// <item><description><b>Formatting:</b> <c>FormatSize</c> (bytes to KB/MB/GB/…), <c>FormatTime</c>, <c>MillisecondsToString</c>, <c>ToFormattedString</c>, <c>ToStringOrEmpty</c>.</description></item>
-/// <item><description><b>Conversion:</b> <c>BytesToMegabytes</c>, <c>RoundToPowerOf2</c>, <c>ToRomanNumeral</c>, <c>ToWords</c>.</description></item>
-/// </list>
-/// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineNumericExtensions")]
+/// <remarks>Methods are grouped by purpose:
+/// <list type="bullet"><item><description><b>Arithmetic helpers:</b><c>Average</c> (for <c>int</c>, <c>long</c>, <c>double</c>, <c>decimal</c>).</description></item><item><description><b>Bounds clamping:</b><c>Decrement</c>, <c>Increment</c>, <c>EnsureMinimum</c>, <c>ToPositiveValue</c>.</description></item><item><description><b>Range and parity checks:</b><c>IsInRange</c>, <c>IsInRangeThrowsException</c>, <c>IsInterval</c>, <c>IsIntervalThrowsException</c>, <c>IsEven</c>, <c>IsNegative</c>.</description></item><item><description><b>Formatting:</b><c>FormatSize</c> (bytes to KB/MB/GB/…), <c>FormatTime</c>, <c>MillisecondsToString</c>, <c>ToFormattedString</c>, <c>ToStringOrEmpty</c>.</description></item><item><description><b>Conversion:</b><c>BytesToMegabytes</c>, <c>RoundToPowerOf2</c>, <c>ToRomanNumeral</c>, <c>ToWords</c>.</description></item></list></remarks>
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineNumericExtensions")]
 public static class NumericExtensions
 {
 
@@ -72,7 +64,7 @@ public static class NumericExtensions
 		new(() => new DefaultObjectPoolProvider().CreateStringBuilderPool());
 
 	/// <summary>
-	/// Word names for tens values (0, 10, 20, … 90), used by <see cref="ToWords"/>.
+	/// Word names for tens values (0, 10, 20, … 90), used by <see cref="ToWords" />.
 	/// Declared as a static field to avoid re-allocation on every (recursive) call.
 	/// </summary>
 	private static readonly string[] _toWordsTens =
@@ -82,7 +74,7 @@ public static class NumericExtensions
 	];
 
 	/// <summary>
-	/// Word names for values 0–19, used by <see cref="ToWords"/>.
+	/// Word names for values 0–19, used by <see cref="ToWords" />.
 	/// Declared as a static field to avoid re-allocation on every (recursive) call.
 	/// </summary>
 	private static readonly string[] _toWordsUnits =
@@ -153,16 +145,16 @@ public static class NumericExtensions
 	}
 
 	/// <summary>
-	/// Clamps an <see cref="int"/> to the inclusive range defined by <paramref name="minimum"/> and <paramref name="maximum"/>.
+	/// Clamps an <see cref="int" /> to the inclusive range defined by <paramref name="minimum" /> and <paramref name="maximum" />.
 	/// </summary>
 	/// <param name="value">The value to clamp.</param>
 	/// <param name="minimum">The inclusive lower bound.</param>
 	/// <param name="maximum">The inclusive upper bound.</param>
 	/// <returns>The clamped value.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum"/> is greater than <paramref name="maximum"/>.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum" /> is greater than <paramref name="maximum" />.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int Clamp(this int value, int minimum, int maximum)
 	{
 		if (minimum > maximum)
@@ -723,15 +715,15 @@ public static class NumericExtensions
 	}
 
 	/// <summary>
-	/// Rounds an <see cref="int"/> to the nearest multiple of <paramref name="multiple"/> using midpoint rounding away from zero.
+	/// Rounds an <see cref="int" /> to the nearest multiple of <paramref name="multiple" /> using midpoint rounding away from zero.
 	/// </summary>
 	/// <param name="value">The value to round.</param>
 	/// <param name="multiple">The multiple to round to. Must be greater than zero.</param>
 	/// <returns>The rounded value.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple"/> is less than or equal to zero.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple" /> is less than or equal to zero.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int RoundToNearestMultiple(this int value, int multiple)
 	{
 		if (multiple <= 0)
@@ -1134,39 +1126,39 @@ public static class NumericExtensions
 	}
 
 	/// <summary>
-	/// Attempts to parse an <see cref="int"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// Attempts to parse an <see cref="int" /> from a <see cref="ReadOnlySpan{T}" /> using invariant culture.
 	/// </summary>
 	/// <param name="input">The input span to parse.</param>
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out int value)
 	{
 		return int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out value);
 	}
 
 	/// <summary>
-	/// Attempts to parse a <see cref="double"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// Attempts to parse a <see cref="double" /> from a <see cref="ReadOnlySpan{T}" /> using invariant culture.
 	/// </summary>
 	/// <param name="input">The input span to parse.</param>
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out double value)
 	{
 		return double.TryParse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out value);
 	}
 
 	/// <summary>
-	/// Attempts to parse a <see cref="decimal"/> from a <see cref="ReadOnlySpan{T}"/> using invariant culture.
+	/// Attempts to parse a <see cref="decimal" /> from a <see cref="ReadOnlySpan{T}" /> using invariant culture.
 	/// </summary>
 	/// <param name="input">The input span to parse.</param>
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out decimal value)
 	{
 		return decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value);

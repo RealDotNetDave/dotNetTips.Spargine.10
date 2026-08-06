@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Net.Http;
 /// to be used statically, with a shared instance of <see cref="HttpClient"/> that is configured with a default timeout value. This approach helps to
 /// avoid the common pitfalls associated with managing the lifecycle of <see cref="HttpClient"/> instances.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation)]
+[Information(Status = Status.NeedsDocumentation)]
 public static class HttpClientHelper
 {
 

@@ -3,15 +3,13 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="StreamExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Extension methods for <c>Stream</c> providing pooled async I/O helpers and flush-and-close operations.
-// </summary>
+// <summary>Extension methods for <c>Stream</c> providing pooled async I/O helpers and flush-and-close operations.</summary>
 // ***********************************************************************
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
@@ -25,7 +23,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <summary>
 /// Provides extension methods for <c>Stream</c> covering pooled async I/O and flush-and-close operations.
 /// </summary>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", Status = Status.UpdateDocumentation)]
+[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", Status = Status.Available)]
 public static class StreamExtensions
 {
 	private const int DefaultCopyBufferSize = 81920;

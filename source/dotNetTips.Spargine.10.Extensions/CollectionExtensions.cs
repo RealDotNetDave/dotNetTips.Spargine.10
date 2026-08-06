@@ -38,7 +38,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// They include features such as adding items conditionally, ensuring items are unique before adding them, and converting collections to different types.
 /// These utilities can significantly reduce boilerplate code and improve performance in scenarios involving collection manipulation.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineCollectionExtensions")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineCollectionExtensions")]
 public static class CollectionExtensions
 {
 
@@ -307,7 +307,7 @@ public static class CollectionExtensions
 		/// <returns>The count of items actually added.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(AddRangeIfNotExists), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
 		{
 			items = items.ArgumentNotNull();
@@ -335,7 +335,7 @@ public static class CollectionExtensions
 		/// <returns>The count of items removed.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="match"/> is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveWhere), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(RemoveWhere), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int RemoveWhere([DisallowNull] Predicate<T> match)
 		{
 			match = match.ArgumentNotNull();
@@ -377,7 +377,7 @@ public static class CollectionExtensions
 		/// <returns><see langword="true"/> when a first item was found; otherwise <see langword="false"/>.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when the source sequence is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(TryGetFirst), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+		[Information(nameof(TryGetFirst), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool TryGetFirst([MaybeNullWhen(false)] out T first)
 		{
 			source = source.ArgumentNotNull();

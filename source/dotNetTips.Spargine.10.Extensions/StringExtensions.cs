@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 08-03-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// and performing manipulations like concatenation, extraction, and indentation. Methods favor ordinal comparisons,
 /// spans, pooled <see cref="StringBuilder"/> instances, and guard clauses for minimal GC pressure.
 /// </remarks>
-[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.UpdateDocumentation)]
+[Information(Documentation = "https://bit.ly/SpargineStringExtensions", Status = Status.Available)]
 public static class StringExtensions
 {
 	private const string UrlSeparator = "://";
@@ -545,7 +545,7 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatCurrentCulture([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -561,7 +561,7 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatInvariant([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -1205,7 +1205,7 @@ public static class StringExtensions
 	/// <param name="args">The values to format and join.</param>
 	/// <returns>A joined string of formatted values, or <see cref="string.Empty"/> when <paramref name="args"/> is empty.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string JoinFormatted([DisallowNull] this string format, [ConstantExpected] string delimiter = ControlChars.CommaSpace, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();

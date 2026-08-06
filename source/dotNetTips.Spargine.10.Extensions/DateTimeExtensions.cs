@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-15-2026
+// Last Modified On : 08-06-2026
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -43,7 +43,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// friendly and formatted string output, and UTC offset conversion.
 /// These methods are designed to simplify common date and time operations, making code more readable and efficient.
 /// </remarks>
-[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDateTimeExtensions")]
 public static class DateTimeExtensions
 {
 
@@ -56,7 +56,7 @@ public static class DateTimeExtensions
 	/// <returns>The clamped <see cref="DateTime"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum"/> is greater than <paramref name="maximum"/>.</exception>
 	[Pure]
-	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTime Clamp(this in DateTime value, in DateTime minimum, in DateTime maximum)
 	{
 		if (minimum > maximum)
@@ -74,7 +74,7 @@ public static class DateTimeExtensions
 	/// <returns>The final tick of the day (23:59:59.9999999).</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTime EndOfDay(this in DateTime value)
 	{
 		return value.Date.AddDays(1).AddTicks(-1);
@@ -413,7 +413,7 @@ public static class DateTimeExtensions
 	/// <returns>The rounded <see cref="DateTime"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple"/> is less than or equal to <see cref="TimeSpan.Zero"/>.</exception>
 	[Pure]
-	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTime RoundToNearestMultiple(this in DateTime value, in TimeSpan multiple)
 	{
 		if (multiple <= TimeSpan.Zero)
@@ -435,7 +435,7 @@ public static class DateTimeExtensions
 	/// <returns>The date at midnight.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTime StartOfDay(this in DateTime value) => value.Date;
 
 	/// <summary>
@@ -512,7 +512,7 @@ public static class DateTimeExtensions
 	/// <returns>The date component as a <see cref="DateOnly"/>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToDateOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToDateOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateOnly ToDateOnly(this in DateTime value) => DateOnly.FromDateTime(value);
 
 	/// <summary>
@@ -658,7 +658,7 @@ public static class DateTimeExtensions
 	/// <returns>The time component as a <see cref="TimeOnly"/>.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ToTimeOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(ToTimeOnly), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TimeOnly ToTimeOnly(this in DateTime value) => TimeOnly.FromDateTime(value);
 
 	/// <summary>
