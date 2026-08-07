@@ -11,4 +11,4 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 ```
 | Method                              | Mean         | Error      | StdDev     | StdErr   | Min          | Q1           | Median       | Q3           | Max          | Op/s    | CI99.9% Margin | Iterations | Baseline | Exceptions | Gen0   | Allocated |
 |------------------------------------ |-------------:|-----------:|-----------:|---------:|-------------:|-------------:|-------------:|-------------:|-------------:|--------:|---------------:|-----------:|--------- |-----------:|-------:|----------:|
-| GenerateMarkdownDocumentForAssembly | 242,018.3 ns | 1,953.1 ns | 1,826.9 ns | 471.7 ns | 238,238.7 ns | 240,601.3 ns | 242,014.7 ns | 243,514.9 ns | 244,333.2 ns | 4,131.9 |      -228.4 ns |      15.00 | No       |          - | 4.8828 | 167.59 KB |
+| GenerateMarkdownDocumentForAssembly | 251,282.0 ns | 2,627.2 ns | 2,328.9 ns | 622.4 ns | 248,399.8 ns | 249,539.9 ns | 250,950.6 ns | 253,004.7 ns | 254,971.8 ns | 3,979.6 |      -304.2 ns |      14.00 | No       |          - | 5.8594 | 173.15 KB |

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260725-171530</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260806-202609</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260725-171530</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260806-202609</th></tr>
 <tr>
 <th>CreateAndDispose .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
 </tr>
@@ -43,50 +43,50 @@ call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
 mov       [rbp-50],rdi
 cmp       byte ptr [rdi+18],0
-jne       short 00007FF8AC10612D
+jne       short 00007FFE2D30F6AD
 lea       rcx,[rbp-20]
-mov       rax,7FF9FF615F50
+mov       rax,7FFFACBD5F50
 call      rax
 mov       rax,[rbp-20]
 mov       rdi,[rbp-50]
 mov       [rdi+10],rax
 mov       byte ptr [rdi+18],1
-cmp       dword ptr [7FF90B954A90],0
-jne       near ptr 00007FF8AC1061CF
+cmp       dword ptr [7FFE8CB54A90],0
+jne       near ptr 00007FFE2D30F74F
 mov       rdi,[rbp-50]
 mov       [rbp-60],rdi
 mov       rsi,[rbp-48]
 mov       [rbp-58],rsi
 mov       rsi,[rdi+8]
 cmp       byte ptr [rdi+18],0
-je        short 00007FF8AC10616F
+je        short 00007FFE2D30F6EF
 lea       rcx,[rbp-28]
-mov       rax,7FF9FF615F50
+mov       rax,7FFFACBD5F50
 call      rax
 mov       rax,[rbp-28]
 mov       rdi,[rbp-50]
 sub       rax,[rdi+10]
 add       rsi,rax
-cmp       dword ptr [7FF90B954A90],0
-jne       short 00007FF8AC1061B9
+cmp       dword ptr [7FFE8CB54A90],0
+jne       short 00007FFE2D30F739
 vxorps    xmm0,xmm0,xmm0
 vcvtsi2sd xmm0,xmm0,rsi
 vcmpordsd xmm1,xmm0,xmm0
 vandpd    xmm1,xmm1,xmm0
 mov       rcx,7FFFFFFFFFFFFFFF
 vcvttsd2si rax,xmm1
-vucomisd  xmm0,qword ptr [7FF8AC106288]
+vucomisd  xmm0,qword ptr [7FFE2D30F808]
 cmovb     rcx,rax
 mov       [rbp-30],rcx
 mov       rbx,[rbp+10]
 mov       rcx,[rbx+88]
 cmp       [rcx],cl
 lea       rcx,[rbp-30]
-call      qword ptr [7FF8AC03E628]
-jmp       short 00007FF8AC1061C0
+call      qword ptr [7FFE2D24FEE8]
+jmp       short 00007FFE2D30F740
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8AC10616F
-call      00007FF8AC1061D9
+jmp       short 00007FFE2D30F6EF
+call      00007FFE2D30F759
 nop
 add       rsp,68
 pop       rbx
@@ -95,15 +95,15 @@ pop       rdi
 pop       rbp
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       near ptr 00007FF8AC10612D
+jmp       near ptr 00007FFE2D30F6AD
 sub       rsp,28
 vzeroupper
 mov       rax,[rbp-60]
 cmp       byte ptr [rax+18],0
-je        short 00007FF8AC10620E
+je        short 00007FFE2D30F78E
 mov       rbx,[rax+8]
 lea       rcx,[rbp-38]
-call      00007FF8ABA08C60
+call      00007FFE2CBF8C78
 mov       rcx,[rbp-38]
 mov       rax,[rbp-60]
 sub       rcx,[rax+10]
@@ -111,12 +111,12 @@ add       rcx,rbx
 mov       [rax+8],rcx
 mov       byte ptr [rax+18],0
 cmp       qword ptr [rbp-58],0
-je        short 00007FF8AC10627F
+je        short 00007FFE2D30F7FF
 mov       rbx,[rax+8]
 cmp       byte ptr [rax+18],0
-je        short 00007FF8AC106237
+je        short 00007FFE2D30F7B7
 lea       rcx,[rbp-40]
-call      00007FF8ABA08C60
+call      00007FFE2CBF8C78
 mov       rdx,[rbp-40]
 mov       rax,[rbp-60]
 sub       rdx,[rax+10]
@@ -127,12 +127,12 @@ vcmpordsd xmm1,xmm0,xmm0
 vandpd    xmm1,xmm1,xmm0
 mov       rdx,7FFFFFFFFFFFFFFF
 vcvttsd2si rcx,xmm1
-vucomisd  xmm0,qword ptr [7FF8AC106288]
+vucomisd  xmm0,qword ptr [7FFE2D30F808]
 cmovb     rdx,rcx
 mov       rcx,offset DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark+<>c.<Setup>b__2_0(System.TimeSpan)
 mov       rsi,[rbp-58]
 cmp       [rsi+18],rcx
-je        short 00007FF8AC10627F
+je        short 00007FFE2D30F7FF
 mov       rcx,[rsi+8]
 call      qword ptr [rsi+18]
 nop

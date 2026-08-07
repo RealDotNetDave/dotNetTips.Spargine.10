@@ -1,1 +1,1 @@
-## DotNetTips.Spargine.Core.BenchmarkTests.Serialization.SerializationBenchmark-20260725-155920
+## DotNetTips.Spargine.Core.BenchmarkTests.Serialization.SerializationBenchmark-20260806-190739

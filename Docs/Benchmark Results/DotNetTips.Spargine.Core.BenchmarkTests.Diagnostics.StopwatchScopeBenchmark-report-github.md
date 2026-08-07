@@ -11,4 +11,4 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 ```
 | Method                           | Mean     | Error    | StdDev   | StdErr   | Min      | Q1       | Median   | Q3       | Max      | Op/s         | CI99.9% Margin | Iterations | Baseline | Exceptions | Gen0   | Code Size | Allocated |
 |--------------------------------- |---------:|---------:|---------:|---------:|---------:|---------:|---------:|---------:|---------:|-------------:|---------------:|-----------:|--------- |-----------:|-------:|----------:|----------:|
-| &#39;StopwatchScope.Start + Dispose&#39; | 59.78 ns | 0.213 ns | 0.199 ns | 0.051 ns | 59.38 ns | 59.63 ns | 59.81 ns | 59.86 ns | 60.11 ns | 16,727,408.0 |       7.474 ns |      15.00 | No       |          - | 0.0013 |     471 B |      40 B |
+| &#39;StopwatchScope.Start + Dispose&#39; | 59.45 ns | 0.241 ns | 0.214 ns | 0.057 ns | 59.18 ns | 59.27 ns | 59.39 ns | 59.61 ns | 59.89 ns | 16,821,939.5 |       6.971 ns |      14.00 | No       |          - | 0.0013 |     471 B |      40 B |

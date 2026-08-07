@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260804-170323</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260806-192325</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260804-170323</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark-20260806-192325</th></tr>
 <tr>
 <th>Decode .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
 </tr>
@@ -25,7 +25,7 @@
 DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark.Decode()
 sub       rsp,28
 mov       rcx,[rcx+1A0]
-call      qword ptr [7FFECCC3E400]
+call      qword ptr [7FFE2D24E778]
 mov       eax,[rax+8]
 add       rsp,28
 ret
@@ -46,32 +46,32 @@ mov       [rbp+8],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp+10],ymm4
 vmovdqa   xmmword ptr [rbp+30],xmm4
-mov       rax,33AB87EDD2BD
+mov       rax,0D587E86934A9
 mov       [rbp],rax
 mov       rbx,rcx
 		if (string.IsNullOrWhiteSpace(text))
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,rbx
-call      qword ptr [7FFECCC358D8]
+call      qword ptr [7FFE2D245DB8]
 test      eax,eax
-jne       near ptr 00007FFECC6ABD9B
+jne       near ptr 00007FFE2CCC0B7B
 		Span<char> norm = stackalloc char[text.Length];
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       esi,[rbx+8]
 mov       eax,esi
 mov       ecx,2
 mul       rcx
-jb        near ptr 00007FFECC6ABEE0
+jb        near ptr 00007FFE2CCC0CC0
 mov       rdi,rax
 test      rdi,rdi
-je        short 00007FFECC6ABC44
+je        short 00007FFE2CCC0A24
 add       rdi,0F
 shr       rdi,4
 add       rsp,20
 push      0
 push      0
 dec       rdi
-jne       short 00007FFECC6ABC32
+jne       short 00007FFE2CCC0A12
 sub       rsp,20
 lea       rdi,[rsp+20]
 		var nc = NormalizeChars(text, norm);
@@ -80,7 +80,7 @@ mov       [rbp+8],rdi
 mov       [rbp+10],esi
 lea       rdx,[rbp+8]
 mov       rcx,rbx
-call      qword ptr [7FFECCC3E478]
+call      qword ptr [7FFE2D24E7F0]
 mov       ebx,eax
 		int buffer = 0, bitsLeft = 0;
 		^^^^^^^^^^^^^^
@@ -92,27 +92,27 @@ mov       rcx,offset MT_System.Collections.Generic.List<System.Byte>
 call      CORINFO_HELP_NEWSFAST
 mov       r13,rax
 imul      eax,ebx,5
-jo        near ptr 00007FFECC6ABEE0
+jo        near ptr 00007FFE2CCC0CC0
 vxorps    xmm0,xmm0,xmm0
 vcvtsi2sd xmm0,xmm0,eax
-vmulsd    xmm0,xmm0,qword ptr [7FFECC6ABF00]
+vmulsd    xmm0,xmm0,qword ptr [7FFE2CCC0CE0]
 vroundsd  xmm0,xmm0,xmm0,9
-call      qword ptr [7FFECC615938]
+call      qword ptr [7FFE2CC25938]
 mov       edx,eax
 mov       rcx,r13
-call      qword ptr [7FFECCC3E490]
+call      qword ptr [7FFE2D24E808]
 		for (var index = 0; index < nc; index++)
 		     ^^^^^^^^^^^^^
 xor       r12d,r12d
 cmp       r12d,ebx
-jl        short 00007FFECC6ABD25
+jl        short 00007FFE2CCC0B05
 		return [.. bytes];
 		^^^^^^^^^^^^^^^^^^
 mov       rcx,r13
-call      qword ptr [7FFECCC3E4D8]
-mov       r8,33AB87EDD2BD
+call      qword ptr [7FFE2D24E850]
+mov       r8,0D587E86934A9
 cmp       [rbp],r8
-je        short 00007FFECC6ABCC8
+je        short 00007FFE2CCC0AA8
 call      CORINFO_HELP_FAIL_FAST
 nop
 vzeroupper
@@ -128,39 +128,39 @@ pop       rbp
 ret
 			var v = c < 128 ? Map[c] : -1;
 			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-test      byte ptr [7FFECC9FD368],1
-je        near ptr 00007FFECC6ABDCF
-mov       rcx,2E3F6401EB0
+test      byte ptr [7FFE2D01D368],1
+je        near ptr 00007FFE2CCC0BAF
+mov       rcx,19FDE001EC8
 mov       rcx,[rcx]
 mov       eax,[rbp+44]
 cmp       eax,[rcx+8]
-jae       near ptr 00007FFECC6ABEDA
+jae       near ptr 00007FFE2CCC0CBA
 mov       edx,eax
 movsx     rdx,byte ptr [rcx+rdx+10]
-jmp       short 00007FFECC6ABD42
+jmp       short 00007FFE2CCC0B22
 				bytes.Add((byte)((buffer >> (bitsLeft - 8)) & 0xFF));
 				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,r13
-call      qword ptr [7FFECCC3E4A8]
+call      qword ptr [7FFE2D24E820]
 				bitsLeft -= 8;
 				^^^^^^^^^^^^^^
 add       r12d,1
-jo        near ptr 00007FFECC6ABEE0
+jo        near ptr 00007FFE2CCC0CC0
 cmp       r12d,ebx
-jge       short 00007FFECC6ABCAA
+jge       short 00007FFE2CCC0A8A
 			var c = norm[index];
 			^^^^^^^^^^^^^^^^^^^^
 cmp       r12d,esi
-jae       near ptr 00007FFECC6ABEDA
+jae       near ptr 00007FFE2CCC0CBA
 movzx     eax,word ptr [rdi+r12*2]
 mov       [rbp+44],eax
 cmp       eax,80
-jl        short 00007FFECC6ABCDD
+jl        short 00007FFE2CCC0ABD
 mov       edx,0FFFFFFFF
 			if (v < 0)
 			^^^^^^^^^^
 test      edx,edx
-jl        near ptr 00007FFECC6ABDE4
+jl        near ptr 00007FFE2CCC0BC4
 			buffer = (buffer << 5) | v;
 			^^^^^^^^^^^^^^^^^^^^^^^^^^^
 shl       r14d,5
@@ -168,13 +168,13 @@ or        r14d,edx
 			bitsLeft += 5;
 			^^^^^^^^^^^^^^
 add       r15d,5
-jo        near ptr 00007FFECC6ABEE0
+jo        near ptr 00007FFE2CCC0CC0
 			if (bitsLeft >= 8)
 			^^^^^^^^^^^^^^^^^^
 cmp       r15d,8
-jl        short 00007FFECC6ABD16
+jl        short 00007FFE2CCC0AF6
 sub       r15d,8
-jo        near ptr 00007FFECC6ABEE0
+jo        near ptr 00007FFE2CCC0CC0
 sarx      ecx,r14d,r15d
 movzx     edx,cl
 inc       dword ptr [r13+14]
@@ -182,18 +182,18 @@ mov       rcx,[r13+8]
 mov       eax,[r13+10]
 mov       r8d,[rcx+8]
 cmp       r8d,eax
-jbe       short 00007FFECC6ABD0D
+jbe       short 00007FFE2CCC0AED
 lea       r8d,[rax+1]
 mov       [r13+10],r8d
 mov       eax,eax
 mov       [rcx+rax+10],dl
-jmp       near ptr 00007FFECC6ABD16
+jmp       near ptr 00007FFE2CCC0AF6
 			return [];
 			^^^^^^^^^^
-mov       rax,3248B2162A0
-mov       r8,33AB87EDD2BD
+mov       rax,1E0730F62A0
+mov       r8,0D587E86934A9
 cmp       [rbp],r8
-je        short 00007FFECC6ABDBA
+je        short 00007FFE2CCC0B9A
 call      CORINFO_HELP_FAIL_FAST
 nop
 vzeroupper
@@ -208,43 +208,43 @@ pop       r15
 pop       rbp
 ret
 mov       rcx,offset MT_DotNetTips.Spargine.Core.Security.Crockford32
-call      qword ptr [7FFECC615728]
-jmp       near ptr 00007FFECC6ABCEA
+call      qword ptr [7FFE2CC25728]
+jmp       near ptr 00007FFE2CCC0ACA
 				throw new FormatException($"Invalid Base32 character '{c}'.");
 				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 lea       rcx,[rbp+18]
 mov       edx,1C
 mov       r8d,1
-call      qword ptr [7FFECC834E70]
+call      qword ptr [7FFE2CE44E70]
 mov       ecx,[rbp+28]
 cmp       ecx,[rbp+38]
-ja        short 00007FFECC6ABE69
+ja        short 00007FFE2CCC0C49
 mov       rdx,[rbp+30]
 mov       eax,ecx
 lea       rdx,[rdx+rax*2]
 mov       eax,[rbp+38]
 sub       eax,ecx
 cmp       eax,1A
-jb        short 00007FFECC6ABE40
-vmovups   ymm0,[7FFECC6ABF20]
+jb        short 00007FFE2CCC0C20
+vmovups   ymm0,[7FFE2CCC0D00]
 vmovups   [rdx],ymm0
-vmovups   xmm0,[7FFECC6ABF40]
+vmovups   xmm0,[7FFE2CCC0D20]
 vmovups   [rdx+20],xmm0
 mov       dword ptr [rdx+30],270020
 mov       ecx,[rbp+28]
 add       ecx,1A
 mov       [rbp+28],ecx
-jmp       short 00007FFECC6ABE54
+jmp       short 00007FFE2CCC0C34
 lea       rcx,[rbp+18]
-mov       rdx,3248B220AF8
-call      qword ptr [7FFECCC37E28]
+mov       rdx,1E073100AF8
+call      qword ptr [7FFE2D1BEF88]
 lea       rcx,[rbp+18]
 mov       edx,[rbp+44]
-call      qword ptr [7FFECCC35FF8]
+call      qword ptr [7FFE2D2464C0]
 mov       ecx,[rbp+28]
 cmp       ecx,[rbp+38]
-jbe       short 00007FFECC6ABE70
-call      qword ptr [7FFECC787198]
+jbe       short 00007FFE2CCC0C50
+call      qword ptr [7FFE2CD97198]
 int       3
 mov       rdx,[rbp+30]
 mov       eax,ecx
@@ -252,23 +252,23 @@ lea       rdx,[rdx+rax*2]
 mov       eax,[rbp+38]
 sub       eax,ecx
 cmp       eax,2
-jb        short 00007FFECC6ABE95
+jb        short 00007FFE2CCC0C75
 mov       dword ptr [rdx],2E0027
 mov       ecx,[rbp+28]
 add       ecx,2
 mov       [rbp+28],ecx
-jmp       short 00007FFECC6ABEA9
+jmp       short 00007FFE2CCC0C89
 lea       rcx,[rbp+18]
-mov       rdx,3248B220B48
-call      qword ptr [7FFECCC37E28]
+mov       rdx,1E073100B48
+call      qword ptr [7FFE2D1BEF88]
 mov       rcx,offset MT_System.FormatException
 call      CORINFO_HELP_NEWSFAST
 mov       r13,rax
 lea       rcx,[rbp+18]
-call      qword ptr [7FFECC834EA0]
+call      qword ptr [7FFE2CE44EA0]
 mov       rdx,rax
 mov       rcx,r13
-call      qword ptr [7FFECCC3E4C0]
+call      qword ptr [7FFE2D24E838]
 mov       rcx,r13
 call      CORINFO_HELP_THROW
 int       3

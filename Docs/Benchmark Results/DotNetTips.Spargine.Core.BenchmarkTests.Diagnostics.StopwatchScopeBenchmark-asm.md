@@ -24,13 +24,13 @@
        cmp       byte ptr [rdi+18],0
        jne       short M00_L00
        lea       rcx,[rbp-20]
-       mov       rax,7FF9FF615F50
+       mov       rax,7FFFACBD5F50
        call      rax
        mov       rax,[rbp-20]
        mov       rdi,[rbp-50]
        mov       [rdi+10],rax
        mov       byte ptr [rdi+18],1
-       cmp       dword ptr [7FF90B954A90],0
+       cmp       dword ptr [7FFE8CB54A90],0
        jne       near ptr M00_L04
 M00_L00:
        mov       rdi,[rbp-50]
@@ -41,13 +41,13 @@ M00_L00:
        cmp       byte ptr [rdi+18],0
        je        short M00_L01
        lea       rcx,[rbp-28]
-       mov       rax,7FF9FF615F50
+       mov       rax,7FFFACBD5F50
        call      rax
        mov       rax,[rbp-28]
        mov       rdi,[rbp-50]
        sub       rax,[rdi+10]
        add       rsi,rax
-       cmp       dword ptr [7FF90B954A90],0
+       cmp       dword ptr [7FFE8CB54A90],0
        jne       short M00_L02
 M00_L01:
        vxorps    xmm0,xmm0,xmm0
@@ -56,14 +56,14 @@ M00_L01:
        vandpd    xmm1,xmm1,xmm0
        mov       rcx,7FFFFFFFFFFFFFFF
        vcvttsd2si rax,xmm1
-       vucomisd  xmm0,qword ptr [7FF8AC106288]
+       vucomisd  xmm0,qword ptr [7FFE2D30F808]
        cmovb     rcx,rax
        mov       [rbp-30],rcx
        mov       rbx,[rbp+10]
        mov       rcx,[rbx+88]
        cmp       [rcx],cl
        lea       rcx,[rbp-30]
-       call      qword ptr [7FF8AC03E628]; BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[System.TimeSpan, System.Private.CoreLib]](System.TimeSpan ByRef)
+       call      qword ptr [7FFE2D24FEE8]; BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[System.TimeSpan, System.Private.CoreLib]](System.TimeSpan ByRef)
        jmp       short M00_L03
 M00_L02:
        call      CORINFO_HELP_POLL_GC
@@ -88,7 +88,7 @@ M00_L05:
        je        short M00_L06
        mov       rbx,[rax+8]
        lea       rcx,[rbp-38]
-       call      00007FF8ABA08C60
+       call      00007FFE2CBF8C78
        mov       rcx,[rbp-38]
        mov       rax,[rbp-60]
        sub       rcx,[rax+10]
@@ -102,7 +102,7 @@ M00_L06:
        cmp       byte ptr [rax+18],0
        je        short M00_L07
        lea       rcx,[rbp-40]
-       call      00007FF8ABA08C60
+       call      00007FFE2CBF8C78
        mov       rdx,[rbp-40]
        mov       rax,[rbp-60]
        sub       rdx,[rax+10]
@@ -114,7 +114,7 @@ M00_L07:
        vandpd    xmm1,xmm1,xmm0
        mov       rdx,7FFFFFFFFFFFFFFF
        vcvttsd2si rcx,xmm1
-       vucomisd  xmm0,qword ptr [7FF8AC106288]
+       vucomisd  xmm0,qword ptr [7FFE2D30F808]
        cmovb     rdx,rcx
        mov       rcx,offset DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark+<>c.<Setup>b__2_0(System.TimeSpan)
        mov       rsi,[rbp-58]
