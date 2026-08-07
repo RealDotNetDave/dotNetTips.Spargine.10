@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 08-07-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// anonymous port binding, buffer and keep-alive configuration, TCP connection helpers, and
 /// non-blocking mode control.
 /// </summary>
-[Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.NeedsDocumentation)]
+[Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.Available, Documentation = "ADD URL")]
 public static class SocketExtensions
 {
 
