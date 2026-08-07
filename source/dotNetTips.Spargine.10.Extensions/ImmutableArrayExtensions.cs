@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 01-16-2022
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 05-21-2026
 // ***********************************************************************
 // <copyright file="ImmutableArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">

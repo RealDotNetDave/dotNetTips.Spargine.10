@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified By : David McCarter
+// Last Modified On : 07-09-2026
 // ***********************************************************************
 // <copyright file="TypeExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
