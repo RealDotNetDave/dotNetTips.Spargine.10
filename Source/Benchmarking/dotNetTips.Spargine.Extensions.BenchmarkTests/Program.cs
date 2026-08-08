@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-14-2026
+// Last Modified On : 08-08-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -42,30 +42,30 @@ internal sealed class Program
 		// BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		BenchmarkHelper.RunBenchmarks(config, true,
-			typeof(ArrayExtensionsCollectionBenchmark),
-			typeof(AssemblyExtensionsBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		//	typeof(ArrayExtensionsCollectionBenchmark),
+		//	typeof(AssemblyExtensionsBenchmark)
+		//);
 
 		// Group 1: A–D - 9:30 hours, 991 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(ArrayExtensionsCollectionBenchmark),
-		// typeof(ArrayExtensionsSliceBenchmark),
-		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
-		//	typeof(AssemblyExtensionsBenchmark),
-		//	typeof(CharacterExtensionsBenchmark),
-		//	typeof(CollectionExtensionsCollectionBenchmark),
-		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
-		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
-		//	typeof(DataContextExtensionsBenchmark),
-		//	typeof(DataReaderExtensionsBenchmark),
-		//	typeof(DataTableExtensionsBenchmark),
-		//	typeof(DateTimeExtensionsBenchmark),
-		//	typeof(DbContextExtensionsBenchmark),
-		//	typeof(DictionaryExtensionsCollectionBenchmark),
-		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark),
-		//	typeof(DirectoryInfoExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(ArrayExtensionsCollectionBenchmark),
+		 typeof(ArrayExtensionsSliceBenchmark),
+			typeof(ArrayExtensionsMutatingCollectionBenchmark),
+			typeof(AssemblyExtensionsBenchmark),
+			typeof(CharacterExtensionsBenchmark),
+			typeof(CollectionExtensionsCollectionBenchmark),
+			typeof(CollectionExtensionsMutatingCollectionBenchmark),
+			typeof(ConcurrentBagExtensionsCollectionBenchmark),
+			typeof(DataContextExtensionsBenchmark),
+			typeof(DataReaderExtensionsBenchmark),
+			typeof(DataTableExtensionsBenchmark),
+			typeof(DateTimeExtensionsBenchmark),
+			typeof(DbContextExtensionsBenchmark),
+			typeof(DictionaryExtensionsCollectionBenchmark),
+			typeof(DictionaryExtensionsMutatingCollectionBenchmark),
+			typeof(DirectoryInfoExtensionsBenchmark)
+		);
 
 		// Group 2: E–H - 10:30 hours, 950 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,

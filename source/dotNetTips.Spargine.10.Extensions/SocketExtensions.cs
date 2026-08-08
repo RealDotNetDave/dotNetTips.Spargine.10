@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-22-2020
 //
-// Last Modified By : David McCarter
-// Last Modified On : 08-07-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-08-2026
 // ***********************************************************************
 // <copyright file="SocketExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,9 +43,11 @@ public static class SocketExtensions
 	public const int MinimumBufferSize = 4096;
 
 	/// <summary>
-	/// Binds <paramref name="socket"/> to <paramref name="address"/> on an OS-assigned port and
-	/// returns the chosen port number.
+	/// Binds the socket to the specified IP address using an operating-system-assigned port and returns the selected port number.
 	/// </summary>
+	/// <remarks>
+	/// Especially useful for tests, development tools, temporary listeners, and other scenarios where manually selecting an available port would add unnecessary complexity.
+	/// </remarks>
 	/// <param name="socket">The socket to bind.</param>
 	/// <param name="address">The IP address to bind to.</param>
 	/// <returns>The port number assigned by the OS.</returns>
@@ -62,7 +64,7 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Configures the send and receive buffer sizes for <paramref name="socket"/>.
+	/// Configures the socket's send and receive buffer sizes.
 	/// </summary>
 	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
 	/// <param name="sendBufferSize">
@@ -82,9 +84,7 @@ public static class SocketExtensions
 	/// the range [<see cref="MinimumBufferSize"/>, <see cref="MaximumBufferSize"/>].
 	/// </exception>
 	/// <remarks>
-	/// Windows internally doubles the buffer value you set (kernel overhead), so a 1 MB setting
-	/// reserves approximately 2 MB of kernel memory per socket. For high-throughput scenarios,
-	/// 64 KB–256 KB is typically sufficient; use larger values only when profiling confirms a benefit.
+	/// Explicit buffer configuration can be useful when tuning network behavior for workloads that transfer larger amounts of data or have specific throughput and memory requirements.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[Information(nameof(ConfigureBufferSizes), author: "David McCarter", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
@@ -101,8 +101,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Enables TCP keep-alive on <paramref name="socket"/> and sets the idle time and probe interval.
+	/// Enables TCP keep-alive for the socket and configures both the idle time before keep-alive probes begin and the interval between probes.
 	/// </summary>
+	/// <remarks>
+	/// Keep-alive settings can help detect dead or unreachable connections instead of allowing inactive connections to linger indefinitely.
+	/// </remarks>
 	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
 	/// <param name="keepAliveTimeSeconds">The idle time, in seconds, before the first keep-alive probe is sent. Must be at least 1.</param>
 	/// <param name="keepAliveIntervalSeconds">The interval, in seconds, between keep-alive probes. Must be at least 1.</param>
@@ -124,9 +127,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Configures the linger state of <paramref name="socket"/>, controlling how it behaves when
-	/// data remains unsent after <c>Close()</c> is called.
+	/// Configures the socket's linger behavior.
 	/// </summary>
+	/// <remarks>
+	/// The linger state controls what happens when <c>Close()</c> is called while unsent data remains in the socket's transmission buffer, giving greater control over connection shutdown behavior.
+	/// </remarks>
 	/// <param name="socket">The <c>Socket</c> to configure. Must not be <c>null</c>.</param>
 	/// <param name="enable">If <c>true</c>, the socket lingers after close; if <c>false</c>, it closes immediately.</param>
 	/// <param name="lingerTimeSeconds">The linger duration in seconds when <paramref name="enable"/> is <c>true</c>. Must be at least 0.</param>
@@ -145,8 +150,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Asynchronously establishes a TCP connection using the endpoint from <paramref name="context"/>.
+	/// Asynchronously establishes a TCP connection using the endpoint supplied by <see cref="SocketsHttpConnectionContext" />.
 	/// </summary>
+	/// <remarks>
+	/// This method supports cancellation through <see cref="CancellationToken" />, making it easier to integrate socket creation into modern asynchronous .NET networking code.
+	/// </remarks>
 	/// <param name="context">The connection context containing the DNS endpoint to connect to.</param>
 	/// <param name="cancellationToken">A token to cancel the operation.</param>
 	/// <returns>A <c>ValueTask{Stream}</c> that resolves to a <c>Stream</c> connected to the TCP server.</returns>
@@ -191,9 +199,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Forces <paramref name="socket"/> into non-blocking mode. On non-Windows platforms, once
-	/// non-blocking is enabled it remains enabled for the lifetime of the socket.
+	/// Forces the socket into non-blocking mode.
 	/// </summary>
+	/// <remarks>
+	/// Platform consideration: on non-Windows operating systems, once non-blocking mode has been enabled, it remains enabled for the lifetime of the socket.
+	/// </remarks>
 	/// <param name="socket">The <c>Socket</c> to modify. Must not be <c>null</c>.</param>
 	/// <param name="force">If <c>true</c>, forces the socket into non-blocking mode.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -206,9 +216,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Attempts to connect <paramref name="socket"/> to <paramref name="remoteEndpoint"/> within
-	/// <paramref name="millisecondsTimeout"/> milliseconds. Only supported on Windows.
+	/// Attempts to connect the socket to the specified <paramref name="remoteEndpoint" /> within the supplied timeout period.
 	/// </summary>
+	/// <remarks>
+	/// This method provides a straightforward way to perform timeout-controlled connection attempts but is supported only on Windows.
+	/// </remarks>
 	/// <param name="socket">The <c>Socket</c> to use for the connection attempt. Must not be <c>null</c>.</param>
 	/// <param name="remoteEndpoint">The <c>EndPoint</c> to connect to. Must not be <c>null</c>.</param>
 	/// <param name="millisecondsTimeout">The maximum time in milliseconds to wait for the connection. Must be at least 1.</param>
@@ -253,10 +265,11 @@ public static class SocketExtensions
 	}
 
 	/// <summary>
-	/// Asynchronously attempts to connect <paramref name="socket"/> to <paramref name="remoteEndpoint"/>
-	/// within <paramref name="millisecondsTimeout"/> milliseconds. Unlike <c>TryConnect</c>, this
-	/// method is cross-platform and uses <c>CancellationToken</c>-based timeouts.
+	/// Asynchronously attempts to connect the socket to the specified <paramref name="remoteEndpoint" /> within the supplied timeout.
 	/// </summary>
+	/// <remarks>
+	/// Unlike <see cref="TryConnect(Socket, EndPoint, int)" />, this implementation is cross-platform and combines timeout handling with <see cref="CancellationToken" /> support, making it a better fit for modern asynchronous and cross-platform .NET applications.
+	/// </remarks>
 	/// <param name="socket">The <c>Socket</c> to use for the connection attempt. Must not be <c>null</c>.</param>
 	/// <param name="remoteEndpoint">The <c>EndPoint</c> to connect to. Must not be <c>null</c>.</param>
 	/// <param name="millisecondsTimeout">The maximum time in milliseconds to wait for the connection. Must be at least 1.</param>

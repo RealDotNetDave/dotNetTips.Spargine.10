@@ -4,7 +4,7 @@
 // Created          : 08-04-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-04-2026
+// Last Modified On : 08-08-2026
 // ***********************************************************************
 // <copyright file="ThreadPoolHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,17 +26,21 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// pool diagnostics. All methods enforce a timeout and support cooperative cancellation.
 /// </summary>
 
-[Information(description: nameof(ThreadPoolHelper), Status = Status.NeedsDocumentation)]
+[Information(description: nameof(ThreadPoolHelper), Status = Status.Available, Documentation = "ADD URL")]
 public static class ThreadPoolHelper
 {
 	//TODO: WHEN WRITING DOCUMENTATION, UPDATE ARTICLE: .NET Threads: The Performance Trap Hiding in Your Code
+	//TODO: LOOKING INTO USING STATICTICS FOR METERING THREAD POOL USAGE AND PERFORMANCE
 
 	private const int MaximumTimeoutMilliseconds = 30_000;
 
 	/// <summary>
-	/// Gets a point-in-time snapshot of the managed thread pool statistics.
+	/// Returns a point-in-time snapshot of statistics for the managed thread pool.
 	/// </summary>
 	/// <returns>A <see cref="ThreadPoolStatistics" /> value containing the current thread pool metrics.</returns>
+	/// <remarks>
+	/// Useful for diagnostics, monitoring, troubleshooting, and understanding thread pool utilization while an application is running.
+	/// </remarks>
 	[Information(nameof(GetStatistics), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ThreadPoolStatistics GetStatistics()
 	{
@@ -57,10 +61,10 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues an operation to the managed thread pool and waits for the result.
+	/// Queues a single operation to the managed thread pool and asynchronously waits for the result.
 	/// </summary>
 	/// <typeparam name="TResult">The type of result returned by the operation.</typeparam>
-	/// <param name="operation">The operation to execute on the thread pool.</param>
+	/// <param name="operation">The operation to execute on the thread pool. The operation receives a <see cref="CancellationToken" /> for cooperative cancellation.</param>
 	/// <param name="millisecondsTimeOut">The timeout, in milliseconds, to wait for the operation to complete. Valid values are from 1 to 30,000 inclusive.</param>
 	/// <param name="cancellationToken">A token that monitors for cancellation requests.</param>
 	/// <returns>A task that represents the asynchronous operation and contains the operation result.</returns>
@@ -82,8 +86,11 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues multiple operations to the managed thread pool and waits for all results.
+	/// Queues multiple operations to the managed thread pool and asynchronously waits for all operations to complete.
 	/// </summary>
+	/// <remarks>
+	/// Useful when independent operations can execute concurrently and all results are required before processing continues.
+	/// </remarks>
 	/// <typeparam name="TResult">The type of result returned by each operation.</typeparam>
 	/// <param name="operations">The operations to execute on the thread pool.</param>
 	/// <param name="millisecondsTimeOut">The timeout, in milliseconds, to wait for the batch to complete. Valid values are from 1 to 30,000 inclusive.</param>
@@ -151,8 +158,11 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues an operation that returns no result to the managed thread pool and waits for it to complete.
+	/// Queues an operation that does not return a value to the managed thread pool and asynchronously waits for it to complete.
 	/// </summary>
+	/// <remarks>
+	/// Useful for background work or other operations where completion matters but no result needs to be returned.
+	/// </remarks>
 	/// <param name="operation">The operation to execute on the thread pool.</param>
 	/// <param name="millisecondsTimeOut">The timeout, in milliseconds, to wait for the operation to complete. Valid values are from 1 to 30,000 inclusive.</param>
 	/// <param name="cancellationToken">A token that monitors for cancellation requests.</param>
@@ -179,8 +189,11 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues multiple operations to the managed thread pool with a bounded degree of parallelism and waits for all results.
+	/// Queues multiple operations to the managed thread pool while limiting the maximum number that can execute concurrently.
 	/// </summary>
+	/// <remarks>
+	/// The <paramref name="maxDegreeOfParallelism" /> parameter provides bounded concurrency, which helps prevent a large batch of work from overwhelming application resources or placing excessive pressure on downstream systems. This overload is especially useful for large collections of operations or workloads where unrestricted parallel execution is undesirable.
+	/// </remarks>
 	/// <typeparam name="TResult">The type of result returned by each operation.</typeparam>
 	/// <param name="operations">The operations to execute on the thread pool.</param>
 	/// <param name="maxDegreeOfParallelism">The maximum number of operations to run concurrently. Valid values are from 1 to 1,024 inclusive.</param>
@@ -233,8 +246,11 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues multiple operations to the managed thread pool and returns the result of the first operation to complete.
+	/// Queues multiple operations to the managed thread pool and returns the result from the first operation to complete.
 	/// </summary>
+	/// <remarks>
+	/// Useful when several operations can produce an acceptable result and only the fastest successful completion is needed.
+	/// </remarks>
 	/// <typeparam name="TResult">The type of result returned by each operation.</typeparam>
 	/// <param name="operations">The operations to execute on the thread pool.</param>
 	/// <param name="millisecondsTimeOut">The timeout, in milliseconds, to wait for the first operation to complete. Valid values are from 1 to 30,000 inclusive.</param>
@@ -268,8 +284,11 @@ public static class ThreadPoolHelper
 	}
 
 	/// <summary>
-	/// Queues an operation to the managed thread pool and captures the outcome in a <see cref="SimpleResult{T}" /> without throwing on failure.
+	/// Queues an operation to the managed thread pool and captures its outcome in a <see cref="SimpleResult{T}" /> instead of propagating failures as exceptions to the caller.
 	/// </summary>
+	/// <remarks>
+	/// Useful for workflows where failure is expected or should be represented as a result that can be inspected and handled without exception-based control flow.
+	/// </remarks>
 	/// <typeparam name="TResult">The type of result returned by the operation.</typeparam>
 	/// <param name="operation">The operation to execute on the thread pool.</param>
 	/// <param name="millisecondsTimeOut">The timeout, in milliseconds, to wait for the operation to complete. Valid values are from 1 to 30,000 inclusive.</param>
