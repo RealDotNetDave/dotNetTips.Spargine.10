@@ -28,11 +28,11 @@
        mov       rdx,[rbp-28]
        mov       r8,[rbp-30]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E7F3F0]; DotNetTips.Spargine.IO.FileProcessor.MoveFiles(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo>, System.IO.DirectoryInfo, Boolean ByRef, System.Threading.CancellationToken)
+       call      qword ptr [7FFB35617E58]; DotNetTips.Spargine.IO.FileProcessor.MoveFiles(System.Collections.Generic.IEnumerable`1<System.IO.FileInfo>, System.IO.DirectoryInfo, Boolean ByRef, System.Threading.CancellationToken)
        mov       [rbp-4],eax
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FF9C1E7F3D8]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)
+       call      qword ptr [7FFB35617E40]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Int32, System.Private.CoreLib]](Int32)
        nop
        add       rsp,60
        pop       rbp
@@ -85,21 +85,21 @@
        mov       [rbp+20],r8
        mov       [rbp+28],r9
        mov       dword ptr [rbp-88],3E8
-       mov       rax,2610D5F10B0
+       mov       rax,2933F9F10B0
        mov       [rsp+20],rax
        mov       rdx,[rbp+20]
-       mov       rcx,7FF9C1EDD2C8
+       mov       rcx,7FFB3564EFC0
        xor       r8d,r8d
-       mov       r9,2610D5E0008
-       call      qword ptr [7FF9C1DEF558]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)
+       mov       r9,2933F9E0008
+       call      qword ptr [7FFB35597FD8]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)
        mov       [rbp+20],rax
        mov       rdx,[rbp+18]
-       mov       rcx,7FF9C1EDD3E0
-       call      qword ptr [7FF9C1E7F450]; DotNetTips.Spargine.IO.FileProcessor.PrepareList[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)
+       mov       rcx,7FFB3564F0D8
+       call      qword ptr [7FFB35617EB8]; DotNetTips.Spargine.IO.FileProcessor.PrepareList[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IEnumerable`1<System.__Canon>)
        mov       [rbp-40],rax
        cmp       qword ptr [rbp-40],0
        jne       short M01_L00
-       mov       rcx,7FF9C1EDD700
+       mov       rcx,7FFB3564F3F8
        call      CORINFO_HELP_COUNTPROFILE32
        xor       eax,eax
        add       rsp,0C0
@@ -112,12 +112,12 @@ M01_L00:
        lea       rdx,[rbp-68]
        lea       r8,[rbp-70]
        mov       rcx,[rbp+20]
-       mov       r9,2610D5E0008
-       call      qword ptr [7FF9C1E7F480]; DotNetTips.Spargine.Core.Validator.CheckExists(System.IO.DirectoryInfo, Boolean ByRef, Boolean ByRef, System.String)
+       mov       r9,2933F9E0008
+       call      qword ptr [7FFB35617EE8]; DotNetTips.Spargine.Core.Validator.CheckExists(System.IO.DirectoryInfo, Boolean ByRef, Boolean ByRef, System.String)
        mov       rax,[rbp+20]
        mov       [rbp-80],rax
        mov       rcx,[rbp-80]
-       mov       rdx,7FF9C1EDD708
+       mov       rdx,7FFB3564F400
        call      CORINFO_HELP_CLASSPROFILE32
        mov       rcx,[rbp-80]
        mov       rax,[rbp-80]
@@ -125,20 +125,20 @@ M01_L00:
        mov       rax,[rax+40]
        call      qword ptr [rax+30]
        mov       rcx,rax
-       call      qword ptr [7FF9C1E7F498]; DotNetTips.Spargine.IO.PathHelper.EnsureTrailingSlash(System.String)
+       call      qword ptr [7FFB35617F00]; DotNetTips.Spargine.IO.PathHelper.EnsureTrailingSlash(System.String)
        mov       [rbp-48],rax
        xor       eax,eax
        mov       [rbp-4C],eax
        mov       rcx,[rbp-40]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1933548]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Count()
+       call      qword ptr [7FFB350E3548]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Count()
        mov       [rbp-50],eax
        lea       rcx,[rbp+30]
-       call      qword ptr [7FF9C1E7F4B0]; System.Threading.CancellationToken.get_CanBeCanceled()
+       call      qword ptr [7FFB35617F18]; System.Threading.CancellationToken.get_CanBeCanceled()
        mov       [rbp-54],eax
        mov       rcx,[rbp+10]
-       mov       rdx,2610D5F10E0
-       call      qword ptr [7FF9C1E7F4C8]; DotNetTips.Spargine.IO.FileProcessor.CreateStopwatch(System.String)
+       mov       rdx,2933F9F10E0
+       call      qword ptr [7FFB35617F30]; DotNetTips.Spargine.IO.FileProcessor.CreateStopwatch(System.String)
        mov       [rbp-60],rax
        xor       eax,eax
        mov       [rbp-74],eax
@@ -146,17 +146,17 @@ M01_L00:
 M01_L01:
        cmp       dword ptr [rbp-54],0
        je        short M01_L02
-       mov       rcx,7FF9C1EDD810
+       mov       rcx,7FFB3564F508
        call      CORINFO_HELP_COUNTPROFILE32
        lea       rcx,[rbp+30]
-       call      qword ptr [7FF9C1E7F4E0]; System.Threading.CancellationToken.ThrowIfCancellationRequested()
+       call      qword ptr [7FFB35617F48]; System.Threading.CancellationToken.ThrowIfCancellationRequested()
 M01_L02:
-       mov       rcx,7FF9C1EDD814
+       mov       rcx,7FFB3564F50C
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,[rbp-40]
        mov       edx,[rbp-74]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1933578]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Item(Int32)
+       call      qword ptr [7FFB350E3578]; System.Collections.Generic.List`1[[System.__Canon, System.Private.CoreLib]].get_Item(Int32)
        mov       [rbp-90],rax
        mov       rax,[rbp-60]
        mov       [rsp+20],rax
@@ -165,7 +165,7 @@ M01_L02:
        movzx     r9d,byte ptr [rax]
        mov       rcx,[rbp+10]
        mov       r8,[rbp-48]
-       call      qword ptr [7FF9C1E7F4F8]; DotNetTips.Spargine.IO.FileProcessor.MoveFileItem(System.IO.FileInfo, System.String, Boolean, DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch)
+       call      qword ptr [7FFB35617F60]; DotNetTips.Spargine.IO.FileProcessor.MoveFileItem(System.IO.FileInfo, System.String, Boolean, DotNetTips.Spargine.Core.Diagnostics.PerformanceStopwatch)
        add       eax,[rbp-4C]
        jo        short M01_L05
        mov       [rbp-4C],eax
@@ -186,7 +186,7 @@ M01_L04:
        mov       eax,[rbp-74]
        cmp       eax,[rbp-50]
        jl        near ptr M01_L01
-       mov       rcx,7FF9C1EDD818
+       mov       rcx,7FFB3564F510
        call      CORINFO_HELP_COUNTPROFILE32
        mov       eax,[rbp-4C]
        add       rsp,0C0
@@ -207,12 +207,12 @@ M01_L05:
        mov       [rbp+10],rcx
        mov       [rbp+18],edx
        mov       rcx,[rbp+10]
-       call      qword ptr [7FF9C1EF44B0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
+       call      qword ptr [7FFB356A4C60]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
        mov       [rbp-8],rax
        mov       rcx,[rbp-8]
        lea       rdx,[rbp+18]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1EF4480]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Int32, System.Private.CoreLib]](Int32 ByRef)
+       call      qword ptr [7FFB356A4C30]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Int32, System.Private.CoreLib]](Int32 ByRef)
        nop
        add       rsp,30
        pop       rbp

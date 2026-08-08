@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260715-183743</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260807-181838</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -24,11 +24,11 @@ InvocationCount=1  UnrollFactor=1  Categories=IO
 </code></pre>
 
 <table>
-<thead><tr><th>Method          </th><th>Mean     </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Median   </th><th>Min      </th><th>Q1       </th><th>Q3       </th><th>Max      </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+<thead><tr><th>Method          </th><th>Mean     </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Median   </th><th>Min      </th><th>Q1       </th><th>Q3       </th><th>Max      </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CreateFile</td><td>738,178.4 ns</td><td>39,797.3 ns</td><td>109,613.3 ns</td><td>11,684.8 ns</td><td>693,900.0 ns</td><td>596,150.0 ns</td><td>653,500.0 ns</td><td>810,900.0 ns</td><td>1,051,550.0 ns</td><td>1,354.69</td><td>-5,798.4 ns</td><td>88.00</td><td>No</td><td>264 B</td><td>-</td><td>880 B</td>
-</tr><tr><td>CreateFiles-Parallel</td><td>64,852,593.3 ns</td><td>1,124,234.4 ns</td><td>1,051,609.6 ns</td><td>271,524.4 ns</td><td>64,874,300.0 ns</td><td>62,681,100.0 ns</td><td>64,169,000.0 ns</td><td>65,836,900.0 ns</td><td>66,114,400.0 ns</td><td>15.42</td><td>-135,754.7 ns</td><td>15.00</td><td>No</td><td>399 B</td><td>-</td><td>174888 B</td>
-</tr><tr><td>CreateFiles-Sequential</td><td>1,135,031.9 ns</td><td>55,485.2 ns</td><td>158,302.4 ns</td><td>16,327.6 ns</td><td>1,074,550.0 ns</td><td>939,700.0 ns</td><td>1,034,375.0 ns</td><td>1,173,975.0 ns</td><td>1,614,400.0 ns</td><td>881.03</td><td>-8,116.8 ns</td><td>94.00</td><td>No</td><td>429 B</td><td>-</td><td>1600 B</td>
+</thead><tbody><tr><td>CreateFile</td><td>699,826.4 ns</td><td>29,819.6 ns</td><td>81,630.6 ns</td><td>8,751.7 ns</td><td>673,500.0 ns</td><td>557,800.0 ns</td><td>643,200.0 ns</td><td>721,300.0 ns</td><td>977,700.0 ns</td><td>1,428.93</td><td>-4,332.4 ns</td><td>87.00</td><td>No</td><td>264 B</td><td>-</td><td>880 B</td>
+</tr><tr><td>CreateFiles-Parallel</td><td>63,122,246.2 ns</td><td>928,954.1 ns</td><td>775,718.7 ns</td><td>215,145.7 ns</td><td>62,855,000.0 ns</td><td>61,904,400.0 ns</td><td>62,755,900.0 ns</td><td>63,709,500.0 ns</td><td>64,820,500.0 ns</td><td>15.84</td><td>-107,566.3 ns</td><td>13.00</td><td>No</td><td>399 B</td><td>-</td><td>174888 B</td>
+</tr><tr><td>CreateFiles-Sequential</td><td>1,155,819.7 ns</td><td>68,879.6 ns</td><td>190,865.0 ns</td><td>20,231.7 ns</td><td>1,062,150.0 ns</td><td>929,450.0 ns</td><td>1,027,250.0 ns</td><td>1,297,350.0 ns</td><td>1,740,250.0 ns</td><td>865.19</td><td>-10,071.3 ns</td><td>89.00</td><td>No</td><td>429 B</td><td>-</td><td>1600 B</td>
 </tr></tbody></table>
 </body>
 </html>

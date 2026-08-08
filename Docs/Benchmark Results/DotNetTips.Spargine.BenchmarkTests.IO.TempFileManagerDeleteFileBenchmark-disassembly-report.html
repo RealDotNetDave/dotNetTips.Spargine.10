@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260715-184004</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260807-182034</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260715-184004</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260807-182034</th></tr>
 <tr>
 <th>DeleteFile .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
 </tr>
@@ -32,45 +32,38 @@ mov       rdx,[rax+1A0]
 mov       rax,[rbp+10]
 mov       rcx,[rax+198]
 cmp       [rcx],ecx
-call      qword ptr [7FF9C1E9EFD0]
+call      qword ptr [7FFB3562E5B0]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)
-		if (string.IsNullOrEmpty(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		if (TryDeleteFile(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-			this.DeleteFileFromCache(fileName);
-			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 push      rbp
 sub       rsp,20
 lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
+		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp+18]
-call      qword ptr [7FF9C1A8F1F8]
+call      qword ptr [7FFB3522F018]
 test      eax,eax
-je        short 00007FF9C1F8FFA6
-mov       rcx,7FF9C20D1AD8
-call      CORINFO_HELP_COUNTPROFILE32
-nop
+je        short 00007FFB35099BA6
 add       rsp,20
 pop       rbp
 ret
+		if (TryDeleteFile(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp+18]
-call      qword ptr [7FF9C1E9EFE8]
+call      qword ptr [7FFB3562E5C8]
 test      eax,eax
-je        short 00007FF9C1F8FFD1
-mov       rcx,7FF9C20D1ADC
-call      CORINFO_HELP_COUNTPROFILE32
+je        short 00007FFB35099BC2
+			this.DeleteFileFromCache(fileName);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp+10]
 mov       rdx,[rbp+18]
-call      qword ptr [7FF9C1E9F000]
-mov       rcx,7FF9C20D1AE0
-call      CORINFO_HELP_COUNTPROFILE32
+call      qword ptr [7FFB3562E5E0]
 nop
 add       rsp,20
 pop       rbp

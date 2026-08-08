@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260715-184004</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260807-182034</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -24,9 +24,9 @@ InvocationCount=1  UnrollFactor=1  Categories=IO
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>DeleteFile</td><td>405,063.1 ns</td><td>17,491.8 ns</td><td>46,990.7 ns</td><td>5,127.1 ns</td><td>327,700.0 ns</td><td>370,875.0 ns</td><td>399,950.0 ns</td><td>426,750.0 ns</td><td>555,000.0 ns</td><td>2,468.8</td><td>-2,521.6 ns</td><td>84.00</td><td>No</td><td>-</td><td>170 B</td><td>192 B</td>
+</thead><tbody><tr><td>DeleteFile</td><td>404,190.7 ns</td><td>20,191.1 ns</td><td>54,931.4 ns</td><td>5,923.4 ns</td><td>299,950.0 ns</td><td>369,250.0 ns</td><td>394,500.0 ns</td><td>422,650.0 ns</td><td>592,650.0 ns</td><td>2,474.1</td><td>-2,918.7 ns</td><td>86.00</td><td>No</td><td>124 B</td><td>-</td><td>192 B</td>
 </tr></tbody></table>
 </body>
 </html>

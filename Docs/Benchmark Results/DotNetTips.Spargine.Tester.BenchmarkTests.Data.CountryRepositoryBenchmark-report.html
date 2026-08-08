@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20260715-160432</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20260807-212632</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -26,9 +26,9 @@ Categories=Real World
 <table>
 <thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Gen0</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>855.47 ns</td><td>4.847 ns</td><td>4.533 ns</td><td>1.171 ns</td><td>847.49 ns</td><td>851.72 ns</td><td>855.83 ns</td><td>859.21 ns</td><td>862.29 ns</td><td>1,168,948.9</td><td>6.915 ns</td><td>15.00</td><td>No</td><td>-</td><td>1,765 B</td><td>0.0010</td><td>32 B</td>
-</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>636.01 ns</td><td>7.293 ns</td><td>6.821 ns</td><td>1.761 ns</td><td>622.46 ns</td><td>633.83 ns</td><td>638.54 ns</td><td>640.23 ns</td><td>643.67 ns</td><td>1,572,300.1</td><td>6.619 ns</td><td>15.00</td><td>No</td><td>-</td><td>6,163 B</td><td>0.0029</td><td>104 B</td>
-</tr><tr><td>GetCountries</td><td>19.38 ns</td><td>0.216 ns</td><td>0.203 ns</td><td>0.052 ns</td><td>18.96 ns</td><td>19.23 ns</td><td>19.42 ns</td><td>19.54 ns</td><td>19.61 ns</td><td>51,604,218.9</td><td>7.474 ns</td><td>15.00</td><td>No</td><td>-</td><td>194 B</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>840.25 ns</td><td>3.495 ns</td><td>3.269 ns</td><td>0.844 ns</td><td>835.88 ns</td><td>837.60 ns</td><td>840.35 ns</td><td>842.61 ns</td><td>845.67 ns</td><td>1,190,125.4</td><td>7.078 ns</td><td>15.00</td><td>No</td><td>-</td><td>1,769 B</td><td>0.0010</td><td>32 B</td>
+</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>626.64 ns</td><td>3.724 ns</td><td>3.110 ns</td><td>0.862 ns</td><td>622.64 ns</td><td>624.27 ns</td><td>626.78 ns</td><td>628.20 ns</td><td>633.23 ns</td><td>1,595,812.1</td><td>6.069 ns</td><td>13.00</td><td>No</td><td>-</td><td>6,160 B</td><td>0.0029</td><td>104 B</td>
+</tr><tr><td>GetCountries</td><td>18.96 ns</td><td>0.156 ns</td><td>0.146 ns</td><td>0.038 ns</td><td>18.76 ns</td><td>18.85 ns</td><td>18.96 ns</td><td>19.02 ns</td><td>19.23 ns</td><td>52,752,725.4</td><td>7.481 ns</td><td>15.00</td><td>No</td><td>-</td><td>194 B</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

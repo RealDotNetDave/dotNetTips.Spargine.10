@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark-20260715-164519</title>
+<title>DotNetTips.Spargine.BenchmarkTests.Net.Http.HttpClientHelperBenchmark-20260807-162811</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -26,8 +26,8 @@ Categories=IO
 <table>
 <thead><tr><th>Method                                 </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CreateOptimizedHttpClient()</td><td>216.0 ns</td><td>4.26 ns</td><td>4.91 ns</td><td>1.10 ns</td><td>203.8 ns</td><td>214.3 ns</td><td>217.7 ns</td><td>219.3 ns</td><td>220.5 ns</td><td>4,630,485.8</td><td>9.451 ns</td><td>20.00</td><td>No</td><td>-</td><td>0.0167</td><td>4,692 B</td><td>0.0005</td><td>0.0005</td><td>800 B</td>
-</tr><tr><td>CreateOptimizedHttpClient(HttpClientOptions?)</td><td>212.1 ns</td><td>4.21 ns</td><td>3.94 ns</td><td>1.02 ns</td><td>200.4 ns</td><td>211.9 ns</td><td>213.1 ns</td><td>214.5 ns</td><td>216.3 ns</td><td>4,714,675.7</td><td>6.992 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.0153</td><td>4,679 B</td><td>0.0005</td><td>0.0005</td><td>800 B</td>
+</thead><tbody><tr><td>CreateOptimizedHttpClient()</td><td>218.7 ns</td><td>4.34 ns</td><td>6.37 ns</td><td>1.18 ns</td><td>204.1 ns</td><td>217.0 ns</td><td>219.6 ns</td><td>222.8 ns</td><td>230.8 ns</td><td>4,572,555.0</td><td>13.91 ns</td><td>29.00</td><td>No</td><td>-</td><td>0.0162</td><td>4,671 B</td><td>0.0005</td><td>0.0005</td><td>800 B</td>
+</tr><tr><td>CreateOptimizedHttpClient(HttpClientOptions?)</td><td>213.2 ns</td><td>4.29 ns</td><td>6.01 ns</td><td>1.16 ns</td><td>198.6 ns</td><td>212.0 ns</td><td>215.4 ns</td><td>216.7 ns</td><td>220.4 ns</td><td>4,691,321.6</td><td>12.92 ns</td><td>27.00</td><td>No</td><td>-</td><td>0.0162</td><td>4,702 B</td><td>0.0005</td><td>0.0005</td><td>800 B</td>
 </tr></tbody></table>
 </body>
 </html>

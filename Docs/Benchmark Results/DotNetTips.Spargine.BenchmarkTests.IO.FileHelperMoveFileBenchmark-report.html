@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark-20260715-165659</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperMoveFileBenchmark-20260807-163935</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -24,9 +24,9 @@ InvocationCount=1  UnrollFactor=1  Categories=IO
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min   </th><th>Q1    </th><th>Q3    </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>MoveFile</td><td>888,667.0 ns</td><td>17,575.1 ns</td><td>34,279.0 ns</td><td>5,000.1 ns</td><td>824,750.0 ns</td><td>867,800.0 ns</td><td>882,650.0 ns</td><td>906,000.0 ns</td><td>973,850.0 ns</td><td>1,125.3</td><td>-2,476.6 ns</td><td>47.00</td><td>No</td><td>-</td><td>580 B</td><td>696 B</td>
+</thead><tbody><tr><td>MoveFile</td><td>919,318.4 ns</td><td>34,286.4 ns</td><td>93,858.5 ns</td><td>10,062.7 ns</td><td>885,500.0 ns</td><td>834,000.0 ns</td><td>860,450.0 ns</td><td>923,750.0 ns</td><td>1,209,300.0 ns</td><td>1,087.8</td><td>-4,987.8 ns</td><td>87.00</td><td>No</td><td>-</td><td>580 B</td><td>696 B</td>
 </tr></tbody></table>
 </body>
 </html>

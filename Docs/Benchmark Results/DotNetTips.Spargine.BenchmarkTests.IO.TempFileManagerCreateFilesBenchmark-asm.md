@@ -11,12 +11,12 @@
        mov       rax,[rbp+10]
        mov       rcx,[rax+198]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E8E0A0]; DotNetTips.Spargine.IO.TempFileManager.CreateFile()
+       call      qword ptr [7FFB3560E400]; DotNetTips.Spargine.IO.TempFileManager.CreateFile()
        mov       [rbp-8],rax
        mov       rcx,[rbp+10]
        mov       r8,[rbp-8]
-       mov       rdx,7FF9C1EDF640
-       call      qword ptr [7FF9C1E8E070]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
+       mov       rdx,7FFB35662E18
+       call      qword ptr [7FFB3560E3D0]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
        nop
        add       rsp,30
        pop       rbp
@@ -37,13 +37,13 @@
        xor       eax,eax
        mov       [rbp-8],rax
        mov       [rbp+10],rcx
-       call      qword ptr [7FF9C1E8E0B8]; DotNetTips.Spargine.IO.TempFileManager.GenerateRandomFile()
+       call      qword ptr [7FFB3560E418]; DotNetTips.Spargine.IO.TempFileManager.GenerateRandomFile()
        mov       [rbp-8],rax
        mov       rax,[rbp+10]
        mov       rcx,[rax+8]
        mov       rdx,[rbp-8]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E8E0D0]; System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].Add(System.__Canon)
+       call      qword ptr [7FFB3560E430]; System.Collections.Concurrent.ConcurrentBag`1[[System.__Canon, System.Private.CoreLib]].Add(System.__Canon)
        mov       rax,[rbp-8]
        add       rsp,30
        pop       rbp
@@ -72,18 +72,18 @@
        jmp       short M02_L01
 M02_L00:
        mov       rcx,[rbp+18]
-       mov       rdx,7FF9C1EE30B0
-       call      qword ptr [7FF9C1A87B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
+       mov       rdx,7FFB356541A0
+       call      qword ptr [7FFB351F7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
        mov       [rbp-10],rax
 M02_L01:
        mov       rcx,[rbp+10]
-       call      qword ptr [7FF9C1E8E6D0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
+       call      qword ptr [7FFB3560EA30]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        lea       r8,[rbp+20]
        mov       rdx,[rbp-10]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E8E688]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
+       call      qword ptr [7FFB3560E9E8]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
        nop
        add       rsp,40
        pop       rbp
@@ -110,12 +110,12 @@ M02_L01:
        lea       rdx,[rbp-10]
        mov       rcx,[rbp-18]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E6E178]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
+       call      qword ptr [7FFB355FE148]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
        mov       [rbp-8],rax
        mov       rcx,[rbp+10]
        mov       r8,[rbp-8]
-       mov       rdx,7FF9C1EBC170
-       call      qword ptr [7FF9C1E6E148]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
+       mov       rdx,7FFB3564C160
+       call      qword ptr [7FFB355FE118]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
        nop
        add       rsp,40
        pop       rbp
@@ -138,19 +138,19 @@ M02_L01:
        mov       [rbp-14],eax
        xor       eax,eax
        mov       [rbp-10],rax
-       mov       rax,27B9A5D0008
+       mov       rax,247BD920008
        mov       [rsp+20],rax
-       mov       rax,27B9A5D3620
+       mov       rax,247BD923620
        mov       [rsp+28],rax
        lea       r9,[rbp-10]
        mov       ecx,[rbp-14]
        mov       edx,1
        mov       r8d,7FFFFFFF
-       call      qword ptr [7FF9C1DDF750]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)
+       call      qword ptr [7FFB3556F750]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)
        mov       [rbp-4],eax
 ; 		var parallelThreshold = Environment.ProcessorCount * 2;
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       call      qword ptr [7FF9C1A6D980]; System.Environment.get_ProcessorCount()
+       call      qword ptr [7FFB351FD980]; System.Environment.get_ProcessorCount()
        imul      eax,2
        jo        short M01_L01
        mov       [rbp-8],eax
@@ -165,7 +165,7 @@ M02_L01:
        jl        short M01_L00
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FF9C1E6E190]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesParallel(Int32)
+       call      qword ptr [7FFB355FE160]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesParallel(Int32)
        nop
        add       rsp,50
        pop       rbp
@@ -173,7 +173,7 @@ M02_L01:
 M01_L00:
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FF9C1E6E1A8]
+       call      qword ptr [7FFB355FE178]
        nop
        add       rsp,50
        pop       rbp
@@ -205,18 +205,18 @@ M01_L01:
        jmp       short M02_L01
 M02_L00:
        mov       rcx,[rbp+18]
-       mov       rdx,7FF9C1ECBA88
-       call      qword ptr [7FF9C1A67B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
+       mov       rdx,7FFB3565BA88
+       call      qword ptr [7FFB351F7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
        mov       [rbp-10],rax
 M02_L01:
        mov       rcx,[rbp+10]
-       call      qword ptr [7FF9C1EF4498]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
+       call      qword ptr [7FFB35684450]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        lea       r8,[rbp+20]
        mov       rdx,[rbp-10]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1EF4450]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
+       call      qword ptr [7FFB35684408]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
        nop
        add       rsp,40
        pop       rbp
@@ -243,12 +243,12 @@ M02_L01:
        lea       rdx,[rbp-10]
        mov       rcx,[rbp-18]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E7E508]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
+       call      qword ptr [7FFB356269E8]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
        mov       [rbp-8],rax
        mov       rcx,[rbp+10]
        mov       r8,[rbp-8]
-       mov       rdx,7FF9C1EDC518
-       call      qword ptr [7FF9C1E7E4D8]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
+       mov       rdx,7FFB35657CB8
+       call      qword ptr [7FFB356269B8]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
        nop
        add       rsp,40
        pop       rbp
@@ -279,38 +279,38 @@ M02_L01:
        mov       [rbp-14],eax
        xor       eax,eax
        mov       [rbp-10],rax
-       mov       rax,1F057550008
+       mov       rax,1EECDAD0008
        mov       [rsp+20],rax
-       mov       rax,1F057553620
+       mov       rax,1EECDAD3620
        mov       [rsp+28],rax
        lea       r9,[rbp-10]
        mov       ecx,[rbp-14]
        mov       edx,1
        mov       r8d,7FFFFFFF
-       call      qword ptr [7FF9C1DDFC00]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)
+       call      qword ptr [7FFB355A7F78]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)
        mov       [rbp-4],eax
-       call      qword ptr [7FF9C1A6D980]; System.Environment.get_ProcessorCount()
+       call      qword ptr [7FFB3523D980]; System.Environment.get_ProcessorCount()
        imul      eax,2
        jo        short M01_L01
        mov       [rbp-8],eax
        mov       eax,[rbp-4]
        cmp       eax,[rbp-8]
        jl        short M01_L00
-       mov       rcx,7FF9C20799F8
+       mov       rcx,7FFB35830880
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FF9C1E7E520]
+       call      qword ptr [7FFB35626A00]
        nop
        add       rsp,50
        pop       rbp
        ret
 M01_L00:
-       mov       rcx,7FF9C20799FC
+       mov       rcx,7FFB35830884
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FF9C1E7E538]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesSequential(Int32)
+       call      qword ptr [7FFB35626A18]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesSequential(Int32)
        nop
        add       rsp,50
        pop       rbp
@@ -342,18 +342,18 @@ M01_L01:
        jmp       short M02_L01
 M02_L00:
        mov       rcx,[rbp+18]
-       mov       rdx,7FF9C1EC5B90
-       call      qword ptr [7FF9C1A67B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
+       mov       rdx,7FFB35660AA0
+       call      qword ptr [7FFB35237B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)
        mov       [rbp-10],rax
 M02_L01:
        mov       rcx,[rbp+10]
-       call      qword ptr [7FF9C1E7EBB0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
+       call      qword ptr [7FFB35627090]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
        lea       r8,[rbp+20]
        mov       rdx,[rbp-10]
        cmp       [rcx],ecx
-       call      qword ptr [7FF9C1E7EB68]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
+       call      qword ptr [7FFB35627048]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)
        nop
        add       rsp,40
        pop       rbp
