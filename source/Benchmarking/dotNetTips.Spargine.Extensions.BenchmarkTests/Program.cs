@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-08-2026
+// Last Modified On : 08-09-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -48,41 +48,41 @@ internal sealed class Program
 		//);
 
 		// Group 1: A–D - 9:30 hours, 991 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(ArrayExtensionsCollectionBenchmark),
-		 typeof(ArrayExtensionsSliceBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(AssemblyExtensionsBenchmark),
-			typeof(CharacterExtensionsBenchmark),
-			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			typeof(ConcurrentBagExtensionsCollectionBenchmark),
-			typeof(DataContextExtensionsBenchmark),
-			typeof(DataReaderExtensionsBenchmark),
-			typeof(DataTableExtensionsBenchmark),
-			typeof(DateTimeExtensionsBenchmark),
-			typeof(DbContextExtensionsBenchmark),
-			typeof(DictionaryExtensionsCollectionBenchmark),
-			typeof(DictionaryExtensionsMutatingCollectionBenchmark),
-			typeof(DirectoryInfoExtensionsBenchmark)
-		);
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(ArrayExtensionsCollectionBenchmark),
+		// typeof(ArrayExtensionsSliceBenchmark),
+		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
+		//	typeof(AssemblyExtensionsBenchmark),
+		//	typeof(CharacterExtensionsBenchmark),
+		//	typeof(CollectionExtensionsCollectionBenchmark),
+		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
+		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
+		//	typeof(DataContextExtensionsBenchmark),
+		//	typeof(DataReaderExtensionsBenchmark),
+		//	typeof(DataTableExtensionsBenchmark),
+		//	typeof(DateTimeExtensionsBenchmark),
+		//	typeof(DbContextExtensionsBenchmark),
+		//	typeof(DictionaryExtensionsCollectionBenchmark),
+		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark),
+		//	typeof(DirectoryInfoExtensionsBenchmark)
+		//);
 
 		// Group 2: E–H - 10:30 hours, 950 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(EfCoreModelBuilderExtensionsBenchmark),
-		// typeof(EnumExtensionsBenchmark),
-		//	typeof(EnumerableExtensionsCollectionBenchmark),
-		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
-		//	typeof(EnumerableExtensionsCountCollectionBenchmark),
-		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
-		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-		//	typeof(ExceptionExtensionsBenchmark),
-		//	typeof(FileInfoExtensionsBenchmark),
-		//	typeof(HashSetExtensionsCollectionBenchmark),
-		//	typeof(HttpClientExtensionsBenchmark),
-		//	typeof(HttpRequestExtensionsBenchmark),
-		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+		 typeof(EfCoreModelBuilderExtensionsBenchmark),
+		 typeof(EnumExtensionsBenchmark),
+			typeof(EnumerableExtensionsCollectionBenchmark),
+			typeof(EnumerableExtensionsConvertingCollectionBenchmark),
+			typeof(EnumerableExtensionsCountCollectionBenchmark),
+			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+			typeof(ExceptionExtensionsBenchmark),
+			typeof(FileInfoExtensionsBenchmark),
+			typeof(HashSetExtensionsCollectionBenchmark),
+			typeof(HttpClientExtensionsBenchmark),
+			typeof(HttpRequestExtensionsBenchmark),
+			typeof(HashSetExtensionsMutatingCollectionBenchmark)
+		);
 
 		// Group 3: L–T - 11 hours, 1,372 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
