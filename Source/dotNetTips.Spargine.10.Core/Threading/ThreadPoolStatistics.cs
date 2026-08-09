@@ -4,7 +4,7 @@
 // Created          : 08-04-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-04-2026
+// Last Modified On : 08-09-2026
 // ***********************************************************************
 // <copyright file="ThreadPoolStatistics.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,5 +25,5 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// <param name="MinCompletionPortThreads">The minimum number of asynchronous I/O threads the thread pool creates on demand.</param>
 /// <param name="MaxCompletionPortThreads">The maximum number of asynchronous I/O threads in the thread pool.</param>
 /// <param name="AvailableCompletionPortThreads">The number of additional asynchronous I/O threads that can be started.</param>
-[Information(description: nameof(ThreadPoolStatistics), Status = Status.NeedsDocumentation)]
+[Information(description: nameof(ThreadPoolStatistics), Status = Status.Available)]
 public readonly record struct ThreadPoolStatistics(int ThreadCount, long PendingWorkItemCount, long CompletedWorkItemCount, int MinWorkerThreads, int MaxWorkerThreads, int AvailableWorkerThreads, int MinCompletionPortThreads, int MaxCompletionPortThreads, int AvailableCompletionPortThreads);
