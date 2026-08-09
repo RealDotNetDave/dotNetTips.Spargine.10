@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataReaderExtensionsBenchmark-20260723-045331</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataReaderExtensionsBenchmark-20260808-210221</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -26,8 +26,8 @@ Categories=IO
 <table>
 <thead><tr><th>Method           </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;ToCsv: With Header&#39;</td><td>66,893.5 ns</td><td>209.4 ns</td><td>185.6 ns</td><td>49.60 ns</td><td>66,585.0 ns</td><td>66,760.5 ns</td><td>66,883.3 ns</td><td>66,968.8 ns</td><td>67,247.0 ns</td><td>14,949.1</td><td>-17.80 ns</td><td>14.00</td><td>No</td><td>-</td><td>1.0986</td><td>13,919 B</td><td>32.89 KB</td>
-</tr><tr><td>&#39;ToCsv: Without Header&#39;</td><td>68,422.9 ns</td><td>229.5 ns</td><td>203.5 ns</td><td>54.38 ns</td><td>68,080.8 ns</td><td>68,273.7 ns</td><td>68,484.4 ns</td><td>68,508.2 ns</td><td>68,799.7 ns</td><td>14,615.0</td><td>-20.19 ns</td><td>14.00</td><td>No</td><td>-</td><td>1.0986</td><td>10,634 B</td><td>32.81 KB</td>
+</thead><tbody><tr><td>&#39;ToCsv: With Header&#39;</td><td>66,174.1 ns</td><td>259.0 ns</td><td>229.6 ns</td><td>61.37 ns</td><td>65,769.2 ns</td><td>66,079.0 ns</td><td>66,125.6 ns</td><td>66,357.0 ns</td><td>66,616.0 ns</td><td>15,111.6</td><td>-23.68 ns</td><td>14.00</td><td>No</td><td>-</td><td>1.0986</td><td>13,916 B</td><td>32.87 KB</td>
+</tr><tr><td>&#39;ToCsv: Without Header&#39;</td><td>69,656.2 ns</td><td>736.7 ns</td><td>615.2 ns</td><td>170.63 ns</td><td>68,641.7 ns</td><td>69,091.8 ns</td><td>69,879.2 ns</td><td>69,926.0 ns</td><td>71,061.4 ns</td><td>14,356.2</td><td>-78.82 ns</td><td>13.00</td><td>No</td><td>-</td><td>1.0986</td><td>10,697 B</td><td>32.79 KB</td>
 </tr></tbody></table>
 </body>
 </html>

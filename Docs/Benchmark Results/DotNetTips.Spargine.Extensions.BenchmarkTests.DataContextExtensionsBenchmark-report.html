@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataContextExtensionsBenchmark-20260723-044945</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataContextExtensionsBenchmark-20260808-205847</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -26,14 +26,14 @@ InvocationCount=1  UnrollFactor=1  Categories=IO
 <table>
 <thead><tr><th>Method                         </th><th>Mean      </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Median    </th><th>Min       </th><th>Q1        </th><th>Q3        </th><th>Max       </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetRecordCountAsync: no predicate&#39;</td><td>1,201,397.8 ns</td><td>55,802.5 ns</td><td>157,392.0 ns</td><td>16,409.3 ns</td><td>1,130,500.0 ns</td><td>1,038,400.0 ns</td><td>1,087,750.0 ns</td><td>1,295,100.0 ns</td><td>1,689,100.0 ns</td><td>832.364</td><td>-8,158.6 ns</td><td>92.00</td><td>No</td><td>8,347 B</td><td>-</td><td>-</td><td>-</td><td>79.59 KB</td>
-</tr><tr><td>&#39;GetRecordCountAsync: with predicate&#39;</td><td>3,270,635.7 ns</td><td>140,781.8 ns</td><td>394,767.4 ns</td><td>41,382.9 ns</td><td>3,123,050.0 ns</td><td>2,901,350.0 ns</td><td>2,999,850.0 ns</td><td>3,358,200.0 ns</td><td>4,476,950.0 ns</td><td>305.751</td><td>-20,645.9 ns</td><td>91.00</td><td>No</td><td>7,355 B</td><td>-</td><td>-</td><td>-</td><td>249.59 KB</td>
-</tr><tr><td>&#39;HasRecordsAsync: no predicate&#39;</td><td>1,105,781.9 ns</td><td>60,673.3 ns</td><td>173,104.3 ns</td><td>17,854.3 ns</td><td>1,049,750.0 ns</td><td>897,100.0 ns</td><td>981,425.0 ns</td><td>1,206,350.0 ns</td><td>1,667,300.0 ns</td><td>904.337</td><td>-8,880.2 ns</td><td>94.00</td><td>No</td><td>8,588 B</td><td>-</td><td>-</td><td>-</td><td>104.9 KB</td>
-</tr><tr><td>&#39;HasRecordsAsync: with predicate&#39;</td><td>3,000,038.2 ns</td><td>69,883.6 ns</td><td>193,647.2 ns</td><td>20,526.6 ns</td><td>2,925,600.0 ns</td><td>2,769,200.0 ns</td><td>2,868,400.0 ns</td><td>3,095,000.0 ns</td><td>3,656,100.0 ns</td><td>333.329</td><td>-10,218.8 ns</td><td>89.00</td><td>No</td><td>7,342 B</td><td>-</td><td>-</td><td>-</td><td>179.01 KB</td>
-</tr><tr><td>DeleteCollectionAsync</td><td>135,939,803.8 ns</td><td>2,588,029.3 ns</td><td>2,161,121.7 ns</td><td>599,387.3 ns</td><td>136,128,750.0 ns</td><td>131,507,450.0 ns</td><td>134,909,750.0 ns</td><td>137,358,450.0 ns</td><td>139,414,350.0 ns</td><td>7.356</td><td>-299,687.2 ns</td><td>13.00</td><td>No</td><td>226 B</td><td>-</td><td>-</td><td>-</td><td>153.52 KB</td>
-</tr><tr><td>ExecuteInTransactionAsync</td><td>256,852.9 ns</td><td>14,219.2 ns</td><td>38,924.7 ns</td><td>4,173.2 ns</td><td>242,200.0 ns</td><td>211,900.0 ns</td><td>231,500.0 ns</td><td>270,100.0 ns</td><td>391,400.0 ns</td><td>3,893.279</td><td>-2,043.1 ns</td><td>87.00</td><td>No</td><td>628 B</td><td>-</td><td>-</td><td>-</td><td>5.54 KB</td>
-</tr><tr><td>InsertCollectionAsync</td><td>137,380,630.8 ns</td><td>2,202,173.7 ns</td><td>1,838,914.8 ns</td><td>510,023.2 ns</td><td>137,124,200.0 ns</td><td>134,731,600.0 ns</td><td>136,596,700.0 ns</td><td>138,082,700.0 ns</td><td>141,362,700.0 ns</td><td>7.279</td><td>-255,005.1 ns</td><td>13.00</td><td>No</td><td>226 B</td><td>-</td><td>-</td><td>-</td><td>293.49 KB</td>
-</tr><tr><td>UpsertCollectionAsync</td><td>4,393,385.0 ns</td><td>70,685.3 ns</td><td>125,643.0 ns</td><td>19,865.9 ns</td><td>4,354,600.0 ns</td><td>4,214,400.0 ns</td><td>4,309,475.0 ns</td><td>4,470,975.0 ns</td><td>4,754,000.0 ns</td><td>227.615</td><td>-9,913.0 ns</td><td>40.00</td><td>No</td><td>224 B</td><td>-</td><td>-</td><td>-</td><td>338.18 KB</td>
+</thead><tbody><tr><td>&#39;GetRecordCountAsync: no predicate&#39;</td><td>1,258,400.5 ns</td><td>76,896.3 ns</td><td>223,090.1 ns</td><td>22,651.4 ns</td><td>1,175,250.0 ns</td><td>961,350.0 ns</td><td>1,098,550.0 ns</td><td>1,375,750.0 ns</td><td>1,838,250.0 ns</td><td>794.660</td><td>-11,277.2 ns</td><td>97.00</td><td>No</td><td>8,321 B</td><td>-</td><td>-</td><td>-</td><td>79.59 KB</td>
+</tr><tr><td>&#39;GetRecordCountAsync: with predicate&#39;</td><td>3,199,881.5 ns</td><td>99,900.2 ns</td><td>276,823.0 ns</td><td>29,343.2 ns</td><td>3,101,750.0 ns</td><td>2,910,450.0 ns</td><td>3,034,250.0 ns</td><td>3,268,450.0 ns</td><td>4,146,150.0 ns</td><td>312.512</td><td>-14,627.1 ns</td><td>89.00</td><td>No</td><td>7,329 B</td><td>-</td><td>-</td><td>-</td><td>249.66 KB</td>
+</tr><tr><td>&#39;HasRecordsAsync: no predicate&#39;</td><td>1,174,670.2 ns</td><td>83,260.1 ns</td><td>244,187.5 ns</td><td>24,541.8 ns</td><td>1,065,650.0 ns</td><td>923,350.0 ns</td><td>982,300.0 ns</td><td>1,314,250.0 ns</td><td>1,816,550.0 ns</td><td>851.303</td><td>-12,221.4 ns</td><td>99.00</td><td>No</td><td>8,612 B</td><td>-</td><td>-</td><td>-</td><td>104.81 KB</td>
+</tr><tr><td>&#39;HasRecordsAsync: with predicate&#39;</td><td>2,983,427.5 ns</td><td>78,057.3 ns</td><td>218,881.0 ns</td><td>22,945.0 ns</td><td>2,912,400.0 ns</td><td>2,717,300.0 ns</td><td>2,821,100.0 ns</td><td>3,092,850.0 ns</td><td>3,672,500.0 ns</td><td>335.185</td><td>-11,427.0 ns</td><td>91.00</td><td>No</td><td>7,311 B</td><td>-</td><td>-</td><td>-</td><td>178.55 KB</td>
+</tr><tr><td>DeleteCollectionAsync</td><td>137,023,063.6 ns</td><td>2,668,961.1 ns</td><td>3,277,724.2 ns</td><td>698,813.2 ns</td><td>136,758,400.0 ns</td><td>131,867,550.0 ns</td><td>135,351,450.0 ns</td><td>139,754,025.0 ns</td><td>142,354,950.0 ns</td><td>7.298</td><td>-349,395.6 ns</td><td>22.00</td><td>No</td><td>224 B</td><td>-</td><td>-</td><td>-</td><td>153.5 KB</td>
+</tr><tr><td>ExecuteInTransactionAsync</td><td>294,442.6 ns</td><td>18,943.4 ns</td><td>54,046.5 ns</td><td>5,574.5 ns</td><td>273,450.0 ns</td><td>214,850.0 ns</td><td>258,675.0 ns</td><td>330,950.0 ns</td><td>460,550.0 ns</td><td>3,396.248</td><td>-2,740.2 ns</td><td>94.00</td><td>No</td><td>666 B</td><td>-</td><td>-</td><td>-</td><td>5.54 KB</td>
+</tr><tr><td>InsertCollectionAsync</td><td>138,148,823.3 ns</td><td>2,736,480.6 ns</td><td>2,559,705.7 ns</td><td>660,913.2 ns</td><td>138,833,850.0 ns</td><td>133,387,950.0 ns</td><td>136,576,250.0 ns</td><td>139,768,200.0 ns</td><td>142,788,950.0 ns</td><td>7.239</td><td>-330,449.1 ns</td><td>15.00</td><td>No</td><td>226 B</td><td>-</td><td>-</td><td>-</td><td>293.39 KB</td>
+</tr><tr><td>UpsertCollectionAsync</td><td>4,463,240.2 ns</td><td>75,515.1 ns</td><td>136,169.4 ns</td><td>21,266.1 ns</td><td>4,436,950.0 ns</td><td>4,316,350.0 ns</td><td>4,362,050.0 ns</td><td>4,507,050.0 ns</td><td>4,983,350.0 ns</td><td>224.052</td><td>-10,612.5 ns</td><td>41.00</td><td>No</td><td>224 B</td><td>-</td><td>-</td><td>-</td><td>338.18 KB</td>
 </tr></tbody></table>
 </body>
 </html>

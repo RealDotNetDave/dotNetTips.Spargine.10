@@ -74,8 +74,8 @@ M00_L01:
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark.IsDBNullNonDbNullValue()
-       mov       rax,1FEC6000238
-       mov       rdx,23F5AF54EE8
+       mov       rax,22DC3400238
+       mov       rdx,26E58384EE8
        cmp       [rax],rdx
        sete      al
        movzx     eax,al
