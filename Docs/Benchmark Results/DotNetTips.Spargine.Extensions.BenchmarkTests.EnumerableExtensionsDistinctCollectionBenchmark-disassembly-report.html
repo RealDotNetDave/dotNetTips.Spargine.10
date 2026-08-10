@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark-20260725-001152</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark-20260809-211109</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -501,16 +501,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D4E777
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D4E770
+ja        short 00007FF8E489C597
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E489C590
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D4E76B
+jmp       short 00007FF8E489C58B
 add       rsp,28
-jmp       qword ptr [7FF8C5B9F210]
+jmp       qword ptr [7FF8E46EED60]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -575,16 +575,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D3DF97
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D3DF90
+ja        short 00007FF8E48BC5B7
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48BC5B0
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D3DF8B
+jmp       short 00007FF8E48BC5AB
 add       rsp,28
-jmp       qword ptr [7FF8C5B8ED78]
+jmp       qword ptr [7FF8E470ED60]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -649,16 +649,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D3DA77
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D3DA70
+ja        short 00007FF8E48BE997
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48BE990
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D3DA6B
+jmp       short 00007FF8E48BE98B
 add       rsp,28
-jmp       qword ptr [7FF8C5B8ED78]
+jmp       qword ptr [7FF8E470F1F8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -723,16 +723,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D3E717
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D3E710
+ja        short 00007FF8E48AC937
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48AC930
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D3E70B
+jmp       short 00007FF8E48AC92B
 add       rsp,28
-jmp       qword ptr [7FF8C5B8F210]
+jmp       qword ptr [7FF8E46FED60]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -797,90 +797,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D1DA77
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D1DA70
+ja        short 00007FF8E48AD257
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48AD250
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D1DA6B
+jmp       short 00007FF8E48AD24B
 add       rsp,28
-jmp       qword ptr [7FF8C5B6ED78]
-
-</code></pre></td>
-<td style="vertical-align:top;"><pre><code>
-DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-push      rdi
-push      rsi
-push      rbx
-sub       rsp,80
-xor       eax,eax
-mov       [rsp+28],rax
-vxorps    xmm4,xmm4,xmm4
-vmovdqu   ymmword ptr [rsp+30],ymm4
-vmovdqu   ymmword ptr [rsp+50],ymm4
-vmovdqa   xmmword ptr [rsp+70],xmm4
-mov       rbx,rcx
-mov       rsi,[rbx+2E0]
-vmovdqu   ymm0,ymmword ptr [rbx+0B0]
-vmovdqu   ymmword ptr [rsp+30],ymm0
-vmovdqu   ymm0,ymmword ptr [rbx+0D0]
-vmovdqu   ymmword ptr [rsp+50],ymm0
-vmovdqu   xmm0,xmmword ptr [rbx+0F0]
-vmovdqu   xmmword ptr [rsp+70],xmm0
-mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rdi,rax
-mov       dword ptr [rdi+20],0FFFFFFFE
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rdi+24],eax
-lea       rcx,[rdi+10]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-lea       rcx,[rdi+0C8]
-cmp       [rcx],cl
-lea       rdx,[rsp+30]
-mov       r8d,50
-vzeroupper
-call      qword ptr [7FF8C55F57A0]
-mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rsi,rax
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rsi+8],eax
-lea       rcx,[rsi+60]
-mov       rdx,rdi
-call      CORINFO_HELP_ASSIGN_REF
-xor       ecx,ecx
-mov       [rsi+68],rcx
-mov       [rsp+28],rsi
-mov       rbx,[rbx+88]
-mov       rdx,[rsp+28]
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-xor       eax,eax
-mov       [rbx+8],rax
-vzeroupper
-add       rsp,80
-pop       rbx
-pop       rsi
-pop       rdi
-ret
-
-System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-sub       rsp,28
-cmp       r8,4000
-ja        short 00007FF8C5D6FFA7
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D6FFA0
-add       rsp,28
-ret
-call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D6FF9B
-add       rsp,28
-jmp       qword ptr [7FF8C5CFC2E8]
+jmp       qword ptr [7FF8E46FF1F8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -945,16 +871,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D20D97
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D20D90
+ja        short 00007FF8E48AC557
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48AC550
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D20D8B
+jmp       short 00007FF8E48AC54B
 add       rsp,28
-jmp       qword ptr [7FF8C5B8F210]
+jmp       qword ptr [7FF8E46FED60]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1019,16 +945,90 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5668E57
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5668E50
+ja        short 00007FF8E48C9D17
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48C9D10
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5668E4B
+jmp       short 00007FF8E48C9D0B
 add       rsp,28
-jmp       qword ptr [7FF8C5B7ED78]
+jmp       qword ptr [7FF8E4786970]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,80
+xor       eax,eax
+mov       [rsp+28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+30],ymm4
+vmovdqu   ymmword ptr [rsp+50],ymm4
+vmovdqa   xmmword ptr [rsp+70],xmm4
+mov       rbx,rcx
+mov       rsi,[rbx+2E0]
+vmovdqu   ymm0,ymmword ptr [rbx+0B0]
+vmovdqu   ymmword ptr [rsp+30],ymm0
+vmovdqu   ymm0,ymmword ptr [rbx+0D0]
+vmovdqu   ymmword ptr [rsp+50],ymm0
+vmovdqu   xmm0,xmmword ptr [rbx+0F0]
+vmovdqu   xmmword ptr [rsp+70],xmm0
+mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       dword ptr [rdi+20],0FFFFFFFE
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rdi+24],eax
+lea       rcx,[rdi+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[rdi+0C8]
+cmp       [rcx],cl
+lea       rdx,[rsp+30]
+mov       r8d,50
+vzeroupper
+call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rsi+8],eax
+lea       rcx,[rsi+60]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rsi+68],rcx
+mov       [rsp+28],rsi
+mov       rbx,[rbx+88]
+mov       rdx,[rsp+28]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+vzeroupper
+add       rsp,80
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+
+System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+sub       rsp,28
+cmp       r8,4000
+ja        short 00007FF8E48B15C7
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48B15C0
+add       rsp,28
+ret
+call      CORINFO_HELP_POLL_GC
+jmp       short 00007FF8E48B15BB
+add       rsp,28
+jmp       qword ptr [7FF8E47A6C88]
 
 </code></pre></td>
 </tr>
@@ -1528,7 +1528,7 @@ cmp       [rcx],cl
 lea       rdx,[rsp+28]
 mov       r8d,50
 vzeroupper
-call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+call      qword ptr [7FF8E41657A0]
 mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
 call      CORINFO_HELP_NEWSFAST
 mov       rsi,rax
@@ -1561,16 +1561,96 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D4E797
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D4E790
+ja        short 00007FF8E48880B7
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48880B0
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D4E78B
+jmp       short 00007FF8E48880AB
 add       rsp,28
-jmp       qword ptr [7FF8C5B9F210]
+jmp       qword ptr [7FF8E494CD50]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,78
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+20],ymm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqa   xmmword ptr [rsp+60],xmm4
+xor       eax,eax
+mov       [rsp+70],rax
+mov       rbx,rcx
+mov       rsi,[rbx+2E0]
+vmovdqu   ymm0,ymmword ptr [rbx+0B0]
+vmovdqu   ymmword ptr [rsp+28],ymm0
+vmovdqu   ymm0,ymmword ptr [rbx+0D0]
+vmovdqu   ymmword ptr [rsp+48],ymm0
+vmovdqu   xmm0,xmmword ptr [rbx+0F0]
+vmovdqu   xmmword ptr [rsp+68],xmm0
+mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       dword ptr [rdi+20],0FFFFFFFE
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rdi+24],eax
+lea       rcx,[rdi+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[rdi+0C8]
+cmp       [rcx],cl
+lea       rdx,[rsp+28]
+mov       r8d,50
+vzeroupper
+call      qword ptr [7FF8E41557A0]
+mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rbp+8],eax
+lea       rcx,[rbp+60]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[rbp+68]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rsp+20],rbp
+mov       rbx,[rbx+88]
+mov       rdx,[rsp+20]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+vzeroupper
+add       rsp,78
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+
+System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+sub       rsp,28
+cmp       r8,4000
+ja        short 00007FF8E4866E97
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E4866E90
+add       rsp,28
+ret
+call      CORINFO_HELP_POLL_GC
+jmp       short 00007FF8E4866E8B
+add       rsp,28
+jmp       qword ptr [7FF8E493CC48]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1641,16 +1721,96 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D2DA97
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D2DA90
+ja        short 00007FF8E48CC617
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48CC610
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D2DA8B
+jmp       short 00007FF8E48CC60B
 add       rsp,28
-jmp       qword ptr [7FF8C5B7ED78]
+jmp       qword ptr [7FF8E471ED60]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,78
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+20],ymm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+vmovdqa   xmmword ptr [rsp+60],xmm4
+xor       eax,eax
+mov       [rsp+70],rax
+mov       rbx,rcx
+mov       rsi,[rbx+2E0]
+vmovdqu   ymm0,ymmword ptr [rbx+0B0]
+vmovdqu   ymmword ptr [rsp+28],ymm0
+vmovdqu   ymm0,ymmword ptr [rbx+0D0]
+vmovdqu   ymmword ptr [rsp+48],ymm0
+vmovdqu   xmm0,xmmword ptr [rbx+0F0]
+vmovdqu   xmmword ptr [rsp+68],xmm0
+mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       dword ptr [rdi+20],0FFFFFFFE
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rdi+24],eax
+lea       rcx,[rdi+10]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[rdi+0C8]
+cmp       [rcx],cl
+lea       rdx,[rsp+28]
+mov       r8d,50
+vzeroupper
+call      qword ptr [7FF8E41657A0]
+mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+call      CORINFO_HELP_NEWSFAST
+mov       rbp,rax
+call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+mov       [rbp+8],eax
+lea       rcx,[rbp+60]
+mov       rdx,rdi
+call      CORINFO_HELP_ASSIGN_REF
+lea       rcx,[rbp+68]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rsp+20],rbp
+mov       rbx,[rbx+88]
+mov       rdx,[rsp+20]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+vzeroupper
+add       rsp,78
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+ret
+
+System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+sub       rsp,28
+cmp       r8,4000
+ja        short 00007FF8E48CA727
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48CA720
+add       rsp,28
+ret
+call      CORINFO_HELP_POLL_GC
+jmp       short 00007FF8E48CA71B
+add       rsp,28
+jmp       qword ptr [7FF8E4857E58]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1721,16 +1881,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D5E637
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D5E630
+ja        short 00007FF8E48DC557
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48DC550
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D5E62B
+jmp       short 00007FF8E48DC54B
 add       rsp,28
-jmp       qword ptr [7FF8C5BAF210]
+jmp       qword ptr [7FF8E472ED60]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1801,16 +1961,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D3D9D7
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D3D9D0
+ja        short 00007FF8E48BD637
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48BD630
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D3D9CB
+jmp       short 00007FF8E48BD62B
 add       rsp,28
-jmp       qword ptr [7FF8C5B8ED78]
+jmp       qword ptr [7FF8E470F1F8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1881,16 +2041,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D4DAB7
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D4DAB0
+ja        short 00007FF8E48C5EF7
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E48C5EF0
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D4DAAB
+jmp       short 00007FF8E48C5EEB
 add       rsp,28
-jmp       qword ptr [7FF8C5B9ED78]
+jmp       qword ptr [7FF8E4786AF0]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -1961,176 +2121,16 @@ ret
 System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 sub       rsp,28
 cmp       r8,4000
-ja        short 00007FF8C5D5C6F7
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5D5C6F0
+ja        short 00007FF8E4229AF7
+call      00007FF943D7A2B0
+cmp       dword ptr [7FF9440B4A90],0
+jne       short 00007FF8E4229AF0
 add       rsp,28
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5D5C6EB
+jmp       short 00007FF8E4229AEB
 add       rsp,28
-jmp       qword ptr [7FF8C5BAEE20]
-
-</code></pre></td>
-<td style="vertical-align:top;"><pre><code>
-DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,78
-vxorps    xmm4,xmm4,xmm4
-vmovdqu   ymmword ptr [rsp+20],ymm4
-vmovdqu   ymmword ptr [rsp+40],ymm4
-vmovdqa   xmmword ptr [rsp+60],xmm4
-xor       eax,eax
-mov       [rsp+70],rax
-mov       rbx,rcx
-mov       rsi,[rbx+2E0]
-vmovdqu   ymm0,ymmword ptr [rbx+0B0]
-vmovdqu   ymmword ptr [rsp+28],ymm0
-vmovdqu   ymm0,ymmword ptr [rbx+0D0]
-vmovdqu   ymmword ptr [rsp+48],ymm0
-vmovdqu   xmm0,xmmword ptr [rbx+0F0]
-vmovdqu   xmmword ptr [rsp+68],xmm0
-mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rdi,rax
-mov       dword ptr [rdi+20],0FFFFFFFE
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rdi+24],eax
-lea       rcx,[rdi+10]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-lea       rcx,[rdi+0C8]
-cmp       [rcx],cl
-lea       rdx,[rsp+28]
-mov       r8d,50
-vzeroupper
-call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-call      CORINFO_HELP_NEWSFAST
-mov       rsi,rax
-mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rbp,rax
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rbp+8],eax
-lea       rcx,[rbp+60]
-mov       rdx,rdi
-call      CORINFO_HELP_ASSIGN_REF
-lea       rcx,[rbp+68]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-mov       [rsp+20],rbp
-mov       rbx,[rbx+88]
-mov       rdx,[rsp+20]
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-xor       eax,eax
-mov       [rbx+8],rax
-vzeroupper
-add       rsp,78
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-ret
-
-System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-sub       rsp,28
-cmp       r8,4000
-ja        short 00007FF8C56796F7
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C56796F0
-add       rsp,28
-ret
-call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C56796EB
-add       rsp,28
-jmp       qword ptr [7FF8C5B7ED78]
-
-</code></pre></td>
-<td style="vertical-align:top;"><pre><code>
-DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-push      rdi
-push      rsi
-push      rbp
-push      rbx
-sub       rsp,78
-vxorps    xmm4,xmm4,xmm4
-vmovdqu   ymmword ptr [rsp+20],ymm4
-vmovdqu   ymmword ptr [rsp+40],ymm4
-vmovdqa   xmmword ptr [rsp+60],xmm4
-xor       eax,eax
-mov       [rsp+70],rax
-mov       rbx,rcx
-mov       rsi,[rbx+2E0]
-vmovdqu   ymm0,ymmword ptr [rbx+0B0]
-vmovdqu   ymmword ptr [rsp+28],ymm0
-vmovdqu   ymm0,ymmword ptr [rbx+0D0]
-vmovdqu   ymmword ptr [rsp+48],ymm0
-vmovdqu   xmm0,xmmword ptr [rbx+0F0]
-vmovdqu   xmmword ptr [rsp+68],xmm0
-mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rdi,rax
-mov       dword ptr [rdi+20],0FFFFFFFE
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rdi+24],eax
-lea       rcx,[rdi+10]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-lea       rcx,[rdi+0C8]
-cmp       [rcx],cl
-lea       rdx,[rsp+28]
-mov       r8d,50
-vzeroupper
-call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-call      CORINFO_HELP_NEWSFAST
-mov       rsi,rax
-mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-call      CORINFO_HELP_NEWSFAST
-mov       rbp,rax
-call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-mov       [rbp+8],eax
-lea       rcx,[rbp+60]
-mov       rdx,rdi
-call      CORINFO_HELP_ASSIGN_REF
-lea       rcx,[rbp+68]
-mov       rdx,rsi
-call      CORINFO_HELP_ASSIGN_REF
-mov       [rsp+20],rbp
-mov       rbx,[rbx+88]
-mov       rdx,[rsp+20]
-lea       rcx,[rbx+8]
-call      CORINFO_HELP_ASSIGN_REF
-xor       eax,eax
-mov       [rbx+8],rax
-vzeroupper
-add       rsp,78
-pop       rbx
-pop       rbp
-pop       rsi
-pop       rdi
-ret
-
-System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-sub       rsp,28
-cmp       r8,4000
-ja        short 00007FF8C5668E77
-call      00007FF9251EA2B0
-cmp       dword ptr [7FF925524A90],0
-jne       short 00007FF8C5668E70
-add       rsp,28
-ret
-call      CORINFO_HELP_POLL_GC
-jmp       short 00007FF8C5668E6B
-add       rsp,28
-jmp       qword ptr [7FF8C5B7ED78]
+jmp       qword ptr [7FF8E472F1F8]
 
 </code></pre></td>
 </tr>

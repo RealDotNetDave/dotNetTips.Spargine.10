@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EfCoreModelBuilderExtensionsBenchmark-20260724-160622</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.EfCoreModelBuilderExtensionsBenchmark-20260809-130656</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -15,7 +15,7 @@
 <pre><code>
 BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.204
+.NET SDK 10.0.302
   [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
   Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 </code></pre>
@@ -26,8 +26,8 @@ Categories=Database
 <table>
 <thead><tr><th>Method                  </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>RegisterEnumAsStringConverters</td><td>6,765.6 ns</td><td>18.56 ns</td><td>17.36 ns</td><td>4.48 ns</td><td>6,730.1 ns</td><td>6,756.3 ns</td><td>6,761.3 ns</td><td>6,778.7 ns</td><td>6,799.3 ns</td><td>147,806.6</td><td>5.258 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.3586</td><td>0.0153</td><td>0.0153</td><td>10.52 KB</td>
-</tr><tr><td>RegisterGuidAsStringConverters</td><td>6,429.8 ns</td><td>36.69 ns</td><td>32.52 ns</td><td>8.69 ns</td><td>6,369.0 ns</td><td>6,408.0 ns</td><td>6,417.9 ns</td><td>6,459.2 ns</td><td>6,470.8 ns</td><td>155,526.4</td><td>2.654 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.3357</td><td>-</td><td>-</td><td>10.52 KB</td>
+</thead><tbody><tr><td>RegisterEnumAsStringConverters</td><td>6,794.2 ns</td><td>98.74 ns</td><td>87.53 ns</td><td>23.39 ns</td><td>6,698.6 ns</td><td>6,742.9 ns</td><td>6,756.6 ns</td><td>6,810.8 ns</td><td>6,993.2 ns</td><td>147,184.2</td><td>-4.696 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.3738</td><td>0.0153</td><td>0.0153</td><td>10.52 KB</td>
+</tr><tr><td>RegisterGuidAsStringConverters</td><td>6,600.6 ns</td><td>36.04 ns</td><td>33.71 ns</td><td>8.70 ns</td><td>6,551.6 ns</td><td>6,570.2 ns</td><td>6,599.2 ns</td><td>6,625.7 ns</td><td>6,666.3 ns</td><td>151,500.8</td><td>3.148 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.3357</td><td>-</td><td>-</td><td>10.52 KB</td>
 </tr></tbody></table>
 </body>
 </html>
