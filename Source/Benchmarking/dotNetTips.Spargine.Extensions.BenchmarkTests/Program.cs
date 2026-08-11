@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-09-2026
+// Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -84,7 +84,7 @@ internal sealed class Program
 		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
 		//);
 
-		// Group 3: L–T - 11 hours, 1,372 benchmarks
+		// Group 3: L–T - 11 hours, 968 benchmarks
 		BenchmarkHelper.RunBenchmarks(config, saveResults: true,
 		  typeof(ImmutableArrayExtensionsBenchmark),
 			typeof(LinqExtensionsBenchmark),
