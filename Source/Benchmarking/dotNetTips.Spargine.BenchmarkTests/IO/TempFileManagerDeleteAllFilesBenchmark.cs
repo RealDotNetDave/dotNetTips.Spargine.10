@@ -4,7 +4,7 @@
 // Created          : 05-10-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-19-2026
+// Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerDeleteAllFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,7 +15,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.IO;
 
@@ -29,13 +28,15 @@ namespace DotNetTips.Spargine.BenchmarkTests.IO;
 /// the delete operation is measured, not file creation cost.
 /// </summary>
 [MemoryDiagnoser]
-[TailCallDiagnoser]
 [BenchmarkCategory(Categories.IO)]
 [SupportedOSPlatform("windows")]
 [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "TempFileManager is disposed in Cleanup(), which BenchmarkDotNet calls after all iterations.")]
 public class TempFileManagerDeleteAllFilesBenchmark : Benchmark
 {
 	private TempFileManager _manager;
+
+	[Params(10, 100, 1000)]
+	public int FileCount { get; set; }
 
 	/// <summary>
 	/// Overrides Cleanup to dispose the <see cref="TempFileManager"/> and remove any remaining temporary files.
@@ -60,12 +61,12 @@ public class TempFileManagerDeleteAllFilesBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Creates 256 temporary files before each iteration so only the delete is measured.
+	/// Creates the configured number of temporary files before each iteration so only the delete is measured.
 	/// </summary>
 	[IterationSetup]
 	public void IterationSetup()
 	{
-		_ = this._manager.CreateFiles(256);
+		_ = this._manager.CreateFiles(this.FileCount);
 	}
 
 	/// <summary>

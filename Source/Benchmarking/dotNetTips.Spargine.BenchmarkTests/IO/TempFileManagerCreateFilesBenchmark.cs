@@ -4,7 +4,7 @@
 // Created          : 05-09-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-09-2026
+// Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerCreateFilesBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -57,6 +57,19 @@ public class TempFileManagerCreateFilesBenchmark : Benchmark
 	public void CreateFile()
 	{
 		var result = this._manager.CreateFile();
+
+		this.Consume(result);
+	}
+
+	/// <summary>
+	/// Benchmark for <see cref="TempFileManager.CreateFiles"/> using count 10 to capture branch-selection behavior on medium input sizes.
+	/// Files are removed after each iteration by <see cref="IterationCleanupAttribute"/> to prevent accumulation.
+	/// </summary>
+	[Benchmark(Description = "CreateFiles-Count10")]
+	[BenchmarkCategory(Categories.IO)]
+	public void CreateFilesCount10()
+	{
+		var result = this._manager.CreateFiles(10);
 
 		this.Consume(result);
 	}

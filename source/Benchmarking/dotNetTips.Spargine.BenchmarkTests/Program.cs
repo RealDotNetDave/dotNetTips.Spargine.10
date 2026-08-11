@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,7 +15,9 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
+using BenchmarkDotNet.Toolchains.InProcess.NoEmit;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.BenchmarkTests.IO;
 using Perfolizer.Horology;
 
 //`![Spargine 6 Rocks Your Code](6219C891F6330C65927FA249E739AC1F.png;https://www.spargine.net )
@@ -33,20 +35,19 @@ public static class Program
 	public static void Main()
 	{
 		var config = DefaultConfig.Instance
-			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
+			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest).WithToolchain(InProcessNoEmitToolchain.Instance))
 			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		//	typeof(DirectoryHelperBenchmark),
-		//	typeof(DirectoryHelperCopyDirectoryBenchmark),
-		//	typeof(FileHelperBenchmark),
-		//	typeof(FileProcessorCopyFilesBenchmark)
-		//	);
+		BenchmarkHelper.RunBenchmarks(config, true,
+			typeof(TempFileManagerDeleteAllFilesBenchmark),
+			typeof(TempFileManagerDeleteFileBenchmark),
+			typeof(TempFileManagerDeleteAllFilesBenchmark)
+			);
 	}
 }
