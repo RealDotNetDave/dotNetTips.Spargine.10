@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -86,9 +86,11 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// <param name="count">The number of temporary files to create.</param>
 	/// <returns>A read-only collection of the paths of the created temporary files.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(CreateFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public ReadOnlyCollection<string> CreateFiles(in int count)
 	{
+		//TODO: +9.27% slower than previous version
+
 		var fileCount = count.ArgumentInRange(min: 1);
 		var parallelThreshold = Environment.ProcessorCount * 2;
 
@@ -101,7 +103,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// Deletes all temporary files.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void DeleteAllFiles()
 	{
 		var filesSnapshot = this._files.ToArray();
