@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.TaskExtensionsBenchmark-20260811-044533</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.302
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Async  
+</code></pre>
+
+<table>
+<thead><tr><th>Method               </th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;WithTimeoutAsync: Task&#39;</td><td>6.427 ns</td><td>0.1471 ns</td><td>0.1304 ns</td><td>0.0349 ns</td><td>6.277 ns</td><td>6.301 ns</td><td>6.442 ns</td><td>6.514 ns</td><td>6.650 ns</td><td>155,605,625.7</td><td>6.983 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>1,021 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;WithTimeoutAsync: Task&lt;T&gt;&#39;</td><td>7.433 ns</td><td>0.0705 ns</td><td>0.0625 ns</td><td>0.0167 ns</td><td>7.376 ns</td><td>7.394 ns</td><td>7.406 ns</td><td>7.461 ns</td><td>7.577 ns</td><td>134,527,100.0</td><td>6.992 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>1,228 B</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>IgnoreCancellation</td><td>2,028.390 ns</td><td>30.1658 ns</td><td>43.2628 ns</td><td>8.1759 ns</td><td>1,970.420 ns</td><td>1,996.280 ns</td><td>2,032.654 ns</td><td>2,052.055 ns</td><td>2,136.469 ns</td><td>493,001.9</td><td>9.912 ns</td><td>28.00</td><td>No</td><td>1.0000</td><td>0.0153</td><td>2,929 B</td><td>-</td><td>-</td><td>528 B</td>
+</tr><tr><td>UnwrapAggregate</td><td>114.996 ns</td><td>2.4129 ns</td><td>7.1145 ns</td><td>0.7115 ns</td><td>96.992 ns</td><td>110.508 ns</td><td>115.627 ns</td><td>120.321 ns</td><td>129.734 ns</td><td>8,695,922.2</td><td>49.644 ns</td><td>100.00</td><td>No</td><td>-</td><td>0.0136</td><td>1,965 B</td><td>0.0002</td><td>0.0002</td><td>-</td>
+</tr></tbody></table>
+</body>
+</html>

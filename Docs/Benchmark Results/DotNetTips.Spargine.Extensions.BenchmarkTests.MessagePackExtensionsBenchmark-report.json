@@ -1,0 +1,45 @@
+{
+   "Title":"DotNetTips.Spargine.Extensions.BenchmarkTests.MessagePackExtensionsBenchmark-20260810-220824",
+   "HostEnvironmentInfo":{
+      "BenchmarkDotNetCaption":"BenchmarkDotNet",
+      "BenchmarkDotNetVersion":"0.15.8",
+      "OsVersion":"Windows 10 (10.0.19045.7548/22H2/2022Update)",
+      "ProcessorName":"Intel Core i5-10400 CPU 2.90GHz",
+      "PhysicalProcessorCount":1,
+      "PhysicalCoreCount":6,
+      "LogicalCoreCount":12,
+      "RuntimeVersion":".NET 10.0.10 (10.0.10, 10.0.1026.32716)",
+      "Architecture":"X64",
+      "HasAttachedDebugger":false,
+      "HasRyuJit":true,
+      "Configuration":"RELEASE",
+      "DotNetCliVersion":"10.0.302",
+      "ChronometerFrequency":{
+         "Hertz":10000000
+      },
+      "HardwareTimerKind":"Unknown"
+   },
+   "Benchmarks":[
+      {
+         "DisplayInfo":"MessagePackExtensionsBenchmark.FromMessagePack: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True)",
+         "Namespace":"DotNetTips.Spargine.Extensions.BenchmarkTests",
+         "Type":"MessagePackExtensionsBenchmark",
+         "Method":"FromMessagePack",
+         "MethodTitle":"FromMessagePack",
+         "Parameters":"",
+         "FullName":"DotNetTips.Spargine.Extensions.BenchmarkTests.MessagePackExtensionsBenchmark.FromMessagePack",
+         "HardwareIntrinsics":"AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256",
+         "Statistics":null,
+         "Memory":{
+            "Gen0Collections":0,
+            "Gen1Collections":0,
+            "Gen2Collections":0,
+            "TotalOperations":0,
+            "BytesAllocatedPerOperation":null
+         },
+         "Measurements":[
+            
+         ]
+      }
+   ]
+}
