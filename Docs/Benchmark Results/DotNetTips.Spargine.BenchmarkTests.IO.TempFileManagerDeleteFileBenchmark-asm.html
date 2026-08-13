@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260807-182034</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260811-115043</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -71,7 +71,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB3562E5B0]; DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFF37146CB8]; DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -83,6 +83,15 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.TempFileManager.DeleteFile(System.String)</th><th></th></tr>
 <tr class="">
+<td></td><td><pre><code>		if (string.IsNullOrEmpty(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		if (TryDeleteFile(fileName))
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			this.DeleteFileFromCache(fileName);
+			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,20</pre></code></td>
@@ -93,49 +102,54 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		if (string.IsNullOrEmpty(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB3522F018]; System.String.IsNullOrEmpty(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFF36CEF270]; System.String.IsNullOrEmpty(System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td id="2" class="reference" data-reference="2_M01_L00"><a href="#2_M01_L00"><pre><code>je        short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFF373233E8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       rsp,20</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>pop       rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>		if (TryDeleteFile(fileName))
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
 </tr><tr class="evenMap">
 <td id="2_M01_L00" class="label" data-label="2_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFB3562E5C8]; DotNetTips.Spargine.IO.TempFileManager.TryDeleteFile(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFF37146CD0]; DotNetTips.Spargine.IO.TempFileManager.TryDeleteFile(System.String)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>test      eax,eax</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td id="2" class="reference" data-reference="2_M01_L01"><a href="#2_M01_L01"><pre><code>je        short M01_L01</pre></code></a></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>			this.DeleteFileFromCache(fileName);
-			^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFF373233EC</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rdx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFB3562E5E0]; DotNetTips.Spargine.IO.TempFileManager.DeleteFileFromCache(System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFF37146CE8]; DotNetTips.Spargine.IO.TempFileManager.DeleteFileFromCache(System.String)</pre></code></td>
 </tr><tr class="">
 <td id="2_M01_L01" class="label" data-label="2_M01_L01"><pre><code>M01_L01</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="">
+<td></td><td><pre><code>mov       rcx,7FFF373233F0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>add       rsp,20</pre></code></td>

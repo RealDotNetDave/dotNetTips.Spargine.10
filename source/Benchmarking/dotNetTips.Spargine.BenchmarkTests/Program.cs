@@ -15,7 +15,6 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Toolchains.InProcess.NoEmit;
 using DotNetTips.Spargine.Benchmarking;
 using DotNetTips.Spargine.BenchmarkTests.IO;
 using Perfolizer.Horology;
@@ -35,7 +34,7 @@ public static class Program
 	public static void Main()
 	{
 		var config = DefaultConfig.Instance
-			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest).WithToolchain(InProcessNoEmitToolchain.Instance))
+			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
 			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond));
 
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);

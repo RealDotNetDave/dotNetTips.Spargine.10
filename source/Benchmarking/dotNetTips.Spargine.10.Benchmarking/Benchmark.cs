@@ -3,7 +3,7 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 08-11-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
@@ -24,6 +24,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Loggers;
 using BenchmarkDotNet.Order;
@@ -55,9 +56,11 @@ namespace DotNetTips.Spargine.Benchmarking;
 [CategoriesColumn]
 [ConfidenceIntervalErrorColumn]
 [CsvExporter]
+[DisassemblyDiagnoser(printSource: true, exportGithubMarkdown: true, exportCombinedDisassemblyReport: true, exportDiff: true, exportHtml: true)]
 [EvaluateOverhead]
 [ExceptionDiagnoser]
 [GcServer(true)]
+[InliningDiagnoser(logFailuresOnly: true, filterByNamespace: true)]
 [IterationsColumn]
 [JsonExporter(indentJson: true)]
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
