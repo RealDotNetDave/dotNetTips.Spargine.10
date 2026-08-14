@@ -4,7 +4,7 @@
 // Created          : 03-02-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 08-14-2026
 // ***********************************************************************
 // <copyright file="FileHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -448,6 +448,24 @@ public static class FileHelper
 		file = file.ArgumentNotNull();
 
 		return file.Name.AsSpan().IndexOfAny(_invalidFileNameSearchValues) >= 0;
+	}
+
+	/// <summary>
+	/// Determines whether [is file or folder] [the specified path].
+	/// </summary>
+	/// <param name="path">The path.</param>
+	/// <returns>System.ValueTuple&lt;System.Boolean, System.Boolean&gt;.</returns>
+	[Information(nameof(IsFileOrFolder), author: "David McCarter", createdOn: "7/15/2020", CodeCredit = "Karen Payne", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	public static (bool isFolder, bool success) IsFileOrFolder(string path)
+	{
+		try
+		{
+			return File.GetAttributes(path).HasFlag(FileAttributes.Directory) ? (true, true) : (false, true);
+		}
+		catch (FileNotFoundException)
+		{
+			return (false, false);
+		}
 	}
 
 	/// <summary>

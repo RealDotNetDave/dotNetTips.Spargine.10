@@ -4,7 +4,7 @@
 // Created          : 03-01-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 08-14-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -233,6 +233,17 @@ public static class DirectoryHelper
 	}
 
 	/// <summary>
+	/// Determines whether [is file or folder] [the specified path].
+	/// </summary>
+	/// <param name="path">The path.</param>
+	/// <returns>System.ValueTuple&lt;System.Boolean, System.Boolean&gt;.</returns>
+	[Information(nameof(IsFileOrFolder), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	public static (bool isFolder, bool success) IsFileOrFolder(string path)
+	{
+		return FileHelper.IsFileOrFolder(path);
+	}
+
+	/// <summary>
 	/// Asynchronously loads files from the specified directories using the given search pattern and search option.
 	/// </summary>
 	/// <param name="directories">The directories from which files are to be loaded.</param>
@@ -242,8 +253,7 @@ public static class DirectoryHelper
 	/// <returns>An asynchronous stream (<see cref="IAsyncEnumerable{T}" />) of collections of <see cref="FileInfo" />, where each collection represents files found in a directory.</returns>
 	/// <remarks>This method utilizes deferred execution to improve performance. Files are not loaded into memory until the asynchronous stream is iterated.</remarks>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="directories"/> or <paramref name="searchPattern"/> is null.</exception>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(LoadFilesAsync), author: "David McCarter", createdOn: "3/1/2021", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsFileOrFolder), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	public static IAsyncEnumerable<IEnumerable<FileInfo>> LoadFilesAsync([DisallowNull] IEnumerable<DirectoryInfo> directories, [DisallowNull] string searchPattern, SearchOption searchOption, CancellationToken cancellationToken = default)
 	{
 		directories = directories.ArgumentNotNull();

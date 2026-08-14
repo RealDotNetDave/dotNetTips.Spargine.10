@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Extensions - 2026.10.8.1
+# DotNetTips.Spargine.10.Extensions - 2026.10.8.2
 
 ## DotNetTips.Spargine.Extensions.ArrayExtensions
 
@@ -898,7 +898,7 @@
 
 ### System.Int32 AddRangeIfNotExists(T collection, T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -931,7 +931,7 @@
 
 ### System.Int32 RemoveWhere(T collection, T match)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -953,7 +953,7 @@
 
 ### System.Boolean TryGetFirst(T source, T first)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1022,7 +1022,7 @@
 
 ### System.Int32 AddRangeIfNotExists(T items)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1055,7 +1055,7 @@
 
 ### System.Int32 RemoveWhere(T match)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1091,7 +1091,7 @@
 
 ### System.Boolean TryGetFirst(T first)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1119,7 +1119,7 @@
 
 ### System.Text.CompositeFormat GetOrAdd(System.String format)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
@@ -1346,7 +1346,7 @@
 
 ### System.DateTime Clamp(System.DateTime& value, System.DateTime& minimum, System.DateTime& maximum)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1357,7 +1357,7 @@
 
 ### System.DateTime EndOfDay(System.DateTime& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1607,7 +1607,7 @@
 
 ### System.DateTime RoundToNearestMultiple(System.DateTime& value, System.TimeSpan& multiple)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1618,7 +1618,7 @@
 
 ### System.DateTime StartOfDay(System.DateTime& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1684,7 +1684,7 @@
 
 ### System.DateOnly ToDateOnly(System.DateTime& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1750,7 +1750,7 @@
 
 ### System.TimeOnly ToTimeOnly(System.DateTime& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -1921,7 +1921,7 @@
 
 ### T GetOrAdd(T collection, T key, T valueFactory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2124,7 +2124,7 @@
 
 ### T TryGetValueOrDefault(T collection, T key, T defaultValue)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2135,7 +2135,7 @@
 
 ### System.Boolean TryRemoveAndReturn(T collection, T key, T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2171,7 +2171,7 @@
 
 ### System.IO.FileInfo CreateTempFileThenMove(System.IO.DirectoryInfo directory, System.String destinationFileName, System.String content, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2193,7 +2193,7 @@
 
 ### System.String ReadAllTextSafe(System.IO.DirectoryInfo directory, System.String fileName, System.String fallback, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2204,7 +2204,7 @@
 
 ### System.IO.FileInfo WriteAllTextAtomic(System.IO.DirectoryInfo directory, System.String fileName, System.String content, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2218,7 +2218,7 @@
 
 ### Microsoft.EntityFrameworkCore.ModelBuilder RegisterEnumAsStringConverters(Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -2229,7 +2229,7 @@
 
 ### Microsoft.EntityFrameworkCore.ModelBuilder RegisterGuidAsStringConverters(Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3456,7 +3456,7 @@
 
 ### System.Void CreateTempFileThenMove(System.IO.FileInfo file, System.String content, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3467,7 +3467,7 @@
 
 ### System.String ReadAllTextSafe(System.IO.FileInfo file, System.String fallback, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -3478,7 +3478,7 @@
 
 ### System.Void WriteAllTextAtomic(System.IO.FileInfo file, System.String content, System.Text.Encoding encoding)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4982,7 +4982,7 @@
 
 ### System.Boolean IsEqualTo(T memory, T other, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -4993,7 +4993,7 @@
 
 ### System.Boolean IsNotEmpty(T memory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5004,7 +5004,7 @@
 
 ### T ToArrayIfNeeded(T memory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5015,7 +5015,7 @@
 
 ### System.Boolean TryGetArraySegment(T memory, T segment)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5029,7 +5029,7 @@
 
 ### System.Boolean IsEqualTo(T other, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5040,7 +5040,7 @@
 
 ### System.Boolean IsNotEmpty()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5051,7 +5051,7 @@
 
 ### T ToArrayIfNeeded()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5062,7 +5062,7 @@
 
 ### System.Boolean TryGetArraySegment(T segment)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5076,7 +5076,7 @@
 
 ### T FromMessagePack(System.Byte[] bytes)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5087,7 +5087,7 @@
 
 ### System.Byte[] ToMessagePackBytes(T value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5156,7 +5156,7 @@
 
 ### System.Int32 Clamp(System.Int32 value, System.Int32 minimum, System.Int32 maximum)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5484,7 +5484,7 @@
 
 ### System.Int32 RoundToNearestMultiple(System.Int32 value, System.Int32 multiple)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5628,7 +5628,7 @@
 
 ### System.Boolean TryParseInvariant(System.ReadOnlySpan<System.Char> input, System.Int32& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5639,7 +5639,7 @@
 
 ### System.Boolean TryParseInvariant(System.ReadOnlySpan<System.Char> input, System.Double& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -5650,7 +5650,7 @@
 
 ### System.Boolean TryParseInvariant(System.ReadOnlySpan<System.Char> input, System.Decimal& value)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6653,7 +6653,7 @@
 
 ### System.Diagnostics.Activity AddTagsIfPresent(System.Diagnostics.Activity activity, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String, System.Object>> tags)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6664,7 +6664,7 @@
 
 ### System.Diagnostics.Activity SetStatusIfError(System.Diagnostics.Activity activity, System.Exception exception)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6830,7 +6830,7 @@
 
 ### System.Boolean IsEqualTo(T memory, T other, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6841,7 +6841,7 @@
 
 ### System.Boolean IsNotEmpty(T memory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6852,7 +6852,7 @@
 
 ### T ToArrayIfNeeded(T memory)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6863,7 +6863,7 @@
 
 ### System.Boolean TryGetArraySegment(T memory, T segment)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6877,7 +6877,7 @@
 
 ### System.Boolean IsEqualTo(T other, T comparer)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6888,7 +6888,7 @@
 
 ### System.Boolean IsNotEmpty()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6899,7 +6899,7 @@
 
 ### T ToArrayIfNeeded()
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6910,7 +6910,7 @@
 
 ### System.Boolean TryGetArraySegment(T segment)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7646,7 +7646,7 @@
 
 ### System.String FormatCurrentCulture(System.String format, System.Object[] args)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7657,7 +7657,7 @@
 
 ### System.String FormatInvariant(System.String format, System.Object[] args)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -7920,7 +7920,7 @@
 
 ### System.String JoinFormatted(System.String format, System.String delimiter, System.Object[] args)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -8751,4 +8751,4 @@
 * **Description:** ConvertFrom
 
 *****
-**Generated by Spargine - dotNetTips.com on 8/4/2026 2:53:45 PM UTC**
+**Generated by Spargine - dotNetTips.com on 8/14/2026 3:41:39 PM UTC**

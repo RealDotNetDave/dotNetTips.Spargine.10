@@ -4,7 +4,7 @@
 // Created          : 06-28-2022
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified On : 08-14-2026
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -933,6 +933,64 @@ public class FileHelperTests
 		Assert.IsNotNull(result);
 		Assert.IsTrue(result.Count > 0);
 		Assert.IsInstanceOfType<ReadOnlyCollection<char>>(result);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void IsFileOrFolderWhenPathDoesNotExistReturnsFailure()
+	{
+		var missingFilePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.txt");
+
+		var result = FileHelper.IsFileOrFolder(missingFilePath);
+
+		Assert.IsFalse(result.isFolder);
+		Assert.IsFalse(result.success);
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void IsFileOrFolderWhenPathIsAFileReturnsFileAndSuccess()
+	{
+		var filePath = RandomData.GenerateTempFile(FileLength);
+
+		try
+		{
+			var result = FileHelper.IsFileOrFolder(filePath);
+
+			Assert.IsFalse(result.isFolder);
+			Assert.IsTrue(result.success);
+		}
+		finally
+		{
+			if (File.Exists(filePath))
+			{
+				File.Delete(filePath);
+			}
+		}
+	}
+
+	[SupportedOSPlatform("windows")]
+	[TestMethod]
+	public void IsFileOrFolderWhenPathIsAFolderReturnsFolderAndSuccess()
+	{
+		var directoryPath = Path.Combine(Path.GetTempPath(), nameof(this.IsFileOrFolderWhenPathIsAFolderReturnsFolderAndSuccess), Guid.NewGuid().ToString("N"));
+
+		try
+		{
+			_ = Directory.CreateDirectory(directoryPath);
+
+			var result = FileHelper.IsFileOrFolder(directoryPath);
+
+			Assert.IsTrue(result.isFolder);
+			Assert.IsTrue(result.success);
+		}
+		finally
+		{
+			if (Directory.Exists(directoryPath))
+			{
+				Directory.Delete(directoryPath);
+			}
+		}
 	}
 
 	[SupportedOSPlatform("windows")]
