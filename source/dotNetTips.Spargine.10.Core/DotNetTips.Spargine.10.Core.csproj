@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -56,14 +56,15 @@
     <VerifyReferenceTrimCompatibility>false</VerifyReferenceTrimCompatibility>
   </PropertyGroup>
   <PropertyGroup>
-    <NuGetAudit>true</NuGetAudit>
-    <NuGetAuditMode>all</NuGetAuditMode>
-    <NuGetAuditLevel>low</NuGetAuditLevel>
-    <PackageReleaseNotes>
-	  --JAN 2026: Initial .NET 10 release.
-	  --APR 2026: Updated dependencies and added new helper methods.
+	<NuGetAudit>true</NuGetAudit>
+	<NuGetAuditMode>all</NuGetAuditMode>
+	<NuGetAuditLevel>low</NuGetAuditLevel>
+	<PackageReleaseNotes>
+	  --APR 2026: Added HMAC-based BarcodeGenerator support and expanded helper coverage.
+	  --MAY 2026: Updated NuGet packages, added benchmarks, and improved FileHelper, DirectoryHelper, and validation APIs.
+	  --JUN-JUL 2026: Improved trimming and performance behavior, added HttpClientOptions, and fixed service and HTTP regressions.
 	</PackageReleaseNotes>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\AppBin\</OutputPath>
