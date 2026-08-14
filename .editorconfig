@@ -1623,7 +1623,7 @@ dotnet_diagnostic.IDE0016.severity = warning
 
 # Use object initializers
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
-dotnet_diagnostic.IDE0017.severity = suggestion
+dotnet_diagnostic.IDE0017.severity = warning
 
 # Inline variable declaration
 # Examples in Rock Your Code: Coding Standards for Microsoft .NET
