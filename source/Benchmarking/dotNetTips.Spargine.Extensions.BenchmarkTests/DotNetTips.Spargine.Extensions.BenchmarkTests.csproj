@@ -30,7 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
 	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.11" />
 	<!-- Direct reference to a fixed SQLitePCLRaw bundle to override a transitive vulnerable version -->
 	<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
 	<PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.7.37220.1" />
