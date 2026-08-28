@@ -32,7 +32,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// anonymous port binding, buffer and keep-alive configuration, TCP connection helpers, and
 /// non-blocking mode control.
 /// </summary>
-[Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(SocketExtensions), author: "David McCarter", createdOn: "7/15/2020", Status = Status.Available, Documentation = "https://bit.ly/SpargineSocketExtensions")]
 public static class SocketExtensions
 {
 
