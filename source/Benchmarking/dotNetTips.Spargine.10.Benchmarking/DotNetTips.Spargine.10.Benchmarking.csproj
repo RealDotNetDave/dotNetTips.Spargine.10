@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Benchmarking</AssemblyTitle>
-    <AssemblyVersion>2026.10.8.2</AssemblyVersion>
+    <AssemblyVersion>2026.10.9.1</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\..\AppBin\</BaseOutputPath>
@@ -22,7 +22,7 @@
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnableSingleFileAnalyzer>false</EnableSingleFileAnalyzer>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.8.2</FileVersion>
+    <FileVersion>2026.10.9.1</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -47,7 +47,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.Benchmarking</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.8.2</Version>
+    <Version>2026.10.9.1</Version>
   </PropertyGroup>
   <PropertyGroup>
     <NuGetAudit>true</NuGetAudit>
@@ -56,6 +56,10 @@
     <PackageReleaseNotes>
 	  --JAN 2026: Initial .NET 10 release.
 	  --APR 2026: Updated to BenchmarkDotNet 0.15.8 and added Windows Diagnostics support and BenchmarkHelper.
+	  --MAY 2026: Added MemoryDiagnoser/ThreadingDiagnoser and diagnoser categories, filePrefix support for BenchmarkHelper.RunBenchmarks, CancellationToken support, and optimized allocations/logging in the Benchmark base class.
+	  --JUN 2026: Code cleanup and refactoring, including collection expressions in DirectoryHelper.
+	  --JUL 2026: Expanded benchmark coverage for all extension methods, added random data properties, and refactored platform attributes.
+	  --AUG 2026: Added comprehensive benchmarks (including ThreadPoolHelper), parameterized runs, diagnostics and metadata enhancements, and refactored TempFileManager to use ConcurrentDictionary.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
