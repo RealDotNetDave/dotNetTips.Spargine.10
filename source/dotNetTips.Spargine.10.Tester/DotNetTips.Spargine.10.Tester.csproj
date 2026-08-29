@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -54,10 +54,11 @@
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <PackageReleaseNotes>
-	  --APR 2026: Added HMAC-based BarcodeGenerator support and expanded helper coverage.
-	  --MAY 2026: Updated NuGet packages, added benchmarks, and improved FileHelper, DirectoryHelper, and validation APIs.
-	  --JUN-JUL 2026: Improved trimming and performance behavior, added HttpClientOptions, and fixed service and HTTP regressions.
+	<PackageReleaseNotes>
+	  --APR 2026: Parameterized RandomData benchmark input sizes and updated test data helpers for .NET 10.
+	  --MAY 2026: Added App/Config APIs, removed trimming suppressions in favor of a global NoWarn, and refreshed benchmarks.
+	  --JUN-JUL 2026: Added advanced random data generators including GenerateGuid, new benchmarks, and PerformanceStopwatch-based validation.
+	  --AUG 2026: Updated RandomData [Information] attributes and file headers and marked stable APIs as available.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -59,10 +59,11 @@
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <PackageReleaseNotes>
-	  --APR 2026: Added HMAC-based BarcodeGenerator support and expanded helper coverage.
-	  --MAY 2026: Updated NuGet packages, added benchmarks, and improved FileHelper, DirectoryHelper, and validation APIs.
-	  --JUN-JUL 2026: Improved trimming and performance behavior, added HttpClientOptions, and fixed service and HTTP regressions.
+	<PackageReleaseNotes>
+	  --APR 2026: Added HttpClientExtensions and SocketExtensions, applied trimming annotations, and expanded benchmark coverage across extension methods.
+	  --MAY 2026: Optimized ArrayExtensions (CRAP score analysis), refactored StringBuilderExtensions and member iteration for performance, and switched collection conversions to the range operator.
+	  --JUN-JUL 2026: Added full benchmark coverage for all extension methods and improved trim safety and validation.
+	  --AUG 2026: Improved SocketExtensions, added ColorExtensions.Average coverage, refreshed collection/string/type extension benchmarks, and marked many extension APIs as stable.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

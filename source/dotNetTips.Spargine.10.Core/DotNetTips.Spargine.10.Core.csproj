@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -60,9 +60,10 @@
 	<NuGetAuditMode>all</NuGetAuditMode>
 	<NuGetAuditLevel>low</NuGetAuditLevel>
 	<PackageReleaseNotes>
-	  --APR 2026: Added HMAC-based BarcodeGenerator support and expanded helper coverage.
-	  --MAY 2026: Updated NuGet packages, added benchmarks, and improved FileHelper, DirectoryHelper, and validation APIs.
-	  --JUN-JUL 2026: Improved trimming and performance behavior, added HttpClientOptions, and fixed service and HTTP regressions.
+	  --APR 2026: Added HMAC-based BarCodeGenerator, sealed classes, and applied trimming annotations across Core.
+	  --MAY 2026: Refactored Ulid Base32 decoding for zero-allocation performance, extracted Crockford32 and AssemblyExtensionsHelper, optimized DistinctBlockingCollection and JSON serialization, and added InvalidValueException and Config APIs with tests.
+	  --JUN-JUL 2026: Added new .NET 10+ APIs and validation, introduced InformationScanner, enhanced trim safety, and refactored to PerformanceStopwatch.
+	  --AUG 2026: Added ThreadPoolHelper, expanded BenchmarkDotNet coverage, refined Crockford32, and marked EnumHelper, TypeHelper, TaskHelper, NetworkHelper, and JsonSerialization APIs as stable.
 	</PackageReleaseNotes>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

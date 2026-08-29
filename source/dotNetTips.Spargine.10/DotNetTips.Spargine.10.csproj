@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -58,10 +58,11 @@
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
-    <PackageReleaseNotes>
-	  --APR 2026: Added HMAC-based BarcodeGenerator support and expanded helper coverage.
-	  --MAY 2026: Updated NuGet packages, added benchmarks, and improved FileHelper, DirectoryHelper, and validation APIs.
-	  --JUN-JUL 2026: Improved trimming and performance behavior, added HttpClientOptions, and fixed service and HTTP regressions.
+	<PackageReleaseNotes>
+	  --APR 2026: Refactored IO helpers (DirectoryHelper, FileHelper, DriveHelper, FileProcessor, TempFileManager) for performance, added SocketsHelper.ConnectTcpAsync and HttpClientHelper.GetStreamAsync, added Win32 RegistryHelper, and enabled trimming support.
+	  --MAY 2026: Switched FileHelper to a static HttpClient, optimized PathHelper invalid-char checks with cached separators, and cached XmlSerializer in ServiceHelper.
+	  --JUN-JUL 2026: Refactored HTTP event listeners, added HttpClientOptions, improved logging, and fixed service and HTTP regressions.
+	  --AUG 2026: Added FileHelper/DirectoryHelper IsFileOrFolder API, refactored TempFileManager to use ConcurrentDictionary, and updated HttpClientHelper metadata.
 	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
