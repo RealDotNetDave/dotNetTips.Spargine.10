@@ -1,0 +1,38 @@
+digraph Dependencies {
+    rankdir=LR;
+    node [shape=box, style=rounded];
+    nDotNetTips_Spargine_Tester_BenchmarkTests [label="DotNetTips.Spargine.Tester.BenchmarkTests"];
+    nDotNetTips_Spargine_Core_BenchmarkTests [label="DotNetTips.Spargine.Core.BenchmarkTests"];
+    nDotNetTips_Spargine_Extensions_BenchmarkTests [label="DotNetTips.Spargine.Extensions.BenchmarkTests"];
+    nDotNetTips_Spargine_10_Benchmarking [label="DotNetTips.Spargine.10.Benchmarking"];
+    nDotNetTips_Spargine_10_Extensions [label="DotNetTips.Spargine.10.Extensions"];
+    nDotNetTips_Spargine_10_Tester [label="DotNetTips.Spargine.10.Tester"];
+    nDotNetTips_Spargine_10_Core [label="DotNetTips.Spargine.10.Core"];
+    nDotNetTips_Spargine_10 [label="DotNetTips.Spargine.10"];
+    nDotNetTips_Spargine_BenchmarkTests [label="DotNetTips.Spargine.BenchmarkTests"];
+    nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Tester;
+    nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Benchmarking;
+    nDotNetTips_Spargine_Core_BenchmarkTests -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_Core_BenchmarkTests -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_Core_BenchmarkTests -> nDotNetTips_Spargine_10_Tester;
+    nDotNetTips_Spargine_Core_BenchmarkTests -> nDotNetTips_Spargine_10_Benchmarking;
+    nDotNetTips_Spargine_Extensions_BenchmarkTests -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_Extensions_BenchmarkTests -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_Extensions_BenchmarkTests -> nDotNetTips_Spargine_10_Tester;
+    nDotNetTips_Spargine_Extensions_BenchmarkTests -> nDotNetTips_Spargine_10_Benchmarking;
+    nDotNetTips_Spargine_10_Benchmarking -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_10_Benchmarking -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_10_Benchmarking -> nDotNetTips_Spargine_10_Tester;
+    nDotNetTips_Spargine_10_Extensions -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_10_Tester -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_10_Tester -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_10 -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_10 -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_BenchmarkTests -> nDotNetTips_Spargine_10_Core;
+    nDotNetTips_Spargine_BenchmarkTests -> nDotNetTips_Spargine_10_Extensions;
+    nDotNetTips_Spargine_BenchmarkTests -> nDotNetTips_Spargine_10_Tester;
+    nDotNetTips_Spargine_BenchmarkTests -> nDotNetTips_Spargine_10;
+    nDotNetTips_Spargine_BenchmarkTests -> nDotNetTips_Spargine_10_Benchmarking;
+}
