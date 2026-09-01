@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-13-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 08-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-01-2026
 // ***********************************************************************
 // <copyright file="DbContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -40,7 +40,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// unsaved-change detection (<c>HasChanges</c>), record existence checks with optional predicate
 /// (<c>HasRecordsAsync</c>), and row counts with optional predicate (<c>GetRecordCountAsync</c>).
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDbContextExtensions")]
 public static class DbContextExtensions
 {
 	/// <summary>

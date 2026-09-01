@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Core</AssemblyTitle>
-    <AssemblyVersion>2026.10.9.1</AssemblyVersion>
+    <AssemblyVersion>2026.10.9.2</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.9.1</FileVersion>
+    <FileVersion>2026.10.9.2</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -46,7 +46,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Core</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.9.1</Version>
+    <Version>2026.10.9.2</Version>
   </PropertyGroup>
   <PropertyGroup>
     <IsTrimmable>true</IsTrimmable>
@@ -56,16 +56,16 @@
     <VerifyReferenceTrimCompatibility>false</VerifyReferenceTrimCompatibility>
   </PropertyGroup>
   <PropertyGroup>
-	<NuGetAudit>true</NuGetAudit>
-	<NuGetAuditMode>all</NuGetAuditMode>
-	<NuGetAuditLevel>low</NuGetAuditLevel>
-	<PackageReleaseNotes>
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+    <PackageReleaseNotes>
 	  --APR 2026: Added HMAC-based BarCodeGenerator, sealed classes, and applied trimming annotations across Core.
 	  --MAY 2026: Refactored Ulid Base32 decoding for zero-allocation performance, extracted Crockford32 and AssemblyExtensionsHelper, optimized DistinctBlockingCollection and JSON serialization, and added InvalidValueException and Config APIs with tests.
 	  --JUN-JUL 2026: Added new .NET 10+ APIs and validation, introduced InformationScanner, enhanced trim safety, and refactored to PerformanceStopwatch.
 	  --AUG 2026: Added ThreadPoolHelper, expanded BenchmarkDotNet coverage, refined Crockford32, and marked EnumHelper, TypeHelper, TaskHelper, NetworkHelper, and JsonSerialization APIs as stable.
 	</PackageReleaseNotes>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\AppBin\</OutputPath>
