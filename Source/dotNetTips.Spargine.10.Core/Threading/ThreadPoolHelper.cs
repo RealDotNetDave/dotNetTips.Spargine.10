@@ -4,7 +4,7 @@
 // Created          : 08-04-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-08-2026
+// Last Modified On : 09-02-2026
 // ***********************************************************************
 // <copyright file="ThreadPoolHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -26,12 +26,9 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// pool diagnostics. All methods enforce a timeout and support cooperative cancellation.
 /// </summary>
 
-[Information(description: nameof(ThreadPoolHelper), Status = Status.Available, Documentation = "ADD URL")]
+[Information(description: nameof(ThreadPoolHelper), Status = Status.Available, Documentation = "https://bit.ly/SpargineThreadPoolHelper")]
 public static class ThreadPoolHelper
 {
-	//TODO: WHEN WRITING DOCUMENTATION, UPDATE ARTICLE: .NET Threads: The Performance Trap Hiding in Your Code
-	//TODO: LOOKING INTO USING STATICTICS FOR METERING THREAD POOL USAGE AND PERFORMANCE
-
 	private const int MaximumTimeoutMilliseconds = 30_000;
 
 	/// <summary>
