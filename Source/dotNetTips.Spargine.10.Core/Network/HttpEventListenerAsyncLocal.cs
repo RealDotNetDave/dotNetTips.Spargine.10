@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </example>
 /// <seealso cref="EventListener"/>
 /// <param name="logger">The logger used for logging HTTP events. This logger is utilized to log information about each HTTP request's start and stop events, including the URL and execution time.</param>
-[Information(nameof(HttpEventListenerAsyncLocal), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation ="ADD URL")]
+[Information(nameof(HttpEventListenerAsyncLocal), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
 public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 {
 
@@ -125,6 +125,19 @@ public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 		}
 	}
 
+	/// <summary>
+	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
+	/// This method is intended for internal use within the <see cref="HttpEventListenerAsyncLocal"/> class to log HTTP event information.
+	/// </summary>
+	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void LogMessage(string message)
+	{
+		logger?.LogInformationMessage(message);
+
+		Trace.WriteLine(message);
+	}
+
 	private void LogRequestStart(EventWrittenEventArgs eventData)
 	{
 		if (eventData.Payload is null || eventData.Payload.Count < 4)
@@ -140,19 +153,6 @@ public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 		{
 			this._currentRequest.Value = new Request($"{scheme}://{host}:{port}{pathAndQuery}", Stopwatch.StartNew());
 		}
-	}
-
-	/// <summary>
-	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
-	/// This method is intended for internal use within the <see cref="HttpEventListenerAsyncLocal"/> class to log HTTP event information.
-	/// </summary>
-	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void LogMessage(string message)
-	{
-		logger?.LogInformationMessage(message);
-
-		Trace.WriteLine(message);
 	}
 
 	/// <summary>

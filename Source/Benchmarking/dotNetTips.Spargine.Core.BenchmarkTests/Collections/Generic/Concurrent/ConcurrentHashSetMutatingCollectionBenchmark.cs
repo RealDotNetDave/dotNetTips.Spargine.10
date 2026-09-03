@@ -42,14 +42,14 @@ public class ConcurrentHashSetMutatingCollectionBenchmark : LargeCollectionBench
 	private ReadOnlyCollection<Person> _newPeople = default!;
 	private ConcurrentHashSet<Person> _personRefConcurrentHashSet = default!;
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.AddRange))]
+	[Benchmark(Description = nameof(ConcurrentHashSet<>.AddRange))]
 	[BenchmarkCategory(Categories.Async)]
 	public void AddRange()
 	{
 		this.Consume(this._personRefConcurrentHashSet.AddRange(this._newPeople));
 	}
 
-	[Benchmark(Description = nameof(ConcurrentHashSet<Person>.Clear))]
+	[Benchmark(Description = nameof(ConcurrentHashSet<>.Clear))]
 	[BenchmarkCategory(Categories.Async)]
 	public void Clear()
 	{

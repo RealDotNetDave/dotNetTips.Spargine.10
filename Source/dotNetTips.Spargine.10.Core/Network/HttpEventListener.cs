@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
-using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Logging;
 using DotNetTips.Spargine.Core.Properties;
 using Microsoft.Extensions.Logging;
@@ -47,22 +46,9 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </code>
 /// </example>
 /// <seealso cref="EventListener"/>
-[Information(nameof(HttpEventListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation ="ADD URL")]
+[Information(nameof(HttpEventListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
 public sealed class HttpEventListener(ILogger logger) : EventListener
 {
-
-	/// <summary>
-	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
-	/// This method is intended for internal use within the <see cref="HttpEventListener"/> class to log HTTP event information.
-	/// </summary>
-	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void LogMessage(string message)
-	{
-		logger?.LogInformationMessage(message);
-
-		Trace.WriteLine(message);
-	}
 
 	/// <summary>
 	/// Called for all existing event sources when the event listener is created and when a new event source is attached to the listener.
@@ -141,6 +127,19 @@ public sealed class HttpEventListener(ILogger logger) : EventListener
 		"ResponseContentStop" => true,
 		_ => false,
 	};
+
+	/// <summary>
+	/// Logs a message to the configured logger and writes the message to the system diagnostic trace.
+	/// This method is intended for internal use within the <see cref="HttpEventListener"/> class to log HTTP event information.
+	/// </summary>
+	/// <param name="message">The message to be logged. It should contain information about the HTTP event being processed.</param>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void LogMessage(string message)
+	{
+		logger?.LogInformationMessage(message);
+
+		Trace.WriteLine(message);
+	}
 
 	private void LogRequestStart(EventWrittenEventArgs eventData)
 	{
