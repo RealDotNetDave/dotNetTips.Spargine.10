@@ -4,12 +4,15 @@
 // Created          : 11-25-2019
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified On : 09-04-2026
 // ***********************************************************************
 // <copyright file="TaskExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>Extension methods for Task that support fire-and-forget patterns with optional exception handling.</summary>
+// <summary>
+// Extension methods for Task and Exception that support fire-and-forget execution with optional
+// exception handling, cancellation suppression, AggregateException unwrapping, and timeout-bound awaiting.
+// </summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -20,15 +23,19 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for <see cref="Task"/> that support fire-and-forget patterns
-/// with optional exception handling.
+/// Provides extension methods for <see cref="Task"/> and <see cref="Exception"/> that support
+/// fire-and-forget execution, cancellation suppression, exception unwrapping, and timeout-bound awaiting.
 /// </summary>
 /// <remarks>
-/// The <see cref="TaskExtensions"/> class includes methods for running tasks in the background
-/// without awaiting completion. Exceptions can be observed via a callback or silently captured
-/// to prevent unobserved task exceptions.
+/// The <see cref="TaskExtensions"/> class includes methods for:
+/// <list type="bullet">
+/// <item><description>Running tasks in the background without awaiting completion, observing faults via a callback or silently capturing them to prevent unobserved task exceptions (<see cref="FireAndForget(Task)"/>).</description></item>
+/// <item><description>Awaiting a task while suppressing <see cref="OperationCanceledException"/> (<see cref="IgnoreCancellation(Task)"/>).</description></item>
+/// <item><description>Unwrapping a single inner exception from an <see cref="AggregateException"/> (<see cref="UnwrapAggregate(Exception)"/>).</description></item>
+/// <item><description>Awaiting a task within a specified timeout (<see cref="WithTimeoutAsync(Task, TimeSpan, CancellationToken)"/>).</description></item>
+/// </list>
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class TaskExtensions
 {
 

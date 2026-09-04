@@ -3,17 +3,16 @@
 // Author           : Copilot Agent
 // Created          : 07-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-04-2026
 // ***********************************************************************
 // <copyright file="StopwatchScopeTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Tests for StopwatchScope.
-// </summary>
+// <summary>Tests for StopwatchScope.</summary>
 // ***********************************************************************
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core.Diagnostics;
 
@@ -46,6 +45,8 @@ public class StopwatchScopeTests
 		using (var scope = StopwatchScope.Start(value => elapsed = value))
 		{
 			Thread.Sleep(20);
+
+			Debug.WriteLine(scope.Elapsed);
 		}
 
 		Assert.IsTrue(elapsed > TimeSpan.Zero);
@@ -105,6 +106,8 @@ public class StopwatchScopeTests
 		using (var scope = StopwatchScope.Start(_ => callbackInvoked = true))
 		{
 			Assert.IsFalse(callbackInvoked);
+
+			Debug.WriteLine(scope.Elapsed);
 		}
 
 		Assert.IsTrue(callbackInvoked);
