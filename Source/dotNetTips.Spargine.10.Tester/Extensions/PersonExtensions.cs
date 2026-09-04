@@ -24,7 +24,7 @@ using DotNetTips.Spargine.Tester.Models.RefTypes;
 namespace DotNetTips.Spargine.Tester.Extensions;
 
 /// <summary>
-/// Provides extension methods for the <see cref="Person"/> class.
+/// Provides extension methods for the <see cref="Person"/> type.
 /// </summary>
 [Information(nameof(PersonExtensions), Status = Status.Available, Documentation = "https://bit.ly/SpargineTester")]
 public static class PersonExtensions
