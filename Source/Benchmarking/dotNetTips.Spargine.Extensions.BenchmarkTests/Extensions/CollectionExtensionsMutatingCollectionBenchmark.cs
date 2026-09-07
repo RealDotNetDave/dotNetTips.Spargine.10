@@ -36,6 +36,7 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 	private Collection<Person> _peopleRefCollection = default!;
 	private HashSet<Person> _peopleRefHashSet = default!;
 	private List<Person> _peopleRefList = default!;
+	private HashSet<Person> _personHashSetToInsert = default!;
 	private Person _personToInsert = default!;
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIf) + ": Condition False")]
@@ -154,11 +155,20 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items")]
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items (array)")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void AddRangeIfNotExistsNewItems()
 	{
 		var result = this._peopleRefCollection.AddRangeIfNotExists(this.GetPersonRefCollectionToInsert());
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items (hashset)")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddRangeIfNotExistsNewItems_HashSet()
+	{
+		var result = this._peopleRefCollection.AddRangeIfNotExists(this._personHashSetToInsert);
 
 		this.Consume(result);
 	}
@@ -207,6 +217,7 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		var people = this.GetPersonRefArray();
 		this._existingPerson = people[0];
 		this._personToInsert = this.GetPersonRefCollectionToInsert()[0];
+		this._personHashSetToInsert = this.GetPersonRefCollectionToInsert().ToHashSet();
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item")]
