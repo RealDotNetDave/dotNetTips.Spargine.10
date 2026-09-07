@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 09-07-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -310,7 +310,7 @@ public static class
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddLast), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] AddLast([AllowNull] in T item)
 		{
 			array = array.ArgumentNotNull();
@@ -320,6 +320,7 @@ public static class
 				return array;
 			}
 
+			// SUGGESTION FROM COPILOT SLOWER
 			var length = array.Length;
 			var result = new T[length + 1];
 
@@ -355,13 +356,21 @@ public static class
 		/// </code>
 		/// </example>
 		[Pure]
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AreEqual), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AreEqual([AllowNull] in T[] arrayToCheck)
 		{
-			return array is null || arrayToCheck is null
-				? false
-				: array.LongLength != arrayToCheck.LongLength ? false : array.AsSpan().SequenceEqual(arrayToCheck);
+			if (array is null || arrayToCheck is null)
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(array, arrayToCheck))
+			{
+				return true;
+			}
+
+			return ((ReadOnlySpan<T>)array).SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
@@ -412,7 +421,7 @@ public static class
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastClone), author: "David McCarter", createdOn: "7/30/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] FastClone()
 		{
 			array = array.ArgumentNotNull();
@@ -502,24 +511,24 @@ public static class
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(GenerateHashCode), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int GenerateHashCode()
 		{
 			array = array.ArgumentNotNull();
 
-			// SUGGESTION FROM COPILOT SLOWER
 			var hashSeed = 6551;
+			var comparer = EqualityComparer<T>.Default;
 
 			ref var start = ref MemoryMarshal.GetArrayDataReference(array);
 			var length = array.Length;
 
 			for (var index = 0; index < length; index++)
 			{
-				var element = Unsafe.Add(ref start, index);
+				ref var element = ref Unsafe.Add(ref start, index);
 
 				if (element is not null)
 				{
-					hashSeed ^= (hashSeed << 5) ^ EqualityComparer<T>.Default.GetHashCode(element);
+					hashSeed ^= (hashSeed << 5) ^ comparer.GetHashCode(element);
 				}
 			}
 
@@ -588,10 +597,25 @@ public static class
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsNotEmpty), author: "David McCarter", createdOn: "6/15/2022", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public bool IsNotEmpty(in Func<T, bool> actionFunction)
 		{
-			return array is null || actionFunction is null ? false : array.Any(actionFunction);
+			if (array is null || actionFunction is null)
+			{
+				return false;
+			}
+
+			var span = array.AsSpan();
+
+			for (var index = 0; index < span.Length; index++)
+			{
+				if (actionFunction(span[index]))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -682,11 +706,12 @@ public static class
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveFirst), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T[] RemoveFirst()
 		{
 			array = array.ArgumentItemsExists();
 
+			// SUGGESTION FROM COPILOT SLOWER
 			var newLength = array.Length - 1;
 			var result = new T[newLength];
 
@@ -753,11 +778,12 @@ public static class
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToDistinct), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public T[] ToDistinct(IEqualityComparer<T>? comparer = null)
 		{
 			array = array.ArgumentNotNull();
 
+			// SUGGESTION FROM COPILOT SLOWER
 			var seen = new HashSet<T>(array.Length, comparer);
 
 			var span = array.AsSpan();
