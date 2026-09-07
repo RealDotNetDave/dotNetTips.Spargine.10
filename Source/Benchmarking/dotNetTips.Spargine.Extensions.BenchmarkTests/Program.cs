@@ -43,9 +43,8 @@ internal sealed class Program
 
 		// Temp tests
 		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(ArrayExtensionsCollectionBenchmark),
-		 typeof(ArrayExtensionsSliceBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark)
+		 typeof(CollectionExtensionsCollectionBenchmark),
+		 typeof(CollectionExtensionsMutatingCollectionBenchmark)
 		);
 
 		// Group 1: A–D - 9:30 hours, 991 benchmarks

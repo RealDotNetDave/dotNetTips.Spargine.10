@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 09-07-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -480,7 +480,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
-			// SUGGESTION BY COPILOT SLOWER
+			// SUGGESTION FROM COPILOT SLOWER
 			var eq = comparer ?? EqualityComparer<T>.Default;
 
 			var index = 0;
@@ -509,7 +509,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			accumulatorPredicate = accumulatorPredicate.ArgumentNotNull();
 
-			//SUGGESTION BY COPILOT SLOWER.
+			// SUGGESTION FROM COPILOT SLOWER
 			var index = 0;
 
 			foreach (var item in collection)
@@ -842,7 +842,7 @@ public static class EnumerableExtensions
 				return false;
 			}
 
-			//RECOMMENDATION FROM COPILOT SLOWER.
+			// SUGGESTION FROM COPILOT SLOWER
 			if (ReferenceEquals(collection, second))
 			{
 				return true;
@@ -1264,7 +1264,7 @@ public static class EnumerableExtensions
 			collection = collection.ArgumentNotNull();
 			separator = separator.ArgumentNotNull();
 
-			//RECOMENDATION FROM COPILOT SLOWER.
+			// SUGGESTION FROM COPILOT SLOWER
 			return (collection.CheckItemsExists() is false)
 				? string.Empty
 				: string.Join(separator.ArgumentNotNullOrEmpty(defaultValue: ControlChars.DefaultSeparator), collection);

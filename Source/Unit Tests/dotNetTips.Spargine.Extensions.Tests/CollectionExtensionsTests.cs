@@ -4,12 +4,13 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified On : 09-07-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
 // </copyright>
-// <summary></summary>
+// <summary>Tests collection extensions, including conditional additions, set insertion,
+// buffered removal semantics, and first-element fast paths.</summary>
 // ***********************************************************************
 using System;
 using System.Collections.ObjectModel;
@@ -30,6 +31,146 @@ public class CollectionExtensionsTests
 {
 
 	private const int Count = 100;
+
+	[TestMethod]
+	public void AddIf_FalseConditionWithArray_DoesNotValidateOrModifyCollection()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		ICollection<Person> collection = new[] { person };
+
+		CollectionExtensions.AddIf(collection, person, false);
+
+		Assert.HasCount(1, collection);
+		Assert.AreSame(person, collection.First());
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_HashSet_PreservesComparerAndCountsDistinctAdditions()
+	{
+		ICollection<string?> collection = new HashSet<string?>(StringComparer.OrdinalIgnoreCase) { "existing" };
+
+		var added = CollectionExtensions.AddRangeIfNotExists(collection, ["EXISTING", "new", "NEW", null, null]);
+
+		Assert.AreEqual(2, added);
+		Assert.HasCount(3, collection);
+		Assert.Contains("new", collection);
+		Assert.IsTrue(collection.Contains(null));
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_HashSetSelfSource_ReturnsZero()
+	{
+		ICollection<Person> collection = new HashSet<Person>(RandomData.GeneratePersonRefCollection(Count));
+		var originalCount = collection.Count;
+
+		var added = CollectionExtensions.AddRangeIfNotExists(collection, collection);
+
+		Assert.AreEqual(0, added);
+		Assert.HasCount(originalCount, collection);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_EmptyHashSetWithEmptySource_ReturnsZero()
+	{
+		ICollection<Person> collection = new HashSet<Person>();
+
+		Assert.AreEqual(0, CollectionExtensions.AddRangeIfNotExists(collection, Array.Empty<Person>()));
+		Assert.IsEmpty(collection);
+	}
+
+	[TestMethod]
+	public void AddRangeIfNotExists_NullItems_ThrowsArgumentNullException()
+	{
+		ICollection<Person> collection = new HashSet<Person>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.AddRangeIfNotExists(collection, null!));
+		Assert.IsEmpty(collection);
+	}
+
+	[TestMethod]
+	public void RemoveWhere_EmptyCollection_DoesNotInvokePredicate()
+	{
+		ICollection<Person> collection = new List<Person>();
+		var calls = 0;
+
+		var removed = CollectionExtensions.RemoveWhere(collection, person =>
+		{
+			calls++;
+			return true;
+		});
+
+		Assert.AreEqual(0, removed);
+		Assert.AreEqual(0, calls);
+	}
+
+	[TestMethod]
+	public void RemoveWhere_AllMatch_EvaluatesBeforeRemoving()
+	{
+		ICollection<Person> collection = RandomData.GeneratePersonRefCollection(Count).ToList();
+		var calls = 0;
+
+		var removed = CollectionExtensions.RemoveWhere(collection, person =>
+		{
+			Assert.HasCount(Count, collection);
+			calls++;
+			return true;
+		});
+
+		Assert.AreEqual(Count, removed);
+		Assert.AreEqual(Count, calls);
+		Assert.IsEmpty(collection);
+	}
+
+	[TestMethod]
+	public void RemoveWhere_NullPredicate_ThrowsArgumentNullException()
+	{
+		ICollection<Person> collection = new List<Person>();
+
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.RemoveWhere(collection, null!));
+	}
+
+	[TestMethod]
+	public void RemoveWhere_ReadOnlyCollectionWithoutMatches_ReturnsZero()
+	{
+		ICollection<Person> collection = new ReadOnlyCollection<Person>(RandomData.GeneratePersonRefCollection(Count).ToList());
+
+		Assert.AreEqual(0, CollectionExtensions.RemoveWhere(collection, static person => false));
+		Assert.HasCount(Count, collection);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_EmptyList_ReturnsFalseAndDefault()
+	{
+		IEnumerable<Person> source = new List<Person>();
+
+		Assert.IsFalse(CollectionExtensions.TryGetFirst(source, out var first));
+		Assert.IsNull(first);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_EmptyNonList_ReturnsFalseAndDefault()
+	{
+		IEnumerable<Person> source = new LinkedList<Person>();
+
+		Assert.IsFalse(CollectionExtensions.TryGetFirst(source, out var first));
+		Assert.IsNull(first);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_NonListWithItem_ReturnsFirstItem()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		IEnumerable<Person> source = new LinkedList<Person>(new[] { person });
+
+		Assert.IsTrue(CollectionExtensions.TryGetFirst(source, out var first));
+		Assert.AreSame(person, first);
+	}
+
+	[TestMethod]
+	public void TryGetFirst_NullSource_ThrowsArgumentNullException()
+	{
+		Assert.ThrowsExactly<ArgumentNullException>(() => CollectionExtensions.TryGetFirst<Person>(null!, out _));
+	}
 
 	[TestMethod]
 	public void AddIf_Array_ThrowsArgumentReadOnlyException()

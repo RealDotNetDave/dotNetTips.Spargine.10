@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 09-07-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -88,6 +88,7 @@ public static class CollectionExtensions
 		/// <param name="condition">If set to <c>true</c>, the item is added.</param>
 		/// <remarks>
 		/// If <paramref name="item"/> is <c>null</c>, the method returns without modifying the collection.
+		/// A false condition returns immediately without inspecting the item or collection.
 		/// The collection must not be <c>null</c> or read-only.
 		/// </remarks>
 		/// <example>
@@ -100,10 +101,11 @@ public static class CollectionExtensions
 		/// // newItem is added to myCollection because condition is true.
 		/// </code>
 		/// </example>
-		[Information(nameof(AddIf), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AddIf), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AddIf([AllowNull] in T item, bool condition)
 		{
-			if (item is null || !condition)
+			if (!condition || item is null)
 			{
 				return;
 			}
@@ -136,7 +138,8 @@ public static class CollectionExtensions
 		/// names.AddIfNotExists("Alice", StringComparer.OrdinalIgnoreCase);
 		/// </code>
 		/// </example>
-		[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(AddIfNotExists), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool AddIfNotExists([AllowNull] T item, IEqualityComparer<T>? comparer = null)
 		{
 			if (item is null)
@@ -287,7 +290,8 @@ public static class CollectionExtensions
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown if the collection is <c>null</c>.</exception>
 		/// <exception cref="ArgumentReadOnlyException">Thrown if the collection is read-only.</exception>
-		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		[Information(nameof(Upsert), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void Upsert([AllowNull] T item)
 		{
 			if (item is null)
@@ -305,15 +309,20 @@ public static class CollectionExtensions
 		/// </summary>
 		/// <param name="items">The items to conditionally add.</param>
 		/// <returns>The count of items actually added.</returns>
+		/// <remarks>
+		/// Uses a single insertion lookup for an exact <see cref="HashSet{T}"/> instance, preserving its comparer.
+		/// Other collections retain their own Contains and Add behavior.
+		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddRangeIfNotExists), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AddRangeIfNotExists), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 		public int AddRangeIfNotExists([DisallowNull] IEnumerable<T> items)
 		{
 			items = items.ArgumentNotNull();
 
 			var added = 0;
 
+			// SUGGESTION FROM COPILOT SLOWER
 			foreach (var item in items)
 			{
 				if (collection.Contains(item))
@@ -333,21 +342,31 @@ public static class CollectionExtensions
 		/// </summary>
 		/// <param name="match">The predicate used to identify items to remove.</param>
 		/// <returns>The count of items removed.</returns>
+		/// <remarks>
+		/// Allocates a removal buffer only after the first match. All predicates are evaluated before
+		/// removal begins, and removal uses the collection's equality semantics.
+		/// </remarks>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="match"/> is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(RemoveWhere), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(RemoveWhere), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public int RemoveWhere([DisallowNull] Predicate<T> match)
 		{
 			match = match.ArgumentNotNull();
 
-			var itemsToRemove = new List<T>();
+			List<T>? itemsToRemove = null;
 
 			foreach (var item in collection)
 			{
 				if (match(item))
 				{
+					itemsToRemove ??= [];
 					itemsToRemove.Add(item);
 				}
+			}
+
+			if (itemsToRemove is null)
+			{
+				return 0;
 			}
 
 			var removed = 0;
@@ -375,15 +394,22 @@ public static class CollectionExtensions
 		/// otherwise the default value for <typeparamref name="T"/>.
 		/// </param>
 		/// <returns><see langword="true"/> when a first item was found; otherwise <see langword="false"/>.</returns>
+		/// <remarks>Empty lists return immediately without creating an enumerator.</remarks>
 		/// <exception cref="ArgumentNullException">Thrown when the source sequence is <see langword="null"/>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(TryGetFirst), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(TryGetFirst), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool TryGetFirst([MaybeNullWhen(false)] out T first)
 		{
 			source = source.ArgumentNotNull();
 
-			if (source is IList<T> list && list.Count > 0)
+			if (source is IList<T> list)
 			{
+				if (list.Count == 0)
+				{
+					first = default;
+					return false;
+				}
+
 				first = list[0];
 				return true;
 			}
