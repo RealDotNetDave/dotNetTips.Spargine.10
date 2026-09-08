@@ -24,6 +24,7 @@
 	<TargetFramework>net10.0</TargetFramework>
 	<Version>2026.10.4.17</Version>
 	<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+	<RootNamespace>DotNetTips.Spargine.Extensions.BenchmarkTests</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<OutputPath>..\..\..\AppBin\</OutputPath>
