@@ -10,17 +10,17 @@
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Regression tests for benchmark fixtures, lifecycle, asynchronous streams,
-// and ownership of temporary directories.
+// Unit tests for Benchmark public API members excluding methods marked with UnitTestStatus.NotRequired.
 // </summary>
 // ***********************************************************************
-//'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+using System.Net;
 using System.Runtime.CompilerServices;
-using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Loggers;
 using DotNetTips.Spargine.Tester;
+using DotNetTips.Spargine.Tester.Models.RefTypes;
+using ValuePerson = DotNetTips.Spargine.Tester.Models.ValueTypes.Person;
 
 namespace DotNetTips.Spargine.Benchmarking.Tests;
 
@@ -32,75 +32,189 @@ public sealed class BenchmarkTests
 	private const int FixtureSeed = 42;
 
 	[TestMethod]
+	public async Task CleanupAsyncReturnsCompletedTask()
+	{
+		var task = new TestBenchmark().CleanupAsync();
+		await task.ConfigureAwait(false);
+		Assert.IsTrue(task.IsCompletedSuccessfully);
+	}
+
+	[TestMethod]
+	public void ClearDataCachesExistingByteFixtureRecreatesArrayWithSameSeededContents()
+	{
+		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
+		var previous = benchmark.GetByteArray(FixtureLength);
+		benchmark.ClearDataCaches();
+		var current = benchmark.GetByteArray(FixtureLength);
+		Assert.AreEqual((false, true), (ReferenceEquals(previous, current), previous.SequenceEqual(current)));
+	}
+
+	[TestMethod]
+	public void ClearDataCachesExistingStringFixtureRecreatesArrayWithSameSeededContents()
+	{
+		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
+		var previous = benchmark.GetStringArray(4);
+		benchmark.ClearDataCaches();
+		var current = benchmark.GetStringArray(4);
+		Assert.AreEqual((false, true), (ReferenceEquals(previous, current), previous.SequenceEqual(current)));
+	}
+
+	[TestMethod]
+	public void ConstantFieldsMatchExpectedValues()
+	{
+		Assert.AreEqual(("john doe", "John Doe", "JOHN DOE"), (Benchmark.LowerCaseString, Benchmark.ProperCaseString, Benchmark.UpperCaseString));
+		Assert.AreEqual(("2ds9JiOtNF", "ndA5nJSHnU"), (Benchmark.String10Characters01, Benchmark.String10Characters02));
+		Assert.AreEqual(("C8IIVjaUi0owZh6", "Q7sXguwS9vZpOo6"), (Benchmark.String15Characters01, Benchmark.String15Characters02));
+		Assert.AreEqual(("fake@fakelive.com", "Fake@FakeLive.com"), (Benchmark.TestEmailLowerCase, Benchmark.TestEmailMixedCase));
+		Assert.AreEqual(("failed", "success"), (TestBenchmark.ExposeFailedText(), TestBenchmark.ExposeSuccessText()));
+	}
+
+	[TestMethod]
+	public void ConsumeAcceptsObject()
+	{
+		new TestBenchmark().Consume(new object());
+	}
+
+	[TestMethod]
+	public async Task ConsumeAsyncEnumerableAsyncNullSourceThrowsArgumentNullException()
+	{
+		var benchmark = new TestBenchmark();
+		var exception = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => benchmark.ConsumeAsyncEnumerableAsync<int>(null!)).ConfigureAwait(false);
+		Assert.AreEqual("source: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public async Task ConsumeAsyncEnumerableAsyncPreCanceledTokenDoesNotStartEnumeration()
+	{
+		using var cancellation = new CancellationTokenSource();
+		await cancellation.CancelAsync().ConfigureAwait(false);
+		var source = new TrackedSequence(1);
+		await Assert.ThrowsExactlyAsync<OperationCanceledException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync(), cancellation.Token)).ConfigureAwait(false);
+		Assert.IsFalse(source.Started);
+	}
+
+	[TestMethod]
+	[DataRow(0)]
+	[DataRow(4)]
+	public async Task ConsumeAsyncEnumerableAsyncSequenceEnumeratesAndDisposes(int count)
+	{
+		var source = new TrackedSequence(count);
+		await new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync()).ConfigureAwait(false);
+		Assert.AreEqual((count, true), (source.EnumeratedCount, source.Disposed));
+	}
+
+	[TestMethod]
+	public async Task ConsumeAsyncEnumerableAsyncSourceFailurePropagatesAndDisposes()
+	{
+		var failure = new InvalidOperationException();
+		var source = new TrackedSequence(1) { BeforeYield = () => throw failure };
+		var actual = await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync())).ConfigureAwait(false);
+		Assert.AreEqual((failure, true), (actual, source.Disposed));
+	}
+
+	[TestMethod]
+	public async Task ConsumeAsyncEnumerableAsyncTokenIsForwardedToSource()
+	{
+		using var cancellation = new CancellationTokenSource();
+		var source = new TrackedSequence(1);
+		await new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync(), cancellation.Token).ConfigureAwait(false);
+		Assert.AreEqual(cancellation.Token, source.ObservedToken);
+	}
+
+	[TestMethod]
+	public async Task ConsumeAsyncReturnsCompletedTask()
+	{
+		var task = new TestBenchmark().ConsumeAsync(new object());
+		await task.ConfigureAwait(false);
+		Assert.IsTrue(task.IsCompletedSuccessfully);
+	}
+
+	[TestMethod]
+	public void ConsumeCollectionAcceptsList()
+	{
+		new TestBenchmark().ConsumeCollection(new List<int> { 1, 2, 3 });
+	}
+
+	[TestMethod]
+	public void ConsumeCollectionNullThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().ConsumeCollection<string>(null!));
+		Assert.AreEqual("collection: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void ConsumeDictionaryAcceptsDictionary()
+	{
+		new TestBenchmark().ConsumeDictionary(new Dictionary<int, string> { [1] = "a", [2] = "b" });
+	}
+
+	[TestMethod]
+	public void ConsumeEnumerableAcceptsSequence()
+	{
+		new TestBenchmark().ConsumeEnumerable(Enumerable.Range(1, 5));
+	}
+
+	[TestMethod]
+	public void ConsumeEnumerableNullThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().ConsumeEnumerable<string>(null!));
+		Assert.AreEqual("collection: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void ConsumeReadOnlySpanAcceptsSpan()
+	{
+		new TestBenchmark().ConsumeReadOnlySpan<int>([1, 2, 3]);
+	}
+
+	[TestMethod]
+	public void ConsumeSpanAcceptsSpan()
+	{
+		Span<int> data = [1, 2, 3];
+		new TestBenchmark().ConsumeSpan(data);
+	}
+
+	[TestMethod]
+	[DataRow(null)]
+	[DataRow(FixtureSeed)]
+	public void CopyByteArrayToMutatedGetterArrayRestoresPristineData(int? seed)
+	{
+		var benchmark = new TestBenchmark { DataSeed = seed };
+		var exposed = benchmark.GetByteArray(FixtureLength);
+		var expected = (byte[])exposed.Clone();
+		exposed.AsSpan().Fill(byte.MaxValue);
+		benchmark.CopyByteArrayTo(exposed);
+		CollectionAssert.AreEqual(expected, exposed);
+	}
+
+	[TestMethod]
+	[DataRow(null)]
+	[DataRow(FixtureSeed)]
+	public void CopyStringArrayToMutatedGetterArrayRestoresPristineData(int? seed)
+	{
+		var benchmark = new TestBenchmark { DataSeed = seed };
+		var exposed = benchmark.GetStringArray(4, 2, 4);
+		var expected = (string[])exposed.Clone();
+		exposed[0] = RandomData.GenerateWord(20);
+		benchmark.CopyStringArrayTo(exposed, 2, 4);
+		CollectionAssert.AreEqual(expected, exposed);
+	}
+
+	[TestMethod]
+	public void CreateTemporaryDirectoryRepeatedCallsCreateDistinctExistingDirectories()
+	{
+		var benchmark = new TestBenchmark();
+		var first = benchmark.CreateTemporaryDirectory();
+		var second = benchmark.CreateTemporaryDirectory();
+		var result = (first.Exists, second.Exists, first.FullName == second.FullName);
+		benchmark.GlobalCleanup();
+		Assert.AreEqual((true, true, false), result);
+	}
+
+	[TestMethod]
 	public void DataSeedDefaultIsNull()
 	{
 		Assert.IsNull(new TestBenchmark().DataSeed);
-	}
-
-	[TestMethod]
-	[DataRow(0)]
-	[DataRow(1)]
-	[DataRow(1023)]
-	[DataRow(1024)]
-	[DataRow(1025)]
-	public void GetByteArrayByLengthValidCountReturnsExactLength(int byteCount)
-	{
-		var benchmark = new TestBenchmark();
-		Assert.AreEqual(byteCount, benchmark.GetByteArrayByLength(byteCount).Length);
-	}
-
-	[TestMethod]
-	public void GetByteArrayByLengthNegativeCountThrowsArgumentOutOfRangeException()
-	{
-		var benchmark = new TestBenchmark();
-		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetByteArrayByLength(-1));
-		Assert.AreEqual("byteCount", exception.ParamName);
-	}
-
-	[TestMethod]
-	[DataRow(0)]
-	[DataRow(-1)]
-	public void GetByteArrayNonpositiveCountThrowsArgumentOutOfRangeException(int count)
-	{
-		var benchmark = new TestBenchmark();
-		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetByteArray(count));
-		Assert.AreEqual("count", exception.ParamName);
-	}
-
-	[TestMethod]
-	public void GetByteArrayDefaultReturnsOneByte()
-	{
-		Assert.AreEqual(1, new TestBenchmark().GetByteArray().Length);
-	}
-
-	[TestMethod]
-	public void GetByteArrayMatchingExactLengthSharesCachedArray()
-	{
-		var benchmark = new TestBenchmark();
-		Assert.AreSame(benchmark.GetByteArray(FixtureLength), benchmark.GetByteArrayByLength(FixtureLength));
-	}
-
-	[TestMethod]
-	[DataRow(0)]
-	[DataRow(-42)]
-	[DataRow(int.MinValue)]
-	[DataRow(int.MaxValue)]
-	public void GetByteArrayMatchingSeedReproducesData(int seed)
-	{
-		var first = new TestBenchmark { DataSeed = seed };
-		var second = new TestBenchmark { DataSeed = seed };
-		_ = second.GetByteArray(7);
-		CollectionAssert.AreEqual(first.GetByteArray(FixtureLength), second.GetByteArray(FixtureLength));
-	}
-
-	[TestMethod]
-	public void GetStringArrayMatchingSeedReproducesDataIndependentlyOfCallOrder()
-	{
-		var first = new TestBenchmark { DataSeed = FixtureSeed };
-		var second = new TestBenchmark { DataSeed = FixtureSeed };
-		_ = second.GetStringArray(3, 1, 2);
-		_ = second.GetByteArray(7);
-		CollectionAssert.AreEqual(first.GetStringArray(FixtureLength), second.GetStringArray(FixtureLength));
 	}
 
 	[TestMethod]
@@ -119,24 +233,6 @@ public sealed class BenchmarkTests
 		var previous = benchmark.GetStringArray(FixtureLength);
 		benchmark.DataSeed = FixtureSeed + 1;
 		CollectionAssert.AreNotEqual(previous, benchmark.GetStringArray(FixtureLength));
-	}
-
-	[TestMethod]
-	public void DataSeedSameSeedPreservesByteCache()
-	{
-		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var previous = benchmark.GetByteArray(FixtureLength);
-		benchmark.DataSeed = FixtureSeed;
-		Assert.AreSame(previous, benchmark.GetByteArray(FixtureLength));
-	}
-
-	[TestMethod]
-	public void DataSeedSameSeedPreservesStringCache()
-	{
-		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var previous = benchmark.GetStringArray(FixtureLength);
-		benchmark.DataSeed = FixtureSeed;
-		Assert.AreSame(previous, benchmark.GetStringArray(FixtureLength));
 	}
 
 	[TestMethod]
@@ -169,83 +265,87 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
-	[DataRow(null)]
-	[DataRow(FixtureSeed)]
-	public void CopyByteArrayToMutatedGetterArrayRestoresPristineData(int? seed)
-	{
-		var benchmark = new TestBenchmark { DataSeed = seed };
-		var exposed = benchmark.GetByteArray(FixtureLength);
-		var expected = (byte[])exposed.Clone();
-		exposed.AsSpan().Fill(byte.MaxValue);
-		benchmark.CopyByteArrayTo(exposed);
-		CollectionAssert.AreEqual(expected, exposed);
-	}
-
-	[TestMethod]
-	[DataRow(null)]
-	[DataRow(FixtureSeed)]
-	public void CopyStringArrayToMutatedGetterArrayRestoresPristineData(int? seed)
-	{
-		var benchmark = new TestBenchmark { DataSeed = seed };
-		var exposed = benchmark.GetStringArray(4, 2, 4);
-		var expected = (string[])exposed.Clone();
-		exposed[0] = RandomData.GenerateWord(20);
-		benchmark.CopyStringArrayTo(exposed, 2, 4);
-		CollectionAssert.AreEqual(expected, exposed);
-	}
-
-	[TestMethod]
-	public void CopyByteArrayToColdCacheFillsOnlyDestinationSlice()
+	public void DataSeedSameSeedPreservesByteCache()
 	{
 		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var destination = new byte[] { byte.MaxValue, 0, 0, byte.MaxValue };
-		benchmark.CopyByteArrayTo(destination.AsSpan(1, 2));
-		var fixture = new TestBenchmark { DataSeed = FixtureSeed }.GetByteArray(2);
-		CollectionAssert.AreEqual(new byte[] { byte.MaxValue, fixture[0], fixture[1], byte.MaxValue }, destination);
+		var previous = benchmark.GetByteArray(FixtureLength);
+		benchmark.DataSeed = FixtureSeed;
+		Assert.AreSame(previous, benchmark.GetByteArray(FixtureLength));
 	}
 
 	[TestMethod]
-	public void CopyStringArrayToColdCacheFillsOnlyDestinationSlice()
+	public void DataSeedSameSeedPreservesStringCache()
 	{
 		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var sentinel = RandomData.GenerateWord(20);
-		var destination = new[] { sentinel, sentinel, sentinel, sentinel };
-		benchmark.CopyStringArrayTo(destination.AsSpan(1, 2));
-		var fixture = new TestBenchmark { DataSeed = FixtureSeed }.GetStringArray(2);
-		CollectionAssert.AreEqual(new[] { sentinel, fixture[0], fixture[1], sentinel }, destination);
+		var previous = benchmark.GetStringArray(FixtureLength);
+		benchmark.DataSeed = FixtureSeed;
+		Assert.AreSame(previous, benchmark.GetStringArray(FixtureLength));
 	}
 
 	[TestMethod]
-	public void CopyByteArrayToEmptyDestinationLeavesCacheUsable()
+	public void GetByteArrayByLengthNegativeCountThrowsArgumentOutOfRangeException()
 	{
 		var benchmark = new TestBenchmark();
-		benchmark.CopyByteArrayTo(Span<byte>.Empty);
-		Assert.AreEqual(0, benchmark.GetByteArrayByLength(0).Length);
+		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetByteArrayByLength(-1));
+		Assert.AreEqual("byteCount", exception.ParamName);
 	}
 
 	[TestMethod]
-	public void CopyStringArrayToEmptyDestinationDoesNotAffectExistingFixture()
+	[DataRow(0)]
+	[DataRow(1)]
+	[DataRow(1023)]
+	[DataRow(1024)]
+	[DataRow(1025)]
+	public void GetByteArrayByLengthValidCountReturnsExactLength(int byteCount)
 	{
 		var benchmark = new TestBenchmark();
-		var fixture = benchmark.GetStringArray(1);
-		benchmark.CopyStringArrayTo(Span<string>.Empty);
-		Assert.AreSame(fixture, benchmark.GetStringArray(1));
+		Assert.AreEqual(byteCount, benchmark.GetByteArrayByLength(byteCount).Length);
 	}
 
 	[TestMethod]
-	public void GetStringArrayUnrepresentableMinimumThrowsArgumentOutOfRangeException()
+	public void GetByteArrayDefaultReturnsOneByte()
 	{
-		var benchmark = new TestBenchmark();
-		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetStringArray(1, int.MaxValue));
-		Assert.AreEqual("wordMinLength", exception.ParamName);
+		Assert.AreEqual(1, new TestBenchmark().GetByteArray().Length);
 	}
 
 	[TestMethod]
-	public void CopyStringArrayToEmptyDestinationWithInvalidMinimumThrowsArgumentOutOfRangeException()
+	public void GetByteArrayMatchingExactLengthSharesCachedArray()
 	{
 		var benchmark = new TestBenchmark();
-		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.CopyStringArrayTo(Span<string>.Empty, int.MaxValue));
-		Assert.AreEqual("wordMinLength", exception.ParamName);
+		Assert.AreSame(benchmark.GetByteArray(FixtureLength), benchmark.GetByteArrayByLength(FixtureLength));
+	}
+
+	[TestMethod]
+	[DataRow(0)]
+	[DataRow(-42)]
+	[DataRow(int.MinValue)]
+	[DataRow(int.MaxValue)]
+	public void GetByteArrayMatchingSeedReproducesData(int seed)
+	{
+		var first = new TestBenchmark { DataSeed = seed };
+		var second = new TestBenchmark { DataSeed = seed };
+		_ = second.GetByteArray(7);
+		CollectionAssert.AreEqual(first.GetByteArray(FixtureLength), second.GetByteArray(FixtureLength));
+	}
+
+	[TestMethod]
+	[DataRow(0)]
+	[DataRow(-1)]
+	public void GetByteArrayNonpositiveCountThrowsArgumentOutOfRangeException(int count)
+	{
+		var benchmark = new TestBenchmark();
+		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetByteArray(count));
+		Assert.AreEqual("count", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void GetStringArrayMatchingSeedReproducesDataIndependentlyOfCallOrder()
+	{
+		var first = new TestBenchmark { DataSeed = FixtureSeed };
+		var second = new TestBenchmark { DataSeed = FixtureSeed };
+		_ = second.GetStringArray(3, 1, 2);
+		_ = second.GetByteArray(7);
+		CollectionAssert.AreEqual(first.GetStringArray(FixtureLength), second.GetStringArray(FixtureLength));
 	}
 
 	[TestMethod]
@@ -275,197 +375,20 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
-	public void ClearDataCachesExistingByteFixtureRecreatesArrayWithSameSeededContents()
-	{
-		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var previous = benchmark.GetByteArray(FixtureLength);
-		benchmark.ClearDataCaches();
-		var current = benchmark.GetByteArray(FixtureLength);
-		Assert.AreEqual((false, true, (int?)FixtureSeed), (ReferenceEquals(previous, current), previous.SequenceEqual(current), benchmark.DataSeed));
-	}
-
-	[TestMethod]
-	public void ClearDataCachesExistingStringFixtureRecreatesArrayWithSameSeededContents()
-	{
-		var benchmark = new TestBenchmark { DataSeed = FixtureSeed };
-		var previous = benchmark.GetStringArray(4);
-		benchmark.ClearDataCaches();
-		var current = benchmark.GetStringArray(4);
-		Assert.AreEqual((false, true), (ReferenceEquals(previous, current), previous.SequenceEqual(current)));
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncNullSourceThrowsArgumentNullException()
+	public void GetStringArrayUnrepresentableMinimumThrowsArgumentOutOfRangeException()
 	{
 		var benchmark = new TestBenchmark();
-		var exception = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => benchmark.ConsumeAsyncEnumerableAsync<int>(null!)).ConfigureAwait(false);
-		Assert.AreEqual("source: ", exception.ParamName);
+		var exception = Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => benchmark.GetStringArray(1, int.MaxValue));
+		Assert.AreEqual("wordMinLength", exception.ParamName);
 	}
 
 	[TestMethod]
-	[DataRow(0)]
-	[DataRow(4)]
-	public async Task ConsumeAsyncEnumerableAsyncSequenceEnumeratesAndDisposes(int count)
-	{
-		var source = new TrackedSequence(count);
-		await new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync()).ConfigureAwait(false);
-		Assert.AreEqual((count, true), (source.EnumeratedCount, source.Disposed));
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncTokenIsForwardedToSource()
-	{
-		using var cancellation = new CancellationTokenSource();
-		var source = new TrackedSequence(1);
-		await new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync(), cancellation.Token).ConfigureAwait(false);
-		Assert.AreEqual(cancellation.Token, source.ObservedToken);
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncPreCanceledTokenDoesNotStartEnumeration()
-	{
-		using var cancellation = new CancellationTokenSource();
-		await cancellation.CancelAsync().ConfigureAwait(false);
-		var source = new TrackedSequence(1);
-		await Assert.ThrowsExactlyAsync<OperationCanceledException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync(), cancellation.Token)).ConfigureAwait(false);
-		Assert.IsFalse(source.Started);
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncSourceIgnoresCancellationStopsAndDisposes()
-	{
-		using var cancellation = new CancellationTokenSource();
-		var source = new TrackedSequence(4) { BeforeYield = cancellation.Cancel };
-		await Assert.ThrowsExactlyAsync<OperationCanceledException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync(), cancellation.Token)).ConfigureAwait(false);
-		Assert.AreEqual((1, true), (source.EnumeratedCount, source.Disposed));
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncSourceFailurePropagatesAndDisposes()
-	{
-		var failure = new InvalidOperationException();
-		var source = new TrackedSequence(1) { BeforeYield = () => throw failure };
-		var actual = await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync())).ConfigureAwait(false);
-		Assert.AreEqual((failure, true), (actual, source.Disposed));
-	}
-
-	[TestMethod]
-	public async Task ConsumeAsyncEnumerableAsyncDisposalFailurePropagates()
-	{
-		var failure = new InvalidOperationException();
-		var source = new TrackedSequence(0) { OnDispose = () => throw failure };
-		var actual = await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => new TestBenchmark().ConsumeAsyncEnumerableAsync(source.ReadAsync())).ConfigureAwait(false);
-		Assert.AreSame(failure, actual);
-	}
-
-	[TestMethod]
-	public async Task GlobalSetupAsyncDefaultHookInitializesBaseFixtures()
-	{
-		var benchmark = new TestBenchmark();
-		await benchmark.GlobalSetupAsync().ConfigureAwait(false);
-		Assert.IsNotNull(benchmark.PersonRef01);
-	}
-
-	[TestMethod]
-	public async Task GlobalSetupAsyncAsyncOverrideRunsBothHooksOnceInOrder()
-	{
-		var benchmark = new LifecycleBenchmark();
-		await benchmark.GlobalSetupAsync().ConfigureAwait(false);
-		Assert.AreEqual("setup,setup-async", string.Join(',', benchmark.Events));
-	}
-
-	[TestMethod]
-	public async Task GlobalCleanupAsyncAsyncOverrideRunsBothHooksOnceInOrder()
-	{
-		var benchmark = new LifecycleBenchmark();
-		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
-		Assert.AreEqual("cleanup,cleanup-async", string.Join(',', benchmark.Events));
-	}
-
-	[TestMethod]
-	public void GlobalSetupManualCallerRunsOnlySynchronousHook()
-	{
-		var benchmark = new LifecycleBenchmark();
-		benchmark.GlobalSetup();
-		Assert.AreEqual("setup", string.Join(',', benchmark.Events));
-	}
-
-	[TestMethod]
-	public void GlobalCleanupManualCallerRunsOnlySynchronousHook()
-	{
-		var benchmark = new LifecycleBenchmark();
-		benchmark.GlobalCleanup();
-		Assert.AreEqual("cleanup", string.Join(',', benchmark.Events));
-	}
-
-	[TestMethod]
-	public async Task GlobalSetupAsyncPendingOverrideDoesNotCompleteEarly()
-	{
-		var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-		var benchmark = new LifecycleBenchmark { SetupCompletion = completion.Task };
-		var setup = benchmark.GlobalSetupAsync();
-		var completedEarly = setup.IsCompleted;
-		completion.SetResult();
-		await setup.ConfigureAwait(false);
-		Assert.IsFalse(completedEarly);
-	}
-
-	[TestMethod]
-	public async Task GlobalCleanupAsyncPendingOverrideDoesNotCompleteEarly()
-	{
-		var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-		var benchmark = new LifecycleBenchmark { CleanupCompletion = completion.Task };
-		var cleanup = benchmark.GlobalCleanupAsync();
-		var completedEarly = cleanup.IsCompleted;
-		completion.SetResult();
-		await cleanup.ConfigureAwait(false);
-		Assert.IsFalse(completedEarly);
-	}
-
-	[TestMethod]
-	public async Task GlobalSetupAsyncFailingOverridePropagatesException()
-	{
-		var failure = new InvalidOperationException();
-		var benchmark = new LifecycleBenchmark { SetupCompletion = Task.FromException(failure) };
-		var actual = await Assert.ThrowsExactlyAsync<InvalidOperationException>(benchmark.GlobalSetupAsync).ConfigureAwait(false);
-		Assert.AreSame(failure, actual);
-	}
-
-	[TestMethod]
-	public void GlobalSetupAttributeBaseClassUsesOnlyAsyncEntryPoint()
-	{
-		var methods = typeof(Benchmark).GetMethods().Where(method => method.IsDefined(typeof(GlobalSetupAttribute)));
-		CollectionAssert.AreEqual(new[] { nameof(Benchmark.GlobalSetupAsync) }, methods.Select(method => method.Name).ToArray());
-	}
-
-	[TestMethod]
-	public void GlobalCleanupAttributeBaseClassUsesOnlyAsyncEntryPoint()
-	{
-		var methods = typeof(Benchmark).GetMethods().Where(method => method.IsDefined(typeof(GlobalCleanupAttribute)));
-		CollectionAssert.AreEqual(new[] { nameof(Benchmark.GlobalCleanupAsync) }, methods.Select(method => method.Name).ToArray());
-	}
-
-	[TestMethod]
-	public void CreateTemporaryDirectoryRepeatedCallsCreateDistinctExistingDirectories()
-	{
-		var benchmark = new TestBenchmark();
-		var first = benchmark.CreateTemporaryDirectory();
-		var second = benchmark.CreateTemporaryDirectory();
-		Console.WriteLine(first.FullName);
-		Console.WriteLine(second.FullName);
-		var result = (first.Exists, second.Exists, first.FullName == second.FullName);
-		benchmark.GlobalCleanup();
-		Assert.AreEqual((true, true, false), result);
-	}
-
-	[TestMethod]
-	public async Task GlobalCleanupAsyncTrackedDirectoryRemovesContentsRecursively()
+	public async Task GlobalCleanupAsyncAlreadyRemovedDirectoryIsRepeatable()
 	{
 		var benchmark = new TestBenchmark();
 		var directory = benchmark.CreateTemporaryDirectory();
-		Console.WriteLine(directory.FullName);
-		var child = Directory.CreateDirectory(Path.Combine(directory.FullName, RandomData.GenerateKey()));
-		await File.WriteAllBytesAsync(Path.Combine(child.FullName, RandomData.GenerateKey()), RandomData.GenerateByteArray(8)).ConfigureAwait(false);
+		directory.Delete();
+		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
 		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
 		Assert.IsFalse(Directory.Exists(directory.FullName));
 	}
@@ -475,23 +398,10 @@ public sealed class BenchmarkTests
 	{
 		var owner = new TestBenchmark();
 		var directory = owner.CreateTemporaryDirectory();
-		Console.WriteLine(directory.FullName);
 		await new TestBenchmark().GlobalCleanupAsync().ConfigureAwait(false);
 		var stillExists = Directory.Exists(directory.FullName);
 		await owner.GlobalCleanupAsync().ConfigureAwait(false);
 		Assert.IsTrue(stillExists);
-	}
-
-	[TestMethod]
-	public async Task GlobalCleanupAsyncAlreadyRemovedDirectoryIsRepeatable()
-	{
-		var benchmark = new TestBenchmark();
-		var directory = benchmark.CreateTemporaryDirectory();
-		Console.WriteLine(directory.FullName);
-		directory.Delete();
-		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
-		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
-		Assert.IsFalse(Directory.Exists(directory.FullName));
 	}
 
 	[TestMethod]
@@ -500,9 +410,19 @@ public sealed class BenchmarkTests
 		var failure = new InvalidOperationException();
 		var benchmark = new LifecycleBenchmark { CleanupCompletion = Task.FromException(failure) };
 		var directory = benchmark.CreateTemporaryDirectory();
-		Console.WriteLine(directory.FullName);
 		var actual = await Assert.ThrowsExactlyAsync<InvalidOperationException>(benchmark.GlobalCleanupAsync).ConfigureAwait(false);
 		Assert.AreEqual((failure, false), (actual, Directory.Exists(directory.FullName)));
+	}
+
+	[TestMethod]
+	public async Task GlobalCleanupAsyncTrackedDirectoryRemovesContentsRecursively()
+	{
+		var benchmark = new TestBenchmark();
+		var directory = benchmark.CreateTemporaryDirectory();
+		var child = Directory.CreateDirectory(Path.Combine(directory.FullName, RandomData.GenerateKey()));
+		await File.WriteAllBytesAsync(Path.Combine(child.FullName, RandomData.GenerateKey()), RandomData.GenerateByteArray(8)).ConfigureAwait(false);
+		await benchmark.GlobalCleanupAsync().ConfigureAwait(false);
+		Assert.IsFalse(Directory.Exists(directory.FullName));
 	}
 
 	[TestMethod]
@@ -511,54 +431,190 @@ public sealed class BenchmarkTests
 		var failure = new InvalidOperationException();
 		var benchmark = new LifecycleBenchmark { CleanupAction = () => throw failure };
 		var directory = benchmark.CreateTemporaryDirectory();
-		Console.WriteLine(directory.FullName);
 		var actual = Assert.ThrowsExactly<InvalidOperationException>(benchmark.GlobalCleanup);
 		Assert.AreEqual((failure, false), (actual, Directory.Exists(directory.FullName)));
 	}
 
-	private sealed class TestBenchmark : Benchmark;
+	[TestMethod]
+	public void LaunchDebuggerPropertyRoundTrips()
+	{
+		var benchmark = new TestBenchmark();
+		benchmark.LaunchDebugger = true;
+		Assert.IsTrue(benchmark.LaunchDebugger);
+	}
+
+	[TestMethod]
+	public void ProtectedLoggingHelpersCanBeInvoked()
+	{
+		var errorMessage = RandomData.GenerateWord(8);
+		var infoMessage = RandomData.GenerateWord(8);
+		var warningMessage = RandomData.GenerateWord(8);
+		var message = RandomData.GenerateWord(8);
+		TestBenchmark.ExposeLogError(errorMessage);
+		TestBenchmark.ExposeLogInfo(infoMessage);
+		TestBenchmark.ExposeLogWarning(warningMessage);
+		TestBenchmark.ExposeLogMessage(LogKind.Info, message);
+	}
+
+	[TestMethod]
+	public async Task SetupAsyncInitializesPublicDataProperties()
+	{
+		var benchmark = new TestBenchmark();
+		await benchmark.SetupAsync().ConfigureAwait(false);
+		Assert.AreNotEqual(Guid.Empty, benchmark.TestGuid);
+	}
+
+	[TestMethod]
+	public void SetupInitializesPublicDataProperties()
+	{
+		var benchmark = new TestBenchmark();
+		benchmark.Setup();
+
+		Assert.IsTrue(benchmark.Base64String.Length > 0);
+		Assert.IsNotNull(benchmark.CoordinateRef01);
+		Assert.IsNotNull(benchmark.CoordinateRef02);
+		Assert.AreNotEqual(default, benchmark.CoordinateVal01);
+		Assert.AreNotEqual(default, benchmark.CoordinateVal02);
+		Assert.IsNotNull(benchmark.PersonRecord01);
+		Assert.IsNotNull(benchmark.PersonRecord02);
+		Assert.IsNotNull(benchmark.PersonRef01);
+		Assert.IsNotNull(benchmark.PersonRef02);
+		Assert.AreNotEqual(default, benchmark.PersonVal01);
+		Assert.AreNotEqual(default, benchmark.PersonVal02);
+		Assert.AreNotEqual(Guid.Empty, benchmark.TestGuid);
+		Assert.IsTrue(benchmark.StringToTrim.StartsWith(' '));
+		Assert.IsTrue(benchmark.StringToTrim.EndsWith(' '));
+		_ = benchmark.TestBoolean;
+		Assert.IsTrue(benchmark.TestCompanyName.Length > 0);
+		Assert.IsTrue(benchmark.TestCurrencyAmount >= decimal.Zero);
+		Assert.IsTrue(benchmark.TestDateOnly >= new DateOnly(2000, 1, 1));
+		Assert.IsTrue(benchmark.TestDateTimeOffset.Year >= 2000);
+		Assert.IsTrue(Enum.IsDefined(benchmark.TestDayOfWeek));
+		Assert.IsTrue(benchmark.TestHashString.Length > 0);
+		Assert.IsTrue(benchmark.TestSentence.Length > 0);
+		Assert.IsTrue(benchmark.LongTestString.Length > 0);
+		Assert.IsTrue(benchmark.TestTimeOnly >= TimeOnly.MinValue);
+		Assert.IsTrue(benchmark.TestTimeSpan >= TimeSpan.Zero);
+		Assert.IsTrue(IPAddress.TryParse(benchmark.TestIPv4Address, out _));
+		Assert.IsTrue(IPAddress.TryParse(benchmark.TestIPv6Address, out _));
+	}
+
+	[TestMethod]
+	public async Task SimulateWorkAsyncPreCanceledTokenThrowsOperationCanceledException()
+	{
+		using var cancellation = new CancellationTokenSource();
+		await cancellation.CancelAsync().ConfigureAwait(false);
+		await Assert.ThrowsExactlyAsync<OperationCanceledException>(() => new TestBenchmark().SimulateWorkAsync(new object(), cancellation.Token)).ConfigureAwait(false);
+	}
+
+	[TestMethod]
+	public async Task SimulateWorkAsyncReturnsCompletedTask()
+	{
+		var task = new TestBenchmark().SimulateWorkAsync(new object());
+		await task.ConfigureAwait(false);
+		Assert.IsTrue(task.IsCompletedSuccessfully);
+	}
+
+	[TestMethod]
+	public void SimulateWorkReturnsRuntimeHashCode()
+	{
+		var item = new object();
+		Assert.AreEqual(RuntimeHelpers.GetHashCode(item), Benchmark.SimulateWork(item));
+	}
+
+	[TestMethod]
+	public void StaticDataPropertiesReturnContent()
+	{
+		Assert.IsTrue(Benchmark.JsonTestDataPerson.Length > 0);
+		Assert.IsTrue(Benchmark.JsonTestDataPersonRecord.Length > 0);
+		Assert.IsTrue(Benchmark.PersonXml.Length > 0);
+		Assert.IsTrue(Benchmark.PersonRecordXml.Length > 0);
+	}
+
+	[TestMethod]
+	public void UpdateCoordinateNullThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().Update<Coordinate>(null!));
+		Assert.AreEqual("coordinate: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void UpdateCoordinateSetsXToExpectedValue()
+	{
+		var coordinate = RandomData.GenerateCoordinate<Coordinate>();
+		Assert.AreEqual(100, new TestBenchmark().Update(coordinate).X);
+	}
+
+	[TestMethod]
+	public void UpdatePersonNullThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().Update((Person)null!));
+		Assert.AreEqual("person: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void UpdatePersonRecordNullThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().Update((PersonRecord)null!));
+		Assert.AreEqual("person: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void UpdatePersonRecordReturnsNewRecordWithUpdatedPhone()
+	{
+		var person = RandomData.GeneratePerson<PersonRecord>();
+		var updated = new TestBenchmark().Update(person);
+		Assert.AreEqual((false, "555-867-5309"), (ReferenceEquals(person, updated), updated.CellPhone));
+	}
+
+	[TestMethod]
+	public void UpdatePersonSetsPhoneNumber()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		Assert.AreEqual("555-867-5309", new TestBenchmark().Update(person).CellPhone);
+	}
+
+	[TestMethod]
+	public void UpdateValueTypePersonSetsPhoneNumber()
+	{
+		var person = RandomData.GeneratePerson<ValuePerson>();
+		Assert.AreEqual("555-867-5309", new TestBenchmark().Update(person).CellPhone);
+	}
 
 	private sealed class LifecycleBenchmark : Benchmark
 	{
-		public List<string> Events { get; } = [];
-		public Task SetupCompletion { get; init; } = Task.CompletedTask;
-		public Task CleanupCompletion { get; init; } = Task.CompletedTask;
 		public Action CleanupAction { get; init; } = () => { };
-
-		public override void Setup()
-		{
-			this.Events.Add("setup");
-		}
-
-		public override async Task SetupAsync()
-		{
-			await base.SetupAsync().ConfigureAwait(false);
-			await this.SetupCompletion.ConfigureAwait(false);
-			this.Events.Add("setup-async");
-		}
+		public Task CleanupCompletion { get; init; } = Task.CompletedTask;
 
 		public override void Cleanup()
 		{
 			this.CleanupAction();
-			this.Events.Add("cleanup");
 		}
 
 		public override async Task CleanupAsync()
 		{
 			await base.CleanupAsync().ConfigureAwait(false);
 			await this.CleanupCompletion.ConfigureAwait(false);
-			this.Events.Add("cleanup-async");
 		}
+	}
+
+	private sealed class TestBenchmark : Benchmark
+	{
+		public static string ExposeFailedText() => FailedText;
+		public static void ExposeLogError(string message) => LogError(message);
+		public static void ExposeLogInfo(string message) => LogInfo(message);
+		public static void ExposeLogMessage(LogKind logKind, string message) => LogMessage(logKind, message);
+		public static void ExposeLogWarning(string message) => LogWarning(message);
+		public static string ExposeSuccessText() => SuccessText;
 	}
 
 	private sealed class TrackedSequence(int count)
 	{
-		public int EnumeratedCount { get; private set; }
-		public bool Disposed { get; private set; }
-		public bool Started { get; private set; }
-		public CancellationToken ObservedToken { get; private set; }
 		public Action BeforeYield { get; init; } = () => { };
-		public Action OnDispose { get; init; } = () => { };
+		public bool Disposed { get; private set; }
+		public int EnumeratedCount { get; private set; }
+		public CancellationToken ObservedToken { get; private set; }
+		public bool Started { get; private set; }
 
 		public async IAsyncEnumerable<int> ReadAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
 		{
@@ -577,7 +633,6 @@ public sealed class BenchmarkTests
 			finally
 			{
 				this.Disposed = true;
-				this.OnDispose();
 			}
 		}
 	}
