@@ -98,7 +98,7 @@ public static class CollectionExtensions
 		/// int newItem = 5;
 		/// bool condition = true;
 		/// myCollection.AddIf(newItem, condition);
-		/// // newItem is added to myCollection because condition is true.
+		/// newItem is added to myCollection because condition is true.
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

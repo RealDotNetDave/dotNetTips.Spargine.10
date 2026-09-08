@@ -1,0 +1,7 @@
+<Project>
+	<!-- Last Modified By: Copilot Agent; Last Modified On: 09-08-2026 -->
+  <!-- Keep the library reference local to this standalone test project. -->
+  <ItemGroup>
+	<ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Benchmarking\dotNetTips.Spargine.10.Benchmarking\DotNetTips.Spargine.10.Benchmarking.csproj" />
+  </ItemGroup>
+</Project>

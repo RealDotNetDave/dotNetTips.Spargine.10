@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 05-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-10-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-08-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -217,7 +217,7 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		var people = this.GetPersonRefArray();
 		this._existingPerson = people[0];
 		this._personToInsert = this.GetPersonRefCollectionToInsert()[0];
-		this._personHashSetToInsert = this.GetPersonRefCollectionToInsert().ToHashSet();
+		this._personHashSetToInsert = [.. this.GetPersonRefCollectionToInsert()];
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item")]

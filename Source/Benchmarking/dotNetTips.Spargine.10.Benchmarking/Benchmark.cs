@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-16-2026
+// Last Modified On : 09-08-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -12,8 +12,9 @@
 // <summary>
 // Abstract base class for all BenchmarkDotNet benchmarks, providing
 // setup/cleanup lifecycle methods, consume helpers for preventing dead-code
-// elimination, random data generators, test entity update methods, and a
-// comprehensive set of default BenchmarkDotNet diagnostic attributes.
+// elimination, seeded fixture caches, safe buffer copies, test entity update
+// methods, asynchronous lifecycle and stream consumption, tracked temporary
+// directories, and default BenchmarkDotNet diagnostic attributes.
 // </summary>
 // ***********************************************************************
 
@@ -130,9 +131,9 @@ public abstract class Benchmark
 	private const string CleanupLogMessage = $"Cleanup(): {nameof(Benchmark)}.";
 
 	/// <summary>
-	/// Log message emitted by <see cref="GlobalSetup"/> when launching the debugger.
+	/// Resource key for the message emitted when launching the debugger.
 	/// </summary>
-	private const string LaunchingDebuggerLogMessage = $"Launching debugger: {nameof(Benchmark)}.";
+	private const string LaunchingDebuggerLogMessage = nameof(LaunchingDebuggerLogMessage);
 
 	/// <summary>
 	/// Fake phone number.
@@ -145,15 +146,24 @@ public abstract class Benchmark
 	private const string SetupLogMessage = $"Setup(): {nameof(Benchmark)}.";
 
 	/// <summary>
-	/// Caches byte arrays of various sizes to avoid regenerating them for each benchmark iteration.
+	/// Retains private byte fixtures and separate mutable arrays exposed to callers.
 	/// </summary>
-	private readonly ConcurrentDictionary<int, byte[]> _byteArrayCache = new();
+	private readonly ConcurrentDictionary<(int Count, int? Seed), (byte[] Source, byte[] Value)> _byteArrayCache = new();
 
 	/// <summary>
-	/// Caches string arrays of various configurations to avoid regenerating them for each benchmark iteration.
-	/// The key is a value tuple (count, minLength, maxLength) to avoid heap-allocating a string key on every call.
+	/// Retains private string fixtures and separate mutable arrays exposed to callers.
 	/// </summary>
-	private readonly ConcurrentDictionary<(int Count, int MinLength, int MaxLength), string[]> _stringArrayCache = new();
+	private readonly ConcurrentDictionary<(int Count, int MinLength, int MaxLength, int? Seed), (string[] Source, string[] Value)> _stringArrayCache = new();
+
+	/// <summary>
+	/// Paths created by this instance, retained until successfully removed during global cleanup.
+	/// </summary>
+	private readonly List<string> _temporaryDirectories = [];
+
+	/// <summary>
+	/// The optional seed for byte and string fixtures.
+	/// </summary>
+	private int? _dataSeed;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Benchmark"/> class.
@@ -220,6 +230,35 @@ public abstract class Benchmark
 	/// </summary>
 	/// <value>The second coordinate object.</value>
 	public Tester.Models.ValueTypes.Coordinate CoordinateVal02 { get; private set; }
+
+	/// <summary>
+	/// Gets or sets the optional seed used by byte and string fixture helpers.
+	/// </summary>
+	/// <value>A seed for reproducible, noncryptographic fixtures, or <c>null</c> for random fixtures.</value>
+	/// <remarks>
+	/// Changing the seed clears the fixture caches. Configure it during setup, not concurrently with
+	/// fixture access. The same seed and arguments reproduce data on the same runtime independently
+	/// of call order. Other fixtures, including people, are unaffected. Reproducibility across runtime
+	/// versions is not guaranteed. Previously returned arrays are not changed.
+	/// </remarks>
+	[Information(nameof(DataSeed), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	public int? DataSeed
+	{
+		get
+		{
+			return this._dataSeed;
+		}
+		set
+		{
+			if (this._dataSeed == value)
+			{
+				return;
+			}
+
+			this._dataSeed = value;
+			this.ClearDataCaches();
+		}
+	}
 
 	/// <summary>
 	/// Gets or sets a value indicating whether the debugger should be launched at the start of the benchmarking session.
@@ -385,6 +424,7 @@ public abstract class Benchmark
 	/// that need to perform real work without being eliminated by compiler optimizations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SimulateWork), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public static int SimulateWork([DisallowNull] object item)
 	{
 		return RuntimeHelpers.GetHashCode(item);
@@ -394,6 +434,7 @@ public abstract class Benchmark
 	/// Performs cleanup operations. This method should be called at the end of benchmark runs.
 	/// It logs the cleanup action to the console.
 	/// </summary>
+	[Information(nameof(Cleanup), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public virtual void Cleanup()
 	{
 		ConsoleLogger.Default.WriteLine(LogKind.Info, CleanupLogMessage);
@@ -403,12 +444,31 @@ public abstract class Benchmark
 	/// Performs asynchronous cleanup operations after all benchmark methods have run.
 	/// Override this method in derived classes to provide custom asynchronous cleanup logic
 	/// required for your benchmarks, such as releasing resources or saving results.
-	/// The default implementation does nothing and returns a completed task.
+	/// The default implementation calls <see cref="Cleanup"/> once and returns a completed task.
 	/// </summary>
 	/// <returns>A <see cref="Task"/> representing the asynchronous cleanup operation.</returns>
+	/// <remarks>Call <c>base.CleanupAsync()</c> when overriding; do not also call <see cref="Cleanup"/>.</remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public virtual Task CleanupAsync()
 	{
+		this.Cleanup();
 		return Task.CompletedTask;
+	}
+
+	/// <summary>
+	/// Releases all cached byte and string fixture references.
+	/// </summary>
+	/// <remarks>
+	/// Use during setup or cleanup, not concurrently with fixture generation. Does not force garbage
+	/// collection, reset the seed, or modify arrays already returned. Seeded data can be regenerated.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ClearDataCaches), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public void ClearDataCaches()
+	{
+		this._byteArrayCache.Clear();
+		this._stringArrayCache.Clear();
 	}
 
 	/// <summary>
@@ -417,6 +477,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the object to consume.</typeparam>
 	/// <param name="obj">The object to consume.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Consume), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void Consume<T>(T obj)
 	{
 		this.Consumer.Consume(obj);
@@ -432,10 +493,37 @@ public abstract class Benchmark
 	/// <param name="obj">The object to consume.</param>
 	/// <returns>A <see cref="ValueTask"/> representing the completed operation.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(ConsumeAsync), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public ValueTask ConsumeAsync<T>(T obj)
 	{
 		this.Consumer.Consume(obj);
 		return ValueTask.CompletedTask;
+	}
+
+	/// <summary>
+	/// Enumerates and consumes every element of an asynchronous sequence.
+	/// </summary>
+	/// <typeparam name="T">The element type.</typeparam>
+	/// <param name="source">The asynchronous sequence to consume.</param>
+	/// <param name="cancellationToken">The token passed to enumeration and checked between elements.</param>
+	/// <returns>A task that completes after enumeration and asynchronous disposal finish.</returns>
+	/// <exception cref="ArgumentNullException">The source is null.</exception>
+	/// <exception cref="OperationCanceledException">Cancellation is requested.</exception>
+	/// <remarks>
+	/// Enumeration, consumption, and disposal are part of the measured workload when called from a
+	/// benchmark. Source and disposal exceptions propagate. Cancellation during a pending move requires
+	/// cooperation from the source; this method does not abandon enumeration in the background.
+	/// </remarks>
+	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public async Task ConsumeAsyncEnumerableAsync<T>([DisallowNull] IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
+	{
+		source = source.ArgumentNotNull(paramName: nameof(source));
+		cancellationToken.ThrowIfCancellationRequested();
+		await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
+		{
+			cancellationToken.ThrowIfCancellationRequested();
+			this.Consume(item);
+		}
 	}
 	/// <summary>
 	/// Consumes each item in the specified <see cref="IReadOnlyList{T}"/> by index,
@@ -444,7 +532,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the elements.</typeparam>
 	/// <param name="collection">The list to consume. Must not be <c>null</c>.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeCollection), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
+	[Information(nameof(ConsumeCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void ConsumeCollection<T>([DisallowNull] IReadOnlyList<T> collection)
 	{
 		collection = collection.ArgumentNotNull();
@@ -467,7 +555,7 @@ public abstract class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking dictionary-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeDictionary), "David McCarter", "1/7/2026", Status = Status.Available)]
+	[Information(nameof(ConsumeDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void ConsumeDictionary<TKey, TValue>([DisallowNull] IDictionary<TKey, TValue> collection) where TKey : notnull
 	{
 		// Cast to the concrete Dictionary type first so the compiler can use its
@@ -502,7 +590,7 @@ public abstract class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking enumerable data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeEnumerable), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
+	[Information(nameof(ConsumeEnumerable), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void ConsumeEnumerable<T>([DisallowNull] IEnumerable<T> collection)
 	{
 		collection = collection.ArgumentNotNull();
@@ -532,7 +620,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the elements contained in the <paramref name="span"/>.</typeparam>
 	/// <param name="span">The read-only span of items to consume.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeReadOnlySpan), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
+	[Information(nameof(ConsumeReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void ConsumeReadOnlySpan<T>(ReadOnlySpan<T> span)
 	{
 		foreach (var item in span)
@@ -554,7 +642,7 @@ public abstract class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking span-based data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeSpan), author: "David McCarter", createdOn: "1/8/2026", Status = Status.Available)]
+	[Information(nameof(ConsumeSpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public void ConsumeSpan<T>(Span<T> span)
 	{
 		foreach (var item in span)
@@ -564,85 +652,187 @@ public abstract class Benchmark
 	}
 
 	/// <summary>
-	/// Retrieves a random byte array of the specified size, caching the result for reuse across benchmark iterations.
+	/// Restores the entire destination from a private byte fixture of the same length.
 	/// </summary>
-	/// <param name="count">
-	/// The size of the byte array to generate. Values less than <c>1</c> are adjusted to <c>1</c>.
-	/// </param>
-	/// <returns>
-	/// A byte array of the requested size (in KB). If a buffer for the same size was previously generated,
-	/// the cached instance is returned; otherwise, a new array is created and cached.
-	/// </returns>
+	/// <param name="destination">The working buffer to fill; an empty span is allowed.</param>
 	/// <remarks>
-	/// <para>
-	/// This method uses an internal cache (<see cref="_byteArrayCache"/>) keyed by the requested kilobyte size to avoid
-	/// regenerating identical arrays, reducing allocation noise and improving consistency in benchmarks.
-	/// </para>
-	/// <para>
-	/// Byte arrays are generated by <see cref="RandomData.GenerateByteArray(int)"/> and stored for subsequent requests.
-	/// The method is marked with <see cref="MethodImplOptions.AggressiveInlining"/> to minimize call overhead in tight loops.
-	/// </para>
+	/// Use outside measured code unless copying is the workload. The first call creates cached arrays;
+	/// subsequent copies reuse them. Mutations to arrays returned by getters do not affect this source.
 	/// </remarks>
-	/// <example>
-	/// <code>
-	/// // Retrieve a 10KB buffer (cached after first call)
-	/// var buffer = this.GetByteArray(10);
-	/// this.Consume(buffer.Length);
-	/// </code>
-	/// </example>
-	/// <seealso cref="_byteArrayCache"/>
-	/// <seealso cref="RandomData.GenerateByteArray(int)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public byte[] GetByteArray(int count = 1)
+	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public void CopyByteArrayTo(Span<byte> destination)
 	{
-		count = count.ArgumentInRange(1);
-		return this._byteArrayCache.GetOrAdd(count, RandomData.GenerateByteArray);
+		this.GetByteFixture(destination.Length).Source.AsSpan().CopyTo(destination);
 	}
 
 	/// <summary>
-	/// Generates a random string array of a specified count, with each string's length bounded by the specified minimum and maximum lengths.
-	/// The method caches the generated array to avoid regeneration on subsequent calls with the same parameters.
+	/// Restores the entire destination from a private string fixture of the same count.
 	/// </summary>
-	/// <param name="count">The number of strings to generate in the array.</param>
-	/// <param name="wordMinLength">The minimum length of each generated string. Defaults to 10.</param>
-	/// <param name="wordMaxLength">The maximum length of each generated string. Defaults to 15.</param>
-	/// <returns>An array of randomly generated strings of the specified count and length constraints.</returns>
-	public string[] GetStringArray(int count, int wordMinLength = 10, int wordMaxLength = 15)
+	/// <param name="destination">The working array span to fill; an empty span is allowed.</param>
+	/// <param name="wordMinLength">The minimum length, adjusted to at least one.</param>
+	/// <param name="wordMaxLength">The maximum length, adjusted to exceed the minimum.</param>
+	/// <exception cref="ArgumentOutOfRangeException">The minimum length is <see cref="int.MaxValue"/>.</exception>
+	/// <remarks>Use outside measured code. Copies references to immutable strings, not the strings themselves.</remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public void CopyStringArrayTo(Span<string> destination, int wordMinLength = 10, int wordMaxLength = 15)
 	{
-		//Ensure maxLength is at least +1 of minLength.
-		wordMinLength = wordMinLength.EnsureMinimum(1);
-		wordMaxLength = wordMaxLength.EnsureMinimum(wordMinLength + 1);
-
-		var key = (count, wordMinLength, wordMaxLength);
-
-		return this._stringArrayCache.GetOrAdd(key, static k => [.. RandomData.GenerateWords(k.Count, k.MinLength, k.MaxLength)]);
-	}
-
-	/// <summary>
-	/// Performs global cleanup operations after all benchmark methods have run.
-	/// This method is automatically called by BenchmarkDotNet at the end of the benchmarking session.
-	/// </summary>
-	[GlobalCleanup]
-	public void GlobalCleanup()
-	{
-		this.Cleanup();
-	}
-
-	/// <summary>
-	/// Performs global setup operations before any benchmark methods are run.
-	/// This method is automatically called by BenchmarkDotNet at the beginning of the benchmarking session.
-	/// It checks if the debugger should be launched and performs initial setup by calling the Setup method.
-	/// </summary>
-	[GlobalSetup]
-	public void GlobalSetup()
-	{
-		if (this.LaunchDebugger)
+		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
+		if (destination.IsEmpty)
 		{
-			ConsoleLogger.Default.WriteLine(LogKind.Info, LaunchingDebuggerLogMessage);
-			_ = Debugger.Launch();
+			return;
 		}
 
+		this.GetStringFixture(destination.Length, wordMinLength, wordMaxLength).Source.AsSpan().CopyTo(destination);
+	}
+
+	/// <summary>
+	/// Creates a unique temporary directory owned by this benchmark instance.
+	/// </summary>
+	/// <returns>The new directory, whose original path is tracked for recursive global cleanup.</returns>
+	/// <exception cref="IOException">The directory cannot be created.</exception>
+	/// <exception cref="UnauthorizedAccessException">Creation is not permitted.</exception>
+	/// <remarks>
+	/// Opt in by calling during setup, not concurrently with cleanup. Global cleanup recursively deletes
+	/// the created paths and their contents; do not place data that must be preserved there or move these
+	/// directories. Merely constructing a benchmark performs no filesystem operations.
+	/// </remarks>
+	[return: NotNull]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public DirectoryInfo CreateTemporaryDirectory()
+	{
+		var directory = Directory.CreateTempSubdirectory();
+		this._temporaryDirectories.Add(directory.FullName);
+		return directory;
+	}
+
+	/// <summary>
+	/// Retrieves a cached mutable byte array of the specified length in bytes.
+	/// </summary>
+	/// <param name="count">The number of bytes to generate. Must be at least one.</param>
+	/// <returns>The cached mutable array for the specified length and current seed.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">The count is less than one.</exception>
+	/// <remarks>
+	/// Uses <see cref="DataSeed"/> when set. Call during setup and store the returned array in a field.
+	/// Use <see cref="CopyByteArrayTo"/> to restore a working buffer from an unmodified private fixture.
+	/// A separate private array is retained for each cached length, doubling retained byte-array storage.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetByteArray), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public byte[] GetByteArray(int count = 1)
+	{
+		count = count.ArgumentInRange(1, paramName: nameof(count));
+		return this.GetByteArrayByLength(count);
+	}
+
+	/// <summary>
+	/// Retrieves a cached mutable byte array with an exact length, including zero.
+	/// </summary>
+	/// <param name="byteCount">The nonnegative length in bytes.</param>
+	/// <returns>The cached array for the length and current seed.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">The byte count is negative.</exception>
+	/// <remarks>Shares fixtures with <see cref="GetByteArray"/>. Generate fixtures outside measured code.</remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public byte[] GetByteArrayByLength(int byteCount)
+	{
+		byteCount = byteCount.ArgumentInRange(min: 0, paramName: nameof(byteCount));
+		return this.GetByteFixture(byteCount).Value;
+	}
+
+	/// <summary>
+	/// Retrieves a cached mutable string array using the current optional seed.
+	/// </summary>
+	/// <param name="count">The number of strings, adjusted to at least one.</param>
+	/// <param name="wordMinLength">The minimum word length, adjusted to at least one.</param>
+	/// <param name="wordMaxLength">The maximum word length, adjusted to exceed the minimum.</param>
+	/// <returns>The cached mutable array of lowercase words.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">The minimum length is <see cref="int.MaxValue"/>.</exception>
+	/// <remarks>
+	/// Call during setup. A private array snapshot preserves the original string references for
+	/// <see cref="CopyStringArrayTo"/>; the immutable strings themselves are shared, not duplicated.
+	/// Changing returned elements does not change this private snapshot.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GetStringArray), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public string[] GetStringArray(int count, int wordMinLength = 10, int wordMaxLength = 15)
+	{
+		return this.GetStringFixture(count, wordMinLength, wordMaxLength).Value;
+	}
+
+	/// <summary>
+	/// Performs synchronous cleanup for manual callers, followed by tracked directory cleanup.
+	/// </summary>
+	/// <remarks>
+	/// Does not invoke asynchronous overrides. BenchmarkDotNet uses <see cref="GlobalCleanupAsync"/>.
+	/// Tracked directory deletion is attempted even when the cleanup hook fails. Deletion failures
+	/// propagate and unsuccessful paths remain tracked for a subsequent cleanup attempt.
+	/// </remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GlobalCleanup), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public void GlobalCleanup()
+	{
+		try
+		{
+			this.Cleanup();
+		}
+		finally
+		{
+			this.CleanupTemporaryDirectories();
+		}
+	}
+
+	/// <summary>
+	/// Awaits the cleanup hook and then removes this instance's tracked temporary directories.
+	/// </summary>
+	/// <returns>A task representing all cleanup work.</returns>
+	/// <remarks>
+	/// BenchmarkDotNet invokes this entry point. Override <see cref="CleanupAsync"/> or
+	/// <see cref="Cleanup"/> instead. Directory cleanup is attempted even if the hook fails.
+	/// </remarks>
+	[GlobalCleanup]
+	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public async Task GlobalCleanupAsync()
+	{
+		try
+		{
+			await this.CleanupAsync().ConfigureAwait(false);
+		}
+		finally
+		{
+			this.CleanupTemporaryDirectories();
+		}
+	}
+
+	/// <summary>
+	/// Performs synchronous setup for manual callers, optionally launching the debugger.
+	/// </summary>
+	/// <remarks>Does not invoke asynchronous overrides. BenchmarkDotNet uses <see cref="GlobalSetupAsync"/>.</remarks>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GlobalSetup), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	public void GlobalSetup()
+	{
+		this.LaunchDebuggerIfRequested();
 		this.Setup();
+	}
+
+	/// <summary>
+	/// Optionally launches the debugger and dispatches asynchronous benchmark initialization.
+	/// </summary>
+	/// <returns>The setup task, which BenchmarkDotNet awaits before measuring the workload.</returns>
+	/// <remarks>
+	/// Override <see cref="SetupAsync"/> or <see cref="Setup"/>, not this entry point. The default
+	/// asynchronous hook calls the synchronous hook once; no synchronous blocking is performed.
+	/// </remarks>
+	[GlobalSetup]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(GlobalSetupAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public Task GlobalSetupAsync()
+	{
+		this.LaunchDebuggerIfRequested();
+		return this.SetupAsync();
 	}
 
 	/// <summary>
@@ -685,9 +875,11 @@ public abstract class Benchmark
 	/// Performs asynchronous setup operations before any benchmark methods are run.
 	/// Override this method in derived classes to provide custom asynchronous initialization logic
 	/// required for your benchmarks, such as loading data from external sources or initializing resources.
-	/// The default implementation does nothing and returns a completed task.
+	/// The default implementation calls <see cref="Setup"/> once and returns a completed task.
 	/// </summary>
 	/// <returns>A <see cref="Task"/> representing the asynchronous setup operation.</returns>
+	/// <remarks>Await <c>base.SetupAsync()</c> when overriding; do not also call <see cref="Setup"/>.</remarks>
+	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.NotRequired, Status = Status.Available)]
 	public virtual Task SetupAsync()
 	{
 		this.Setup();
@@ -720,6 +912,7 @@ public abstract class Benchmark
 	/// </remarks>
 	/// <seealso cref="SimulateWork(object)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(SimulateWorkAsync), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual Task SimulateWorkAsync([DisallowNull] object item, CancellationToken cancellationToken = default)
 	{
 		cancellationToken.ThrowIfCancellationRequested();
@@ -739,6 +932,7 @@ public abstract class Benchmark
 	/// This helper is intended for benchmarking scenarios to apply a deterministic mutation to a <see cref="Person"/> instance.
 	/// <see cref="Person.CellPhone"/> to the constant test value stored in <see cref="PhoneNumberUpdate"/>.
 	/// </remarks>
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual Person Update([DisallowNull] Person person)
 	{
 		person = person.ArgumentNotNull();
@@ -761,6 +955,7 @@ public abstract class Benchmark
 	/// Since <see cref="Tester.Models.ValueTypes.Person"/> is a value type, the update is applied to a copy and the modified
 	/// instance is returned. This helper is intended for benchmarking scenarios to apply a deterministic mutation without allocations.
 	/// </remarks>
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual Tester.Models.ValueTypes.Person Update(Tester.Models.ValueTypes.Person person)
 	{
 		person.CellPhone = PhoneNumberUpdate;
@@ -785,6 +980,7 @@ public abstract class Benchmark
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual PersonRecord Update([DisallowNull] PersonRecord person)
 	{
 		person = person.ArgumentNotNull();
@@ -805,6 +1001,7 @@ public abstract class Benchmark
 	/// This helper applies a deterministic mutation for benchmarking scenarios and validates input.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public virtual T Update<T>([NotNull] T coordinate) where T : ICoordinate
 	{
 		coordinate = coordinate.ArgumentNotNull();
@@ -818,6 +1015,7 @@ public abstract class Benchmark
 	/// Logs an error message.
 	/// </summary>
 	/// <param name="message">The message to log.</param>
+	[Information(nameof(LogError), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogError(string message)
 	{
 		LogMessage(LogKind.Error, message);
@@ -827,6 +1025,7 @@ public abstract class Benchmark
 	/// Logs an informational message.
 	/// </summary>
 	/// <param name="message">The message to log.</param>
+	[Information(nameof(LogInfo), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogInfo(string message)
 	{
 		LogMessage(LogKind.Info, message);
@@ -844,6 +1043,7 @@ public abstract class Benchmark
 	/// appear in BenchmarkDotNet console output and artifacts, which is useful for setup/teardown diagnostics and
 	/// informative traces during benchmark execution.
 	/// </remarks>
+	[Information(nameof(LogMessage), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogMessage(LogKind logKind, string message)
 	{
 		ConsoleLogger.Default.WriteLine(logKind, message);
@@ -853,6 +1053,7 @@ public abstract class Benchmark
 	/// Logs a warning message.
 	/// </summary>
 	/// <param name="message">The message to log.</param>
+	[Information(nameof(LogWarning), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogWarning(string message)
 	{
 		LogMessage(LogKind.Warning, message);
@@ -865,7 +1066,7 @@ public abstract class Benchmark
 	/// <param name="action">The action to time. Must not be <c>null</c>.</param>
 	/// <param name="description">A label for the log output.</param>
 	/// <returns>The elapsed <see cref="TimeSpan"/>.</returns>
-	[Information(nameof(MeasureAction), author: "David McCarter", createdOn: "4/17/2026", Status = Status.Available)]
+	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static TimeSpan MeasureAction([DisallowNull] Action action, string description = "Action")
 	{
 		action = action.ArgumentNotNull();
@@ -877,6 +1078,126 @@ public abstract class Benchmark
 		LogInfo(string.Create(CultureInfo.InvariantCulture, $"{description} completed in {elapsed.TotalMilliseconds:F3}ms"));
 
 		return elapsed;
+	}
+
+	/// <summary>
+	/// Generates reproducible lowercase benchmark words using an isolated random sequence.
+	/// </summary>
+	/// <param name="count">The validated number of words.</param>
+	/// <param name="minLength">The inclusive minimum length.</param>
+	/// <param name="maxLength">The inclusive maximum length.</param>
+	/// <param name="seed">The fixture seed.</param>
+	/// <returns>The generated words.</returns>
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Predictable randomness is required for reproducible, nonsecurity benchmark fixtures.")]
+	[Information(nameof(CreateSeededWords), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	private static string[] CreateSeededWords(int count, int minLength, int maxLength, int seed)
+	{
+		var random = new Random(seed);
+		var words = new string[count];
+
+		for (var wordIndex = 0; wordIndex < words.Length; wordIndex++)
+		{
+			var length = (int)random.NextInt64(minLength, (long)maxLength + 1);
+			words[wordIndex] = string.Create(length, random, static (characters, generator) =>
+			{
+				for (var characterIndex = 0; characterIndex < characters.Length; characterIndex++)
+				{
+					characters[characterIndex] = (char)generator.Next(RandomData.DefaultMinCharacter, RandomData.DefaultMaxCharacter + 1);
+				}
+			});
+		}
+
+		return words;
+	}
+
+	/// <summary>
+	/// Removes tracked directories in reverse creation order, retaining failed paths for retry.
+	/// </summary>
+	/// <exception cref="IOException">A tracked directory cannot be removed.</exception>
+	/// <exception cref="UnauthorizedAccessException">Removal is not permitted.</exception>
+	[Information(nameof(CleanupTemporaryDirectories), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	private void CleanupTemporaryDirectories()
+	{
+		for (var directoryIndex = this._temporaryDirectories.Count - 1; directoryIndex >= 0; directoryIndex--)
+		{
+			try
+			{
+				Directory.Delete(this._temporaryDirectories[directoryIndex], recursive: true);
+			}
+			catch (System.IO.DirectoryNotFoundException)
+			{
+				// A workload that already removed its directory has fulfilled this cleanup obligation.
+			}
+
+			this._temporaryDirectories.RemoveAt(directoryIndex);
+		}
+	}
+
+	/// <summary>
+	/// Gets the private source and public working byte arrays for a validated length.
+	/// </summary>
+	/// <param name="count">The nonnegative byte length.</param>
+	/// <returns>The private fixture and public working array.</returns>
+	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Seeded data is reproducible benchmark input, never cryptographic material.")]
+	[Information(nameof(GetByteFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	private (byte[] Source, byte[] Value) GetByteFixture(int count)
+	{
+		return this._byteArrayCache.GetOrAdd((count, this.DataSeed), static key =>
+		{
+			if (key.Count == 0)
+			{
+				return (Array.Empty<byte>(), Array.Empty<byte>());
+			}
+
+			byte[] source;
+			if (key.Seed is int seed)
+			{
+				source = new byte[key.Count];
+				new Random(seed).NextBytes(source);
+			}
+			else
+			{
+				source = RandomData.GenerateByteArray(key.Count);
+			}
+
+			return (source, (byte[])source.Clone());
+		});
+	}
+
+	/// <summary>
+	/// Gets private and public string arrays after normalizing the requested bounds.
+	/// </summary>
+	/// <param name="count">The requested count, adjusted to at least one.</param>
+	/// <param name="wordMinLength">The requested minimum length.</param>
+	/// <param name="wordMaxLength">The requested maximum length.</param>
+	/// <returns>The private fixture and public working array.</returns>
+	[Information(nameof(GetStringFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	private (string[] Source, string[] Value) GetStringFixture(int count, int wordMinLength, int wordMaxLength)
+	{
+		count = count.EnsureMinimum(1);
+		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
+		wordMaxLength = wordMaxLength.EnsureMinimum(wordMinLength + 1);
+
+		return this._stringArrayCache.GetOrAdd((count, wordMinLength, wordMaxLength, this.DataSeed), static key =>
+		{
+			var source = key.Seed is int seed
+				? CreateSeededWords(key.Count, key.MinLength, key.MaxLength, seed)
+				: [.. RandomData.GenerateWords(key.Count, key.MinLength, key.MaxLength)];
+			return (source, (string[])source.Clone());
+		});
+	}
+
+	/// <summary>
+	/// Launches the debugger only when explicitly requested.
+	/// </summary>
+	[Information(nameof(LaunchDebuggerIfRequested), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	private void LaunchDebuggerIfRequested()
+	{
+		if (this.LaunchDebugger)
+		{
+			ConsoleLogger.Default.WriteLine(LogKind.Info, Resources.ResourceManager.GetString(LaunchingDebuggerLogMessage, CultureInfo.CurrentUICulture).ArgumentNotNull());
+			_ = Debugger.Launch();
+		}
 	}
 
 }
