@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-17-2026
+// Last Modified On : 09-08-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// Represents the base class for benchmarks that involve collections, specifically optimized for handling PersonRecord objects.
 /// This class provides methods to preload PersonRecord collections to improve benchmark test speed and efficiency.
 /// </summary>
-[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
+[Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public abstract partial class CollectionBenchmark : Benchmark
 {
 	/// <summary>
@@ -73,7 +73,17 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets the half count.
 	/// </summary>
 	/// <value>The half count.</value>
-	public int HalfCount { get => this._halfCount; internal set => this._halfCount = value; }
+	public int HalfCount
+	{
+		get
+		{
+			return this._halfCount;
+		}
+		internal set
+		{
+			this._halfCount = value;
+		}
+	}
 
 	/// <summary>
 	/// Gets the maximum count for the collections used in the benchmark.
@@ -142,8 +152,62 @@ public abstract partial class CollectionBenchmark : Benchmark
 	public Tester.Models.ValueTypes.Person PersonValLookupLast { get; private set; }
 
 	/// <summary>
+	/// Clears all in-memory collection caches held by this benchmark instance.
+	/// After calling this method the internal collections will be empty and lookup
+	/// properties will be reset to defaults.
+	/// </summary>
+	[Information(nameof(ClearCollectionCaches), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public void ClearCollectionCaches()
+	{
+		this._coordinateRefArray = Array.Empty<Coordinate>();
+		this._coordinateValArray = Array.Empty<DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate>();
+		this._personRefList = new List<Person>();
+		this._personValList = new List<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
+		this._personRecordList = new List<PersonRecord>();
+
+		this.PersonEmailHalf = string.Empty;
+		this.PersonEmailLast = string.Empty;
+		this.PersonFirstNameHalf = string.Empty;
+		this.PersonFirstNameLast = string.Empty;
+		this.PersonLastNameHalf = string.Empty;
+		this.PersonLastNameLast = string.Empty;
+
+		this.PersonRecordLookupHalf = new PersonRecord();
+		this.PersonRecordLookupLast = new PersonRecord();
+		this.PersonRefLookupHalf = null!;
+		this.PersonRefLookupLast = null!;
+		this.PersonValLookupHalf = default;
+		this.PersonValLookupLast = default;
+	}
+
+	/// <summary>
+	/// Reloads the coordinate and person collections and refreshes the lookup values.
+	/// This is useful for tests that need to repopulate the internal caches deterministically.
+	/// </summary>
+	[Information(nameof(ReloadCollections), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public void ReloadCollections()
+	{
+		this.LoadCoordinateCollections();
+		this.LoadPersonCollections();
+
+		this.PersonEmailHalf = this._personRefList[this.HalfCount].Email;
+		this.PersonEmailLast = this._personRefList[^1].Email;
+		this.PersonFirstNameHalf = this._personRefList[this.HalfCount].FirstName;
+		this.PersonFirstNameLast = this._personRefList[^1].FirstName;
+		this.PersonLastNameHalf = this._personRefList[this.HalfCount].LastName;
+		this.PersonLastNameLast = this._personRefList[^1].LastName;
+		this.PersonRecordLookupHalf = this._personRecordList[this.HalfCount];
+		this.PersonRecordLookupLast = this._personRecordList[^1];
+		this.PersonRefLookupHalf = this._personRefList[this.HalfCount];
+		this.PersonRefLookupLast = this._personRefList[^1];
+		this.PersonValLookupHalf = this._personValList[this.HalfCount];
+		this.PersonValLookupLast = this._personValList[^1];
+	}
+
+	/// <summary>
 	/// Setups the benchmark instance. This method is called before the benchmark runs and is responsible for initializing the collections and loading the data.
 	/// </summary>
+	[Information(nameof(Setup), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public override void Setup()
 	{
 		base.Setup();
@@ -181,6 +245,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of <see cref="PersonRecord"/> objects to load.</param>
 	/// <returns>An array of <see cref="PersonRecord"/> objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
+	[Information(nameof(LoadPeopleRecordCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	internal static List<PersonRecord> LoadPeopleRecordCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)
@@ -206,6 +271,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of <see cref="Person"/> reference objects to load. The value must be in the range of 1 to 10000.</param>
 	/// <returns>An array of <see cref="Person"/> reference objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
+	[Information(nameof(LoadPeopleRefCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	internal static List<Person> LoadPeopleRefCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)
@@ -231,6 +297,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of Tester.Models.ValueTypes.Person{Tester.Models.ValueTypes.Address} value objects to load. The value must be in the range of 1 to 10000.</param>
 	/// <returns>An array of Tester.Models.ValueTypes.Person{Tester.Models.ValueTypes.Address} value objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
+	[Information(nameof(LoadPeopleValCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	internal static List<Tester.Models.ValueTypes.Person> LoadPeopleValCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)
@@ -253,6 +320,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="PersonRecord"/> objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
+	[Information(nameof(GetPersonRecordCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
 	{
 		return [.. this._peopleRecordToInsert];
@@ -262,6 +330,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="Person"/> reference objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="Person"/>.</returns>
+	[Information(nameof(GetPersonRefCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	protected virtual Person[] GetPersonRefCollectionToInsert()
 	{
 		return [.. this._peopleRefToInsert];
@@ -271,6 +340,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="Tester.Models.ValueTypes.Person"/> value objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
+	[Information(nameof(GetPersonValCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
 	{
 		return [.. this._peopleValToInsert];

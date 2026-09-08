@@ -66,7 +66,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [JsonExporter(indentJson: true)]
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
 [StopOnFirstError(true)]
-[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
+[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]
 public abstract class Benchmark
 {
 

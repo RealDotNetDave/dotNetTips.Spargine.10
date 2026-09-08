@@ -17,6 +17,7 @@
 // ***********************************************************************
 
 using System.Runtime.InteropServices;
+using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
@@ -53,10 +54,23 @@ public partial class CollectionBenchmark
 	private List<Tester.Models.ValueTypes.Person> _personValList;
 
 	/// <summary>
+	/// Clears the in-memory person collection caches and replaces them with empty lists.
+	/// Useful for tests that need to reset state between runs.
+	/// </summary>
+	[Information(nameof(ClearPersonCaches), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public void ClearPersonCaches()
+	{
+		this._personRefList = new List<Person>();
+		this._personValList = new List<Tester.Models.ValueTypes.Person>();
+		this._personRecordList = new List<PersonRecord>();
+	}
+
+	/// <summary>
 	/// Gets a clone of the PersonRecord array. This method ensures that benchmarks operate on a fresh copy of the data,
 	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
 	/// <returns>A clone of the PersonRecord array.</returns>
+	[Information(nameof(GetPersonRecordArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public PersonRecord[] GetPersonRecordArray()
 	{
 		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
@@ -67,6 +81,7 @@ public partial class CollectionBenchmark
 	/// Gets a cloned dictionary for PersonRecord.
 	/// </summary>
 	/// <returns>A dictionary of PersonRecord indexed by string.</returns>
+	[Information(nameof(GetPersonRecordDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public Dictionary<string, PersonRecord> GetPersonRecordDictionary()
 	{
 		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
@@ -81,9 +96,21 @@ public partial class CollectionBenchmark
 	}
 
 	/// <summary>
+	/// Returns a read-only span over the internal PersonRecord list.
+	/// This is allocation-free and intended for high-performance read-only access.
+	/// The caller MUST NOT mutate the underlying list.
+	/// </summary>
+	[Information(nameof(GetPersonRecordReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public ReadOnlySpan<PersonRecord> GetPersonRecordReadOnlySpan()
+	{
+		return CollectionsMarshal.AsSpan(this._personRecordList);
+	}
+
+	/// <summary>
 	/// Gets clone of Person reference array.
 	/// </summary>
 	/// <returns>An array of Person reference types.</returns>
+	[Information(nameof(GetPersonRefArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public Person[] GetPersonRefArray()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -94,6 +121,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person reference types as a dictionary.
 	/// </summary>
 	/// <returns>A dictionary of Person reference types indexed by string.</returns>
+	[Information(nameof(GetPersonRefDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public Dictionary<string, Person> GetPersonRefDictionary()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -108,9 +136,21 @@ public partial class CollectionBenchmark
 	}
 
 	/// <summary>
+	/// Returns a read-only span over the internal Person reference-type list.
+	/// This is allocation-free and intended for high-performance read-only access.
+	/// The caller MUST NOT mutate the underlying list.
+	/// </summary>
+	[Information(nameof(GetPersonRefReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public ReadOnlySpan<Person> GetPersonRefReadOnlySpan()
+	{
+		return CollectionsMarshal.AsSpan(this._personRefList);
+	}
+
+	/// <summary>
 	/// Gets clone of Person value types as an array.
 	/// </summary>
 	/// <returns>An array of Person value types.</returns>
+	[Information(nameof(GetPersonValArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
 		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);
@@ -120,6 +160,7 @@ public partial class CollectionBenchmark
 	/// <summary>
 	/// Gets clone of person value dictionary.
 	/// </summary>
+	[Information(nameof(GetPersonValDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	public Dictionary<string, Tester.Models.ValueTypes.Person> GetPersonValDictionary()
 	{
 		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);
@@ -134,9 +175,47 @@ public partial class CollectionBenchmark
 	}
 
 	/// <summary>
+	/// Returns a read-only span over the internal Person value-type list.
+	/// This is allocation-free and intended for high-performance read-only access.
+	/// The caller MUST NOT mutate the underlying list.
+	/// </summary>
+	[Information(nameof(GetPersonValReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public ReadOnlySpan<Tester.Models.ValueTypes.Person> GetPersonValReadOnlySpan()
+	{
+		return CollectionsMarshal.AsSpan(this._personValList);
+	}
+
+	/// <summary>
+	/// Attempts to find a Person reference with the specified id in the internal list.
+	/// This is a convenience O(n) lookup. For large collections prefer building a dictionary via GetPersonRefDictionary().
+	/// </summary>
+	[Information(nameof(TryFindPersonRefById), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	public bool TryFindPersonRefById(string id, out Person person)
+	{
+		person = null!;
+		if (string.IsNullOrWhiteSpace(id))
+		{
+			return false;
+		}
+
+		foreach (var p in this._personRefList)
+		{
+			if (string.Equals(p.Id, id, StringComparison.OrdinalIgnoreCase))
+			{
+				person = p;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
 	/// Loads the person collections into memory, including arrays, lists, and dictionaries for PersonRecord, Person reference types, and Person value types.
 	/// </summary>
+	[Information(nameof(LoadPersonCollections), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
 	protected void LoadPersonCollections()
+
 	{
 		this._personRefList = LoadPeopleRefCollection(this.MaxCount);
 		this._personValList = LoadPeopleValCollection(this.MaxCount);
