@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-25-2019
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-04-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="TaskExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,7 +35,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <item><description>Awaiting a task within a specified timeout (<see cref="WithTimeoutAsync(Task, TimeSpan, CancellationToken)"/>).</description></item>
 /// </list>
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineTaskExtensions")]
 public static class TaskExtensions
 {
 
