@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-08-2026
+// Last Modified On : 05-22-2026
 // ***********************************************************************
 // <copyright file="TempFileManagerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,11 +14,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.IO;
@@ -238,6 +235,27 @@ public class TempFileManagerTests
 	}
 
 	[TestMethod]
+	public void DeleteFile_WithMoreThanFiftyManagedFiles_UsesParallelFilter()
+	{
+		// Arrange – 51 files forces _files.Count > 50 inside DeleteFilesFromCache,
+		// which routes execution through FilterFilesParallel instead of FilterFilesSequential.
+		using (var manager = new TempFileManager())
+		{
+			var files = manager.CreateFiles(51);
+			var fileToDelete = files[0];
+
+			// Act
+			manager.DeleteFile(fileToDelete);
+
+			// Assert
+			var managedFiles = manager.GetManagedFiles();
+			Assert.IsFalse(File.Exists(fileToDelete), $"File {fileToDelete} should have been deleted from disk.");
+			Assert.DoesNotContain(fileToDelete, managedFiles);
+			Assert.HasCount(50, managedFiles);
+		}
+	}
+
+	[TestMethod]
 	public void Dispose_ShouldReleaseResources()
 	{
 		// Arrange
@@ -383,27 +401,6 @@ public class TempFileManagerTests
 
 			// Assert
 			Assert.IsEmpty(managedFiles);
-		}
-	}
-
-	[TestMethod]
-	public void DeleteFile_WithMoreThanFiftyManagedFiles_UsesParallelFilter()
-	{
-		// Arrange – 51 files forces _files.Count > 50 inside DeleteFilesFromCache,
-		// which routes execution through FilterFilesParallel instead of FilterFilesSequential.
-		using (var manager = new TempFileManager())
-		{
-			var files = manager.CreateFiles(51);
-			var fileToDelete = files[0];
-
-			// Act
-			manager.DeleteFile(fileToDelete);
-
-			// Assert
-			var managedFiles = manager.GetManagedFiles();
-			Assert.IsFalse(File.Exists(fileToDelete), $"File {fileToDelete} should have been deleted from disk.");
-			Assert.DoesNotContain(fileToDelete, managedFiles);
-			Assert.HasCount(50, managedFiles);
 		}
 	}
 

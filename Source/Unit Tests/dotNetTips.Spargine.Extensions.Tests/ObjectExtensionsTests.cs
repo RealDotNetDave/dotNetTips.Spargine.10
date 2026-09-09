@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -12,14 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using DotNetTips.Spargine.Core.Devices;
 using DotNetTips.Spargine.Core.Network;
@@ -27,7 +26,7 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MessagePack;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -104,17 +103,7 @@ public class ObjectExtensionsTests : UnitTester
 	{
 		var person = RandomData.GeneratePerson<Person>();
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ComputeSha256Hash((System.Text.Json.Serialization.Metadata.JsonTypeInfo<Person>)null));
-	}
-
-	[TestMethod]
-	public void ComputeSha256Hash_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
-	{
-		var person = RandomData.GeneratePerson<Person>();
-		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
-
-		object wrongType = 42;
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ComputeSha256Hash(typeInfo));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ComputeSha256Hash((JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -139,6 +128,16 @@ public class ObjectExtensionsTests : UnitTester
 		var hash2 = person.ComputeSha256Hash(typeInfo);
 
 		Assert.AreEqual(hash1, hash2);
+	}
+
+	[TestMethod]
+	public void ComputeSha256Hash_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+
+		object wrongType = 42;
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ComputeSha256Hash(typeInfo));
 	}
 
 	[TestMethod]
@@ -207,21 +206,15 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void DisposeFieldsTest()
+	public void DisposeFields_WithDisposableCollectionField_DisposesItems()
 	{
-		var disposableObj = new DisposableFields();
-		DisposableFields nullTest = null;
+		var testObject = new ObjectWithTrackedDisposableEnumerable();
 
-		try
-		{
-			disposableObj.DisposeFields();
-			nullTest.DisposeFields();
-		}
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex.Message);
-			Assert.Fail();
-		}
+		Assert.IsTrue(testObject.Items.Count > 0);
+
+		testObject.DisposeFields();
+
+		Assert.IsTrue(testObject.Items.All(item => item.IsDisposed));
 	}
 
 	[TestMethod]
@@ -293,6 +286,24 @@ public class ObjectExtensionsTests : UnitTester
 		finally
 		{
 			collectionField.SetValue(obj, originalValue);
+		}
+	}
+
+	[TestMethod]
+	public void DisposeFieldsTest()
+	{
+		var disposableObj = new DisposableFields();
+		DisposableFields nullTest = null;
+
+		try
+		{
+			disposableObj.DisposeFields();
+			nullTest.DisposeFields();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			Assert.Fail();
 		}
 	}
 
@@ -449,7 +460,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void FastBinaryClone_WithOptions_Null_ThrowsArgumentNullException()
 	{
 		Person person = null;
-		var options = MessagePack.MessagePackSerializerOptions.Standard;
+		var options = MessagePackSerializerOptions.Standard;
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FastBinaryClone<Person>(options));
 	}
@@ -458,7 +469,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void FastBinaryClone_WithOptions_ReturnsClone()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		var options = MessagePack.MessagePackSerializerOptions.Standard;
+		var options = MessagePackSerializerOptions.Standard;
 
 		var clone = person.FastBinaryClone<Person>(options);
 
@@ -537,6 +548,19 @@ public class ObjectExtensionsTests : UnitTester
 		Assert.HasCount(1, dict);
 		Assert.IsTrue(dict.ContainsKey("TestInt"));
 		Assert.AreEqual("42", dict["TestInt"]);
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_CollectionWithEmptyStringField_IgnoresEmptyValues()
+	{
+		var list = new List<string> { string.Empty, "HasValue" };
+
+		var result = list.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.ContainsKey("Test[0]"));
+		Assert.IsTrue(result.ContainsKey("Test[1]"));
+		Assert.AreEqual("HasValue", result["Test[1]"]);
 	}
 
 	[TestMethod]
@@ -631,6 +655,16 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 
 		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.FieldsToDictionary(null));
+	}
+
+	[TestMethod]
+	public void FieldsToDictionary_ObjectWithNullField_IgnoresNullField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		var result = testObject.FieldsToDictionary("Test", ignoreEmptyValues: true);
+
+		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
@@ -1058,6 +1092,16 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void InitializeFields_WithNullReferenceTypeField_InitializesField()
+	{
+		var testObject = new ObjectWithNullListField();
+
+		testObject.InitializeFields();
+
+		Assert.IsNotNull(testObject.Items);
+	}
+
+	[TestMethod]
 	public void InitializeFieldsTest()
 	{
 		var testObject = new DisposableFields();
@@ -1421,6 +1465,16 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void PropertiesToDictionary_CollectionWithNullItem_HandlesException()
+	{
+		var list = new List<Person> { RandomData.GeneratePerson<Person>(), null };
+
+		var dict = list.PropertiesToDictionary("People");
+
+		Assert.IsNotNull(dict);
+	}
+
+	[TestMethod]
 	public void PropertiesToDictionary_EnumerableType_ReturnsEntries()
 	{
 		var list = new List<int> { 1, 2, 3 };
@@ -1481,6 +1535,18 @@ public class ObjectExtensionsTests : UnitTester
 		var result = value.PropertiesToString(header: string.Empty);
 
 		Assert.IsFalse(string.IsNullOrEmpty(result));
+	}
+
+	[TestMethod]
+	public void PropertiesToString_List_UsesItemTypeName()
+	{
+		var list = new List<int> { 1, 2, 3 };
+
+		var result = list.PropertiesToString();
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains("List`1", StringComparison.Ordinal));
+		Assert.IsTrue(result.Contains("Item", StringComparison.Ordinal));
 	}
 
 	[TestMethod]
@@ -1560,7 +1626,7 @@ public class ObjectExtensionsTests : UnitTester
 	public void PropertiesToString_WithPropertySelector_ExcludeByAttribute_ReturnsFilteredProperties()
 	{
 		var person = RandomData.GeneratePerson<Person>();
-		Func<PropertyInfo, bool> excludeJsonIgnore = p => p.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() == null;
+		Func<PropertyInfo, bool> excludeJsonIgnore = p => p.GetCustomAttribute<JsonIgnoreAttribute>() == null;
 
 		var result = person.PropertiesToString(excludeJsonIgnore);
 
@@ -1698,6 +1764,31 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIgnoreNullsFalse_IncludesError()
+	{
+		var testObject = new ObjectWithThrowingProperty();
+		Func<PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false);
+
+		Assert.IsNotNull(result);
+		Assert.Contains("[Error:", result);
+	}
+
+	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIncludeMemberNameTrue_IncludesQualifiedError()
+	{
+		var testObject = new ObjectWithThrowingProperty();
+		Func<PropertyInfo, bool> selector = p => true;
+
+		var result = testObject.PropertiesToString(selector, ignoreNulls: false, includeMemberName: true);
+
+		Assert.IsNotNull(result);
+		Assert.Contains("[Error:", result);
+		Assert.Contains("ObjectWithThrowingProperty", result);
+	}
+
+	[TestMethod]
 	public void PropertiesToString_WithPropertySelector_ValueTypeFilter_WorksCorrectly()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -1811,6 +1902,19 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void PropertiesToString_WithPropertySelector_WriteOnlyProperty_IsSkipped()
+	{
+		var obj = new ObjectWithWriteOnlyProperty();
+		Func<PropertyInfo, bool> selector = p => true;
+
+		var result = obj.PropertiesToString(selector);
+
+		Assert.IsNotNull(result);
+		Assert.IsFalse(result.Contains("WriteOnly", StringComparison.Ordinal));
+		Assert.IsTrue(result.Contains("Readable", StringComparison.Ordinal));
+	}
+
+	[TestMethod]
 	public void StripNullTest()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -1857,6 +1961,15 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
+	public void ToJsonFile_NullObject_ThrowsArgumentNullException()
+	{
+		object obj = null;
+		var file = new FileInfo(Path.GetTempFileName());
+
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ToJsonFile(file));
+	}
+
+	[TestMethod]
 	public void ToJsonFile_WithTypeInfo_NullFile_ThrowsArgumentNullException()
 	{
 		var person = RandomData.GeneratePerson<Person>();
@@ -1872,17 +1985,7 @@ public class ObjectExtensionsTests : UnitTester
 		var person = RandomData.GeneratePerson<Person>();
 		var file = new FileInfo(RandomData.GenerateRandomFileName());
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<Person>)null));
-	}
-
-	[TestMethod]
-	public void ToJsonFile_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
-	{
-		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
-		var file = new FileInfo(RandomData.GenerateRandomFileName());
-		object wrongType = 42;
-
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ToJsonFile(file, typeInfo));
+		_ = Assert.ThrowsExactly<ArgumentNullException>(() => person.ToJsonFile(file, (JsonTypeInfo<Person>)null));
 	}
 
 	[TestMethod]
@@ -1909,12 +2012,13 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void ToJsonFile_NullObject_ThrowsArgumentNullException()
+	public void ToJsonFile_WithTypeInfo_WrongType_ThrowsInvalidOperationException()
 	{
-		object obj = null;
-		var file = new FileInfo(Path.GetTempFileName());
+		var typeInfo = PersonRefJsonSerializerContext.Default.Person;
+		var file = new FileInfo(RandomData.GenerateRandomFileName());
+		object wrongType = 42;
 
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => obj.ToJsonFile(file));
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => wrongType.ToJsonFile(file, typeInfo));
 	}
 
 	[TestMethod]
@@ -2068,60 +2172,6 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void TryDispose_WithThrowExceptionFalse_SuppressesException()
-	{
-		var faultyDisposable = new FaultyDisposableObject();
-
-		try
-		{
-			faultyDisposable.TryDispose(throwException: false);
-		}
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex.Message);
-			Assert.Fail("Should suppress exception when throwException is false");
-		}
-	}
-
-	[TestMethod]
-	public void TryDispose_WithThrowExceptionTrue_RethrowsException()
-	{
-		var faultyDisposable = new FaultyDisposableObject();
-
-		_ = Assert.ThrowsExactly<InvalidOperationException>(() =>
-			faultyDisposable.TryDispose(throwException: true));
-	}
-
-	[TestMethod]
-	public void TryDisposeTest()
-	{
-		var disposableObj = new DisposableFields();
-
-		try
-		{
-			disposableObj.TryDispose();
-			disposableObj.TryDispose(true);
-		}
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex.Message);
-			Assert.Fail();
-		}
-	}
-
-	[TestMethod]
-	public void DisposeFields_WithDisposableCollectionField_DisposesItems()
-	{
-		var testObject = new ObjectWithTrackedDisposableEnumerable();
-
-		Assert.IsTrue(testObject.Items.Count > 0);
-
-		testObject.DisposeFields();
-
-		Assert.IsTrue(testObject.Items.All(item => item.IsDisposed));
-	}
-
-	[TestMethod]
 	public void TryDispose_ObjectImplementsBothInterfaces_CallsSynchronousDispose()
 	{
 		var asyncObj = new AsyncDisposableObject();
@@ -2143,96 +2193,34 @@ public class ObjectExtensionsTests : UnitTester
 	}
 
 	[TestMethod]
-	public void PropertiesToString_List_UsesItemTypeName()
+	public void TryDispose_WithThrowExceptionFalse_SuppressesException()
 	{
-		var list = new System.Collections.Generic.List<int> { 1, 2, 3 };
-
-		var result = list.PropertiesToString();
-
-		Assert.IsNotNull(result);
-		Assert.IsFalse(result.Contains("List`1", StringComparison.Ordinal));
-		Assert.IsTrue(result.Contains("Item", StringComparison.Ordinal));
+		using (var faultyDisposable = new FaultyDisposableObject())
+		{
+			try
+			{
+				faultyDisposable.TryDispose(throwException: false);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+				Assert.Fail("Should suppress exception when throwException is false");
+			}
+		}
 	}
 
-	[TestMethod]
-	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIgnoreNullsFalse_IncludesError()
+	private sealed class AsyncDisposableObject : IDisposable, IAsyncDisposable
 	{
-		var testObject = new ObjectWithThrowingProperty();
-		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
+		public bool DisposeAsyncWasCalled { get; private set; }
+		public bool DisposeSyncWasCalled { get; private set; }
 
-		var result = testObject.PropertiesToString(selector, ignoreNulls: false);
+		public void Dispose() { this.DisposeSyncWasCalled = true; }
 
-		Assert.IsNotNull(result);
-		Assert.Contains("[Error:", result);
-	}
-
-	[TestMethod]
-	public void PropertiesToString_WithPropertySelector_ThrowingProperty_WithIncludeMemberNameTrue_IncludesQualifiedError()
-	{
-		var testObject = new ObjectWithThrowingProperty();
-		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
-
-		var result = testObject.PropertiesToString(selector, ignoreNulls: false, includeMemberName: true);
-
-		Assert.IsNotNull(result);
-		Assert.Contains("[Error:", result);
-		Assert.Contains("ObjectWithThrowingProperty", result);
-	}
-
-	[TestMethod]
-	public void PropertiesToDictionary_CollectionWithNullItem_HandlesException()
-	{
-		var list = new System.Collections.Generic.List<Person> { RandomData.GeneratePerson<Person>(), null };
-
-		var dict = list.PropertiesToDictionary("People");
-
-		Assert.IsNotNull(dict);
-	}
-
-	[TestMethod]
-	public void InitializeFields_WithNullReferenceTypeField_InitializesField()
-	{
-		var testObject = new ObjectWithNullListField();
-
-		testObject.InitializeFields();
-
-		Assert.IsNotNull(testObject.Items);
-	}
-
-	[TestMethod]
-	public void FieldsToDictionary_CollectionWithEmptyStringField_IgnoresEmptyValues()
-	{
-		var list = new System.Collections.Generic.List<string> { string.Empty, "HasValue" };
-
-		var result = list.FieldsToDictionary("Test", ignoreEmptyValues: true);
-
-		Assert.IsNotNull(result);
-		Assert.IsFalse(result.ContainsKey("Test[0]"));
-		Assert.IsTrue(result.ContainsKey("Test[1]"));
-		Assert.AreEqual("HasValue", result["Test[1]"]);
-	}
-
-	[TestMethod]
-	public void FieldsToDictionary_ObjectWithNullField_IgnoresNullField()
-	{
-		var testObject = new ObjectWithNullListField();
-
-		var result = testObject.FieldsToDictionary("Test", ignoreEmptyValues: true);
-
-		Assert.IsNotNull(result);
-	}
-
-	[TestMethod]
-	public void PropertiesToString_WithPropertySelector_WriteOnlyProperty_IsSkipped()
-	{
-		var obj = new ObjectWithWriteOnlyProperty();
-		Func<System.Reflection.PropertyInfo, bool> selector = p => true;
-
-		var result = obj.PropertiesToString(selector);
-
-		Assert.IsNotNull(result);
-		Assert.IsFalse(result.Contains("WriteOnly", StringComparison.Ordinal));
-		Assert.IsTrue(result.Contains("Readable", StringComparison.Ordinal));
+		public ValueTask DisposeAsync()
+		{
+			this.DisposeAsyncWasCalled = true;
+			return ValueTask.CompletedTask;
+		}
 	}
 
 	private sealed class DisposeTrackingDisposable : IDisposable
@@ -2240,6 +2228,26 @@ public class ObjectExtensionsTests : UnitTester
 		public bool IsDisposed { get; private set; }
 
 		public void Dispose() => this.IsDisposed = true;
+	}
+
+	private sealed class FaultyDisposableObject : IDisposable
+	{
+		public void Dispose()
+		{
+		}
+	}
+
+	private sealed class ObjectWithNullListField
+	{
+		private List<string> _items = null;
+
+		public List<string> Items => this._items;
+	}
+
+	private sealed class ObjectWithThrowingProperty
+	{
+		public string NormalProperty => "Normal";
+		public string ThrowingProperty => throw new InvalidOperationException("Property throws");
 	}
 
 	private sealed class ObjectWithTrackedDisposableEnumerable : IDisposable
@@ -2254,49 +2262,21 @@ public class ObjectExtensionsTests : UnitTester
 		public void Dispose() { }
 	}
 
-	private sealed class AsyncDisposableObject : IDisposable, IAsyncDisposable
-	{
-		public bool DisposeAsyncWasCalled { get; private set; }
-		public bool DisposeSyncWasCalled { get; private set; }
-
-		public void Dispose() { this.DisposeSyncWasCalled = true; }
-
-		public System.Threading.Tasks.ValueTask DisposeAsync()
-		{
-			this.DisposeAsyncWasCalled = true;
-			return System.Threading.Tasks.ValueTask.CompletedTask;
-		}
-	}
-
-	private sealed class ObjectWithThrowingProperty
-	{
-		public string ThrowingProperty => throw new InvalidOperationException("Property throws");
-		public string NormalProperty => "Normal";
-	}
-
-	private sealed class ObjectWithNullListField
-	{
-		private System.Collections.Generic.List<string> _items = null;
-
-		public System.Collections.Generic.List<string> Items => this._items;
-	}
-
-	private sealed class FaultyDisposableObject : IDisposable
-	{
-		public void Dispose()
-		{
-			throw new InvalidOperationException("Faulty dispose");
-		}
-	}
-
 	private sealed class ObjectWithWriteOnlyProperty
 	{
 #pragma warning disable IDE0052
 		private string _hidden = string.Empty;
 #pragma warning restore IDE0052
 
-		public string WriteOnly { set => this._hidden = value; }
+
 		public string Readable { get; set; } = "readable";
+		public string WriteOnly
+		{
+			set
+			{
+				this._hidden = value;
+			}
+		}
 	}
 
 }

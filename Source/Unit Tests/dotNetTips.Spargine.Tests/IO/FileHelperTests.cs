@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-28-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 08-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="FileHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -386,11 +386,14 @@ public class FileHelperTests
 		// Arrange
 		var sourceFile = new FileInfo(RandomData.GenerateTempFile(FileLength));
 		var destinationDir = new DirectoryInfo(Path.Combine(App.ExecutingFolder(), nameof(this.CopyFileAsync_ShouldRespectCancellationToken)));
-		var cts = new CancellationTokenSource();
-		cts.Cancel();
 
-		// Act & Assert
-		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir, cts.Token));
+		using (var cts = new CancellationTokenSource())
+		{
+			cts.Cancel();
+
+			// Act & Assert
+			await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => FileHelper.CopyFileAsync(sourceFile, destinationDir, cts.Token));
+		}
 
 		// Cleanup
 		File.Delete(sourceFile.FullName);

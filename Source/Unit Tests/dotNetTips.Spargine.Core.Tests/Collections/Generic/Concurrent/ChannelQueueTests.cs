@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-26-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-01-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ChannelQueueTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -15,17 +15,13 @@
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Queues;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetTips.Spargine.Core.Tests.Collections.Generic.Concurrent;
 
@@ -772,20 +768,22 @@ public class ChannelQueueTests
 	{
 		// Arrange
 		var channel = new ChannelQueue<int>();
-		var cts = new CancellationTokenSource();
-
-		// Simulate a scenario where cancellation is requested before the operation starts
-		cts.Cancel();
-
-		// Act & Assert
-		try
+		using (var cts = new CancellationTokenSource())
 		{
-			await channel.ReadAsync(cts.Token);
-			Assert.Fail("ReadAsync should throw a TaskCanceledException when cancellation is requested.");
-		}
-		catch (TaskCanceledException)
-		{
-			// Expected exception
+
+			// Simulate a scenario where cancellation is requested before the operation starts
+			cts.Cancel();
+
+			// Act & Assert
+			try
+			{
+				await channel.ReadAsync(cts.Token);
+				Assert.Fail("ReadAsync should throw a TaskCanceledException when cancellation is requested.");
+			}
+			catch (TaskCanceledException)
+			{
+				// Expected exception
+			}
 		}
 	}
 

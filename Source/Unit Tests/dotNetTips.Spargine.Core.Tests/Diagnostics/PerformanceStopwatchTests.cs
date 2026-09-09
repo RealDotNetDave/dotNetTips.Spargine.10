@@ -4,7 +4,7 @@
 // Created          : 01-18-2023
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-01-2026
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="PerformanceStopwatchTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -655,24 +655,27 @@ public class PerformanceStopwatchTests
 	public void TrackTelemetry_WithProperties_Test()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetry_WithProperties_Test));
-		var configuration = new TelemetryConfiguration
+
+		using (var configuration = new TelemetryConfiguration
 		{
 			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
-		};
-		var telemetryClient = new TelemetryClient(configuration);
-		var properties = new Dictionary<string, string>
+		})
 		{
-			["Key1"] = "Value1",
-			["Key2"] = "Value2"
-		};
+			var telemetryClient = new TelemetryClient(configuration);
+			var properties = new Dictionary<string, string>
+			{
+				["Key1"] = "Value1",
+				["Key2"] = "Value2"
+			};
 
-		Thread.Sleep(100);
+			Thread.Sleep(100);
 
-		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message", properties);
+			psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message", properties);
 
-		Assert.IsTrue(properties.ContainsKey("Title"));
-		Assert.IsTrue(properties.ContainsKey("ElapsedMs"));
-		Assert.IsTrue(properties.ContainsKey("Message"));
+			Assert.IsTrue(properties.ContainsKey("Title"));
+			Assert.IsTrue(properties.ContainsKey("ElapsedMs"));
+			Assert.IsTrue(properties.ContainsKey("Message"));
+		}
 	}
 
 	[TestMethod]

@@ -3,7 +3,7 @@
 // Author           : Copilot Agent
 // Created          : 04-08-2026
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 04-08-2026
 // ***********************************************************************
 // <copyright file="RegistryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
@@ -16,7 +16,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using DotNetTips.Spargine.Win32;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -29,14 +28,7 @@ public class RegistryHelperTests
 {
 
 	[TestMethod]
-	public void KeyCurrentUserOneDriveHasExpectedValue()
-	{
-		// Assert
-		Assert.AreEqual(@"SOFTWARE\Microsoft\OneDrive", RegistryHelper.KeyCurrentUserOneDrive);
-	}
-
-	[TestMethod]
-	public void GetRegistryKeyValidPathLocalMachineReturnsKey()
+	public void GetRegistryKeyEmptyPathReturnsKey()
 	{
 		if (!OperatingSystem.IsWindows())
 		{
@@ -44,18 +36,18 @@ public class RegistryHelperTests
 			return;
 		}
 
-		// Arrange
-		const string keyPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+		// Arrange - empty string opens the hive root
+		const string keyPath = "";
 
 		// Act
 		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.LocalMachine);
 
-		// Assert
+		// Assert - root key should be accessible
 		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
-	public void GetRegistryKeyValidPathCurrentUserReturnsKey()
+	public void GetRegistryKeyNonExistentPathCurrentUserReturnsNull()
 	{
 		if (!OperatingSystem.IsWindows())
 		{
@@ -64,13 +56,13 @@ public class RegistryHelperTests
 		}
 
 		// Arrange
-		const string keyPath = @"SOFTWARE\Microsoft";
+		const string keyPath = @"SOFTWARE\NonExistentKey12345\DoesNotExist";
 
 		// Act
 		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.CurrentUser);
 
 		// Assert
-		Assert.IsNotNull(result);
+		Assert.IsNull(result);
 	}
 
 	[TestMethod]
@@ -93,22 +85,17 @@ public class RegistryHelperTests
 	}
 
 	[TestMethod]
-	public void GetRegistryKeyNonExistentPathCurrentUserReturnsNull()
+	public void GetRegistryKeyNonWindowsThrowsPlatformNotSupportedException()
 	{
-		if (!OperatingSystem.IsWindows())
+		if (OperatingSystem.IsWindows())
 		{
-			Assert.Inconclusive("Registry requires Windows.");
+			Assert.Inconclusive("This test validates non-Windows behavior.");
 			return;
 		}
 
-		// Arrange
-		const string keyPath = @"SOFTWARE\NonExistentKey12345\DoesNotExist";
-
-		// Act
-		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.CurrentUser);
-
-		// Assert
-		Assert.IsNull(result);
+		// Act & Assert
+		Assert.ThrowsExactly<PlatformNotSupportedException>(
+			() => RegistryHelper.GetRegistryKey(@"SOFTWARE\Microsoft", RegistryHive.LocalMachine));
 	}
 
 	[TestMethod]
@@ -152,7 +139,7 @@ public class RegistryHelperTests
 	}
 
 	[TestMethod]
-	public void GetRegistryKeyEmptyPathReturnsKey()
+	public void GetRegistryKeyValidPathCurrentUserReturnsKey()
 	{
 		if (!OperatingSystem.IsWindows())
 		{
@@ -160,28 +147,40 @@ public class RegistryHelperTests
 			return;
 		}
 
-		// Arrange - empty string opens the hive root
-		const string keyPath = "";
+		// Arrange
+		const string keyPath = @"SOFTWARE\Microsoft";
 
 		// Act
-		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.LocalMachine);
+		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.CurrentUser);
 
-		// Assert - root key should be accessible
+		// Assert
 		Assert.IsNotNull(result);
 	}
 
 	[TestMethod]
-	public void GetRegistryKeyNonWindowsThrowsPlatformNotSupportedException()
+	public void GetRegistryKeyValidPathLocalMachineReturnsKey()
 	{
-		if (OperatingSystem.IsWindows())
+		if (!OperatingSystem.IsWindows())
 		{
-			Assert.Inconclusive("This test validates non-Windows behavior.");
+			Assert.Inconclusive("Registry requires Windows.");
 			return;
 		}
 
-		// Act & Assert
-		Assert.ThrowsExactly<PlatformNotSupportedException>(
-			() => RegistryHelper.GetRegistryKey(@"SOFTWARE\Microsoft", RegistryHive.LocalMachine));
+		// Arrange
+		const string keyPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+
+		// Act
+		using var result = RegistryHelper.GetRegistryKey(keyPath, RegistryHive.LocalMachine);
+
+		// Assert
+		Assert.IsNotNull(result);
+	}
+
+	[TestMethod]
+	public void KeyCurrentUserOneDriveHasExpectedValue()
+	{
+		// Assert
+		Assert.AreEqual(@"SOFTWARE\Microsoft\OneDrive", RegistryHelper.KeyCurrentUserOneDrive);
 	}
 
 }

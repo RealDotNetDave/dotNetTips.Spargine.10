@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-03-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-28-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilderTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -20,7 +19,6 @@ using System.Text;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 

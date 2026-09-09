@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-05-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ExceptionExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,7 +13,6 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
@@ -23,7 +22,6 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -329,7 +327,7 @@ public class ExceptionExtensionsTests
 	public void FormatForDisplay_WithExceptionWithStackTrace_IncludesStackTrace()
 	{
 		// Arrange
-		Exception exception = null;
+		Exception exception;
 
 		try
 		{

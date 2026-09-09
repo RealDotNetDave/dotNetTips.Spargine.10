@@ -4,7 +4,7 @@
 // Created          : 12-03-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-28-2026
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="InMemoryCacheTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -12,16 +12,13 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Cache;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.Primitives;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -213,6 +210,21 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public async Task AddCacheItemAsync_WithCancelledToken_ThrowsTaskCanceledExceptionAndDoesNotAdd()
+	{
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		using var cts = new CancellationTokenSource();
+		cts.Cancel();
+
+		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => cache.AddCacheItemAsync(key, "value", cts.Token));
+		Assert.IsNull(cache.GetCacheItem<string>(key));
+
+		cache.Clear();
+	}
+
+	[TestMethod]
 	public async Task AddCacheItemAsync_WithCustomExpiration_AddsAndRetrievesItem()
 	{
 		var cache = InMemoryCache.Instance;
@@ -318,21 +330,6 @@ public class InMemoryCacheTests
 
 		var cached = await cache.GetCacheItemAsync<string>(key, cts.Token);
 		Assert.AreEqual(value, cached);
-
-		cache.Clear();
-	}
-
-	[TestMethod]
-	public async Task AddCacheItemAsync_WithCancelledToken_ThrowsTaskCanceledExceptionAndDoesNotAdd()
-	{
-		var cache = InMemoryCache.Instance;
-		cache.Clear();
-		var key = Guid.NewGuid().ToString();
-		using var cts = new CancellationTokenSource();
-		cts.Cancel();
-
-		await Assert.ThrowsExactlyAsync<TaskCanceledException>(() => cache.AddCacheItemAsync(key, "value", cts.Token));
-		Assert.IsNull(cache.GetCacheItem<string>(key));
 
 		cache.Clear();
 	}
@@ -472,7 +469,7 @@ public class InMemoryCacheTests
 		cache.Clear();
 		var person = RandomData.GeneratePerson<Person>();
 		using var cts = new CancellationTokenSource();
-		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+		var changeToken = new CancellationChangeToken(cts.Token);
 
 		// Act
 		cache.AddCacheItemWithChangeToken(person.Id, person, TimeSpan.FromMinutes(10), changeToken);
@@ -504,7 +501,7 @@ public class InMemoryCacheTests
 		// Arrange
 		var cache = InMemoryCache.Instance;
 		using var cts = new CancellationTokenSource();
-		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+		var changeToken = new CancellationChangeToken(cts.Token);
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -518,7 +515,7 @@ public class InMemoryCacheTests
 		var cache = InMemoryCache.Instance;
 		var person = RandomData.GeneratePerson<Person>();
 		using var cts = new CancellationTokenSource();
-		var changeToken = new Microsoft.Extensions.Primitives.CancellationChangeToken(cts.Token);
+		var changeToken = new CancellationChangeToken(cts.Token);
 
 		// Act & Assert
 		Assert.ThrowsExactly<ArgumentNullException>(() =>
@@ -781,6 +778,22 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
+	public void Compact_FullPercentage_RemovesAllItems()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		cache.AddCacheItem("key1", "value1");
+		cache.AddCacheItem("key2", "value2");
+
+		// Act
+		cache.Compact(1.0);
+
+		// Assert - All items should be removed
+		Assert.AreEqual(0, InMemoryCache.Count);
+	}
+
+	[TestMethod]
 	public void Compact_InvalidPercentage_ThrowsArgumentOutOfRangeException()
 	{
 		// Arrange
@@ -826,22 +839,6 @@ public class InMemoryCacheTests
 		// Assert - All items should remain
 		Assert.AreEqual(2, InMemoryCache.Count);
 		cache.Clear();
-	}
-
-	[TestMethod]
-	public void Compact_FullPercentage_RemovesAllItems()
-	{
-		// Arrange
-		var cache = InMemoryCache.Instance;
-		cache.Clear();
-		cache.AddCacheItem("key1", "value1");
-		cache.AddCacheItem("key2", "value2");
-
-		// Act
-		cache.Compact(1.0);
-
-		// Assert - All items should be removed
-		Assert.AreEqual(0, InMemoryCache.Count);
 	}
 
 	[TestMethod]
@@ -1203,42 +1200,17 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	public async Task GetOrCreateAsync_AbsoluteExpiration_StoresCorrectly()
+	public async Task GetOrCreateAsync_AbsoluteExpiration_NullFactory_ThrowsArgumentNullException()
 	{
+		// Arrange
 		var cache = InMemoryCache.Instance;
 		cache.Clear();
 		var key = Guid.NewGuid().ToString();
 		var expiration = DateTimeOffset.UtcNow.AddMinutes(1);
 
-		var value = await cache.GetOrCreateAsync(key, _ => Task.FromResult("abc"), expiration);
-
-		Assert.AreEqual("abc", value);
-		Assert.AreEqual("abc", cache.GetCacheItem<string>(key));
-		cache.Clear();
-	}
-
-	[TestMethod]
-	public async Task GetOrCreateAsync_NullKey_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var cache = InMemoryCache.Instance;
-
 		// Act & Assert
 		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
-			cache.GetOrCreateAsync<string>(null, _ => Task.FromResult("x")));
-	}
-
-	[TestMethod]
-	public async Task GetOrCreateAsync_NullFactory_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var cache = InMemoryCache.Instance;
-		cache.Clear();
-		var key = Guid.NewGuid().ToString();
-
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
-			cache.GetOrCreateAsync<string>(key, null));
+			cache.GetOrCreateAsync<string>(key, null, expiration));
 		cache.Clear();
 	}
 
@@ -1255,17 +1227,17 @@ public class InMemoryCacheTests
 	}
 
 	[TestMethod]
-	public async Task GetOrCreateAsync_AbsoluteExpiration_NullFactory_ThrowsArgumentNullException()
+	public async Task GetOrCreateAsync_AbsoluteExpiration_StoresCorrectly()
 	{
-		// Arrange
 		var cache = InMemoryCache.Instance;
 		cache.Clear();
 		var key = Guid.NewGuid().ToString();
 		var expiration = DateTimeOffset.UtcNow.AddMinutes(1);
 
-		// Act & Assert
-		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
-			cache.GetOrCreateAsync<string>(key, null, expiration));
+		var value = await cache.GetOrCreateAsync(key, _ => Task.FromResult("abc"), expiration);
+
+		Assert.AreEqual("abc", value);
+		Assert.AreEqual("abc", cache.GetCacheItem<string>(key));
 		cache.Clear();
 	}
 
@@ -1297,6 +1269,56 @@ public class InMemoryCacheTests
 		Assert.AreEqual("success", result);
 		Assert.AreEqual(2, callCount, "Factory should be called twice - once for the failure and once for the retry.");
 		cache.Clear();
+	}
+
+	[TestMethod]
+	public async Task GetOrCreateAsync_FastPath_TypeMismatch_InvokesFactory()
+	{
+		// Arrange – put a string in the cache under a key, then request an int for the same key.
+		// The fast-path check (TryGetValueCore) returns false because the cached object is not an int,
+		// so the factory must be invoked and the new value cached.
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+		cache.AddCacheItem(key, "existing string value");
+		var factoryCalled = false;
+
+		// Act
+		var result = await cache.GetOrCreateAsync<int>(key, _ =>
+		{
+			factoryCalled = true;
+			return Task.FromResult(42);
+		});
+
+		// Assert
+		Assert.IsTrue(factoryCalled, "Factory should have been called because the cached type did not match.");
+		Assert.AreEqual(42, result);
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public async Task GetOrCreateAsync_NullFactory_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+		cache.Clear();
+		var key = Guid.NewGuid().ToString();
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.GetOrCreateAsync<string>(key, null));
+		cache.Clear();
+	}
+
+	[TestMethod]
+	public async Task GetOrCreateAsync_NullKey_ThrowsArgumentNullException()
+	{
+		// Arrange
+		var cache = InMemoryCache.Instance;
+
+		// Act & Assert
+		_ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(() =>
+			cache.GetOrCreateAsync<string>(null, _ => Task.FromResult("x")));
 	}
 
 	[TestMethod]
@@ -1380,23 +1402,26 @@ public class InMemoryCacheTests
 		var cache = InMemoryCache.Instance;
 		cache.Clear();
 		var dependencyKey = Guid.NewGuid().ToString();
-		var cts = cache.CreateCacheDependency(dependencyKey);
-		var people = RandomData.GeneratePersonRefCollection(2).ToList();
 
-		foreach (var person in people)
+		using (var cts = cache.CreateCacheDependency(dependencyKey))
 		{
-			cache.AddCacheItemWithDependency(person.Id, person, TimeSpan.FromMinutes(10), cts);
-		}
+			var people = RandomData.GeneratePersonRefCollection(2).ToList();
 
-		// Act
-		var result = cache.InvalidateDependentCacheItems(dependencyKey);
-		Thread.Sleep(50);
+			foreach (var person in people)
+			{
+				cache.AddCacheItemWithDependency(person.Id, person, TimeSpan.FromMinutes(10), cts);
+			}
 
-		// Assert
-		Assert.IsTrue(result);
-		foreach (var person in people)
-		{
-			Assert.IsNull(cache.GetCacheItem<Person>(person.Id));
+			// Act
+			var result = cache.InvalidateDependentCacheItems(dependencyKey);
+			Thread.Sleep(50);
+
+			// Assert
+			Assert.IsTrue(result);
+			foreach (var person in people)
+			{
+				Assert.IsNull(cache.GetCacheItem<Person>(person.Id));
+			}
 		}
 		cache.Clear();
 	}
@@ -1906,31 +1931,6 @@ public class InMemoryCacheTests
 		// Assert
 		Assert.IsFalse(result, "TryGetValue should return false for a type mismatch.");
 		Assert.AreEqual(default(int), value, "TryGetValue should output default value for type mismatch.");
-		cache.Clear();
-	}
-
-	[TestMethod]
-	public async Task GetOrCreateAsync_FastPath_TypeMismatch_InvokesFactory()
-	{
-		// Arrange – put a string in the cache under a key, then request an int for the same key.
-		// The fast-path check (TryGetValueCore) returns false because the cached object is not an int,
-		// so the factory must be invoked and the new value cached.
-		var cache = InMemoryCache.Instance;
-		cache.Clear();
-		var key = Guid.NewGuid().ToString();
-		cache.AddCacheItem(key, "existing string value");
-		var factoryCalled = false;
-
-		// Act
-		var result = await cache.GetOrCreateAsync<int>(key, _ =>
-		{
-			factoryCalled = true;
-			return Task.FromResult(42);
-		});
-
-		// Assert
-		Assert.IsTrue(factoryCalled, "Factory should have been called because the cached type did not match.");
-		Assert.AreEqual(42, result);
 		cache.Clear();
 	}
 

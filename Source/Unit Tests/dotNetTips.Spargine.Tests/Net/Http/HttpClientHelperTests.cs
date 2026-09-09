@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="HttpClientHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -164,7 +164,7 @@ public class HttpClientHelperTests
 
 		// Act
 #pragma warning disable CS0618 // Type or member is obsolete
-		var stream = await HttpClientHelper.GetStreamAsync(url);
+		using var stream = await HttpClientHelper.GetStreamAsync(url);
 #pragma warning restore CS0618 // Type or member is obsolete
 
 		// Assert

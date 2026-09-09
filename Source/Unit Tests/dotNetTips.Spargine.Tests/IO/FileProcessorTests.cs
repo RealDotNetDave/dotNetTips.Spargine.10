@@ -3,8 +3,14 @@
 // Author           : David McCarter
 // Created          : 06-28-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
+// ***********************************************************************
+// <copyright file="FileProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
+//     McCarter Consulting (David McCarter)
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 
 // ***********************************************************************
 // <copyright file="FileProcessorTests.cs" company="dotNetTips.com - McCarter Consulting">
@@ -713,7 +719,7 @@ public class FileProcessorTests
 			files.Add(new FileInfo(file));
 		}
 
-		var cts = new CancellationTokenSource();
+		using var cts = new CancellationTokenSource();
 
 		int processedCount = 0;
 		processor.Processed += (sender, e) =>

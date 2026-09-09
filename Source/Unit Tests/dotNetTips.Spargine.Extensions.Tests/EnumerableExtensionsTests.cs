@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -14,21 +14,17 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Frozen;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -1319,6 +1315,24 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void FastLongCount_NoArg_WithEnumerable_CountsAll()
+	{
+		// A local iterator method produces an IEnumerable<T> that does not support
+		// TryGetNonEnumeratedCount, exercising the foreach-based fallback path.
+		static IEnumerable<int> LazyRange(int n)
+		{
+			for (var i = 0; i < n; i++)
+			{
+				yield return i;
+			}
+		}
+
+		var result = LazyRange(Count).FastLongCount();
+
+		Assert.AreEqual((long)Count, result);
+	}
+
+	[TestMethod]
 	public void FastLongCount_NoArg_WithList_ReturnsFastCount()
 	{
 		// List<T> implements ICollection<T> which supports TryGetNonEnumeratedCount.
@@ -1327,18 +1341,6 @@ public class EnumerableExtensionsTests
 		var result = collection.AsEnumerable().FastLongCount();
 
 		Assert.AreEqual(5L, result);
-	}
-
-	[TestMethod]
-	public void FastLongCount_NoArg_WithEnumerable_CountsAll()
-	{
-		// A local iterator method produces an IEnumerable<T> that does not support
-		// TryGetNonEnumeratedCount, exercising the foreach-based fallback path.
-		static IEnumerable<int> LazyRange(int n) { for (var i = 0; i < n; i++) yield return i; }
-
-		var result = LazyRange(Count).FastLongCount();
-
-		Assert.AreEqual((long)Count, result);
 	}
 
 	[TestMethod]
@@ -2080,7 +2082,7 @@ public class EnumerableExtensionsTests
 		var numbers = new int[] { 1, 2, 3, 4, 5 };
 
 		// Act
-		var result = ((IEnumerable<int>)numbers).FastProcessor(n => n * 2);
+		var result = (numbers as IEnumerable<int>).FastProcessor(n => n * 2);
 
 		// Assert
 		Assert.HasCount(5, result);
@@ -2986,17 +2988,6 @@ public class EnumerableExtensionsTests
 		Assert.IsTrue(testValue.ToDelimitedString(',').IsNotEmpty());
 		Assert.IsTrue(testValue.ToDelimitedString().IsNotEmpty());
 		Assert.IsTrue(string.Empty.ToDelimitedString().IsEmpty());
-	}
-
-	[TestMethod]
-	public void ToDelimitedString_NullCollection_ReturnsEmptyString()
-	{
-		// Exercises the collection is null branch of the || guard.
-		IEnumerable<char> collection = null;
-
-		var result = collection!.ToDelimitedString();
-
-		Assert.IsTrue(result.IsEmpty());
 	}
 
 	[TestMethod]
@@ -5342,18 +5333,6 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
-	public void ToCollection_WithList_WrapsDirectly()
-	{
-		var numbers = new List<int> { 1, 2, 3 };
-
-		var result = ((IEnumerable<int>)numbers).ToCollection();
-		numbers.Add(4);
-
-		Assert.HasCount(4, result);
-		Assert.AreEqual(4, result[^1]);
-	}
-
-	[TestMethod]
 	public void ToCollection_WithDeferredEnumerable_MaterializesAndWraps()
 	{
 		// Arrange - Where query is neither IList<T> nor ICollection<T>
@@ -5381,11 +5360,34 @@ public class EnumerableExtensionsTests
 	}
 
 	[TestMethod]
+	public void ToCollection_WithList_WrapsDirectly()
+	{
+		var numbers = new List<int> { 1, 2, 3 };
+
+		var result = ((IEnumerable<int>)numbers).ToCollection();
+		numbers.Add(4);
+
+		Assert.HasCount(4, result);
+		Assert.AreEqual(4, result[^1]);
+	}
+
+	[TestMethod]
 	public void ToCollectionTest()
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count);
 
 		Assert.IsTrue(people.ToCollection().IsNotEmpty());
+	}
+
+	[TestMethod]
+	public void ToDelimitedString_NullCollection_ReturnsEmptyString()
+	{
+		// Exercises the collection is null branch of the || guard.
+		IEnumerable<char> collection = null;
+
+		var result = collection!.ToDelimitedString();
+
+		Assert.IsTrue(result.IsEmpty());
 	}
 
 	[TestMethod]

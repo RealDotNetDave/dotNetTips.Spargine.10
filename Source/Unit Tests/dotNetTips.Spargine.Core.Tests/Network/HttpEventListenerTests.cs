@@ -4,7 +4,7 @@
 // Created          : 05-01-2025
 //
 // Last Modified By : David McCarter
-// Last Modified On : 12-23-2025
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="HttpEventListenerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,20 +15,17 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Network;
 using DotNetTips.Spargine.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Core.Tests.Network;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class HttpEventListenersTests : IDisposable
+public sealed class HttpEventListenersTests : IDisposable
 {
 
 	private readonly HttpClient _httpClient = new();

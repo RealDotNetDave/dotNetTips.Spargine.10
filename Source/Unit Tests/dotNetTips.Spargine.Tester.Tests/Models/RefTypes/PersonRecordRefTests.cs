@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-28-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="PersonRecordRefTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -20,7 +20,6 @@ using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.SerializerContexts;
 using DotNetTips.Spargine.Tester.Tests.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -391,7 +390,7 @@ public class PersonRecordRefTests
 	{
 		var record = RandomData.GeneratePerson<PersonRecord>();
 
-		var result = (PersonRecord)null >= record;
+		var result = null as PersonRecord >= record;
 
 		Assert.IsFalse(result);
 	}

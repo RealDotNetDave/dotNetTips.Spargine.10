@@ -3,7 +3,7 @@
 // Author           : Copilot Agent
 // Created          : 08-04-2026
 //
-// Last Modified By : Copilot Agent
+// Last Modified By : David McCarter
 // Last Modified On : 08-04-2026
 // ***********************************************************************
 // <copyright file="ThreadPoolHelperTests.cs" company="dotNetTips.com - McCarter Consulting">

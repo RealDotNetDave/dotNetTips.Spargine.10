@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-06-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-27-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ConcurrentHashSetTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -13,15 +13,12 @@
 // ***********************************************************************
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Core.Collections.Generic.Concurrent;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -316,20 +313,6 @@ public class ConcurrentHashSetTests
 	}
 
 	[TestMethod]
-	public void Constructor_WithConcurrencyLevelGreaterThanCapacity_ClampsCapacityToConcurrencyLevel()
-	{
-		// Arrange & Act – capacity (2) < concurrencyLevel (4), so the private ctor clamps capacity up.
-		var hashSet = new ConcurrentHashSet<int>(concurrencyLevel: 4, capacity: 2);
-
-		// Assert – set is empty but fully functional
-		Assert.AreEqual(0, hashSet.Count, "Set should be empty after construction.");
-		Assert.IsTrue(hashSet.IsEmpty, "IsEmpty should be true.");
-
-		hashSet.Add(1);
-		Assert.IsTrue(hashSet.Contains(1), "Should contain added item after clamped-capacity construction.");
-	}
-
-	[TestMethod]
 	public void Constructor_WithConcurrencyLevelAndCapacity_InitializesCorrectly()
 	{
 		int concurrencyLevel = 4; // Example concurrency level
@@ -430,6 +413,20 @@ public class ConcurrentHashSetTests
 	}
 
 	[TestMethod]
+	public void Constructor_WithConcurrencyLevelGreaterThanCapacity_ClampsCapacityToConcurrencyLevel()
+	{
+		// Arrange & Act – capacity (2) < concurrencyLevel (4), so the private ctor clamps capacity up.
+		var hashSet = new ConcurrentHashSet<int>(concurrencyLevel: 4, capacity: 2);
+
+		// Assert – set is empty but fully functional
+		Assert.AreEqual(0, hashSet.Count, "Set should be empty after construction.");
+		Assert.IsTrue(hashSet.IsEmpty, "IsEmpty should be true.");
+
+		hashSet.Add(1);
+		Assert.IsTrue(hashSet.Contains(1), "Should contain added item after clamped-capacity construction.");
+	}
+
+	[TestMethod]
 	public void Constructor_WithDuplicateCollection_RemovesDuplicates()
 	{
 		// Arrange
@@ -476,7 +473,7 @@ public class ConcurrentHashSetTests
 	public void Constructor_WithNullComparer_ThrowsArgumentNullException()
 	{
 		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>(null as IEqualityComparer<int>));
+		Assert.ThrowsExactly<ArgumentNullException>(() => new ConcurrentHashSet<int>((IEqualityComparer<int>?)null));
 	}
 
 	[TestMethod]

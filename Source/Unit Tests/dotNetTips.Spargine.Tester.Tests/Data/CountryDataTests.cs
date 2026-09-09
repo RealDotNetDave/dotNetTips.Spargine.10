@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-10-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="CountryDataTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,14 +14,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Core.Serialization;
 using DotNetTips.Spargine.Tester.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -165,7 +163,7 @@ public class CountryDataTests
 	[TestMethod]
 	public void GetCountry_NullOrEmpty_ThrowsArgumentNullException()
 	{
-		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(null as string));
+		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry((string?)null));
 		Assert.ThrowsExactly<ArgumentNullException>(() => CountryRepository.GetCountry(string.Empty));
 	}
 

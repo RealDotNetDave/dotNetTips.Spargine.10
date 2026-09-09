@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="TypeHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -90,7 +90,6 @@ public class TypeHelperTests : UnitTester
 	public void BuiltInTypes_CountIsGreaterThanOrEqualToSixteen()
 	{
 		var result = TypeHelper.BuiltInTypes;
-		result = TypeHelper.BuiltInTypes;
 
 		Assert.IsNotNull(result);
 		Assert.IsGreaterThanOrEqualTo(16, result.Count);

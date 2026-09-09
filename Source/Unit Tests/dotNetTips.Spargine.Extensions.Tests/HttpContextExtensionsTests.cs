@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 04-06-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified By : David McCarter
+// Last Modified On : 04-13-2026
 // ***********************************************************************
 // <copyright file="HttpContextExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -13,17 +13,12 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 

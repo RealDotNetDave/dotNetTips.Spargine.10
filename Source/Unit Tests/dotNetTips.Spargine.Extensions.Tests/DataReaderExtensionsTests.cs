@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-05-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-05-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -17,7 +17,6 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -167,18 +166,20 @@ public class DataReaderExtensionsTests
 	public void ToCsv_NonStringField_AppendsValueDirectly()
 	{
 		// Arrange
-		using var table = new DataTable();
-		table.Columns.Add("Id", typeof(int));
-		table.Columns.Add("Score", typeof(double));
-		table.Rows.Add(1, 99.5);
-		using var reader = table.CreateDataReader();
+		using (var table = new DataTable())
+		{
+			table.Columns.Add("Id", typeof(int));
+			table.Columns.Add("Score", typeof(double));
+			table.Rows.Add(1, 99.5);
+			using var reader = table.CreateDataReader();
 
-		// Act
-		var result = reader.ToCsv(includeHeaderAsFirstRow: false);
+			// Act
+			var result = reader.ToCsv(includeHeaderAsFirstRow: false);
 
-		// Assert
-		Assert.AreEqual(1, result.Count);
-		Assert.AreEqual("1,99.5", result[0]);
+			// Assert
+			Assert.AreEqual(1, result.Count);
+			Assert.AreEqual("1,99.5", result[0]);
+		}
 	}
 
 	[TestMethod]

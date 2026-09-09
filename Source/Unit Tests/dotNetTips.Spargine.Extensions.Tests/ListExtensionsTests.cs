@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ListExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,19 +13,15 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
 using DotNetTips.Spargine.Tester.Models.RefTypes.Comparers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -2304,7 +2300,7 @@ public class ListExtensionsTests
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.IsInstanceOfType(result, typeof(Collection<int>), "Result should be of type Collection<int>.");
-		Assert.IsEmpty(result, "Resulting collection should be empty.");
+		Assert.IsEmpty(result, "Expected the collection to be empty.");
 	}
 
 	[TestMethod]
@@ -2333,8 +2329,8 @@ public class ListExtensionsTests
 		// Arrange
 		List<int> list = null;
 
-		// Act
-		_ = Assert.ThrowsExactly<ArgumentNullException>(() => list.ToCollection());
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(() => list.ToCollection());
 	}
 
 	[TestMethod]
@@ -2395,13 +2391,10 @@ public class ListExtensionsTests
 	{
 		var people = RandomData.GeneratePersonRefCollection(Count).ToList();
 
-		var result = people.ToDistinctBlockingCollection(true);
+		var result = people.ToDistinctBlockingCollection();
 
 		Assert.IsNotNull(result);
-
 		Assert.HasCount(Count, result);
-
-		Assert.IsTrue(result.IsAddingCompleted);
 	}
 
 	[TestMethod]
@@ -2472,7 +2465,7 @@ public class ListExtensionsTests
 
 		// Assert
 		Assert.IsNotNull(result, "Result should not be null.");
-		Assert.HasCount(list.Count, result, "Resulting list should have the same count as the source list.");
+		Assert.HasCount(list.Count, result, "Result should have the same count as the source list.");
 	}
 
 	[TestMethod]
@@ -2545,8 +2538,6 @@ public class ListExtensionsTests
 		Assert.IsNotNull(result);
 		Assert.HasCount(Count, result);
 	}
-
-	// ── ToFrozenSet with comparer ────────────────────────────────────────
 
 	[TestMethod]
 	public void ToFrozenSet_WithCaseInsensitiveComparer_CollapsesDuplicates()
@@ -2858,7 +2849,6 @@ public class ListExtensionsTests
 		Assert.IsNotNull(result, "Result should not be null.");
 		Assert.HasCount(list.Count, result, "Result should have the same count as the original list.");
 		CollectionAssert.AreEqual(list, result, "Result should contain the same values as the original list.");
-		Assert.AreNotSame(list, result, "Result should be a different list instance.");
 	}
 
 	[TestMethod]

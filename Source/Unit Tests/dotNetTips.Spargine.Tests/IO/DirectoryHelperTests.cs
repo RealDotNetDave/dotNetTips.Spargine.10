@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-28-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="DirectoryHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -2054,8 +2054,12 @@ public class DirectoryHelperTests
 
 		// Create a file in the directory and set its attributes to ReadOnly
 		var testFilePath = Path.Combine(tempDirectoryPath, "testFile.txt");
-		var testFile = File.Create(testFilePath);
-		testFile.Close();
+
+		using (var testFile = File.Create(testFilePath))
+		{
+			testFile.Close();
+		}
+
 		File.SetAttributes(testFilePath, FileAttributes.ReadOnly);
 
 		// Act

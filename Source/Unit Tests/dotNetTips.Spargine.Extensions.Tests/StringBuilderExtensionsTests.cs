@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,14 +13,12 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -226,6 +224,20 @@ public sealed class StringBuilderExtensionsTests
 	}
 
 	[TestMethod]
+	public void AppendValuesGenericNullSeparatorUsesDefaultTest()
+	{
+		var sb = new StringBuilder();
+		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
+
+#pragma warning disable CS8625
+		sb.AppendValues((string)null, values, (value) => sb.Append(value));
+#pragma warning restore CS8625
+
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
+		StringAssert.Contains(sb.ToString(), ControlChars.DefaultSeparator, "Default separator should be used when null separator is provided.");
+	}
+
+	[TestMethod]
 	public void AppendValuesGenericNullValuesTest()
 	{
 		var sb = new StringBuilder();
@@ -303,6 +315,22 @@ public sealed class StringBuilderExtensionsTests
 		{
 			_ = sb.Append(person.FirstName);
 		}));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithParamNullSeparatorUsesDefaultTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+
+#pragma warning disable CS8625
+		sb.AppendValues(null, people, "format", (person, fmt) =>
+		{
+			_ = sb.Append(person.FirstName);
+		});
+#pragma warning restore CS8625
+
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
 	}
 
 	[TestMethod]
@@ -404,6 +432,22 @@ public sealed class StringBuilderExtensionsTests
 		{
 			_ = builder.Append(person.FirstName);
 		}));
+	}
+
+	[TestMethod]
+	public void AppendValuesWithTwoParamsNullSeparatorUsesDefaultTest()
+	{
+		var sb = new StringBuilder();
+		var people = RandomData.GeneratePersonRefCollection(count: 3);
+
+#pragma warning disable CS8625
+		sb.AppendValues((string)null, people, "param1", "param2", (StringBuilder builder, Person person, string p1, string p2) =>
+		{
+			_ = builder.Append(person.FirstName);
+		});
+#pragma warning restore CS8625
+
+		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
 	}
 
 	[TestMethod]
@@ -691,52 +735,6 @@ public sealed class StringBuilderExtensionsTests
 		// Verify the StringBuilder remains valid
 		Assert.AreEqual(0, sb.Length, "StringBuilder length should be zero.");
 		Assert.IsGreaterThanOrEqualTo(0, sb.Capacity, "StringBuilder capacity should be non-negative.");
-	}
-
-	[TestMethod]
-	public void AppendValuesGenericNullSeparatorUsesDefaultTest()
-	{
-		var sb = new StringBuilder();
-		var values = RandomData.GenerateWords(count: 3, minLength: 5, maxLength: 7);
-
-#pragma warning disable CS8625
-		sb.AppendValues((string)null, values, (value) => sb.Append(value));
-#pragma warning restore CS8625
-
-		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
-		StringAssert.Contains(sb.ToString(), ControlChars.DefaultSeparator, "Default separator should be used when null separator is provided.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithParamNullSeparatorUsesDefaultTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-
-#pragma warning disable CS8625
-		sb.AppendValues((string)null, people, "format", (person, fmt) =>
-		{
-			_ = sb.Append(person.FirstName);
-		});
-#pragma warning restore CS8625
-
-		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
-	}
-
-	[TestMethod]
-	public void AppendValuesWithTwoParamsNullSeparatorUsesDefaultTest()
-	{
-		var sb = new StringBuilder();
-		var people = RandomData.GeneratePersonRefCollection(count: 3);
-
-#pragma warning disable CS8625
-		sb.AppendValues((string)null, people, "param1", "param2", (StringBuilder builder, Person person, string p1, string p2) =>
-		{
-			_ = builder.Append(person.FirstName);
-		});
-#pragma warning restore CS8625
-
-		Assert.IsGreaterThan(0, sb.Length, "StringBuilder should contain appended values when separator is null.");
 	}
 
 }

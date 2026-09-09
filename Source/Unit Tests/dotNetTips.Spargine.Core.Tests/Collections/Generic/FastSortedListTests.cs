@@ -4,7 +4,7 @@
 // Created          : 06-24-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 04-03-2026
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="FastSortedListTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -13,12 +13,10 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using DotNetTips.Spargine.Core.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -275,13 +273,15 @@ public class FastSortedListTests
 	public void GetEnumerator_ShouldSort()
 	{
 		var list = new FastSortedList<int> { 5, 3, 4, 1, 2 };
-		var enumerator = list.GetEnumerator();
 
-		var firstItem = enumerator.Current;
-		enumerator.MoveNext(); // Move to the first item
-		firstItem = enumerator.Current;
+		using (var enumerator = list.GetEnumerator())
+		{
+			var firstItem = enumerator.Current;
+			enumerator.MoveNext(); // Move to the first item
+			firstItem = enumerator.Current;
 
-		Assert.AreEqual(1, firstItem, "GetEnumerator should sort the list before returning the enumerator.");
+			Assert.AreEqual(1, firstItem, "GetEnumerator should sort the list before returning the enumerator.");
+		}
 	}
 
 	[TestMethod]

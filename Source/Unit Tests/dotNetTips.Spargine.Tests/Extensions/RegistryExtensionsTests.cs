@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 04-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="RegistryExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -16,7 +16,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
 using DotNetTips.Spargine.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -36,10 +35,12 @@ public class RegistryExtensionsTests
 	public void GetSubKey_EmptyName_ThrowsArgumentNullException()
 	{
 		// Arrange
-		using var baseKey = Registry.LocalMachine;
+		using (var baseKey = Registry.LocalMachine)
+		{
 
-		// Act & Assert
-		Assert.ThrowsExactly<ArgumentNullException>(() => baseKey.GetSubKey(string.Empty));
+			// Act & Assert
+			Assert.ThrowsExactly<ArgumentNullException>(() => baseKey.GetSubKey(string.Empty));
+		}
 	}
 
 	[TestMethod]

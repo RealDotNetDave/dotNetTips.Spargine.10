@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="ArrayExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -740,7 +740,9 @@ public class ArrayExtensionsTests
 	{
 		var arr = new[] { 1, 2, 3 };
 
+#pragma warning disable CS8604 // Possible null reference argument.
 		Assert.IsFalse(arr.IsNotEmpty(null as Func<int, bool>));
+#pragma warning restore CS8604 // Possible null reference argument.
 	}
 
 	[TestMethod]

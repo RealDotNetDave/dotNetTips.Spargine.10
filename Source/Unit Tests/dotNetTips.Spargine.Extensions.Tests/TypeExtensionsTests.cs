@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-12-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="TypeExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -28,7 +27,6 @@ using DotNetTips.Spargine.Core.Logging;
 using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -195,19 +193,20 @@ public class TypeExtensionsTests
 	[TestMethod]
 	public void GetImplementedInterfacesTest()
 	{
-		var table = new DataTable();
+		using (var table = new DataTable())
+		{
+			var result = table.GetImplementedInterfaces("IComponent");
 
-		var result = table.GetImplementedInterfaces("IComponent");
+			Assert.AreEqual(1, result.Count);
 
-		Assert.AreEqual(1, result.Count);
+			result = table.GetImplementedInterfaces("IFakeInterface");
 
-		result = table.GetImplementedInterfaces("IFakeInterface");
+			Assert.IsEmpty(result);
 
-		Assert.IsEmpty(result);
+			result = table.GetImplementedInterfaces("IComponent", "IDisposable");
 
-		result = table.GetImplementedInterfaces("IComponent", "IDisposable");
-
-		Assert.AreEqual(2, result.Count);
+			Assert.AreEqual(2, result.Count);
+		}
 
 	}
 

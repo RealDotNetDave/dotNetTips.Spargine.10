@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 01-16-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 04-03-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="TaskHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -37,9 +37,12 @@ public class TaskHelperTests
 	[TestMethod]
 	public void RunSync11()
 	{
-		var cancelToken = new CancellationTokenSource().Token;
+		using (var cancellationTokenSource = new CancellationTokenSource())
+		{
+			var cancelToken = cancellationTokenSource.Token;
 
-		TaskHelper.RunSync(() => this.Fire(nameof(this.RunSync11)), cancellationToken: cancelToken);
+			TaskHelper.RunSync(() => this.Fire(nameof(this.RunSync11)), cancellationToken: cancelToken);
+		}
 
 		Assert.AreEqual(nameof(this.RunSync11), this._fireResult);
 	}

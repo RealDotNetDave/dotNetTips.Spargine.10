@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-06-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-22-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="SocketExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -15,14 +15,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
@@ -355,20 +351,21 @@ public class SocketExtensionsTests
 			await serverStream.FlushAsync();
 		});
 
-		using var handler = new SocketsHttpHandler
+		using (var handler = new SocketsHttpHandler
 		{
 			ConnectCallback = (context, cancellationToken) => context.ConnectTcpAsync(cancellationToken)
-		};
+		})
+		{
+			using var client = new HttpClient(handler);
 
-		using var client = new HttpClient(handler);
+			// Act
+			using var response = await client.GetAsync(new Uri($"http://127.0.0.1:{port}/"));
+			var content = await response.Content.ReadAsStringAsync();
 
-		// Act
-		using var response = await client.GetAsync(new Uri($"http://127.0.0.1:{port}/"));
-		var content = await response.Content.ReadAsStringAsync();
-
-		// Assert
-		Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-		Assert.AreEqual(responseBody, content);
+			// Assert
+			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+			Assert.AreEqual(responseBody, content);
+		}
 
 		await serverTask;
 		listener.Stop();

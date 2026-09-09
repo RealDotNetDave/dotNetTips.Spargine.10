@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 05-01-2025
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-08-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="StreamExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -65,7 +65,7 @@ public class StreamExtensionsTests
 	[TestMethod]
 	public void FlushClose_StreamIsNotNull_FlushesAndClosesStream()
 	{
-		var stream = new MemoryStream();
+		using var stream = new MemoryStream();
 
 		stream.FlushClose();
 

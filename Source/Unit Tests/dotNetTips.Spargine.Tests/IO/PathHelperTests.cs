@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 06-24-2024
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-02-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-09-2026
 // ***********************************************************************
 // <copyright file="PathHelperTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -14,18 +14,16 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using DotNetTips.Spargine.Core;
 using DotNetTips.Spargine.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 namespace DotNetTips.Spargine.Tests.IO;
 
 [ExcludeFromCodeCoverage]
 [TestClass]
-public class PathHelperTests : IDisposable
+public sealed class PathHelperTests : IDisposable
 {
 
 	private readonly string _testDirectory = Path.Combine(Path.GetTempPath(), "PathHelperTests");
