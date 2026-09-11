@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260807-164337</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260910-201751</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,9 +14,9 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260807-164337</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260910-201751</th></tr>
 <tr>
-<th>MoveFiles .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>MoveFiles .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 </tr>
 </thead>
 <tbody>
@@ -31,13 +31,13 @@ vmovdqu   ymmword ptr [rbp-30],ymm4
 vmovdqa   xmmword ptr [rbp-10],xmm4
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
-mov       rax,[rax+1A0]
+mov       rax,[rax+1B0]
 mov       [rbp-20],rax
 mov       rax,[rbp+10]
-mov       rax,[rax+1A8]
+mov       rax,[rax+1B8]
 mov       [rbp-28],rax
 mov       rax,[rbp+10]
-mov       rax,[rax+198]
+mov       rax,[rax+1A8]
 mov       [rbp-30],rax
 mov       dword ptr [rbp-10],1
 xor       eax,eax
@@ -49,11 +49,11 @@ mov       rcx,[rbp-20]
 mov       rdx,[rbp-28]
 mov       r8,[rbp-30]
 cmp       [rcx],ecx
-call      qword ptr [7FFB35617E58]
+call      qword ptr [7FFBB506EBF8]
 mov       [rbp-4],eax
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB35617E40]
+call      qword ptr [7FFBB506EBE0]
 nop
 add       rsp,60
 pop       rbp
@@ -104,21 +104,21 @@ mov       [rbp+18],rdx
 mov       [rbp+20],r8
 mov       [rbp+28],r9
 mov       dword ptr [rbp-88],3E8
-mov       rax,2933F9F10B0
+mov       rax,1DCFD731180
 mov       [rsp+20],rax
 mov       rdx,[rbp+20]
-mov       rcx,7FFB3564EFC0
+mov       rcx,7FFBB50D4B60
 xor       r8d,r8d
-mov       r9,2933F9E0008
-call      qword ptr [7FFB35597FD8]
+mov       r9,1DCFD720008
+call      qword ptr [7FFBB4DCE670]
 mov       [rbp+20],rax
 mov       rdx,[rbp+18]
-mov       rcx,7FFB3564F0D8
-call      qword ptr [7FFB35617EB8]
+mov       rcx,7FFBB50D4C78
+call      qword ptr [7FFBB506EC58]
 mov       [rbp-40],rax
 cmp       qword ptr [rbp-40],0
-jne       short 00007FFB35734E43
-mov       rcx,7FFB3564F3F8
+jne       short 00007FFBB518B4A3
+mov       rcx,7FFBB50D4F98
 call      CORINFO_HELP_COUNTPROFILE32
 xor       eax,eax
 add       rsp,0C0
@@ -130,12 +130,12 @@ mov       [rbp-70],eax
 lea       rdx,[rbp-68]
 lea       r8,[rbp-70]
 mov       rcx,[rbp+20]
-mov       r9,2933F9E0008
-call      qword ptr [7FFB35617EE8]
+mov       r9,1DCFD720008
+call      qword ptr [7FFBB506EC88]
 mov       rax,[rbp+20]
 mov       [rbp-80],rax
 mov       rcx,[rbp-80]
-mov       rdx,7FFB3564F400
+mov       rdx,7FFBB50D4FA0
 call      CORINFO_HELP_CLASSPROFILE32
 mov       rcx,[rbp-80]
 mov       rax,[rbp-80]
@@ -143,36 +143,36 @@ mov       rax,[rax]
 mov       rax,[rax+40]
 call      qword ptr [rax+30]
 mov       rcx,rax
-call      qword ptr [7FFB35617F00]
+call      qword ptr [7FFBB506ECA0]
 mov       [rbp-48],rax
 xor       eax,eax
 mov       [rbp-4C],eax
 mov       rcx,[rbp-40]
 cmp       [rcx],ecx
-call      qword ptr [7FFB350E3548]
+call      qword ptr [7FFBB4B33548]
 mov       [rbp-50],eax
 lea       rcx,[rbp+30]
-call      qword ptr [7FFB35617F18]
+call      qword ptr [7FFBB506ECB8]
 mov       [rbp-54],eax
 mov       rcx,[rbp+10]
-mov       rdx,2933F9F10E0
-call      qword ptr [7FFB35617F30]
+mov       rdx,1DCFD7311B0
+call      qword ptr [7FFBB506ECD0]
 mov       [rbp-60],rax
 xor       eax,eax
 mov       [rbp-74],eax
-jmp       near ptr 00007FFB35734F65
+jmp       near ptr 00007FFBB518B5C5
 cmp       dword ptr [rbp-54],0
-je        short 00007FFB35734F07
-mov       rcx,7FFB3564F508
+je        short 00007FFBB518B567
+mov       rcx,7FFBB50D50A8
 call      CORINFO_HELP_COUNTPROFILE32
 lea       rcx,[rbp+30]
-call      qword ptr [7FFB35617F48]
-mov       rcx,7FFB3564F50C
+call      qword ptr [7FFBB506ECE8]
+mov       rcx,7FFBB50D50AC
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,[rbp-40]
 mov       edx,[rbp-74]
 cmp       [rcx],ecx
-call      qword ptr [7FFB350E3578]
+call      qword ptr [7FFBB4B33578]
 mov       [rbp-90],rax
 mov       rax,[rbp-60]
 mov       [rsp+20],rax
@@ -181,26 +181,26 @@ mov       rax,[rbp+28]
 movzx     r9d,byte ptr [rax]
 mov       rcx,[rbp+10]
 mov       r8,[rbp-48]
-call      qword ptr [7FFB35617F60]
+call      qword ptr [7FFBB506ED00]
 add       eax,[rbp-4C]
-jo        short 00007FFB35734FB4
+jo        short 00007FFBB518B614
 mov       [rbp-4C],eax
 mov       eax,[rbp-74]
 add       eax,1
-jo        short 00007FFB35734FB4
+jo        short 00007FFBB518B614
 mov       [rbp-74],eax
 mov       eax,[rbp-88]
 dec       eax
 mov       [rbp-88],eax
 cmp       dword ptr [rbp-88],0
-jg        short 00007FFB35734F8D
+jg        short 00007FFBB518B5ED
 lea       rcx,[rbp-88]
 mov       edx,8C
 call      CORINFO_HELP_PATCHPOINT
 mov       eax,[rbp-74]
 cmp       eax,[rbp-50]
-jl        near ptr 00007FFB35734EE8
-mov       rcx,7FFB3564F510
+jl        near ptr 00007FFBB518B548
+mov       rcx,7FFBB50D50B0
 call      CORINFO_HELP_COUNTPROFILE32
 mov       eax,[rbp-4C]
 add       rsp,0C0
@@ -218,12 +218,12 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       [rbp+18],edx
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB356A4C60]
+call      qword ptr [7FFBB50F4690]
 mov       [rbp-8],rax
 mov       rcx,[rbp-8]
 lea       rdx,[rbp+18]
 cmp       [rcx],ecx
-call      qword ptr [7FFB356A4C30]
+call      qword ptr [7FFBB50F4660]
 nop
 add       rsp,30
 pop       rbp

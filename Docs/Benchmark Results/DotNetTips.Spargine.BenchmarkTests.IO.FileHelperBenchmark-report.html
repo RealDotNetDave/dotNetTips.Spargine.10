@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperBenchmark-20260807-163510</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperBenchmark-20260910-200917</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method          </th><th>Mean   </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min    </th><th>Q1     </th><th>Median </th><th>Q3     </th><th>Max    </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method          </th><th>Mean   </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min    </th><th>Q1     </th><th>Median </th><th>Q3     </th><th>Max    </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CalculateTotalFileSize</td><td>1,128.295 ns</td><td>5.5875 ns</td><td>4.9532 ns</td><td>1.3238 ns</td><td>1,118.621 ns</td><td>1,125.576 ns</td><td>1,128.255 ns</td><td>1,131.222 ns</td><td>1,137.184 ns</td><td>886,292.9</td><td>6.338 ns</td><td>14.00</td><td>No</td><td>-</td><td>1,226 B</td><td>-</td>
-</tr><tr><td>CheckPermission</td><td>71,951.795 ns</td><td>686.0496 ns</td><td>608.1651 ns</td><td>162.5390 ns</td><td>71,056.873 ns</td><td>71,691.266 ns</td><td>71,848.645 ns</td><td>72,258.502 ns</td><td>73,158.289 ns</td><td>13,898.2</td><td>-74.269 ns</td><td>14.00</td><td>No</td><td>-</td><td>NA</td><td>2536 B</td>
-</tr><tr><td>FileHasInvalidChars</td><td>3.703 ns</td><td>0.0209 ns</td><td>0.0175 ns</td><td>0.0049 ns</td><td>3.675 ns</td><td>3.693 ns</td><td>3.706 ns</td><td>3.713 ns</td><td>3.731 ns</td><td>270,086,059.9</td><td>6.498 ns</td><td>13.00</td><td>No</td><td>-</td><td>1,122 B</td><td>-</td>
+</thead><tbody><tr><td>CalculateTotalFileSize</td><td>1,140.276 ns</td><td>3.9273 ns</td><td>3.2794 ns</td><td>0.9096 ns</td><td>1,131.565 ns</td><td>1,140.098 ns</td><td>1,140.601 ns</td><td>1,141.492 ns</td><td>1,145.477 ns</td><td>876,981.0</td><td>6.045 ns</td><td>13.00</td><td>No</td><td>1,226 B</td><td>-</td><td>-</td>
+</tr><tr><td>CheckPermission</td><td>71,798.594 ns</td><td>751.7734 ns</td><td>703.2093 ns</td><td>181.5679 ns</td><td>70,454.596 ns</td><td>71,481.073 ns</td><td>71,859.686 ns</td><td>72,307.349 ns</td><td>72,935.565 ns</td><td>13,927.8</td><td>-83.284 ns</td><td>15.00</td><td>No</td><td>NA</td><td>-</td><td>2536 B</td>
+</tr><tr><td>FileHasInvalidChars</td><td>3.767 ns</td><td>0.0205 ns</td><td>0.0171 ns</td><td>0.0047 ns</td><td>3.734 ns</td><td>3.762 ns</td><td>3.768 ns</td><td>3.775 ns</td><td>3.794 ns</td><td>265,467,298.8</td><td>6.498 ns</td><td>13.00</td><td>No</td><td>1,122 B</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

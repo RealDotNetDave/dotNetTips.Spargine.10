@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260811-115043</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerDeleteFileBenchmark-20260910-215521</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>FileCount</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min   </th><th>Q1    </th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>FileCount</th><th>Mean  </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min   </th><th>Q1    </th><th>Median</th><th>Q3    </th><th>Max   </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>DeleteFile</td><td>10</td><td>387,684.9 ns</td><td>23,758.8 ns</td><td>64,637.5 ns</td><td>6,970.0 ns</td><td>372,150.0 ns</td><td>293,100.0 ns</td><td>341,425.0 ns</td><td>426,800.0 ns</td><td>601,300.0 ns</td><td>2,579.4</td><td>-3,442.0 ns</td><td>86.00</td><td>No</td><td>-</td><td>170 B</td><td>-</td>
-</tr><tr><td>DeleteFile</td><td>100</td><td>310,258.7 ns</td><td>11,124.4 ns</td><td>31,376.5 ns</td><td>3,271.2 ns</td><td>301,150.0 ns</td><td>259,200.0 ns</td><td>289,050.0 ns</td><td>328,550.0 ns</td><td>397,400.0 ns</td><td>3,223.1</td><td>-1,589.6 ns</td><td>92.00</td><td>No</td><td>-</td><td>NA</td><td>-</td>
-</tr><tr><td>DeleteFile</td><td>1000</td><td>345,336.8 ns</td><td>17,910.2 ns</td><td>51,387.9 ns</td><td>5,272.3 ns</td><td>330,100.0 ns</td><td>254,400.0 ns</td><td>313,950.0 ns</td><td>375,050.0 ns</td><td>492,500.0 ns</td><td>2,895.7</td><td>-2,588.6 ns</td><td>95.00</td><td>No</td><td>-</td><td>NA</td><td>-</td>
+</thead><tbody><tr><td>DeleteFile</td><td>10</td><td>353,365.2 ns</td><td>11,447.4 ns</td><td>32,287.5 ns</td><td>3,366.2 ns</td><td>280,250.0 ns</td><td>331,225.0 ns</td><td>349,150.0 ns</td><td>373,200.0 ns</td><td>443,650.0 ns</td><td>2,829.9</td><td>-1,637.1 ns</td><td>92.00</td><td>No</td><td>-</td><td>-</td>
+</tr><tr><td>DeleteFile</td><td>100</td><td>334,722.3 ns</td><td>14,133.0 ns</td><td>40,322.2 ns</td><td>4,158.9 ns</td><td>275,500.0 ns</td><td>306,100.0 ns</td><td>326,000.0 ns</td><td>350,850.0 ns</td><td>441,000.0 ns</td><td>2,987.6</td><td>-2,032.5 ns</td><td>94.00</td><td>No</td><td>-</td><td>-</td>
+</tr><tr><td>DeleteFile</td><td>1000</td><td>331,637.9 ns</td><td>13,407.9 ns</td><td>38,469.7 ns</td><td>3,946.9 ns</td><td>238,900.0 ns</td><td>305,850.0 ns</td><td>322,900.0 ns</td><td>355,450.0 ns</td><td>421,500.0 ns</td><td>3,015.3</td><td>-1,926.0 ns</td><td>95.00</td><td>No</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

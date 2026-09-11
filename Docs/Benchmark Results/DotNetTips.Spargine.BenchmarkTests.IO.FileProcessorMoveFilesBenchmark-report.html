@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260807-164337</title>
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileProcessorMoveFilesBenchmark-20260910-201751</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,20 +13,20 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean      </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Min       </th><th>Q1        </th><th>Median    </th><th>Q3        </th><th>Max       </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method</th><th>Mean      </th><th>Error   </th><th>StdDev  </th><th>StdErr</th><th>Min       </th><th>Q1        </th><th>Median    </th><th>Q3        </th><th>Max       </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>MoveFiles</td><td>177,140,615.4 ns</td><td>2,294,664.5 ns</td><td>1,916,148.7 ns</td><td>531,444.0 ns</td><td>173,761,400.0 ns</td><td>175,776,800.0 ns</td><td>177,341,800.0 ns</td><td>178,387,300.0 ns</td><td>180,879,300.0 ns</td><td>5.645</td><td>-265,715.5 ns</td><td>13.00</td><td>No</td><td>-</td><td>756 B</td><td>224.09 KB</td>
+</thead><tbody><tr><td>MoveFiles</td><td>178,140,064.3 ns</td><td>1,942,789.5 ns</td><td>1,722,232.3 ns</td><td>460,285.9 ns</td><td>174,952,350.0 ns</td><td>177,070,775.0 ns</td><td>178,771,250.0 ns</td><td>179,056,225.0 ns</td><td>180,359,350.0 ns</td><td>5.614</td><td>-230,136.0 ns</td><td>14.00</td><td>No</td><td>756 B</td><td>-</td><td>224.09 KB</td>
 </tr></tbody></table>
 </body>
 </html>

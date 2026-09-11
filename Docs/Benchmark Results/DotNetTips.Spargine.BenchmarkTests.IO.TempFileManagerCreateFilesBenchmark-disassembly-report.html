@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260807-181838</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260910-215247</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,11 +14,11 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="3">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260807-181838</th></tr>
+<tr><th colspan="3">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260910-215247</th></tr>
 <tr>
-<th>CreateFile .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>CreateFilesParallel .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>CreateFilesSequential .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>CreateFile .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>CreateFilesParallel .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>CreateFilesSequential .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 </tr>
 </thead>
 <tbody>
@@ -32,14 +32,14 @@ xor       eax,eax
 mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
-mov       rcx,[rax+198]
+mov       rcx,[rax+1A8]
 cmp       [rcx],ecx
-call      qword ptr [7FFB3560E400]
+call      qword ptr [7FFBB505E5F8]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFB35662E18
-call      qword ptr [7FFB3560E3D0]
+mov       rdx,7FFBB50BE9D0
+call      qword ptr [7FFBB505E5C8]
 nop
 add       rsp,30
 pop       rbp
@@ -48,8 +48,8 @@ ret
 DotNetTips.Spargine.IO.TempFileManager.CreateFile()
 		var file = GenerateRandomFile();
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		this._files.Add(file);
-		^^^^^^^^^^^^^^^^^^^^^^
+		_ = this._files.TryAdd(file, default);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 		return file;
 		^^^^^^^^^^^^
 push      rbp
@@ -58,13 +58,14 @@ lea       rbp,[rsp+30]
 xor       eax,eax
 mov       [rbp-8],rax
 mov       [rbp+10],rcx
-call      qword ptr [7FFB3560E418]
+call      qword ptr [7FFBB505E610]
 mov       [rbp-8],rax
 mov       rax,[rbp+10]
 mov       rcx,[rax+8]
 mov       rdx,[rbp-8]
+xor       r8d,r8d
 cmp       [rcx],ecx
-call      qword ptr [7FFB3560E430]
+call      qword ptr [7FFBB505E628]
 mov       rax,[rbp-8]
 add       rsp,30
 pop       rbp
@@ -85,22 +86,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFB3570CFD1
+je        short 00007FFBB515D6D1
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFB3570CFE9
+jmp       short 00007FFBB515D6E9
 mov       rcx,[rbp+18]
-mov       rdx,7FFB356541A0
-call      qword ptr [7FFB351F7B58]
+mov       rdx,7FFBB50A5A88
+call      qword ptr [7FFBB4C47B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB3560EA30]
+call      qword ptr [7FFBB505EAA8]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB3560E9E8]
+call      qword ptr [7FFBB505EA60]
 nop
 add       rsp,40
 pop       rbp
@@ -118,18 +119,18 @@ xor       eax,eax
 mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
-mov       rax,[rax+198]
+mov       rax,[rax+1A8]
 mov       [rbp-18],rax
 mov       dword ptr [rbp-10],100
 lea       rdx,[rbp-10]
 mov       rcx,[rbp-18]
 cmp       [rcx],ecx
-call      qword ptr [7FFB355FE148]
+call      qword ptr [7FFBB507DBF0]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFB3564C160
-call      qword ptr [7FFB355FE118]
+mov       rdx,7FFBB50D9630
+call      qword ptr [7FFBB507DBC0]
 nop
 add       rsp,40
 pop       rbp
@@ -139,8 +140,9 @@ DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
 push      rbp
 sub       rsp,50
 lea       rbp,[rsp+50]
-vxorps    xmm4,xmm4,xmm4
-vmovdqa   xmmword ptr [rbp-10],xmm4
+xor       eax,eax
+mov       [rbp-4],eax
+mov       [rbp-10],rax
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 		var fileCount = count.ArgumentInRange(min: 1);
@@ -150,47 +152,39 @@ mov       eax,[rax]
 mov       [rbp-14],eax
 xor       eax,eax
 mov       [rbp-10],rax
-mov       rax,247BD920008
+mov       rax,26977710008
 mov       [rsp+20],rax
-mov       rax,247BD923620
+mov       rax,26977713620
 mov       [rsp+28],rax
 lea       r9,[rbp-10]
 mov       ecx,[rbp-14]
 mov       edx,1
 mov       r8d,7FFFFFFF
-call      qword ptr [7FFB3556F750]
+call      qword ptr [7FFBB4FFF4E0]
 mov       [rbp-4],eax
-		var parallelThreshold = Environment.ProcessorCount * 2;
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-call      qword ptr [7FFB351FD980]
-imul      eax,2
-jo        short 00007FFB35069ED1
-mov       [rbp-8],eax
-		return fileCount < parallelThreshold
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return fileCount < App.MaxDegreeOfParallelism()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 			? this.CreateFilesSequential(fileCount)
 			                                       
 			: this.CreateFilesParallel(fileCount);
 			                                      
-mov       eax,[rbp-4]
-cmp       eax,[rbp-8]
-jl        short 00007FFB35069EBD
+call      qword ptr [7FFBB507DC08]
+cmp       eax,[rbp-4]
+jg        short 00007FFBB4AF7EB2
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB355FE160]
+call      qword ptr [7FFBB507DC20]
 nop
 add       rsp,50
 pop       rbp
 ret
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB355FE178]
+call      qword ptr [7FFBB507DC38]
 nop
 add       rsp,50
 pop       rbp
 ret
-call      CORINFO_HELP_OVERFLOW
-int       3
 
 DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
 push      rbp
@@ -207,22 +201,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFB3506CC51
+je        short 00007FFBB4AFEB81
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFB3506CC69
+jmp       short 00007FFBB4AFEB99
 mov       rcx,[rbp+18]
-mov       rdx,7FFB3565BA88
-call      qword ptr [7FFB351F7B58]
+mov       rdx,7FFBB518E688
+call      qword ptr [7FFBB4C87B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB35684450]
+call      qword ptr [7FFBB5157A98]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB35684408]
+call      qword ptr [7FFBB5157A50]
 nop
 add       rsp,40
 pop       rbp
@@ -240,18 +234,18 @@ xor       eax,eax
 mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
-mov       rax,[rax+198]
+mov       rax,[rax+1A8]
 mov       [rbp-18],rax
 mov       dword ptr [rbp-10],2
 lea       rdx,[rbp-10]
 mov       rcx,[rbp-18]
 cmp       [rcx],ecx
-call      qword ptr [7FFB356269E8]
+call      qword ptr [7FFBB508E550]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFB35657CB8
-call      qword ptr [7FFB356269B8]
+mov       rdx,7FFBB50EEB98
+call      qword ptr [7FFBB508E520]
 nop
 add       rsp,40
 pop       rbp
@@ -260,10 +254,8 @@ ret
 DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
 		var fileCount = count.ArgumentInRange(min: 1);
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		var parallelThreshold = Environment.ProcessorCount * 2;
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-		return fileCount < parallelThreshold
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return fileCount < App.MaxDegreeOfParallelism()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 			? this.CreateFilesSequential(fileCount)
 			                                       
 			: this.CreateFilesParallel(fileCount);
@@ -271,8 +263,9 @@ DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)
 push      rbp
 sub       rsp,50
 lea       rbp,[rsp+50]
-vxorps    xmm4,xmm4,xmm4
-vmovdqa   xmmword ptr [rbp-10],xmm4
+xor       eax,eax
+mov       [rbp-4],eax
+mov       [rbp-10],rax
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rax,[rbp+18]
@@ -280,43 +273,37 @@ mov       eax,[rax]
 mov       [rbp-14],eax
 xor       eax,eax
 mov       [rbp-10],rax
-mov       rax,1EECDAD0008
+mov       rax,25CB1D90008
 mov       [rsp+20],rax
-mov       rax,1EECDAD3620
+mov       rax,25CB1D93620
 mov       [rsp+28],rax
 lea       r9,[rbp-10]
 mov       ecx,[rbp-14]
 mov       edx,1
 mov       r8d,7FFFFFFF
-call      qword ptr [7FFB355A7F78]
+call      qword ptr [7FFBB4FEFDB0]
 mov       [rbp-4],eax
-call      qword ptr [7FFB3523D980]
-imul      eax,2
-jo        short 00007FFB3575BC7F
-mov       [rbp-8],eax
-mov       eax,[rbp-4]
-cmp       eax,[rbp-8]
-jl        short 00007FFB3575BC5C
-mov       rcx,7FFB35830880
+call      qword ptr [7FFBB508E568]
+cmp       eax,[rbp-4]
+jg        short 00007FFBB52345C1
+mov       rcx,7FFBB5335BF8
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB35626A00]
+call      qword ptr [7FFBB508E580]
 nop
 add       rsp,50
 pop       rbp
 ret
-mov       rcx,7FFB35830884
+mov       rcx,7FFBB5335BFC
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB35626A18]
+call      qword ptr [7FFBB508E598]
 nop
 add       rsp,50
 pop       rbp
 ret
-call      CORINFO_HELP_OVERFLOW
-int       3
 
 DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)
 push      rbp
@@ -333,22 +320,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFB3575CD91
+je        short 00007FFBB5234B51
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFB3575CDA9
+jmp       short 00007FFBB5234B69
 mov       rcx,[rbp+18]
-mov       rdx,7FFB35660AA0
-call      qword ptr [7FFB35237B58]
+mov       rdx,7FFBB5195D38
+call      qword ptr [7FFBB4C77B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB35627090]
+call      qword ptr [7FFBB5156A78]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB35627048]
+call      qword ptr [7FFBB5156A30]
 nop
 add       rsp,40
 pop       rbp
