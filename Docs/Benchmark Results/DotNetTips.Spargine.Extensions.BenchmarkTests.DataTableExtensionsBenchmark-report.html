@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark-20260808-210344</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DataTableExtensionsBenchmark-20260912-034122</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,24 +13,24 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s     </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s      </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;HasRows: Empty table&#39;</td><td>0.2629 ns</td><td>0.0082 ns</td><td>0.0077 ns</td><td>0.0020 ns</td><td>0.2463 ns</td><td>0.2584 ns</td><td>0.2652 ns</td><td>0.2668 ns</td><td>0.2789 ns</td><td>3,803,174,986.1</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>53 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;HasRows: Null table&#39;</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.000 ns</td><td>14.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;HasRows: With rows&#39;</td><td>0.2592 ns</td><td>0.0065 ns</td><td>0.0061 ns</td><td>0.0016 ns</td><td>0.2501 ns</td><td>0.2553 ns</td><td>0.2574 ns</td><td>0.2617 ns</td><td>0.2710 ns</td><td>3,857,541,066.7</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>53 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;IsDBNull: DBNull.Value&#39;</td><td>0.1131 ns</td><td>0.0091 ns</td><td>0.0085 ns</td><td>0.0022 ns</td><td>0.1035 ns</td><td>0.1070 ns</td><td>0.1100 ns</td><td>0.1182 ns</td><td>0.1282 ns</td><td>8,843,201,040.0</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;IsDBNull: Non DBNull value&#39;</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>6.500 ns</td><td>13.00</td><td>No</td><td>40 B</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>&#39;HasRows: Empty table&#39;</td><td>0.2763 ns</td><td>0.0048 ns</td><td>0.0043 ns</td><td>0.0011 ns</td><td>0.2687 ns</td><td>0.2735 ns</td><td>0.2768 ns</td><td>0.2795 ns</td><td>0.2819 ns</td><td>3,619,473,272.3</td><td>6.999 ns</td><td>14.00</td><td>No</td><td>53 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;HasRows: Null table&#39;</td><td>0.0186 ns</td><td>0.0063 ns</td><td>0.0059 ns</td><td>0.0015 ns</td><td>0.0121 ns</td><td>0.0143 ns</td><td>0.0163 ns</td><td>0.0211 ns</td><td>0.0305 ns</td><td>53,669,380,304.5</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;HasRows: With rows&#39;</td><td>0.2637 ns</td><td>0.0014 ns</td><td>0.0011 ns</td><td>0.0003 ns</td><td>0.2615 ns</td><td>0.2630 ns</td><td>0.2637 ns</td><td>0.2645 ns</td><td>0.2652 ns</td><td>3,792,311,120.6</td><td>6.000 ns</td><td>12.00</td><td>No</td><td>53 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;IsDBNull: DBNull.Value&#39;</td><td>0.0165 ns</td><td>0.0049 ns</td><td>0.0045 ns</td><td>0.0012 ns</td><td>0.0118 ns</td><td>0.0132 ns</td><td>0.0147 ns</td><td>0.0195 ns</td><td>0.0242 ns</td><td>60,759,221,551.7</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;IsDBNull: Non DBNull value&#39;</td><td>0.0152 ns</td><td>0.0040 ns</td><td>0.0038 ns</td><td>0.0010 ns</td><td>0.0098 ns</td><td>0.0126 ns</td><td>0.0152 ns</td><td>0.0171 ns</td><td>0.0231 ns</td><td>65,777,097,041.9</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>40 B</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

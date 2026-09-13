@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20260808-223724</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20260912-051504</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=IO  
 </code></pre>
 
 <table>
-<thead><tr><th>Method          </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+<thead><tr><th>Method          </th><th>Mean    </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CreateTempFileThenMove</td><td>1,408,575.6 ns</td><td>25,751.1 ns</td><td>47,731.3 ns</td><td>7,279.0 ns</td><td>1,406,150.0 ns</td><td>1,335,450.0 ns</td><td>1,366,200.0 ns</td><td>1,448,350.0 ns</td><td>1,524,250.0 ns</td><td>709.9</td><td>-3,618.0 ns</td><td>43.00</td><td>No</td><td>563 B</td><td>-</td><td>1.52 KB</td>
-</tr><tr><td>ReadAllTextSafe</td><td>633,379.9 ns</td><td>29,153.4 ns</td><td>79,807.1 ns</td><td>8,556.2 ns</td><td>614,250.0 ns</td><td>532,650.0 ns</td><td>586,050.0 ns</td><td>657,250.0 ns</td><td>863,650.0 ns</td><td>1,578.8</td><td>-4,234.6 ns</td><td>87.00</td><td>No</td><td>484 B</td><td>-</td><td>8.39 KB</td>
-</tr><tr><td>WriteAllTextAtomic</td><td>1,505,014.6 ns</td><td>64,316.2 ns</td><td>178,220.0 ns</td><td>18,891.3 ns</td><td>1,431,500.0 ns</td><td>1,279,500.0 ns</td><td>1,395,500.0 ns</td><td>1,575,700.0 ns</td><td>2,026,600.0 ns</td><td>664.4</td><td>-9,401.1 ns</td><td>89.00</td><td>No</td><td>431 B</td><td>-</td><td>1.52 KB</td>
+</thead><tbody><tr><td>CreateTempFileThenMove</td><td>1,583,575.0 ns</td><td>74,912.7 ns</td><td>211,292.5 ns</td><td>22,028.8 ns</td><td>1,496,300.0 ns</td><td>1,363,050.0 ns</td><td>1,455,850.0 ns</td><td>1,593,875.0 ns</td><td>2,236,350.0 ns</td><td>631.5</td><td>-10,968.4 ns</td><td>92.00</td><td>No</td><td>-</td><td>563 B</td><td>1.52 KB</td>
+</tr><tr><td>ReadAllTextSafe</td><td>641,893.2 ns</td><td>28,250.7 ns</td><td>77,810.7 ns</td><td>8,294.6 ns</td><td>622,350.0 ns</td><td>504,800.0 ns</td><td>596,650.0 ns</td><td>677,925.0 ns</td><td>886,000.0 ns</td><td>1,557.9</td><td>-4,103.3 ns</td><td>88.00</td><td>No</td><td>-</td><td>484 B</td><td>8.39 KB</td>
+</tr><tr><td>WriteAllTextAtomic</td><td>1,662,010.4 ns</td><td>105,988.8 ns</td><td>305,802.0 ns</td><td>31,210.8 ns</td><td>1,519,400.0 ns</td><td>1,347,950.0 ns</td><td>1,456,750.0 ns</td><td>1,792,100.0 ns</td><td>2,476,250.0 ns</td><td>601.7</td><td>-15,557.4 ns</td><td>96.00</td><td>No</td><td>-</td><td>431 B</td><td>1.52 KB</td>
 </tr></tbody></table>
 </body>
 </html>

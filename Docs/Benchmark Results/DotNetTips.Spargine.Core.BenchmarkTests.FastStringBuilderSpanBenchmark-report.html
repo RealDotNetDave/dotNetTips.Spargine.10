@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.FastStringBuilderSpanBenchmark-20260806-181259</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.FastStringBuilderSpanBenchmark-20260912-185449</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,23 +13,23 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Strings  
 </code></pre>
 
 <table>
-<thead><tr><th>Method           </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method           </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;Combine Span&#39;</td><td>121.5 ns</td><td>1.19 ns</td><td>0.99 ns</td><td>0.28 ns</td><td>119.3 ns</td><td>121.1 ns</td><td>121.7 ns</td><td>122.2 ns</td><td>123.0 ns</td><td>8,229,494.0</td><td>6.362 ns</td><td>13.00</td><td>No</td><td>0.0103</td><td>3,262 B</td><td>-</td><td>-</td><td>-</td><td>328 B</td>
-</tr><tr><td>&#39;CombineWithSpace Span&#39;</td><td>133.9 ns</td><td>0.85 ns</td><td>0.75 ns</td><td>0.20 ns</td><td>132.7 ns</td><td>133.5 ns</td><td>133.8 ns</td><td>134.4 ns</td><td>135.7 ns</td><td>7,468,143.6</td><td>6.899 ns</td><td>14.00</td><td>No</td><td>0.0126</td><td>3,525 B</td><td>-</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
-</tr><tr><td>&#39;Concat Span&#39;</td><td>127.8 ns</td><td>1.87 ns</td><td>1.75 ns</td><td>0.45 ns</td><td>125.4 ns</td><td>126.3 ns</td><td>127.4 ns</td><td>129.2 ns</td><td>130.8 ns</td><td>7,823,000.4</td><td>7.274 ns</td><td>15.00</td><td>No</td><td>0.0126</td><td>3,019 B</td><td>-</td><td>0.0005</td><td>0.0005</td><td>368 B</td>
-</tr><tr><td>&#39;PerformAction Span&#39;</td><td>136.5 ns</td><td>1.01 ns</td><td>0.90 ns</td><td>0.24 ns</td><td>134.8 ns</td><td>136.0 ns</td><td>136.7 ns</td><td>137.1 ns</td><td>138.4 ns</td><td>7,323,641.4</td><td>6.880 ns</td><td>14.00</td><td>No</td><td>0.0153</td><td>3,361 B</td><td>-</td><td>0.0005</td><td>0.0005</td><td>448 B</td>
+</thead><tbody><tr><td>&#39;Combine Span&#39;</td><td>119.8 ns</td><td>0.83 ns</td><td>0.65 ns</td><td>0.19 ns</td><td>119.1 ns</td><td>119.5 ns</td><td>119.6 ns</td><td>120.0 ns</td><td>121.6 ns</td><td>8,347,203.8</td><td>5.907 ns</td><td>12.00</td><td>No</td><td>-</td><td>3,262 B</td><td>0.0119</td><td>0.0005</td><td>0.0005</td><td>344 B</td>
+</tr><tr><td>&#39;CombineWithSpace Span&#39;</td><td>132.3 ns</td><td>2.34 ns</td><td>1.95 ns</td><td>0.54 ns</td><td>126.6 ns</td><td>132.0 ns</td><td>132.4 ns</td><td>133.4 ns</td><td>135.1 ns</td><td>7,558,450.6</td><td>6.229 ns</td><td>13.00</td><td>No</td><td>-</td><td>3,523 B</td><td>0.0124</td><td>0.0005</td><td>0.0005</td><td>360 B</td>
+</tr><tr><td>&#39;Concat Span&#39;</td><td>127.8 ns</td><td>0.45 ns</td><td>0.39 ns</td><td>0.11 ns</td><td>126.9 ns</td><td>127.6 ns</td><td>127.8 ns</td><td>128.0 ns</td><td>128.2 ns</td><td>7,826,882.5</td><td>6.947 ns</td><td>14.00</td><td>No</td><td>-</td><td>3,017 B</td><td>0.0122</td><td>0.0005</td><td>0.0005</td><td>360 B</td>
+</tr><tr><td>&#39;PerformAction Span&#39;</td><td>143.7 ns</td><td>0.32 ns</td><td>0.30 ns</td><td>0.08 ns</td><td>143.0 ns</td><td>143.6 ns</td><td>143.8 ns</td><td>143.9 ns</td><td>144.1 ns</td><td>6,958,686.4</td><td>7.461 ns</td><td>15.00</td><td>No</td><td>-</td><td>3,361 B</td><td>0.0145</td><td>0.0005</td><td>0.0005</td><td>424 B</td>
 </tr></tbody></table>
 </body>
 </html>

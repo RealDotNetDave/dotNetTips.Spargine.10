@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260806-202609</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260912-205756</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,9 +14,9 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260806-202609</th></tr>
+<tr><th colspan="1">DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark-20260912-205756</th></tr>
 <tr>
-<th>CreateAndDispose .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>CreateAndDispose .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 </tr>
 </thead>
 <tbody>
@@ -36,57 +36,57 @@ xor       eax,eax
 mov       [rbp-20],rax
 mov       rbx,rcx
 mov       [rbp+10],rbx
-mov       rsi,[rbx+198]
+mov       rsi,[rbx+1A8]
 mov       [rbp-48],rsi
 mov       rcx,offset MT_System.Diagnostics.Stopwatch
 call      CORINFO_HELP_NEWSFAST
 mov       rdi,rax
 mov       [rbp-50],rdi
 cmp       byte ptr [rdi+18],0
-jne       short 00007FFE2D30F6AD
+jne       short 00007FF86C31570D
 lea       rcx,[rbp-20]
-mov       rax,7FFFACBD5F50
+mov       rax,7FF922725F60
 call      rax
 mov       rax,[rbp-20]
 mov       rdi,[rbp-50]
 mov       [rdi+10],rax
 mov       byte ptr [rdi+18],1
-cmp       dword ptr [7FFE8CB54A90],0
-jne       near ptr 00007FFE2D30F74F
+cmp       dword ptr [7FF8CBB53A90],0
+jne       near ptr 00007FF86C3157AF
 mov       rdi,[rbp-50]
 mov       [rbp-60],rdi
 mov       rsi,[rbp-48]
 mov       [rbp-58],rsi
 mov       rsi,[rdi+8]
 cmp       byte ptr [rdi+18],0
-je        short 00007FFE2D30F6EF
+je        short 00007FF86C31574F
 lea       rcx,[rbp-28]
-mov       rax,7FFFACBD5F50
+mov       rax,7FF922725F60
 call      rax
 mov       rax,[rbp-28]
 mov       rdi,[rbp-50]
 sub       rax,[rdi+10]
 add       rsi,rax
-cmp       dword ptr [7FFE8CB54A90],0
-jne       short 00007FFE2D30F739
+cmp       dword ptr [7FF8CBB53A90],0
+jne       short 00007FF86C315799
 vxorps    xmm0,xmm0,xmm0
 vcvtsi2sd xmm0,xmm0,rsi
 vcmpordsd xmm1,xmm0,xmm0
 vandpd    xmm1,xmm1,xmm0
 mov       rcx,7FFFFFFFFFFFFFFF
 vcvttsd2si rax,xmm1
-vucomisd  xmm0,qword ptr [7FFE2D30F808]
+vucomisd  xmm0,qword ptr [7FF86C315868]
 cmovb     rcx,rax
 mov       [rbp-30],rcx
 mov       rbx,[rbp+10]
-mov       rcx,[rbx+88]
+mov       rcx,[rbx+90]
 cmp       [rcx],cl
 lea       rcx,[rbp-30]
-call      qword ptr [7FFE2D24FEE8]
-jmp       short 00007FFE2D30F740
+call      qword ptr [7FF86C24E730]
+jmp       short 00007FF86C3157A0
 call      CORINFO_HELP_POLL_GC
-jmp       short 00007FFE2D30F6EF
-call      00007FFE2D30F759
+jmp       short 00007FF86C31574F
+call      00007FF86C3157B9
 nop
 add       rsp,68
 pop       rbx
@@ -95,15 +95,15 @@ pop       rdi
 pop       rbp
 ret
 call      CORINFO_HELP_POLL_GC
-jmp       near ptr 00007FFE2D30F6AD
+jmp       near ptr 00007FF86C31570D
 sub       rsp,28
 vzeroupper
 mov       rax,[rbp-60]
 cmp       byte ptr [rax+18],0
-je        short 00007FFE2D30F78E
+je        short 00007FF86C3157EE
 mov       rbx,[rax+8]
 lea       rcx,[rbp-38]
-call      00007FFE2CBF8C78
+call      00007FF86BC08C78
 mov       rcx,[rbp-38]
 mov       rax,[rbp-60]
 sub       rcx,[rax+10]
@@ -111,12 +111,12 @@ add       rcx,rbx
 mov       [rax+8],rcx
 mov       byte ptr [rax+18],0
 cmp       qword ptr [rbp-58],0
-je        short 00007FFE2D30F7FF
+je        short 00007FF86C31585F
 mov       rbx,[rax+8]
 cmp       byte ptr [rax+18],0
-je        short 00007FFE2D30F7B7
+je        short 00007FF86C315817
 lea       rcx,[rbp-40]
-call      00007FFE2CBF8C78
+call      00007FF86BC08C78
 mov       rdx,[rbp-40]
 mov       rax,[rbp-60]
 sub       rdx,[rax+10]
@@ -127,12 +127,12 @@ vcmpordsd xmm1,xmm0,xmm0
 vandpd    xmm1,xmm1,xmm0
 mov       rdx,7FFFFFFFFFFFFFFF
 vcvttsd2si rcx,xmm1
-vucomisd  xmm0,qword ptr [7FFE2D30F808]
+vucomisd  xmm0,qword ptr [7FF86C315868]
 cmovb     rdx,rcx
 mov       rcx,offset DotNetTips.Spargine.Core.BenchmarkTests.Diagnostics.StopwatchScopeBenchmark+<>c.<Setup>b__2_0(System.TimeSpan)
 mov       rsi,[rbp-58]
 cmp       [rsi+18],rcx
-je        short 00007FFE2D30F7FF
+je        short 00007FF86C31585F
 mov       rcx,[rsi+8]
 call      qword ptr [rsi+18]
 nop

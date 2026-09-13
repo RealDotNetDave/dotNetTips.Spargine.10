@@ -1,4 +1,4 @@
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToLower_ToLower_ForComparison()
@@ -8,7 +8,7 @@
        sub       rsp,20
        mov       rbx,rcx
        mov       rcx,gs:[58]
-       mov       rcx,[rcx+38]
+       mov       rcx,[rcx+30]
        cmp       dword ptr [rcx+238],2
        jle       near ptr M00_L06
        mov       rcx,[rcx+240]
@@ -19,11 +19,11 @@ M00_L00:
        mov       rsi,[rax+10]
        test      rsi,rsi
        jne       short M00_L01
-       mov       rax,2A6D0000190
+       mov       rax,16E7D400110
        mov       rsi,[rax]
        test      rsi,rsi
        jne       short M00_L01
-       mov       rax,2A6D0000170
+       mov       rax,16E7D4000F0
        mov       rsi,[rax]
        test      rsi,rsi
        je        short M00_L07
@@ -43,7 +43,7 @@ M00_L04:
        jne       near ptr M00_L11
        mov       esi,61
 M00_L05:
-       mov       rax,[rbx+88]
+       mov       rax,[rbx+90]
        mov       [rax+48],si
        add       rsp,20
        pop       rbx
@@ -52,10 +52,10 @@ M00_L05:
        ret
 M00_L06:
        mov       ecx,2
-       call      qword ptr [7FF8F432EB50]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFBB4CE48B8]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M00_L00
 M00_L07:
-       call      qword ptr [7FF8F3CFD4B8]; System.Globalization.CultureInfo.InitializeUserDefaultCulture()
+       call      qword ptr [7FFBB4845E00]; System.Globalization.CultureInfo.InitializeUserDefaultCulture()
        mov       rsi,rax
        jmp       short M00_L01
 M00_L08:
@@ -64,7 +64,7 @@ M00_L08:
        mov       rdi,rax
        mov       rdx,[rsi+30]
        mov       rcx,rdi
-       call      qword ptr [7FF8F4324300]; System.Globalization.TextInfo..ctor(System.Globalization.CultureData)
+       call      qword ptr [7FFBB4C5C0D8]; System.Globalization.TextInfo..ctor(System.Globalization.CultureData)
        movzx     ecx,byte ptr [rsi+60]
        mov       [rdi+30],cl
        lea       rcx,[rsi+10]
@@ -80,13 +80,13 @@ M00_L09:
        jmp       near ptr M00_L03
 M00_L10:
        mov       rcx,rdi
-       call      qword ptr [7FF8F43267C0]; System.Globalization.TextInfo.PopulateIsAsciiCasingSameAsInvariant()
+       call      qword ptr [7FFBB4C5E4A8]; System.Globalization.TextInfo.PopulateIsAsciiCasingSameAsInvariant()
        jmp       near ptr M00_L04
 M00_L11:
        mov       rcx,rdi
        mov       edx,41
        xor       r8d,r8d
-       call      qword ptr [7FF8F432EBB0]
+       call      qword ptr [7FFBB4CE50F8]
        mov       esi,eax
        jmp       near ptr M00_L05
 ; Total bytes of code 309
@@ -96,7 +96,7 @@ M00_L11:
        push      rbx
        sub       rsp,20
        mov       ebx,ecx
-       call      qword ptr [7FF952681D18]; Precode of System.Threading.Thread.GetThreadStaticsBase()
+       call      qword ptr [7FFC022E1D18]; Precode of System.Threading.Thread.GetThreadStaticsBase()
        mov       ecx,ebx
        and       ecx,0FFFFFF
        mov       edx,ecx
@@ -149,23 +149,23 @@ M01_L03:
        push      rsi
        push      rbx
        sub       rsp,28
-       call      qword ptr [7FF9526697E8]
+       call      qword ptr [7FFC022C97E8]
        mov       rbx,rax
        mov       rsi,rbx
-       call      qword ptr [7FF952680A28]
+       call      qword ptr [7FFC022E0A28]
        mov       rdx,rax
        test      rsi,rsi
        je        short M02_L00
        mov       rcx,rsi
        xor       r8d,r8d
-       call      qword ptr [7FF952681BC8]
+       call      qword ptr [7FFC022E1BC8]
        mov       rax,[rbx]
        add       rsp,28
        pop       rbx
        pop       rsi
        ret
 M02_L00:
-       call      qword ptr [7FF95267F410]
+       call      qword ptr [7FFC022DF410]
        int       3
 ; Total bytes of code 61
 ```
@@ -175,18 +175,18 @@ M02_L00:
        sub       rsp,20
        mov       rbx,rcx
        lea       rcx,[rbx+10]
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbx+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FF952680540]; Precode of System.Globalization.CultureData.get_CultureName()
+       call      qword ptr [7FFC022E0540]; Precode of System.Globalization.CultureData.get_CultureName()
        lea       rcx,[rbx+8]
        mov       rdx,rax
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbx+10]
        mov       rdx,[rcx+8]
        lea       rcx,[rbx+18]
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
-       call      qword ptr [7FF952669480]
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C9480]
        cmp       byte ptr [rax],0
        jne       short M03_L01
 M03_L00:
@@ -195,7 +195,7 @@ M03_L00:
        ret
 M03_L01:
        mov       rcx,[rbx+18]
-       call      qword ptr [7FF952680430]
+       call      qword ptr [7FFC022E0430]
        mov       [rbx+28],rax
        jmp       short M03_L00
 ; Total bytes of code 94
@@ -206,7 +206,7 @@ M03_L01:
        sub       rsp,20
        mov       rbx,rcx
        mov       rcx,[rbx+18]
-       call      qword ptr [7FF952680A08]; Precode of System.Globalization.CultureInfo.GetCultureInfo(System.String)
+       call      qword ptr [7FFC022E0A08]; Precode of System.Globalization.CultureInfo.GetCultureInfo(System.String)
        mov       rcx,rax
        lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
        cmp       [rcx],ecx
@@ -218,7 +218,7 @@ M03_L01:
        mov       r8,[r8]
        mov       r9d,1
        cmp       [rcx],ecx
-       call      qword ptr [7FF952680258]; Precode of System.Globalization.CompareInfo.Compare(System.String, System.String, System.Globalization.CompareOptions)
+       call      qword ptr [7FFC022E0258]; Precode of System.Globalization.CompareInfo.Compare(System.String, System.String, System.Globalization.CompareOptions)
        mov       ecx,2
        mov       edx,1
        test      eax,eax
@@ -230,17 +230,17 @@ M03_L01:
 ; Total bytes of code 94
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToLower_ToAsciiLower()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       word ptr [rax+48],61
        ret
 ; Total bytes of code 14
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToUpper_ToUpper_ForComparison()
@@ -261,11 +261,11 @@ M00_L00:
        mov       rsi,[rax+10]
        test      rsi,rsi
        jne       short M00_L01
-       mov       rax,2A4DE400190
+       mov       rax,23D64800110
        mov       rsi,[rax]
        test      rsi,rsi
        jne       short M00_L01
-       mov       rax,2A4DE400170
+       mov       rax,23D648000F0
        mov       rsi,[rax]
        test      rsi,rsi
        je        short M00_L08
@@ -286,12 +286,12 @@ M00_L04:
        mov       rcx,rdi
        mov       edx,61
        mov       r8d,1
-       call      qword ptr [7FF8F43E5620]
+       call      qword ptr [7FFBB4CE4FD8]
        jmp       short M00_L06
 M00_L05:
        mov       eax,41
 M00_L06:
-       mov       rcx,[rbx+88]
+       mov       rcx,[rbx+90]
        mov       [rcx+48],ax
        add       rsp,20
        pop       rbx
@@ -300,10 +300,10 @@ M00_L06:
        ret
 M00_L07:
        mov       ecx,2
-       call      qword ptr [7FF8F43E4CF0]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
+       call      qword ptr [7FFBB4CE4798]; System.Runtime.CompilerServices.StaticsHelpers.GetOptimizedGCThreadStaticBase(Int32)
        jmp       near ptr M00_L00
 M00_L08:
-       call      qword ptr [7FF8F3D2D4B8]; System.Globalization.CultureInfo.InitializeUserDefaultCulture()
+       call      qword ptr [7FFBB4845E00]; System.Globalization.CultureInfo.InitializeUserDefaultCulture()
        mov       rsi,rax
        jmp       short M00_L01
 M00_L09:
@@ -312,7 +312,7 @@ M00_L09:
        mov       rdi,rax
        mov       rdx,[rsi+30]
        mov       rcx,rdi
-       call      qword ptr [7FF8F4357B10]; System.Globalization.TextInfo..ctor(System.Globalization.CultureData)
+       call      qword ptr [7FFBB4C377F8]; System.Globalization.TextInfo..ctor(System.Globalization.CultureData)
        movzx     ecx,byte ptr [rsi+60]
        mov       [rdi+30],cl
        lea       rcx,[rsi+10]
@@ -328,7 +328,7 @@ M00_L10:
        jmp       near ptr M00_L03
 M00_L11:
        mov       rcx,rdi
-       call      qword ptr [7FF8F435DEF0]; System.Globalization.TextInfo.PopulateIsAsciiCasingSameAsInvariant()
+       call      qword ptr [7FFBB4C3DCC8]; System.Globalization.TextInfo.PopulateIsAsciiCasingSameAsInvariant()
        jmp       near ptr M00_L04
 ; Total bytes of code 310
 ```
@@ -337,7 +337,7 @@ M00_L11:
        push      rbx
        sub       rsp,20
        mov       ebx,ecx
-       call      qword ptr [7FF952681D18]; Precode of System.Threading.Thread.GetThreadStaticsBase()
+       call      qword ptr [7FFC022E1D18]; Precode of System.Threading.Thread.GetThreadStaticsBase()
        mov       ecx,ebx
        and       ecx,0FFFFFF
        mov       edx,ecx
@@ -390,23 +390,23 @@ M01_L03:
        push      rsi
        push      rbx
        sub       rsp,28
-       call      qword ptr [7FF9526697E8]
+       call      qword ptr [7FFC022C97E8]
        mov       rbx,rax
        mov       rsi,rbx
-       call      qword ptr [7FF952680A28]
+       call      qword ptr [7FFC022E0A28]
        mov       rdx,rax
        test      rsi,rsi
        je        short M02_L00
        mov       rcx,rsi
        xor       r8d,r8d
-       call      qword ptr [7FF952681BC8]
+       call      qword ptr [7FFC022E1BC8]
        mov       rax,[rbx]
        add       rsp,28
        pop       rbx
        pop       rsi
        ret
 M02_L00:
-       call      qword ptr [7FF95267F410]
+       call      qword ptr [7FFC022DF410]
        int       3
 ; Total bytes of code 61
 ```
@@ -416,18 +416,18 @@ M02_L00:
        sub       rsp,20
        mov       rbx,rcx
        lea       rcx,[rbx+10]
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbx+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FF952680540]; Precode of System.Globalization.CultureData.get_CultureName()
+       call      qword ptr [7FFC022E0540]; Precode of System.Globalization.CultureData.get_CultureName()
        lea       rcx,[rbx+8]
        mov       rdx,rax
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
        mov       rcx,[rbx+10]
        mov       rdx,[rcx+8]
        lea       rcx,[rbx+18]
-       call      qword ptr [7FF952668FE8]; CORINFO_HELP_ASSIGN_REF
-       call      qword ptr [7FF952669480]
+       call      qword ptr [7FFC022C8FE8]; CORINFO_HELP_ASSIGN_REF
+       call      qword ptr [7FFC022C9480]
        cmp       byte ptr [rax],0
        jne       short M03_L01
 M03_L00:
@@ -436,7 +436,7 @@ M03_L00:
        ret
 M03_L01:
        mov       rcx,[rbx+18]
-       call      qword ptr [7FF952680430]
+       call      qword ptr [7FFC022E0430]
        mov       [rbx+28],rax
        jmp       short M03_L00
 ; Total bytes of code 94
@@ -447,7 +447,7 @@ M03_L01:
        sub       rsp,20
        mov       rbx,rcx
        mov       rcx,[rbx+18]
-       call      qword ptr [7FF952680A08]; Precode of System.Globalization.CultureInfo.GetCultureInfo(System.String)
+       call      qword ptr [7FFC022E0A08]; Precode of System.Globalization.CultureInfo.GetCultureInfo(System.String)
        mov       rcx,rax
        lea       r11,[System.Collections.Generic.CollectionExtensions.AsReadOnly[[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IList`1<System.__Canon>)]
        cmp       [rcx],ecx
@@ -459,7 +459,7 @@ M03_L01:
        mov       r8,[r8]
        mov       r9d,1
        cmp       [rcx],ecx
-       call      qword ptr [7FF952680258]; Precode of System.Globalization.CompareInfo.Compare(System.String, System.String, System.Globalization.CompareOptions)
+       call      qword ptr [7FFC022E0258]; Precode of System.Globalization.CompareInfo.Compare(System.String, System.String, System.Globalization.CompareOptions)
        mov       ecx,2
        mov       edx,1
        test      eax,eax
@@ -471,91 +471,91 @@ M03_L01:
 ; Total bytes of code 94
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.ToUpper_ToAsciiUpper()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       word ptr [rax+48],41
        ret
 ; Total bytes of code 14
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiControl()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiPunctuation()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiUpper()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsAsciiWhitespace()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsHexDigit()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsNewLine()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.IsUnicodeDigit()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       byte ptr [rax+4C],1
        ret
 ; Total bytes of code 12
 ```
 
-## .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 
 ```assembly
 ; DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark.GetDigitValue()
-       mov       rax,[rcx+88]
+       mov       rax,[rcx+90]
        mov       dword ptr [rax+38],0FFFFFFFF
        ret
 ; Total bytes of code 15

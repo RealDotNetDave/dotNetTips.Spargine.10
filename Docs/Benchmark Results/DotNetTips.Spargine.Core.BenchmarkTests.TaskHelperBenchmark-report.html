@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.TaskHelperBenchmark-20260806-181853</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.TaskHelperBenchmark-20260912-190058</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,20 +13,20 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                                       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method                                       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Gen0</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;RunSync(Func&lt;ValueTask&lt;TResult&gt;&gt;) - returns value&#39;</td><td>1,304.3 ns</td><td>4.17 ns</td><td>3.70 ns</td><td>0.99 ns</td><td>1,297.0 ns</td><td>1,302.5 ns</td><td>1,304.4 ns</td><td>1,306.0 ns</td><td>1,311.4 ns</td><td>766,666.3</td><td>6.506 ns</td><td>14.00</td><td>No</td><td>0.0076</td><td>-</td><td>2,412 B</td><td>264 B</td>
-</tr><tr><td>RunSync(Func&lt;ValueTask&gt;)</td><td>1,328.7 ns</td><td>19.32 ns</td><td>18.07 ns</td><td>4.67 ns</td><td>1,304.8 ns</td><td>1,310.8 ns</td><td>1,330.9 ns</td><td>1,346.3 ns</td><td>1,352.3 ns</td><td>752,642.3</td><td>5.167 ns</td><td>15.00</td><td>No</td><td>0.0076</td><td>-</td><td>NA</td><td>248 B</td>
+</thead><tbody><tr><td>&#39;RunSync(Func&lt;ValueTask&lt;TResult&gt;&gt;) - returns value&#39;</td><td>1,322.3 ns</td><td>5.15 ns</td><td>4.81 ns</td><td>1.24 ns</td><td>1,317.3 ns</td><td>1,318.2 ns</td><td>1,321.3 ns</td><td>1,325.2 ns</td><td>1,332.7 ns</td><td>756,282.5</td><td>6.878 ns</td><td>15.00</td><td>No</td><td>2,412 B</td><td>0.0076</td><td>-</td><td>264 B</td>
+</tr><tr><td>RunSync(Func&lt;ValueTask&gt;)</td><td>1,314.0 ns</td><td>15.97 ns</td><td>14.94 ns</td><td>3.86 ns</td><td>1,290.0 ns</td><td>1,299.7 ns</td><td>1,321.5 ns</td><td>1,325.3 ns</td><td>1,332.8 ns</td><td>761,036.9</td><td>5.571 ns</td><td>15.00</td><td>No</td><td>NA</td><td>0.0076</td><td>-</td><td>248 B</td>
 </tr></tbody></table>
 </body>
 </html>

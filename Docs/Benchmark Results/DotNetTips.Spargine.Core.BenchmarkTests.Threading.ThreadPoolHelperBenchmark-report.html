@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.Threading.ThreadPoolHelperBenchmark-20260806-190409</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Threading.ThreadPoolHelperBenchmark-20260912-193439</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,27 +13,27 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Threading  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                   </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method                   </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Exceptions</th><th>Gen1</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;RunAsync: Action&#39;</td><td>1,040.44 ns</td><td>4.959 ns</td><td>4.639 ns</td><td>1.198 ns</td><td>1,032.67 ns</td><td>1,036.12 ns</td><td>1,040.31 ns</td><td>1,043.48 ns</td><td>1,047.86 ns</td><td>961,135.8</td><td>6.901 ns</td><td>15.00</td><td>No</td><td>0.0229</td><td>1.9874</td><td>-</td><td>1,716 B</td><td>-</td><td>-</td><td>-</td><td>667 B</td>
-</tr><tr><td>&#39;RunAsync: Bounded Parallelism&#39;</td><td>3,151.20 ns</td><td>6.635 ns</td><td>6.206 ns</td><td>1.602 ns</td><td>3,141.21 ns</td><td>3,146.44 ns</td><td>3,151.04 ns</td><td>3,155.53 ns</td><td>3,162.95 ns</td><td>317,339.1</td><td>6.699 ns</td><td>15.00</td><td>No</td><td>0.0687</td><td>9.6580</td><td>0.0001</td><td>2,024 B</td><td>-</td><td>-</td><td>-</td><td>2169 B</td>
-</tr><tr><td>&#39;RunAsync: Func&lt;Task&lt;TResult&gt;&gt;&#39;</td><td>1,074.87 ns</td><td>3.727 ns</td><td>3.304 ns</td><td>0.883 ns</td><td>1,065.86 ns</td><td>1,074.25 ns</td><td>1,075.59 ns</td><td>1,076.41 ns</td><td>1,079.49 ns</td><td>930,348.7</td><td>6.559 ns</td><td>14.00</td><td>No</td><td>0.0229</td><td>1.9899</td><td>0.0000</td><td>1,884 B</td><td>-</td><td>-</td><td>-</td><td>670 B</td>
-</tr><tr><td>&#39;RunAsync: Func&lt;TResult&gt;&#39;</td><td>1,020.65 ns</td><td>6.787 ns</td><td>6.348 ns</td><td>1.639 ns</td><td>1,012.28 ns</td><td>1,014.58 ns</td><td>1,019.74 ns</td><td>1,025.37 ns</td><td>1,033.77 ns</td><td>979,772.3</td><td>6.680 ns</td><td>15.00</td><td>No</td><td>0.0191</td><td>1.9750</td><td>0.0000</td><td>1,886 B</td><td>-</td><td>-</td><td>-</td><td>594 B</td>
-</tr><tr><td>&#39;RunAsync: Multiple Results&#39;</td><td>1,662.91 ns</td><td>3.945 ns</td><td>3.497 ns</td><td>0.935 ns</td><td>1,657.37 ns</td><td>1,660.73 ns</td><td>1,663.06 ns</td><td>1,664.89 ns</td><td>1,669.56 ns</td><td>601,354.4</td><td>6.533 ns</td><td>14.00</td><td>No</td><td>0.0420</td><td>5.5385</td><td>-</td><td>1,945 B</td><td>-</td><td>-</td><td>-</td><td>1196 B</td>
-</tr><tr><td>GetStatistics</td><td>22.41 ns</td><td>0.042 ns</td><td>0.037 ns</td><td>0.010 ns</td><td>22.32 ns</td><td>22.38 ns</td><td>22.41 ns</td><td>22.44 ns</td><td>22.46 ns</td><td>44,629,485.2</td><td>6.995 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>-</td><td>234 B</td><td>-</td><td>-</td><td>-</td><td>-</td>
-</tr><tr><td>RunWhenAnyAsync</td><td>1,331.06 ns</td><td>2.830 ns</td><td>2.509 ns</td><td>0.670 ns</td><td>1,326.43 ns</td><td>1,329.44 ns</td><td>1,331.52 ns</td><td>1,332.96 ns</td><td>1,334.57 ns</td><td>751,282.7</td><td>6.665 ns</td><td>14.00</td><td>No</td><td>0.0324</td><td>4.1217</td><td>-</td><td>1,593 B</td><td>-</td><td>0.0019</td><td>0.0019</td><td>5868 B</td>
-</tr><tr><td>TryRunAsync</td><td>2,049.35 ns</td><td>17.192 ns</td><td>16.081 ns</td><td>4.152 ns</td><td>2,009.95 ns</td><td>2,044.03 ns</td><td>2,052.93 ns</td><td>2,059.65 ns</td><td>2,068.03 ns</td><td>487,960.7</td><td>5.424 ns</td><td>15.00</td><td>No</td><td>0.0916</td><td>1.9993</td><td>0.0000</td><td>1,949 B</td><td>-</td><td>0.0305</td><td>-</td><td>2761 B</td>
+</thead><tbody><tr><td>&#39;RunAsync: Action&#39;</td><td>1,072.59 ns</td><td>4.811 ns</td><td>4.500 ns</td><td>1.162 ns</td><td>1,063.81 ns</td><td>1,070.20 ns</td><td>1,073.09 ns</td><td>1,076.01 ns</td><td>1,079.18 ns</td><td>932,326.9</td><td>6.919 ns</td><td>15.00</td><td>No</td><td>1,716 B</td><td>1.9897</td><td>0.0000</td><td>0.0229</td><td>-</td><td>-</td><td>665 B</td>
+</tr><tr><td>&#39;RunAsync: Bounded Parallelism&#39;</td><td>3,107.66 ns</td><td>14.184 ns</td><td>12.574 ns</td><td>3.361 ns</td><td>3,091.35 ns</td><td>3,098.83 ns</td><td>3,106.76 ns</td><td>3,115.96 ns</td><td>3,137.16 ns</td><td>321,785.6</td><td>5.320 ns</td><td>14.00</td><td>No</td><td>2,019 B</td><td>9.6128</td><td>0.0001</td><td>0.0687</td><td>-</td><td>-</td><td>2163 B</td>
+</tr><tr><td>&#39;RunAsync: Func&lt;Task&lt;TResult&gt;&gt;&#39;</td><td>1,085.28 ns</td><td>7.315 ns</td><td>6.485 ns</td><td>1.733 ns</td><td>1,074.46 ns</td><td>1,080.39 ns</td><td>1,086.22 ns</td><td>1,089.19 ns</td><td>1,098.41 ns</td><td>921,421.9</td><td>6.133 ns</td><td>14.00</td><td>No</td><td>1,877 B</td><td>1.9968</td><td>-</td><td>0.0229</td><td>-</td><td>-</td><td>670 B</td>
+</tr><tr><td>&#39;RunAsync: Func&lt;TResult&gt;&#39;</td><td>1,037.22 ns</td><td>3.314 ns</td><td>3.100 ns</td><td>0.800 ns</td><td>1,032.96 ns</td><td>1,034.72 ns</td><td>1,037.30 ns</td><td>1,039.55 ns</td><td>1,042.28 ns</td><td>964,119.5</td><td>7.100 ns</td><td>15.00</td><td>No</td><td>1,886 B</td><td>1.9752</td><td>-</td><td>0.0210</td><td>-</td><td>-</td><td>593 B</td>
+</tr><tr><td>&#39;RunAsync: Multiple Results&#39;</td><td>1,677.97 ns</td><td>4.260 ns</td><td>3.985 ns</td><td>1.029 ns</td><td>1,668.40 ns</td><td>1,676.71 ns</td><td>1,678.37 ns</td><td>1,680.48 ns</td><td>1,683.34 ns</td><td>595,958.0</td><td>6.986 ns</td><td>15.00</td><td>No</td><td>1,943 B</td><td>5.6151</td><td>0.0000</td><td>0.0381</td><td>-</td><td>-</td><td>1203 B</td>
+</tr><tr><td>GetStatistics</td><td>22.38 ns</td><td>0.039 ns</td><td>0.032 ns</td><td>0.009 ns</td><td>22.32 ns</td><td>22.35 ns</td><td>22.37 ns</td><td>22.41 ns</td><td>22.42 ns</td><td>44,691,662.8</td><td>6.496 ns</td><td>13.00</td><td>No</td><td>234 B</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+</tr><tr><td>RunWhenAnyAsync</td><td>1,327.04 ns</td><td>3.023 ns</td><td>2.680 ns</td><td>0.716 ns</td><td>1,321.65 ns</td><td>1,325.69 ns</td><td>1,327.22 ns</td><td>1,328.53 ns</td><td>1,331.83 ns</td><td>753,554.1</td><td>6.642 ns</td><td>14.00</td><td>No</td><td>1,785 B</td><td>4.0889</td><td>-</td><td>0.0305</td><td>-</td><td>-</td><td>874 B</td>
+</tr><tr><td>TryRunAsync</td><td>2,026.34 ns</td><td>6.942 ns</td><td>5.797 ns</td><td>1.608 ns</td><td>2,019.39 ns</td><td>2,022.13 ns</td><td>2,027.05 ns</td><td>2,028.29 ns</td><td>2,040.00 ns</td><td>493,500.3</td><td>5.696 ns</td><td>13.00</td><td>No</td><td>1,949 B</td><td>1.9814</td><td>0.0000</td><td>0.0916</td><td>-</td><td>0.0305</td><td>2756 B</td>
 </tr></tbody></table>
 </body>
 </html>

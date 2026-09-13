@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260808-211552</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260912-035355</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,13 +14,13 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="5">DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260808-211552</th></tr>
+<tr><th colspan="5">DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260912-035355</th></tr>
 <tr>
-<th>GetRecordCountAsync .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>GetRecordCountWithPredicateAsync .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>HasRecordsAsync .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>HasRecordsWithPredicateAsync .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
-<th>AddAndSaveAsync .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3</th>
+<th>GetRecordCountAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>GetRecordCountWithPredicateAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>HasRecordsAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>HasRecordsWithPredicateAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>AddAndSaveAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 </tr>
 </thead>
 <tbody>
@@ -35,16 +35,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FF8F4FBD110]
+call      qword ptr [7FFBB5887BE8]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4FBD0F8]
+call      qword ptr [7FFBB5887BD0]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4FBD128]
+call      qword ptr [7FFBB5887C00]
 nop
 add       rsp,50
 pop       rbp
@@ -59,10 +59,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF8F51CFE70]
+call      qword ptr [7FFBB4C26430]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FF8F51CFE88]
+call      qword ptr [7FFBB4C26448]
 nop
 add       rsp,30
 pop       rbp
@@ -79,7 +79,7 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FF8F4FBD140]
+call      qword ptr [7FFBB5887C18]
 nop
 add       rsp,20
 pop       rbp
@@ -92,23 +92,23 @@ sub       rsp,28
 mov       rbx,rcx
 mov       rsi,[rbx]
 test      rsi,rsi
-je        short 00007FF8F53A1CAA
-mov       rcx,7FF8F5881690
+je        short 00007FFBB5C8BADA
+mov       rcx,7FFBB613CA38
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rax,rsi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-mov       rcx,7FF8F5881694
+mov       rcx,7FFBB613CA3C
 call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF8F5881690
+mov       rcx,7FFBB613CA38
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
 add       rsp,28
 pop       rbx
 pop       rsi
-jmp       qword ptr [7FF8F57767A8]
+jmp       qword ptr [7FFBB6056388]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -119,10 +119,10 @@ mov       rcx,[rcx]
 mov       edx,[rcx+34]
 and       edx,11000000
 cmp       edx,1000000
-jne       short 00007FF8F53A1D75
+jne       short 00007FFBB5C37E95
 ret
 xor       edx,edx
-jmp       qword ptr [7FF8F55CE448]
+jmp       qword ptr [7FFBB5E9E0A0]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -135,16 +135,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FF8F4F87240]
+call      qword ptr [7FFBB5897348]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4F87228]
+call      qword ptr [7FFBB5897330]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4F87258]
+call      qword ptr [7FFBB5897360]
 nop
 add       rsp,50
 pop       rbp
@@ -159,10 +159,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF8F54D71F8]
+call      qword ptr [7FFBB4C363B8]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FF8F54D7210]
+call      qword ptr [7FFBB4C363D0]
 nop
 add       rsp,30
 pop       rbp
@@ -179,7 +179,7 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FF8F4F87270]
+call      qword ptr [7FFBB5897378]
 nop
 add       rsp,20
 pop       rbp
@@ -192,23 +192,23 @@ sub       rsp,28
 mov       rbx,rcx
 mov       rsi,[rbx]
 test      rsi,rsi
-je        short 00007FF8F53F563A
-mov       rcx,7FF8F595E6B8
+je        short 00007FFBB5D05D5A
+mov       rcx,7FFBB626FD88
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rax,rsi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-mov       rcx,7FF8F595E6BC
+mov       rcx,7FFBB626FD8C
 call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF8F595E6B8
+mov       rcx,7FFBB626FD88
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
 add       rsp,28
 pop       rbx
 pop       rsi
-jmp       qword ptr [7FF8F5934A68]
+jmp       qword ptr [7FFBB6234BB8]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -219,10 +219,10 @@ mov       rcx,[rcx]
 mov       edx,[rcx+34]
 and       edx,11000000
 cmp       edx,1000000
-jne       short 00007FF8F53F5705
+jne       short 00007FFBB5D05E25
 ret
 xor       edx,edx
-jmp       qword ptr [7FF8F56D6C40]
+jmp       qword ptr [7FFBB6006DF0]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -235,16 +235,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FF8F4F77A38]
+call      qword ptr [7FFBB58D77C8]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4F77A20]
+call      qword ptr [7FFBB58D77B0]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4F77A50]
+call      qword ptr [7FFBB58D77E0]
 nop
 add       rsp,50
 pop       rbp
@@ -259,10 +259,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF8F51FFDF8]
+call      qword ptr [7FFBB4C66820]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FF8F51FFE10]
+call      qword ptr [7FFBB4C66838]
 nop
 add       rsp,30
 pop       rbp
@@ -279,7 +279,7 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FF8F4F77A68]
+call      qword ptr [7FFBB58D77F8]
 nop
 add       rsp,20
 pop       rbp
@@ -292,23 +292,23 @@ sub       rsp,28
 mov       rbx,rcx
 mov       rsi,[rbx]
 test      rsi,rsi
-je        short 00007FF8F53DE1BA
-mov       rcx,7FF8F58AECB0
+je        short 00007FFBB5D3F30A
+mov       rcx,7FFBB6231540
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rax,rsi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-mov       rcx,7FF8F58AECB4
+mov       rcx,7FFBB6231544
 call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF8F58AECB0
+mov       rcx,7FFBB6231540
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
 add       rsp,28
 pop       rbx
 pop       rsi
-jmp       qword ptr [7FF8F57A7570]
+jmp       qword ptr [7FFBB6117768]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -319,10 +319,10 @@ mov       rcx,[rcx]
 mov       edx,[rcx+34]
 and       edx,11000000
 cmp       edx,1000000
-jne       short 00007FF8F53DE285
+jne       short 00007FFBB5D3F3D5
 ret
 xor       edx,edx
-jmp       qword ptr [7FF8F560E6A0]
+jmp       qword ptr [7FFBB5F7E7C0]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -335,16 +335,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FF8F4ECFDB0]
+call      qword ptr [7FFBB58B7C48]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4ECFD98]
+call      qword ptr [7FFBB58B7C30]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4ECFDC8]
+call      qword ptr [7FFBB58B7C60]
 nop
 add       rsp,50
 pop       rbp
@@ -359,10 +359,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF8F540E748]
+call      qword ptr [7FFBB4C46CA0]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FF8F540E760]
+call      qword ptr [7FFBB4C46CB8]
 nop
 add       rsp,30
 pop       rbp
@@ -379,7 +379,7 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FF8F4ECFDE0]
+call      qword ptr [7FFBB58B7C78]
 nop
 add       rsp,20
 pop       rbp
@@ -392,23 +392,23 @@ sub       rsp,28
 mov       rbx,rcx
 mov       rsi,[rbx]
 test      rsi,rsi
-je        short 00007FF8F53945FA
-mov       rcx,7FF8F58F01A8
+je        short 00007FFBB5D16BFA
+mov       rcx,7FFBB6242EF0
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rax,rsi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-mov       rcx,7FF8F58F01AC
+mov       rcx,7FFBB6242EF4
 call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FF8F58F01A8
+mov       rcx,7FFBB6242EF0
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
 add       rsp,28
 pop       rbx
 pop       rsi
-jmp       qword ptr [7FF8F578DAB8]
+jmp       qword ptr [7FFBB5FEF2A0]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -419,10 +419,10 @@ mov       rcx,[rcx]
 mov       edx,[rcx+34]
 and       edx,11000000
 cmp       edx,1000000
-jne       short 00007FF8F53946C5
+jne       short 00007FFBB5D16CC5
 ret
 xor       edx,edx
-jmp       qword ptr [7FF8F5604510]
+jmp       qword ptr [7FFBB5FE55D8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -435,16 +435,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FF8F4CDE7F0]
+call      qword ptr [7FFBB56E65E0]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4CDE7D8]
+call      qword ptr [7FFBB56E65C8]
 lea       rcx,[rbp-18]
-call      qword ptr [7FF8F4CDE808]
+call      qword ptr [7FFBB56E65F8]
 nop
 add       rsp,50
 pop       rbp
@@ -459,10 +459,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FF8F5027078]
+call      qword ptr [7FFBB4C66CE8]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FF8F5027090]
+call      qword ptr [7FFBB4C66D00]
 nop
 add       rsp,30
 pop       rbp
@@ -479,18 +479,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FF8F4CDE820]
+call      qword ptr [7FFBB56E6610]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FF8F5348D59
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5BA517A
+mov       rcx,7FFBB5DF3420
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-jmp       qword ptr [7FF8F513C348]
+mov       rcx,7FFBB5DF3424
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB5DF3420
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB5B67A80]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -501,10 +519,10 @@ mov       rcx,[rcx]
 mov       edx,[rcx+34]
 and       edx,11000000
 cmp       edx,1000000
-jne       short 00007FF8F532E275
+jne       short 00007FFBB5CA1FB5
 ret
 xor       edx,edx
-jmp       qword ptr [7FF8F4EC7B10]
+jmp       qword ptr [7FFBB581F900]
 
 </code></pre></td>
 </tr>

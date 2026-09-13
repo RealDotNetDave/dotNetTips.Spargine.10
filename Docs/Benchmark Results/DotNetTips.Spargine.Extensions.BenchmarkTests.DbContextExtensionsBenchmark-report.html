@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260808-211552</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260912-035355</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,24 +13,24 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=Database  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                         </th><th>Mean    </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method                         </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetRecordCountAsync: no predicate&#39;</td><td>271,113.1 ns</td><td>9,774.0 ns</td><td>26,257.2 ns</td><td>2,864.9 ns</td><td>271,750.0 ns</td><td>219,700.0 ns</td><td>259,400.0 ns</td><td>282,350.0 ns</td><td>334,200.0 ns</td><td>3,688.5</td><td>-1,390.4 ns</td><td>84.00</td><td>No</td><td>-</td><td>296 B</td><td>7.23 KB</td>
-</tr><tr><td>&#39;GetRecordCountAsync: with predicate&#39;</td><td>368,583.9 ns</td><td>14,500.5 ns</td><td>39,694.9 ns</td><td>4,255.7 ns</td><td>366,400.0 ns</td><td>303,300.0 ns</td><td>348,500.0 ns</td><td>389,400.0 ns</td><td>489,000.0 ns</td><td>2,713.1</td><td>-2,084.4 ns</td><td>87.00</td><td>No</td><td>-</td><td>296 B</td><td>6.27 KB</td>
-</tr><tr><td>&#39;HasRecordsAsync: no predicate&#39;</td><td>288,158.0 ns</td><td>10,136.7 ns</td><td>27,919.5 ns</td><td>2,976.2 ns</td><td>289,950.0 ns</td><td>232,550.0 ns</td><td>273,475.0 ns</td><td>302,000.0 ns</td><td>361,250.0 ns</td><td>3,470.3</td><td>-1,444.1 ns</td><td>88.00</td><td>No</td><td>-</td><td>296 B</td><td>4.73 KB</td>
-</tr><tr><td>&#39;HasRecordsAsync: with predicate&#39;</td><td>368,646.9 ns</td><td>14,494.7 ns</td><td>38,184.8 ns</td><td>4,242.8 ns</td><td>369,000.0 ns</td><td>303,600.0 ns</td><td>347,500.0 ns</td><td>387,200.0 ns</td><td>492,500.0 ns</td><td>2,712.6</td><td>-2,080.9 ns</td><td>81.00</td><td>No</td><td>-</td><td>296 B</td><td>6.29 KB</td>
-</tr><tr><td>AddAndSaveAsync</td><td>2,429,894.4 ns</td><td>136,701.4 ns</td><td>400,921.5 ns</td><td>40,294.1 ns</td><td>2,319,250.0 ns</td><td>1,958,750.0 ns</td><td>2,100,950.0 ns</td><td>2,636,450.0 ns</td><td>3,502,350.0 ns</td><td>411.5</td><td>-20,097.6 ns</td><td>99.00</td><td>No</td><td>-</td><td>224 B</td><td>122.92 KB</td>
+</thead><tbody><tr><td>&#39;GetRecordCountAsync: no predicate&#39;</td><td>271,767.1 ns</td><td>11,643.7 ns</td><td>30,877.3 ns</td><td>3,409.8 ns</td><td>276,400.0 ns</td><td>202,400.0 ns</td><td>254,950.0 ns</td><td>289,475.0 ns</td><td>356,300.0 ns</td><td>3,679.6</td><td>-1,663.9 ns</td><td>82.00</td><td>No</td><td>-</td><td>296 B</td><td>7.23 KB</td>
+</tr><tr><td>&#39;GetRecordCountAsync: with predicate&#39;</td><td>371,024.4 ns</td><td>13,034.7 ns</td><td>35,462.0 ns</td><td>3,824.0 ns</td><td>370,350.0 ns</td><td>300,350.0 ns</td><td>347,350.0 ns</td><td>395,250.0 ns</td><td>472,550.0 ns</td><td>2,695.2</td><td>-1,869.0 ns</td><td>86.00</td><td>No</td><td>-</td><td>296 B</td><td>6.27 KB</td>
+</tr><tr><td>&#39;HasRecordsAsync: no predicate&#39;</td><td>297,925.9 ns</td><td>10,151.7 ns</td><td>27,790.2 ns</td><td>2,979.4 ns</td><td>296,650.0 ns</td><td>242,150.0 ns</td><td>282,300.0 ns</td><td>314,350.0 ns</td><td>365,850.0 ns</td><td>3,356.5</td><td>-1,446.2 ns</td><td>87.00</td><td>No</td><td>-</td><td>296 B</td><td>4.73 KB</td>
+</tr><tr><td>&#39;HasRecordsAsync: with predicate&#39;</td><td>361,086.9 ns</td><td>12,863.4 ns</td><td>34,556.7 ns</td><td>3,770.4 ns</td><td>365,600.0 ns</td><td>291,300.0 ns</td><td>335,650.0 ns</td><td>382,750.0 ns</td><td>459,100.0 ns</td><td>2,769.4</td><td>-1,843.2 ns</td><td>84.00</td><td>No</td><td>-</td><td>296 B</td><td>6.29 KB</td>
+</tr><tr><td>AddAndSaveAsync</td><td>2,142,181.8 ns</td><td>65,949.5 ns</td><td>181,644.1 ns</td><td>19,363.3 ns</td><td>2,085,550.0 ns</td><td>1,910,550.0 ns</td><td>2,020,400.0 ns</td><td>2,196,750.0 ns</td><td>2,713,750.0 ns</td><td>466.8</td><td>-9,637.7 ns</td><td>88.00</td><td>No</td><td>-</td><td>296 B</td><td>122.92 KB</td>
 </tr><tr><td>DeleteAndSaveAsync</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>No</td><td>NA</td><td>NA</td><td>NA</td>
 </tr></tbody></table>
 </body>
