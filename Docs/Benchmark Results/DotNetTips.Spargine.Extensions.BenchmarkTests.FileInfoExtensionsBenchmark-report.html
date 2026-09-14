@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.FileInfoExtensionsBenchmark-20260809-231018</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.FileInfoExtensionsBenchmark-20260913-230639</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,11 +13,11 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7548/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.302
-  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
-  Job-JZFTPE : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 InvocationCount=1  UnrollFactor=1  Categories=IO  
@@ -26,10 +26,10 @@ InvocationCount=1  UnrollFactor=1  Categories=IO
 <table>
 <thead><tr><th>Method                    </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;ReadAllTextSafe: Existing file&#39;</td><td>671,642.0 ns</td><td>28,830.5 ns</td><td>78,923.2 ns</td><td>8,461.5 ns</td><td>664,250.0 ns</td><td>486,350.0 ns</td><td>621,200.0 ns</td><td>706,150.0 ns</td><td>926,650.0 ns</td><td>1,488.9</td><td>-4,187.23 ns</td><td>87.00</td><td>No</td><td>602 B</td><td>-</td><td>8200 B</td>
-</tr><tr><td>&#39;ReadAllTextSafe: Missing file&#39;</td><td>4,200.0 ns</td><td>536.2 ns</td><td>1,458.8 ns</td><td>157.3 ns</td><td>4,000.0 ns</td><td>1,500.0 ns</td><td>3,200.0 ns</td><td>4,975.0 ns</td><td>9,100.0 ns</td><td>238,095.2</td><td>-35.65 ns</td><td>86.00</td><td>No</td><td>602 B</td><td>-</td><td>-</td>
-</tr><tr><td>CreateTempFileThenMove</td><td>1,389,275.6 ns</td><td>46,952.4 ns</td><td>127,737.3 ns</td><td>13,774.3 ns</td><td>1,352,000.0 ns</td><td>1,213,500.0 ns</td><td>1,317,550.0 ns</td><td>1,428,750.0 ns</td><td>1,827,500.0 ns</td><td>719.8</td><td>-6,844.14 ns</td><td>86.00</td><td>No</td><td>1,239 B</td><td>-</td><td>1120 B</td>
-</tr><tr><td>WriteAllTextAtomic</td><td>1,414,948.9 ns</td><td>59,826.4 ns</td><td>170,688.2 ns</td><td>17,605.1 ns</td><td>1,338,700.0 ns</td><td>1,226,900.0 ns</td><td>1,308,775.0 ns</td><td>1,478,800.0 ns</td><td>1,956,900.0 ns</td><td>706.7</td><td>-8,755.57 ns</td><td>94.00</td><td>No</td><td>401 B</td><td>-</td><td>1120 B</td>
+</thead><tbody><tr><td>&#39;ReadAllTextSafe: Existing file&#39;</td><td>613,567.4 ns</td><td>27,677.7 ns</td><td>75,299.3 ns</td><td>8,119.7 ns</td><td>597,800.0 ns</td><td>501,000.0 ns</td><td>568,100.0 ns</td><td>637,425.0 ns</td><td>867,000.0 ns</td><td>1,629.8</td><td>-4,016.87 ns</td><td>86.00</td><td>No</td><td>602 B</td><td>-</td><td>8200 B</td>
+</tr><tr><td>&#39;ReadAllTextSafe: Missing file&#39;</td><td>4,075.6 ns</td><td>497.9 ns</td><td>1,387.9 ns</td><td>146.3 ns</td><td>3,900.0 ns</td><td>1,200.0 ns</td><td>3,225.0 ns</td><td>4,500.0 ns</td><td>7,900.0 ns</td><td>245,365.3</td><td>-28.15 ns</td><td>90.00</td><td>No</td><td>602 B</td><td>-</td><td>-</td>
+</tr><tr><td>CreateTempFileThenMove</td><td>1,467,142.0 ns</td><td>92,501.2 ns</td><td>254,775.2 ns</td><td>27,159.1 ns</td><td>1,359,050.0 ns</td><td>1,230,800.0 ns</td><td>1,299,850.0 ns</td><td>1,539,675.0 ns</td><td>2,242,300.0 ns</td><td>681.6</td><td>-13,535.57 ns</td><td>88.00</td><td>No</td><td>1,239 B</td><td>-</td><td>1152 B</td>
+</tr><tr><td>WriteAllTextAtomic</td><td>1,391,552.2 ns</td><td>55,387.2 ns</td><td>153,477.6 ns</td><td>16,268.6 ns</td><td>1,332,650.0 ns</td><td>1,230,050.0 ns</td><td>1,296,150.0 ns</td><td>1,401,950.0 ns</td><td>1,843,950.0 ns</td><td>718.6</td><td>-8,089.80 ns</td><td>89.00</td><td>No</td><td>401 B</td><td>-</td><td>1120 B</td>
 </tr></tbody></table>
 </body>
 </html>
