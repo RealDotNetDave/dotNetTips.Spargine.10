@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-22-2023
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-14-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-14-2026
 // ***********************************************************************
 // <copyright file="RandomDataBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -15,6 +15,7 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using DotNetTips.Spargine.Benchmarking;
+using DotNetTips.Spargine.Extensions;
 using DotNetTips.Spargine.Tester.Data;
 using DotNetTips.Spargine.Tester.Extensions;
 using DotNetTips.Spargine.Tester.Models.RefTypes;
@@ -47,6 +48,30 @@ public class RandomDataBenchmark : Benchmark
 		}
 	}
 
+	[Benchmark(Description = "Creating: " + nameof(Person))]
+	public void CreatePerson01()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		this.Consume(person);
+	}
+
+	[Benchmark(Description = "Creating: " + nameof(Person))]
+	public void CreatePerson04()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		this.Consume(person);
+	}
+
+	[Benchmark(Description = "Creating: " + nameof(PersonRecord))]
+	public void CreatePerson05()
+	{
+		var person = RandomData.GeneratePerson<PersonRecord>();
+
+		this.Consume(person);
+	}
+
 
 	[Benchmark(Description = nameof(RandomData.GenerateAddress) + ": Ref")]
 	public void GenerateAddressRef()
@@ -56,6 +81,14 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateBoolean))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateBoolean()
+	{
+		var result = RandomData.GenerateBoolean();
+
+		this.Consume(result);
+	}
 
 	[Benchmark(Description = nameof(RandomData.GenerateCharacter))]
 	public void GenerateCharacter()
@@ -73,10 +106,46 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateCompanyName))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateCompanyName()
+	{
+		var result = RandomData.GenerateCompanyName();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GenerateCoordinate))]
 	public void GenerateCoordinate()
 	{
 		var result = RandomData.GenerateCoordinate<Coordinate>();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateCurrencyAmount))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateCurrencyAmount()
+	{
+		var result = RandomData.GenerateCurrencyAmount();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateDateOnly))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateDateOnly()
+	{
+		var result = RandomData.GenerateDateOnly();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateDateTimeOffset))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateDateTimeOffset()
+	{
+		var result = RandomData.GenerateDateTimeOffset();
 
 		this.Consume(result);
 	}
@@ -105,6 +174,15 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateEnum))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateEnum()
+	{
+		var result = RandomData.GenerateEnum<DayOfWeek>();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GenerateFirstName))]
 	public void GenerateFirstName()
 	{
@@ -113,10 +191,56 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateGuid))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateGuid()
+	{
+		var result = RandomData.GenerateGuid();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateHashString))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateHashString()
+	{
+		var result = RandomData.GenerateHashString();
+
+		this.Consume(result);
+	}
+
+
 	[Benchmark(Description = nameof(RandomData.GenerateInteger))]
 	public void GenerateInteger()
 	{
 		var result = RandomData.GenerateInteger();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateIPv4Address))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateIPv4Address()
+	{
+		var result = RandomData.GenerateIPv4Address();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateIPv6Address))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateIPv6Address()
+	{
+		var result = RandomData.GenerateIPv6Address();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateJsonObject))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateJsonObject()
+	{
+		var result = RandomData.GenerateJsonObject();
 
 		this.Consume(result);
 	}
@@ -133,6 +257,15 @@ public class RandomDataBenchmark : Benchmark
 	public void GenerateLastName()
 	{
 		var result = RandomData.GenerateLastName();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateParagraph))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateParagraph()
+	{
+		var result = RandomData.GenerateParagraph();
 
 		this.Consume(result);
 	}
@@ -209,6 +342,33 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(result);
 	}
 
+	[Benchmark(Description = nameof(RandomData.GenerateSentence))]
+	[BenchmarkCategory(Categories.Strings)]
+	public void GenerateSentence()
+	{
+		var result = RandomData.GenerateSentence();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateTimeOnly))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateTimeOnly()
+	{
+		var result = RandomData.GenerateTimeOnly();
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(RandomData.GenerateTimeSpan))]
+	[BenchmarkCategory(Categories.ValueType)]
+	public void GenerateTimeSpan()
+	{
+		var result = RandomData.GenerateTimeSpan();
+
+		this.Consume(result);
+	}
+
 	[Benchmark(Description = nameof(RandomData.GenerateUrl))]
 	public void GenerateUrl()
 	{
@@ -249,126 +409,6 @@ public class RandomDataBenchmark : Benchmark
 		this.Consume(fileName);
 	}
 
-	[Benchmark(Description = nameof(RandomData.GenerateBoolean))]
-	public void GenerateBoolean()
-	{
-		var result = RandomData.GenerateBoolean();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateCompanyName))]
-	public void GenerateCompanyName()
-	{
-		var result = RandomData.GenerateCompanyName();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateCurrencyAmount))]
-	public void GenerateCurrencyAmount()
-	{
-		var result = RandomData.GenerateCurrencyAmount();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateDateOnly))]
-	public void GenerateDateOnly()
-	{
-		var result = RandomData.GenerateDateOnly();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateDateTimeOffset))]
-	public void GenerateDateTimeOffset()
-	{
-		var result = RandomData.GenerateDateTimeOffset();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateEnum) + ": DayOfWeek")]
-	public void GenerateEnum()
-	{
-		var result = RandomData.GenerateEnum<DayOfWeek>();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateGuid))]
-	public void GenerateGuid()
-	{
-		var result = RandomData.GenerateGuid();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateHashString))]
-	public void GenerateHashString()
-	{
-		var result = RandomData.GenerateHashString();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateIPv4Address))]
-	public void GenerateIPv4Address()
-	{
-		var result = RandomData.GenerateIPv4Address();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateIPv6Address))]
-	public void GenerateIPv6Address()
-	{
-		var result = RandomData.GenerateIPv6Address();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateJsonObject))]
-	public void GenerateJsonObject()
-	{
-		var result = RandomData.GenerateJsonObject();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateParagraph))]
-	public void GenerateParagraph()
-	{
-		var result = RandomData.GenerateParagraph();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateSentence))]
-	public void GenerateSentence()
-	{
-		var result = RandomData.GenerateSentence();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateTimeOnly))]
-	public void GenerateTimeOnly()
-	{
-		var result = RandomData.GenerateTimeOnly();
-
-		this.Consume(result);
-	}
-
-	[Benchmark(Description = nameof(RandomData.GenerateTimeSpan))]
-	public void GenerateTimeSpan()
-	{
-		var result = RandomData.GenerateTimeSpan();
-
-		this.Consume(result);
-	}
-
 	[Benchmark(Description = nameof(PersonExtensions.get_Age))]
 	public void PersonGetAge()
 	{
@@ -382,6 +422,22 @@ public class RandomDataBenchmark : Benchmark
 	{
 		var result = this.PersonRef01.FullName;
 		this.Consume(result);
+	}
+
+	[Benchmark(Description = "PropertiesToString(): " + nameof(Person))]
+	public void PropertiesToString01()
+	{
+		var person = RandomData.GeneratePerson<Person>();
+
+		this.Consume(person.PropertiesToString());
+	}
+
+	[Benchmark(Description = "PropertiesToString(): " + nameof(PersonRecord))]
+	public void PropertiesToString02()
+	{
+		var person = RandomData.GeneratePerson<PersonRecord>();
+
+		this.Consume(person.PropertiesToString());
 	}
 
 	public override void Setup()

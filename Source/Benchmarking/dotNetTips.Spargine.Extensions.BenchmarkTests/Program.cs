@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 08-11-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-14-2026
 // ***********************************************************************
 // <copyright file="Program.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -67,44 +67,46 @@ internal sealed class Program
 		//	typeof(DirectoryInfoExtensionsBenchmark)
 		//);
 
-		// Group 2: E–H - 10:30 hours, 950 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(EfCoreModelBuilderExtensionsBenchmark),
-		 typeof(EnumExtensionsBenchmark),
-			typeof(EnumerableExtensionsCollectionBenchmark),
-			typeof(EnumerableExtensionsConvertingCollectionBenchmark),
-			typeof(EnumerableExtensionsCountCollectionBenchmark),
-			typeof(EnumerableExtensionsDistinctCollectionBenchmark),
-			typeof(EnumerableExtensionsMutatingCollectionBenchmark),
-			typeof(ExceptionExtensionsBenchmark),
-			typeof(FileInfoExtensionsBenchmark),
-			typeof(HashSetExtensionsCollectionBenchmark),
-			typeof(HttpClientExtensionsBenchmark),
-			typeof(HttpRequestExtensionsBenchmark),
-			typeof(HashSetExtensionsMutatingCollectionBenchmark)
-		);
+		// Group 2: E–H - 10:15 hours, 950 benchmarks
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(EfCoreModelBuilderExtensionsBenchmark),
+		// typeof(EnumExtensionsBenchmark),
+		//	typeof(EnumerableExtensionsCollectionBenchmark),
+		//	typeof(EnumerableExtensionsConvertingCollectionBenchmark),
+		//	typeof(EnumerableExtensionsCountCollectionBenchmark),
+		//	typeof(EnumerableExtensionsDistinctCollectionBenchmark),
+		//	typeof(EnumerableExtensionsMutatingCollectionBenchmark),
+		//	typeof(ExceptionExtensionsBenchmark),
+		//	typeof(FileInfoExtensionsBenchmark),
+		//	typeof(HashSetExtensionsCollectionBenchmark),
+		//	typeof(HttpClientExtensionsBenchmark),
+		//	typeof(HttpRequestExtensionsBenchmark),
+		//	typeof(HashSetExtensionsMutatingCollectionBenchmark)
+		//);
 
 		// Group 3: L–T - 11 hours, 968 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
-		//  typeof(ImmutableArrayExtensionsBenchmark),
-		//	typeof(LinqExtensionsBenchmark),
-		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(MessagePackExtensionsBenchmark),
-		//	typeof(NumericExtensionsBenchmark),
-		//	typeof(ObjectExtensionsBenchmark),
-		//	typeof(OpenTelemetryExtensionsBenchmark),
-		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
-		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
-		//	typeof(ReadOnlySpanExtensionsBenchmark),
-		//	typeof(SortedDictionaryExtensionsBenchmark),
-		//	typeof(SortedSetExtensionsBenchmark),
-		//	typeof(StreamExtensionsBenchmark),
-		//	typeof(StringBuilderExtensionsCounterBenchmark),
-		//	typeof(StringExtensionsBenchmark),
-		//	typeof(StringExtensionsCounterBenchmark),
-		//	typeof(TaskExtensionsBenchmark),
-		//	typeof(TypeExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, saveResults: true,
+		  typeof(ImmutableArrayExtensionsBenchmark),
+			typeof(LinqExtensionsBenchmark),
+			typeof(ListExtensionsAddRemoveCollectionBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
+			typeof(MemoryExtensionsBenchmark),
+			typeof(MessagePackExtensionsBenchmark),
+			typeof(NumericExtensionsBenchmark),
+			typeof(ObjectExtensionsBenchmark),
+			typeof(OpenTelemetryExtensionsBenchmark),
+			typeof(ObservableCollectionExtensionsCollectionBenchmark),
+			typeof(ReadOnlyCollectionExtensionsBenchmark),
+			typeof(ReadOnlyMemoryExtensionsBenchmark),
+			typeof(ReadOnlySpanExtensionsBenchmark),
+			typeof(SortedDictionaryExtensionsBenchmark),
+			typeof(SortedSetExtensionsBenchmark),
+			typeof(StreamExtensionsBenchmark),
+			typeof(StringBuilderExtensionsCounterBenchmark),
+			typeof(StringExtensionsBenchmark),
+			typeof(StringExtensionsCounterBenchmark),
+			typeof(TaskExtensionsBenchmark),
+			typeof(TypeExtensionsBenchmark)
+		);
 	}
 }
