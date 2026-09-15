@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark-20260914-222101</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="4">DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark-20260914-222101</th></tr>
+<tr>
+<th>IsEqualTo .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>IsNotEmpty .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>ToArrayIfNeeded .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>TryGetArraySegment .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark.IsEqualTo()
+push      r15
+push      r14
+push      r13
+push      r12
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,48
+xor       eax,eax
+mov       [rsp+28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqa   xmmword ptr [rsp+30],xmm4
+mov       [rsp+40],rax
+mov       rbx,rcx
+mov       rcx,[rbx+1A8]
+mov       esi,[rbx+1B0]
+mov       edi,[rbx+1B4]
+mov       rbp,[rbx+1B8]
+mov       r14d,[rbx+1C0]
+mov       r15d,[rbx+1C4]
+xor       r13d,r13d
+xor       r12d,r12d
+test      rcx,rcx
+je        short 00007FFCE00C3712
+mov       rdx,[rcx]
+test      dword ptr [rdx],80000000
+je        near ptr 00007FFCE00C3796
+lea       r13,[rcx+10]
+mov       r12d,[rcx+8]
+and       esi,7FFFFFFF
+mov       edx,esi
+mov       ecx,edi
+add       rcx,rdx
+mov       eax,r12d
+cmp       rcx,rax
+ja        near ptr 00007FFCE00C37D5
+add       r13,rdx
+mov       r12d,edi
+xor       esi,esi
+xor       edi,edi
+test      rbp,rbp
+je        short 00007FFCE00C3753
+mov       rdx,[rbp]
+test      dword ptr [rdx],80000000
+je        near ptr 00007FFCE00C37B4
+lea       rsi,[rbp+10]
+mov       edi,[rbp+8]
+and       r14d,7FFFFFFF
+mov       eax,r14d
+mov       ecx,r15d
+add       rcx,rax
+mov       edx,edi
+cmp       rcx,rdx
+ja        near ptr 00007FFCE00C37D5
+add       rsi,rax
+mov       edi,r15d
+cmp       r12d,edi
+jne       near ptr 00007FFCE00C37DC
+mov       rax,r13
+mov       rcx,rsi
+mov       edx,edi
+cmp       rdx,8
+jb        short 00007FFCE00C37E0
+cmp       rax,rcx
+jne       near ptr 00007FFCE00C3834
+mov       eax,1
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+vzeroupper
+add       rsp,48
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r12
+pop       r13
+pop       r14
+pop       r15
+ret
+lea       rdx,[rsp+38]
+mov       rax,[rcx]
+mov       rax,[rax+40]
+call      qword ptr [rax+28]
+mov       r13,[rsp+38]
+mov       r12d,[rsp+40]
+jmp       near ptr 00007FFCE00C36F3
+lea       rdx,[rsp+28]
+mov       rcx,rbp
+mov       rax,[rbp]
+mov       rax,[rax+40]
+call      qword ptr [rax+28]
+mov       rsi,[rsp+28]
+mov       edi,[rsp+30]
+jmp       near ptr 00007FFCE00C3732
+call      qword ptr [7FFCDFB27198]
+int       3
+xor       eax,eax
+jmp       short 00007FFCE00C3778
+cmp       rdx,4
+jae       short 00007FFCE00C3819
+xor       eax,eax
+mov       rcx,rdx
+and       rcx,2
+je        short 00007FFCE00C37FD
+movzx     eax,word ptr [r13]
+movzx     r8d,word ptr [rsi]
+sub       eax,r8d
+test      dl,1
+je        short 00007FFCE00C380F
+movzx     edx,byte ptr [rcx+r13]
+movzx     ecx,byte ptr [rsi+rcx]
+sub       edx,ecx
+or        eax,edx
+test      eax,eax
+sete      al
+movzx     eax,al
+jmp       short 00007FFCE00C383C
+lea       rax,[rdx-4]
+mov       ecx,[r13]
+sub       ecx,[rsi]
+mov       edx,[rax+r13]
+sub       edx,[rsi+rax]
+or        ecx,edx
+sete      al
+movzx     eax,al
+jmp       short 00007FFCE00C383C
+cmp       rdx,20
+jb        short 00007FFCE00C3885
+jmp       short 00007FFCE00C3841
+jmp       near ptr 00007FFCE00C3778
+xor       r8d,r8d
+add       rdx,0FFFFFFFFFFFFFFE0
+je        short 00007FFCE00C386D
+vmovups   ymm0,[rax+r8]
+vpcmpeqb  ymm0,ymm0,[rcx+r8]
+vpmovmskb r10d,ymm0
+cmp       r10d,0FFFFFFFF
+jne       near ptr 00007FFCE00C38F1
+add       r8,20
+cmp       rdx,r8
+ja        short 00007FFCE00C384A
+vmovups   ymm0,[rax+rdx]
+vpcmpeqb  ymm0,ymm0,[rcx+rdx]
+vpmovmskb eax,ymm0
+cmp       eax,0FFFFFFFF
+jne       short 00007FFCE00C38F1
+jmp       near ptr 00007FFCE00C3773
+cmp       rdx,10
+jb        short 00007FFCE00C38D0
+xor       r8d,r8d
+add       rdx,0FFFFFFFFFFFFFFF0
+je        short 00007FFCE00C38B6
+vmovups   xmm0,[rax+r8]
+vpcmpeqb  xmm0,xmm0,[rcx+r8]
+vpmovmskb r10d,xmm0
+cmp       r10d,0FFFF
+jne       short 00007FFCE00C38F1
+add       r8,10
+cmp       rdx,r8
+ja        short 00007FFCE00C3894
+vmovups   xmm0,[rax+rdx]
+vpcmpeqb  xmm0,xmm0,[rcx+rdx]
+vpmovmskb eax,xmm0
+cmp       eax,0FFFF
+jne       short 00007FFCE00C38F1
+jmp       near ptr 00007FFCE00C3773
+add       rdx,0FFFFFFFFFFFFFFF8
+mov       rax,[r13]
+sub       rax,[rsi]
+mov       rcx,[rdx+r13]
+sub       rcx,[rsi+rdx]
+or        rax,rcx
+sete      al
+movzx     eax,al
+jmp       near ptr 00007FFCE00C383C
+xor       eax,eax
+jmp       near ptr 00007FFCE00C3778
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark.IsNotEmpty()
+mov       eax,[rcx+1B4]
+test      eax,eax
+setne     al
+movzx     eax,al
+mov       rcx,[rcx+90]
+mov       [rcx+4C],al
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark.ToArrayIfNeeded()
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbp
+push      rbx
+sub       rsp,68
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+20],ymm4
+vmovdqu   ymmword ptr [rsp+40],ymm4
+xor       eax,eax
+mov       [rsp+60],rax
+mov       rbx,rcx
+mov       rsi,[rbx+1A8]
+mov       edi,[rbx+1B0]
+mov       ebp,[rbx+1B4]
+test      rsi,rsi
+je        near ptr 00007FFCDFA4DAD5
+mov       rcx,[rsi]
+test      dword ptr [rcx],80000000
+je        short 00007FFCDFA4DA88
+mov       edx,edi
+and       edx,7FFFFFFF
+mov       r14d,[rsi+8]
+cmp       r14d,edx
+jb        short 00007FFCDFA4DA7B
+sub       r14d,edx
+cmp       r14d,ebp
+jb        short 00007FFCDFA4DA7B
+mov       r14,rsi
+mov       r15d,ebp
+test      edx,edx
+jne       near ptr 00007FFCDFA4DB08
+cmp       [r14+8],r15d
+jne       near ptr 00007FFCDFA4DB08
+mov       [rsp+20],r14
+mov       rbx,[rbx+90]
+mov       rdx,[rsp+20]
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+xor       eax,eax
+mov       [rbx+8],rax
+add       rsp,68
+pop       rbx
+pop       rbp
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+ret
+mov       rcx,rsi
+mov       r8d,ebp
+call      qword ptr [7FFCDFFCF090]
+int       3
+lea       rdx,[rsp+58]
+mov       rcx,rsi
+mov       rax,[rsi]
+mov       rax,[rax+48]
+call      qword ptr [rax]
+test      eax,eax
+je        short 00007FFCDFA4DAD5
+mov       rdx,[rsp+58]
+vxorps    xmm0,xmm0,xmm0
+vmovdqu   xmmword ptr [rsp+48],xmm0
+mov       r8d,edi
+add       r8d,[rsp+60]
+lea       rcx,[rsp+48]
+mov       r9d,ebp
+call      qword ptr [7FFCDFFCF0A8]
+mov       r14,[rsp+48]
+mov       edx,[rsp+50]
+mov       r15d,[rsp+54]
+jmp       near ptr 00007FFCDFA4DA3C
+test      ebp,ebp
+jne       short 00007FFCDFA4DB08
+mov       rcx,offset MT_System.ArraySegment<System.Byte>
+call      qword ptr [7FFCDF9B5728]
+mov       rdx,264578001A8
+mov       rdx,[rdx]
+mov       r14,[rdx+8]
+mov       ecx,[rdx+10]
+mov       r15d,[rdx+14]
+mov       edx,ecx
+jmp       near ptr 00007FFCDFA4DA3C
+xor       r14d,r14d
+xor       r15d,r15d
+test      rsi,rsi
+je        short 00007FFCDFA4DB68
+mov       rdx,[rsi]
+test      dword ptr [rdx],80000000
+je        short 00007FFCDFA4DB2A
+lea       r14,[rsi+10]
+mov       edx,[rsi+8]
+mov       r15d,edx
+jmp       short 00007FFCDFA4DB46
+lea       rdx,[rsp+28]
+mov       rcx,rsi
+mov       rax,[rsi]
+mov       rax,[rax+40]
+call      qword ptr [rax+28]
+mov       r14,[rsp+28]
+mov       r15d,[rsp+30]
+and       edi,7FFFFFFF
+mov       eax,edi
+mov       ecx,ebp
+add       rcx,rax
+mov       edx,r15d
+cmp       rcx,rdx
+jbe       short 00007FFCDFA4DB62
+call      qword ptr [7FFCDFB27198]
+int       3
+add       r14,rax
+mov       r15d,ebp
+mov       [rsp+38],r14
+mov       [rsp+40],r15d
+lea       rcx,[rsp+38]
+call      qword ptr [7FFCDFDDC018]
+mov       r14,rax
+jmp       near ptr 00007FFCDFA4DA4E
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FFCDFA586E1
+ret
+jmp       qword ptr [7FFCDF9B5C38]
+
+System.ReadOnlySpan`1[[System.Byte, System.Private.CoreLib]].ToArray()
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       esi,[rbx+8]
+test      esi,esi
+je        short 00007FFD2FAE63C8
+movsxd    rcx,esi
+call      qword ptr [7FFD30476B20]
+mov       rdi,rax
+mov       r8d,esi
+mov       rdx,[rbx]
+lea       rcx,[rdi+10]
+call      qword ptr [7FFD3047D928]
+mov       rax,rdi
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+call      qword ptr [7FFD3046A010]
+mov       rax,[rax]
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ReadOnlyMemoryExtensionsBenchmark.TryGetArraySegment()
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,50
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rsp+20],ymm4
+vmovdqa   xmmword ptr [rsp+40],xmm4
+mov       rbx,rcx
+mov       rcx,[rbx+1A8]
+mov       esi,[rbx+1B0]
+mov       edi,[rbx+1B4]
+test      rcx,rcx
+je        near ptr 00007FFCDFA33536
+mov       rdx,[rcx]
+test      dword ptr [rdx],80000000
+je        short 00007FFCDFA334ED
+mov       edx,esi
+and       edx,7FFFFFFF
+mov       r8d,[rcx+8]
+cmp       r8d,edx
+jb        short 00007FFCDFA334E3
+sub       r8d,edx
+cmp       r8d,edi
+jb        short 00007FFCDFA334E3
+mov       esi,1
+mov       [rsp+20],rcx
+mov       [rsp+28],edx
+mov       [rsp+2C],edi
+mov       rcx,[rbx+90]
+cmp       [rcx],cl
+lea       rcx,[rsp+20]
+call      qword ptr [7FFCDFF9DF80]
+mov       rax,[rbx+90]
+mov       [rax+4C],sil
+add       rsp,50
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+mov       r8d,edi
+call      qword ptr [7FFCE0035260]
+int       3
+lea       rdx,[rsp+40]
+mov       rax,[rcx]
+mov       rax,[rax+48]
+call      qword ptr [rax]
+test      eax,eax
+je        short 00007FFCDFA33536
+mov       rdx,[rsp+40]
+vxorps    xmm0,xmm0,xmm0
+vmovdqu   xmmword ptr [rsp+30],xmm0
+mov       r8d,esi
+add       r8d,[rsp+48]
+lea       rcx,[rsp+30]
+mov       r9d,edi
+call      qword ptr [7FFCE0035278]
+mov       rcx,[rsp+30]
+mov       edx,[rsp+38]
+mov       edi,[rsp+3C]
+jmp       near ptr 00007FFCDFA334AA
+test      edi,edi
+jne       short 00007FFCDFA33569
+mov       rcx,offset MT_System.ArraySegment<System.Byte>
+call      qword ptr [7FFCDF985728]
+mov       rcx,29CAE0021E0
+mov       rcx,[rcx]
+mov       rax,[rcx+8]
+mov       edx,[rcx+10]
+mov       edi,[rcx+14]
+mov       rcx,rax
+jmp       near ptr 00007FFCDFA334AA
+xor       ecx,ecx
+xor       edx,edx
+xor       edi,edi
+xor       esi,esi
+jmp       near ptr 00007FFCDFA334AF
+
+BenchmarkDotNet.Engines.DeadCodeEliminationHelper.KeepAliveWithoutBoxingReadonly[[System.ArraySegment`1[[System.Byte, System.Private.CoreLib]], System.Private.CoreLib]](System.ArraySegment`1<Byte> ByRef)
+ret
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FFCDFA39091
+ret
+jmp       qword ptr [7FFCDF985C38]
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
