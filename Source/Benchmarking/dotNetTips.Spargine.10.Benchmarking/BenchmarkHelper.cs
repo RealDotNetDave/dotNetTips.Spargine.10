@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified On : 09-15-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -361,16 +361,26 @@ public static class BenchmarkHelper
 	/// <item><description>Validates that each benchmark type inherits from <see cref="Benchmark"/> and is defined in <paramref name="callingAssembly"/>.</description></item>
 	/// <item><description>Attaches <see cref="ConsoleLogger.Default"/> to the configuration for consistent console output.</description></item>
 	/// <item><description>Uses <see cref="PerformanceStopwatch"/> to record per-type timing and build an aggregated summary.</description></item>
+	/// <item><description>
+	/// Inspects the <c>Summary</c> returned by <c>BenchmarkRunner.Run(Type, IConfig)</c> for each benchmark type
+	/// to detect cases that did not produce usable measurements (reported as "N/A" in exported reports) instead
+	/// of relying solely on exceptions being thrown.
+	/// </description></item>
 	/// </list>
 	/// <para>
-	/// On successful completion of all benchmarks, a success beep is played via <see cref="PlaySuccessBeep"/>,
-	/// a timing summary is optionally saved to disk when <paramref name="saveResults"/> is <c>true</c>, and
-	/// the method waits for user input using <see cref="Console.ReadLine"/> to keep the console open.
+	/// When all benchmark cases across all types complete successfully, a success beep is played via
+	/// <see cref="PlaySuccessBeep"/> and a timing summary is optionally saved to disk when
+	/// <paramref name="saveResults"/> is <c>true</c>.
+	/// </para>
+	/// <para>
+	/// When one or more benchmark cases fail to produce results (<c>BenchmarkReport.Success</c> is <c>false</c>
+	/// or <c>BenchmarkReport.ResultStatistics</c> is <c>null</c>) or a type has critical validation errors, the
+	/// failing cases are logged to <see cref="ConsoleLogger.Default"/> and an error beep is played via
+	/// <see cref="PlayErrorBeep"/> instead of the success beep.
 	/// </para>
 	/// <para>
 	/// If any exception is thrown during validation or execution, the error is logged to
-	/// <see cref="ConsoleLogger.Default"/>, an error beep is played via <see cref="PlayErrorBeep"/>, and the
-	/// method again waits for user input before returning.
+	/// <see cref="ConsoleLogger.Default"/> and an error beep is played via <see cref="PlayErrorBeep"/>.
 	/// </para>
 	/// </remarks>
 	/// <exception cref="ArgumentException">
@@ -412,6 +422,7 @@ public static class BenchmarkHelper
 
 			var benchmarkCount = benchmarks.Length;
 			var totalTestCount = 0;
+			var failedBenchmarks = new List<string>(capacity: 4);
 
 			// Run each benchmark type individually using BenchmarkRunner.Run()
 			// This ensures each benchmark runs in the calling assembly's context
@@ -434,7 +445,23 @@ public static class BenchmarkHelper
 
 				var startTime = sw.Elapsed;
 
-				_ = BenchmarkRunner.Run(benchmarkType, config);
+				var runSummary = BenchmarkRunner.Run(benchmarkType, config);
+
+				// BenchmarkDotNet reports "N/A" for failed cases in exported reports instead of
+				// surfacing an exception, so the resulting Summary must be inspected directly to
+				// detect cases that did not produce usable measurements.
+				if (runSummary.HasCriticalValidationErrors)
+				{
+					failedBenchmarks.Add($"{benchmarkName} - critical validation error(s)");
+				}
+
+				foreach (var report in runSummary.Reports)
+				{
+					if (!report.Success || report.ResultStatistics is null)
+					{
+						failedBenchmarks.Add(report.BenchmarkCase.DisplayInfo);
+					}
+				}
 
 				var totalBenchmarkTime = sw.Elapsed.Subtract(startTime);
 
@@ -449,6 +476,11 @@ public static class BenchmarkHelper
 
 			sw.AddDiagnosticEntry($"Total benchmark tests across all classes: {totalTestCount}");
 
+			if (failedBenchmarks.Count > 0)
+			{
+				sw.AddDiagnosticEntry($"Failed benchmark cases: {failedBenchmarks.Count}");
+			}
+
 			sw.Stop();
 
 			var summary = sw.GetSummaryReport();
@@ -459,7 +491,22 @@ public static class BenchmarkHelper
 				SaveReportToFile(config, summary, filePrefix);
 			}
 
-			if (OperatingSystem.IsWindows())
+			if (failedBenchmarks.Count > 0)
+			{
+				ConsoleLogger.Default.WriteLineError(string.Empty);
+				ConsoleLogger.Default.WriteLineError($"{failedBenchmarks.Count} benchmark case(s) failed to produce results:");
+
+				for (var failureIndex = 0; failureIndex < failedBenchmarks.Count; failureIndex++)
+				{
+					ConsoleLogger.Default.WriteLineError($"  - {failedBenchmarks[failureIndex]}");
+				}
+
+				if (OperatingSystem.IsWindows())
+				{
+					PlayErrorBeep();
+				}
+			}
+			else if (OperatingSystem.IsWindows())
 			{
 				PlaySuccessBeep();
 			}
