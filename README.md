@@ -17,13 +17,13 @@ All of the assemblies listed below can be found on NuGet by [clicking here](http
 ### DotNetTips.Spargine.Core
     Unit test coverage: 88.6%
     Benchmark tests: 1,527
-### DotNetTips.Spargine.Extentions
+### DotNetTips.Spargine.Extensions
     Unit test coverage: 93.8%
     Benchmark tests: 2,925
 ### DotNetTips.Spargine.Tester
     Unit test coverage: 94.4%
     Benchmark tests: 225
-Below is the list of current projects in this repository
+## Below is the list of classes in this repository
 *  	**DotNetTips.Spargine:** Windows and File I/O Targeting Library.
     
     * **IO**
