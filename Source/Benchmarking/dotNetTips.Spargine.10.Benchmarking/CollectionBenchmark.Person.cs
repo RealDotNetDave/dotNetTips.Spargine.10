@@ -70,7 +70,7 @@ public partial class CollectionBenchmark
 	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
 	/// <returns>A clone of the PersonRecord array.</returns>
-	[Information(nameof(GetPersonRecordArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetPersonRecordArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public PersonRecord[] GetPersonRecordArray()
 	{
 		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
@@ -110,7 +110,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person reference array.
 	/// </summary>
 	/// <returns>An array of Person reference types.</returns>
-	[Information(nameof(GetPersonRefArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetPersonRefArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public Person[] GetPersonRefArray()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -121,7 +121,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person reference types as a dictionary.
 	/// </summary>
 	/// <returns>A dictionary of Person reference types indexed by string.</returns>
-	[Information(nameof(GetPersonRefDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetPersonRefDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public Dictionary<string, Person> GetPersonRefDictionary()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -150,7 +150,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person value types as an array.
 	/// </summary>
 	/// <returns>An array of Person value types.</returns>
-	[Information(nameof(GetPersonValArray), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(GetPersonValArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
 		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);

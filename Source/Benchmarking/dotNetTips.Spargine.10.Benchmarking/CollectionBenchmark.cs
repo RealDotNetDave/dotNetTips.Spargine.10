@@ -160,7 +160,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	public void ClearCollectionCaches()
 	{
 		this._coordinateRefArray = Array.Empty<Coordinate>();
-		this._coordinateValArray = Array.Empty<DotNetTips.Spargine.Tester.Models.ValueTypes.Coordinate>();
+		this._coordinateValArray = Array.Empty<Tester.Models.ValueTypes.Coordinate>();
 		this._personRefList = new List<Person>();
 		this._personValList = new List<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>();
 		this._personRecordList = new List<PersonRecord>();
@@ -207,7 +207,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <summary>
 	/// Setups the benchmark instance. This method is called before the benchmark runs and is responsible for initializing the collections and loading the data.
 	/// </summary>
-	[Information(nameof(Setup), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(Setup), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	public override void Setup()
 	{
 		base.Setup();
@@ -245,7 +245,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of <see cref="PersonRecord"/> objects to load.</param>
 	/// <returns>An array of <see cref="PersonRecord"/> objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
-	[Information(nameof(LoadPeopleRecordCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(LoadPeopleRecordCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	internal static List<PersonRecord> LoadPeopleRecordCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)
@@ -271,7 +271,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of <see cref="Person"/> reference objects to load. The value must be in the range of 1 to 10000.</param>
 	/// <returns>An array of <see cref="Person"/> reference objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
-	[Information(nameof(LoadPeopleRefCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(LoadPeopleRefCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	internal static List<Person> LoadPeopleRefCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)
@@ -297,7 +297,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of Tester.Models.ValueTypes.Person{Tester.Models.ValueTypes.Address} value objects to load. The value must be in the range of 1 to 10000.</param>
 	/// <returns>An array of Tester.Models.ValueTypes.Person{Tester.Models.ValueTypes.Address} value objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when the count is not within the valid range.</exception>
-	[Information(nameof(LoadPeopleValCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.New)]
+	[Information(nameof(LoadPeopleValCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	internal static List<Tester.Models.ValueTypes.Person> LoadPeopleValCollection(int count)
 	{
 		if (count <= MaxPeopleDataCount)

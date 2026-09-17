@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-08-2026
+// Last Modified On : 09-17-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -679,6 +679,7 @@ public abstract class Benchmark
 	public void CopyStringArrayTo(Span<string> destination, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
+
 		if (destination.IsEmpty)
 		{
 			return;
@@ -1089,7 +1090,7 @@ public abstract class Benchmark
 	/// <param name="seed">The fixture seed.</param>
 	/// <returns>The generated words.</returns>
 	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Predictable randomness is required for reproducible, nonsecurity benchmark fixtures.")]
-	[Information(nameof(CreateSeededWords), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CreateSeededWords), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string[] CreateSeededWords(int count, int minLength, int maxLength, int seed)
 	{
 		var random = new Random(seed);
@@ -1115,7 +1116,7 @@ public abstract class Benchmark
 	/// </summary>
 	/// <exception cref="IOException">A tracked directory cannot be removed.</exception>
 	/// <exception cref="UnauthorizedAccessException">Removal is not permitted.</exception>
-	[Information(nameof(CleanupTemporaryDirectories), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(CleanupTemporaryDirectories), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private void CleanupTemporaryDirectories()
 	{
 		for (var directoryIndex = this._temporaryDirectories.Count - 1; directoryIndex >= 0; directoryIndex--)
@@ -1139,7 +1140,7 @@ public abstract class Benchmark
 	/// <param name="count">The nonnegative byte length.</param>
 	/// <returns>The private fixture and public working array.</returns>
 	[SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "Seeded data is reproducible benchmark input, never cryptographic material.")]
-	[Information(nameof(GetByteFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetByteFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private (byte[] Source, byte[] Value) GetByteFixture(int count)
 	{
 		return this._byteArrayCache.GetOrAdd((count, this.DataSeed), static key =>
@@ -1171,7 +1172,7 @@ public abstract class Benchmark
 	/// <param name="wordMinLength">The requested minimum length.</param>
 	/// <param name="wordMaxLength">The requested maximum length.</param>
 	/// <returns>The private fixture and public working array.</returns>
-	[Information(nameof(GetStringFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GetStringFixture), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private (string[] Source, string[] Value) GetStringFixture(int count, int wordMinLength, int wordMaxLength)
 	{
 		count = count.EnsureMinimum(1);
@@ -1190,7 +1191,7 @@ public abstract class Benchmark
 	/// <summary>
 	/// Launches the debugger only when explicitly requested.
 	/// </summary>
-	[Information(nameof(LaunchDebuggerIfRequested), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(LaunchDebuggerIfRequested), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private void LaunchDebuggerIfRequested()
 	{
 		if (this.LaunchDebugger)
