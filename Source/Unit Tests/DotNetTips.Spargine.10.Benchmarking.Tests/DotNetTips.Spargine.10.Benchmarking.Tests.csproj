@@ -10,15 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.10.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.10.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="MSTest.TestAdapter" Version="4.4.0" />
+    <PackageReference Update="MSTest.TestAdapter" Version="4.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="MSTest.TestFramework" Version="4.4.0" />
+    <PackageReference Update="MSTest.TestFramework" Version="4.4.1" />
   </ItemGroup>
 
 </Project>

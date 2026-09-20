@@ -6,7 +6,7 @@
     <ApplicationIcon>SPARGINE-ICON-GRAPHIC-SMALL.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <AssemblyTitle>DotNetTips.Spargine.10.Core</AssemblyTitle>
-    <AssemblyVersion>2026.10.9.2</AssemblyVersion>
+    <AssemblyVersion>2026.10.9.3</AssemblyVersion>
     <Authors>David McCarter</Authors>
     <AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
     <BaseOutputPath>..\..\AppBin</BaseOutputPath>
@@ -20,7 +20,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnablePackageValidation>false</EnablePackageValidation>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <FileVersion>2026.10.9.2</FileVersion>
+    <FileVersion>2026.10.9.3</FileVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -31,6 +31,7 @@
     <PackageIcon>SPARGINE-ICON-GRAPHIC-SMALL.png</PackageIcon>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://bit.ly/Spargine</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>David McCarter, dotNetDave, dotNetTips.com, Spargine</PackageTags>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
@@ -46,7 +47,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Title>DotNetTips.Spargine.10.Core</Title>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>2026.10.9.2</Version>
+    <Version>2026.10.9.3</Version>
   </PropertyGroup>
   <PropertyGroup>
     <IsTrimmable>true</IsTrimmable>
@@ -133,6 +134,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
