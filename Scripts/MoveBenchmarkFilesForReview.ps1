@@ -9,6 +9,11 @@ Important JSON behavior:
 - Newer/current BenchmarkDotNet JSON files can end with: -report.json
 - This script supports both.
 
+Disassembly report behavior:
+- BenchmarkDotNet disassembly reports end with: -disassembly-report.html
+- OLD reports become: -disassembly-report-old.html
+- NEW reports become: -disassembly-report-new.html
+
 Step 1:
 - Copy current *-report.csv files from Benchmark Results into docs\Charts\Data.
 - Current files are discovered recursively under Benchmark Results.
@@ -19,10 +24,12 @@ Step 2:
   - *-report-full.json becomes *-report-full-old.json
   - *-report.json      becomes *-report-old.json
   - *-report.csv       becomes *-report-old.csv
+  - *-disassembly-report.html becomes *-disassembly-report-old.html
 - NEW reports are copied from Benchmark Results into D:\temp\sparginebenchmarkreview.
   - *-report-full.json becomes *-report-full-new.json
   - *-report.json      becomes *-report-new.json
   - *-report.csv       becomes *-report-new.csv
+  - *-disassembly-report.html becomes *-disassembly-report-new.html
 - NEW reports are discovered recursively under Benchmark Results.
 - Anything under Benchmark Results\Archive is excluded from the NEW report set.
 
@@ -114,6 +121,19 @@ function Get-ReviewCsvName {
 	)
 
 	return (Rename-Suffix -FileName $FileName -OldSuffix '-report.csv' -NewSuffix "-report-$Kind.csv")
+}
+
+function Get-ReviewDisassemblyName {
+	param(
+		[Parameter(Mandatory = $true)]
+		[string]$FileName,
+
+		[Parameter(Mandatory = $true)]
+		[ValidateSet('old', 'new')]
+		[string]$Kind
+	)
+
+	return (Rename-Suffix -FileName $FileName -OldSuffix '-disassembly-report.html' -NewSuffix "-disassembly-report-$Kind.html")
 }
 
 function Should-CopyFile {
@@ -350,6 +370,7 @@ foreach ($file in $currentCsvFiles) {
 # ----------------------------
 $step2OldJson = New-StepSummary
 $step2OldCsv  = New-StepSummary
+$step2OldDisassembly = New-StepSummary
 
 Write-Host ''
 Write-Host "=== Step 2a: Copy OLD reports from Archive\$ArchiveFolderName ==="
@@ -358,6 +379,7 @@ if (-not (Test-Path -LiteralPath $oldSource)) {
 	$message = "Old benchmark source folder not found: $oldSource"
 	$step2OldJson.Failed.Add($message)
 	$step2OldCsv.Failed.Add($message)
+	$step2OldDisassembly.Failed.Add($message)
 	Write-Warning $message
 }
 else {
@@ -385,6 +407,15 @@ else {
 		$destinationPath = Join-Path $ReviewDestination $newName
 		Add-CopyResult -Summary $step2OldCsv -SourceFile $file -DestinationPath $destinationPath -DisplayName 'OLD CSV' -ForceCopy:$ForceCopy
 	}
+
+	$oldDisassemblyFiles = @(Get-BenchmarkReportFiles -Path $oldSource -Filters @('*-disassembly-report.html'))
+	Print-DiscoveredFiles -Label 'OLD disassembly reports' -Files $oldDisassemblyFiles
+
+	foreach ($file in $oldDisassemblyFiles) {
+		$newName = Get-ReviewDisassemblyName -FileName $file.Name -Kind 'old'
+		$destinationPath = Join-Path $ReviewDestination $newName
+		Add-CopyResult -Summary $step2OldDisassembly -SourceFile $file -DestinationPath $destinationPath -DisplayName 'OLD disassembly report' -ForceCopy:$ForceCopy
+	}
 }
 
 # ----------------------------
@@ -392,6 +423,7 @@ else {
 # ----------------------------
 $step2NewJson = New-StepSummary
 $step2NewCsv  = New-StepSummary
+$step2NewDisassembly = New-StepSummary
 
 Write-Host ''
 Write-Host '=== Step 2b: Copy NEW reports from current Benchmark Results folder ==='
@@ -423,6 +455,15 @@ foreach ($file in $newCsvFiles) {
 	Add-CopyResult -Summary $step2NewCsv -SourceFile $file -DestinationPath $destinationPath -DisplayName 'NEW CSV' -ForceCopy:$ForceCopy
 }
 
+$newDisassemblyFiles = @(Get-BenchmarkReportFiles -Path $currentSource -Filters @('*-disassembly-report.html') -ExcludeDirectory $archiveRoot)
+Print-DiscoveredFiles -Label 'NEW disassembly reports' -Files $newDisassemblyFiles
+
+foreach ($file in $newDisassemblyFiles) {
+	$newName = Get-ReviewDisassemblyName -FileName $file.Name -Kind 'new'
+	$destinationPath = Join-Path $ReviewDestination $newName
+	Add-CopyResult -Summary $step2NewDisassembly -SourceFile $file -DestinationPath $destinationPath -DisplayName 'NEW disassembly report' -ForceCopy:$ForceCopy
+}
+
 # ----------------------------
 # Print summaries
 # ----------------------------
@@ -430,8 +471,10 @@ Print-StepSummary -Title 'Step 1 current CSV -> Charts\Data' -Summary $step1
 
 Print-StepSummary -Title 'Step 2a OLD JSON -> *-report-full-old.json or *-report-old.json' -Summary $step2OldJson
 Print-StepSummary -Title 'Step 2a OLD CSV  -> *-report-old.csv' -Summary $step2OldCsv
+Print-StepSummary -Title 'Step 2a OLD disassembly -> *-disassembly-report-old.html' -Summary $step2OldDisassembly
 
 Print-StepSummary -Title 'Step 2b NEW JSON -> *-report-full-new.json or *-report-new.json' -Summary $step2NewJson
 Print-StepSummary -Title 'Step 2b NEW CSV  -> *-report-new.csv' -Summary $step2NewCsv
+Print-StepSummary -Title 'Step 2b NEW disassembly -> *-disassembly-report-new.html' -Summary $step2NewDisassembly
 
 Write-Host "`nDone."
