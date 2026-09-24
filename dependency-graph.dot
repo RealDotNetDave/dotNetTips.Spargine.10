@@ -10,6 +10,7 @@ digraph Dependencies {
     nDotNetTips_Spargine_10_Core [label="DotNetTips.Spargine.10.Core"];
     nDotNetTips_Spargine_10 [label="DotNetTips.Spargine.10"];
     nDotNetTips_Spargine_BenchmarkTests [label="DotNetTips.Spargine.BenchmarkTests"];
+    nDotNetTips_Spargine_10_Benchmarking_Tests [label="DotNetTips.Spargine.10.Benchmarking.Tests"];
     nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Core;
     nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Extensions;
     nDotNetTips_Spargine_Tester_BenchmarkTests -> nDotNetTips_Spargine_10_Tester;
