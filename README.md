@@ -92,6 +92,10 @@ All of the assemblies listed below can be found on NuGet by [clicking here](http
         * **XmlSerialization**: Facilitates seamless serialization and deserialization of strings to and from the XML format.
     * **Threading**
         * **ThreadPoolHelper**: Provides helper methods for executing work on the managed thread pool, including single and batch operations, bounded-concurrency batches, first-to-complete execution, asynchronous and void-returning operations, non-throwing execution via SimpleResult{T}, and thread pool diagnostics. All methods enforce a timeout and support cooperative cancellation.
+        * **TaskTracker**: Tracks fire-and-forget and background tasks with ULID registration keys, pending-task inspection, and completion waiting support.
+        * **TaskTrackerFacade**: Exposes a shared default task tracker instance and forwarding helpers for registration, unregister, pending-state checks, and completion waiting.
+        * **TaskTrackerExtensions**: Extension methods for registering tasks and item-based work with a tracker, including single-item and span-based batch helpers.
+        * **ITaskTracker**: Defines the task-tracking contract for registering, unregistering, pending-task inspection, and completion waiting.
     * **Web**
         * **ServiceProxy**: Generates a service proxy for types that implement ICommunicationObject, enabling communication with such objects.
         * **WebHelper**: Utility methods for website calls. These functions streamline website interactions and efficiently manage HTTP-related tasks.

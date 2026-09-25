@@ -682,15 +682,17 @@ public class PerformanceStopwatchTests
 	public void TrackTelemetryTest()
 	{
 		var psw = PerformanceStopwatch.StartNew(nameof(this.TrackTelemetryTest));
-		var configuration = new TelemetryConfiguration
+		using (var configuration = new TelemetryConfiguration
 		{
 			ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://dc.services.visualstudio.com/"
-		};
-		var telemetryClient = new TelemetryClient(configuration);
+		})
+		{
+			var telemetryClient = new TelemetryClient(configuration);
 
-		Thread.Sleep(100);
+			Thread.Sleep(100);
 
-		psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message");
+			psw.TrackTelemetry(telemetryClient, "TestOperation", "Test message");
+		}
 
 		Assert.IsNotNull(psw);
 	}

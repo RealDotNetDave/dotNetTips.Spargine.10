@@ -232,12 +232,9 @@ public static class EnumerableExtensions
 	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Called from within C# 14 extension blocks.")]
 	private static bool? TryIsEmptyConcurrent<T>([DisallowNull] IEnumerable<T> collection)
 	{
-		if (collection is ConcurrentBag<T> concurrentBag)
-		{
-			return concurrentBag.IsEmpty;
-		}
-
-		return collection is ConcurrentQueue<T> concurrentQueue
+		return collection is ConcurrentBag<T> concurrentBag
+			? concurrentBag.IsEmpty
+			: collection is ConcurrentQueue<T> concurrentQueue
 			? concurrentQueue.IsEmpty
 			: collection is ConcurrentStack<T> concurrentStack ? concurrentStack.IsEmpty : null;
 	}

@@ -66,33 +66,28 @@ namespace DotNetTips.Spargine.Core.Web;
 /// var data = proxy.GetData();
 /// </code>
 /// </example>
-public abstract class ServiceProxy<T> : IDisposable where T : ICommunicationObject
+/// <remarks>
+/// Initializes a new instance of the <see cref="ServiceProxy{T}"/> class with the specified service endpoint.
+/// </remarks>
+/// <param name="serviceEndpoint">
+/// The <see cref="ServiceEndpoint"/> that defines the address, binding, and contract information
+/// used to communicate with the service. Must not be <c>null</c>.
+/// </param>
+/// <exception cref="ArgumentNullException">
+/// Thrown when <paramref name="serviceEndpoint"/> is <c>null</c>.
+/// </exception>
+/// <remarks>
+/// The service endpoint is used to create the channel factory when the <see cref="Channel"/> property
+/// is first accessed. The channel factory and channel creation are deferred until needed,
+/// implementing a lazy initialization pattern.
+/// </remarks>
+[method: Preserve("Do not change to primary constructor. This constructor is used by derived classes to pass the service endpoint.")]
+public abstract class ServiceProxy<T>([NotNull] ServiceEndpoint serviceEndpoint) : IDisposable where T : ICommunicationObject
 {
 	private readonly Lock _lock = new();
-	private readonly ServiceEndpoint _serviceEndpoint;
+	private readonly ServiceEndpoint _serviceEndpoint = serviceEndpoint;
 	private T? _channel;
 	private ChannelFactory<T>? _channelFactory;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ServiceProxy{T}"/> class with the specified service endpoint.
-	/// </summary>
-	/// <param name="serviceEndpoint">
-	/// The <see cref="ServiceEndpoint"/> that defines the address, binding, and contract information
-	/// used to communicate with the service. Must not be <c>null</c>.
-	/// </param>
-	/// <exception cref="ArgumentNullException">
-	/// Thrown when <paramref name="serviceEndpoint"/> is <c>null</c>.
-	/// </exception>
-	/// <remarks>
-	/// The service endpoint is used to create the channel factory when the <see cref="Channel"/> property
-	/// is first accessed. The channel factory and channel creation are deferred until needed,
-	/// implementing a lazy initialization pattern.
-	/// </remarks>
-	[Preserve("Do not change to primary constructor. This constructor is used by derived classes to pass the service endpoint.")]
-	protected ServiceProxy([NotNull] ServiceEndpoint serviceEndpoint)
-	{
-		this._serviceEndpoint = serviceEndpoint;
-	}
 
 	/// <summary>
 	/// Gets the communication channel used to interact with the service. This property ensures the channel is initialized before use.

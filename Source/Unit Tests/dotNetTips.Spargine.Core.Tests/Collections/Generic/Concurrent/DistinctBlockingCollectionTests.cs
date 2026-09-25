@@ -33,9 +33,10 @@ public class DistinctBlockingCollectionTests
 	public void AddDuplicateItemTest()
 	{
 		// Arrange
-		var collection = new DistinctBlockingCollection<string>();
-		collection.Add("test1");
+		using var collection = new DistinctBlockingCollection<string>();
 
+		collection.Add("test1");
+	
 		// Act
 		collection.Add("test1");
 

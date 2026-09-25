@@ -103,12 +103,9 @@ public static class BarcodeGenerator
 
 		ParseFields(payload, fields);
 
-		if (!ValidateBarcodeFields(fields))
-		{
-			return false;
-		}
-
-		return !TryDecodeSignature(sigPart, out var providedSig)
+		return !ValidateBarcodeFields(fields)
+			? false
+			: !TryDecodeSignature(sigPart, out var providedSig)
 			? false
 			: !CheckExpiry(fields, maxSkew, pastExpiryGrace)
 			? false
@@ -228,16 +225,7 @@ public static class BarcodeGenerator
 	/// </summary>
 	private static bool VerifySignature(string payload, byte[] providedSig, Dictionary<string, string> fields, IReadOnlyDictionary<string, byte[]> keysByKid, int macLenBytes)
 	{
-		IEnumerable<byte[]> candidates;
-
-		if (fields.TryGetValue(KID, out var kid) && keysByKid.TryGetValue(kid, out var key))
-		{
-			candidates = [key];
-		}
-		else
-		{
-			candidates = keysByKid.Values;
-		}
+		var candidates = fields.TryGetValue(KID, out var kid) && keysByKid.TryGetValue(kid, out var key) ? [key] : keysByKid.Values;
 
 		foreach (var k in candidates)
 		{

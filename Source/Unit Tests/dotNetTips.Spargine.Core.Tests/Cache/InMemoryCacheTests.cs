@@ -930,7 +930,7 @@ public class InMemoryCacheTests
 		var dependencyKey = Guid.NewGuid().ToString();
 
 		// Act
-		var cts = cache.CreateCacheDependency(dependencyKey);
+		using var cts = cache.CreateCacheDependency(dependencyKey);
 
 		// Assert
 		Assert.IsNotNull(cts);

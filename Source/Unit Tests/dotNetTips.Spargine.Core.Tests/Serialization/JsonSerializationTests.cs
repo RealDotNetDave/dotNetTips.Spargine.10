@@ -619,7 +619,7 @@ public class JsonSerializationTests
 
 			// Act & Assert
 			_ = Assert.ThrowsExactly<ArgumentNullException>(
-				() => JsonSerialization.LoadCollectionFromJson<Person>(file, 2, (JsonTypeInfo<Person>)null));
+				() => JsonSerialization.LoadCollectionFromJson<Person>(file, 2, (JsonTypeInfo<Person>?)null));
 		}
 		finally
 		{

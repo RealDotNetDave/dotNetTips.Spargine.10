@@ -56,9 +56,12 @@ public class TaskHelperTests
 	[TestMethod]
 	public void RunSync13()
 	{
-		var cancelToken = new CancellationTokenSource().Token;
+		using (var cancellationTokenSource = new CancellationTokenSource())
+		{
+			var cancelToken = cancellationTokenSource.Token;
 
-		Assert.ThrowsExactly<ArgumentNullException>(() => TaskHelper.RunSync((Func<Task>)null, cancelToken));
+			Assert.ThrowsExactly<ArgumentNullException>(() => TaskHelper.RunSync((Func<Task>)null, cancelToken));
+		}
 	}
 
 	[TestMethod]

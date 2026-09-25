@@ -250,9 +250,7 @@ public class IDataModelTests
 	{
 		public int Id { get; init; }
 
-#pragma warning disable CS8632
 		int IComparable.CompareTo(object? obj)
-#pragma warning restore CS8632
 		{
 			return obj is IntKeyModel other
 				? ((IComparable<IntKeyModel>)this).CompareTo(other)

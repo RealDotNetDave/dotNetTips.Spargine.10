@@ -365,12 +365,7 @@ public static class
 				return false;
 			}
 
-			if (ReferenceEquals(array, arrayToCheck))
-			{
-				return true;
-			}
-
-			return ((ReadOnlySpan<T>)array).SequenceEqual(arrayToCheck);
+			return ReferenceEquals(array, arrayToCheck) ? true : ((ReadOnlySpan<T>)array).SequenceEqual(arrayToCheck);
 		}
 
 		/// <summary>
