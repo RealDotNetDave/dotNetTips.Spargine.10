@@ -4,7 +4,7 @@
 // Created          : 09-24-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-24-2026
+// Last Modified On : 09-25-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -143,6 +143,39 @@ public sealed class TaskTrackerTests
 
 		Assert.AreEqual(0, tracker.GetPendingCount());
 		Assert.IsFalse(tracker.HasPendingTasks);
+	}
+
+	[TestMethod]
+	public async Task RegisterItemWithTracker_Action_RegistersAndCompletes()
+	{
+		using ITaskTracker tracker = new TaskTracker();
+		var processedCount = 0;
+
+		var registrationKey = TaskTrackerExtensions.RegisterItemWithTracker(5, item => Interlocked.Add(ref processedCount, item), tracker);
+		Assert.AreNotEqual(default(Ulid), registrationKey);
+
+		var completed = await tracker.WaitForCompletionAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+
+		Assert.IsTrue(completed);
+		Assert.AreEqual(5, processedCount);
+	}
+
+	[TestMethod]
+	public async Task RegisterItemWithTrackerAsync_SyncThrow_InvokesExceptionCallback()
+	{
+		using ITaskTracker tracker = new TaskTracker();
+		var callbackInvoked = new TaskCompletionSource<Exception>();
+
+		var registrationKey = TaskTrackerExtensions.RegisterItemWithTrackerAsync(
+			2,
+			item => item == 2 ? throw new InvalidOperationException("sync failure single") : Task.CompletedTask,
+			tracker,
+			ex => callbackInvoked.TrySetResult(ex));
+
+		Assert.AreNotEqual(default(Ulid), registrationKey);
+
+		var callbackTask = await Task.WhenAny(callbackInvoked.Task, Task.Delay(1000)).ConfigureAwait(false);
+		Assert.AreEqual(callbackInvoked.Task, callbackTask);
 	}
 
 	[TestMethod]

@@ -4,7 +4,7 @@
 // Created          : 09-24-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-24-2026
+// Last Modified On : 09-25-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -36,6 +36,7 @@ public static class TaskTrackerExtensions
 	public static Ulid FireAndForgetAndTrack([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		task = task.ArgumentNotNull();
+
 		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
 		var key = taskTracker.Register(task, onException);
 
@@ -43,6 +44,45 @@ public static class TaskTrackerExtensions
 		_ = task.ContinueWith(t => t.Exception, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
 
 		return key;
+	}
+	/// <summary>
+	/// Creates and registers a single task for the provided item using a synchronous action.
+	/// </summary>
+	/// <typeparam name="T">The item type.</typeparam>
+	/// <param name="item">The item to process.</param>
+	/// <param name="action">The action to execute for the item.</param>
+	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
+	/// <param name="onException">Optional exception callback invoked when the registered task faults.</param>
+	/// <returns>The registration key for the created task.</returns>
+	[Information(nameof(RegisterItemWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static Ulid RegisterItemWithTracker<T>(this T item, Action<T> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	{
+		action = action.ArgumentNotNull();
+
+		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
+		var task = Task.Run(() => action(item));
+
+		return taskTracker.Register(task, onException);
+	}
+
+	/// <summary>
+	/// Creates and registers a single task for the provided item using an asynchronous function.
+	/// </summary>
+	/// <typeparam name="T">The item type.</typeparam>
+	/// <param name="item">The item to process.</param>
+	/// <param name="action">The asynchronous function to execute for the item.</param>
+	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
+	/// <param name="onException">Optional exception callback invoked when the registered task faults.</param>
+	/// <returns>The registration key for the created task.</returns>
+	[Information(nameof(RegisterItemWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static Ulid RegisterItemWithTrackerAsync<T>(this T item, Func<T, Task> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	{
+		action = action.ArgumentNotNull();
+
+		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
+		var task = Task.Run(() => action(item));
+
+		return taskTracker.Register(task, onException);
 	}
 
 	/// <summary>
@@ -55,9 +95,10 @@ public static class TaskTrackerExtensions
 	/// <param name="onException">Optional exception callback invoked when a registered task faults.</param>
 	/// <returns>A read-only collection of registration keys for the created tasks.</returns>
 	[Information(nameof(RegisterManyWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-	public static ReadOnlyCollection<Ulid> RegisterManyWithTracker<T>(ReadOnlySpan<T> items, Action<T> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	public static ReadOnlyCollection<Ulid> RegisterManyWithTracker<T>(this ReadOnlySpan<T> items, Action<T> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();
+
 		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
 		var keys = new List<Ulid>(items.Length);
 
@@ -81,9 +122,10 @@ public static class TaskTrackerExtensions
 	/// <param name="onException">Optional exception callback invoked when a registered task faults.</param>
 	/// <returns>A read-only collection of registration keys for the created tasks.</returns>
 	[Information(nameof(RegisterManyWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-	public static ReadOnlyCollection<Ulid> RegisterManyWithTrackerAsync<T>(ReadOnlySpan<T> items, Func<T, Task> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	public static ReadOnlyCollection<Ulid> RegisterManyWithTrackerAsync<T>(this ReadOnlySpan<T> items, Func<T, Task> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();
+
 		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
 		var keys = new List<Ulid>(items.Length);
 
@@ -96,6 +138,7 @@ public static class TaskTrackerExtensions
 
 		return keys.AsReadOnly();
 	}
+
 	/// <summary>
 	/// Registers the task with the supplied tracker so it will be observed and tracked until completion.
 	/// </summary>
