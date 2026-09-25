@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.9.2
+# DotNetTips.Spargine.10.Core - 2026.10.9.3
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -6209,6 +6209,210 @@
 * **Modified By:** David McCarter
 
 *****
+## DotNetTips.Spargine.Core.Threading.ITaskTracker
+
+### System.Int32 GetPendingCount()
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** GetPendingCount
+
+### System.Boolean HasPendingTasks { get; set; }
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** HasPendingTasks
+
+### DotNetTips.Spargine.Core.Ulid Register(System.Threading.Tasks.Task task, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** Register
+
+### System.Void Unregister(System.Threading.Tasks.Task task)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Boolean Unregister(DotNetTips.Spargine.Core.Ulid key)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Threading.Tasks.Task<System.Boolean> WaitForCompletionAsync(System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** None
+* **BenchMarkStatus:** None
+* **Unit Test Status:** Completed
+* **Description:** WaitForCompletionAsync
+
+*****
+## DotNetTips.Spargine.Core.Threading.TaskTracker
+
+### System.Void Dispose()
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** Dispose
+
+### System.Int32 GetPendingCount()
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** GetPendingCount
+
+### System.Boolean HasPendingTasks { get; set; }
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** HasPendingTasks
+
+### DotNetTips.Spargine.Core.Ulid Register(System.Threading.Tasks.Task task, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** Register
+
+### System.Void Unregister(System.Threading.Tasks.Task task)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Boolean Unregister(DotNetTips.Spargine.Core.Ulid key)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Threading.Tasks.Task<System.Boolean> WaitForCompletionAsync(System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** WaitForCompletionAsync
+
+*****
+## DotNetTips.Spargine.Core.Threading.TaskTrackerExtensions
+
+### DotNetTips.Spargine.Core.Ulid FireAndForgetAndTrack(System.Threading.Tasks.Task task, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** FireAndForgetAndTrack
+
+### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTracker(T items, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** RegisterManyWithTracker
+
+### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTrackerAsync(T items, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** RegisterManyWithTrackerAsync
+
+### DotNetTips.Spargine.Core.Ulid RegisterWithTracker(System.Threading.Tasks.Task task, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Optimize
+* **BenchMarkStatus:** Benchmark
+* **Unit Test Status:** Completed
+* **Description:** RegisterWithTracker
+
+*****
+## DotNetTips.Spargine.Core.Threading.TaskTrackerFacade
+
+### System.Int32 GetPendingCount()
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** GetPendingCount
+
+### System.Boolean HasPendingTasks { get; set; }
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** HasPendingTasks
+
+### DotNetTips.Spargine.Core.Threading.ITaskTracker Instance { get; set; }
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** Instance
+
+### DotNetTips.Spargine.Core.Ulid Register(System.Threading.Tasks.Task task, System.Action<System.Exception> onException)
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** Register
+
+### System.Void Unregister(System.Threading.Tasks.Task task)
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Boolean Unregister(DotNetTips.Spargine.Core.Ulid key)
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** Unregister
+
+### System.Threading.Tasks.Task<System.Boolean> WaitForCompletionAsync(System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
+
+* **Status:** New
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
+* **Unit Test Status:** Completed
+* **Description:** WaitForCompletionAsync
+
+*****
 ## DotNetTips.Spargine.Core.Threading.ThreadPoolHelper
 
 ### DotNetTips.Spargine.Core.Threading.ThreadPoolStatistics GetStatistics()
@@ -7595,4 +7799,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 9/17/2026 7:04:48 PM UTC**
+**Generated by Spargine - dotNetTips.com on 9/25/2026 1:50:24 PM UTC**
