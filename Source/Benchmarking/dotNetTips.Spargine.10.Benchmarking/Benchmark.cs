@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-17-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-27-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -66,7 +66,7 @@ namespace DotNetTips.Spargine.Benchmarking;
 [JsonExporter(indentJson: true)]
 [Orderer(SummaryOrderPolicy.Method, methodOrderPolicy: MethodOrderPolicy.Alphabetical)]
 [StopOnFirstError(true)]
-[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.UpdateDocumentation)]
+[Information(Documentation = "https://bit.ly/BenchmarkLikeDotNetDave", Status = Status.Available)]
 public abstract class Benchmark
 {
 
@@ -464,7 +464,7 @@ public abstract class Benchmark
 	/// collection, reset the seed, or modify arrays already returned. Seeded data can be regenerated.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ClearDataCaches), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(ClearDataCaches), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void ClearDataCaches()
 	{
 		this._byteArrayCache.Clear();
@@ -514,7 +514,7 @@ public abstract class Benchmark
 	/// benchmark. Source and disposal exceptions propagate. Cancellation during a pending move requires
 	/// cooperation from the source; this method does not abandon enumeration in the background.
 	/// </remarks>
-	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public async Task ConsumeAsyncEnumerableAsync<T>([DisallowNull] IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentNotNull(paramName: nameof(source));
@@ -660,7 +660,7 @@ public abstract class Benchmark
 	/// subsequent copies reuse them. Mutations to arrays returned by getters do not affect this source.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void CopyByteArrayTo(Span<byte> destination)
 	{
 		this.GetByteFixture(destination.Length).Source.AsSpan().CopyTo(destination);
@@ -675,7 +675,7 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The minimum length is <see cref="int.MaxValue"/>.</exception>
 	/// <remarks>Use outside measured code. Copies references to immutable strings, not the strings themselves.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void CopyStringArrayTo(Span<string> destination, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
@@ -701,7 +701,7 @@ public abstract class Benchmark
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public DirectoryInfo CreateTemporaryDirectory()
 	{
 		var directory = Directory.CreateTempSubdirectory();
@@ -736,7 +736,7 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The byte count is negative.</exception>
 	/// <remarks>Shares fixtures with <see cref="GetByteArray"/>. Generate fixtures outside measured code.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public byte[] GetByteArrayByLength(int byteCount)
 	{
 		byteCount = byteCount.ArgumentInRange(min: 0, paramName: nameof(byteCount));
@@ -794,7 +794,7 @@ public abstract class Benchmark
 	/// <see cref="Cleanup"/> instead. Directory cleanup is attempted even if the hook fails.
 	/// </remarks>
 	[GlobalCleanup]
-	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public async Task GlobalCleanupAsync()
 	{
 		try
@@ -829,7 +829,7 @@ public abstract class Benchmark
 	/// </remarks>
 	[GlobalSetup]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GlobalSetupAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	[Information(nameof(GlobalSetupAsync), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public Task GlobalSetupAsync()
 	{
 		this.LaunchDebuggerIfRequested();
@@ -1013,9 +1013,13 @@ public abstract class Benchmark
 	}
 
 	/// <summary>
-	/// Logs an error message.
+	/// Logs an error-level message by forwarding it to the benchmark console logger.
 	/// </summary>
-	/// <param name="message">The message to log.</param>
+	/// <param name="message">The message text to write. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="message"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// This helper standardizes error logging for benchmark setup, execution, and cleanup diagnostics.
+	/// </remarks>
 	[Information(nameof(LogError), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogError(string message)
 	{
@@ -1023,9 +1027,13 @@ public abstract class Benchmark
 	}
 
 	/// <summary>
-	/// Logs an informational message.
+	/// Logs an informational message by forwarding it to the benchmark console logger.
 	/// </summary>
-	/// <param name="message">The message to log.</param>
+	/// <param name="message">The message text to write. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="message"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// Informational entries are useful for non-error execution traces and benchmark lifecycle progress messages.
+	/// </remarks>
 	[Information(nameof(LogInfo), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogInfo(string message)
 	{
@@ -1037,23 +1045,29 @@ public abstract class Benchmark
 	/// Logs a message to the BenchmarkDotNet console logger with the specified severity.
 	/// </summary>
 	/// <param name="logKind">The severity/category of the message to log.</param>
-	/// <param name="message">The message text to write.</param>
+	/// <param name="message">The message text to write. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="message"/> is <c>null</c>.</exception>
 	/// <remarks>
 	/// This method centralizes logging within benchmarks by forwarding messages to <see cref="ConsoleLogger.Default"/>.
-	/// Messages are written using <see cref="ConsoleLogger.WriteLine(LogKind, string)"/> and will
-	/// appear in BenchmarkDotNet console output and artifacts, which is useful for setup/teardown diagnostics and
-	/// informative traces during benchmark execution.
+	/// Messages are written using <see cref="ConsoleLogger.WriteLine(LogKind, string)"/> and appear in BenchmarkDotNet
+	/// console output and artifacts for setup, teardown, and execution diagnostics.
 	/// </remarks>
 	[Information(nameof(LogMessage), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogMessage(LogKind logKind, string message)
 	{
+		message = message.ArgumentNotNull();
+
 		ConsoleLogger.Default.WriteLine(logKind, message);
 	}
 
 	/// <summary>
-	/// Logs a warning message.
+	/// Logs a warning-level message by forwarding it to the benchmark console logger.
 	/// </summary>
-	/// <param name="message">The message to log.</param>
+	/// <param name="message">The message text to write. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="message"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// Warning entries are intended for noteworthy conditions that do not stop benchmark execution.
+	/// </remarks>
 	[Information(nameof(LogWarning), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static void LogWarning(string message)
 	{
@@ -1062,11 +1076,16 @@ public abstract class Benchmark
 
 	/// <summary>
 	/// Measures the elapsed time of the specified action and logs the result.
-	/// Useful for quick ad-hoc timing during setup/cleanup — not a substitute for BenchmarkDotNet.
 	/// </summary>
 	/// <param name="action">The action to time. Must not be <c>null</c>.</param>
-	/// <param name="description">A label for the log output.</param>
+	/// <param name="description">A label for the log output. Defaults to <c>Action</c> when omitted.</param>
 	/// <returns>The elapsed <see cref="TimeSpan"/>.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="action"/> is <c>null</c>.</exception>
+	/// <remarks>
+	/// This helper is intended for quick ad-hoc timing during setup or cleanup and is not a substitute for
+	/// BenchmarkDotNet measurements. Exceptions thrown by <paramref name="action"/> are not intercepted and
+	/// are propagated to the caller.
+	/// </remarks>
 	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
 	protected static TimeSpan MeasureAction([DisallowNull] Action action, string description = "Action")
 	{

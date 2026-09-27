@@ -4,7 +4,7 @@
 // Created          : 09-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-08-2026
+// Last Modified On : 09-27-2026
 // ***********************************************************************
 // <copyright file="BenchmarkTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -454,6 +454,34 @@ public sealed class BenchmarkTests
 		TestBenchmark.ExposeLogInfo(infoMessage);
 		TestBenchmark.ExposeLogWarning(warningMessage);
 		TestBenchmark.ExposeLogMessage(LogKind.Info, message);
+	}
+
+	[TestMethod]
+	public void LogErrorNullMessageThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeLogError(null!));
+		Assert.AreEqual("message: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void LogInfoNullMessageThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeLogInfo(null!));
+		Assert.AreEqual("message: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void LogMessageNullMessageThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeLogMessage(LogKind.Info, null!));
+		Assert.AreEqual("message: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void LogWarningNullMessageThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeLogWarning(null!));
+		Assert.AreEqual("message: ", exception.ParamName);
 	}
 
 	[TestMethod]
