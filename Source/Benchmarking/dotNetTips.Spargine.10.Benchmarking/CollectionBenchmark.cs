@@ -37,6 +37,8 @@ namespace DotNetTips.Spargine.Benchmarking;
 [Information(Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public abstract partial class CollectionBenchmark : Benchmark
 {
+	//TODO: OVERLOAD METHODS LIKE GetPersonRecordCollectionToInsert() TO RETURN NEW ITEMS.
+
 	/// <summary>
 	/// Half count
 	/// </summary>

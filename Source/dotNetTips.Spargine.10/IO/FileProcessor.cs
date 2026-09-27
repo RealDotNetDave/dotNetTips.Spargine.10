@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-03-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 07-16-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-26-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -93,6 +93,7 @@ public sealed class FileProcessor
 	{
 		destination = destination.ArgumentNotNull();
 
+		// Materialize once, stripping nulls/duplicates; null result means there is nothing to copy.
 		var list = PrepareList(files);
 
 		if (list is null)
@@ -102,13 +103,18 @@ public sealed class FileProcessor
 
 		_ = destination.CheckExists(createDirectory: true);
 
+		// Normalize to a trailing slash so per-file path concatenation stays correct.
 		var destinationPath = PathHelper.EnsureTrailingSlash(destination.FullName);
 		var successCount = 0;
 		var listCount = list.Count;
+
+		// Cache CanBeCanceled to skip token checks entirely when cancellation is impossible.
 		var canBeCanceled = cancellationToken.CanBeCanceled;
 
+		// Only allocated when the Processed event has subscribers, avoiding needless timing overhead.
 		var psw = this.CreateStopwatch(nameof(this.CopyFiles));
 
+		// Index-based loop over the List<T> avoids enumerator allocation on this hot path.
 		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
 			if (canBeCanceled)
@@ -262,7 +268,6 @@ public sealed class FileProcessor
 	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
 	/// </code>
 	/// </example>
-	[Information(nameof(DeleteFolders), author: "David McCarter", createdOn: "8/6/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		var list = PrepareList(folders);
