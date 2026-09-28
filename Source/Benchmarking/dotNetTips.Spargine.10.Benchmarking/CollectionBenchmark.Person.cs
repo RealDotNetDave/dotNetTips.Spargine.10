@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-18-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Person.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -57,7 +57,7 @@ public partial class CollectionBenchmark
 	/// Clears the in-memory person collection caches and replaces them with empty lists.
 	/// Useful for tests that need to reset state between runs.
 	/// </summary>
-	[Information(nameof(ClearPersonCaches), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ClearPersonCaches), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ClearPersonCaches()
 	{
 		this._personRefList = new List<Person>();
@@ -70,7 +70,7 @@ public partial class CollectionBenchmark
 	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
 	/// <returns>A clone of the PersonRecord array.</returns>
-	[Information(nameof(GetPersonRecordArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRecordArray), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public PersonRecord[] GetPersonRecordArray()
 	{
 		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
@@ -81,7 +81,7 @@ public partial class CollectionBenchmark
 	/// Gets a cloned dictionary for PersonRecord.
 	/// </summary>
 	/// <returns>A dictionary of PersonRecord indexed by string.</returns>
-	[Information(nameof(GetPersonRecordDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRecordDictionary), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Dictionary<string, PersonRecord> GetPersonRecordDictionary()
 	{
 		var cloned = this._personRecordList.FastClone(typeInfo: PersonRecordJsonSerializerContext.Default.PersonList);
@@ -100,7 +100,7 @@ public partial class CollectionBenchmark
 	/// This is allocation-free and intended for high-performance read-only access.
 	/// The caller MUST NOT mutate the underlying list.
 	/// </summary>
-	[Information(nameof(GetPersonRecordReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRecordReadOnlySpan), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlySpan<PersonRecord> GetPersonRecordReadOnlySpan()
 	{
 		return CollectionsMarshal.AsSpan(this._personRecordList);
@@ -110,7 +110,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person reference array.
 	/// </summary>
 	/// <returns>An array of Person reference types.</returns>
-	[Information(nameof(GetPersonRefArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRefArray), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Person[] GetPersonRefArray()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -121,7 +121,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person reference types as a dictionary.
 	/// </summary>
 	/// <returns>A dictionary of Person reference types indexed by string.</returns>
-	[Information(nameof(GetPersonRefDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRefDictionary), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Dictionary<string, Person> GetPersonRefDictionary()
 	{
 		var cloned = this._personRefList.FastClone(typeInfo: PersonRefJsonSerializerContext.Default.PersonList);
@@ -140,7 +140,7 @@ public partial class CollectionBenchmark
 	/// This is allocation-free and intended for high-performance read-only access.
 	/// The caller MUST NOT mutate the underlying list.
 	/// </summary>
-	[Information(nameof(GetPersonRefReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRefReadOnlySpan), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlySpan<Person> GetPersonRefReadOnlySpan()
 	{
 		return CollectionsMarshal.AsSpan(this._personRefList);
@@ -150,7 +150,7 @@ public partial class CollectionBenchmark
 	/// Gets clone of Person value types as an array.
 	/// </summary>
 	/// <returns>An array of Person value types.</returns>
-	[Information(nameof(GetPersonValArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonValArray), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Tester.Models.ValueTypes.Person[] GetPersonValArray()
 	{
 		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);
@@ -160,7 +160,7 @@ public partial class CollectionBenchmark
 	/// <summary>
 	/// Gets clone of person value dictionary.
 	/// </summary>
-	[Information(nameof(GetPersonValDictionary), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonValDictionary), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Dictionary<string, Tester.Models.ValueTypes.Person> GetPersonValDictionary()
 	{
 		var cloned = this._personValList.FastClone(typeInfo: PersonValJsonSerializerContext.Default.PersonList);
@@ -179,7 +179,7 @@ public partial class CollectionBenchmark
 	/// This is allocation-free and intended for high-performance read-only access.
 	/// The caller MUST NOT mutate the underlying list.
 	/// </summary>
-	[Information(nameof(GetPersonValReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonValReadOnlySpan), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlySpan<Tester.Models.ValueTypes.Person> GetPersonValReadOnlySpan()
 	{
 		return CollectionsMarshal.AsSpan(this._personValList);
@@ -189,7 +189,7 @@ public partial class CollectionBenchmark
 	/// Attempts to find a Person reference with the specified id in the internal list.
 	/// This is a convenience O(n) lookup. For large collections prefer building a dictionary via GetPersonRefDictionary().
 	/// </summary>
-	[Information(nameof(TryFindPersonRefById), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(TryFindPersonRefById), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public bool TryFindPersonRefById(string id, out Person person)
 	{
 		person = null!;
@@ -213,7 +213,7 @@ public partial class CollectionBenchmark
 	/// <summary>
 	/// Loads the person collections into memory, including arrays, lists, and dictionaries for PersonRecord, Person reference types, and Person value types.
 	/// </summary>
-	[Information(nameof(LoadPersonCollections), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LoadPersonCollections), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected void LoadPersonCollections()
 
 	{

@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-27-2026
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -241,7 +241,7 @@ public abstract class Benchmark
 	/// of call order. Other fixtures, including people, are unaffected. Reproducibility across runtime
 	/// versions is not guaranteed. Previously returned arrays are not changed.
 	/// </remarks>
-	[Information(nameof(DataSeed), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(DataSeed), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public int? DataSeed
 	{
 		get
@@ -424,7 +424,7 @@ public abstract class Benchmark
 	/// that need to perform real work without being eliminated by compiler optimizations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SimulateWork), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(SimulateWork), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static int SimulateWork([DisallowNull] object item)
 	{
 		return RuntimeHelpers.GetHashCode(item);
@@ -449,7 +449,7 @@ public abstract class Benchmark
 	/// <returns>A <see cref="Task"/> representing the asynchronous cleanup operation.</returns>
 	/// <remarks>Call <c>base.CleanupAsync()</c> when overriding; do not also call <see cref="Cleanup"/>.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CleanupAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public virtual Task CleanupAsync()
 	{
 		this.Cleanup();
@@ -464,7 +464,7 @@ public abstract class Benchmark
 	/// collection, reset the seed, or modify arrays already returned. Seeded data can be regenerated.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ClearDataCaches), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ClearDataCaches), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void ClearDataCaches()
 	{
 		this._byteArrayCache.Clear();
@@ -493,7 +493,7 @@ public abstract class Benchmark
 	/// <param name="obj">The object to consume.</param>
 	/// <returns>A <see cref="ValueTask"/> representing the completed operation.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeAsync), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ConsumeAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ValueTask ConsumeAsync<T>(T obj)
 	{
 		this.Consumer.Consume(obj);
@@ -514,7 +514,7 @@ public abstract class Benchmark
 	/// benchmark. Source and disposal exceptions propagate. Cancellation during a pending move requires
 	/// cooperation from the source; this method does not abandon enumeration in the background.
 	/// </remarks>
-	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public async Task ConsumeAsyncEnumerableAsync<T>([DisallowNull] IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentNotNull(paramName: nameof(source));
@@ -532,7 +532,7 @@ public abstract class Benchmark
 	/// <typeparam name="T">The type of the elements.</typeparam>
 	/// <param name="collection">The list to consume. Must not be <c>null</c>.</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ConsumeCollection), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ConsumeCollection<T>([DisallowNull] IReadOnlyList<T> collection)
 	{
 		collection = collection.ArgumentNotNull();
@@ -590,7 +590,7 @@ public abstract class Benchmark
 	/// It is designed to introduce deterministic work when benchmarking enumerable data structures without allocations.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ConsumeEnumerable), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ConsumeEnumerable), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ConsumeEnumerable<T>([DisallowNull] IEnumerable<T> collection)
 	{
 		collection = collection.ArgumentNotNull();
@@ -660,7 +660,7 @@ public abstract class Benchmark
 	/// subsequent copies reuse them. Mutations to arrays returned by getters do not affect this source.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void CopyByteArrayTo(Span<byte> destination)
 	{
 		this.GetByteFixture(destination.Length).Source.AsSpan().CopyTo(destination);
@@ -675,7 +675,7 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The minimum length is <see cref="int.MaxValue"/>.</exception>
 	/// <remarks>Use outside measured code. Copies references to immutable strings, not the strings themselves.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public void CopyStringArrayTo(Span<string> destination, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
@@ -701,7 +701,7 @@ public abstract class Benchmark
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public DirectoryInfo CreateTemporaryDirectory()
 	{
 		var directory = Directory.CreateTempSubdirectory();
@@ -721,7 +721,7 @@ public abstract class Benchmark
 	/// A separate private array is retained for each cached length, doubling retained byte-array storage.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetByteArray), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetByteArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public byte[] GetByteArray(int count = 1)
 	{
 		count = count.ArgumentInRange(1, paramName: nameof(count));
@@ -736,7 +736,7 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The byte count is negative.</exception>
 	/// <remarks>Shares fixtures with <see cref="GetByteArray"/>. Generate fixtures outside measured code.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public byte[] GetByteArrayByLength(int byteCount)
 	{
 		byteCount = byteCount.ArgumentInRange(min: 0, paramName: nameof(byteCount));
@@ -757,7 +757,7 @@ public abstract class Benchmark
 	/// Changing returned elements does not change this private snapshot.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetStringArray), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetStringArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public string[] GetStringArray(int count, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		return this.GetStringFixture(count, wordMinLength, wordMaxLength).Value;
@@ -772,7 +772,7 @@ public abstract class Benchmark
 	/// propagate and unsuccessful paths remain tracked for a subsequent cleanup attempt.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GlobalCleanup), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GlobalCleanup), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
 	public void GlobalCleanup()
 	{
 		try
@@ -794,7 +794,7 @@ public abstract class Benchmark
 	/// <see cref="Cleanup"/> instead. Directory cleanup is attempted even if the hook fails.
 	/// </remarks>
 	[GlobalCleanup]
-	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
 	public async Task GlobalCleanupAsync()
 	{
 		try
@@ -913,7 +913,7 @@ public abstract class Benchmark
 	/// </remarks>
 	/// <seealso cref="SimulateWork(object)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(SimulateWorkAsync), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(SimulateWorkAsync), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual Task SimulateWorkAsync([DisallowNull] object item, CancellationToken cancellationToken = default)
 	{
 		cancellationToken.ThrowIfCancellationRequested();
@@ -933,7 +933,7 @@ public abstract class Benchmark
 	/// This helper is intended for benchmarking scenarios to apply a deterministic mutation to a <see cref="Person"/> instance.
 	/// <see cref="Person.CellPhone"/> to the constant test value stored in <see cref="PhoneNumberUpdate"/>.
 	/// </remarks>
-	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual Person Update([DisallowNull] Person person)
 	{
 		person = person.ArgumentNotNull();
@@ -956,7 +956,7 @@ public abstract class Benchmark
 	/// Since <see cref="Tester.Models.ValueTypes.Person"/> is a value type, the update is applied to a copy and the modified
 	/// instance is returned. This helper is intended for benchmarking scenarios to apply a deterministic mutation without allocations.
 	/// </remarks>
-	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual Tester.Models.ValueTypes.Person Update(Tester.Models.ValueTypes.Person person)
 	{
 		person.CellPhone = PhoneNumberUpdate;
@@ -981,7 +981,7 @@ public abstract class Benchmark
 	/// </para>
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual PersonRecord Update([DisallowNull] PersonRecord person)
 	{
 		person = person.ArgumentNotNull();
@@ -1002,7 +1002,7 @@ public abstract class Benchmark
 	/// This helper applies a deterministic mutation for benchmarking scenarios and validates input.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Update), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public virtual T Update<T>([NotNull] T coordinate) where T : ICoordinate
 	{
 		coordinate = coordinate.ArgumentNotNull();
@@ -1020,7 +1020,7 @@ public abstract class Benchmark
 	/// <remarks>
 	/// This helper standardizes error logging for benchmark setup, execution, and cleanup diagnostics.
 	/// </remarks>
-	[Information(nameof(LogError), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LogError), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected static void LogError(string message)
 	{
 		LogMessage(LogKind.Error, message);
@@ -1034,7 +1034,7 @@ public abstract class Benchmark
 	/// <remarks>
 	/// Informational entries are useful for non-error execution traces and benchmark lifecycle progress messages.
 	/// </remarks>
-	[Information(nameof(LogInfo), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LogInfo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected static void LogInfo(string message)
 	{
 		LogMessage(LogKind.Info, message);
@@ -1052,7 +1052,7 @@ public abstract class Benchmark
 	/// Messages are written using <see cref="ConsoleLogger.WriteLine(LogKind, string)"/> and appear in BenchmarkDotNet
 	/// console output and artifacts for setup, teardown, and execution diagnostics.
 	/// </remarks>
-	[Information(nameof(LogMessage), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LogMessage), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected static void LogMessage(LogKind logKind, string message)
 	{
 		message = message.ArgumentNotNull();
@@ -1068,7 +1068,7 @@ public abstract class Benchmark
 	/// <remarks>
 	/// Warning entries are intended for noteworthy conditions that do not stop benchmark execution.
 	/// </remarks>
-	[Information(nameof(LogWarning), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LogWarning), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected static void LogWarning(string message)
 	{
 		LogMessage(LogKind.Warning, message);
@@ -1086,7 +1086,7 @@ public abstract class Benchmark
 	/// BenchmarkDotNet measurements. Exceptions thrown by <paramref name="action"/> are not intercepted and
 	/// are propagated to the caller.
 	/// </remarks>
-	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(MeasureAction), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected static TimeSpan MeasureAction([DisallowNull] Action action, string description = "Action")
 	{
 		action = action.ArgumentNotNull();
@@ -1135,7 +1135,7 @@ public abstract class Benchmark
 	/// </summary>
 	/// <exception cref="IOException">A tracked directory cannot be removed.</exception>
 	/// <exception cref="UnauthorizedAccessException">Removal is not permitted.</exception>
-	[Information(nameof(CleanupTemporaryDirectories), UnitTestStatus = UnitTestStatus.None, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(CleanupTemporaryDirectories), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private void CleanupTemporaryDirectories()
 	{
 		for (var directoryIndex = this._temporaryDirectories.Count - 1; directoryIndex >= 0; directoryIndex--)

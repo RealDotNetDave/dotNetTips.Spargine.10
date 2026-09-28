@@ -4,7 +4,7 @@
 // Created          : 09-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-27-2026
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="BenchmarkTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -14,6 +14,7 @@
 // </summary>
 // ***********************************************************************
 
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -37,6 +38,15 @@ public sealed class BenchmarkTests
 		var task = new TestBenchmark().CleanupAsync();
 		await task.ConfigureAwait(false);
 		Assert.IsTrue(task.IsCompletedSuccessfully);
+	}
+
+	[TestMethod]
+	public async Task CleanupAsyncCallsCleanupOnce()
+	{
+		var cleanupCount = 0;
+		var benchmark = new LifecycleBenchmark { CleanupAction = () => cleanupCount++ };
+		await benchmark.CleanupAsync().ConfigureAwait(false);
+		Assert.AreEqual(1, cleanupCount);
 	}
 
 	[TestMethod]
@@ -67,12 +77,6 @@ public sealed class BenchmarkTests
 		Assert.AreEqual(("C8IIVjaUi0owZh6", "Q7sXguwS9vZpOo6"), (Benchmark.String15Characters01, Benchmark.String15Characters02));
 		Assert.AreEqual(("fake@fakelive.com", "Fake@FakeLive.com"), (Benchmark.TestEmailLowerCase, Benchmark.TestEmailMixedCase));
 		Assert.AreEqual(("failed", "success"), (TestBenchmark.ExposeFailedText(), TestBenchmark.ExposeSuccessText()));
-	}
-
-	[TestMethod]
-	public void ConsumeAcceptsObject()
-	{
-		new TestBenchmark().Consume(new object());
 	}
 
 	[TestMethod]
@@ -136,6 +140,14 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
+	public void ConsumeCollectionReadsEveryItem()
+	{
+		var values = new TrackingList<int>([1, 2, 3]);
+		new TestBenchmark().ConsumeCollection(values);
+		Assert.AreEqual(3, values.ReadCount);
+	}
+
+	[TestMethod]
 	public void ConsumeCollectionNullThrowsArgumentNullException()
 	{
 		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => new TestBenchmark().ConsumeCollection<string>(null!));
@@ -143,15 +155,43 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
-	public void ConsumeDictionaryAcceptsDictionary()
+	public void ConsumeDictionaryConcreteDictionaryBypassesInterfaceEnumerator()
 	{
-		new TestBenchmark().ConsumeDictionary(new Dictionary<int, string> { [1] = "a", [2] = "b" });
+		var collection = new TrackingDictionary { [1] = "a", [2] = "b" };
+		new TestBenchmark().ConsumeDictionary(collection);
+		Assert.AreEqual(0, collection.EnumeratedCount);
+	}
+
+	[TestMethod]
+	public void ConsumeDictionaryNonConcreteDictionaryEnumeratesAllEntries()
+	{
+		var source = new TrackingDictionary { [1] = "a", [2] = "b", [3] = "c" };
+		IDictionary<int, string> collection = new ReadOnlyDictionary<int, string>(source);
+		new TestBenchmark().ConsumeDictionary(collection);
+		Assert.AreEqual(3, source.EnumeratedCount);
 	}
 
 	[TestMethod]
 	public void ConsumeEnumerableAcceptsSequence()
 	{
 		new TestBenchmark().ConsumeEnumerable(Enumerable.Range(1, 5));
+	}
+
+	[TestMethod]
+	public void ConsumeEnumerableNonListEnumeratesAllItems()
+	{
+		var enumerated = 0;
+		IEnumerable<int> Values()
+		{
+			for (var value = 0; value < 3; value++)
+			{
+				enumerated++;
+				yield return value;
+			}
+		}
+
+		new TestBenchmark().ConsumeEnumerable(Values());
+		Assert.AreEqual(3, enumerated);
 	}
 
 	[TestMethod]
@@ -162,16 +202,19 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
-	public void ConsumeReadOnlySpanAcceptsSpan()
+	public void ConsumeReadOnlySpanLeavesSourceUnchanged()
 	{
-		new TestBenchmark().ConsumeReadOnlySpan<int>([1, 2, 3]);
+		int[] values = [1, 2, 3];
+		new TestBenchmark().ConsumeReadOnlySpan<int>(values);
+		CollectionAssert.AreEqual(new[] { 1, 2, 3 }, values);
 	}
 
 	[TestMethod]
-	public void ConsumeSpanAcceptsSpan()
+	public void ConsumeSpanLeavesSourceUnchanged()
 	{
-		Span<int> data = [1, 2, 3];
-		new TestBenchmark().ConsumeSpan(data);
+		int[] values = [1, 2, 3];
+		new TestBenchmark().ConsumeSpan(values.AsSpan());
+		CollectionAssert.AreEqual(new[] { 1, 2, 3 }, values);
 	}
 
 	[TestMethod]
@@ -209,6 +252,15 @@ public sealed class BenchmarkTests
 		var result = (first.Exists, second.Exists, first.FullName == second.FullName);
 		benchmark.GlobalCleanup();
 		Assert.AreEqual((true, true, false), result);
+	}
+
+	[TestMethod]
+	public void GlobalCleanupRemovesTrackedTemporaryDirectories()
+	{
+		var benchmark = new TestBenchmark();
+		var directory = benchmark.CreateTemporaryDirectory();
+		benchmark.GlobalCleanup();
+		Assert.IsFalse(Directory.Exists(directory.FullName));
 	}
 
 	[TestMethod]
@@ -457,6 +509,27 @@ public sealed class BenchmarkTests
 	}
 
 	[TestMethod]
+	public void MeasureActionExecutesActionAndReturnsNonNegativeElapsed()
+	{
+		var invoked = false;
+		var elapsed = TestBenchmark.ExposeMeasureAction(() => invoked = true, "UnitTest");
+		Assert.AreEqual((true, true), (invoked, elapsed >= TimeSpan.Zero));
+	}
+
+	[TestMethod]
+	public void MeasureActionNullActionThrowsArgumentNullException()
+	{
+		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeMeasureAction(null!));
+		Assert.AreEqual("action: ", exception.ParamName);
+	}
+
+	[TestMethod]
+	public void MeasureActionPropagatesExceptionFromAction()
+	{
+		_ = Assert.ThrowsExactly<InvalidOperationException>(() => TestBenchmark.ExposeMeasureAction(() => throw new InvalidOperationException()));
+	}
+
+	[TestMethod]
 	public void LogErrorNullMessageThrowsArgumentNullException()
 	{
 		var exception = Assert.ThrowsExactly<ArgumentNullException>(() => TestBenchmark.ExposeLogError(null!));
@@ -626,6 +699,37 @@ public sealed class BenchmarkTests
 		}
 	}
 
+	private sealed class TrackingDictionary : Dictionary<int, string>, IEnumerable<KeyValuePair<int, string>>
+	{
+		public int EnumeratedCount { get; private set; }
+
+		IEnumerator<KeyValuePair<int, string>> IEnumerable<KeyValuePair<int, string>>.GetEnumerator()
+		{
+			foreach (var pair in (Dictionary<int, string>)this)
+			{
+				this.EnumeratedCount++;
+				yield return pair;
+			}
+		}
+	}
+
+	private sealed class TrackingList<T>(T[] values) : IReadOnlyList<T>
+	{
+		public int Count => values.Length;
+		public int ReadCount { get; private set; }
+		public T this[int index]
+		{
+			get
+			{
+				this.ReadCount++;
+				return values[index];
+			}
+		}
+
+		public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)values).GetEnumerator();
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => values.GetEnumerator();
+	}
+
 	private sealed class TestBenchmark : Benchmark
 	{
 		public static string ExposeFailedText() => FailedText;
@@ -633,6 +737,7 @@ public sealed class BenchmarkTests
 		public static void ExposeLogInfo(string message) => LogInfo(message);
 		public static void ExposeLogMessage(LogKind logKind, string message) => LogMessage(logKind, message);
 		public static void ExposeLogWarning(string message) => LogWarning(message);
+		public static TimeSpan ExposeMeasureAction(Action action, string description = "Action") => MeasureAction(action, description);
 		public static string ExposeSuccessText() => SuccessText;
 	}
 

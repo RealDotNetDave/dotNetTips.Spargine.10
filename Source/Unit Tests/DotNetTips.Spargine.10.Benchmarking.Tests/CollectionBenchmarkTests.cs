@@ -4,7 +4,7 @@
 // Created          : 09-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-08-2026
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmarkTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -137,6 +137,13 @@ public sealed class CollectionBenchmarkTests
 	}
 
 	[TestMethod]
+	public void GetCoordinateRefCollectionContainsLoadedCoordinates()
+	{
+		var benchmark = CreateBenchmark();
+		Assert.AreSame(benchmark.GetCoordinateRefReadOnlySpan()[0], benchmark.GetCoordinateRefCollection()[0]);
+	}
+
+	[TestMethod]
 	public void GetCoordinateRefReadOnlySpanReturnsMaxCountItems()
 	{
 		Assert.AreEqual(MaxCount, CreateBenchmark().GetCoordinateRefReadOnlySpan().Length);
@@ -160,6 +167,13 @@ public sealed class CollectionBenchmarkTests
 	public void GetCoordinateValCollectionReturnsMaxCountItems()
 	{
 		Assert.AreEqual(MaxCount, CreateBenchmark().GetCoordinateValCollection().Count);
+	}
+
+	[TestMethod]
+	public void GetCoordinateValCollectionContainsLoadedCoordinates()
+	{
+		var benchmark = CreateBenchmark();
+		Assert.AreEqual(benchmark.GetCoordinateValReadOnlySpan()[0], benchmark.GetCoordinateValCollection()[0]);
 	}
 
 	[TestMethod]
@@ -303,6 +317,102 @@ public sealed class CollectionBenchmarkTests
 	}
 
 	[TestMethod]
+	public void LoadCoordinateCollectionsAfterCacheClearRestoresCoordinates()
+	{
+		var benchmark = CreateBenchmark();
+		benchmark.ClearCollectionCaches();
+		benchmark.ExposeLoadCoordinateCollections();
+		Assert.AreEqual((MaxCount, MaxCount), (benchmark.GetCoordinateRefReadOnlySpan().Length, benchmark.GetCoordinateValReadOnlySpan().Length));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAfterCacheClearRestoresPeople()
+	{
+		var benchmark = CreateBenchmark();
+		benchmark.ClearPersonCaches();
+		benchmark.ExposeLoadPersonCollections();
+		Assert.AreEqual((MaxCount, MaxCount, MaxCount), (benchmark.GetPersonRecordReadOnlySpan().Length, benchmark.GetPersonRefReadOnlySpan().Length, benchmark.GetPersonValReadOnlySpan().Length));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitGeneratesRemainder()
+	{
+		const int count = 10_001;
+		var benchmark = new TestCollectionBenchmark(count);
+		benchmark.ExposeLoadPersonCollections();
+		Assert.AreEqual((count, count, count), (benchmark.GetPersonRecordReadOnlySpan().Length, benchmark.GetPersonRefReadOnlySpan().Length, benchmark.GetPersonValReadOnlySpan().Length));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitPreservesFirstResourceRecord()
+	{
+		var resourceBenchmark = new TestCollectionBenchmark(10);
+		resourceBenchmark.ExposeLoadPersonCollections();
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+		var expected = resourceBenchmark.GetPersonRecordReadOnlySpan()[0];
+		var actual = benchmark.GetPersonRecordReadOnlySpan()[0];
+
+		Assert.AreEqual((expected.Id, expected.Email, expected.FirstName, expected.LastName),
+			(actual.Id, actual.Email, actual.FirstName, actual.LastName));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitPreservesFirstResourceRefPerson()
+	{
+		var resourceBenchmark = new TestCollectionBenchmark(10);
+		resourceBenchmark.ExposeLoadPersonCollections();
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+		var expected = resourceBenchmark.GetPersonRefReadOnlySpan()[0];
+		var actual = benchmark.GetPersonRefReadOnlySpan()[0];
+
+		Assert.AreEqual((expected.Id, expected.Email, expected.FirstName, expected.LastName),
+			(actual.Id, actual.Email, actual.FirstName, actual.LastName));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitPreservesFirstResourceValPerson()
+	{
+		var resourceBenchmark = new TestCollectionBenchmark(10);
+		resourceBenchmark.ExposeLoadPersonCollections();
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+		var expected = resourceBenchmark.GetPersonValReadOnlySpan()[0];
+		var actual = benchmark.GetPersonValReadOnlySpan()[0];
+
+		Assert.AreEqual((expected.Id, expected.Email, expected.FirstName, expected.LastName),
+			(actual.Id, actual.Email, actual.FirstName, actual.LastName));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitGeneratesRecordWithId()
+	{
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+
+		Assert.IsFalse(string.IsNullOrWhiteSpace(benchmark.GetPersonRecordReadOnlySpan()[^1].Id));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitGeneratesRefPersonWithId()
+	{
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+
+		Assert.IsFalse(string.IsNullOrWhiteSpace(benchmark.GetPersonRefReadOnlySpan()[^1].Id));
+	}
+
+	[TestMethod]
+	public void LoadPersonCollectionsAboveEmbeddedLimitGeneratesValPersonWithId()
+	{
+		var benchmark = new TestCollectionBenchmark(10_001);
+		benchmark.ExposeLoadPersonCollections();
+
+		Assert.IsFalse(string.IsNullOrWhiteSpace(benchmark.GetPersonValReadOnlySpan()[^1].Id));
+	}
+
+	[TestMethod]
 	public void SetupLoadsHalfPersonEmailLookupValue()
 	{
 		var benchmark = CreateBenchmark();
@@ -344,6 +454,181 @@ public sealed class CollectionBenchmarkTests
 		Assert.IsFalse(benchmark.TryFindPersonRefById(null!, out _));
 	}
 
+	[TestMethod]
+	public void GetPersonRecordArrayClonesElementsAndPreservesContent()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonRecordReadOnlySpan()[0];
+		var copy = benchmark.GetPersonRecordArray()[0];
+
+		Assert.AreEqual((source.Id, source.Email, false), (copy.Id, copy.Email, ReferenceEquals(source, copy)));
+	}
+
+	[TestMethod]
+	public void GetPersonRefArrayClonesElementsAndIsolatesChanges()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonRefReadOnlySpan()[0];
+		var copy = benchmark.GetPersonRefArray();
+		var cloned = copy[0];
+		copy[0] = copy[1];
+
+		Assert.AreEqual((false, source.Id, source.Email), (ReferenceEquals(source, cloned), benchmark.GetPersonRefReadOnlySpan()[0].Id, cloned.Email));
+	}
+
+	[TestMethod]
+	public void GetPersonValArrayPreservesValuesAndIsolatesChanges()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonValReadOnlySpan()[0];
+		var copy = benchmark.GetPersonValArray();
+		var cloned = copy[0];
+		copy[0] = copy[1];
+
+		Assert.AreEqual((source.Id, source.Email, source.Id, source.Email),
+			(cloned.Id, cloned.Email, benchmark.GetPersonValReadOnlySpan()[0].Id, benchmark.GetPersonValReadOnlySpan()[0].Email));
+	}
+
+	[TestMethod]
+	public void GetPersonRecordDictionaryContainsClonedItemsWithMatchingKeys()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonRecordReadOnlySpan()[0];
+		var dictionary = benchmark.GetPersonRecordDictionary();
+
+		Assert.AreEqual((MaxCount, source.Id, source.Email, false),
+			(dictionary.Count, dictionary[source.Id].Id, dictionary[source.Id].Email, ReferenceEquals(source, dictionary[source.Id])));
+	}
+
+	[TestMethod]
+	public void GetPersonRefDictionaryContainsClonedItemsAndIsolatesChanges()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonRefReadOnlySpan()[0];
+		var dictionary = benchmark.GetPersonRefDictionary();
+		var cloned = dictionary[source.Id];
+		dictionary.Remove(source.Id);
+
+		Assert.AreEqual((MaxCount - 1, source.Id, false, source.Email),
+			(dictionary.Count, cloned.Id, ReferenceEquals(source, cloned), benchmark.GetPersonRefReadOnlySpan()[0].Email));
+	}
+
+	[TestMethod]
+	public void GetPersonValDictionaryContainsMatchingKeysAndIsIndependent()
+	{
+		var benchmark = CreateBenchmark();
+		var source = benchmark.GetPersonValReadOnlySpan()[0];
+		var dictionary = benchmark.GetPersonValDictionary();
+		var cloned = dictionary[source.Id];
+		dictionary.Remove(source.Id);
+
+		Assert.AreEqual((MaxCount - 1, source.Id, source.Email, source.Id),
+			(dictionary.Count, cloned.Id, cloned.Email, benchmark.GetPersonValReadOnlySpan()[0].Id));
+	}
+
+	[TestMethod]
+	public void GetPersonRecordReadOnlySpanReferencesLoadedItems()
+	{
+		var benchmark = CreateBenchmark();
+
+		Assert.AreSame(benchmark.PersonRecordLookupHalf, benchmark.GetPersonRecordReadOnlySpan()[benchmark.HalfCount]);
+	}
+
+	[TestMethod]
+	public void GetPersonRefReadOnlySpanReferencesLoadedItems()
+	{
+		var benchmark = CreateBenchmark();
+
+		Assert.AreSame(benchmark.PersonRefLookupLast, benchmark.GetPersonRefReadOnlySpan()[^1]);
+	}
+
+	[TestMethod]
+	public void GetPersonValReadOnlySpanReflectsLoadedLookup()
+	{
+		var benchmark = CreateBenchmark();
+
+		Assert.AreEqual((benchmark.PersonValLookupHalf.Id, benchmark.PersonValLookupHalf.Email),
+			(benchmark.GetPersonValReadOnlySpan()[benchmark.HalfCount].Id, benchmark.GetPersonValReadOnlySpan()[benchmark.HalfCount].Email));
+	}
+
+	[TestMethod]
+	public void GetCoordinateRefArrayChangesDoNotAffectBackingSpan()
+	{
+		var benchmark = CreateBenchmark();
+		var original = benchmark.GetCoordinateRefReadOnlySpan()[0];
+		var copy = benchmark.GetCoordinateRefArray();
+		copy[0] = copy[1];
+
+		Assert.AreSame(original, benchmark.GetCoordinateRefReadOnlySpan()[0]);
+	}
+
+	[TestMethod]
+	public void GetCoordinateValArrayChangesDoNotAffectBackingSpan()
+	{
+		var benchmark = CreateBenchmark();
+		var original = benchmark.GetCoordinateValReadOnlySpan()[0];
+		var copy = benchmark.GetCoordinateValArray();
+		copy[0] = copy[1];
+
+		Assert.AreEqual(original, benchmark.GetCoordinateValReadOnlySpan()[0]);
+	}
+
+	[TestMethod]
+	public void GetCoordinateRefCollectionChangesDoNotAffectBackingSpan()
+	{
+		var benchmark = CreateBenchmark();
+		var original = benchmark.GetCoordinateRefReadOnlySpan()[0];
+		var collection = benchmark.GetCoordinateRefCollection();
+		collection[0] = collection[1];
+
+		Assert.AreSame(original, benchmark.GetCoordinateRefReadOnlySpan()[0]);
+	}
+
+	[TestMethod]
+	public void GetCoordinateValCollectionChangesDoNotAffectBackingSpan()
+	{
+		var benchmark = CreateBenchmark();
+		var original = benchmark.GetCoordinateValReadOnlySpan()[0];
+		var collection = benchmark.GetCoordinateValCollection();
+		collection[0] = collection[1];
+
+		Assert.AreEqual(original, benchmark.GetCoordinateValReadOnlySpan()[0]);
+	}
+
+	[TestMethod]
+	public void GetPersonRecordCollectionToInsertReturnsFreshArrayWithOriginalItems()
+	{
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonRecordCollectionToInsert();
+		var second = benchmark.ExposeGetPersonRecordCollectionToInsert();
+		first[0] = first[1];
+
+		Assert.AreEqual((false, false, benchmark.HalfCount), (ReferenceEquals(first, second), ReferenceEquals(first[0], second[0]), second.Length));
+	}
+
+	[TestMethod]
+	public void GetPersonRefCollectionToInsertReturnsFreshArrayWithOriginalItems()
+	{
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonRefCollectionToInsert();
+		var second = benchmark.ExposeGetPersonRefCollectionToInsert();
+		first[0] = first[1];
+
+		Assert.AreEqual((false, false, benchmark.HalfCount), (ReferenceEquals(first, second), ReferenceEquals(first[0], second[0]), second.Length));
+	}
+
+	[TestMethod]
+	public void GetPersonValCollectionToInsertReturnsFreshArrayWithOriginalItems()
+	{
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonValCollectionToInsert();
+		var second = benchmark.ExposeGetPersonValCollectionToInsert();
+		var original = second[0];
+		first[0] = first[1];
+
+		Assert.AreEqual((false, original.Id, benchmark.HalfCount), (ReferenceEquals(first, second), second[0].Id, second.Length));
+	}
+
 	private static TestCollectionBenchmark CreateBenchmark()
 	{
 		var benchmark = new TestCollectionBenchmark(MaxCount);
@@ -359,5 +644,9 @@ public sealed class CollectionBenchmarkTests
 		public Person[] ExposeGetPersonRefCollectionToInsert() => this.GetPersonRefCollectionToInsert();
 
 		public ValuePerson[] ExposeGetPersonValCollectionToInsert() => this.GetPersonValCollectionToInsert();
+
+		public void ExposeLoadCoordinateCollections() => this.LoadCoordinateCollections();
+
+		public void ExposeLoadPersonCollections() => this.LoadPersonCollections();
 	}
 }

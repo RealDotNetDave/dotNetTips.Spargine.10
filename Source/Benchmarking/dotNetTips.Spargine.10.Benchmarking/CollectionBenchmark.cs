@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -158,7 +158,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// After calling this method the internal collections will be empty and lookup
 	/// properties will be reset to defaults.
 	/// </summary>
-	[Information(nameof(ClearCollectionCaches), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ClearCollectionCaches), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ClearCollectionCaches()
 	{
 		this._coordinateRefArray = Array.Empty<Coordinate>();
@@ -186,7 +186,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Reloads the coordinate and person collections and refreshes the lookup values.
 	/// This is useful for tests that need to repopulate the internal caches deterministically.
 	/// </summary>
-	[Information(nameof(ReloadCollections), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(ReloadCollections), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void ReloadCollections()
 	{
 		this.LoadCoordinateCollections();
@@ -209,7 +209,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <summary>
 	/// Sets up the benchmark instance. This method is called before the benchmark runs and is responsible for initializing the collections and loading the data.
 	/// </summary>
-	[Information(nameof(Setup), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(Setup), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public override void Setup()
 	{
 		base.Setup();
@@ -322,7 +322,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="PersonRecord"/> objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
-	[Information(nameof(GetPersonRecordCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRecordCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
 	{
 		return [.. this._peopleRecordToInsert];
@@ -332,7 +332,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="Person"/> reference objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="Person"/>.</returns>
-	[Information(nameof(GetPersonRefCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonRefCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual Person[] GetPersonRefCollectionToInsert()
 	{
 		return [.. this._peopleRefToInsert];
@@ -342,7 +342,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// Gets a collection of <see cref="Tester.Models.ValueTypes.Person"/> value objects for insertion into collections.
 	/// </summary>
 	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
-	[Information(nameof(GetPersonValCollectionToInsert), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetPersonValCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
 	{
 		return [.. this._peopleValToInsert];

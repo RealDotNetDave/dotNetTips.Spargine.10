@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 04-18-2022
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-27-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.Coordinate.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -39,7 +39,7 @@ public partial class CollectionBenchmark
 	/// Copies the internal reference-type coordinate buffer into the provided destination span.
 	/// Throws if the destination is smaller than the source.
 	/// </summary>
-	[Information(nameof(CopyCoordinateRefTo), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(CopyCoordinateRefTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void CopyCoordinateRefTo(Span<Tester.Models.RefTypes.Coordinate> destination)
 	{
 		this._coordinateRefArray.AsSpan().CopyTo(destination);
@@ -49,7 +49,7 @@ public partial class CollectionBenchmark
 	/// Copies the internal value-type coordinate buffer into the provided destination span.
 	/// Throws if the destination is smaller than the source.
 	/// </summary>
-	[Information(nameof(CopyCoordinateValTo), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(CopyCoordinateValTo), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public void CopyCoordinateValTo(Span<Coordinate> destination)
 	{
 		this._coordinateValArray.AsSpan().CopyTo(destination);
@@ -60,7 +60,7 @@ public partial class CollectionBenchmark
 	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
 	/// <returns>A clone of the Coordinate array.</returns>
-	[Information(nameof(GetCoordinateRefArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateRefArray), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Tester.Models.RefTypes.Coordinate[] GetCoordinateRefArray()
 	{
 		// Return a shallow clone of the backing array so callers may modify the
@@ -73,7 +73,7 @@ public partial class CollectionBenchmark
 	/// Similar to <see cref="GetCoordinateValArray"/>, this method provides a fresh copy of the data for benchmark tests.
 	/// </summary>
 	/// <returns>A clone of the Coordinate list as a Collection.</returns>
-	[Information(nameof(GetCoordinateRefCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateRefCollection), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Collection<Tester.Models.RefTypes.Coordinate> GetCoordinateRefCollection()
 	{
 		return this._coordinateRefArray.ToCollection();
@@ -84,7 +84,7 @@ public partial class CollectionBenchmark
 	/// The caller MUST NOT mutate the underlying collection; this provides
 	/// allocation-free read access for hot-path benchmarks.
 	/// </summary>
-	[Information(nameof(GetCoordinateRefReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateRefReadOnlySpan), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlySpan<Tester.Models.RefTypes.Coordinate> GetCoordinateRefReadOnlySpan()
 	{
 		return this._coordinateRefArray.AsSpan();
@@ -95,7 +95,7 @@ public partial class CollectionBenchmark
 	/// preventing modifications from affecting subsequent benchmark runs.
 	/// </summary>
 	/// <returns>A clone of the Coordinate array.</returns>
-	[Information(nameof(GetCoordinateValArray), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateValArray), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Coordinate[] GetCoordinateValArray()
 	{
 		// Return a shallow clone of the backing array so callers may modify the
@@ -108,7 +108,7 @@ public partial class CollectionBenchmark
 	/// Similar to <see cref="GetCoordinateValArray"/>, this method provides a fresh copy of the data for benchmark tests.
 	/// </summary>
 	/// <returns>A clone of the Coordinate list as a Collection.</returns>
-	[Information(nameof(GetCoordinateValCollection), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateValCollection), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Collection<Coordinate> GetCoordinateValCollection()
 	{
 		return this._coordinateValArray.ToCollection();
@@ -119,7 +119,7 @@ public partial class CollectionBenchmark
 	/// The caller MUST NOT mutate the underlying collection; this provides
 	/// allocation-free read access for hot-path benchmarks.
 	/// </summary>
-	[Information(nameof(GetCoordinateValReadOnlySpan), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(GetCoordinateValReadOnlySpan), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public ReadOnlySpan<Coordinate> GetCoordinateValReadOnlySpan()
 	{
 		return this._coordinateValArray.AsSpan();
@@ -129,7 +129,7 @@ public partial class CollectionBenchmark
 	/// Loads the coordinate collections into memory. This includes both a list and an array of Coordinate objects,
 	/// populated to the maximum count specified for the benchmark. This method is called to prepare data for benchmark tests.
 	/// </summary>
-	[Information(nameof(LoadCoordinateCollections), UnitTestStatus = UnitTestStatus.None, Status = Status.Available)]
+	[Information(nameof(LoadCoordinateCollections), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected void LoadCoordinateCollections()
 	{
 		this._coordinateValArray = [.. RandomData.GenerateCoordinateCollection<Coordinate>(this.MaxCount)];
