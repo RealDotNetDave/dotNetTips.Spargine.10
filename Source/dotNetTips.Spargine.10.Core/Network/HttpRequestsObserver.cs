@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="HttpRequestsObserver.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -42,7 +42,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </code>
 /// </example>
 /// <param name="logger">The logger used for logging information about the HTTP requests and responses.</param>
-[Information(nameof(HttpRequestsObserver), Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(HttpRequestsObserver), Status = Status.Available, Documentation = "https://bit.ly/SpargineLogHttpTraffic")]
 public sealed class HttpRequestsObserver(ILogger logger) : IDisposable, IObserver<DiagnosticListener>
 {
 

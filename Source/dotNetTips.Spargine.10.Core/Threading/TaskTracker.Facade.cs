@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Static façade providing quick access to a default <see cref="ITaskTracker"/> instance.
 /// Use <see cref="Instance"/> for dependency injection scenarios.
 /// </summary>
-[Information(nameof(TaskTrackerFacade), UnitTestStatus = UnitTestStatus.Completed, Status = Status.New)]
+[Information(nameof(TaskTrackerFacade), UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
 public static class TaskTrackerFacade
 {
 	private static readonly Lazy<ITaskTracker> _default = new(() => new TaskTracker());

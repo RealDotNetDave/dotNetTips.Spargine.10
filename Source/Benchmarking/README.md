@@ -44,6 +44,7 @@ BenchmarkDotNet now calls `GlobalSetupAsync()` and `GlobalCleanupAsync()`. Their
 Use these directories only for disposable benchmark data. Do not move them or place data that must survive cleanup inside them. No arbitrary external path can be registered for deletion. Manually created benchmark instances must invoke a global cleanup entry point; calling only `Cleanup()` or `CleanupAsync()` does not perform tracked-directory cleanup.
 
 ## Unit tests
+**Unit test coverage: 63%**
 
 The standalone `Source/Unit Tests/DotNetTips.Spargine.10.Benchmarking.Tests` MSTest project contains fixture, lifecycle, async-stream, and directory-ownership regression tests. Its library reference is supplied by a project-local `Directory.Build.targets`, leaving the project file unchanged. Run it with `dotnet test` using the project path; it is not included in the open benchmarking solution.
 

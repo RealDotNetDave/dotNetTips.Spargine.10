@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="HttpEventListenerAsyncLocal.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -47,7 +47,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </example>
 /// <seealso cref="EventListener"/>
 /// <param name="logger">The logger used for logging HTTP events. This logger is utilized to log information about each HTTP request's start and stop events, including the URL and execution time.</param>
-[Information(nameof(HttpEventListenerAsyncLocal), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(HttpEventListenerAsyncLocal), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineLogHttpTraffic")]
 public sealed class HttpEventListenerAsyncLocal(ILogger logger) : EventListener
 {
 

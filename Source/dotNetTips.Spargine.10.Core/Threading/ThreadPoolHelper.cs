@@ -293,7 +293,7 @@ public static class ThreadPoolHelper
 	/// <returns>A task that contains a <see cref="SimpleResult{T}" /> describing success (with the value) or failure (with the exception).</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="operation" /> is <see langword="null" />.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="millisecondsTimeOut" /> is less than 1 or greater than 30,000.</exception>
-	[Information(nameof(TryRunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryRunAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<SimpleResult<TResult>> TryRunAsync<TResult>([DisallowNull] Func<CancellationToken, TResult> operation, int millisecondsTimeOut, CancellationToken cancellationToken = default)
 	{
 		operation = operation.ArgumentNotNull();

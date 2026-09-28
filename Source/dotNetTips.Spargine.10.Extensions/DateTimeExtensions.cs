@@ -87,7 +87,7 @@ public static class DateTimeExtensions
 	/// <returns>The final tick of the day using the original offset.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(EndOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTimeOffset EndOfDay(this in DateTimeOffset value)
 	{
 		return new DateTimeOffset(value.Date.AddDays(1).AddTicks(-1), value.Offset);
@@ -445,7 +445,7 @@ public static class DateTimeExtensions
 	/// <returns>The date at midnight using the original offset.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(StartOfDay), "David McCarter", "07-10-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTimeOffset StartOfDay(this in DateTimeOffset value) =>
 		new(value.Year, value.Month, value.Day, 0, 0, 0, value.Offset);
 
@@ -667,7 +667,7 @@ public static class DateTimeExtensions
 	/// <param name="input">The input span to parse.</param>
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise default.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.New)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out DateTime value)
 	{
 		return DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out value);

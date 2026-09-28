@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Tracks fire-and-forget tasks so callers can query pending work and wait for completion.
 /// Implementations observe task completions and may forward exceptions via a callback supplied at registration.
 /// </summary>
-[Information(nameof(ITaskTracker), Status = Status.New)]
+[Information(nameof(ITaskTracker), Status = Status.NeedsDocumentation)]
 public interface ITaskTracker : IDisposable
 {
 

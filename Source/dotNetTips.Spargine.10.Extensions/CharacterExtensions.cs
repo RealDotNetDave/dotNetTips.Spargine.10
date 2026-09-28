@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// <c>ToAsciiLower</c>) and digit value extraction (<c>GetDigitValue</c>). All members are aggressively
 /// inlined for optimal throughput in character processing scenarios.
 /// </summary>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineCharacterExtensions")]
 public static class CharacterExtensions
 {
 	/// <summary>

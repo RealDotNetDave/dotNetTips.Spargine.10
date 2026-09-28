@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="HttpEventListener.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -46,7 +46,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </code>
 /// </example>
 /// <seealso cref="EventListener"/>
-[Information(nameof(HttpEventListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(HttpEventListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineLogHttpTraffic")]
 public sealed class HttpEventListener(ILogger logger) : EventListener
 {
 

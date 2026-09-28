@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Default implementation of <see cref="ITaskTracker"/>.
 /// Tracks task registrations by key and supports task or key-based unregister operations.
 /// </summary>
-[Information(nameof(TaskTracker), Status = Status.New)]
+[Information(nameof(TaskTracker), Status = Status.NeedsDocumentation)]
 public sealed class TaskTracker : ITaskTracker
 {
 	private const int DefaultTimeoutSeconds = 30;

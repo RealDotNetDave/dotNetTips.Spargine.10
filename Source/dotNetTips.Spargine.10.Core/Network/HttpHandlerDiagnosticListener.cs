@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-11-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-18-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="HttpHandlerDiagnosticListener.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -45,7 +45,7 @@ namespace DotNetTips.Spargine.Core.Network;
 /// </code>
 /// </example>
 /// <remarks>Initializes a new instance of the <see cref="HttpHandlerDiagnosticListener" /> class.</remarks>
-[Information(nameof(HttpHandlerDiagnosticListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
+[Information(nameof(HttpHandlerDiagnosticListener), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineLogHttpTraffic")]
 public sealed class HttpHandlerDiagnosticListener(ILogger logger) : IObserver<KeyValuePair<string, object>>
 {
 

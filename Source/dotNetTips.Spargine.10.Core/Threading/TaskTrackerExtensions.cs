@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// <summary>
 /// Extension methods for registering and fire-and-forget tracking of <see cref="Task"/> instances.
 /// </summary>
-[Information(nameof(TaskTrackerExtensions), Status = Status.Available)]
+[Information(nameof(TaskTrackerExtensions), Status = Status.NeedsDocumentation)]
 public static class TaskTrackerExtensions
 {
 

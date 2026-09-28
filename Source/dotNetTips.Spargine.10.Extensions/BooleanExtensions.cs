@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-15-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="BooleanExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -43,7 +43,7 @@ public static class BooleanExtensions
 	/// <returns>A <see cref="string"/> containing "true" or "false" in lowercase.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available, Documentation = "ADD URL")]
+	[Information("Original Code from: https://github.com/dotnet/BenchmarkDotNet.", author: "David McCarter", createdOn: "7/15/2020", BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static string ToLowerCase(this bool value)
 	{
 		return value ? Resources.TrueLowerCase : Resources.FalseLowerCase;
