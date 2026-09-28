@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AnalysisLevel>none</AnalysisLevel>
+    <AssemblyVersion>2026.10.4.17</AssemblyVersion>
+    <BaseOutputPath>..\..\..\AppBin</BaseOutputPath>
+    <Company>dotNetTips.com - McCarter Consulting</Company>
+    <Configurations>Debug;Release</Configurations>
+    <Copyright>McCarter Consulting (David McCarter)</Copyright>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <FileVersion>2026.10.4.17</FileVersion>
+	<ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <LangVersion>latest</LangVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+	<Nullable>enable</Nullable>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Version>2026.10.4.17</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="IO\FilePropertyReaderWriterTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="10.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.12" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageReference Include="Moq" Version="4.21.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.4.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.4.1" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Extensions\DotNetTips.Spargine.10.Extensions.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10.Tester\DotNetTips.Spargine.10.Tester.csproj" />
+    <ProjectReference Include="..\..\dotNetTips.Spargine.10\DotNetTips.Spargine.10.csproj" />
+  </ItemGroup>
+</Project>
