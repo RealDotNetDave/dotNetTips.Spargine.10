@@ -4,7 +4,7 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 09-28-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,12 +33,16 @@ namespace DotNetTips.Spargine.Extensions;
 /// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
 /// safely skipping files that raise <see cref="IOException" />.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation ="ADD URL")]
 public static class DirectoryInfoExtensions
 {
 	/// <summary>
 	/// Creates a temporary file in <paramref name="directory"/> and atomically moves it to <paramref name="destinationFileName"/>.
 	/// </summary>
+	/// <remarks>
+	/// This method ensures the target directory exists, writes through a temporary file, and then
+	/// replaces the destination file to minimize the risk of partial writes.
+	/// </remarks>
 	/// <param name="directory">The directory where temp and destination files reside.</param>
 	/// <param name="destinationFileName">The destination file name (not full path).</param>
 	/// <param name="content">The content to write.</param>
@@ -65,6 +69,10 @@ public static class DirectoryInfoExtensions
 	/// <summary>
 	/// Gets the total size of files in a <see cref="DirectoryInfo"/> based on a search pattern and search option.
 	/// </summary>
+	/// <remarks>
+	/// Files that cannot be accessed due to <see cref="IOException"/> are skipped and traced,
+	/// allowing size calculation to continue for the remaining files.
+	/// </remarks>
 	/// <param name="path">The directory information.</param>
 	/// <param name="searchPattern">The search pattern to match file names in <paramref name="path"/>.</param>
 	/// <param name="searchOption">Specifies whether to include subdirectories.</param>
@@ -101,6 +109,10 @@ public static class DirectoryInfoExtensions
 	/// <summary>
 	/// Reads all text from the file in this directory and returns <paramref name="fallback"/> when the read fails.
 	/// </summary>
+	/// <remarks>
+	/// The method delegates to <see cref="FileInfoExtensions.ReadAllTextSafe(FileInfo,string,Encoding?)"/>
+	/// after resolving the file path from <paramref name="directory"/> and <paramref name="fileName"/>.
+	/// </remarks>
 	/// <param name="directory">The source directory.</param>
 	/// <param name="fileName">The file name (not full path).</param>
 	/// <param name="fallback">Fallback text returned when read fails.</param>
@@ -121,6 +133,10 @@ public static class DirectoryInfoExtensions
 	/// <summary>
 	/// Writes text atomically to a file within the directory.
 	/// </summary>
+	/// <remarks>
+	/// This is a convenience wrapper that uses <see cref="CreateTempFileThenMove(DirectoryInfo,string,string,Encoding?)"/>
+	/// to perform an atomic write operation.
+	/// </remarks>
 	/// <param name="directory">The target directory.</param>
 	/// <param name="fileName">The destination file name (not full path).</param>
 	/// <param name="content">The content to write.</param>
