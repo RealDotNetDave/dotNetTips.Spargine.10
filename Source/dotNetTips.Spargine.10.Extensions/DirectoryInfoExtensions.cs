@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
 /// safely skipping files that raise <see cref="IOException" />.
 /// </remarks>
-[Information(Status = Status.Available, Documentation ="ADD URL")]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class DirectoryInfoExtensions
 {
 	/// <summary>
