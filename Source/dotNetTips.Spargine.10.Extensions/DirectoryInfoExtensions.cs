@@ -4,7 +4,7 @@
 // Created          : 10-08-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-28-2026
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="DirectoryInfoExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -33,7 +33,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// search pattern and <see cref="SearchOption" />, accumulating total file size in bytes while
 /// safely skipping files that raise <see cref="IOException" />.
 /// </remarks>
-[Information(Status = Status.Available, Documentation = "ADD URL")]
+[Information(Status = Status.Available, Documentation = "https://bit.ly/SpargineDirectoryInfoExtensions")]
 public static class DirectoryInfoExtensions
 {
 	/// <summary>
