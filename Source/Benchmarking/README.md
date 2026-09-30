@@ -1,6 +1,5 @@
 # DotNetTips.Spargine.Benchmarking v2026.10.10.1 for .NET 10
-<!-- Last Modified By: Copilot Agent; Last Modified On: 09-08-2026 -->
-![Spargine 10](SPARGINE-10-BANNER-BACKGROUND-100.png)
+![Spargine 10 banner](https://raw.githubusercontent.com/RealDotNetDave/dotNetTips.Spargine.10/master/Docs/Graphics/SPARGINE-10-BANNER-BACKGROUND-100.png)
 Open-source .NET assembly from dotNetTips.com and David (dotNetDave) McCarter for benchmarking code using BenchmarkDotNet. 
 This repository is for the dotNetTips.Spargine code for .NET 10. Please support this project by [**clicking here**]("https://github.com/sponsors/RealDotNetDave).
 [**Click here**](https://dotnettips.wordpress.com/spargine/) to visit the Spargine page on **dotNetTips.com**. Much of this code is also documented on

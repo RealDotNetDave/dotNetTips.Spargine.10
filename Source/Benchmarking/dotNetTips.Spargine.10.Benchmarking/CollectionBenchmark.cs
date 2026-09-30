@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-28-2026
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -319,9 +319,9 @@ public abstract partial class CollectionBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Gets a collection of <see cref="PersonRecord"/> objects for insertion into collections.
+	/// Gets a new array containing the cached <see cref="PersonRecord"/> objects prepared during setup for insertion benchmarks.
 	/// </summary>
-	/// <returns>An array of <see cref="PersonRecord"/>.</returns>
+	/// <returns>A new array containing the cached insert <see cref="PersonRecord"/> objects.</returns>
 	[Information(nameof(GetPersonRecordCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert()
 	{
@@ -329,9 +329,27 @@ public abstract partial class CollectionBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Gets a collection of <see cref="Person"/> reference objects for insertion into collections.
+	/// Gets a new array of newly generated <see cref="PersonRecord"/> objects for insertion benchmarks.
 	/// </summary>
-	/// <returns>An array of <see cref="Person"/>.</returns>
+	/// <param name="count">The number of newly generated <see cref="PersonRecord"/> objects to return. Must be at least one.</param>
+	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="PersonRecord"/> objects.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
+	[Information(nameof(GetPersonRecordCollectionToInsert),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Optimize,
+		BenchmarkStatus = BenchmarkStatus.Benchmark,
+		Status = Status.New)]
+	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert(int count)
+	{
+		count = count.ArgumentInRange(1, paramName: nameof(count));
+
+		return [.. RandomData.GeneratePersonRecordCollection(count)];
+	}
+
+	/// <summary>
+	/// Gets a new array containing the cached <see cref="Person"/> reference objects prepared during setup for insertion benchmarks.
+	/// </summary>
+	/// <returns>A new array containing the cached insert <see cref="Person"/> reference objects.</returns>
 	[Information(nameof(GetPersonRefCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual Person[] GetPersonRefCollectionToInsert()
 	{
@@ -339,13 +357,49 @@ public abstract partial class CollectionBenchmark : Benchmark
 	}
 
 	/// <summary>
-	/// Gets a collection of <see cref="Tester.Models.ValueTypes.Person"/> value objects for insertion into collections.
+	/// Gets a new array of newly generated <see cref="Person"/> reference objects for insertion benchmarks.
 	/// </summary>
-	/// <returns>An array of <see cref="Tester.Models.ValueTypes.Person"/>.</returns>
+	/// <param name="count">The number of newly generated <see cref="Person"/> reference objects to return. Must be at least one.</param>
+	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="Person"/> reference objects.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
+	[Information(nameof(GetPersonRefCollectionToInsert),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Optimize,
+		BenchmarkStatus = BenchmarkStatus.Benchmark,
+		Status = Status.New)]
+	protected virtual Person[] GetPersonRefCollectionToInsert(int count)
+	{
+		count = count.ArgumentInRange(1, paramName: nameof(count));
+
+		return [.. RandomData.GeneratePersonRefCollection(count)];
+	}
+
+	/// <summary>
+	/// Gets a new array containing the cached <see cref="Tester.Models.ValueTypes.Person"/> objects prepared during setup for insertion benchmarks.
+	/// </summary>
+	/// <returns>A new array containing the cached insert <see cref="Tester.Models.ValueTypes.Person"/> objects.</returns>
 	[Information(nameof(GetPersonValCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert()
 	{
 		return [.. this._peopleValToInsert];
+	}
+
+	/// <summary>
+	/// Gets a new array of newly generated <see cref="Tester.Models.ValueTypes.Person"/> objects for insertion benchmarks.
+	/// </summary>
+	/// <param name="count">The number of newly generated <see cref="Tester.Models.ValueTypes.Person"/> objects to return. Must be at least one.</param>
+	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="Tester.Models.ValueTypes.Person"/> objects.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
+	[Information(nameof(GetPersonValCollectionToInsert),
+		UnitTestStatus = UnitTestStatus.Completed,
+		OptimizationStatus = OptimizationStatus.Optimize,
+		BenchmarkStatus = BenchmarkStatus.Benchmark,
+		Status = Status.New)]
+	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert(int count)
+	{
+		count = count.ArgumentInRange(1, paramName: nameof(count));
+
+		return [.. RandomData.GeneratePersonValCollection(count)];
 	}
 
 	/// <summary>

@@ -4,7 +4,7 @@
 // Created          : 09-08-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-28-2026
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmarkTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -205,6 +205,17 @@ public sealed class CollectionBenchmarkTests
 	}
 
 	[TestMethod]
+	public void GetPersonRecordCollectionToInsertWithCountReturnsRequestedNewItems()
+	{
+		const int count = 3;
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonRecordCollectionToInsert(count);
+		var second = benchmark.ExposeGetPersonRecordCollectionToInsert(count);
+
+		Assert.AreEqual((count, count, false, false), (first.Length, second.Length, ReferenceEquals(first, second), ReferenceEquals(first[0], second[0])));
+	}
+
+	[TestMethod]
 	public void GetPersonRecordDictionaryContainsLastLookupId()
 	{
 		var benchmark = CreateBenchmark();
@@ -233,6 +244,17 @@ public sealed class CollectionBenchmarkTests
 	}
 
 	[TestMethod]
+	public void GetPersonRefCollectionToInsertWithCountReturnsRequestedNewItems()
+	{
+		const int count = 3;
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonRefCollectionToInsert(count);
+		var second = benchmark.ExposeGetPersonRefCollectionToInsert(count);
+
+		Assert.AreEqual((count, count, false, false), (first.Length, second.Length, ReferenceEquals(first, second), ReferenceEquals(first[0], second[0])));
+	}
+
+	[TestMethod]
 	public void GetPersonRefDictionaryContainsLastLookupId()
 	{
 		var benchmark = CreateBenchmark();
@@ -258,6 +280,17 @@ public sealed class CollectionBenchmarkTests
 		var benchmark = CreateBenchmark();
 
 		Assert.AreEqual(benchmark.HalfCount, benchmark.ExposeGetPersonValCollectionToInsert().Length);
+	}
+
+	[TestMethod]
+	public void GetPersonValCollectionToInsertWithCountReturnsRequestedNewItems()
+	{
+		const int count = 3;
+		var benchmark = CreateBenchmark();
+		var first = benchmark.ExposeGetPersonValCollectionToInsert(count);
+		var second = benchmark.ExposeGetPersonValCollectionToInsert(count);
+
+		Assert.AreEqual((count, count, false, false), (first.Length, second.Length, ReferenceEquals(first, second), first[0].Id == second[0].Id));
 	}
 
 	[TestMethod]
@@ -641,9 +674,15 @@ public sealed class CollectionBenchmarkTests
 	{
 		public PersonRecord[] ExposeGetPersonRecordCollectionToInsert() => this.GetPersonRecordCollectionToInsert();
 
+		public PersonRecord[] ExposeGetPersonRecordCollectionToInsert(int count) => this.GetPersonRecordCollectionToInsert(count);
+
 		public Person[] ExposeGetPersonRefCollectionToInsert() => this.GetPersonRefCollectionToInsert();
 
+		public Person[] ExposeGetPersonRefCollectionToInsert(int count) => this.GetPersonRefCollectionToInsert(count);
+
 		public ValuePerson[] ExposeGetPersonValCollectionToInsert() => this.GetPersonValCollectionToInsert();
+
+		public ValuePerson[] ExposeGetPersonValCollectionToInsert(int count) => this.GetPersonValCollectionToInsert(count);
 
 		public void ExposeLoadCoordinateCollections() => this.LoadCoordinateCollections();
 
