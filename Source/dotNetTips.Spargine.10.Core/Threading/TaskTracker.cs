@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 09-24-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-24-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="TaskTracker.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Default implementation of <see cref="ITaskTracker"/>.
 /// Tracks task registrations by key and supports task or key-based unregister operations.
 /// </summary>
-[Information(nameof(TaskTracker), Status = Status.NeedsDocumentation)]
+[Information(nameof(TaskTracker), Status = Status.Available, Documentation ="ADD URL")]
 public sealed class TaskTracker : ITaskTracker
 {
 	private const int DefaultTimeoutSeconds = 30;

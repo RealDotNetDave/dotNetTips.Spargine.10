@@ -4,7 +4,7 @@
 // Created          : 09-24-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-25-2026
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,32 +19,31 @@ using System.Diagnostics.CodeAnalysis;
 namespace DotNetTips.Spargine.Core.Threading;
 
 /// <summary>
-/// Extension methods for registering and fire-and-forget tracking of <see cref="Task"/> instances.
+/// Extension methods for registering <see cref="Task"/> instances with an <see cref="ITaskTracker"/>.
 /// </summary>
-[Information(nameof(TaskTrackerExtensions), Status = Status.NeedsDocumentation)]
+[Information(nameof(TaskTrackerExtensions), Status = Status.Available, Documentation = "ADD URL")]
 public static class TaskTrackerExtensions
 {
 
 	/// <summary>
-	/// Registers the task and executes it in a fire-and-forget manner. Exceptions are forwarded to the provided callback if supplied.
+	/// Registers an already-started task with a tracker so it can be awaited or monitored later without being awaited at the call site.
+	/// Exceptions are observed by the tracker and forwarded to the provided callback if supplied.
 	/// </summary>
-	/// <param name="task">The task to execute fire-and-forget.</param>
+	/// <param name="task">The task to register. Must be an already-started (hot) task; cold tasks created with <c>new Task(...)</c> are not started by this method.</param>
 	/// <param name="tracker">Optional tracker to register the task with. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
 	/// <param name="onException">Optional exception callback.</param>
 	/// <returns>The <see cref="Ulid"/> registration key assigned to the task.</returns>
-	[Information(nameof(FireAndForgetAndTrack), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-	public static Ulid FireAndForgetAndTrack([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
+	/// <remarks>Registering the same task instance more than once returns the key from the original registration.</remarks>
+	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	public static Ulid RegisterWithTracker([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		task = task.ArgumentNotNull();
 
-		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
-		var key = taskTracker.Register(task, onException);
-
-		// Ensure exceptions are observed to avoid unobserved task exceptions.
-		_ = task.ContinueWith(t => t.Exception, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
-
-		return key;
+		// Register() attaches a continuation that reads Task.Exception, which observes any fault.
+		return (tracker ?? TaskTrackerFacade.Instance).Register(task, onException);
 	}
+
 	/// <summary>
 	/// Creates and registers a single task for the provided item using a synchronous action.
 	/// </summary>
@@ -137,21 +136,5 @@ public static class TaskTrackerExtensions
 		}
 
 		return keys.AsReadOnly();
-	}
-
-	/// <summary>
-	/// Registers the task with the supplied tracker so it will be observed and tracked until completion.
-	/// </summary>
-	/// <param name="task">The task to register.</param>
-	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
-	/// <param name="onException">Optional exception callback invoked when the task faults.</param>
-	/// <returns>The <see cref="Ulid"/> registration key assigned to the task.</returns>
-	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
-	public static Ulid RegisterWithTracker([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
-	{
-		task = task.ArgumentNotNull();
-		var taskTracker = tracker ?? TaskTrackerFacade.Instance;
-
-		return taskTracker.Register(task, onException);
 	}
 }

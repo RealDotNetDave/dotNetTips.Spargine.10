@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 09-24-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-24-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="ITaskTracker.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -25,7 +25,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Tracks fire-and-forget tasks so callers can query pending work and wait for completion.
 /// Implementations observe task completions and may forward exceptions via a callback supplied at registration.
 /// </summary>
-[Information(nameof(ITaskTracker), Status = Status.NeedsDocumentation)]
+[Information(nameof(ITaskTracker), Status = Status.Available, Documentation = "ADD URL")]
 public interface ITaskTracker : IDisposable
 {
 

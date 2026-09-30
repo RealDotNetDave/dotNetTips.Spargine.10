@@ -4,7 +4,7 @@
 // Created          : 09-24-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-25-2026
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -102,7 +102,7 @@ public sealed class TaskTrackerTests
 	}
 
 	[TestMethod]
-	public async Task FireAndForgetAndTrack_ForwardsExceptionToCallback()
+	public async Task RegisterWithTracker_TaskFaults_ForwardsExceptionToCallback()
 	{
 		using ITaskTracker tracker = new TaskTracker();
 
@@ -114,7 +114,7 @@ public sealed class TaskTrackerTests
 			throw new InvalidOperationException("boom2");
 		});
 
-		var registrationKey = task.FireAndForgetAndTrack(tracker, ex => invoked.TrySetResult(ex));
+		var registrationKey = task.RegisterWithTracker(tracker, ex => invoked.TrySetResult(ex));
 		Assert.AreNotEqual(default(Ulid), registrationKey);
 
 		var completed = await Task.WhenAny(invoked.Task, Task.Delay(1000)).ConfigureAwait(false);

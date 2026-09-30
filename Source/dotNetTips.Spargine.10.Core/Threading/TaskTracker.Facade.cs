@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 09-24-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-24-2026
+// Last Modified By : David McCarter
+// Last Modified On : 09-30-2026
 // ***********************************************************************
 // <copyright file="TaskTracker.Facade.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -21,7 +21,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Static façade providing quick access to a default <see cref="ITaskTracker"/> instance.
 /// Use <see cref="Instance"/> for dependency injection scenarios.
 /// </summary>
-[Information(nameof(TaskTrackerFacade), UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
+[Information(nameof(TaskTrackerFacade), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
 public static class TaskTrackerFacade
 {
 	private static readonly Lazy<ITaskTracker> _default = new(() => new TaskTracker());
