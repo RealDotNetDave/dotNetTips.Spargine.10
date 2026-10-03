@@ -4,7 +4,7 @@
 // Created          : 09-24-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 09-30-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -35,7 +35,7 @@ public static class TaskTrackerExtensions
 	/// <returns>The <see cref="Ulid"/> registration key assigned to the task.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	/// <remarks>Registering the same task instance more than once returns the key from the original registration.</remarks>
-	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Ulid RegisterWithTracker([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		task = task.ArgumentNotNull();
@@ -53,7 +53,7 @@ public static class TaskTrackerExtensions
 	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
 	/// <param name="onException">Optional exception callback invoked when the registered task faults.</param>
 	/// <returns>The registration key for the created task.</returns>
-	[Information(nameof(RegisterItemWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterItemWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Ulid RegisterItemWithTracker<T>(this T item, Action<T> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();
@@ -73,7 +73,7 @@ public static class TaskTrackerExtensions
 	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
 	/// <param name="onException">Optional exception callback invoked when the registered task faults.</param>
 	/// <returns>The registration key for the created task.</returns>
-	[Information(nameof(RegisterItemWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterItemWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static Ulid RegisterItemWithTrackerAsync<T>(this T item, Func<T, Task> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();
@@ -93,7 +93,7 @@ public static class TaskTrackerExtensions
 	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
 	/// <param name="onException">Optional exception callback invoked when a registered task faults.</param>
 	/// <returns>A read-only collection of registration keys for the created tasks.</returns>
-	[Information(nameof(RegisterManyWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterManyWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static ReadOnlyCollection<Ulid> RegisterManyWithTracker<T>(this ReadOnlySpan<T> items, Action<T> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();
@@ -120,7 +120,7 @@ public static class TaskTrackerExtensions
 	/// <param name="tracker">Optional tracker to use. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
 	/// <param name="onException">Optional exception callback invoked when a registered task faults.</param>
 	/// <returns>A read-only collection of registration keys for the created tasks.</returns>
-	[Information(nameof(RegisterManyWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(RegisterManyWithTrackerAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public static ReadOnlyCollection<Ulid> RegisterManyWithTrackerAsync<T>(this ReadOnlySpan<T> items, Func<T, Task> action, ITaskTracker? tracker = null, Action<Exception>? onException = null)
 	{
 		action = action.ArgumentNotNull();

@@ -159,28 +159,20 @@ public void ProcessType<T>(T instance) where T : IHasProperties
 - All of the status properties in '[Information]' must be **ordered** as follows: `UnitTestStatus`, `OptimizationStatus`, `BenchmarkStatus`, `Status`. For example:
   ```csharp
   [Information(nameof(MyMethod),
-	  UnitTestStatus = UnitTestStatus.Completed,
-	  OptimizationStatus = OptimizationStatus.Completed,
-	  BenchmarkStatus = BenchmarkStatus.CheckPerformance,
-	  Status = Status.Available)]
+      UnitTestStatus = UnitTestStatus.Completed,
+      OptimizationStatus = OptimizationStatus.Completed,
+      BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+      Status = Status.Available)]
   public void MyMethod() { ... }
 
   // For class-level attributes (nameof() not applicable), use a descriptive string:
   [Information("MyClass description.",
-	  UnitTestStatus = UnitTestStatus.Completed,
-	  OptimizationStatus = OptimizationStatus.Completed,
-	  BenchmarkStatus = BenchmarkStatus.CheckPerformance,
-	  Status = Status.Available)]
+      UnitTestStatus = UnitTestStatus.Completed,
+      OptimizationStatus = OptimizationStatus.Completed,
+      BenchmarkStatus = BenchmarkStatus.CheckPerformance,
+      Status = Status.Available)]
   public sealed class MyClass { ... }
   ```
-
----
-
-## **1.3. Resource String Formatting (MANDATORY)**
-
-- **NEVER** pass a resource string directly to `string.Format()` or `StringBuilder.AppendFormat()`.
-- **ALWAYS** pre-parse resource format strings into `CompositeFormat` instances cached as `private static readonly` fields.
-- Name `CompositeFormat` fields after the resource key using camelCase with `_` prefix: `Resources.RangeError` → `_rangeError`.
 - Use `string.Format(CultureInfo.InvariantCulture, _compositeField, args)` or the appropriate culture overload.
 
 ```csharp
@@ -242,6 +234,7 @@ string message = string.Format(CultureInfo.InvariantCulture, _rangeError, min, m
 - After optimizing a method, update its `[Information]` attribute to `BenchmarkStatus = BenchmarkStatus.CheckPerformance`.
 - Do NOT declare field initializers as `= null!`; leave them without an initializer if they are set in `Setup()`.
 - When adding new benchmark classes in this repository, update `source/Benchmarking/dotNetTips.Spargine.Extensions.BenchmarkTests/Program.cs` in the proper benchmark group so the new benchmarks are runnable.
+- Benchmark fixtures should use BenchmarkDotNet/Spargine lifecycle cleanup hooks instead of adding IDisposable and a disposal pattern. Do not add MethodImpl attributes to benchmark fixtures.
 
 ---
 

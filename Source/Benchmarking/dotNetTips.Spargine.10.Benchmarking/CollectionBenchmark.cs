@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-30-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="CollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -37,8 +37,6 @@ namespace DotNetTips.Spargine.Benchmarking;
 [Information(Status = Status.Available, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public abstract partial class CollectionBenchmark : Benchmark
 {
-	//TODO: OVERLOAD METHODS LIKE GetPersonRecordCollectionToInsert() TO RETURN NEW ITEMS.
-
 	/// <summary>
 	/// Half count
 	/// </summary>
@@ -334,11 +332,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of newly generated <see cref="PersonRecord"/> objects to return. Must be at least one.</param>
 	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="PersonRecord"/> objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
-	[Information(nameof(GetPersonRecordCollectionToInsert),
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Optimize,
-		BenchmarkStatus = BenchmarkStatus.Benchmark,
-		Status = Status.New)]
+	[Information(nameof(GetPersonRecordCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	protected virtual PersonRecord[] GetPersonRecordCollectionToInsert(int count)
 	{
 		count = count.ArgumentInRange(1, paramName: nameof(count));
@@ -362,11 +356,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of newly generated <see cref="Person"/> reference objects to return. Must be at least one.</param>
 	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="Person"/> reference objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
-	[Information(nameof(GetPersonRefCollectionToInsert),
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Optimize,
-		BenchmarkStatus = BenchmarkStatus.Benchmark,
-		Status = Status.New)]
+	[Information(nameof(GetPersonRefCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	protected virtual Person[] GetPersonRefCollectionToInsert(int count)
 	{
 		count = count.ArgumentInRange(1, paramName: nameof(count));
@@ -390,11 +380,7 @@ public abstract partial class CollectionBenchmark : Benchmark
 	/// <param name="count">The number of newly generated <see cref="Tester.Models.ValueTypes.Person"/> objects to return. Must be at least one.</param>
 	/// <returns>A new array containing <paramref name="count"/> newly generated <see cref="Tester.Models.ValueTypes.Person"/> objects.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="count"/> is less than one.</exception>
-	[Information(nameof(GetPersonValCollectionToInsert),
-		UnitTestStatus = UnitTestStatus.Completed,
-		OptimizationStatus = OptimizationStatus.Optimize,
-		BenchmarkStatus = BenchmarkStatus.Benchmark,
-		Status = Status.New)]
+	[Information(nameof(GetPersonValCollectionToInsert), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
 	protected virtual Tester.Models.ValueTypes.Person[] GetPersonValCollectionToInsert(int count)
 	{
 		count = count.ArgumentInRange(1, paramName: nameof(count));

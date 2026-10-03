@@ -48,6 +48,21 @@ Use these directories only for disposable benchmark data. Do not move them or pl
 The standalone `Source/Unit Tests/DotNetTips.Spargine.10.Benchmarking.Tests` MSTest project contains fixture, lifecycle, async-stream, and directory-ownership regression tests. Its library reference is supplied by a project-local `Directory.Build.targets`, leaving the project file unchanged. Run it with `dotnet test` using the project path; it is not included in the open benchmarking solution.
 
 # Benchmark Tests
+## TaskTracker threading benchmarks
+
+The public `DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark` derives from the Spargine `Benchmark` base and remains unsealed for BenchmarkDotNet's generated runner. It covers:
+
+- Fresh pending-task registration, with and without an exception callback.
+- Duplicate pending-task registration, explicitly labeled as a separate case.
+- Successful pending-task removal by task reference and by ULID.
+- Waiting for a pending task signaled inline, an empty tracker, and a zero-timeout pending task.
+
+From the repository root, run only these eight cases with `dotnet run --project Source/Benchmarking/dotNetTips.Spargine.Core.BenchmarkTests/DotNetTips.Spargine.Core.BenchmarkTests.csproj -c Release -- --task-tracker`. The Core runner also discovers this class during its default all-benchmark run; the Extensions runner remains independent.
+
+Iteration setup creates fresh pending task sources and registrations outside measurement. Each iteration uses one invocation and an unroll factor of one so registration and removal do not silently become duplicate or no-op operations. Cleanup completes the sources before disposing the trackers, releasing retained continuations even after unregistering a task.
+
+The active completion wait uses an infinite timeout and includes inline task signaling and completion continuations; it does not measure sleeps, elapsed delays, timer scheduling, or task creation/registration. The callback-registration case measures attaching the callback, not exception forwarding. Single-invocation results can be noisy for these short operations; review BenchmarkDotNet diagnostics before interpreting measurements.
+
 [**click here**](https://github.com/RealDotNetDave/dotNetTips.Spargine.8/tree/master/docs/Benchmark%20Results)
  to view current benchmark results for this project.
 # Your Support Is Appreciated!

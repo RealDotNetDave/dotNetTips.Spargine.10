@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 09-24-2026
 //
-// Last Modified By : David McCarter
-// Last Modified On : 09-30-2026
+// Last Modified By : Copilot Agent
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="TaskTracker.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -27,7 +27,7 @@ namespace DotNetTips.Spargine.Core.Threading;
 /// Default implementation of <see cref="ITaskTracker"/>.
 /// Tracks task registrations by key and supports task or key-based unregister operations.
 /// </summary>
-[Information(nameof(TaskTracker), Status = Status.Available, Documentation ="ADD URL")]
+[Information(nameof(TaskTracker), Status = Status.Available, Documentation = "ADD URL")]
 public sealed class TaskTracker : ITaskTracker
 {
 	private const int DefaultTimeoutSeconds = 30;
@@ -57,7 +57,7 @@ public sealed class TaskTracker : ITaskTracker
 
 	/// <inheritdoc />
 	[SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Callback exceptions must not escape the task continuation.")]
-	[Information(nameof(Register), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Register), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public Ulid Register([DisallowNull] Task task, Action<Exception>? onException = null)
 	{
 		task = task.ArgumentNotNull();
@@ -101,7 +101,7 @@ public sealed class TaskTracker : ITaskTracker
 	}
 
 	/// <inheritdoc />
-	[Information(nameof(Unregister), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Unregister), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public void Unregister([DisallowNull] Task task)
 	{
 		task = task.ArgumentNotNull();
@@ -117,12 +117,12 @@ public sealed class TaskTracker : ITaskTracker
 	}
 
 	/// <inheritdoc />
-	[Information(nameof(Unregister), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(Unregister), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public bool Unregister(Ulid key) => this._tasksByKey.TryRemove(key, out _);
 
 	/// <inheritdoc />
 	[SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Exceptions are forwarded at registration time; swallow here to avoid rethrow during wait.")]
-	[Information(nameof(WaitForCompletionAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.New)]
+	[Information(nameof(WaitForCompletionAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
 	public async Task<bool> WaitForCompletionAsync(TimeSpan? timeout = null, CancellationToken cancellationToken = default)
 	{
 		if (this._disposed)

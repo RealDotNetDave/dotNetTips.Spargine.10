@@ -4,7 +4,7 @@
 // Created          : 11-13-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-01-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -514,7 +514,7 @@ public abstract class Benchmark
 	/// benchmark. Source and disposal exceptions propagate. Cancellation during a pending move requires
 	/// cooperation from the source; this method does not abandon enumeration in the background.
 	/// </remarks>
-	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(ConsumeAsyncEnumerableAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task ConsumeAsyncEnumerableAsync<T>([DisallowNull] IAsyncEnumerable<T> source, CancellationToken cancellationToken = default)
 	{
 		source = source.ArgumentNotNull(paramName: nameof(source));
@@ -662,7 +662,7 @@ public abstract class Benchmark
 	/// subsequent copies reuse them. Mutations to arrays returned by getters do not affect this source.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CopyByteArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void CopyByteArrayTo(Span<byte> destination)
 	{
 		this.GetByteFixture(destination.Length).Source.AsSpan().CopyTo(destination);
@@ -677,7 +677,7 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The minimum length is <see cref="int.MaxValue"/>.</exception>
 	/// <remarks>Use outside measured code. Copies references to immutable strings, not the strings themselves.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CopyStringArrayTo), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void CopyStringArrayTo(Span<string> destination, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		wordMinLength = wordMinLength.EnsureMinimum(1).ArgumentInRange(max: int.MaxValue - 1, paramName: nameof(wordMinLength));
@@ -703,11 +703,13 @@ public abstract class Benchmark
 	/// </remarks>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(CreateTemporaryDirectory), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public DirectoryInfo CreateTemporaryDirectory()
 	{
 		var directory = Directory.CreateTempSubdirectory();
+
 		this._temporaryDirectories.Add(directory.FullName);
+
 		return directory;
 	}
 
@@ -738,10 +740,11 @@ public abstract class Benchmark
 	/// <exception cref="ArgumentOutOfRangeException">The byte count is negative.</exception>
 	/// <remarks>Shares fixtures with <see cref="GetByteArray"/>. Generate fixtures outside measured code.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GetByteArrayByLength), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public byte[] GetByteArrayByLength(int byteCount)
 	{
 		byteCount = byteCount.ArgumentInRange(min: 0, paramName: nameof(byteCount));
+
 		return this.GetByteFixture(byteCount).Value;
 	}
 
@@ -796,7 +799,7 @@ public abstract class Benchmark
 	/// <see cref="Cleanup"/> instead. Directory cleanup is attempted even if the hook fails.
 	/// </remarks>
 	[GlobalCleanup]
-	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Benchmark, Status = Status.Available)]
+	[Information(nameof(GlobalCleanupAsync), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public async Task GlobalCleanupAsync()
 	{
 		try
