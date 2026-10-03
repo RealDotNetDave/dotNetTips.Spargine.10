@@ -4,7 +4,7 @@
 // Created          : 05-14-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-13-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="Crockford32.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -46,7 +46,7 @@ public static class Crockford32
 	/// </returns>
 	/// <exception cref="FormatException">Thrown when the input contains a character that is not valid in the Crockford Base32 alphabet.</exception>
 	[Pure]
-	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Decode), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static byte[] Decode(string text)
 	{
 		if (string.IsNullOrWhiteSpace(text))
@@ -58,7 +58,8 @@ public static class Crockford32
 		var nc = NormalizeChars(text, norm);
 
 		int buffer = 0, bitsLeft = 0;
-		var bytes = new List<byte>((int)Math.Floor(nc * 5 / 8.0));
+		var bytes = new byte[(nc * 5) >> 3];
+		var byteIndex = 0;
 
 		for (var index = 0; index < nc; index++)
 		{
@@ -75,12 +76,12 @@ public static class Crockford32
 
 			if (bitsLeft >= 8)
 			{
-				bytes.Add((byte)((buffer >> (bitsLeft - 8)) & 0xFF));
+				bytes[byteIndex++] = (byte)((buffer >> (bitsLeft - 8)) & 0xFF);
 				bitsLeft -= 8;
 			}
 		}
 
-		return [.. bytes];
+		return bytes;
 	}
 
 	/// <summary>

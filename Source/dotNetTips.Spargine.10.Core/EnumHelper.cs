@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="EnumHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
@@ -37,6 +38,11 @@ public static partial class EnumHelper
 {
 	private static readonly ConcurrentDictionary<Enum, string> _descriptionCache = new();
 	private static readonly ConcurrentDictionary<(Type, bool), ReadOnlyCollection<EnumValue>> _itemsCache = new();
+	private static class EnumMetadata<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>
+		where TEnum : struct, Enum
+	{
+		internal static readonly bool IsFlags = typeof(TEnum).IsDefined(typeof(FlagsAttribute), inherit: false);
+	}
 
 	/// <summary>
 	/// Gets the count of individual flags set on the specified flags enumeration value.
@@ -44,27 +50,18 @@ public static partial class EnumHelper
 	/// <typeparam name="TEnum">The flags enum type.</typeparam>
 	/// <param name="input">The flags value to inspect.</param>
 	/// <returns>The number of individual flags set; or <c>1</c> for non-flags enumerations.</returns>
-	[Information(nameof(FlagCount), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FlagCount), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int FlagCount<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
 		where TEnum : struct, Enum
 	{
-		var type = typeof(TEnum);
-
-		if (type.IsDefined(typeof(FlagsAttribute), false) is false)
+		if (EnumMetadata<TEnum>.IsFlags is false)
 		{
 			return 1;
 		}
 
-		var count = 0;
 		var value = Convert.ToUInt64(input, CultureInfo.InvariantCulture);
 
-		while (value != 0)
-		{
-			count += (int)(value & 1);
-			value >>= 1;
-		}
-
-		return count;
+		return BitOperations.PopCount(value);
 	}
 
 	/// <summary>
@@ -186,7 +183,7 @@ public static partial class EnumHelper
 	/// </code>
 	/// </example>
 	[return: NotNull]
-	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetItems), author: "David McCarter", createdOn: "1/1/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<EnumValue> GetItems<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(bool fixNames = true)
 		where T : Enum
@@ -194,26 +191,22 @@ public static partial class EnumHelper
 		var enumType = typeof(T);
 		var cacheKey = (enumType, fixNames);
 
-		if (_itemsCache.TryGetValue(cacheKey, out var cachedResult))
+		return _itemsCache.GetOrAdd(cacheKey, static key =>
 		{
-			return cachedResult;
-		}
+			var (cachedEnumType, cachedFixNames) = key;
+			var enumValues = (T[])Enum.GetValues(cachedEnumType);
+			var length = enumValues.Length;
+			var result = new EnumValue[length];
+			var enumNames = GetNames(cachedEnumType, cachedFixNames);
 
-		var enumValues = Enum.GetValues(enumType);
-		var length = enumValues.Length;
-		var result = new EnumValue[length];
-		var enumNames = GetNames(enumType, fixNames);
+			for (var valueIndex = 0; valueIndex < length; valueIndex++)
+			{
+				var value = Convert.ToInt32(enumValues[valueIndex], CultureInfo.InvariantCulture);
+				result[valueIndex] = new EnumValue(value, enumNames[valueIndex]);
+			}
 
-		for (var i = 0; i < length; i++)
-		{
-			var value = Convert.ToInt32(enumValues.GetValue(i), CultureInfo.InvariantCulture);
-			result[i] = new EnumValue(value, enumNames[i]);
-		}
-
-		var readOnlyResult = Array.AsReadOnly(result);
-		_ = _itemsCache.TryAdd(cacheKey, readOnlyResult);
-
-		return readOnlyResult;
+			return Array.AsReadOnly(result);
+		});
 	}
 
 	/// <summary>
@@ -224,25 +217,26 @@ public static partial class EnumHelper
 	/// <returns>A read-only collection of the individual flags that are set.</returns>
 	/// <exception cref="ArgumentException">Thrown when <typeparamref name="TEnum"/> is not a flags enumeration.</exception>
 	[return: NotNull]
-	[Information(nameof(GetSetFlags), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetSetFlags), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<TEnum> GetSetFlags<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>(TEnum input)
 		where TEnum : struct, Enum
 	{
-		var type = typeof(TEnum);
-
-		if (type.IsDefined(typeof(FlagsAttribute), false) is false)
+		if (EnumMetadata<TEnum>.IsFlags is false)
 		{
+			var type = typeof(TEnum);
 			throw new ArgumentException($"Enum type {type.Name} is not a flags enumeration.", nameof(input));
 		}
 
+		var inputValue = Convert.ToUInt64(input, CultureInfo.InvariantCulture);
 		var values = Enum.GetValues<TEnum>();
 		var items = new List<TEnum>(values.Length);
 
 		for (var index = 0; index < values.Length; index++)
 		{
 			var value = values[index];
+			var valueBits = Convert.ToUInt64(value, CultureInfo.InvariantCulture);
 
-			if (input.HasFlag(value) && Convert.ToUInt64(value, CultureInfo.InvariantCulture) != 0)
+			if (valueBits != 0 && (inputValue & valueBits) == valueBits)
 			{
 				items.Add(value);
 			}

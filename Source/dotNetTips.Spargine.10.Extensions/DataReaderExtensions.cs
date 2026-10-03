@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -60,12 +60,19 @@ public static class DataReaderExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="dataReader"/> is null.</exception>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ToCsv), author: "David McCarter", createdOn: "10/8/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ReadOnlyCollection<string> ToCsv([DisallowNull] this IDataReader dataReader, bool includeHeaderAsFirstRow, [ConstantExpected] char delimiter = ControlChars.Comma)
 	{
 		dataReader = dataReader.ArgumentNotNull();
 
 		var convertedRows = new List<string>();
+		var fieldCount = dataReader.FieldCount;
+		var isStringField = new bool[fieldCount];
+
+		for (var fieldIndex = 0; fieldIndex < fieldCount; fieldIndex++)
+		{
+			isStringField[fieldIndex] = dataReader.GetFieldType(fieldIndex) == typeof(string);
+		}
 
 		AddHeaderRowToCsv(dataReader, includeHeaderAsFirstRow, delimiter, convertedRows);
 
@@ -75,30 +82,22 @@ public static class DataReaderExtensions
 
 			try
 			{
-				for (var fieldIndex = 0; fieldIndex < dataReader.FieldCount; fieldIndex++)
+				for (var fieldIndex = 0; fieldIndex < fieldCount; fieldIndex++)
 				{
 					if (!dataReader.IsDBNull(fieldIndex))
 					{
 						var value = dataReader.GetValue(fieldIndex).ToString();
-						if (dataReader.GetFieldType(fieldIndex) == typeof(string))
+						if (isStringField[fieldIndex] && value is not null)
 						{
-							// If double quotes are used in value, ensure each are replaced by two.
-							if (value!.Contains('"', StringComparison.Ordinal))
-							{
-								value = value.Replace("\"", "\"\"", StringComparison.Ordinal);
-							}
-
-							// If delimiter is in value, ensure it is put in double quotes.
-							if (value.Contains(delimiter, StringComparison.CurrentCulture))
-							{
-								value = $"\"{value}\"";
-							}
+							AppendEscapedCsvField(sb, value, delimiter);
 						}
-
-						_ = sb.Append(value);
+						else
+						{
+							_ = sb.Append(value);
+						}
 					}
 
-					if (fieldIndex < dataReader.FieldCount - 1)
+					if (fieldIndex < fieldCount - 1)
 					{
 						_ = sb.Append(delimiter);
 					}
@@ -113,6 +112,44 @@ public static class DataReaderExtensions
 		}
 
 		return convertedRows.AsReadOnly();
+	}
+
+	private static void AppendEscapedCsvField(StringBuilder sb, string value, [ConstantExpected] char delimiter)
+	{
+		var requiresQuotes = false;
+
+		for (var charIndex = 0; charIndex < value.Length; charIndex++)
+		{
+			var currentChar = value[charIndex];
+			if (currentChar is '"' || currentChar == delimiter)
+			{
+				requiresQuotes = true;
+				break;
+			}
+		}
+
+		if (!requiresQuotes)
+		{
+			_ = sb.Append(value);
+			return;
+		}
+
+		_ = sb.Append('"');
+
+		for (var charIndex = 0; charIndex < value.Length; charIndex++)
+		{
+			var currentChar = value[charIndex];
+			if (currentChar == '"')
+			{
+				_ = sb.Append("\"\"");
+			}
+			else
+			{
+				_ = sb.Append(currentChar);
+			}
+		}
+
+		_ = sb.Append('"');
 	}
 
 	/// <summary>

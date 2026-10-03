@@ -4,7 +4,7 @@
 // Created          : 01-12-2021
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-20-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="DistinctBlockingCollection.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -203,7 +203,7 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 	/// </returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Remove), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public bool Remove(T item)
 	{
 		if (item is null)
@@ -218,22 +218,22 @@ public sealed class DistinctBlockingCollection<T> : BlockingCollection<T>, IClon
 
 		var comparer = EqualityComparer<T>.Default;
 		var removed = false;
-		var itemsToRestore = new List<T>();
+		var itemCount = this.Count;
 
-		while (this.TryTake(out var currentItem))
+		for (var itemIndex = 0; itemIndex < itemCount; itemIndex++)
 		{
+			if (!this.TryTake(out var currentItem))
+			{
+				break;
+			}
+
 			if (!removed && comparer.Equals(currentItem, item))
 			{
 				removed = true;
 				continue;
 			}
 
-			itemsToRestore.Add(currentItem);
-		}
-
-		foreach (var itemToRestore in itemsToRestore)
-		{
-			base.Add(itemToRestore);
+			base.Add(currentItem);
 		}
 
 		return removed;

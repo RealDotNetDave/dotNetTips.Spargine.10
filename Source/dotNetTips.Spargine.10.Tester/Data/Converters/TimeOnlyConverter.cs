@@ -52,7 +52,7 @@ public sealed class TimeOnlyConverter(string? serializationFormat) : JsonConvert
 	/// This method attempts to parse a <see cref="TimeOnly"/> value from the JSON string. It uses the IsoDateTimeOffsetConverter.Singleton.Culture for parsing.
 	/// If the JSON string cannot be parsed, a <see cref="JsonException"/> is thrown.
 	/// </remarks>
-	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Read), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var value = reader.GetString() ?? throw new JsonException(Resources.ErrorJSONValueIsNullOrNotAValidTimeOnlyRepresentation);
@@ -80,7 +80,7 @@ public sealed class TimeOnlyConverter(string? serializationFormat) : JsonConvert
 	/// This method converts the <see cref="TimeOnly"/> value to its string representation using the specified serialization format
 	/// and writes it as a JSON string value. It uses IsoDateTimeOffsetConverter.Singleton.Culture for formatting.
 	/// </remarks>
-	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Write), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public override void Write(Utf8JsonWriter writer, TimeOnly value, JsonSerializerOptions options)
 	{
 		writer = writer.ArgumentNotNull();

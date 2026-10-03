@@ -4,7 +4,7 @@
 // Created          : 07-09-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 08-03-2026
+// Last Modified On : 10-01-2026
 // ***********************************************************************
 // <copyright file="InformationScanner.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -16,7 +16,6 @@
 // ***********************************************************************
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -36,22 +35,23 @@ public static class InformationScanner
 	/// <returns>Enumeration of InformationMetadata items for each annotated member.</returns>
 	[RequiresUnreferencedCode("Scans assembly types and members via reflection; trimming may remove members required by consumers.")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetInformationMetadata), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<InformationMetadata> GetInformationMetadata([AllowNull] Assembly? assembly = null)
 	{
 		assembly ??= Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+		var assemblyName = assembly.FullName ?? assembly.GetName().Name ?? string.Empty;
 
 		foreach (var type in assembly.GetTypes())
 		{
 			var typeInfo = type.GetTypeInfo();
+			var typeName = type.FullName ?? type.Name;
 
-			// Type-level attribute
 			var infoAttr = typeInfo.GetCustomAttribute<InformationAttribute>(inherit: false);
 			if (infoAttr is not null)
 			{
 				yield return new InformationMetadata(
-					assembly.FullName ?? assembly.GetName().Name ?? string.Empty,
-					type.FullName ?? type.Name,
+					assemblyName,
+					typeName,
 					string.Empty,
 					"Type",
 					infoAttr.Description,
@@ -63,23 +63,76 @@ public static class InformationScanner
 					infoAttr.Documentation ?? string.Empty);
 			}
 
-			// Member-level attributes
-			var members = new List<MemberInfo>();
-			members.AddRange(typeInfo.DeclaredMethods.Cast<MemberInfo>());
-			members.AddRange(typeInfo.DeclaredFields);
-			members.AddRange(typeInfo.DeclaredProperties);
-			members.AddRange(typeInfo.DeclaredNestedTypes);
-
-			foreach (var m in members)
+			foreach (var method in typeInfo.DeclaredMethods)
 			{
-				var attr = m.GetCustomAttribute<InformationAttribute>(inherit: false);
+				var attr = method.GetCustomAttribute<InformationAttribute>(inherit: false);
 				if (attr is not null)
 				{
 					yield return new InformationMetadata(
-						assembly.FullName ?? assembly.GetName().Name ?? string.Empty,
-						type.FullName ?? type.Name,
-						m.Name,
-						m.MemberType.ToString(),
+						assemblyName,
+						typeName,
+						method.Name,
+						method.MemberType.ToString(),
+						attr.Description,
+						attr.Author ?? string.Empty,
+						attr.UnitTestStatus,
+						attr.BenchmarkStatus,
+						attr.OptimizationStatus,
+						attr.Status,
+						attr.Documentation ?? string.Empty);
+				}
+			}
+
+			foreach (var field in typeInfo.DeclaredFields)
+			{
+				var attr = field.GetCustomAttribute<InformationAttribute>(inherit: false);
+				if (attr is not null)
+				{
+					yield return new InformationMetadata(
+						assemblyName,
+						typeName,
+						field.Name,
+						field.MemberType.ToString(),
+						attr.Description,
+						attr.Author ?? string.Empty,
+						attr.UnitTestStatus,
+						attr.BenchmarkStatus,
+						attr.OptimizationStatus,
+						attr.Status,
+						attr.Documentation ?? string.Empty);
+				}
+			}
+
+			foreach (var property in typeInfo.DeclaredProperties)
+			{
+				var attr = property.GetCustomAttribute<InformationAttribute>(inherit: false);
+				if (attr is not null)
+				{
+					yield return new InformationMetadata(
+						assemblyName,
+						typeName,
+						property.Name,
+						property.MemberType.ToString(),
+						attr.Description,
+						attr.Author ?? string.Empty,
+						attr.UnitTestStatus,
+						attr.BenchmarkStatus,
+						attr.OptimizationStatus,
+						attr.Status,
+						attr.Documentation ?? string.Empty);
+				}
+			}
+
+			foreach (var nestedType in typeInfo.DeclaredNestedTypes)
+			{
+				var attr = nestedType.GetCustomAttribute<InformationAttribute>(inherit: false);
+				if (attr is not null)
+				{
+					yield return new InformationMetadata(
+						assemblyName,
+						typeName,
+						nestedType.Name,
+						nestedType.MemberType.ToString(),
 						attr.Description,
 						attr.Author ?? string.Empty,
 						attr.UnitTestStatus,

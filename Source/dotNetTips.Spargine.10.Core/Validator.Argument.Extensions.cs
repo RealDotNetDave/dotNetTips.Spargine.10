@@ -3,8 +3,8 @@
 // Author           : Copilot Agent
 // Created          : 07-09-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 08-03-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="Validator.Argument.Extensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -106,11 +106,12 @@ public static partial class Validator
 	/// <returns>The original sequence when valid.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(EnsureNotEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(EnsureNotEmpty), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static IEnumerable<T> EnsureNotEmpty<T>([DisallowNull] this IEnumerable<T>? source, string errorMessage = ControlChars.EmptyString, [CallerArgumentExpression(nameof(source))] string paramName = ControlChars.EmptyString)
 	{
 		source = source.ArgumentNotNull();
 
+		// SUGGESTION BY COPILOT SLOWER
 		// Fast-paths: TryGetNonEnumeratedCount, ICollection<T>, IReadOnlyCollection<T>
 		if (source.TryGetNonEnumeratedCount(out var tmpCount))
 		{

@@ -4,7 +4,7 @@
 // Created          : 01-19-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-16-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="RandomData.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - McCarter Consulting. All rights reserved.
@@ -424,7 +424,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A random company name string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCompanyName), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCompanyName), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateCompanyName()
 	{
 		var suffixes = new[] { "Inc", "Corp", "LLC", "Ltd", "Group", "Solutions", "Technologies", "Systems", "Industries", "Enterprises" };
@@ -524,7 +524,7 @@ public static class RandomData
 	/// <param name="maxValue">The maximum value. Default is 10000.00.</param>
 	/// <returns>A random currency amount with 2 decimal places.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateCurrencyAmount), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateCurrencyAmount), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static decimal GenerateCurrencyAmount(decimal minValue = 0.01m, decimal maxValue = 10000.00m)
 	{
 		return GenerateDecimal(minValue, maxValue, 2);
@@ -543,7 +543,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateDateOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateOnly GenerateDateOnly(DateOnly? minValue = null, DateOnly? maxValue = null)
 	{
 		var min = minValue ?? new DateOnly(2000, 1, 1);
@@ -574,7 +574,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateDateTimeOffset), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static DateTimeOffset GenerateDateTimeOffset(DateTimeOffset? minValue = null, DateTimeOffset? maxValue = null)
 	{
 		var min = minValue ?? new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
@@ -720,7 +720,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateEnum), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TEnum GenerateEnum<TEnum>() where TEnum : struct, Enum
 	{
 		var values = Enum.GetValues<TEnum>();
@@ -834,7 +834,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A new <see cref="Guid"/>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateGuid), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public static Guid GenerateGuid()
 	{
 		return Guid.NewGuid();
@@ -846,7 +846,7 @@ public static class RandomData
 	/// <param name="length">The length of the hash string in characters. Must be at least 1 and at most 128. Default is 32.</param>
 	/// <returns>A random hexadecimal hash string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateHashString), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateHashString), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateHashString(int length = 32)
 	{
 		length = length.ArgumentInRange(min: 1, max: 128, defaultValue: 32);
@@ -866,7 +866,7 @@ public static class RandomData
 	/// <returns>A 32-bit signed integer greater than or equal to <paramref name="min"/> and less than <paramref name="max"/>.</returns>
 	/// <exception cref="ArgumentOutOfRangeException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateInteger), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateInteger), "David McCarter", "1/19/2019", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int GenerateInteger(in int min = int.MinValue, int max = int.MaxValue)
 	{
 		//Ensure maxLength is +1 of minLength so the _randomNumberGenerator does not cause an exception.
@@ -880,7 +880,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A string representing a random IPv4 address (e.g., "192.168.1.100").</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateIPv4Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateIPv4Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateIPv4Address()
 	{
 		Span<byte> octets = stackalloc byte[4];
@@ -894,7 +894,7 @@ public static class RandomData
 	/// </summary>
 	/// <returns>A string representing a random IPv6 address (e.g., "2001:0db8:85a3:0000:0000:8a2e:0370:7334").</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateIPv6Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateIPv6Address), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateIPv6Address()
 	{
 		Span<byte> bytes = stackalloc byte[16];
@@ -909,7 +909,7 @@ public static class RandomData
 	/// <param name="propertyCount">The number of properties in the JSON object. Must be at least 1. Default is 5.</param>
 	/// <returns>A random JSON object string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateJsonObject), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateJsonObject), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateJsonObject(int propertyCount = 5)
 	{
 		propertyCount = propertyCount.ArgumentInRange(min: 1, defaultValue: 5);
@@ -1087,7 +1087,7 @@ public static class RandomData
 	/// <param name="wordsPerSentence">The number of words per sentence. Must be at least 1. Default is 10.</param>
 	/// <returns>A random paragraph with multiple sentences.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateParagraph), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateParagraph), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateParagraph(int sentenceCount = 5, int wordsPerSentence = 10)
 	{
 		sentenceCount = sentenceCount.ArgumentInRange(min: 1, defaultValue: 5);
@@ -1426,7 +1426,7 @@ public static class RandomData
 	/// <param name="wordCount">The number of words in the sentence. Must be at least 1. Default is 10.</param>
 	/// <returns>A random sentence with proper capitalization and punctuation.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateSentence), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateSentence), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GenerateSentence(int wordCount = 10)
 	{
 		wordCount = wordCount.ArgumentInRange(min: 1, defaultValue: 10);
@@ -1513,7 +1513,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateTimeOnly), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TimeOnly GenerateTimeOnly(TimeOnly? minValue = null, TimeOnly? maxValue = null)
 	{
 		var min = minValue ?? TimeOnly.MinValue;
@@ -1547,7 +1547,7 @@ public static class RandomData
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GenerateTimeSpan), "Copilot Agent", "07/10/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static TimeSpan GenerateTimeSpan(TimeSpan? minValue = null, TimeSpan? maxValue = null)
 	{
 		var min = minValue ?? TimeSpan.Zero;
@@ -1850,7 +1850,7 @@ public static class RandomData
 
 	/// <summary>Appends the appropriate character for a postal-code format specifier to the StringBuilder.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(AppendPostalCodeFormatChar), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(AppendPostalCodeFormatChar), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void AppendPostalCodeFormatChar(StringBuilder sb, char character)
 	{
 		_ = character switch
@@ -1863,7 +1863,7 @@ public static class RandomData
 
 	/// <summary>Replaces the CITY placeholder in the StringBuilder if city data is available.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ApplyCityReplacement), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ApplyCityReplacement), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void ApplyCityReplacement(StringBuilder sb, string format, City? city)
 	{
 		if (city is not null && format.Contains("CITY", StringComparison.Ordinal))
@@ -1874,7 +1874,7 @@ public static class RandomData
 
 	/// <summary>Builds address field values from the given country and lengths.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(BuildAddressComponents), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(BuildAddressComponents), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static AddressComponents BuildAddressComponents(Country country, int addressLength, int countyProvinceLength)
 	{
 		var (state, city) = PickStateAndCity(country);
@@ -1892,7 +1892,7 @@ public static class RandomData
 
 	/// <summary>Pre-computes per-word lengths and the total byte count needed for <see cref="GenerateWords"/>.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ComputeWordLengths), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(ComputeWordLengths), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static (int[] Lengths, int TotalBytes) ComputeWordLengths(int count, int minLength, int maxLength)
 	{
 		var lengths = new int[count];
@@ -1913,7 +1913,7 @@ public static class RandomData
 
 	/// <summary>Iterates the format string and fills the StringBuilder with generated postal-code characters.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FillPostalCodeFromFormat), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(FillPostalCodeFromFormat), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void FillPostalCodeFromFormat(StringBuilder sb, string format)
 	{
 		foreach (var character in format.AsSpan())
@@ -1924,7 +1924,7 @@ public static class RandomData
 
 	/// <summary>Fills <paramref name="chars"/> from <paramref name="randomBytes"/> using the given character range.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FillWordChars), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(FillWordChars), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static void FillWordChars(Span<char> chars, ReadOnlySpan<byte> randomBytes, char minCharacter, int range)
 	{
 		for (var i = 0; i < chars.Length; i++)
@@ -2004,7 +2004,7 @@ public static class RandomData
 
 	/// <summary>Generates a single <see cref="PersonName"/> from the internal name pools.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GeneratePersonNameInternal), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static PersonName GeneratePersonNameInternal() =>
 		new(_firstNames.Value.PickRandom() ?? Core.ControlChars.EmptyString, _lastNames.Value.PickRandom() ?? Core.ControlChars.EmptyString);
 
@@ -2142,19 +2142,19 @@ public static class RandomData
 
 	/// <summary>Picks a random city from the state's cities, or <see langword="null"/> if the state is null.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetCityFromState), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static City? GetCityFromState(State? state) =>
 		state?.Cities?.PickRandom();
 
 	/// <summary>Returns the city name or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCityName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetCityName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetCityName(City? city) =>
 		city?.Name ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the phone number length for the given country, or the default of 10.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetCountryPhoneLength), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetCountryPhoneLength), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static int GetCountryPhoneLength(Country? country) =>
 		country?.PhoneNumberLength ?? 10;
 
@@ -2184,13 +2184,13 @@ public static class RandomData
 
 	/// <summary>Returns the raw phone code string for the given country (comma-separated list), or empty string if not available.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetPhoneCodeString), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetPhoneCodeString(Country? country) =>
 		country?.PhoneCode ?? Core.ControlChars.EmptyString;
 
 	/// <summary>Returns the state name or empty string.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetStateName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(GetStateName), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static string GetStateName(State? state) =>
 		state?.Name ?? Core.ControlChars.EmptyString;
 
@@ -2211,7 +2211,7 @@ public static class RandomData
 
 	/// <summary>Picks a random state and city from the country.</summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
+	[Information(nameof(PickStateAndCity), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	private static (State? state, City? city) PickStateAndCity(Country country)
 	{
 		var state = country.States?.PickRandom();

@@ -3,15 +3,13 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="OpenTelemetryExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Null-safe OpenTelemetry-focused helpers for <see cref="System.Diagnostics.Activity"/>.
-// </summary>
+// <summary>Null-safe OpenTelemetry-focused helpers for <see cref="System.Diagnostics.Activity"/>.</summary>
 // ***********************************************************************
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -34,10 +32,15 @@ public static class OpenTelemetryExtensions
 	/// <param name="activity">The target activity.</param>
 	/// <param name="tags">The tags to add.</param>
 	/// <returns>The original <paramref name="activity"/> for fluent chaining.</returns>
-	[Information(nameof(AddTagsIfPresent), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(AddTagsIfPresent), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Activity? AddTagsIfPresent([AllowNull] this Activity activity, [AllowNull] IEnumerable<KeyValuePair<string, object?>> tags)
 	{
 		if (activity is null || tags is null)
+		{
+			return activity;
+		}
+
+		if (tags is ICollection<KeyValuePair<string, object?>> knownCountTags && knownCountTags.Count == 0)
 		{
 			return activity;
 		}
@@ -62,7 +65,7 @@ public static class OpenTelemetryExtensions
 	/// <param name="activity">The target activity.</param>
 	/// <param name="exception">The exception that indicates an error.</param>
 	/// <returns>The original <paramref name="activity"/> for fluent chaining.</returns>
-	[Information(nameof(SetStatusIfError), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(SetStatusIfError), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Activity? SetStatusIfError([AllowNull] this Activity activity, Exception? exception)
 	{
 		if (activity is null || exception is null)

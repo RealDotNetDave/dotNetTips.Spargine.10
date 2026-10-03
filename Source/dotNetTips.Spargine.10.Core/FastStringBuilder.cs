@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 12-27-2022
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 08-03-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="FastStringBuilder.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -326,19 +326,20 @@ public static class FastStringBuilder
 	/// <returns>The formatted string.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatCurrentCulture(string format, params object?[] args)
 	{
-		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)
+		if (format is null || args.CheckItemsExists() is false)
 		{
 			return ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get();
+		var sb = _stringBuilderPool.Get().SetCapacity(format.Length);
+		var compositeFormat = ResourceFormatCache.GetOrAdd(format);
 
 		try
 		{
-			return sb.AppendFormat(CultureInfo.CurrentCulture, ResourceFormatCache.GetOrAdd(format), args).ToString();
+			return sb.AppendFormat(CultureInfo.CurrentCulture, compositeFormat, args).ToString();
 		}
 		finally
 		{
@@ -354,19 +355,20 @@ public static class FastStringBuilder
 	/// <returns>The formatted string.</returns>
 	[return: NotNull]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatInvariant), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatInvariant(string format, params object?[] args)
 	{
-		if (format.CheckIsNotNull() is false || args is null || args.Length == 0)
+		if (format is null || args.CheckItemsExists() is false)
 		{
 			return ControlChars.EmptyString;
 		}
 
-		var sb = _stringBuilderPool.Get();
+		var sb = _stringBuilderPool.Get().SetCapacity(format.Length);
+		var compositeFormat = ResourceFormatCache.GetOrAdd(format);
 
 		try
 		{
-			return sb.AppendFormat(CultureInfo.InvariantCulture, ResourceFormatCache.GetOrAdd(format), args).ToString();
+			return sb.AppendFormat(CultureInfo.InvariantCulture, compositeFormat, args).ToString();
 		}
 		finally
 		{

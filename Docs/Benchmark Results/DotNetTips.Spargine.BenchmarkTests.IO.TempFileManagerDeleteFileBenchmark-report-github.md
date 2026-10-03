@@ -10,8 +10,8 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 InvocationCount=1  UnrollFactor=1  Categories=IO  
 
 ```
-| Method     | FileCount | Mean         | Error       | StdDev      | StdErr     | Min          | Q1           | Median       | Q3           | Max          | Op/s    | CI99.9% Margin | Iterations | Baseline | Exceptions | Allocated |
+| Method     | FileCount | Mean         | Error       | StdDev      | StdErr     | Median       | Min          | Q1           | Q3           | Max          | Op/s    | CI99.9% Margin | Iterations | Baseline | Exceptions | Allocated |
 |----------- |---------- |-------------:|------------:|------------:|-----------:|-------------:|-------------:|-------------:|-------------:|-------------:|--------:|---------------:|-----------:|--------- |-----------:|----------:|
-| DeleteFile | 10        | 353,365.2 ns | 11,447.4 ns | 32,287.5 ns | 3,366.2 ns | 280,250.0 ns | 331,225.0 ns | 349,150.0 ns | 373,200.0 ns | 443,650.0 ns | 2,829.9 |    -1,637.1 ns |      92.00 | No       |          - |         - |
-| DeleteFile | 100       | 334,722.3 ns | 14,133.0 ns | 40,322.2 ns | 4,158.9 ns | 275,500.0 ns | 306,100.0 ns | 326,000.0 ns | 350,850.0 ns | 441,000.0 ns | 2,987.6 |    -2,032.5 ns |      94.00 | No       |          - |         - |
-| DeleteFile | 1000      | 331,637.9 ns | 13,407.9 ns | 38,469.7 ns | 3,946.9 ns | 238,900.0 ns | 305,850.0 ns | 322,900.0 ns | 355,450.0 ns | 421,500.0 ns | 3,015.3 |    -1,926.0 ns |      95.00 | No       |          - |         - |
+| DeleteFile | 10        | 387,751.2 ns | 31,699.7 ns | 84,063.1 ns | 9,283.2 ns | 368,000.0 ns | 273,850.0 ns | 333,575.0 ns | 407,875.0 ns | 741,750.0 ns | 2,579.0 |    -4,600.6 ns |      82.00 | No       |          - |         - |
+| DeleteFile | 100       | 316,078.4 ns | 11,102.6 ns | 31,855.4 ns | 3,268.3 ns | 306,850.0 ns | 263,850.0 ns | 293,000.0 ns | 334,450.0 ns | 403,350.0 ns | 3,163.8 |    -1,586.6 ns |      95.00 | No       |          - |         - |
+| DeleteFile | 1000      | 358,484.7 ns | 14,911.1 ns | 42,782.7 ns | 4,389.4 ns | 346,050.0 ns | 275,450.0 ns | 329,800.0 ns | 389,100.0 ns | 484,150.0 ns | 2,789.5 |    -2,147.2 ns |      95.00 | No       |          - |         - |

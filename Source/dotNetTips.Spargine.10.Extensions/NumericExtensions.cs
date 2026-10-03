@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="NumericExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -154,7 +154,7 @@ public static class NumericExtensions
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="minimum" /> is greater than <paramref name="maximum" />.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Clamp), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int Clamp(this int value, int minimum, int maximum)
 	{
 		if (minimum > maximum)
@@ -250,7 +250,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatTime(this double milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -260,7 +260,8 @@ public static class NumericExtensions
 		}
 
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-		var sb = _stringBuilderPool.Value.Get();
+		var stringBuilderPool = _stringBuilderPool.Value;
+		var sb = stringBuilderPool.Get();
 
 		try
 		{
@@ -293,7 +294,7 @@ public static class NumericExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb.Clear());
+			stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -304,7 +305,7 @@ public static class NumericExtensions
 	/// <returns>A string representing the time in hours, minutes, and seconds, or milliseconds if less than 1000.</returns>
 	[Pure]
 	[return: NotNull]
-	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatTime), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatTime(this long milliseconds)
 	{
 		if (milliseconds < 1000)
@@ -313,7 +314,8 @@ public static class NumericExtensions
 		}
 
 		var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-		var sb = _stringBuilderPool.Value.Get();
+		var stringBuilderPool = _stringBuilderPool.Value;
+		var sb = stringBuilderPool.Get();
 
 		try
 		{
@@ -340,7 +342,7 @@ public static class NumericExtensions
 		}
 		finally
 		{
-			_stringBuilderPool.Value.Return(sb.Clear());
+			stringBuilderPool.Return(sb.Clear());
 		}
 	}
 
@@ -723,7 +725,7 @@ public static class NumericExtensions
 	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="multiple" /> is less than or equal to zero.</exception>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(RoundToNearestMultiple), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static int RoundToNearestMultiple(this int value, int multiple)
 	{
 		if (multiple <= 0)
@@ -1132,7 +1134,7 @@ public static class NumericExtensions
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out int value)
 	{
 		return int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out value);
@@ -1145,7 +1147,7 @@ public static class NumericExtensions
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out double value)
 	{
 		return double.TryParse(input, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out value);
@@ -1158,7 +1160,7 @@ public static class NumericExtensions
 	/// <param name="value">When this method returns, contains the parsed value if successful; otherwise zero.</param>
 	/// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(TryParseInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool TryParseInvariant(this ReadOnlySpan<char> input, out decimal value)
 	{
 		return decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value);

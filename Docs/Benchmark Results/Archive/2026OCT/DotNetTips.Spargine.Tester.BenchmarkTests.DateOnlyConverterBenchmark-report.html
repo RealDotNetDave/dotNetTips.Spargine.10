@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.DateOnlyConverterBenchmark-20260910-221242</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=JSON  
+</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>Read</td><td>174.0 ns</td><td>0.75 ns</td><td>0.70 ns</td><td>0.18 ns</td><td>172.6 ns</td><td>173.5 ns</td><td>173.9 ns</td><td>174.5 ns</td><td>175.0 ns</td><td>5,748,529.1</td><td>7.409 ns</td><td>15.00</td><td>No</td><td>0.0014</td><td>-</td><td>2,545 B</td><td>48 B</td>
+</tr><tr><td>Write</td><td>127.2 ns</td><td>1.26 ns</td><td>1.18 ns</td><td>0.30 ns</td><td>125.3 ns</td><td>126.5 ns</td><td>126.8 ns</td><td>128.1 ns</td><td>129.6 ns</td><td>7,862,323.3</td><td>7.348 ns</td><td>15.00</td><td>No</td><td>0.0060</td><td>-</td><td>4,692 B</td><td>184 B</td>
+</tr></tbody></table>
+</body>
+</html>

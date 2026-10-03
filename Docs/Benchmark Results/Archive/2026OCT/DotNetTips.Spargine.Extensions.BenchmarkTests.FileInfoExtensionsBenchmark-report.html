@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.FileInfoExtensionsBenchmark-20260913-230639</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                    </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;ReadAllTextSafe: Existing file&#39;</td><td>613,567.4 ns</td><td>27,677.7 ns</td><td>75,299.3 ns</td><td>8,119.7 ns</td><td>597,800.0 ns</td><td>501,000.0 ns</td><td>568,100.0 ns</td><td>637,425.0 ns</td><td>867,000.0 ns</td><td>1,629.8</td><td>-4,016.87 ns</td><td>86.00</td><td>No</td><td>602 B</td><td>-</td><td>8200 B</td>
+</tr><tr><td>&#39;ReadAllTextSafe: Missing file&#39;</td><td>4,075.6 ns</td><td>497.9 ns</td><td>1,387.9 ns</td><td>146.3 ns</td><td>3,900.0 ns</td><td>1,200.0 ns</td><td>3,225.0 ns</td><td>4,500.0 ns</td><td>7,900.0 ns</td><td>245,365.3</td><td>-28.15 ns</td><td>90.00</td><td>No</td><td>602 B</td><td>-</td><td>-</td>
+</tr><tr><td>CreateTempFileThenMove</td><td>1,467,142.0 ns</td><td>92,501.2 ns</td><td>254,775.2 ns</td><td>27,159.1 ns</td><td>1,359,050.0 ns</td><td>1,230,800.0 ns</td><td>1,299,850.0 ns</td><td>1,539,675.0 ns</td><td>2,242,300.0 ns</td><td>681.6</td><td>-13,535.57 ns</td><td>88.00</td><td>No</td><td>1,239 B</td><td>-</td><td>1152 B</td>
+</tr><tr><td>WriteAllTextAtomic</td><td>1,391,552.2 ns</td><td>55,387.2 ns</td><td>153,477.6 ns</td><td>16,268.6 ns</td><td>1,332,650.0 ns</td><td>1,230,050.0 ns</td><td>1,296,150.0 ns</td><td>1,401,950.0 ns</td><td>1,843,950.0 ns</td><td>718.6</td><td>-8,089.80 ns</td><td>89.00</td><td>No</td><td>401 B</td><td>-</td><td>1120 B</td>
+</tr></tbody></table>
+</body>
+</html>

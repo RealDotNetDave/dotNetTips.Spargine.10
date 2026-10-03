@@ -41,7 +41,7 @@ Use -ForceCopy to overwrite matching destination files regardless of timestamp.
 param(
 	[string]$SourceRoot = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Benchmark Results',
 	[string]$ChartsDataDestination = 'D:\src\GitHub\dotNetTips.Spargine.10\docs\Charts\Data',
-	[string]$ArchiveFolderName = '2026JUL',
+	[string]$ArchiveFolderName = '2026OCT',
 	[string]$ReviewDestination = 'D:\temp\sparginebenchmarkreview',
 	[switch]$ForceCopy
 )

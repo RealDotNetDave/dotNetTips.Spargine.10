@@ -1,0 +1,45 @@
+{
+   "Title":"DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent.DistinctBlockingCollectionBenchmark-20260913-012840",
+   "HostEnvironmentInfo":{
+      "BenchmarkDotNetCaption":"BenchmarkDotNet",
+      "BenchmarkDotNetVersion":"0.15.8",
+      "OsVersion":"Windows 10 (10.0.19045.7725/22H2/2022Update)",
+      "ProcessorName":"Intel Core i5-10400 CPU 2.90GHz",
+      "PhysicalProcessorCount":1,
+      "PhysicalCoreCount":6,
+      "LogicalCoreCount":12,
+      "RuntimeVersion":".NET 10.0.12 (10.0.12, 10.0.1226.42308)",
+      "Architecture":"X64",
+      "HasAttachedDebugger":false,
+      "HasRyuJit":true,
+      "Configuration":"RELEASE",
+      "DotNetCliVersion":"10.0.401",
+      "ChronometerFrequency":{
+         "Hertz":10000000
+      },
+      "HardwareTimerKind":"Unknown"
+   },
+   "Benchmarks":[
+      {
+         "DisplayInfo":"DistinctBlockingCollectionBenchmark.Clone: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True) [Count=64]",
+         "Namespace":"DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent",
+         "Type":"DistinctBlockingCollectionBenchmark",
+         "Method":"Clone",
+         "MethodTitle":"Clone",
+         "Parameters":"Count=64",
+         "FullName":"DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent.DistinctBlockingCollectionBenchmark.Clone(Count: 64)",
+         "HardwareIntrinsics":"",
+         "Statistics":null,
+         "Memory":{
+            "Gen0Collections":0,
+            "Gen1Collections":0,
+            "Gen2Collections":0,
+            "TotalOperations":0,
+            "BytesAllocatedPerOperation":null
+         },
+         "Measurements":[
+            
+         ]
+      }
+   ]
+}

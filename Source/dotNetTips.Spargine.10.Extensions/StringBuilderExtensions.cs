@@ -4,7 +4,7 @@
 // Created          : 05-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 05-21-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="StringBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -236,7 +236,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendKeyValue), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendKeyValue), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendKeyValue([DisallowNull] string key, string value, bool includeQuotes = true, bool includeComma = true)
 		{
 			sb = sb.ArgumentNotNull();
@@ -253,27 +253,7 @@ public static class StringBuilderExtensions
 			if (includeQuotes)
 			{
 				_ = sb.Append(ControlChars.Quote);
-				var lastSpecialIndex = 0;
-				int specialIndex;
-
-				while (true)
-				{
-					specialIndex = value.AsSpan(lastSpecialIndex).IndexOfAny(_specialCharacters);
-
-					if (specialIndex >= 0)
-					{
-						var absoluteIndex = lastSpecialIndex + specialIndex;
-
-						_ = sb.Append(value, lastSpecialIndex, specialIndex).Append(ControlChars.Backslash).Append(value[absoluteIndex]);
-
-						lastSpecialIndex = absoluteIndex + 1;
-					}
-					else
-					{
-						_ = sb.Append(value, lastSpecialIndex, value.Length - lastSpecialIndex);
-						break;
-					}
-				}
+				AppendEscapedValue(sb, value);
 				_ = sb.Append(ControlChars.Quote);
 			}
 			else
@@ -342,11 +322,16 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues([DisallowNull] string separator, [DisallowNull] params ReadOnlyCollection<string> values)
 		{
 			sb = sb.ArgumentNotNull();
 			values = values.ArgumentNotNull();
+
+			if (values.Count == 0)
+			{
+				return;
+			}
 
 			separator = SetSeparator(separator);
 
@@ -374,13 +359,18 @@ public static class StringBuilderExtensions
 		/// <param name="joinAction">The action to perform for each value.</param>
 		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/> or <paramref name="joinAction"/> is <c>null</c>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] Action<T> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
 			joinAction = joinAction.ArgumentNotNull();
 
 			if (values is null)
+			{
+				return;
+			}
+
+			if (values is ICollection<T> collection && collection.Count == 0)
 			{
 				return;
 			}
@@ -415,7 +405,7 @@ public static class StringBuilderExtensions
 		/// <param name="joinAction">The action to perform for each value and the additional parameter.</param>
 		/// <exception cref="ArgumentNullException">Thrown if <paramref name="sb"/>, <paramref name="param"/>, or <paramref name="joinAction"/> is <c>null</c>.</exception>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T, TParam>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam param, [DisallowNull] Action<T, TParam> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -423,6 +413,11 @@ public static class StringBuilderExtensions
 			param = param.ArgumentNotNull();
 
 			if (values is null)
+			{
+				return;
+			}
+
+			if (values is ICollection<T> collection && collection.Count == 0)
 			{
 				return;
 			}
@@ -467,7 +462,7 @@ public static class StringBuilderExtensions
 		/// </code>
 		/// </example>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(AppendValues), "David McCarter", "5/26/2020", "7/29/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void AppendValues<T, TParam1, TParam2>([DisallowNull] string separator, IEnumerable<T> values, [DisallowNull] TParam1 param1, [DisallowNull] TParam2 param2, [DisallowNull] Action<StringBuilder, T, TParam1, TParam2> joinAction)
 		{
 			sb = sb.ArgumentNotNull();
@@ -476,6 +471,11 @@ public static class StringBuilderExtensions
 			joinAction = joinAction.ArgumentNotNull();
 
 			if (values is null)
+			{
+				return;
+			}
+
+			if (values is ICollection<T> collection && collection.Count == 0)
 			{
 				return;
 			}

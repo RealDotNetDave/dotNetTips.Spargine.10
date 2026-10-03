@@ -39,13 +39,12 @@ internal sealed class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Temp tests
-		//BenchmarkHelper.RunBenchmarks(config, true,
-		// typeof(CollectionExtensionsCollectionBenchmark),
-		// typeof(CollectionExtensionsMutatingCollectionBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, true,
+typeof(EnumerableExtensionsCollectionBenchmark), typeof(EnumerableExtensionsConvertingCollectionBenchmark), typeof(EnumerableExtensionsCountCollectionBenchmark), typeof(EnumerableExtensionsDistinctCollectionBenchmark), typeof(EnumerableExtensionsMutatingCollectionBenchmark), typeof(ExceptionExtensionsBenchmark), typeof(FileInfoExtensionsBenchmark), typeof(HashSetExtensionsCollectionBenchmark), typeof(HashSetExtensionsMutatingCollectionBenchmark), typeof(HttpClientExtensionsBenchmark), typeof(HttpRequestExtensionsBenchmark), typeof(MemoryExtensionsBenchmark), typeof(NumericExtensionsBenchmark), typeof(ObjectExtensionsBenchmark), typeof(OpenTelemetryExtensionsBenchmark), typeof(StreamExtensionsBenchmark), typeof(StringBuilderExtensionsCounterBenchmark), typeof(StringExtensionsBenchmark), typeof(StringExtensionsCounterBenchmark), typeof(TaskExtensionsBenchmark), typeof(CollectionExtensionsMutatingCollectionBenchmark)
+		);
 
 		// Group 1: A–D - 9:45 hours, 999 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,

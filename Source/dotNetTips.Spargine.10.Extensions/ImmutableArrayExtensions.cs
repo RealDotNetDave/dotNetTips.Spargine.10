@@ -103,7 +103,7 @@ public static class ImmutableArrayExtensions
 		/// If the array does not contain any items, it is returned unchanged.
 		/// </remarks>
 		[Pure]
-		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastShuffle), "David McCarter", "8/27/2020", "1/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ImmutableArray<T> FastShuffle()
 		{
 			collection = collection.ArgumentNotNull();

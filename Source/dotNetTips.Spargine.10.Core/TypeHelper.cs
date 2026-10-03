@@ -4,7 +4,7 @@
 // Created          : 11-11-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="TypeHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -88,6 +88,8 @@ public static class TypeHelper
 	/// (string key allocation — ~250 chars for generic types — locking, expiry tracking, boxing) far exceeds it.
 	/// </summary>
 	private static readonly ConcurrentDictionary<(Type, Type), bool> _implementsInterfaceCache = new();
+	private static readonly ConcurrentDictionary<Type, bool> _isBuiltInTypeCache = new();
+	private static readonly ConcurrentDictionary<(Type Type, bool FullName, bool IncludeGenericParameterNames, bool IncludeGenericParameters, char NestedTypeDelimiter), string> _typeDisplayNameCache = new();
 
 	/// <summary>
 	/// Static primitive types used for the <see cref="BuiltInTypeNames"/> cache initialization.
@@ -345,7 +347,7 @@ public static class TypeHelper
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="json"/> is <c>null</c> or empty, or if <paramref name="typeInfo"/> is <c>null</c>.</exception>
 	/// <exception cref="JsonException">Thrown if the JSON is invalid or deserialization returns <c>null</c>.</exception>
 	[return: NotNull]
-	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FromJson), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static T FromJson<T>([DisallowNull][StringSyntax(StringSyntaxAttribute.Json)] string json, [DisallowNull] JsonTypeInfo<T> typeInfo)
 	where T : class
 	{
@@ -1327,36 +1329,27 @@ public static class TypeHelper
 	/// <param name="nestedTypeDelimiter">The delimiter to use for nested types.</param>
 	/// <returns>The display name of the type.</returns>
 	[return: NotNull]
-	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetTypeDisplayName), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string GetTypeDisplayName(Type type, bool fullName = true, bool includeGenericParameterNames = false, bool includeGenericParameters = true, char nestedTypeDelimiter = ControlChars.Dot)
 	{
 		type = type.ArgumentNotNull();
+		var cacheKey = (Type: type, FullName: fullName, IncludeGenericParameterNames: includeGenericParameterNames, IncludeGenericParameters: includeGenericParameters, NestedTypeDelimiter: nestedTypeDelimiter);
 
-		// Create a cache key that uniquely identifies the combination of type and display options
-		// SUGGESTION FROM COPILOT SLOWER
-		var cacheKey = $"{type.AssemblyQualifiedName}.{nameof(GetTypeDisplayName)}.{fullName}.{includeGenericParameterNames}.{includeGenericParameters}.{(int)nestedTypeDelimiter}";
-
-		if (_commonCache.TryGetValue<string>(cacheKey, out var cachedDisplayName))
+		return _typeDisplayNameCache.GetOrAdd(cacheKey, static key =>
 		{
-			return cachedDisplayName!;
-		}
+			var sb = _stringBuilderPool.Get();
 
-		var sb = _stringBuilderPool.Get();
+			try
+			{
+				ProcessType(sb, key.Type, new DisplayNameOptions(key.FullName, key.IncludeGenericParameterNames, key.IncludeGenericParameters, key.NestedTypeDelimiter));
 
-		try
-		{
-			ProcessType(sb, type, new DisplayNameOptions(fullName, includeGenericParameterNames, includeGenericParameters, nestedTypeDelimiter));
-
-			var displayName = sb.ToString();
-
-			_commonCache.AddCacheItem(cacheKey, displayName, TimeSpan.FromMinutes(TimeOutMinutes));
-
-			return displayName;
-		}
-		finally
-		{
-			_stringBuilderPool.Return(sb.Clear());
-		}
+				return sb.ToString();
+			}
+			finally
+			{
+				_stringBuilderPool.Return(sb.Clear());
+			}
+		});
 	}
 
 	/// <summary>
@@ -1598,7 +1591,7 @@ public static class TypeHelper
 	/// is not in the dictionary. The cache is lazily initialized on first access.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IsBuiltinType), author: "David McCarter", createdOn: "11/6/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool IsBuiltinType(in Type type)
 	{
 		if (type is null)
@@ -1606,21 +1599,24 @@ public static class TypeHelper
 			return false;
 		}
 
-		if (_cachedBuiltInTypes is null)
+		return _isBuiltInTypeCache.GetOrAdd(type, static currentType =>
 		{
-			_ = BuiltInTypeNames();
-		}
+			if (_cachedBuiltInTypes is null)
+			{
+				_ = BuiltInTypeNames();
+			}
 
-		if (_cachedBuiltInTypes!.ContainsKey(type))
-		{
-			return true;
-		}
+			if (_cachedBuiltInTypes!.ContainsKey(currentType))
+			{
+				return true;
+			}
 
-		var ns = type.Namespace;
+			var ns = currentType.Namespace;
 
-		return ns is not null
-			&& (string.Equals(ns, "System", StringComparison.Ordinal) || ns.StartsWith("System.", StringComparison.Ordinal))
-			&& type.Assembly == typeof(object).Assembly;
+			return ns is not null
+				&& (string.Equals(ns, "System", StringComparison.Ordinal) || ns.StartsWith("System.", StringComparison.Ordinal))
+				&& currentType.Assembly == typeof(object).Assembly;
+		});
 	}
 
 	/// <summary>

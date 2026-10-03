@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 06-13-2026
+// Last Modified On : 10-01-2026
 // ***********************************************************************
 // <copyright file="ObjectExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -834,7 +834,7 @@ public static class ObjectExtensions
 		/// person.ToJsonFile(file, MyJsonContext.Default.Person);
 		/// </code>
 		/// </example>
-		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToJsonFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public void ToJsonFile<T>([DisallowNull] FileInfo file, [DisallowNull] JsonTypeInfo<T> typeInfo)
 		{
 			file = file.ArgumentNotNull();
@@ -845,7 +845,12 @@ public static class ObjectExtensions
 				throw new InvalidOperationException($"The object is not of type {typeof(T).FullName}.");
 			}
 
-			file.Directory?.Create();
+			var directory = file.Directory;
+
+			if (directory is not null && directory.Exists is false)
+			{
+				directory.Create();
+			}
 
 			using var stream = new FileStream(
 				file.FullName,
@@ -1024,7 +1029,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(PropertiesToString), author: "David McCarter", createdOn: "12/18/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string PropertiesToString([DisallowNull] Func<PropertyInfo, bool> propertySelector, [AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = false)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1034,10 +1039,9 @@ public static class ObjectExtensions
 			var typeName = ResolveStringTypeName(obj.GetType().Name, includeMemberName);
 			var properties = BuildSelectedPropertiesDictionary(obj, propertySelector, typeName, ignoreNulls);
 
-			if (ignoreNulls)
-			{
-				properties = FilterEmptyPropertiesDict(properties);
-			}
+			properties = ignoreNulls
+				? FilterEmptyPropertiesDict(properties)
+				: properties;
 
 			return BuildKeyValueString(properties, header, sequenceSeparator, keyValueSeparator);
 		}
@@ -1226,7 +1230,7 @@ public static class ObjectExtensions
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		[RequiresUnreferencedCode("This method uses reflection to discover types at runtime.")]
-		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FieldsToString), author: "David McCarter", createdOn: "08/22/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public string FieldsToString([AllowNull] string header = ControlChars.EmptyString, [ConstantExpected] char keyValueSeparator = ControlChars.Colon, [DisallowNull] string sequenceSeparator = ControlChars.DefaultSeparator, bool ignoreNulls = true, bool includeMemberName = true)
 		{
 			obj = obj.ArgumentNotNull();
@@ -1235,10 +1239,9 @@ public static class ObjectExtensions
 			var typeName = ResolveStringTypeName(obj.GetType().Name, includeMemberName);
 			var fields = obj.FieldsToDictionary(memberName: typeName, ignoreEmptyValues: ignoreNulls);
 
-			if (ignoreNulls)
-			{
-				fields = FilterEmptyProperties(fields);
-			}
+			fields = ignoreNulls
+				? FilterEmptyProperties(fields)
+				: fields;
 
 			return BuildKeyValueString(fields, header, sequenceSeparator, keyValueSeparator);
 		}

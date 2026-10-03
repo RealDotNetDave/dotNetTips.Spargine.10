@@ -31,7 +31,7 @@ namespace DotNetTips.Spargine.Core.Diagnostics;
 /// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 [Information(nameof(StopwatchScope), Status = Status.NeedsDocumentation)]
 [method: MethodImpl(MethodImplOptions.AggressiveInlining)]
-[method: Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+[method: Information(nameof(StopwatchScope), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 public sealed class StopwatchScope([AllowNull] Action<TimeSpan>? onDispose = null) : IDisposable
 {
 	private readonly Action<TimeSpan>? _onDispose = onDispose;
@@ -48,7 +48,7 @@ public sealed class StopwatchScope([AllowNull] Action<TimeSpan>? onDispose = nul
 	/// <param name="onDispose">An optional callback invoked with the elapsed time when the scope is disposed.</param>
 	/// <returns>A started stopwatch scope.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(Start), "Copilot Agent", "07-09-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static StopwatchScope Start([AllowNull] Action<TimeSpan>? onDispose = null) => new(onDispose);
 
 	/// <summary>

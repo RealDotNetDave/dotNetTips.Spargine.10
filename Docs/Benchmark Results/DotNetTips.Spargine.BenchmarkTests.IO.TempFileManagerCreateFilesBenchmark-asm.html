@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20260910-215247</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark-20261003-092740</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -71,7 +71,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505E5F8]; DotNetTips.Spargine.IO.TempFileManager.CreateFile()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EEE80]; DotNetTips.Spargine.IO.TempFileManager.CreateFile()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
@@ -79,9 +79,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFBB50BE9D0</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B356BC0</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505E5C8]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EEE50]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -93,15 +93,6 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.TempFileManager.CreateFile()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>		var file = GenerateRandomFile();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>		_ = this._files.TryAdd(file, default);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>		return file;
-		^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,30</pre></code></td>
@@ -114,9 +105,15 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505E610]; DotNetTips.Spargine.IO.TempFileManager.GenerateRandomFile()</pre></code></td>
+<td></td><td><pre><code>		var file = GenerateRandomFile();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EEE98]; DotNetTips.Spargine.IO.TempFileManager.GenerateRandomFile()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		_ = this._files.TryAdd(file, default);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
 </tr><tr class="">
@@ -128,7 +125,10 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505E628]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.__Canon, System.Private.CoreLib],[System.Byte, System.Private.CoreLib]].TryAdd(System.__Canon, Byte)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EEEB0]; System.Collections.Concurrent.ConcurrentDictionary`2[[System.__Canon, System.Private.CoreLib],[System.Byte, System.Private.CoreLib]].TryAdd(System.__Canon, Byte)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return file;
+		^^^^^^^^^^^^</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rbp-8]</pre></code></td>
 </tr><tr class="">
@@ -181,9 +181,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFBB50A5A88</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B33B180</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBB4C47B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4AED7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
 </tr><tr class="">
@@ -192,7 +192,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505EAA8]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EF330]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -204,7 +204,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB505EA60]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2EF2E8]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -218,7 +218,7 @@
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
 <table><tbody>
-<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark.CreateFilesParallel()</th><th></th></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark.CreateFilesCount10()</th><th></th></tr>
 <tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
@@ -242,7 +242,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       dword ptr [rbp-10],100</pre></code></td>
+<td></td><td><pre><code>mov       dword ptr [rbp-10],0A</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[rbp-10]</pre></code></td>
 </tr><tr class="">
@@ -250,7 +250,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB507DBF0]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2ADD40]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
@@ -258,9 +258,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFBB50D9630</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B309C90</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB507DBC0]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2ADD10]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -272,6 +272,18 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</th><th></th></tr>
 <tr class="">
+<td></td><td><pre><code>		var fileCount = count.ArgumentInRange(min: 1);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return fileCount < App.MaxDegreeOfParallelism()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			? this.CreateFilesSequential(fileCount)
+			                                       </pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			: this.CreateFilesParallel(fileCount);
+			                                      </pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>sub       rsp,50</pre></code></td>
@@ -288,9 +300,6 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		var fileCount = count.ArgumentInRange(min: 1);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rbp+18]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       eax,[rax]</pre></code></td>
@@ -301,11 +310,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,26977710008</pre></code></td>
+<td></td><td><pre><code>mov       rax,1F7C4630008</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,26977713620</pre></code></td>
+<td></td><td><pre><code>mov       rax,1F7C4633620</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+28],rax</pre></code></td>
 </tr><tr class="">
@@ -317,30 +326,25 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8d,7FFFFFFF</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB4FFF4E0]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B22F540]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		return fileCount < App.MaxDegreeOfParallelism()
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>			? this.CreateFilesSequential(fileCount)
-			                                       </pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>			: this.CreateFilesParallel(fileCount);
-			                                      </pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB507DC08]; DotNetTips.Spargine.Core.App.MaxDegreeOfParallelism()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2ADD58]; DotNetTips.Spargine.Core.App.MaxDegreeOfParallelism()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       eax,[rbp-4]</pre></code></td>
 </tr><tr class="">
 <td></td><td id="5" class="reference" data-reference="5_M01_L00"><a href="#5_M01_L00"><pre><code>jg        short M01_L00</pre></code></a></td>
 </tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB4B530B98</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB507DC20]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesParallel(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2ADD70]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -353,11 +357,15 @@
 <td id="5_M01_L00" class="label" data-label="5_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB4B530B9C</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBB507DC38]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2ADD88]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesSequential(Int32)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="evenMap">
@@ -410,9 +418,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFBB518E688</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B3B5D50</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBB4C87B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4AEB7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
 </tr><tr class="">
@@ -421,7 +429,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB5157A98]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B386280]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -433,7 +441,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB5157A50]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B386238]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -447,7 +455,7 @@
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
 <h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
 <table><tbody>
-<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark.CreateFilesSequential()</th><th></th></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark.CreateFilesParallel()</th><th></th></tr>
 <tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
@@ -471,7 +479,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       dword ptr [rbp-10],2</pre></code></td>
+<td></td><td><pre><code>mov       dword ptr [rbp-10],100</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rdx,[rbp-10]</pre></code></td>
 </tr><tr class="">
@@ -479,7 +487,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB508E550]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2BDCC8]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
@@ -487,9 +495,9 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rdx,7FFBB50EEB98</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B319C90</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB508E520]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2BDC98]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -539,11 +547,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,25CB1D90008</pre></code></td>
+<td></td><td><pre><code>mov       rax,2A0F1080008</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rax,25CB1D93620</pre></code></td>
+<td></td><td><pre><code>mov       rax,2A0F1083620</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+28],rax</pre></code></td>
 </tr><tr class="">
@@ -555,17 +563,17 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       r8d,7FFFFFFF</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB4FEFDB0]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B23F4C8]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB508E568]; DotNetTips.Spargine.Core.App.MaxDegreeOfParallelism()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2BDCE0]; DotNetTips.Spargine.Core.App.MaxDegreeOfParallelism()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>cmp       eax,[rbp-4]</pre></code></td>
 </tr><tr class="">
 <td></td><td id="8" class="reference" data-reference="8_M01_L00"><a href="#8_M01_L00"><pre><code>jg        short M01_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,7FFBB5335BF8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB4B57A838</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="">
@@ -573,7 +581,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB508E580]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2BDCF8]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesParallel(Int32)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -586,7 +594,7 @@
 <td id="8_M01_L00" class="label" data-label="8_M01_L00"><pre><code>M01_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,7FFBB5335BFC</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB4B57A83C</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="evenMap">
@@ -594,7 +602,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBB508E598]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesSequential(Int32)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B2BDD10]</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="evenMap">
@@ -647,9 +655,9 @@
 <tr class="evenMap">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rdx,7FFBB5195D38</pre></code></td>
+<td></td><td><pre><code>mov       rdx,7FFB4B3CE900</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>call      qword ptr [7FFBB4C77B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4AEC7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
 </tr><tr class="">
@@ -658,7 +666,7 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB5156A78]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B397E58]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -670,7 +678,236 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFBB5156A30]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB4B397E10]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,40</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+</tbody></table>
+<h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
+<h3>Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)</h3>
+<table><tbody>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.BenchmarkTests.IO.TempFileManagerCreateFilesBenchmark.CreateFilesSequential()</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,40</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+40]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vxorps    xmm4,xmm4,xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>vmovdqu   xmmword ptr [rbp-18],xmm4</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+1A8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       dword ptr [rbp-10],2</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rdx,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2DE088]; DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8,[rbp-8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,7FFB4B32D570</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2DE058]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,40</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.IO.TempFileManager.CreateFiles(Int32 ByRef)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+50]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		var fileCount = count.ArgumentInRange(min: 1);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       eax,[rax]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-14],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,26FBE4F0008</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,26FBE4F3620</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rsp+28],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       r9,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       ecx,[rbp-14]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,1</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       r8d,7FFFFFFF</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B24F8B8]; DotNetTips.Spargine.Core.Validator.ArgumentInRange(Int32, Int32, Int32, System.Nullable`1<Int32> ByRef, System.String, System.String)</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return fileCount < App.MaxDegreeOfParallelism()
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			? this.CreateFilesSequential(fileCount)
+			                                       </pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>			: this.CreateFilesParallel(fileCount);
+			                                      </pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2DE0A0]; DotNetTips.Spargine.Core.App.MaxDegreeOfParallelism()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       eax,[rbp-4]</pre></code></td>
+</tr><tr class="">
+<td></td><td id="11" class="reference" data-reference="11_M01_L00"><a href="#11_M01_L00"><pre><code>jg        short M01_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2DE0B8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,50</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr class="evenMap">
+<td id="11_M01_L00" class="label" data-label="11_M01_L00"><pre><code>M01_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFB4B2DE0D0]; DotNetTips.Spargine.IO.TempFileManager.CreateFilesSequential(Int32)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>nop</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,50</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbp</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>ret</pre></code></td>
+</tr><tr><td colspan="{2}">&nbsp;</td></tr>
+<tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon)</th><th></th></tr>
+<tr class="">
+<td></td><td><pre><code>push      rbp</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,40</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       rbp,[rsp+40]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>xor       eax,eax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-8],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+18],rdx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp+20],r8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rax+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-20],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       qword ptr [rbp-20],0</pre></code></td>
+</tr><tr class="">
+<td></td><td id="12" class="reference" data-reference="12_M02_L00"><a href="#12_M02_L00"><pre><code>je        short M02_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp-20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td id="12" class="reference" data-reference="12_M02_L01"><a href="#12_M02_L01"><pre><code>jmp       short M02_L01</pre></code></a></td>
+</tr><tr class="evenMap">
+<td id="12_M02_L00" class="label" data-label="12_M02_L00"><pre><code>M02_L00</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rdx,7FFB4B3E5D38</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      qword ptr [7FFB4AED7B58]; System.Runtime.CompilerServices.GenericsHelpers.Method(IntPtr, IntPtr)</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td id="12_M02_L01" class="label" data-label="12_M02_L01"><pre><code>M02_L01</pre></code></td>
+<td>&nbsp;</td></tr>
+<tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B3A65B0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-18]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>lea       r8,[rbp+20]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      qword ptr [7FFB4B3A6568]; BenchmarkDotNet.Engines.Consumer.Consume[[System.__Canon, System.Private.CoreLib]](System.__Canon ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">

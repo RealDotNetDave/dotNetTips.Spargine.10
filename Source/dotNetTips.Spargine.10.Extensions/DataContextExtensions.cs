@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 10-08-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="DataContextExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -57,12 +57,17 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The total number of entities successfully deleted.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
-	[Information(nameof(DeleteCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> DeleteCollectionAsync<T>([DisallowNull] this DataContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		entities = entities.ArgumentNotNull();
+
+		if (entities.TryGetNonEnumeratedCount(out var count) && count == 0)
+		{
+			return 0;
+		}
 
 		var deletedCount = 0;
 
@@ -85,7 +90,7 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="action"/> is null.</exception>
-	[Information(nameof(ExecuteInTransactionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ExecuteInTransactionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task ExecuteInTransactionAsync([DisallowNull] this DataContext context, [DisallowNull] Func<DataContext, CancellationToken, Task> action, CancellationToken cancellationToken = default)
 	{
 		context = context.ArgumentNotNull();
@@ -118,13 +123,15 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records in the table.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 
-		return context.GetTable<T>().CountAsync(cancellationToken);
+		var table = context.GetTable<T>();
+
+		return table.CountAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -137,14 +144,16 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The number of records matching the predicate.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(GetRecordCountAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task<int> GetRecordCountAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		ArgumentNullException.ThrowIfNull(predicate);
 
-		return context.GetTable<T>().CountAsync(predicate, cancellationToken);
+		var table = context.GetTable<T>();
+
+		return table.CountAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
@@ -208,13 +217,15 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if the table contains any records; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 
-		return context.GetTable<T>().AnyAsync(cancellationToken);
+		var table = context.GetTable<T>();
+
+		return table.AnyAsync(cancellationToken);
 	}
 
 	/// <summary>
@@ -227,14 +238,16 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns><c>true</c> if any records match the predicate; otherwise, <c>false</c>.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="predicate"/> is null.</exception>
-	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(HasRecordsAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task<bool> HasRecordsAsync<T>([DisallowNull] this DataContext context, [DisallowNull] Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		ArgumentNullException.ThrowIfNull(predicate);
 
-		return context.GetTable<T>().AnyAsync(predicate, cancellationToken);
+		var table = context.GetTable<T>();
+
+		return table.AnyAsync(predicate, cancellationToken);
 	}
 
 	/// <summary>
@@ -247,12 +260,17 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The total number of entities successfully inserted.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
-	[Information(nameof(InsertCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(InsertCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> InsertCollectionAsync<T>([DisallowNull] this DataContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		entities = entities.ArgumentNotNull();
+
+		if (entities.TryGetNonEnumeratedCount(out var count) && count == 0)
+		{
+			return 0;
+		}
 
 		var insertedCount = 0;
 
@@ -276,12 +294,17 @@ public static class DataContextExtensions
 	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
 	/// <returns>The total number of entities successfully upserted.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> or <paramref name="entities"/> is null.</exception>
-	[Information(nameof(UpsertCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UpsertCollectionAsync), author: "Copilot Agent", createdOn: "4/13/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task<int> UpsertCollectionAsync<T>([DisallowNull] this DataContext context, [DisallowNull] IEnumerable<T> entities, CancellationToken cancellationToken = default)
 		where T : class
 	{
 		context = context.ArgumentNotNull();
 		entities = entities.ArgumentNotNull();
+
+		if (entities.TryGetNonEnumeratedCount(out var count) && count == 0)
+		{
+			return 0;
+		}
 
 		var upsertedCount = 0;
 

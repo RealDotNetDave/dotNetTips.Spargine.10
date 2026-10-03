@@ -4,7 +4,7 @@
 // Created          : 05-08-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-08-2026
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="CollectionExtensionsMutatingCollectionBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter
@@ -36,7 +36,9 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 	private Collection<Person> _peopleRefCollection = default!;
 	private HashSet<Person> _peopleRefHashSet = default!;
 	private List<Person> _peopleRefList = default!;
-	private HashSet<Person> _personHashSetToInsert = default!;
+	private HashSet<Person> _personHashSetFromCacheToInsert = default!;
+	private Person[] _personArrayFromCacheToInsert;
+	private Person[] _personArrayToInsert;
 	private Person _personToInsert = default!;
 
 	[Benchmark(Description = nameof(CollectionExtensions.AddIf) + ": Condition False")]
@@ -155,20 +157,29 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items (array)")]
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items from cache (array)")]
 	[BenchmarkCategory(Categories.Collections)]
-	public void AddRangeIfNotExistsNewItems()
+	public void AddRangeIfNotExistsNewItems_FromCache()
 	{
-		var result = this._peopleRefCollection.AddRangeIfNotExists(this.GetPersonRefCollectionToInsert());
+		var result = this._peopleRefCollection.AddRangeIfNotExists(this._personArrayFromCacheToInsert);
 
 		this.Consume(result);
 	}
 
-	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items (hashset)")]
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items (array)")]
+	[BenchmarkCategory(Categories.Collections)]
+	public void AddRangeIfNotExistsNewItems()
+	{
+		var result = this._peopleRefCollection.AddRangeIfNotExists(this._personArrayToInsert);
+
+		this.Consume(result);
+	}
+
+	[Benchmark(Description = nameof(CollectionExtensions.AddRangeIfNotExists) + ": New Items from cache (hashset)")]
 	[BenchmarkCategory(Categories.Collections)]
 	public void AddRangeIfNotExistsNewItems_HashSet()
 	{
-		var result = this._peopleRefCollection.AddRangeIfNotExists(this._personHashSetToInsert);
+		var result = this._peopleRefCollection.AddRangeIfNotExists(this._personHashSetFromCacheToInsert);
 
 		this.Consume(result);
 	}
@@ -217,7 +228,9 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 		var people = this.GetPersonRefArray();
 		this._existingPerson = people[0];
 		this._personToInsert = this.GetPersonRefCollectionToInsert()[0];
-		this._personHashSetToInsert = [.. this.GetPersonRefCollectionToInsert()];
+		this._personHashSetFromCacheToInsert = [.. this.GetPersonRefCollectionToInsert()];
+		this._personArrayFromCacheToInsert = this.GetPersonRefCollectionToInsert();
+		this._personArrayToInsert = this.GetPersonRefCollectionToInsert(this.Count);
 	}
 
 	[Benchmark(Description = nameof(CollectionExtensions.Upsert) + ": Existing Item")]

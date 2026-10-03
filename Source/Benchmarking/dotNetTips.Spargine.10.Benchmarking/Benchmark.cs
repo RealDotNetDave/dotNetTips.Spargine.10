@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 11-13-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-28-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-01-2026
 // ***********************************************************************
 // <copyright file="Benchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -519,12 +519,14 @@ public abstract class Benchmark
 	{
 		source = source.ArgumentNotNull(paramName: nameof(source));
 		cancellationToken.ThrowIfCancellationRequested();
+
 		await foreach (var item in source.WithCancellation(cancellationToken).ConfigureAwait(false))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 			this.Consume(item);
 		}
 	}
+
 	/// <summary>
 	/// Consumes each item in the specified <see cref="IReadOnlyList{T}"/> by index,
 	/// avoiding enumerator allocation.
@@ -721,7 +723,7 @@ public abstract class Benchmark
 	/// A separate private array is retained for each cached length, doubling retained byte-array storage.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetByteArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetByteArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public byte[] GetByteArray(int count = 1)
 	{
 		count = count.ArgumentInRange(1, paramName: nameof(count));
@@ -757,7 +759,7 @@ public abstract class Benchmark
 	/// Changing returned elements does not change this private snapshot.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GetStringArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GetStringArray), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public string[] GetStringArray(int count, int wordMinLength = 10, int wordMaxLength = 15)
 	{
 		return this.GetStringFixture(count, wordMinLength, wordMaxLength).Value;
@@ -772,7 +774,7 @@ public abstract class Benchmark
 	/// propagate and unsuccessful paths remain tracked for a subsequent cleanup attempt.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GlobalCleanup), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GlobalCleanup), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void GlobalCleanup()
 	{
 		try
@@ -812,7 +814,7 @@ public abstract class Benchmark
 	/// </summary>
 	/// <remarks>Does not invoke asynchronous overrides. BenchmarkDotNet uses <see cref="GlobalSetupAsync"/>.</remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(GlobalSetup), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(GlobalSetup), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.Available)]
 	public void GlobalSetup()
 	{
 		this.LaunchDebuggerIfRequested();

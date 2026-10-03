@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-16-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -71,13 +71,12 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// </summary>
 	/// <returns>The path of the created temporary file.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.Available)]
+	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public string CreateFile()
 	{
-		var file = GenerateRandomFile();
-		_ = this._files.TryAdd(file, default);
+		_ = this._files.TryAdd(GenerateRandomFile(), default);
 
-		return file;
+		return GenerateRandomFile();
 	}
 
 	/// <summary>
@@ -100,7 +99,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// Deletes all temporary files.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteAllFiles), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void DeleteAllFiles()
 	{
 		var fileCount = this._files.Count;
@@ -144,7 +143,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	/// If the file name is null or empty, the method returns without performing any action.
 	/// </remarks>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(DeleteFile), UnitTestStatus = UnitTestStatus.NotRequired, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public void DeleteFile(string fileName)
 	{
 		if (string.IsNullOrEmpty(fileName))

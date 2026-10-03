@@ -4,7 +4,7 @@
 // Created          : 11-25-2019
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-09-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="TaskExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -88,7 +88,7 @@ public static class TaskExtensions
 	/// <returns>A task that completes when the source task completes or is canceled.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(IgnoreCancellation), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(IgnoreCancellation), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static async Task IgnoreCancellation([DisallowNull] this Task task)
 	{
 		task = task.ArgumentNotNull();
@@ -109,7 +109,7 @@ public static class TaskExtensions
 	/// <returns>The unwrapped exception when possible; otherwise the original exception.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="exception"/> is null.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(UnwrapAggregate), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(UnwrapAggregate), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Exception UnwrapAggregate([DisallowNull] this Exception exception)
 	{
 		exception = exception.ArgumentNotNull();
@@ -117,6 +117,11 @@ public static class TaskExtensions
 		if (exception is not AggregateException aggregateException)
 		{
 			return exception;
+		}
+
+		if (aggregateException.InnerExceptions.Count == 1 && aggregateException.InnerException is Exception singleInnerException && singleInnerException is not AggregateException)
+		{
+			return singleInnerException;
 		}
 
 		var flattenedException = aggregateException.Flatten();
@@ -136,7 +141,7 @@ public static class TaskExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	/// <exception cref="TimeoutException">Thrown when the task does not complete within <paramref name="timeout"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task WithTimeoutAsync([DisallowNull] this Task task, TimeSpan timeout, CancellationToken cancellationToken = default)
 	{
 		task = task.ArgumentNotNull();
@@ -155,7 +160,7 @@ public static class TaskExtensions
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
 	/// <exception cref="TimeoutException">Thrown when the task does not complete within <paramref name="timeout"/>.</exception>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(WithTimeoutAsync), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static Task<T> WithTimeoutAsync<T>([DisallowNull] this Task<T> task, TimeSpan timeout, CancellationToken cancellationToken = default)
 	{
 		task = task.ArgumentNotNull();

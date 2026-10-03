@@ -60,6 +60,8 @@ public class DbContextExtensionsBenchmark : Benchmark
 	[Benchmark(Description = nameof(DbContextExtensions.DeleteAndSaveAsync))]
 	public async Task DeleteAndSaveAsync()
 	{
+		//TODO: THIS BENCHMARK IS NOT PRODUCING RESULTS
+
 		var result = await this.Context.DeleteAndSaveAsync(this._entitiesToDelete).ConfigureAwait(false);
 		this.Consume(result);
 	}
@@ -69,7 +71,7 @@ public class DbContextExtensionsBenchmark : Benchmark
 	{
 		await this.Context.ExecuteInTransactionAsync(static async (dbContext, cancellationToken) =>
 		{
-			await dbContext.Set<TestDbEntity>().AddAsync(new TestDbEntity { Name = "Tx" }, cancellationToken).ConfigureAwait(false);
+			_= await dbContext.Set<TestDbEntity>().AddAsync(new TestDbEntity { Name = "Tx" }, cancellationToken).ConfigureAwait(false);
 			_ = await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 		}).ConfigureAwait(false);
 	}

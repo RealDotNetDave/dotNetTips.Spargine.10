@@ -4,7 +4,7 @@
 // Created          : 09-15-2017
 //
 // Last Modified By : David McCarter
-// Last Modified On : 08-06-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
@@ -224,12 +224,11 @@ public static class StringExtensions
 	/// var none = "Hello".ContainsAny(StringComparison.Ordinal, "WORLD"); // false
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(ContainsAny), "David McCarter", "9/15/2017", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static bool ContainsAny([DisallowNull] this string input,
 		StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
 		params ReadOnlySpan<string> characters)
 	{
-		// Suggestion from Copilot turned out to be slower
 		if (characters.IsEmpty)
 		{
 			return false;
@@ -238,7 +237,11 @@ public static class StringExtensions
 		input = input.ArgumentNotNullOrEmpty();
 		stringComparison = stringComparison.ArgumentDefined();
 
-		// SUGGESTIONS FROM COPILOT SLOWER
+		if (characters.Length == 1)
+		{
+			return input.Contains(characters[0], stringComparison);
+		}
+
 		foreach (var character in characters)
 		{
 			if (input.Contains(character, stringComparison))
@@ -477,21 +480,19 @@ public static class StringExtensions
 	/// </code>
 	/// </example>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FastParseUrl), "David McCarter", "10/1/2025", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static (string Scheme, string Host, string Port, string Path) FastParseUrl([NotNull] this string url)
 	{
 		url = url.ArgumentNotNullOrEmpty();
+		var span = url.AsSpan();
+		var schemeIndex = span.IndexOf(UrlSeparator.AsSpan());
 
-		// SUGGESTIONS FROM COPILOT SLOWER
-		if (!url.Contains(UrlSeparator, StringComparison.Ordinal))
+		if (schemeIndex < 0)
 		{
 			ExceptionThrower.ThrowArgumentException($"Sting is a incorrect format. Missing {UrlSeparator}.", nameof(url));
 		}
 
-		var span = url.AsSpan();
-
 		// Extract scheme
-		var schemeIndex = span.IndexOf(UrlSeparator.AsSpan());
 		var scheme = span[..schemeIndex].ToString();
 		span = span[(schemeIndex + 3)..];
 
@@ -545,13 +546,14 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatCurrentCulture), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatCurrentCulture([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
 		args = args.ArgumentNotNull();
+		var compositeFormat = CompositeFormatCache.GetOrAdd(format);
 
-		return string.Format(CultureInfo.CurrentCulture, CompositeFormatCache.GetOrAdd(format), args);
+		return string.Format(CultureInfo.CurrentCulture, compositeFormat, args);
 	}
 
 	/// <summary>
@@ -561,13 +563,14 @@ public static class StringExtensions
 	/// <param name="args">The arguments to format.</param>
 	/// <returns>The formatted string.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(FormatInvariant), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string FormatInvariant([DisallowNull] this string format, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
 		args = args.ArgumentNotNull();
+		var compositeFormat = CompositeFormatCache.GetOrAdd(format);
 
-		return string.Format(CultureInfo.InvariantCulture, CompositeFormatCache.GetOrAdd(format), args);
+		return string.Format(CultureInfo.InvariantCulture, compositeFormat, args);
 	}
 
 	/// <summary>
@@ -1205,7 +1208,7 @@ public static class StringExtensions
 	/// <param name="args">The values to format and join.</param>
 	/// <returns>A joined string of formatted values, or <see cref="string.Empty"/> when <paramref name="args"/> is empty.</returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(JoinFormatted), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static string JoinFormatted([DisallowNull] this string format, [ConstantExpected] string delimiter = ControlChars.CommaSpace, [DisallowNull] params object?[] args)
 	{
 		format = format.ArgumentNotNullOrEmpty();
@@ -1217,8 +1220,9 @@ public static class StringExtensions
 		}
 
 		delimiter = string.IsNullOrEmpty(delimiter) ? ControlChars.CommaSpace : delimiter;
+		var compositeFormat = CompositeFormatCache.GetOrAdd(format);
 
-		return JoinFormattedCore(CompositeFormatCache.GetOrAdd(format), CultureInfo.InvariantCulture, delimiter, args);
+		return JoinFormattedCore(compositeFormat, CultureInfo.InvariantCulture, delimiter, args);
 	}
 
 	/// <summary>

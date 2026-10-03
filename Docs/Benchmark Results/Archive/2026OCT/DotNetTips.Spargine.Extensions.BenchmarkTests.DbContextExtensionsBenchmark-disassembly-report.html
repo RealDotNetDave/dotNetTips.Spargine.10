@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260912-035355</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="5">DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20260912-035355</th></tr>
+<tr>
+<th>GetRecordCountAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>GetRecordCountWithPredicateAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>HasRecordsAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>HasRecordsWithPredicateAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>AddAndSaveAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.GetRecordCountAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFBB5887BE8]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB5887BD0]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB5887C00]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFBB4C26430]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFBB4C26448]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFBB5887C18]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5C8BADA
+mov       rcx,7FFBB613CA38
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFBB613CA3C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB613CA38
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB6056388]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFBB5C37E95
+ret
+xor       edx,edx
+jmp       qword ptr [7FFBB5E9E0A0]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.GetRecordCountWithPredicateAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFBB5897348]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB5897330]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB5897360]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFBB4C363B8]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFBB4C363D0]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFBB5897378]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5D05D5A
+mov       rcx,7FFBB626FD88
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFBB626FD8C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB626FD88
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB6234BB8]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFBB5D05E25
+ret
+xor       edx,edx
+jmp       qword ptr [7FFBB6006DF0]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.HasRecordsAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFBB58D77C8]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB58D77B0]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB58D77E0]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFBB4C66820]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFBB4C66838]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFBB58D77F8]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5D3F30A
+mov       rcx,7FFBB6231540
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFBB6231544
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB6231540
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB6117768]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFBB5D3F3D5
+ret
+xor       edx,edx
+jmp       qword ptr [7FFBB5F7E7C0]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.HasRecordsWithPredicateAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFBB58B7C48]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB58B7C30]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB58B7C60]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFBB4C46CA0]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFBB4C46CB8]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFBB58B7C78]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5D16BFA
+mov       rcx,7FFBB6242EF0
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFBB6242EF4
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB6242EF0
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB5FEF2A0]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFBB5D16CC5
+ret
+xor       edx,edx
+jmp       qword ptr [7FFBB5FE55D8]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.AddAndSaveAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFBB56E65E0]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB56E65C8]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFBB56E65F8]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFBB4C66CE8]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFBB4C66D00]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFBB56E6610]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFBB5BA517A
+mov       rcx,7FFBB5DF3420
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFBB5DF3424
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFBB5DF3420
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFBB5B67A80]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFBB5CA1FB5
+ret
+xor       edx,edx
+jmp       qword ptr [7FFBB581F900]
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

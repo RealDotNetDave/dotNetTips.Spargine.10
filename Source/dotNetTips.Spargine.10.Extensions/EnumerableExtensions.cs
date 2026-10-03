@@ -4,7 +4,7 @@
 // Created          : 11-21-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-07-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -471,23 +471,37 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IndexOf), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public int IndexOf([DisallowNull] T item, [AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			collection = collection.ArgumentItemsExists();
 			item = item.ArgumentNotNull();
 
-			// SUGGESTION FROM COPILOT SLOWER
 			var eq = comparer ?? EqualityComparer<T>.Default;
 
-			var index = 0;
+			if (collection is IList<T> list)
+			{
+				var itemCount = list.Count;
+
+				for (var index = 0; index < itemCount; index++)
+				{
+					if (eq.Equals(list[index], item))
+					{
+						return index;
+					}
+				}
+
+				return -1;
+			}
+
+			var position = 0;
 			foreach (var element in collection)
 			{
 				if (eq.Equals(element, item))
 				{
-					return index;
+					return position;
 				}
-				index++;
+				position++;
 			}
 
 			return -1;
@@ -569,7 +583,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(OrderBy), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> OrderBy([DisallowNull] string sortExpression)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1102,7 +1116,7 @@ public static class EnumerableExtensions
 		/// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="List{T}"/> that contains elements from the input collection.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(ToListAsync), "David McCarter", "11/21/2020", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public Task<List<T>> ToListAsync(CancellationToken cancellationToken = default)
 		{
 
@@ -1118,9 +1132,7 @@ public static class EnumerableExtensions
 
 			if (collection is ICollection<T> col)
 			{
-				var result = new List<T>(col.Count);
-				result.AddRange(col);
-				return Task.FromResult(result);
+				return Task.FromResult(new List<T>(col));
 			}
 
 			return Task.FromResult<List<T>>([.. collection]);
@@ -1183,7 +1195,7 @@ public static class EnumerableExtensions
 		/// </example>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FirstOrDefault), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FirstOrDefault), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public T FirstOrDefault([DisallowNull] Func<T, bool> accumulatorPredicate, T alternate)
 		{
 			collection = collection.ArgumentNotNull();
@@ -1293,38 +1305,24 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastProcessor), author: "David McCarter", createdOn: "8/7/2024", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public ReadOnlyCollection<T> FastProcessor([DisallowNull] Func<T, T> action)
 		{
 			collection = collection.ArgumentNotNull();
 			action = action.ArgumentNotNull();
 
-			if (collection is List<T> list)
+			var span = collection is List<T> list
+				? CollectionsMarshal.AsSpan(list)
+				: collection.ToArray();
+			var itemCount = span.Length;
+			var resultArray = new T[itemCount];
+
+			for (var index = 0; index < itemCount; index++)
 			{
-				ReadOnlySpan<T> span = CollectionsMarshal.AsSpan(list);
-				var itemCount = span.Length;
-				var resultArray = new T[itemCount];
-
-				for (var index = 0; index < itemCount; index++)
-				{
-					resultArray[index] = action(span[index]);
-				}
-
-				return Array.AsReadOnly(resultArray);
+				resultArray[index] = action(span[index]);
 			}
-			else
-			{
-				ReadOnlySpan<T> span = collection.ToArray();
-				var itemCount = span.Length;
-				var resultArray = new T[itemCount];
 
-				for (var index = 0; index < itemCount; index++)
-				{
-					resultArray[index] = action(span[index]);
-				}
-
-				return Array.AsReadOnly(resultArray);
-			}
+			return Array.AsReadOnly(resultArray);
 		}
 
 		/// <summary>
@@ -1438,12 +1436,22 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.NeedsUpdate, Status = Status.Available)]
+		[Information(nameof(ContainsAny), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool ContainsAny([AllowNull] params ReadOnlyCollection<T> items)
 		{
 			if ((collection is null) || (items is null) || (items.Count == 0))
 			{
 				return false;
+			}
+
+			if (collection is ICollection<T> knownCountCollection && knownCountCollection.Count == 0)
+			{
+				return false;
+			}
+
+			if (items.Count == 1)
+			{
+				return collection.Contains(items[0]);
 			}
 
 			if (collection is ISet<T> set)
@@ -1477,10 +1485,15 @@ public static class EnumerableExtensions
 		/// <returns><c>true</c> if the collection contains duplicates; otherwise, <c>false</c>.</returns>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(HasDuplicates), author: "David McCarter", createdOn: "7/3/2023", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool HasDuplicates([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
 			if (collection is null)
+			{
+				return false;
+			}
+
+			if (collection.TryGetNonEnumeratedCount(out var itemCount) && itemCount < 2)
 			{
 				return false;
 			}
@@ -1527,7 +1540,7 @@ public static class EnumerableExtensions
 		/// </remarks>
 		[Pure]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+		[Information(nameof(IsEmpty), "David McCarter", "11/21/2020", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 		public bool IsEmpty()
 		{
 			if (collection is null)
@@ -1559,7 +1572,13 @@ public static class EnumerableExtensions
 				return collectionT.Count == 0;
 			}
 
-			return collection is IReadOnlyCollection<T> readOnlyCollection ? readOnlyCollection.Count == 0 : !collection.Any();
+			if (collection is IReadOnlyCollection<T> readOnlyCollection)
+			{
+				return readOnlyCollection.Count == 0;
+			}
+
+			using var enumerator = collection.GetEnumerator();
+			return !enumerator.MoveNext();
 		}
 
 		/// <summary>
@@ -1598,9 +1617,14 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
+		[Information(nameof(FastDistinct), "David McCarter", "11/8/2022", OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> FastDistinct([AllowNull] IEqualityComparer<T>? comparer = null)
 		{
+			if (collection is HashSet<T> hashSet && comparer is null)
+			{
+				return hashSet;
+			}
+
 			// Value types: use size-based optimization; honor comparer
 			if (typeof(T).IsValueType)
 			{
@@ -1904,7 +1928,7 @@ public static class EnumerableExtensions
 		[Pure]
 		[return: NotNull]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.Available)]
+		[Information(nameof(AddDistinct), author: "David McCarter", createdOn: "3/22/2023", UnitTestStatus = UnitTestStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, Status = Status.Available)]
 		public IEnumerable<T> AddDistinct([AllowNull] params IEnumerable<T> items)
 		{
 			if (collection is null)
@@ -1917,6 +1941,7 @@ public static class EnumerableExtensions
 				return collection;
 			}
 
+			// SUGGESTION FROM COPILOT SLOWER
 			var itemsList = items as ICollection<T> ?? [.. items];
 
 			if (itemsList.Count == 0)

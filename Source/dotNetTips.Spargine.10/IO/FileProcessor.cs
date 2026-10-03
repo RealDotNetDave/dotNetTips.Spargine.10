@@ -254,20 +254,6 @@ public sealed class FileProcessor
 	/// Use the <see cref="Processed"/> event to find out if folder deletion succeeded or failed.
 	/// </remarks>
 	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
-	/// <example>
-	/// Here is an example of using the <see cref="DeleteFolders"/> method:
-	/// <code>
-	/// var fileProcessor = new FileProcessor();
-	/// fileProcessor.Processed += (sender, e) => 
-	/// {
-	///     Console.WriteLine($"{e.ProgressState}: {e.Name}");
-	/// };
-	/// 
-	/// var foldersToDelete = new List&lt;DirectoryInfo&gt; { new DirectoryInfo("path/to/folder/to/delete") };
-	/// var cts = new CancellationTokenSource();
-	/// fileProcessor.DeleteFolders(foldersToDelete, recursive: true, cts.Token);
-	/// </code>
-	/// </example>
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		var list = PrepareList(folders);

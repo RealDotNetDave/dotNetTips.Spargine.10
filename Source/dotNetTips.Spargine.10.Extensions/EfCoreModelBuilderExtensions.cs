@@ -3,15 +3,13 @@
 // Author           : Copilot Agent
 // Created          : 07-08-2026
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-02-2026
 // ***********************************************************************
 // <copyright file="EfCoreModelBuilderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
-// <summary>
-// Extension methods for EF Core ModelBuilder value-converter registrations.
-// </summary>
+// <summary>Extension methods for EF Core ModelBuilder value-converter registrations.</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Core;
@@ -28,6 +26,13 @@ namespace DotNetTips.Spargine.Extensions;
 [Information(Status = Status.NeedsDocumentation)]
 public static class EfCoreModelBuilderExtensions
 {
+	private static readonly ValueConverter<Guid, string> _guidToStringConverter = new(
+		value => value.ToString(),
+		value => Guid.Parse(value));
+
+	private static readonly ValueConverter<Guid?, string?> _nullableGuidToStringConverter = new(
+		value => value.HasValue ? value.Value.ToString() : null,
+		value => string.IsNullOrWhiteSpace(value) ? null : Guid.Parse(value));
 
 	/// <summary>
 	/// Registers enum-to-string value converters for all enum and nullable enum properties in the current model.
@@ -36,26 +41,37 @@ public static class EfCoreModelBuilderExtensions
 	/// <param name="modelBuilder">The EF Core model builder.</param>
 	/// <returns>The same <see cref="ModelBuilder"/> instance for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="modelBuilder"/> is <see langword="null"/>.</exception>
-	[Information(nameof(RegisterEnumAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(RegisterEnumAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ModelBuilder RegisterEnumAsStringConverters([DisallowNull] this ModelBuilder modelBuilder)
 	{
 		modelBuilder = modelBuilder.ArgumentNotNull();
+		var converterCache = new Dictionary<Type, ValueConverter>();
 
-		foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(static entityType => entityType.GetProperties()))
+		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
 		{
-			if (property.GetValueConverter() is not null)
+			foreach (var property in entityType.GetProperties())
 			{
-				continue;
-			}
+				if (property.GetValueConverter() is not null)
+				{
+					continue;
+				}
 
-			var clrType = property.ClrType;
-			var underlyingType = Nullable.GetUnderlyingType(clrType);
+				var clrType = property.ClrType;
+				var underlyingType = Nullable.GetUnderlyingType(clrType);
 
-			if (clrType.IsEnum || underlyingType?.IsEnum == true)
-			{
-				var enumType = underlyingType ?? clrType;
-				var converterType = typeof(EnumToStringConverter<>).MakeGenericType(enumType);
-				property.SetValueConverter((ValueConverter)Activator.CreateInstance(converterType)!);
+				if (clrType.IsEnum || underlyingType?.IsEnum == true)
+				{
+					var enumType = underlyingType ?? clrType;
+
+					if (converterCache.TryGetValue(enumType, out var converter) is false)
+					{
+						var converterType = typeof(EnumToStringConverter<>).MakeGenericType(enumType);
+						converter = (ValueConverter)Activator.CreateInstance(converterType)!;
+						converterCache[enumType] = converter;
+					}
+
+					property.SetValueConverter(converter);
+				}
 			}
 		}
 
@@ -69,32 +85,31 @@ public static class EfCoreModelBuilderExtensions
 	/// <param name="modelBuilder">The EF Core model builder.</param>
 	/// <returns>The same <see cref="ModelBuilder"/> instance for fluent chaining.</returns>
 	/// <exception cref="ArgumentNullException">Thrown when <paramref name="modelBuilder"/> is <see langword="null"/>.</exception>
-	[Information(nameof(RegisterGuidAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
+	[Information(nameof(RegisterGuidAsStringConverters), "Copilot Agent", "07-08-2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public static ModelBuilder RegisterGuidAsStringConverters([DisallowNull] this ModelBuilder modelBuilder)
 	{
 		modelBuilder = modelBuilder.ArgumentNotNull();
 
-		foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(static entityType => entityType.GetProperties()))
+		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
 		{
-			if (property.GetValueConverter() is not null)
+			foreach (var property in entityType.GetProperties())
 			{
-				continue;
-			}
+				if (property.GetValueConverter() is not null)
+				{
+					continue;
+				}
 
-			var clrType = property.ClrType;
-			var underlyingType = Nullable.GetUnderlyingType(clrType);
+				var clrType = property.ClrType;
+				var underlyingType = Nullable.GetUnderlyingType(clrType);
 
-			if (clrType == typeof(Guid))
-			{
-				property.SetValueConverter(new ValueConverter<Guid, string>(
-					value => value.ToString(),
-					value => Guid.Parse(value)));
-			}
-			else if (underlyingType == typeof(Guid))
-			{
-				property.SetValueConverter(new ValueConverter<Guid?, string?>(
-					value => value.HasValue ? value.Value.ToString() : null,
-					value => string.IsNullOrWhiteSpace(value) ? null : Guid.Parse(value)));
+				if (clrType == typeof(Guid))
+				{
+					property.SetValueConverter(_guidToStringConverter);
+				}
+				else if (underlyingType == typeof(Guid))
+				{
+					property.SetValueConverter(_nullableGuidToStringConverter);
+				}
 			}
 		}
 
