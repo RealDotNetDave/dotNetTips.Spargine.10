@@ -4,7 +4,7 @@
 // Created          : 07-09-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 07-09-2026
+// Last Modified On : 10-03-2026
 // ***********************************************************************
 // <copyright file="DbContextExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -60,9 +60,8 @@ public class DbContextExtensionsBenchmark : Benchmark
 	[Benchmark(Description = nameof(DbContextExtensions.DeleteAndSaveAsync))]
 	public async Task DeleteAndSaveAsync()
 	{
-		//TODO: THIS BENCHMARK IS NOT PRODUCING RESULTS
-
 		var result = await this.Context.DeleteAndSaveAsync(this._entitiesToDelete).ConfigureAwait(false);
+
 		this.Consume(result);
 	}
 
@@ -71,7 +70,7 @@ public class DbContextExtensionsBenchmark : Benchmark
 	{
 		await this.Context.ExecuteInTransactionAsync(static async (dbContext, cancellationToken) =>
 		{
-			_= await dbContext.Set<TestDbEntity>().AddAsync(new TestDbEntity { Name = "Tx" }, cancellationToken).ConfigureAwait(false);
+			_ = await dbContext.Set<TestDbEntity>().AddAsync(new TestDbEntity { Name = "Tx" }, cancellationToken).ConfigureAwait(false);
 			_ = await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 		}).ConfigureAwait(false);
 	}
@@ -143,11 +142,14 @@ public class DbContextExtensionsBenchmark : Benchmark
 		this._entitiesToAdd = CreateEntities(EntityCount, "Add");
 	}
 
+	/// <summary>
+	/// Prepares tracked entities for deletion in each benchmark iteration.
+	/// </summary>
 	[IterationSetup(Target = nameof(DeleteAndSaveAsync))]
 	public void SetupDeleteAndSaveAsync()
 	{
 		this.PrepareContext(seedData: true);
-		this._entitiesToDelete = [.. this.Context.TestEntities.AsNoTracking()];
+		this._entitiesToDelete = [.. this.Context.TestEntities];
 	}
 
 	[IterationSetup(Target = nameof(ExecuteInTransactionAsync))]
