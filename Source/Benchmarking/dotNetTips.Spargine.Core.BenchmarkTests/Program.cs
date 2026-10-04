@@ -11,8 +11,8 @@
 // </copyright>
 // <summary>
 // Core benchmark runner with an optional TaskTracker threading selection.
-// Benchmark Runtime: 11:45
-// Benchmark count: 1,527 benchmarks.
+// Benchmark Runtime: 11:00
+// Benchmark count: 1,540 benchmarks.
 // </summary>
 // ***********************************************************************
 

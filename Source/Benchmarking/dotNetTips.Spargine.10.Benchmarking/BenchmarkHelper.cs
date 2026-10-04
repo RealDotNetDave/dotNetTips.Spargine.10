@@ -479,6 +479,11 @@ public static class BenchmarkHelper
 			if (failedBenchmarks.Count > 0)
 			{
 				sw.AddDiagnosticEntry($"Failed benchmark cases: {failedBenchmarks.Count}");
+
+				foreach (var failedCase in failedBenchmarks)
+				{
+					sw.AddDiagnosticEntry($"  - {failedCase}");
+				}
 			}
 
 			sw.Stop();
