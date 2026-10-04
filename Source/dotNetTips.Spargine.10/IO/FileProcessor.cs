@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 03-03-2021
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 09-26-2026
+// Last Modified By : David McCarter
+// Last Modified On : 10-04-2026
 // ***********************************************************************
 // <copyright file="FileProcessor.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -248,12 +248,13 @@ public sealed class FileProcessor
 	/// </summary>
 	/// <param name="folders">The folders to delete.</param>
 	/// <param name="recursive">Specifies whether to delete directories, subdirectories, and files in <paramref name="folders"/>.</param>
-	/// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+	/// <param name="cancellationToken">A cancellation token to observe while deleting folders.</param>
 	/// <returns>The number of folders successfully deleted.</returns>
 	/// <remarks>
 	/// Use the <see cref="Processed"/> event to find out if folder deletion succeeded or failed.
 	/// </remarks>
 	/// <exception cref="OperationCanceledException">The operation was canceled via the cancellation token.</exception>
+	[Information(nameof(DeleteFolders), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Completed, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public int DeleteFolders(IEnumerable<DirectoryInfo> folders, in bool recursive = true, CancellationToken cancellationToken = default)
 	{
 		var list = PrepareList(folders);
