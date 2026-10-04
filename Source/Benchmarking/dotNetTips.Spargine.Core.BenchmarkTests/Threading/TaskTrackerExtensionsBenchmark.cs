@@ -4,13 +4,13 @@
 // Created          : 10-03-2026
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 10-03-2026
+// Last Modified On : 10-04-2026
 // ***********************************************************************
 // <copyright file="TaskTrackerExtensionsBenchmark.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
 // </copyright>
 // <summary>
-// Benchmarks the TaskTrackerExtensions registration helpers using a fresh tracker for each iteration.
+// Benchmarks the TaskTrackerExtensions registration helpers using a single tracker for the whole run.
 // </summary>
 // ***********************************************************************
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -27,13 +27,13 @@ namespace DotNetTips.Spargine.Core.BenchmarkTests.Threading;
 /// Measures <see cref="TaskTrackerExtensions"/> registration helpers.
 /// </summary>
 /// <remarks>
-/// Each iteration measures one invocation against a new tracker so registrations never accumulate.
+/// A single tracker is used for the whole run. Registered tasks complete immediately and are removed by the tracker,
+/// and the pending task is registered by reference, so registrations never accumulate.
 /// The class is unsealed because BenchmarkDotNet generates a derived workload runner.
 /// </remarks>
 [BenchmarkCategory(Categories.Threading)]
-[InvocationCount(1, unrollFactor: 1)]
 [MemoryDiagnoser]
-[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "BenchmarkDotNet iteration cleanup and the inherited global cleanup hook dispose the tracker.")]
+[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "The inherited global cleanup hook disposes the tracker.")]
 public class TaskTrackerExtensionsBenchmark : Benchmark
 {
 	private static readonly Action<int> _action = static _ => { };
@@ -61,19 +61,9 @@ public class TaskTrackerExtensionsBenchmark : Benchmark
 	/// </summary>
 	public override void Cleanup()
 	{
-		this.CleanupIteration();
-		base.Cleanup();
-	}
-
-	/// <summary>
-	/// Completes outstanding work before disposing the tracker.
-	/// </summary>
-	[IterationCleanup]
-	public void CleanupIteration()
-	{
 		_ = this._pendingSource.TrySetResult();
-		_ = this._tracker.WaitForCompletionAsync(TimeSpan.FromSeconds(5), CancellationToken.None).GetAwaiter().GetResult();
 		this._tracker.Dispose();
+		base.Cleanup();
 	}
 
 	/// <summary>
@@ -95,31 +85,19 @@ public class TaskTrackerExtensionsBenchmark : Benchmark
 	/// </summary>
 	/// <returns>The registration keys.</returns>
 	[Benchmark(Description = nameof(RegisterManyWithTracker))]
-	public ReadOnlyCollection<Ulid> RegisterManyWithTracker() => new ReadOnlySpan<int>(this._items).RegisterManyWithTracker(_action, this._tracker);
+	public ReadOnlyCollection<Ulid> RegisterManyWithTracker()
+	{
+		return new ReadOnlySpan<int>(this._items).RegisterManyWithTracker(_action, this._tracker);
+	}
 
 	/// <summary>
 	/// Measures creating and registering one task per item with an asynchronous function.
 	/// </summary>
 	/// <returns>The registration keys.</returns>
 	[Benchmark(Description = nameof(RegisterManyWithTrackerAsync))]
-	public ReadOnlyCollection<Ulid> RegisterManyWithTrackerAsync() => new ReadOnlySpan<int>(this._items).RegisterManyWithTrackerAsync(_asyncAction, this._tracker);
-
-	/// <summary>
-	/// Measures registering a pending task with a tracker.
-	/// </summary>
-	/// <returns>The registration key.</returns>
-	[Benchmark(Description = nameof(RegisterWithTracker))]
-	public Ulid RegisterWithTracker() => this._pendingSource.Task.RegisterWithTracker(this._tracker);
-
-	/// <summary>
-	/// Creates a fresh tracker and pending task outside the measured workload.
-	/// </summary>
-	[IterationSetup]
-	public void Reset()
+	public ReadOnlyCollection<Ulid> RegisterManyWithTrackerAsync()
 	{
-		this.CleanupIteration();
-		this._pendingSource = new TaskCompletionSource();
-		this._tracker = new TaskTracker();
+		return new ReadOnlySpan<int>(this._items).RegisterManyWithTrackerAsync(_asyncAction, this._tracker);
 	}
 
 	/// <summary>
@@ -136,6 +114,8 @@ public class TaskTrackerExtensionsBenchmark : Benchmark
 			this._items[itemIndex] = itemIndex;
 		}
 
-		this.Reset();
+		this._tracker.Dispose();
+		this._pendingSource = new TaskCompletionSource();
+		this._tracker = new TaskTracker();
 	}
 }

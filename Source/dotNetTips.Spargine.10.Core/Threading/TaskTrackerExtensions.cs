@@ -26,25 +26,6 @@ public static class TaskTrackerExtensions
 {
 
 	/// <summary>
-	/// Registers an already-started task with a tracker so it can be awaited or monitored later without being awaited at the call site.
-	/// Exceptions are observed by the tracker and forwarded to the provided callback if supplied.
-	/// </summary>
-	/// <param name="task">The task to register. Must be an already-started (hot) task; cold tasks created with <c>new Task(...)</c> are not started by this method.</param>
-	/// <param name="tracker">Optional tracker to register the task with. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
-	/// <param name="onException">Optional exception callback.</param>
-	/// <returns>The <see cref="Ulid"/> registration key assigned to the task.</returns>
-	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
-	/// <remarks>Registering the same task instance more than once returns the key from the original registration.</remarks>
-	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, BenchmarkStatus = BenchmarkStatus.CheckPerformance, Status = Status.New)]
-	public static Ulid RegisterWithTracker([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
-	{
-		task = task.ArgumentNotNull();
-
-		// Register() attaches a continuation that reads Task.Exception, which observes any fault.
-		return (tracker ?? TaskTrackerFacade.Instance).Register(task, onException);
-	}
-
-	/// <summary>
 	/// Creates and registers a single task for the provided item using a synchronous action.
 	/// </summary>
 	/// <typeparam name="T">The item type.</typeparam>
@@ -136,5 +117,24 @@ public static class TaskTrackerExtensions
 		}
 
 		return keys.AsReadOnly();
+	}
+
+	/// <summary>
+	/// Registers an already-started task with a tracker so it can be awaited or monitored later without being awaited at the call site.
+	/// Exceptions are observed by the tracker and forwarded to the provided callback if supplied.
+	/// </summary>
+	/// <param name="task">The task to register. Must be an already-started (hot) task; cold tasks created with <c>new Task(...)</c> are not started by this method.</param>
+	/// <param name="tracker">Optional tracker to register the task with. If null, <see cref="TaskTrackerFacade.Instance"/> is used.</param>
+	/// <param name="onException">Optional exception callback.</param>
+	/// <returns>The <see cref="Ulid"/> registration key assigned to the task.</returns>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="task"/> is null.</exception>
+	/// <remarks>Registering the same task instance more than once returns the key from the original registration.</remarks>
+	[Information(nameof(RegisterWithTracker), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.NotRequired, Status = Status.New)]
+	public static Ulid RegisterWithTracker([DisallowNull] this Task task, ITaskTracker? tracker = null, Action<Exception>? onException = null)
+	{
+		task = task.ArgumentNotNull();
+
+		// Register() attaches a continuation that reads Task.Exception, which observes any fault.
+		return (tracker ?? TaskTrackerFacade.Instance).Register(task, onException);
 	}
 }

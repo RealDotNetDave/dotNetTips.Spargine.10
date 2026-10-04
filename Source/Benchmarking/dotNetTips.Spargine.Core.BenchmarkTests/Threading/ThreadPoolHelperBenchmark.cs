@@ -21,7 +21,6 @@ using DotNetTips.Spargine.Core.Threading;
 namespace DotNetTips.Spargine.Core.BenchmarkTests.Threading;
 
 [MemoryDiagnoser]
-[ThreadingDiagnoser]
 public class ThreadPoolHelperBenchmark : Benchmark
 {
 	private static readonly Action<CancellationToken> ActionOperation = static _ => { };

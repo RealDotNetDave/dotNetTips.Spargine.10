@@ -54,7 +54,7 @@ internal sealed class Program
 		BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config, true, typeof(DistinctBlockingCollectionBenchmark), typeof(DistinctBlockingCollectionMutatingCollectionBenchmark), typeof(EnumHelperBenchmark), typeof(FastStringBuilderBenchmark), typeof(InformationScannerBenchmark), typeof(Crockford32Benchmark), typeof(TypeHelperBenchmark), typeof(ValidatorBenchmark));
+		//BenchmarkHelper.RunBenchmarks(config, true, typeof(TaskTrackerExtensionsBenchmark));
 
 	}
 }
