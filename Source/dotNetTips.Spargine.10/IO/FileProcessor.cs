@@ -114,7 +114,7 @@ public sealed class FileProcessor
 		// Only allocated when the Processed event has subscribers, avoiding needless timing overhead.
 		var psw = this.CreateStopwatch(nameof(this.CopyFiles));
 
-		// Index-based loop over the List<T> avoids enumerator allocation on this hot path.
+		// Index-based loop over the List<T>
 		for (var fileIndex = 0; fileIndex < listCount; fileIndex++)
 		{
 			if (canBeCanceled)

@@ -15,5 +15,5 @@ Crankin' up the audit scanner under: D:\src\GitHub\dotNetTips.Spargine.10
 No missing solution project references — the whole band showed up!
 2 orphaned project folders found — lost souls on the road.
 
-Audit wrapped — rocked it in 3.2 seconds.
+Audit wrapped — rocked it in 3.6 seconds.
 ```

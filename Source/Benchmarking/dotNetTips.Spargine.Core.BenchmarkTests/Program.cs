@@ -21,7 +21,7 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Reports;
 using DotNetTips.Spargine.Benchmarking;
-using DotNetTips.Spargine.Core.BenchmarkTests.Threading;
+using DotNetTips.Spargine.Core.BenchmarkTests.Collections.Generic.Concurrent;
 using Perfolizer.Horology;
 
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
@@ -37,24 +37,19 @@ internal sealed class Program
 	/// Runs all Core benchmarks or selects the TaskTracker threading benchmarks.
 	/// </summary>
 	/// <param name="args">Pass <c>--task-tracker</c> to run only TaskTracker benchmarks.</param>
-	private static void Main(string[] args)
+	private static void Main()
 	{
 
 		var config = DefaultConfig.Instance
 			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
 			.WithSummaryStyle(SummaryStyle.Default.WithTimeUnit(TimeUnit.Nanosecond)).WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
-		if (args.Length == 1 && string.Equals(args[0], "--task-tracker", StringComparison.Ordinal))
-		{
-			BenchmarkHelper.RunBenchmarks(config, true, typeof(TaskTrackerBenchmark), typeof(TaskTrackerExtensionsBenchmark));
-			return;
-		}
-
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		//BenchmarkHelper.RunAllBenchmarks(config);
 
 		// Run Selected Tests
-		//BenchmarkHelper.RunBenchmarks(config, true, typeof(TaskTrackerExtensionsBenchmark));
+		BenchmarkHelper.RunBenchmarks(config, true, typeof(ConcurrentHashSetMutatingCollectionBenchmark),
+			typeof(DistinctConcurrentBagMutatingBenchmark));
 
 	}
 }
