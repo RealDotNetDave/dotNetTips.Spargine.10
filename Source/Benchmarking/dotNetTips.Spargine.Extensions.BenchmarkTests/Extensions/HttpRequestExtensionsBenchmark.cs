@@ -33,8 +33,8 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class HttpRequestExtensionsBenchmark : Benchmark
 {
 	private static readonly byte[] _requestJsonBytes = Encoding.UTF8.GetBytes("{\"id\":42,\"name\":\"benchmark\"}");
-	private static readonly JsonTypeInfo<SampleRequestBody> _requestTypeInfo = (JsonTypeInfo<SampleRequestBody>)_typeInfoOptions.GetTypeInfo(typeof(SampleRequestBody));
 	private static readonly JsonSerializerOptions _typeInfoOptions = new() { TypeInfoResolver = new DefaultJsonTypeInfoResolver() };
+	private static readonly JsonTypeInfo<SampleRequestBody> _requestTypeInfo = (JsonTypeInfo<SampleRequestBody>)_typeInfoOptions.GetTypeInfo(typeof(SampleRequestBody));
 	private HttpRequest _request = default!;
 
 	[Benchmark(Description = nameof(HttpRequestExtensions.GetRawBodyBytesAsync))]

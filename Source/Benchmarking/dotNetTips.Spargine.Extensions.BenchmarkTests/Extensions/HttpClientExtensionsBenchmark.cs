@@ -36,10 +36,10 @@ namespace DotNetTips.Spargine.Extensions.BenchmarkTests;
 public class HttpClientExtensionsBenchmark : Benchmark
 {
 	private static readonly Uri _jsonUri = new("https://example.test/api/resource");
-	private static readonly JsonTypeInfo<SamplePayload> _payloadTypeInfo = (JsonTypeInfo<SamplePayload>)_typeInfoOptions.GetTypeInfo(typeof(SamplePayload));
+	private static readonly JsonSerializerOptions _typeInfoOptions = new() { TypeInfoResolver = new DefaultJsonTypeInfoResolver() };
 	private static readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 	private static readonly Uri _streamUri = new("https://example.test/api/stream");
-	private static readonly JsonSerializerOptions _typeInfoOptions = new() { TypeInfoResolver = new DefaultJsonTypeInfoResolver() };
+	private static readonly JsonTypeInfo<SamplePayload> _payloadTypeInfo = (JsonTypeInfo<SamplePayload>)_typeInfoOptions.GetTypeInfo(typeof(SamplePayload));
 	private HttpClient _httpClient = default!;
 	private SamplePayload _requestPayload = default!;
 

@@ -43,28 +43,28 @@ internal sealed class Program
 
 		// Temp tests
 		//		BenchmarkHelper.RunBenchmarks(config, true,
-		//typeof(DbContextExtensionsBenchmark)
+		//typeof(HttpClientExtensionsBenchmark), typeof(HttpRequestExtensionsBenchmark)
 		//		);
 
-		// Group 1: A–D - 9:45 hours, 999 benchmarks
-		BenchmarkHelper.RunBenchmarks(config, true,
-		 typeof(ArrayExtensionsCollectionBenchmark),
-		 typeof(ArrayExtensionsSliceBenchmark),
-			typeof(ArrayExtensionsMutatingCollectionBenchmark),
-			typeof(AssemblyExtensionsBenchmark),
-			typeof(CharacterExtensionsBenchmark),
-			typeof(CollectionExtensionsCollectionBenchmark),
-			typeof(CollectionExtensionsMutatingCollectionBenchmark),
-			typeof(ConcurrentBagExtensionsCollectionBenchmark),
-			typeof(DataContextExtensionsBenchmark),
-			typeof(DataReaderExtensionsBenchmark),
-			typeof(DataTableExtensionsBenchmark),
-			typeof(DateTimeExtensionsBenchmark),
-			typeof(DbContextExtensionsBenchmark),
-			typeof(DictionaryExtensionsCollectionBenchmark),
-			typeof(DictionaryExtensionsMutatingCollectionBenchmark),
-			typeof(DirectoryInfoExtensionsBenchmark)
-		);
+		// Group 1: A–D - 9:49 hours, 1,007 benchmarks
+		//BenchmarkHelper.RunBenchmarks(config, true,
+		// typeof(ArrayExtensionsCollectionBenchmark),
+		// typeof(ArrayExtensionsSliceBenchmark),
+		//	typeof(ArrayExtensionsMutatingCollectionBenchmark),
+		//	typeof(AssemblyExtensionsBenchmark),
+		//	typeof(CharacterExtensionsBenchmark),
+		//	typeof(CollectionExtensionsCollectionBenchmark),
+		//	typeof(CollectionExtensionsMutatingCollectionBenchmark),
+		//	typeof(ConcurrentBagExtensionsCollectionBenchmark),
+		//	typeof(DataContextExtensionsBenchmark),
+		//	typeof(DataReaderExtensionsBenchmark),
+		//	typeof(DataTableExtensionsBenchmark),
+		//	typeof(DateTimeExtensionsBenchmark),
+		//	typeof(DbContextExtensionsBenchmark),
+		//	typeof(DictionaryExtensionsCollectionBenchmark),
+		//	typeof(DictionaryExtensionsMutatingCollectionBenchmark),
+		//	typeof(DirectoryInfoExtensionsBenchmark)
+		//);
 
 		// Group 2: E–H - 10:15 hours, 950 benchmarks
 		//BenchmarkHelper.RunBenchmarks(config, true,
@@ -84,28 +84,28 @@ internal sealed class Program
 		//);
 
 		// Group 3: L–T - 11 hours, 976 benchmarks
-		//BenchmarkHelper.RunBenchmarks(config, saveResults: true,
-		//  typeof(ImmutableArrayExtensionsBenchmark),
-		//	typeof(LinqExtensionsBenchmark),
-		//	typeof(ListExtensionsAddRemoveCollectionBenchmark),
-		//	typeof(ListExtensionsCollectionBenchmark),
-		//	typeof(MemoryExtensionsBenchmark),
-		//	typeof(MessagePackExtensionsBenchmark),
-		//	typeof(NumericExtensionsBenchmark),
-		//	typeof(ObjectExtensionsBenchmark),
-		//	typeof(OpenTelemetryExtensionsBenchmark),
-		//	typeof(ObservableCollectionExtensionsCollectionBenchmark),
-		//	typeof(ReadOnlyCollectionExtensionsBenchmark),
-		//	typeof(ReadOnlyMemoryExtensionsBenchmark),
-		//	typeof(ReadOnlySpanExtensionsBenchmark),
-		//	typeof(SortedDictionaryExtensionsBenchmark),
-		//	typeof(SortedSetExtensionsBenchmark),
-		//	typeof(StreamExtensionsBenchmark),
-		//	typeof(StringBuilderExtensionsCounterBenchmark),
-		//	typeof(StringExtensionsBenchmark),
-		//	typeof(StringExtensionsCounterBenchmark),
-		//	typeof(TaskExtensionsBenchmark),
-		//	typeof(TypeExtensionsBenchmark)
-		//);
+		BenchmarkHelper.RunBenchmarks(config, saveResults: true,
+		  typeof(ImmutableArrayExtensionsBenchmark),
+			typeof(LinqExtensionsBenchmark),
+			typeof(ListExtensionsAddRemoveCollectionBenchmark),
+			typeof(ListExtensionsCollectionBenchmark),
+			typeof(MemoryExtensionsBenchmark),
+			typeof(MessagePackExtensionsBenchmark),
+			typeof(NumericExtensionsBenchmark),
+			typeof(ObjectExtensionsBenchmark),
+			typeof(OpenTelemetryExtensionsBenchmark),
+			typeof(ObservableCollectionExtensionsCollectionBenchmark),
+			typeof(ReadOnlyCollectionExtensionsBenchmark),
+			typeof(ReadOnlyMemoryExtensionsBenchmark),
+			typeof(ReadOnlySpanExtensionsBenchmark),
+			typeof(SortedDictionaryExtensionsBenchmark),
+			typeof(SortedSetExtensionsBenchmark),
+			typeof(StreamExtensionsBenchmark),
+			typeof(StringBuilderExtensionsCounterBenchmark),
+			typeof(StringExtensionsBenchmark),
+			typeof(StringExtensionsCounterBenchmark),
+			typeof(TaskExtensionsBenchmark),
+			typeof(TypeExtensionsBenchmark)
+		);
 	}
 }
