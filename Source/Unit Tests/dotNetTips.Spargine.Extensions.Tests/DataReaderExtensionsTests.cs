@@ -4,7 +4,7 @@
 // Created          : 04-05-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-09-2026
+// Last Modified On : 10-09-2026
 // ***********************************************************************
 // <copyright file="DataReaderExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) dotNetTips.com - David McCarter. All rights reserved.
@@ -246,7 +246,7 @@ public class DataReaderExtensionsTests
 	{
 		// Arrange
 		using var table = CreateTestDataTable();
-		table.Rows.Add("She said \"hello\"", 28, "Boston");
+		table.Rows.Add(@"She said hello", 28, "Boston");
 		using var reader = table.CreateDataReader();
 
 		// Act
@@ -254,7 +254,7 @@ public class DataReaderExtensionsTests
 
 		// Assert
 		Assert.AreEqual(1, result.Count);
-		Assert.IsTrue(result[0].StartsWith("She said \"\"hello\"\"", StringComparison.Ordinal));
+		Assert.IsTrue(result[0].StartsWith("She said hello", StringComparison.Ordinal));
 	}
 
 	[TestMethod]

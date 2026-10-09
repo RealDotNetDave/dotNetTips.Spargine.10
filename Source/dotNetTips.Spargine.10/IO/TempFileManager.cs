@@ -4,7 +4,7 @@
 // Created          : 08-04-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 10-03-2026
+// Last Modified On : 10-09-2026
 // ***********************************************************************
 // <copyright file="TempFileManager.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -74,9 +74,11 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 	[Information(nameof(CreateFile), UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.NotRequired, BenchmarkStatus = BenchmarkStatus.Completed, Status = Status.Available)]
 	public string CreateFile()
 	{
-		_ = this._files.TryAdd(GenerateRandomFile(), default);
+		var randomFile = GenerateRandomFile();
 
-		return GenerateRandomFile();
+		_ = this._files.TryAdd(randomFile, default);
+
+		return randomFile;
 	}
 
 	/// <summary>
@@ -221,6 +223,7 @@ public sealed class TempFileManager() : IDisposable, IAsyncDisposable
 			}
 
 			File.Delete(fileName);
+
 			return true;
 		}
 		catch (Exception ex) when (ex is ArgumentException or

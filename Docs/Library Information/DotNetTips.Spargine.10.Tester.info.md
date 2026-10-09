@@ -1,11 +1,11 @@
-# DotNetTips.Spargine.10.Tester - 2026.10.9.6
+# DotNetTips.Spargine.10.Tester - 2026.10.10.2
 
 ## DotNetTips.Spargine.Tester.Data.Converters.DateOnlyConverter
 
 ### System.DateOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** Read
@@ -13,7 +13,7 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateOnly value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** Write
@@ -24,7 +24,7 @@
 ### System.DateTimeOffset Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** Read
@@ -32,7 +32,7 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** Write
@@ -54,7 +54,7 @@
 ### System.TimeOnly Read(System.Text.Json.Utf8JsonReader& reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** Read
@@ -62,8 +62,8 @@
 ### System.Void Write(System.Text.Json.Utf8JsonWriter writer, System.TimeOnly value, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Description:** Write
 
@@ -1266,7 +1266,7 @@
 ### System.Void AppendPostalCodeFormatChar(System.Text.StringBuilder sb, System.Char character)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** AppendPostalCodeFormatChar
@@ -1274,7 +1274,7 @@
 ### System.Void ApplyCityReplacement(System.Text.StringBuilder sb, System.String format, DotNetTips.Spargine.Tester.Data.Models.City city)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** ApplyCityReplacement
@@ -1282,7 +1282,7 @@
 ### DotNetTips.Spargine.Tester.RandomData.AddressComponents BuildAddressComponents(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** BuildAddressComponents
@@ -1290,7 +1290,7 @@
 ### System.ValueTuple<System.Int32[], System.Int32> ComputeWordLengths(System.Int32 count, System.Int32 minLength, System.Int32 maxLength)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** ComputeWordLengths
@@ -1298,7 +1298,7 @@
 ### System.Void FillPostalCodeFromFormat(System.Text.StringBuilder sb, System.String format)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** FillPostalCodeFromFormat
@@ -1306,12 +1306,12 @@
 ### System.Void FillWordChars(System.Span<System.Char> chars, System.ReadOnlySpan<System.Byte> randomBytes, System.Char minCharacter, System.Int32 range)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** FillWordChars
 
-### T GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
+### TAddress GenerateAddress(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1322,7 +1322,7 @@
 * **Description:** GenerateAddress
 * **Modified By:** David McCarter
 
-### T GenerateAddressCollection(System.Int32& count, System.Int32& addressLength, System.Int32& countyProvinceLength)
+### System.Collections.ObjectModel.Collection<TAddress> GenerateAddressCollection(System.Int32& count, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1333,7 +1333,7 @@
 * **Description:** GenerateAddressCollection
 * **Modified By:** David McCarter
 
-### T GenerateAddressCollection(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 count, System.Int32 addressLength, System.Int32 countyProvinceLength)
+### System.Collections.ObjectModel.Collection<TAddress> GenerateAddressCollection(DotNetTips.Spargine.Tester.Data.Models.Country country, System.Int32 count, System.Int32 addressLength, System.Int32 countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1391,7 +1391,7 @@
 ### System.String GenerateCompanyName()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1410,7 +1410,7 @@
 * **Description:** GenerateCoordinate
 * **Modified By:** David McCarter
 
-### T GenerateCoordinateCollection(System.Int32 count)
+### System.Collections.ObjectModel.ReadOnlyCollection<T> GenerateCoordinateCollection(System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1446,7 +1446,7 @@
 ### System.Decimal GenerateCurrencyAmount(System.Decimal minValue, System.Decimal maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1457,7 +1457,7 @@
 ### System.DateOnly GenerateDateOnly(System.Nullable<System.DateOnly> minValue, System.Nullable<System.DateOnly> maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1468,7 +1468,7 @@
 ### System.DateTimeOffset GenerateDateTimeOffset(System.Nullable<System.DateTimeOffset> minValue, System.Nullable<System.DateTimeOffset> maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1509,10 +1509,10 @@
 * **Description:** GenerateEmailAddress
 * **Modified By:** David McCarter
 
-### T GenerateEnum()
+### TEnum GenerateEnum()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1567,8 +1567,8 @@
 ### System.Guid GenerateGuid()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Completed
+* **Optimization Status:** Completed
+* **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
 * **CreatedOn:** 7/10/2026
@@ -1578,7 +1578,7 @@
 ### System.String GenerateHashString(System.Int32 length)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1589,7 +1589,7 @@
 ### System.Int32 GenerateInteger(System.Int32& min, System.Int32 max)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -1600,7 +1600,7 @@
 ### System.String GenerateIPv4Address()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1611,7 +1611,7 @@
 ### System.String GenerateIPv6Address()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1622,7 +1622,7 @@
 ### System.String GenerateJsonObject(System.Int32 propertyCount)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1677,7 +1677,7 @@
 ### System.String GenerateParagraph(System.Int32 sentenceCount, System.Int32 wordsPerSentence)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1685,7 +1685,7 @@
 * **Description:** GenerateParagraph
 * **Modified By:** Copilot Agent
 
-### T GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
+### TPerson GeneratePerson(System.Int32& addressCount, System.Int32& addressLength, System.Int32& countyProvinceLength)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1699,7 +1699,7 @@
 ### DotNetTips.Spargine.Tester.PersonName GeneratePersonNameInternal()
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GeneratePersonNameInternal
@@ -1860,7 +1860,7 @@
 ### System.String GenerateSentence(System.Int32 wordCount)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1882,7 +1882,7 @@
 ### System.TimeOnly GenerateTimeOnly(System.Nullable<System.TimeOnly> minValue, System.Nullable<System.TimeOnly> maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -1893,7 +1893,7 @@
 ### System.TimeSpan GenerateTimeSpan(System.Nullable<System.TimeSpan> minValue, System.Nullable<System.TimeSpan> maxValue)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -2014,7 +2014,7 @@
 ### DotNetTips.Spargine.Tester.Data.Models.City GetCityFromState(DotNetTips.Spargine.Tester.Data.Models.State state)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GetCityFromState
@@ -2022,7 +2022,7 @@
 ### System.String GetCityName(DotNetTips.Spargine.Tester.Data.Models.City city)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GetCityName
@@ -2030,7 +2030,7 @@
 ### System.Int32 GetCountryPhoneLength(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GetCountryPhoneLength
@@ -2046,7 +2046,7 @@
 ### System.String GetPhoneCodeString(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GetPhoneCodeString
@@ -2054,7 +2054,7 @@
 ### System.String GetStateName(DotNetTips.Spargine.Tester.Data.Models.State state)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** GetStateName
@@ -2073,7 +2073,7 @@
 ### System.ValueTuple<DotNetTips.Spargine.Tester.Data.Models.State, DotNetTips.Spargine.Tester.Data.Models.City> PickStateAndCity(DotNetTips.Spargine.Tester.Data.Models.Country country)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Not Required
 * **Description:** PickStateAndCity
@@ -2121,7 +2121,7 @@
 * **Unit Test Status:** Completed
 * **Description:** PrintToDebug
 
-### System.Void PrintToDebug(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Void PrintToDebug(System.Collections.Generic.IEnumerable<T> collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2161,10 +2161,10 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.String SaveToFile(System.Collections.Generic.IEnumerable<T> collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
@@ -2185,10 +2185,10 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
 
-### System.String SaveToFile(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
+### System.String SaveToFile(System.Collections.Generic.IEnumerable<T> collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** SaveToFile
@@ -2201,7 +2201,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFileAsync
 
-### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
+### System.Threading.Tasks.Task<System.String> SaveToFileAsync(System.Collections.Generic.IEnumerable<T> collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2217,7 +2217,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SaveToFileAsync
 
-### System.Threading.Tasks.Task<System.String> SaveToFileAsync(T collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
+### System.Threading.Tasks.Task<System.String> SaveToFileAsync(System.Collections.Generic.IEnumerable<T> collection, System.Func<System.Reflection.PropertyInfo, System.Boolean> propertySelector, System.IO.DirectoryInfo directory, System.String methodName)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -2226,4 +2226,4 @@
 * **Description:** SaveToFileAsync
 
 *****
-**Generated by Spargine - dotNetTips.com on 9/28/2026 1:17:31 PM UTC**
+**Generated by Spargine - dotNetTips.com on 10/9/2026 11:25:50 AM UTC**

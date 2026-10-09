@@ -1,4 +1,4 @@
-# DotNetTips.Spargine.10.Core - 2026.10.9.6
+# DotNetTips.Spargine.10.Core - 2026.10.10.2
 
 ## DotNetTips.Spargine.Core.ApiLibraries
 
@@ -528,7 +528,7 @@
 * **Description:** AddCacheItemAsync
 * **Modified By:** David McCarter
 
-### System.Void AddCacheItemBatch(T items)
+### System.Void AddCacheItemBatch(System.Collections.Generic.IDictionary<System.String, T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -715,7 +715,7 @@
 * **Description:** GetCacheItem
 * **Modified By:** David McCarter
 
-### T GetCacheItemAsync(System.String key, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<T> GetCacheItemAsync(System.String key, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -726,7 +726,7 @@
 * **Description:** GetCacheItemAsync
 * **Modified By:** David McCarter
 
-### T GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
+### System.Collections.Generic.IDictionary<System.String, T> GetCacheItemBatch(System.Collections.Generic.IEnumerable<System.String> keys)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -748,7 +748,7 @@
 * **Description:** GetCacheStatistics
 * **Modified By:** David McCarter
 
-### T GetOrCreateAsync(System.String key, T factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<T> GetOrCreateAsync(System.String key, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<T>> factory, System.Nullable<System.TimeSpan> timeout, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -756,7 +756,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetOrCreateAsync
 
-### T GetOrCreateAsync(System.String key, T factory, System.DateTimeOffset absoluteExpiration, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<T> GetOrCreateAsync(System.String key, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<T>> factory, System.DateTimeOffset absoluteExpiration, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -789,7 +789,7 @@
 * **Description:** InvalidateDependentCacheItems
 * **Modified By:** David McCarter
 
-### System.Boolean PeekCacheItem(System.String key, T value)
+### System.Boolean PeekCacheItem(System.String key, T& value)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -844,7 +844,7 @@
 * **Description:** ResetStatistics
 * **Modified By:** David McCarter
 
-### System.Boolean TryGetValue(System.String key, T value)
+### System.Boolean TryGetValue(System.String key, T& value)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -877,7 +877,7 @@
 * **Description:** CurrentIndex
 * **Modified By:** David McCarter
 
-### T GetEnumerator()
+### System.Collections.Generic.IEnumerator<T> GetEnumerator()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -954,7 +954,7 @@
 * **Description:** SkipNext
 * **Modified By:** David McCarter
 
-### T ToArray()
+### T[] ToArray()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -976,7 +976,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (TValue defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -984,7 +984,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (IEqualityComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -992,7 +992,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (Func`2& onMissingKey)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1000,7 +1000,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T dictionary, T defaultValue)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (IDictionary`2& dictionary, TValue& defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1008,7 +1008,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T dictionary, T onMissingKey)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (IDictionary`2& dictionary, Func`2& onMissingKey)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1016,7 +1016,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T keyValuePairs, T defaultValue)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (IEnumerable`1& keyValuePairs, TValue& defaultValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1024,7 +1024,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T keyValuePairs, T onMissingKey)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (IEnumerable`1& keyValuePairs, Func`2& onMissingKey)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1032,7 +1032,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (TValue& defaultValue, IEqualityComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1040,7 +1040,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (Func`2& onMissingKey, IEqualityComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1048,7 +1048,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T defaultValue, System.Int32 capacity)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (TValue defaultValue, System.Int32 capacity)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1056,7 +1056,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (T onMissingKey, System.Int32 capacity)
+### DotNetTips.Spargine.Core.Collections.Generic.AutoDefaultDictionary<TKey, TValue> (Func`2& onMissingKey, System.Int32 capacity)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1064,7 +1064,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T AddOrUpdate(T key, T addValue, T updateValueFactory)
+### TValue AddOrUpdate(TKey key, TValue addValue, System.Func<TKey, TValue, TValue> updateValueFactory)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1072,7 +1072,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T AsDictionary(T keyValuePairs)
+### System.Collections.Generic.Dictionary<TKey, TValue> AsDictionary(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>> keyValuePairs)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1088,7 +1088,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean ContainsValue(T value, T comparer)
+### System.Boolean ContainsValue(TValue value, System.Collections.Generic.IEqualityComparer<TValue> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1096,7 +1096,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T DefaultValue { get; set; }
+### TValue DefaultValue { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1104,7 +1104,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T GetOrAdd(T key, T value)
+### TValue GetOrAdd(TKey key, TValue value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1112,7 +1112,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T GetOrAdd(T key, T valueFactory)
+### TValue GetOrAdd(TKey key, System.Func<TKey, TValue> valueFactory)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1120,7 +1120,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T GetValueOrDefault(T key)
+### TValue GetValueOrDefault(TKey key)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1128,7 +1128,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T Item { get; set; }
+### TValue Item { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1136,7 +1136,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T OnMissingKeyFactory { get; set; }
+### System.Func<TKey, TValue> OnMissingKeyFactory { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1144,7 +1144,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T ToImmutableDictionary()
+### System.Collections.Immutable.ImmutableDictionary<TKey, TValue> ToImmutableDictionary()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1152,7 +1152,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T ToReadOnlyDictionary()
+### System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1160,7 +1160,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean TryAdd(T key, T value)
+### System.Boolean TryAdd(TKey key, TValue value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1168,7 +1168,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean TryUpdate(T key, T newValue, T comparisonValue)
+### System.Boolean TryUpdate(TKey key, TValue newValue, TValue comparisonValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1190,7 +1190,7 @@
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T collection)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (IEnumerable`1& collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1201,7 +1201,7 @@
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1223,7 +1223,7 @@
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (T collection, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (IEnumerable`1& collection, System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1234,7 +1234,7 @@
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, T collection, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, IEnumerable`1& collection, System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1245,7 +1245,7 @@
 * **Description:** ConcurrentHashSet
 * **Modified By:** David McCarter
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, System.Int32 capacity, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T> (System.Int32& concurrencyLevel, System.Int32 capacity, System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1275,7 +1275,7 @@
 * **Unit Test Status:** Completed
 * **Description:** AddNewLocks
 
-### System.Int32 AddRange(T items)
+### System.Int32 AddRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1297,7 +1297,7 @@
 * **Description:** Clear
 * **Modified By:** David McCarter
 
-### System.Int64 ComputeApproxCount(T tables)
+### System.Int64 ComputeApproxCount(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1321,7 +1321,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ComputeCountUnderLock
 
-### System.ValueTuple<System.Int32, System.Boolean> ComputeNewLength(T tables)
+### System.ValueTuple<System.Int32, System.Boolean> ComputeNewLength(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1340,7 +1340,7 @@
 * **Description:** Contains
 * **Modified By:** David McCarter
 
-### System.Void CopyTo(T array, System.Int32 arrayIndex)
+### System.Void CopyTo(T[] array, System.Int32 arrayIndex)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1362,7 +1362,7 @@
 * **Description:** Count
 * **Modified By:** David McCarter
 
-### System.Object[] CreateExpandedLocks(T tables)
+### System.Object[] CreateExpandedLocks(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1386,7 +1386,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FindNextValidLength
 
-### T GetEnumerator()
+### System.Collections.Generic.IEnumerator<T> GetEnumerator()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1416,7 +1416,7 @@
 * **Description:** IsEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean NodeMatches(T node, T item, System.Int32 hashCode)
+### System.Boolean NodeMatches(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Node node, T item, System.Int32 hashCode)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1424,7 +1424,7 @@
 * **Unit Test Status:** Completed
 * **Description:** NodeMatches
 
-### System.Void RehashBuckets(T tables, T newBuckets, System.Int32[] newCountPerLock, System.Object[] newLocks)
+### System.Void RehashBuckets(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables, DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Node[] newBuckets, System.Int32[] newCountPerLock, System.Object[] newLocks)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1443,7 +1443,7 @@
 * **Description:** Remove
 * **Modified By:** David McCarter
 
-### System.Boolean RemoveNodeFromBucket(T tables, T item, System.Int32 hashCode, System.Int32 bucketNo, System.Int32 lockNo)
+### System.Boolean RemoveNodeFromBucket(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables, T item, System.Int32 hashCode, System.Int32 bucketNo, System.Int32 lockNo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1451,7 +1451,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RemoveNodeFromBucket
 
-### System.Boolean ShouldIncreaseBudgetOnly(T tables)
+### System.Boolean ShouldIncreaseBudgetOnly(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Tables tables)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1459,7 +1459,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ShouldIncreaseBudgetOnly
 
-### T System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+### System.Collections.Generic.IEnumerator<T> System.Collections.Generic.IEnumerable<T>.GetEnumerator()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1470,7 +1470,7 @@
 * **Description:** Add
 * **Modified By:** David McCarter
 
-### T ToArray()
+### T[] ToArray()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1508,7 +1508,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryComputeDoublePlusOne
 
-### System.Boolean TryFindInBucket(T start, T item, System.Int32 hashCode, T foundItem)
+### System.Boolean TryFindInBucket(DotNetTips.Spargine.Core.Collections.Generic.Concurrent.ConcurrentHashSet<T>.Node start, T item, System.Int32 hashCode, T& foundItem)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1516,7 +1516,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryFindInBucket
 
-### System.Boolean TryPeek(T equalValue, T actualValue)
+### System.Boolean TryPeek(T equalValue, T& actualValue)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -1557,7 +1557,7 @@
 * **Unit Test Status:** Completed
 * **Description:** DistinctBlockingCollection
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T> (T collection)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctBlockingCollection<T> (IEnumerable`1& collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1573,7 +1573,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Add
 
-### System.Int32 AddRange(T items, System.Threading.CancellationToken cancellationToken)
+### System.Int32 AddRange(System.Collections.Generic.IEnumerable<T> items, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1605,7 +1605,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Contains
 
-### System.Boolean ContainsAny(T items)
+### System.Boolean ContainsAny(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1632,7 +1632,7 @@
 ### System.Boolean Remove(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** Remove
@@ -1669,7 +1669,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryAdd
 
-### System.Int32 TryAddRange(T items, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
+### System.Int32 TryAddRange(System.Collections.Generic.IEnumerable<T> items, System.Int32 millisecondsTimeout, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1688,7 +1688,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T collection)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (IEnumerable`1& collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1696,7 +1696,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.Concurrent.DistinctConcurrentBag<T> (System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1712,7 +1712,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Int32 AddRange(T items)
+### System.Int32 AddRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1736,7 +1736,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean ContainsAny(T items)
+### System.Boolean ContainsAny(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1744,7 +1744,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ContainsAny
 
-### System.Void CopyTo(T array, System.Int32 arrayIndex)
+### System.Void CopyTo(T[] array, System.Int32 arrayIndex)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1760,7 +1760,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T GetEnumerator()
+### System.Collections.Generic.IEnumerator<T> GetEnumerator()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1787,7 +1787,7 @@
 ### System.Void ReconstructBagWithout(T item)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
@@ -1800,7 +1800,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Int32 RemoveRange(T items)
+### System.Int32 RemoveRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1808,7 +1808,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RemoveRange
 
-### T ToArray()
+### T[] ToArray()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1816,7 +1816,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToArray
 
-### T ToFrozenSet()
+### System.Collections.Frozen.FrozenSet<T> ToFrozenSet()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1824,7 +1824,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToFrozenSet
 
-### T ToList()
+### System.Collections.Generic.List<T> ToList()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1840,7 +1840,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean TryGetValue(T equalValue, T actualValue)
+### System.Boolean TryGetValue(T equalValue, T& actualValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1848,7 +1848,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryGetValue
 
-### System.Boolean TryPeek(T equalValue, T actualValue)
+### System.Boolean TryPeek(T equalValue, T& actualValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1856,7 +1856,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryPeek
 
-### System.Boolean TryTake(T result)
+### System.Boolean TryTake(T& result)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1875,7 +1875,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (IComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1883,7 +1883,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T collection)
+### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (IEnumerable`1& collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1899,7 +1899,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (T collection, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (IEnumerable`1& collection, IComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1907,7 +1907,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (System.Int32 capacity, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.FastSortedList<T> (System.Int32 capacity, IComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1923,7 +1923,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void AddRange(T items)
+### System.Void AddRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1931,7 +1931,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T AsReadOnlySpan()
+### System.ReadOnlySpan<T> AsReadOnlySpan()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1947,7 +1947,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T GetEnumerator()
+### System.Collections.Generic.List<T>.Enumerator GetEnumerator()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1979,7 +1979,7 @@
 * **Unit Test Status:** None
 * **Modified By:** UNKNOWN
 
-### T ToArray()
+### T[] ToArray()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1987,7 +1987,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T ToImmutableList()
+### System.Collections.Immutable.IImmutableList<T> ToImmutableList()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -1995,7 +1995,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T ToList()
+### System.Collections.Generic.IList<T> ToList()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2014,7 +2014,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (System.Collections.Generic.IEqualityComparer<T> comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2022,7 +2022,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T collection)
+### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (IEnumerable`1& collection)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2030,7 +2030,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (T collection, T comparer)
+### DotNetTips.Spargine.Core.Collections.Generic.ObservableList<T> (IEnumerable`1& collection, IEqualityComparer`1& comparer)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2046,7 +2046,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void AddRange(T items)
+### System.Void AddRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2062,7 +2062,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T Comparer { get; set; }
+### System.Collections.Generic.IEqualityComparer<T> Comparer { get; set; }
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2078,7 +2078,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void CopyTo(T array)
+### System.Void CopyTo(T[] array)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2086,7 +2086,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void CopyTo(T array, System.Int32 arrayIndex)
+### System.Void CopyTo(T[] array, System.Int32 arrayIndex)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2094,7 +2094,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void CopyTo(T array, System.Int32 arrayIndex, System.Int32 count)
+### System.Void CopyTo(T[] array, System.Int32 arrayIndex, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2118,7 +2118,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void ExceptWith(T other)
+### System.Void ExceptWith(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2126,7 +2126,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T FindAll(T match)
+### System.Collections.Generic.IEnumerable<T> FindAll(System.Predicate<T> match)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2142,7 +2142,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void IntersectWith(T other)
+### System.Void IntersectWith(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2150,7 +2150,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean IsProperSubsetOf(T other)
+### System.Boolean IsProperSubsetOf(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2158,7 +2158,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean IsProperSupersetOf(T other)
+### System.Boolean IsProperSupersetOf(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2174,7 +2174,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean IsSubsetOf(T other)
+### System.Boolean IsSubsetOf(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2182,7 +2182,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean IsSupersetOf(T other)
+### System.Boolean IsSupersetOf(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2198,7 +2198,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean Overlaps(T other)
+### System.Boolean Overlaps(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2214,7 +2214,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Int32 RemoveRange(T items)
+### System.Int32 RemoveRange(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2222,7 +2222,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Int32 RemoveWhere(T match)
+### System.Int32 RemoveWhere(System.Predicate<T> match)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2230,7 +2230,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void Reset(T items)
+### System.Void Reset(System.Collections.Generic.IEnumerable<T> items)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2238,7 +2238,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean SetEquals(T other)
+### System.Boolean SetEquals(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2246,7 +2246,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void SymmetricExceptWith(T other)
+### System.Void SymmetricExceptWith(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2262,7 +2262,7 @@
 * **Unit Test Status:** Not Required
 * **Modified By:** UNKNOWN
 
-### T ToArray()
+### T[] ToArray()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2270,7 +2270,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### T ToList()
+### System.Collections.Generic.List<T> ToList()
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2286,7 +2286,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Boolean TryGetValue(T equalValue, T actualValue)
+### System.Boolean TryGetValue(T equalValue, T& actualValue)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -2294,7 +2294,7 @@
 * **Unit Test Status:** Completed
 * **Modified By:** UNKNOWN
 
-### System.Void UnionWith(T other)
+### System.Void UnionWith(System.Collections.Generic.IEnumerable<T> other)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3401,7 +3401,7 @@
 ### DotNetTips.Spargine.Core.Diagnostics.StopwatchScope (System.Action<System.TimeSpan> onDispose)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -3412,7 +3412,7 @@
 ### DotNetTips.Spargine.Core.Diagnostics.StopwatchScope Start(System.Action<System.TimeSpan> onDispose)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -3506,7 +3506,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FromValue
 
-### T GetAll()
+### System.Collections.Generic.IEnumerable<T> GetAll()
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3514,7 +3514,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAll
 
-### System.Boolean TryFromDisplayName(System.String displayName, T result)
+### System.Boolean TryFromDisplayName(System.String displayName, T& result)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3522,7 +3522,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryFromDisplayName
 
-### System.Boolean TryFromValue(System.Int32 value, T result)
+### System.Boolean TryFromValue(System.Int32 value, T& result)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3541,10 +3541,10 @@
 *****
 ## DotNetTips.Spargine.Core.EnumHelper
 
-### System.Int32 FlagCount(T input)
+### System.Int32 FlagCount(TEnum input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -3560,7 +3560,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetDescription
 
-### System.String GetDescription(T input)
+### System.String GetDescription(TEnum input)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -3571,7 +3571,7 @@
 ### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.EnumValue> GetItems(System.Boolean fixNames)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -3579,10 +3579,10 @@
 * **Description:** GetItems
 * **Modified By:** David McCarter
 
-### T GetSetFlags(T input)
+### System.Collections.ObjectModel.ReadOnlyCollection<TEnum> GetSetFlags(TEnum input)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -3590,7 +3590,7 @@
 * **Description:** GetSetFlags
 * **Modified By:** Copilot Agent
 
-### System.Boolean TryParse(System.String name, T result)
+### System.Boolean TryParse(System.String name, T& result)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3663,7 +3663,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FormatForDisplay
 
-### T FromHierarchy(T source, T accumulatorFunction)
+### System.Collections.Generic.IEnumerable<TSource> FromHierarchy(TSource source, System.Func<TSource, TSource> accumulatorFunction)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3671,7 +3671,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FromHierarchy
 
-### T FromHierarchy(T source, T nextItem, T canContinuePredicate)
+### System.Collections.Generic.IEnumerable<TSource> FromHierarchy(TSource source, System.Func<TSource, TSource> nextItem, System.Func<TSource, System.Boolean> canContinuePredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3929,7 +3929,7 @@
 *****
 ## DotNetTips.Spargine.Core.ExceptionExtensions.<G>$A9422F7DB89A57DD264BF6B8B5E1AB6D<$T0>
 
-### T FromHierarchy(T accumulatorFunction)
+### System.Collections.Generic.IEnumerable<$T0> FromHierarchy(System.Func<$T0, $T0> accumulatorFunction)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -3937,7 +3937,7 @@
 * **Unit Test Status:** Completed
 * **Description:** FromHierarchy
 
-### T FromHierarchy(T nextItem, T canContinuePredicate)
+### System.Collections.Generic.IEnumerable<$T0> FromHierarchy(System.Func<$T0, $T0> nextItem, System.Func<$T0, System.Boolean> canContinuePredicate)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4164,7 +4164,7 @@
 * **Unit Test Status:** Completed
 * **Description:** From .NET Core source.
 
-### System.Void ThrowInvalidValueException(System.String message, T value)
+### System.Void ThrowInvalidValueException(System.String message, TValue value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4172,7 +4172,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ThrowInvalidValueException
 
-### System.Void ThrowInvalidValueException(System.String message, T value, System.Exception innerException)
+### System.Void ThrowInvalidValueException(System.String message, TValue value, System.Exception innerException)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -4370,7 +4370,7 @@
 ### System.String FormatCurrentCulture(System.String format, System.Object[] args)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -4381,7 +4381,7 @@
 ### System.String FormatInvariant(System.String format, System.Object[] args)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -4444,7 +4444,7 @@
 * **Description:** Remove
 * **Modified By:** David McCarter
 
-### System.String ToDelimitedString(T collection, System.Char delimiter)
+### System.String ToDelimitedString(System.Collections.Generic.Dictionary<TKey, TValue> collection, System.Char delimiter)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -4513,7 +4513,7 @@
 ### System.Collections.Generic.IEnumerable<DotNetTips.Spargine.Core.InformationMetadata> GetInformationMetadata(System.Reflection.Assembly assembly)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** GetInformationMetadata
@@ -5176,7 +5176,7 @@
 * **Unit Test Status:** Completed
 * **Description:** IsCompleted
 
-### T ListenAsync(System.Threading.CancellationToken cancellationToken)
+### System.Collections.Generic.IAsyncEnumerable<T> ListenAsync(System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5198,7 +5198,7 @@
 * **Description:** Lock
 * **Modified By:** David McCarter
 
-### T ReadAsync(System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.ValueTask<T> ReadAsync(System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5209,7 +5209,7 @@
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
 
-### T ReadAsync(T keyResolver, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.ValueTask<T> ReadAsync(System.Func<T, System.String> keyResolver, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5220,7 +5220,7 @@
 * **Description:** ReadAsync
 * **Modified By:** David McCarter
 
-### System.Boolean TryPeek(T item)
+### System.Boolean TryPeek(T& item)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5228,7 +5228,7 @@
 * **Unit Test Status:** Completed
 * **Description:** TryPeek
 
-### System.Boolean TryRead(T item)
+### System.Boolean TryRead(T& item)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5266,7 +5266,7 @@
 * **Description:** WriteAsync
 * **Modified By:** David McCarter
 
-### System.Threading.Tasks.Task WriteAsync(T items, System.Boolean lockQueue, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task WriteAsync(System.Collections.Generic.IEnumerable<T> items, System.Boolean lockQueue, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5569,7 +5569,7 @@
 ### System.Byte[] Decode(System.String text)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -5761,7 +5761,7 @@
 ### System.Text.Json.JsonSerializerOptions CreateDefaultOptions(System.Boolean writeIndented, System.Boolean includeDateOnlyConverters)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -5769,7 +5769,7 @@
 * **Description:** CreateDefaultOptions
 * **Modified By:** Copilot Agent
 
-### T Deserialize(System.String json, System.Text.Json.JsonSerializerOptions options)
+### TResult Deserialize(System.String json, System.Text.Json.JsonSerializerOptions options)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5777,7 +5777,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Deserialize
 
-### T Deserialize(System.String json, T typeInfo)
+### TResult Deserialize(System.String json, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TResult> typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5785,7 +5785,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Deserialize
 
-### T DeserializeFromFile(System.IO.FileInfo file)
+### TResult DeserializeFromFile(System.IO.FileInfo file)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5804,7 +5804,7 @@
 * **Description:** From .NET Core source.
 * **Modified By:** David McCarter
 
-### T LoadCollectionFromJson(System.String json, System.Int32 count)
+### T[] LoadCollectionFromJson(System.String json, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5812,7 +5812,7 @@
 * **Unit Test Status:** Completed
 * **Description:** LoadCollectionFromJson
 
-### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count)
+### T[] LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5820,7 +5820,7 @@
 * **Unit Test Status:** Completed
 * **Description:** LoadCollectionFromJson
 
-### T LoadCollectionFromJson(System.String json, System.Int32 count, T typeInfo)
+### T[] LoadCollectionFromJson(System.String json, System.Int32 count, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5828,7 +5828,7 @@
 * **Unit Test Status:** Completed
 * **Description:** LoadCollectionFromJson
 
-### T LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count, T typeInfo)
+### T[] LoadCollectionFromJson(System.IO.FileInfo file, System.Int32 count, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5855,7 +5855,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Serialize
 
-### System.String Serialize(T obj, T typeInfo)
+### System.String Serialize(T obj, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5863,7 +5863,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Serialize
 
-### System.Void SerializeToFile(T obj, System.IO.FileInfo file, T typeInfo)
+### System.Void SerializeToFile(T obj, System.IO.FileInfo file, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5885,7 +5885,7 @@
 *****
 ## DotNetTips.Spargine.Core.Serialization.XmlSerialization
 
-### T Deserialize(System.String xml)
+### TResult Deserialize(System.String xml)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5893,7 +5893,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Deserialize
 
-### T DeserializeFromFile(System.IO.FileInfo file)
+### TResult DeserializeFromFile(System.IO.FileInfo file)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -5942,7 +5942,7 @@
 *****
 ## DotNetTips.Spargine.Core.SimpleResult
 
-### T FromException(System.Exception e)
+### DotNetTips.Spargine.Core.SimpleResult<T> FromException(System.Exception e)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5950,7 +5950,7 @@
 * **Unit Test Status:** Completed
 * **Description:** SimpleResult
 
-### T FromValue(T value)
+### DotNetTips.Spargine.Core.SimpleResult<T> FromValue(T value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -5993,7 +5993,7 @@
 * **Unit Test Status:** Completed
 * **Description:** AddMessage
 
-### T Bind(T binder)
+### DotNetTips.Spargine.Core.SimpleResult<TResult> Bind(System.Func<T, DotNetTips.Spargine.Core.SimpleResult<TResult>> binder)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6001,7 +6001,7 @@
 * **Unit Test Status:** Completed
 * **Description:** Bind
 
-### System.Void Deconstruct(T value, System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Exception, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& errors)
+### System.Void Deconstruct(T& value, System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Exception, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]& errors)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6057,7 +6057,7 @@
 * **Unit Test Status:** Not Required
 * **Description:** IsSuccess
 
-### T Map(T mapper)
+### DotNetTips.Spargine.Core.SimpleResult<TResult> Map(System.Func<T, TResult> mapper)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6113,7 +6113,7 @@
 * **Unit Test Status:** Completed
 * **Description:** ToString
 
-### System.Boolean TryGet(T value)
+### System.Boolean TryGet(T& value)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6153,7 +6153,7 @@
 ### System.Void RunSync(System.Func<System.Threading.Tasks.ValueTask> taskFunction)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -6161,7 +6161,7 @@
 * **Description:** RunSync
 * **Modified By:** Copilot Agent
 
-### T RunSync(T taskFunction)
+### TResult RunSync(System.Func<System.Threading.Tasks.Task<TResult>> taskFunction)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6173,10 +6173,10 @@
 * **Documentation:** https://bit.ly/SpargineSep2022
 * **Modified By:** David McCarter
 
-### T RunSync(T taskFunction)
+### TResult RunSync(System.Func<System.Threading.Tasks.ValueTask<TResult>> taskFunction)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** Copilot Agent
@@ -6184,7 +6184,7 @@
 * **Description:** RunSync
 * **Modified By:** Copilot Agent
 
-### T RunSync(T taskFunction, System.Threading.CancellationToken cancellationToken, System.Threading.Tasks.TaskCreationOptions taskCreation, System.Threading.Tasks.TaskContinuationOptions taskContinuation, System.Threading.Tasks.TaskScheduler taskScheduler)
+### TResult RunSync(System.Func<System.Threading.Tasks.Task<TResult>> taskFunction, System.Threading.CancellationToken cancellationToken, System.Threading.Tasks.TaskCreationOptions taskCreation, System.Threading.Tasks.TaskContinuationOptions taskContinuation, System.Threading.Tasks.TaskScheduler taskScheduler)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6290,7 +6290,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** Register
 
@@ -6298,7 +6298,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** Unregister
 
@@ -6306,7 +6306,7 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** Unregister
 
@@ -6314,58 +6314,50 @@
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** WaitForCompletionAsync
 
 *****
 ## DotNetTips.Spargine.Core.Threading.TaskTrackerExtensions
 
-### DotNetTips.Spargine.Core.Ulid FireAndForgetAndTrack(System.Threading.Tasks.Task task, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+### DotNetTips.Spargine.Core.Ulid RegisterItemWithTracker(T item, System.Action<T> action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
-* **Unit Test Status:** Completed
-* **Description:** FireAndForgetAndTrack
-
-### DotNetTips.Spargine.Core.Ulid RegisterItemWithTracker(T item, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
-
-* **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** RegisterItemWithTracker
 
-### DotNetTips.Spargine.Core.Ulid RegisterItemWithTrackerAsync(T item, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+### DotNetTips.Spargine.Core.Ulid RegisterItemWithTrackerAsync(T item, System.Func<T, System.Threading.Tasks.Task> action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** RegisterItemWithTrackerAsync
 
-### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTracker(T items, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTracker(System.ReadOnlySpan<T> items, System.Action<T> action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** RegisterManyWithTracker
 
-### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTrackerAsync(T items, T action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
+### System.Collections.ObjectModel.ReadOnlyCollection<DotNetTips.Spargine.Core.Ulid> RegisterManyWithTrackerAsync(System.ReadOnlySpan<T> items, System.Func<T, System.Threading.Tasks.Task> action, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
 
 * **Status:** New
 * **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **BenchMarkStatus:** Check Performance
 * **Unit Test Status:** Completed
 * **Description:** RegisterManyWithTrackerAsync
 
 ### DotNetTips.Spargine.Core.Ulid RegisterWithTracker(System.Threading.Tasks.Task task, DotNetTips.Spargine.Core.Threading.ITaskTracker tracker, System.Action<System.Exception> onException)
 
 * **Status:** New
-* **Optimization Status:** Optimize
-* **BenchMarkStatus:** Benchmark
+* **Optimization Status:** Not Required
+* **BenchMarkStatus:** Not Required
 * **Unit Test Status:** Completed
 * **Description:** RegisterWithTracker
 
@@ -6439,7 +6431,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetStatistics
 
-### T RunAsync(T operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<TResult> RunAsync(System.Func<System.Threading.CancellationToken, TResult> operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6447,7 +6439,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RunAsync
 
-### T RunAsync(T operations, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<TResult[]> RunAsync(System.Collections.Generic.IReadOnlyCollection<System.Func<System.Threading.CancellationToken, TResult>> operations, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6455,7 +6447,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RunAsync
 
-### T RunAsync(T operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<TResult> RunAsync(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<TResult>> operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6471,7 +6463,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RunAsync
 
-### T RunAsync(T operations, System.Int32 maxDegreeOfParallelism, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<TResult[]> RunAsync(System.Collections.Generic.IReadOnlyCollection<System.Func<System.Threading.CancellationToken, TResult>> operations, System.Int32 maxDegreeOfParallelism, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6479,7 +6471,7 @@
 * **Unit Test Status:** Completed
 * **Description:** RunAsync
 
-### T RunWhenAnyAsync(T operations, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<TResult> RunWhenAnyAsync(System.Collections.Generic.IReadOnlyCollection<System.Func<System.Threading.CancellationToken, TResult>> operations, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -6487,9 +6479,9 @@
 * **Unit Test Status:** Completed
 * **Description:** RunWhenAnyAsync
 
-### T TryRunAsync(T operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
+### System.Threading.Tasks.Task<DotNetTips.Spargine.Core.SimpleResult<TResult>> TryRunAsync(System.Func<System.Threading.CancellationToken, TResult> operation, System.Int32 millisecondsTimeOut, System.Threading.CancellationToken cancellationToken)
 
-* **Status:** New
+* **Status:** Available
 * **Optimization Status:** Optimize
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
@@ -6579,10 +6571,10 @@
 * **Unit Test Status:** Completed
 * **Description:** FromJson
 
-### T FromJson(System.String json, T typeInfo)
+### T FromJson(System.String json, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Not Required
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** FromJson
@@ -6687,7 +6679,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAllStaticMethods
 
-### T GetAttribute(System.Reflection.FieldInfo fieldInfo)
+### TAttribute GetAttribute(System.Reflection.FieldInfo fieldInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6695,7 +6687,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAttribute
 
-### T GetAttribute(System.Type type)
+### TAttribute GetAttribute(System.Type type)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6703,7 +6695,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAttribute
 
-### T GetAttribute(System.Reflection.MethodInfo methodInfo)
+### TAttribute GetAttribute(System.Reflection.MethodInfo methodInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6711,7 +6703,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetAttribute
 
-### T GetAttribute(System.Reflection.PropertyInfo propertyInfo)
+### TAttribute GetAttribute(System.Reflection.PropertyInfo propertyInfo)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -6775,7 +6767,7 @@
 * **Unit Test Status:** Completed
 * **Description:** GetMembersWithAttribute
 
-### System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String, System.String>> GetPropertyValues(T input)
+### System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String, System.String>> GetPropertyValues(T& input)
 
 * **Status:** Available
 * **Optimization Status:** Completed
@@ -6805,7 +6797,7 @@
 ### System.String GetTypeDisplayName(System.Type type, System.Boolean fullName, System.Boolean includeGenericParameterNames, System.Boolean includeGenericParameters, System.Char nestedTypeDelimiter)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** GetTypeDisplayName
@@ -6885,7 +6877,7 @@
 ### System.Boolean IsBuiltinType(System.Type& type)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Author:** David McCarter
@@ -7153,7 +7145,7 @@
 *****
 ## DotNetTips.Spargine.Core.Validator
 
-### T ArgumentCountInRange(T input, System.Int32 min, System.Int32 max, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IEnumerable<T> ArgumentCountInRange(System.Collections.Generic.IEnumerable<T> input, System.Int32 min, System.Int32 max, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7164,7 +7156,7 @@
 * **Description:** ArgumentCountInRange
 * **Modified By:** David McCarter
 
-### T ArgumentCustom(T input, T predicate, System.String errorMessage, System.String paramName)
+### T ArgumentCustom(T input, System.Func<T, System.Boolean> predicate, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7318,7 +7310,7 @@
 * **Description:** ArgumentInRange
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IEnumerable<T> ArgumentItemsExists(System.Collections.Generic.IEnumerable<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7329,7 +7321,7 @@
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IReadOnlyList<T> ArgumentItemsExists(System.Collections.Generic.IReadOnlyList<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7340,7 +7332,7 @@
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IReadOnlyCollection<T> ArgumentItemsExists(System.Collections.Generic.IReadOnlyCollection<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7351,7 +7343,7 @@
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.List<T> ArgumentItemsExists(System.Collections.Generic.List<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7362,7 +7354,7 @@
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.String errorMessage, System.String paramName)
+### T[] ArgumentItemsExists(T[] input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7373,7 +7365,7 @@
 * **Description:** ArgumentItemsExists
 * **Modified By:** David McCarter
 
-### T ArgumentItemsExists(T input, System.Int64& count, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IEnumerable<T> ArgumentItemsExists(System.Collections.Generic.IEnumerable<T> input, System.Int64& count, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7417,7 +7409,7 @@
 * **Description:** ArgumentMeetsCondition
 * **Modified By:** David McCarter
 
-### T ArgumentNotEmpty(T input, System.String errorMessage, System.String paramName)
+### System.ReadOnlySpan<T> ArgumentNotEmpty(System.ReadOnlySpan<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7428,7 +7420,7 @@
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
 
-### T ArgumentNotEmpty(T input, System.String errorMessage, System.String paramName)
+### System.Span<T> ArgumentNotEmpty(System.Span<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7439,7 +7431,7 @@
 * **Description:** ArgumentNotEmpty
 * **Modified By:** David McCarter
 
-### T ArgumentNotNull(T input, System.String errorMessage, System.String paramName)
+### System.Collections.ObjectModel.Collection<T> ArgumentNotNull(System.Collections.ObjectModel.Collection<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7494,7 +7486,7 @@
 * **Description:** ArgumentNotNullOrEmpty
 * **Modified By:** David McCarter
 
-### T ArgumentNotReadOnly(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IList<T> ArgumentNotReadOnly(System.Collections.Generic.IList<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7505,7 +7497,7 @@
 * **Description:** ArgumentNotReadOnly
 * **Modified By:** David McCarter
 
-### T ArgumentNotReadOnly(T input, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.ICollection<T> ArgumentNotReadOnly(System.Collections.Generic.ICollection<T> input, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7659,7 +7651,7 @@
 * **Description:** CheckIsInRange
 * **Modified By:** David McCarter
 
-### System.Boolean CheckIsNotEmpty(T input, System.Boolean& throwException, System.String errorMessage)
+### System.Boolean CheckIsNotEmpty(System.ReadOnlySpan<T> input, System.Boolean& throwException, System.String errorMessage)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7703,7 +7695,7 @@
 * **Description:** CheckIsNotNullOrEmpty
 * **Modified By:** David McCarter
 
-### System.Boolean CheckItemsExists(T input, System.Boolean& throwException, System.String errorMessage)
+### System.Boolean CheckItemsExists(System.Collections.Generic.IEnumerable<T> input, System.Boolean& throwException, System.String errorMessage)
 
 * **Status:** Available
 * **Optimization Status:** None
@@ -7725,7 +7717,7 @@
 * **Description:** CheckTypeEquals
 * **Modified By:** David McCarter
 
-### T EnsureCountInRange(T source, System.Int32 minInclusive, System.Int32 maxInclusive, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IEnumerable<T> EnsureCountInRange(System.Collections.Generic.IEnumerable<T> source, System.Int32 minInclusive, System.Int32 maxInclusive, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
 * **Optimization Status:** Optimize
@@ -7757,10 +7749,10 @@
 * **Unit Test Status:** Completed
 * **Description:** EnsureInRange
 
-### T EnsureNotEmpty(T source, System.String errorMessage, System.String paramName)
+### System.Collections.Generic.IEnumerable<T> EnsureNotEmpty(System.Collections.Generic.IEnumerable<T> source, System.String errorMessage, System.String paramName)
 
 * **Status:** Available
-* **Optimization Status:** Optimize
+* **Optimization Status:** Completed
 * **BenchMarkStatus:** Completed
 * **Unit Test Status:** Completed
 * **Description:** EnsureNotEmpty
@@ -7815,4 +7807,4 @@
 * **Modified By:** David McCarter
 
 *****
-**Generated by Spargine - dotNetTips.com on 9/28/2026 1:17:31 PM UTC**
+**Generated by Spargine - dotNetTips.com on 10/9/2026 11:25:50 AM UTC**

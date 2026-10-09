@@ -4,7 +4,7 @@
 // Created          : 12-17-2020
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-09-2026
+// Last Modified On : 10-09-2026
 // ***********************************************************************
 // <copyright file="EnumerableExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) David McCarter - dotNetTips.com. All rights reserved.
@@ -4311,6 +4311,7 @@ public class EnumerableExtensionsTests
 		var result = people.OrderBy("Email").ToList();
 
 		var expected = people.OrderBy(p => p.Email, StringComparer.Ordinal).ToList();
+
 		CollectionAssert.AreEqual(expected, result);
 	}
 
