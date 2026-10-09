@@ -98,7 +98,7 @@ public class FileHelperBenchmark : Benchmark
 
 		ConsoleLogger.Default.WriteLine($"Source Path={this._sourcePath}");
 
-		_ = RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
+		_ =  RandomData.GenerateFiles(this._sourcePath.FullName, FileCount, FileLength);
 
 		this._testFiles = this._sourcePath.GetFiles("*.*", SearchOption.TopDirectoryOnly);
 	}

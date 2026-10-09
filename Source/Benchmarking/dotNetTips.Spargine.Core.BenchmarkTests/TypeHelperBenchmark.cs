@@ -592,6 +592,7 @@ public class TypeHelperBenchmark : Benchmark
 		base.Setup();
 
 		var list = new Dictionary<string, string>(this._collectionCount);
+
 		for (var i = 0; i < this._collectionCount; i++)
 		{
 			list.Add(RandomData.GenerateKey(), RandomData.GenerateKey());

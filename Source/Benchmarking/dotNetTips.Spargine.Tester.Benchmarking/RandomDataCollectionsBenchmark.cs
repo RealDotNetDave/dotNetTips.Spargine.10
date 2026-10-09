@@ -217,11 +217,6 @@ public class RandomDataCollectionsBenchmark : LargeCollectionBenchmark
 		this._coordinateCollection = this.GetCoordinateValArray().ToCollection();
 		this._personRecordCollection = this.GetPersonRecordArray().ToCollection();
 		this._personRefCollection = this.GetPersonRefArray().ToCollection();
-
-		LogInfo($"PersonRefCollection: {this._personRefCollection.Count}");
-		LogInfo($"PersonRecordCollection: {this._personRecordCollection.Count}");
-		LogInfo($"FIRST PERSON: {this._personRefCollection.First().Email}");
-		LogInfo($"LAST PERSON: {this._personRefCollection.Last().Email}");
 	}
 
 }

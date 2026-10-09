@@ -225,8 +225,7 @@ public class CollectionExtensionsMutatingCollectionBenchmark : LargeCollectionBe
 	{
 		base.Setup();
 
-		var people = this.GetPersonRefArray();
-		this._existingPerson = people[0];
+		this._existingPerson = this.PersonRef01;
 		this._personToInsert = this.GetPersonRefCollectionToInsert()[0];
 		this._personHashSetFromCacheToInsert = [.. this.GetPersonRefCollectionToInsert()];
 		this._personArrayFromCacheToInsert = this.GetPersonRefCollectionToInsert();
