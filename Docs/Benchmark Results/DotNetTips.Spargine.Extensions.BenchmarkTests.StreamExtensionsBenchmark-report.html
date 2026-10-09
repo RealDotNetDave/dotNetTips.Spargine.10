@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.StreamExtensionsBenchmark-20261003-030250</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.StreamExtensionsBenchmark-20261008-234123</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -24,12 +24,12 @@ Categories=IO
 </code></pre>
 
 <table>
-<thead><tr><th>Method                       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Allocated</th>
+<thead><tr><th>Method                       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Gen0</th><th>Exceptions</th><th>Gen1</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;CopyToAsyncPooled: Custom Buffer&#39;</td><td>1,799.3 ns</td><td>6.76 ns</td><td>5.28 ns</td><td>1.52 ns</td><td>1,791.9 ns</td><td>1,795.3 ns</td><td>1,799.3 ns</td><td>1,803.7 ns</td><td>1,808.1 ns</td><td>555,766.9</td><td>5.238 ns</td><td>12.00</td><td>No</td><td>-</td><td>0.4349</td><td>1,950 B</td><td>12.24 KB</td>
-</tr><tr><td>&#39;CopyToAsyncPooled: Default Buffer&#39;</td><td>1,155.1 ns</td><td>10.20 ns</td><td>9.04 ns</td><td>2.42 ns</td><td>1,143.7 ns</td><td>1,148.8 ns</td><td>1,153.5 ns</td><td>1,159.7 ns</td><td>1,176.0 ns</td><td>865,726.3</td><td>5.792 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.2880</td><td>1,950 B</td><td>8.22 KB</td>
-</tr><tr><td>ReadExactlyAsync</td><td>1,020.8 ns</td><td>5.61 ns</td><td>4.69 ns</td><td>1.30 ns</td><td>1,012.3 ns</td><td>1,016.5 ns</td><td>1,021.2 ns</td><td>1,024.0 ns</td><td>1,028.3 ns</td><td>979,589.9</td><td>5.850 ns</td><td>13.00</td><td>No</td><td>-</td><td>0.2861</td><td>1,773 B</td><td>8.16 KB</td>
-</tr><tr><td>WriteAllAsync</td><td>1,035.1 ns</td><td>6.59 ns</td><td>5.84 ns</td><td>1.56 ns</td><td>1,028.5 ns</td><td>1,030.8 ns</td><td>1,033.9 ns</td><td>1,036.1 ns</td><td>1,048.2 ns</td><td>966,083.9</td><td>6.219 ns</td><td>14.00</td><td>No</td><td>-</td><td>0.2823</td><td>1,704 B</td><td>8.16 KB</td>
+</thead><tbody><tr><td>&#39;CopyToAsyncPooled: Custom Buffer&#39;</td><td>1,776.5 ns</td><td>9.00 ns</td><td>7.52 ns</td><td>2.08 ns</td><td>1,756.1 ns</td><td>1,773.9 ns</td><td>1,776.8 ns</td><td>1,780.3 ns</td><td>1,788.2 ns</td><td>562,915.4</td><td>5.458 ns</td><td>13.00</td><td>No</td><td>1,950 B</td><td>0.4349</td><td>-</td><td>0.0019</td><td>12.24 KB</td>
+</tr><tr><td>&#39;CopyToAsyncPooled: Default Buffer&#39;</td><td>1,160.1 ns</td><td>4.64 ns</td><td>4.11 ns</td><td>1.10 ns</td><td>1,154.2 ns</td><td>1,157.4 ns</td><td>1,159.1 ns</td><td>1,161.8 ns</td><td>1,169.0 ns</td><td>862,016.4</td><td>6.450 ns</td><td>14.00</td><td>No</td><td>1,950 B</td><td>0.2899</td><td>-</td><td>-</td><td>8.22 KB</td>
+</tr><tr><td>ReadExactlyAsync</td><td>1,014.5 ns</td><td>5.65 ns</td><td>5.29 ns</td><td>1.36 ns</td><td>1,006.5 ns</td><td>1,009.9 ns</td><td>1,013.7 ns</td><td>1,018.1 ns</td><td>1,022.1 ns</td><td>985,716.4</td><td>6.818 ns</td><td>15.00</td><td>No</td><td>1,773 B</td><td>0.2861</td><td>-</td><td>-</td><td>8.16 KB</td>
+</tr><tr><td>WriteAllAsync</td><td>1,034.5 ns</td><td>9.47 ns</td><td>8.40 ns</td><td>2.24 ns</td><td>1,026.4 ns</td><td>1,029.3 ns</td><td>1,032.5 ns</td><td>1,035.3 ns</td><td>1,054.1 ns</td><td>966,609.2</td><td>5.878 ns</td><td>14.00</td><td>No</td><td>1,704 B</td><td>0.2804</td><td>-</td><td>-</td><td>8.16 KB</td>
 </tr></tbody></table>
 </body>
 </html>

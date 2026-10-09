@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.UlidBenchmark-20261004-203814</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min </th><th>Q1  </th><th>Q3  </th><th>Max </th><th>Op/s   </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>GetHashCode</td><td>5.111 ns</td><td>0.0275 ns</td><td>0.0244 ns</td><td>0.0065 ns</td><td>5.118 ns</td><td>5.064 ns</td><td>5.095 ns</td><td>5.129 ns</td><td>5.143 ns</td><td>195,655,889.7</td><td>6.997 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>461 B</td><td>-</td>
+</tr><tr><td>GetTimeStamp</td><td>200.655 ns</td><td>0.4979 ns</td><td>0.4414 ns</td><td>0.1180 ns</td><td>200.645 ns</td><td>199.909 ns</td><td>200.363 ns</td><td>200.907 ns</td><td>201.395 ns</td><td>4,983,688.8</td><td>6.941 ns</td><td>14.00</td><td>No</td><td>0.0026</td><td>-</td><td>1,791 B</td><td>80 B</td>
+</tr><tr><td>NewUlid</td><td>2.330 ns</td><td>0.1274 ns</td><td>0.3758 ns</td><td>0.0376 ns</td><td>2.042 ns</td><td>2.003 ns</td><td>2.012 ns</td><td>2.816 ns</td><td>2.849 ns</td><td>429,211,458.5</td><td>49.981 ns</td><td>100.00</td><td>No</td><td>-</td><td>-</td><td>182 B</td><td>-</td>
+</tr></tbody></table>
+</body>
+</html>

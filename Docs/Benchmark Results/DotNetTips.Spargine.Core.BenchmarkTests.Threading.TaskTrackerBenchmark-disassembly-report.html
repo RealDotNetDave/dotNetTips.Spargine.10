@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark-20261004-195022</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="8">DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark-20261004-195022</th></tr>
+<tr>
+<th>RegisterDuplicatePending .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>RegisterPendingWithCallback .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>RegisterPending .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>UnregisterByTask .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>UnregisterByKey .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>WaitEmptyAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>WaitForPendingCompletionAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>WaitPendingZeroTimeoutAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.RegisterDuplicatePending()
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp-10],rax
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rax,[rax+1B8]
+mov       [rbp-8],rax
+mov       rax,[rbp+10]
+mov       rcx,[rax+1A8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD577C69A0]
+mov       [rbp-10],rax
+mov       rdx,[rbp-10]
+mov       rcx,[rbp-8]
+xor       r8d,r8d
+cmp       [rcx],ecx
+call      qword ptr [7FFD574C1DE0]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Threading.Tasks.TaskCompletionSource.get_Task()
+mov       rax,[rcx+8]
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.RegisterPendingWithCallback()
+push      rbp
+sub       rsp,60
+lea       rbp,[rsp+60]
+xor       eax,eax
+mov       [rbp-38],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-30],ymm4
+vmovdqa   xmmword ptr [rbp-10],xmm4
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rax,[rax+1B0]
+mov       [rbp-8],rax
+mov       rax,[rbp+10]
+mov       rcx,[rax+1A8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD57806E50]
+mov       [rbp-18],rax
+mov       rax,1C573C001E8
+mov       rax,[rax]
+mov       [rbp-10],rax
+mov       rax,[rbp-8]
+mov       [rbp-20],rax
+mov       rax,[rbp-18]
+mov       [rbp-28],rax
+mov       rax,[rbp-10]
+mov       [rbp-30],rax
+cmp       qword ptr [rbp-10],0
+jne       short 00007FFD5791ACD6
+mov       rcx,7FFD57A0B7E8
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,offset MT_System.Action<System.Exception>
+call      CORINFO_HELP_NEWSFAST
+mov       [rbp-38],rax
+mov       rax,1C573C001E0
+mov       rdx,[rax]
+mov       rcx,[rbp-38]
+mov       r8,7FFD5780B2B8
+call      qword ptr [7FFD571C6BB0]
+mov       rdx,[rbp-38]
+mov       rcx,1C573C001E8
+call      CORINFO_HELP_ASSIGN_REF
+mov       rax,[rbp-38]
+mov       [rbp-30],rax
+mov       rcx,7FFD57A0B7EC
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,[rbp-20]
+mov       rdx,[rbp-28]
+mov       r8,[rbp-30]
+cmp       [rcx],ecx
+call      qword ptr [7FFD574E1DE0]
+nop
+add       rsp,60
+pop       rbp
+ret
+
+System.Threading.Tasks.TaskCompletionSource.get_Task()
+mov       rax,[rcx+8]
+ret
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       rsi,rdx
+mov       rdi,r8
+test      rsi,rsi
+je        short 00007FFD578FC49C
+mov       rcx,7FFD5799BEFC
+call      CORINFO_HELP_COUNTPROFILE32
+lea       rcx,[rbx+8]
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rdi
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rdi
+ret
+mov       rcx,7FFD5799BEF8
+call      CORINFO_HELP_COUNTPROFILE32
+call      qword ptr [7FFD579A4618]
+int       3
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.RegisterPending()
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp-10],rax
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rax,[rax+1B0]
+mov       [rbp-8],rax
+mov       rax,[rbp+10]
+mov       rcx,[rax+1A8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD577D6E80]
+mov       [rbp-10],rax
+mov       rdx,[rbp-10]
+mov       rcx,[rbp-8]
+xor       r8d,r8d
+cmp       [rcx],ecx
+call      qword ptr [7FFD574B1DE0]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Threading.Tasks.TaskCompletionSource.get_Task()
+mov       rax,[rcx+8]
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.UnregisterByTask()
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp-10],rax
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rax,[rax+1B8]
+mov       [rbp-8],rax
+mov       rax,[rbp+10]
+mov       rcx,[rax+1A8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD577E69E8]
+mov       [rbp-10],rax
+mov       rdx,[rbp-10]
+mov       rcx,[rbp-8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD574D1D08]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Threading.Tasks.TaskCompletionSource.get_Task()
+mov       rax,[rcx+8]
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.UnregisterByKey()
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       rax,[rbp+10]
+mov       rdx,[rax+1C0]
+mov       rax,[rbp+10]
+mov       rcx,[rax+1B8]
+cmp       [rcx],ecx
+call      qword ptr [7FFD574B22F0]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.WaitEmptyAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFD5780F330]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD5780F318]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD5780F348]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult[[System.Boolean, System.Private.CoreLib]](System.Threading.Tasks.Task`1<Boolean>)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFD5780F7F8]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFD5780F810]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Start[[DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark+<WaitEmptyAsync>d__14, DotNetTips.Spargine.Core.BenchmarkTests]](<WaitEmptyAsync>d__14 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFD5780F360]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFD579030AA
+mov       rcx,7FFD579FFB80
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFD579FFB84
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFD579FFB80
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFD579A7228]
+
+System.Threading.Tasks.Task`1[[System.Boolean, System.Private.CoreLib]].GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter`1[[System.Boolean, System.Private.CoreLib]].GetResult()
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       rcx,[rbx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFD57909CA9
+mov       rax,[rbx]
+movzx     eax,byte ptr [rax+38]
+add       rsp,20
+pop       rbx
+ret
+xor       edx,edx
+call      qword ptr [7FFD579A7990]
+jmp       short 00007FFD57909C9C
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.WaitForPendingCompletionAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFD577EF2D0]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD577EF2B8]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD577EF2E8]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult[[System.Boolean, System.Private.CoreLib]](System.Threading.Tasks.Task`1<Boolean>)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFD577EFED0]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFD577EFEE8]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Start[[DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark+<WaitForPendingCompletionAsync>d__15, DotNetTips.Spargine.Core.BenchmarkTests]](<WaitForPendingCompletionAsync>d__15 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFD577EF300]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFD578F6EBA
+mov       rcx,7FFD579EB8E8
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFD579EB8EC
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFD579EB8E8
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFD57987D38]
+
+System.Threading.Tasks.Task`1[[System.Boolean, System.Private.CoreLib]].GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter`1[[System.Boolean, System.Private.CoreLib]].GetResult()
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       rcx,[rbx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFD57902C69
+mov       rax,[rbx]
+movzx     eax,byte ptr [rax+38]
+add       rsp,20
+pop       rbx
+ret
+xor       edx,edx
+call      qword ptr [7FFD5798CF48]
+jmp       short 00007FFD57902C5C
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark.WaitPendingZeroTimeoutAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFD577FF2E8]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD577FF2D0]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD577FF300]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult[[System.Boolean, System.Private.CoreLib]](System.Threading.Tasks.Task`1<Boolean>)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFD577FF8D0]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFD577FF8E8]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].Start[[DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark+<WaitPendingZeroTimeoutAsync>d__16, DotNetTips.Spargine.Core.BenchmarkTests]](<WaitPendingZeroTimeoutAsync>d__16 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFD577FF318]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[[System.Boolean, System.Private.CoreLib]].get_Task()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFD579048FA
+mov       rcx,7FFD579F1278
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       rcx,7FFD579F127C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFD579F1278
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFD57997558]
+
+System.Threading.Tasks.Task`1[[System.Boolean, System.Private.CoreLib]].GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter`1[[System.Boolean, System.Private.CoreLib]].GetResult()
+push      rbx
+sub       rsp,20
+mov       rbx,rcx
+mov       rcx,[rbx]
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFD5790CAF9
+mov       rax,[rbx]
+movzx     eax,byte ptr [rax+38]
+add       rsp,20
+pop       rbx
+ret
+xor       edx,edx
+call      qword ptr [7FFD57997FA8]
+jmp       short 00007FFD5790CAEC
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

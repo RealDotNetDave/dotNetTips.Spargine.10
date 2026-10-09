@@ -1,0 +1,2842 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark-20261008-213707</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="8">ObservableCollectionExtensionsCollectionBenchmark.'IsNotEmpty: With Count'</th></tr>
+<tr>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A7376711
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A7376700
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A73766EF
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B30ED0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A73766D0
+mov       r11,7FF8A6B30EC8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A73766D0
+xor       eax,eax
+jmp       short 00007FF8A73766DD
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A735DDB1
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A735DDA0
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A735DD8F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B50DF8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A735DD70
+mov       r11,7FF8A6B50DF0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A735DD70
+xor       eax,eax
+jmp       short 00007FF8A735DD7D
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A72CF6B1
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A72CF6A0
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A72CF68F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B20B70
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A72CF670
+mov       r11,7FF8A6B20B68
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A72CF670
+xor       eax,eax
+jmp       short 00007FF8A72CF67D
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A7313DC1
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A7313DB0
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A7313D9F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B60DB0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A7313D80
+mov       r11,7FF8A6B60DA8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A7313D80
+xor       eax,eax
+jmp       short 00007FF8A7313D8D
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A734E171
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734E160
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734E14F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B40DF8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734E130
+mov       r11,7FF8A6B40DF0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734E130
+xor       eax,eax
+jmp       short 00007FF8A734E13D
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A734E8E1
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734E8D0
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734E8BF
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B30DF8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734E8A0
+mov       r11,7FF8A6B30DF0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734E8A0
+xor       eax,eax
+jmp       short 00007FF8A734E8AD
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A73B9D91
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A73B9D80
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A73B9D6F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B60FA8
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A73B9D50
+mov       r11,7FF8A6B60FA0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A73B9D50
+xor       eax,eax
+jmp       short 00007FF8A73B9D5D
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithCount()
+push      rbp
+push      rsi
+push      rbx
+sub       rsp,20
+lea       rbp,[rsp+30]
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A748EDC1
+mov       r11,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A748EDB0
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A748ED9F
+mov       esi,[rcx+10]
+movsxd    rax,esi
+cmp       rax,5
+sete      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,20
+pop       rbx
+pop       rsi
+pop       rbp
+ret
+mov       r11,7FF8A6B31208
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A748ED80
+mov       r11,7FF8A6B31200
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A748ED80
+xor       eax,eax
+jmp       short 00007FF8A748ED8D
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th colspan="8">ObservableCollectionExtensionsCollectionBenchmark.'IsNotEmpty: With Predicate'</th></tr>
+<tr>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,1831F402A40
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A7339D6A
+test      rbx,rbx
+je        near ptr 00007FF8A7339E27
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A7339D3D
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A7339D26
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A7339DF3
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A7339DDB
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A7339DBA
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A7339BFD
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A7339BFD
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A7339BFD
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A7339CE2
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A7339BEB
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A7339CE9
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A7339BE6
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A7339B7A
+jmp       near ptr 00007FF8A7339CEF
+xor       r15d,r15d
+jmp       short 00007FF8A7339BDC
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7339E0B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A7339C29
+mov       r11,7FF8A6B30DD0
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A7339C98
+jmp       near ptr 00007FF8A7339E0B
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A7339CE2
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A7339C5C
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7339E0B
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A7339CE9
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A7339CAC
+jmp       short 00007FF8A7339CBC
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B30DD8
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A7339CD7
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A7339CCA
+xor       r15d,r15d
+jmp       short 00007FF8A7339CD7
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A7339BFD
+jmp       short 00007FF8A7339CEF
+call      qword ptr [7FF8A6E0C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A7339E15
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        near ptr 00007FF8A7339DB3
+add       r14,10
+jmp       short 00007FF8A7339D44
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A7339D5F
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A7339D63
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A7339D4A
+xor       edi,edi
+jmp       short 00007FF8A7339D0A
+mov       edi,1
+jmp       short 00007FF8A7339D0A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,1831F402A38
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6BE6BB0]
+mov       rcx,1831F402A40
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A7339AB2
+call      qword ptr [7FF8A6E07A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,1831F402AC0
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A7339B3D
+mov       rcx,rbx
+mov       r11,7FF8A6B30DE8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A7339B3D
+mov       rcx,rbx
+mov       r11,7FF8A6B30DC8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A7339B3D
+call      00007FF8A7339E2E
+jmp       near ptr 00007FF8A7339D5F
+mov       r11,7FF8A6B30DE0
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A7339D05
+xor       edi,edi
+jmp       near ptr 00007FF8A7339D0A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A7339E5C
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A7339E5C
+mov       r11,7FF8A6B30DE0
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A733A524
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A733A523
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A734E5F5
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73AD428]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A73392C1
+ret
+jmp       qword ptr [7FF8A6BE5C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,1BE51002A40
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A734A7CA
+test      rbx,rbx
+je        near ptr 00007FF8A734A887
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A734A79D
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A734A786
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A734A853
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A734A83B
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A734A81A
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A734A65D
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A734A65D
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A734A65D
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A734A742
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A734A64B
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A734A749
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A734A646
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A734A5DA
+jmp       near ptr 00007FF8A734A74F
+xor       r15d,r15d
+jmp       short 00007FF8A734A63C
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A734A86B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A734A689
+mov       r11,7FF8A6B30DD0
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A734A6F8
+jmp       near ptr 00007FF8A734A86B
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A734A742
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A734A6BC
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A734A86B
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A734A749
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A734A70C
+jmp       short 00007FF8A734A71C
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B30DD8
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A734A737
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A734A72A
+xor       r15d,r15d
+jmp       short 00007FF8A734A737
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A734A65D
+jmp       short 00007FF8A734A74F
+call      qword ptr [7FF8A6E0C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A734A875
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        near ptr 00007FF8A734A813
+add       r14,10
+jmp       short 00007FF8A734A7A4
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A734A7BF
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A734A7C3
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A734A7AA
+xor       edi,edi
+jmp       short 00007FF8A734A76A
+mov       edi,1
+jmp       short 00007FF8A734A76A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,1BE51002A38
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6BE6BB0]
+mov       rcx,1BE51002A40
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A734A512
+call      qword ptr [7FF8A6E07A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,1BE51002AC0
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A734A59D
+mov       rcx,rbx
+mov       r11,7FF8A6B30DE8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A734A59D
+mov       rcx,rbx
+mov       r11,7FF8A6B30DC8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A734A59D
+call      00007FF8A734A88E
+jmp       near ptr 00007FF8A734A7BF
+mov       r11,7FF8A6B30DE0
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A734A765
+xor       edi,edi
+jmp       near ptr 00007FF8A734A76A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A734A8BC
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A734A8BC
+mov       r11,7FF8A6B30DE0
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A734AF74
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A734AF73
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A7361925
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73CD458]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A7349CE1
+ret
+jmp       qword ptr [7FF8A6BE5C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,1E41AC02A28
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A7326D6A
+test      rbx,rbx
+je        near ptr 00007FF8A7326E27
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A7326D3D
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A7326D26
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A7326DF3
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A7326DDB
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A7326DBA
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A7326BFD
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A7326BFD
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A7326BFD
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A7326CE2
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A7326BEB
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A7326CE9
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A7326BE6
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A7326B7A
+jmp       near ptr 00007FF8A7326CEF
+xor       r15d,r15d
+jmp       short 00007FF8A7326BDC
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7326E0B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A7326C29
+mov       r11,7FF8A6B20DC8
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A7326C98
+jmp       near ptr 00007FF8A7326E0B
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A7326CE2
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A7326C5C
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7326E0B
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A7326CE9
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A7326CAC
+jmp       short 00007FF8A7326CBC
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B20DD0
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A7326CD7
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A7326CCA
+xor       r15d,r15d
+jmp       short 00007FF8A7326CD7
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A7326BFD
+jmp       short 00007FF8A7326CEF
+call      qword ptr [7FF8A6DFC138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A7326E15
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        near ptr 00007FF8A7326DB3
+add       r14,10
+jmp       short 00007FF8A7326D44
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A7326D5F
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A7326D63
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A7326D4A
+xor       edi,edi
+jmp       short 00007FF8A7326D0A
+mov       edi,1
+jmp       short 00007FF8A7326D0A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,1E41AC02A20
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6BD6BB0]
+mov       rcx,1E41AC02A28
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A7326AB2
+call      qword ptr [7FF8A6DF7A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,1E41AC02AC0
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A7326B3D
+mov       rcx,rbx
+mov       r11,7FF8A6B20DE0
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A7326B3D
+mov       rcx,rbx
+mov       r11,7FF8A6B20DC0
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A7326B3D
+call      00007FF8A7326E2E
+jmp       near ptr 00007FF8A7326D5F
+mov       r11,7FF8A6B20DD8
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A7326D05
+xor       edi,edi
+jmp       near ptr 00007FF8A7326D0A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A7326E5C
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A7326E5C
+mov       r11,7FF8A6B20DD8
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A7327524
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A7327523
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A733FA85
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A738D278]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A73267B1
+ret
+jmp       qword ptr [7FF8A6BD5C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,1DB0E402A28
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A73587AA
+test      rbx,rbx
+je        near ptr 00007FF8A7358867
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A735877D
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A7358766
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A7358833
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A735881B
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A73587FA
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A735863D
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A735863D
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A735863D
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A7358722
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A735862B
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A7358729
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A7358626
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A73585BA
+jmp       near ptr 00007FF8A735872F
+xor       r15d,r15d
+jmp       short 00007FF8A735861C
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A735884B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A7358669
+mov       r11,7FF8A6B50DD0
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A73586D8
+jmp       near ptr 00007FF8A735884B
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A7358722
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A735869C
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A735884B
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A7358729
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A73586EC
+jmp       short 00007FF8A73586FC
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B50DD8
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A7358717
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A735870A
+xor       r15d,r15d
+jmp       short 00007FF8A7358717
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A735863D
+jmp       short 00007FF8A735872F
+call      qword ptr [7FF8A6E2C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A7358855
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        near ptr 00007FF8A73587F3
+add       r14,10
+jmp       short 00007FF8A7358784
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A735879F
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A73587A3
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A735878A
+xor       edi,edi
+jmp       short 00007FF8A735874A
+mov       edi,1
+jmp       short 00007FF8A735874A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,1DB0E402A20
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6C06BB0]
+mov       rcx,1DB0E402A28
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A73584F2
+call      qword ptr [7FF8A6E27A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,1DB0E402AC0
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A735857D
+mov       rcx,rbx
+mov       r11,7FF8A6B50DE8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A735857D
+mov       rcx,rbx
+mov       r11,7FF8A6B50DC8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A735857D
+call      00007FF8A735886E
+jmp       near ptr 00007FF8A735879F
+mov       r11,7FF8A6B50DE0
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A7358745
+xor       edi,edi
+jmp       near ptr 00007FF8A735874A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A735889C
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A735889C
+mov       r11,7FF8A6B50DE0
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A7358F64
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A7358F63
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A736AB05
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73CD410]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A7357D01
+ret
+jmp       qword ptr [7FF8A6C05C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,180BE800A30
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A72FFBAA
+test      rbx,rbx
+je        near ptr 00007FF8A72FFC67
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A72FFB7D
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A72FFB66
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A72FFC33
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A72FFC1B
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A72FFBFA
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A72FFA3D
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A72FFA3D
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A72FFA3D
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A72FFB22
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A72FFA2B
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A72FFB29
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A72FFA26
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A72FF9BA
+jmp       near ptr 00007FF8A72FFB2F
+xor       r15d,r15d
+jmp       short 00007FF8A72FFA1C
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A72FFC4B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A72FFA69
+mov       r11,7FF8A6B50B58
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A72FFAD8
+jmp       near ptr 00007FF8A72FFC4B
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A72FFB22
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A72FFA9C
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A72FFC4B
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A72FFB29
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A72FFAEC
+jmp       short 00007FF8A72FFAFC
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B50B60
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A72FFB17
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A72FFB0A
+xor       r15d,r15d
+jmp       short 00007FF8A72FFB17
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A72FFA3D
+jmp       short 00007FF8A72FFB2F
+call      qword ptr [7FF8A6E2C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A72FFC55
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        near ptr 00007FF8A72FFBF3
+add       r14,10
+jmp       short 00007FF8A72FFB84
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A72FFB9F
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A72FFBA3
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A72FFB8A
+xor       edi,edi
+jmp       short 00007FF8A72FFB4A
+mov       edi,1
+jmp       short 00007FF8A72FFB4A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,180BE800A28
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6C06BB0]
+mov       rcx,180BE800A30
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A72FF8F2
+call      qword ptr [7FF8A6E27A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,180BE800A48
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A72FF97D
+mov       rcx,rbx
+mov       r11,7FF8A6B50B70
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A72FF97D
+mov       rcx,rbx
+mov       r11,7FF8A6B50B50
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A72FF97D
+call      00007FF8A72FFC6E
+jmp       near ptr 00007FF8A72FFB9F
+mov       r11,7FF8A6B50B68
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A72FFB45
+xor       edi,edi
+jmp       near ptr 00007FF8A72FFB4A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A72FFC9C
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A72FFC9C
+mov       r11,7FF8A6B50B68
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A72FFDA4
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A72FFDA3
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A73280E5
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73CE3D0]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A72FDDC1
+ret
+jmp       qword ptr [7FF8A6C05C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      r13
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,30
+lea       rbp,[rsp+60]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,1D7AF000A30
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A734D481
+test      rbx,rbx
+je        near ptr 00007FF8A734D53E
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A734D44F
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A734D437
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A734D50A
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A734D4F2
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A734D4D1
+mov       rdi,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+mov       rcx,rdi
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-38],rdi
+cmp       qword ptr [rbp-38],0
+je        near ptr 00007FF8A734D311
+mov       rcx,[rbp-38]
+mov       rbx,[rcx]
+mov       rdi,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdi
+jne       near ptr 00007FF8A734D311
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       short 00007FF8A734D311
+lea       r14,[rcx+8]
+mov       rdx,[r14]
+mov       rax,rdx
+mov       r8d,[r14+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A734D3EA
+mov       r8d,[r14+14]
+cmp       r8d,[rax+10]
+jae       near ptr 00007FF8A734D3F7
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A734D3F1
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[r14+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [r14+14]
+mov       rcx,[rbp-38]
+mov       rdx,[rcx+10]
+mov       r15,[rdx+30]
+test      r15,r15
+je        short 00007FF8A734D30C
+cmp       dword ptr [r15+8],0
+setg      r13b
+movzx     r13d,r13b
+test      r13d,r13d
+je        short 00007FF8A734D29B
+jmp       near ptr 00007FF8A734D40A
+xor       r13d,r13d
+jmp       short 00007FF8A734D302
+mov       rcx,[rbp-38]
+mov       rbx,[rcx]
+mov       rdi,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdi
+je        short 00007FF8A734D33D
+mov       r11,7FF8A6B40DE8
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A734D3A0
+jmp       near ptr 00007FF8A734D522
+lea       r14,[rcx+8]
+mov       rax,[r14]
+mov       edx,[r14+10]
+mov       r8,[r14]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A734D3EA
+mov       r8d,[r14+14]
+cmp       r8d,[rax+10]
+jae       near ptr 00007FF8A734D3F7
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A734D3F1
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[r14+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [r14+14]
+mov       rcx,[rbp-38]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A734D3B4
+jmp       short 00007FF8A734D3C4
+mov       rcx,[rbp-38]
+mov       r11,7FF8A6B40DF0
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r13d,eax
+mov       rcx,[rbp-38]
+jmp       short 00007FF8A734D3DF
+mov       r15,[rdx+30]
+test      r15,r15
+jne       short 00007FF8A734D3D2
+xor       r13d,r13d
+jmp       short 00007FF8A734D3DF
+cmp       dword ptr [r15+8],0
+setg      r13b
+movzx     r13d,r13b
+test      r13d,r13d
+je        near ptr 00007FF8A734D311
+jmp       short 00007FF8A734D40A
+call      qword ptr [7FF8A6E1C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+xor       eax,eax
+mov       [r14+8],rax
+mov       dword ptr [r14+14],0FFFFFFFF
+jmp       near ptr 00007FF8A734D522
+cmp       rbx,rdi
+jne       near ptr 00007FF8A734D52C
+mov       r14d,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],r14b
+add       rsp,30
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r13
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       r14d,[rbx+10]
+mov       rdi,[rbx+8]
+cmp       [rdi+8],r14d
+jb        near ptr 00007FF8A734D4CA
+add       rdi,10
+jmp       short 00007FF8A734D457
+lea       rdi,[rbx+10]
+mov       r14d,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,r14d
+jge       short 00007FF8A734D474
+mov       rdx,[rdi+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A734D479
+inc       ebx
+cmp       ebx,r14d
+jl        short 00007FF8A734D45E
+xor       r14d,r14d
+jmp       short 00007FF8A734D419
+mov       r14d,1
+jmp       short 00007FF8A734D419
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,1D7AF000A28
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6BF6BB0]
+mov       rcx,1D7AF000A30
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A734D1D4
+call      qword ptr [7FF8A6E17A08]
+int       3
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,1D7AF000AC8
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A734D262
+mov       rcx,rbx
+mov       r11,7FF8A6B40E00
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A734D262
+mov       rcx,rbx
+mov       r11,7FF8A6B40DE0
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A734D262
+call      00007FF8A734D546
+jmp       near ptr 00007FF8A734D474
+mov       r11,7FF8A6B40DF8
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A734D413
+xor       r14d,r14d
+jmp       near ptr 00007FF8A734D419
+sub       rsp,28
+cmp       qword ptr [rbp-38],0
+je        short 00007FF8A734D574
+mov       rcx,[rbp-38]
+mov       rbx,[rcx]
+mov       rdi,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdi
+je        short 00007FF8A734D574
+mov       r11,7FF8A6B40DF8
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A734D784
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A734D783
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A73636C5
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73BD428]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A734C531
+ret
+jmp       qword ptr [7FF8A6BF5C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,22AB6400A58
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A7372A0D
+test      rbx,rbx
+je        near ptr 00007FF8A7372AC3
+mov       rax,[rbx]
+mov       rdx,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       rax,rdx
+je        near ptr 00007FF8A73729E0
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,rdx
+je        near ptr 00007FF8A73729C6
+mov       r8,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       rax,r8
+jne       near ptr 00007FF8A7372A8F
+mov       rbx,[rbx+8]
+cmp       [rbx],rdx
+jne       near ptr 00007FF8A7372A77
+cmp       dword ptr [rbx+10],0
+je        near ptr 00007FF8A7372A56
+mov       rcx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+call      CORINFO_HELP_NEWSFAST
+mov       rdi,rax
+mov       r14d,[rbx+14]
+lea       rcx,[rdi+8]
+mov       rdx,rbx
+call      CORINFO_HELP_ASSIGN_REF
+xor       ecx,ecx
+mov       [rdi+10],rcx
+mov       [rdi+18],r14d
+mov       [rdi+1C],ecx
+mov       [rbp-30],rdi
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A737289D
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A737289D
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A737289D
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A7372982
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A737288B
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A7372989
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A7372886
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A737281A
+jmp       near ptr 00007FF8A737298F
+xor       r15d,r15d
+jmp       short 00007FF8A737287C
+xor       edx,edx
+mov       [rdi+8],rdx
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7372AA7
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A73728C9
+mov       r11,7FF8A6B60EB0
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A7372938
+jmp       near ptr 00007FF8A7372AA7
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A7372982
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jb        short 00007FF8A73728FC
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A7372AA7
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A7372989
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A737294C
+jmp       short 00007FF8A737295C
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B60EB8
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A7372977
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A737296A
+xor       r15d,r15d
+jmp       short 00007FF8A7372977
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A737289D
+jmp       short 00007FF8A737298F
+call      qword ptr [7FF8A6E3C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A7372AB1
+mov       edi,1
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        short 00007FF8A73729D9
+add       r14,10
+jmp       short 00007FF8A73729E7
+call      qword ptr [7FF8A6E37A08]
+int       3
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A7372A02
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A7372A06
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A73729ED
+xor       edi,edi
+jmp       short 00007FF8A73729AA
+mov       edi,1
+jmp       short 00007FF8A73729AA
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,22AB6400A50
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6C16BB0]
+mov       rcx,22AB6400A58
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A7372752
+mov       rcx,offset MT_System.SZGenericArrayEnumerator<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+call      System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rcx,22AB6400B10
+mov       rdi,[rcx]
+jmp       near ptr 00007FF8A73727DD
+mov       rcx,rbx
+mov       r11,7FF8A6B60EC8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A73727DD
+mov       rcx,rbx
+mov       r11,7FF8A6B60EA8
+call      qword ptr [r11]
+mov       rdi,rax
+jmp       near ptr 00007FF8A73727DD
+call      00007FF8A7372ACA
+jmp       near ptr 00007FF8A7372A02
+mov       r11,7FF8A6B60EC0
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A73729A5
+xor       edi,edi
+jmp       near ptr 00007FF8A73729AA
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A7372AF8
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A7372AF8
+mov       r11,7FF8A6B60EC0
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A7372BC4
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A7372BC3
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A7345B65
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A72E47E0]
+int       3
+
+System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+mov       rax,[rcx+20]
+mov       rax,[rax-18]
+mov       rdx,rax
+test      dl,1
+jne       short 00007FF8A733D871
+ret
+jmp       qword ptr [7FF8A6C15C38]
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmptyWithPredicate()
+push      rbp
+push      r15
+push      r14
+push      rdi
+push      rsi
+push      rbx
+sub       rsp,28
+lea       rbp,[rsp+50]
+mov       [rbp+10],rcx
+mov       rbx,[rcx+2E8]
+mov       rax,2D1C8002AE8
+mov       rsi,[rax]
+test      rsi,rsi
+je        near ptr 00007FF8A74D656D
+test      rbx,rbx
+je        near ptr 00007FF8A74D65E0
+mov       r11,[rbx]
+mov       rax,offset MT_DotNetTips.Spargine.Tester.Models.RefTypes.Person[]
+cmp       r11,rax
+je        near ptr 00007FF8A74D6526
+mov       rax,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       r11,rax
+je        near ptr 00007FF8A74D650C
+mov       rax,offset MT_System.Collections.ObjectModel.ObservableCollection<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       r11,rax
+jne       near ptr 00007FF8A74D65B6
+mov       rcx,[rbx+8]
+mov       r11,7FF8A6B61218
+call      qword ptr [r11]
+mov       rcx,rax
+mov       [rbp-30],rcx
+cmp       qword ptr [rbp-30],0
+je        near ptr 00007FF8A74D640B
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+jne       near ptr 00007FF8A74D640B
+mov       rdx,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],rdx
+jne       near ptr 00007FF8A74D640B
+lea       rdi,[rcx+8]
+mov       rdx,[rdi]
+mov       rax,rdx
+mov       r8d,[rdi+10]
+cmp       r8d,[rdx+14]
+jne       near ptr 00007FF8A74D64DE
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A74D63F4
+mov       rsi,[rax+8]
+cmp       r8d,[rsi+8]
+jae       near ptr 00007FF8A74D64E5
+mov       edx,r8d
+mov       rdx,[rsi+rdx*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r14,[rdx+30]
+test      r14,r14
+je        short 00007FF8A74D6406
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        short 00007FF8A74D6388
+jmp       near ptr 00007FF8A74D64EB
+xor       eax,eax
+mov       [rdi+8],rax
+mov       dword ptr [rdi+14],0FFFFFFFF
+jmp       near ptr 00007FF8A74D6505
+xor       r15d,r15d
+jmp       short 00007FF8A74D63EA
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       rdx,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,rdx
+je        short 00007FF8A74D6437
+mov       r11,7FF8A6B61200
+call      qword ptr [r11]
+test      eax,eax
+jne       short 00007FF8A74D6494
+jmp       near ptr 00007FF8A74D6505
+lea       rdi,[rcx+8]
+mov       rax,[rdi]
+mov       edx,[rdi+10]
+mov       r8,[rdi]
+cmp       edx,[r8+14]
+jne       near ptr 00007FF8A74D64DE
+mov       r8d,[rdi+14]
+cmp       r8d,[rax+10]
+jae       short 00007FF8A74D63F4
+mov       rdx,[rax+8]
+cmp       r8d,[rdx+8]
+jae       near ptr 00007FF8A74D64E5
+mov       eax,r8d
+mov       rdx,[rdx+rax*8+10]
+lea       rcx,[rdi+8]
+call      CORINFO_HELP_ASSIGN_REF
+inc       dword ptr [rdi+14]
+mov       rcx,[rbp-30]
+mov       rdx,[rcx+10]
+mov       r11,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+cmp       [rsi+18],r11
+jne       short 00007FF8A74D64A8
+jmp       short 00007FF8A74D64B8
+mov       rcx,[rbp-30]
+mov       r11,7FF8A6B61208
+call      qword ptr [r11]
+mov       rdx,rax
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+mov       r15d,eax
+mov       rcx,[rbp-30]
+jmp       short 00007FF8A74D64D3
+mov       r14,[rdx+30]
+test      r14,r14
+jne       short 00007FF8A74D64C6
+xor       r15d,r15d
+jmp       short 00007FF8A74D64D3
+cmp       dword ptr [r14+8],0
+setg      r15b
+movzx     r15d,r15b
+test      r15d,r15d
+je        near ptr 00007FF8A74D640B
+jmp       short 00007FF8A74D64EB
+call      qword ptr [7FF8A6E3C138]
+int       3
+call      CORINFO_HELP_RNGCHKFAIL
+int       3
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+jne       near ptr 00007FF8A74D65CE
+mov       edi,1
+jmp       short 00007FF8A74D654A
+call      00007FF8A74D65E7
+jmp       short 00007FF8A74D6548
+mov       edi,[rbx+10]
+mov       r14,[rbx+8]
+cmp       [r14+8],edi
+jb        short 00007FF8A74D651F
+add       r14,10
+jmp       short 00007FF8A74D652D
+call      qword ptr [7FF8A6E37A08]
+int       3
+lea       r14,[rbx+10]
+mov       edi,[rbx+8]
+xor       ebx,ebx
+cmp       ebx,edi
+jge       short 00007FF8A74D6548
+mov       rdx,[r14+rbx*8]
+mov       rcx,[rsi+8]
+call      qword ptr [rsi+18]
+test      eax,eax
+jne       short 00007FF8A74D6566
+inc       ebx
+cmp       ebx,edi
+jl        short 00007FF8A74D6533
+xor       edi,edi
+mov       rcx,[rbp+10]
+mov       rax,[rcx+90]
+mov       [rax+4C],dil
+add       rsp,28
+pop       rbx
+pop       rsi
+pop       rdi
+pop       r14
+pop       r15
+pop       rbp
+ret
+mov       edi,1
+jmp       short 00007FF8A74D654A
+mov       rcx,offset MT_System.Func<DotNetTips.Spargine.Tester.Models.RefTypes.Person, System.Boolean>
+call      CORINFO_HELP_NEWSFAST
+mov       rsi,rax
+mov       rdx,2D1C8002AE0
+mov       rdx,[rdx]
+mov       rcx,rsi
+mov       r8,offset DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+call      qword ptr [7FF8A6C16BB0]
+mov       rcx,2D1C8002AE8
+mov       rdx,rsi
+call      CORINFO_HELP_ASSIGN_REF
+jmp       near ptr 00007FF8A74D62F2
+mov       rcx,rbx
+mov       r11,7FF8A6B611F8
+call      qword ptr [r11]
+mov       rcx,rax
+jmp       near ptr 00007FF8A74D634B
+mov       r11,7FF8A6B61210
+call      qword ptr [r11]
+jmp       near ptr 00007FF8A74D64FE
+xor       edi,edi
+jmp       near ptr 00007FF8A74D654A
+sub       rsp,28
+cmp       qword ptr [rbp-30],0
+je        short 00007FF8A74D6615
+mov       rcx,[rbp-30]
+mov       rbx,[rcx]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>+Enumerator
+cmp       rbx,r11
+je        short 00007FF8A74D6615
+mov       r11,7FF8A6B61210
+call      qword ptr [r11]
+nop
+add       rsp,28
+ret
+
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark+<>c.<IsNotEmptyWithPredicate>b__3_0(DotNetTips.Spargine.Tester.Models.RefTypes.Person)
+mov       rax,[rdx+30]
+test      rax,rax
+je        short 00007FF8A74D66E4
+cmp       dword ptr [rax+8],0
+setg      al
+movzx     eax,al
+ret
+xor       eax,eax
+jmp       short 00007FF8A74D66E3
+
+System.MulticastDelegate.CtorClosed(System.Object, IntPtr)
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,r8
+test      rdx,rdx
+je        short 00007FF8A7377645
+lea       rcx,[rbx+8]
+call      CORINFO_HELP_ASSIGN_REF
+mov       [rbx+18],rsi
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+call      qword ptr [7FF8A73064D8]
+int       3
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th colspan="8">ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty</th></tr>
+<tr>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+<th>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A733DF25
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A733DF14
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B20D98
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A733DEFB
+xor       eax,eax
+jmp       short 00007FF8A733DF03
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A735D2C5
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A735D2B4
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B50D90
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A735D29B
+xor       eax,eax
+jmp       short 00007FF8A735D2A3
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A734AA65
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734AA54
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B40D90
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734AA3B
+xor       eax,eax
+jmp       short 00007FF8A734AA43
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A7357A85
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A7357A74
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B50D80
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A7357A5B
+xor       eax,eax
+jmp       short 00007FF8A7357A63
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A734F845
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A734F834
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B30D98
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A734F81B
+xor       eax,eax
+jmp       short 00007FF8A734F823
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A735AC65
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A735AC54
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B50D90
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A735AC3B
+xor       eax,eax
+jmp       short 00007FF8A735AC43
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A7354AE5
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A7354AD4
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B40E70
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A7354ABB
+xor       eax,eax
+jmp       short 00007FF8A7354AC3
+
+</code></pre></td>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.Extensions.BenchmarkTests.ObservableCollectionExtensionsCollectionBenchmark.IsNotEmpty()
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rcx,[rbx+2E8]
+test      rcx,rcx
+je        short 00007FF8A74A23A5
+mov       rcx,[rcx+8]
+mov       r11,offset MT_System.Collections.Generic.List<DotNetTips.Spargine.Tester.Models.RefTypes.Person>
+cmp       [rcx],r11
+jne       short 00007FF8A74A2394
+mov       esi,[rcx+10]
+test      esi,esi
+setg      al
+movzx     eax,al
+mov       rcx,[rbx+90]
+mov       [rcx+4C],al
+add       rsp,28
+pop       rbx
+pop       rsi
+ret
+mov       r11,7FF8A6B411B0
+call      qword ptr [r11]
+mov       esi,eax
+jmp       short 00007FF8A74A237B
+xor       eax,eax
+jmp       short 00007FF8A74A2383
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

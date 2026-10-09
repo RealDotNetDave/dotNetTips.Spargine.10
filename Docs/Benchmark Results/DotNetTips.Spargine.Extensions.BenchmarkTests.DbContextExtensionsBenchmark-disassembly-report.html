@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261003-094600</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261007-011532</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="8">DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261003-094600</th></tr>
+<tr><th colspan="8">DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261007-011532</th></tr>
 <tr>
 <th>GetRecordCountAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 <th>GetRecordCountWithPredicateAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
@@ -38,16 +38,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BF2EA18]
+call      qword ptr [7FFB0DE0E5B0]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF2EA00]
+call      qword ptr [7FFB0DE0E598]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF2EA30]
+call      qword ptr [7FFB0DE0E5C8]
 nop
 add       rsp,50
 pop       rbp
@@ -62,10 +62,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B2FCF60]
+call      qword ptr [7FFB0D1C75A0]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B2FCF78]
+call      qword ptr [7FFB0D1C75B8]
 nop
 add       rsp,30
 pop       rbp
@@ -82,19 +82,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BF2EA48]
+call      qword ptr [7FFB0DE0E5E0]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E22092A
+mov       rcx,7FFB0E6F09B0
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E6F09B4
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E6F09B0
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E5C7108]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -102,14 +119,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E1CC925
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0E42EFE8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -122,16 +138,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BF173D8]
+call      qword ptr [7FFB0DD3FF48]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF173C0]
+call      qword ptr [7FFB0DD3FF30]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF173F0]
+call      qword ptr [7FFB0DD3FF60]
 nop
 add       rsp,50
 pop       rbp
@@ -146,10 +162,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B2B6430]
+call      qword ptr [7FFB0D11EFA0]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B2B6448]
+call      qword ptr [7FFB0D11EFB8]
 nop
 add       rsp,30
 pop       rbp
@@ -166,19 +182,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BF17408]
+call      qword ptr [7FFB0DD3FF78]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E2167EA
+mov       rcx,7FFB0E7A3338
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E7A333C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E7A3338
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E5BF528]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -186,14 +219,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E2168B5
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0E475FF8]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -206,16 +238,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BF374C8]
+call      qword ptr [7FFB0DD5FF48]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF374B0]
+call      qword ptr [7FFB0DD5FF30]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BF374E0]
+call      qword ptr [7FFB0DD5FF60]
 nop
 add       rsp,50
 pop       rbp
@@ -230,10 +262,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B2D6550]
+call      qword ptr [7FFB0D13EFA0]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B2D6568]
+call      qword ptr [7FFB0D13EFB8]
 nop
 add       rsp,30
 pop       rbp
@@ -250,19 +282,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BF374F8]
+call      qword ptr [7FFB0DD5FF78]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E22E81A
+mov       rcx,7FFB0E745C38
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E745C3C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E745C38
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E695ED8]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -270,14 +319,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E22E8E5
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0E3DD638]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -290,16 +338,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BE5FE70]
+call      qword ptr [7FFB0DE27330]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BE5FE58]
+call      qword ptr [7FFB0DE27318]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BE5FE88]
+call      qword ptr [7FFB0DE27348]
 nop
 add       rsp,50
 pop       rbp
@@ -314,10 +362,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B23EFA0]
+call      qword ptr [7FFB0D1C6460]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B23EFB8]
+call      qword ptr [7FFB0D1C6478]
 nop
 add       rsp,30
 pop       rbp
@@ -334,19 +382,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BE5FEA0]
+call      qword ptr [7FFB0DE27360]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E2821CA
+mov       rcx,7FFB0E7BB738
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E7BB73C
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E7BB738
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E56F270]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -354,14 +419,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E282295
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0E564DE0]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -374,16 +438,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BD36598]
+call      qword ptr [7FFB0DC25D40]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BD36580]
+call      qword ptr [7FFB0DC25D28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BD365B0]
+call      qword ptr [7FFB0DC25D58]
 nop
 add       rsp,50
 pop       rbp
@@ -398,10 +462,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B2B6C88]
+call      qword ptr [7FFB0D196418]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B2B6CA0]
+call      qword ptr [7FFB0D196430]
 nop
 add       rsp,30
 pop       rbp
@@ -418,19 +482,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BD365C8]
+call      qword ptr [7FFB0DC25D70]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E0E1B3A
+mov       rcx,7FFB0E309A10
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E309A14
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E309A10
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E097A38]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -438,14 +519,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E1E0DD5
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0DD3F060]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -458,16 +538,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4C156898]
+call      qword ptr [7FFB0E01DC08]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4C156880]
+call      qword ptr [7FFB0E01DBF0]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4C1568B0]
+call      qword ptr [7FFB0E01DC20]
 nop
 add       rsp,50
 pop       rbp
@@ -482,10 +562,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B24EFE8]
+call      qword ptr [7FFB0D196358]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B24F000]
+call      qword ptr [7FFB0D196370]
 nop
 add       rsp,30
 pop       rbp
@@ -502,7 +582,7 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4C1568C8]
+call      qword ptr [7FFB0E01DC38]
 nop
 add       rsp,20
 pop       rbp
@@ -515,23 +595,23 @@ sub       rsp,28
 mov       rbx,rcx
 mov       rsi,[rbx]
 test      rsi,rsi
-je        short 00007FFB4C21C94A
-mov       rcx,7FFB4C5DAE28
+je        short 00007FFB0E14DF8A
+mov       rcx,7FFB0E55E830
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rax,rsi
 add       rsp,28
 pop       rbx
 pop       rsi
 ret
-mov       rcx,7FFB4C5DAE2C
+mov       rcx,7FFB0E55E834
 call      CORINFO_HELP_COUNTPROFILE32
-mov       rcx,7FFB4C5DAE28
+mov       rcx,7FFB0E55E830
 call      CORINFO_HELP_COUNTPROFILE32
 mov       rcx,rbx
 add       rsp,28
 pop       rbx
 pop       rsi
-jmp       qword ptr [7FFB4C535D70]
+jmp       qword ptr [7FFB0E514708]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -539,14 +619,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E228DC5
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0E01E928]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -559,16 +638,16 @@ mov       [rbp-28],rax
 vxorps    xmm4,xmm4,xmm4
 vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
-call      qword ptr [7FFB4BC5E8B0]
+call      qword ptr [7FFB0DC55D40]
 mov       [rbp-18],rax
 mov       rax,[rbp+10]
 mov       [rbp-28],rax
 mov       dword ptr [rbp-20],0FFFFFFFF
 lea       rdx,[rbp-28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BC5E898]
+call      qword ptr [7FFB0DC55D28]
 lea       rcx,[rbp-18]
-call      qword ptr [7FFB4BC5E8C8]
+call      qword ptr [7FFB0DC55D58]
 nop
 add       rsp,50
 pop       rbp
@@ -583,10 +662,10 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4B22EFA0]
+call      qword ptr [7FFB0D1C6400]
 mov       [rbp-8],rax
 lea       rcx,[rbp-8]
-call      qword ptr [7FFB4B22EFB8]
+call      qword ptr [7FFB0D1C6418]
 nop
 add       rsp,30
 pop       rbp
@@ -603,19 +682,36 @@ lea       rbp,[rsp+20]
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       rcx,[rbp+18]
-call      qword ptr [7FFB4BC5E8E0]
+call      qword ptr [7FFB0DC55D70]
 nop
 add       rsp,20
 pop       rbp
 ret
 
 System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-mov       rax,[rcx]
-test      rax,rax
-je        short 00007FFB981EAF39
+push      rsi
+push      rbx
+sub       rsp,28
+mov       rbx,rcx
+mov       rsi,[rbx]
+test      rsi,rsi
+je        short 00007FFB0E117A8A
+mov       rcx,7FFB0E354980
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rax,rsi
+add       rsp,28
+pop       rbx
+pop       rsi
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-jmp       qword ptr [rax]
+mov       rcx,7FFB0E354984
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,7FFB0E354980
+call      CORINFO_HELP_COUNTPROFILE32
+mov       rcx,rbx
+add       rsp,28
+pop       rbx
+pop       rsi
+jmp       qword ptr [7FFB0E09CD08]
 
 System.Threading.Tasks.Task.GetAwaiter()
 mov       rax,rcx
@@ -623,14 +719,13 @@ ret
 
 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
 mov       rcx,[rcx]
-mov       eax,[rcx+34]
-and       eax,11000000
-cmp       eax,1000000
-jne       short 00007FFB981EDC03
+mov       edx,[rcx+34]
+and       edx,11000000
+cmp       edx,1000000
+jne       short 00007FFB0E2072E5
 ret
-lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
 xor       edx,edx
-jmp       qword ptr [rax]
+jmp       qword ptr [7FFB0DD6F570]
 
 </code></pre></td>
 <td style="vertical-align:top;"><pre><code>
@@ -642,13 +737,13 @@ xor       eax,eax
 mov       [rbp-4],eax
 mov       [rbp+10],rcx
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB4B2CE9E8]
+call      qword ptr [7FFB0D1A6D90]
 mov       rcx,rax
-call      qword ptr [7FFB4BE6CEA0]
+call      qword ptr [7FFB0DD55278]
 mov       [rbp-4],eax
 mov       rcx,[rbp+10]
 mov       edx,[rbp-4]
-call      qword ptr [7FFB4BE6CE88]
+call      qword ptr [7FFB0DD55260]
 nop
 add       rsp,30
 pop       rbp
@@ -669,12 +764,12 @@ mov       [rbp-8],rax
 mov       rax,[rbp-8]
 mov       [rbp-10],rax
 cmp       qword ptr [rbp-8],0
-jne       short 00007FFB4BD82972
+jne       short 00007FFB0E0CF8D2
 mov       rcx,offset MT_System.InvalidOperationException
 call      CORINFO_HELP_NEWSFAST
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
-call      qword ptr [7FFB4B43C060]
+call      qword ptr [7FFB0D394408]
 mov       rcx,[rbp-18]
 call      CORINFO_HELP_THROW
 int       3
@@ -684,37 +779,46 @@ pop       rbp
 ret
 
 DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)
-push      rbp
-sub       rsp,30
-lea       rbp,[rsp+30]
-xor       eax,eax
-mov       [rbp-8],rax
-mov       [rbp+10],rcx
 		context = context.ArgumentNotNull();
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,1C233C93088
-mov       [rsp+20],rax
-mov       rdx,[rbp+10]
-mov       rcx,7FFB4BECB5F8
-xor       r8d,r8d
-mov       r9,1C233C70008
-call      qword ptr [7FFB4B01E670]
-mov       [rbp+10],rax
 		return context.ChangeTracker.HasChanges();
 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rcx,[rbp+10]
+push      rbp
+sub       rsp,40
+lea       rbp,[rsp+40]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp-10],rax
+mov       [rbp+10],rcx
+mov       rax,2C4E83E3088
+mov       [rsp+20],rax
+mov       rdx,[rbp+10]
+mov       rcx,7FFB0DD7B5F8
+xor       r8d,r8d
+mov       r9,2C4E83C0008
+call      qword ptr [7FFB0CF1E670]
+mov       [rbp+10],rax
 mov       rax,[rbp+10]
+mov       [rbp-10],rax
+mov       rcx,[rbp-10]
+mov       rdx,7FFB0E39B700
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-10]
+mov       rax,[rbp-10]
 mov       rax,[rax]
 mov       rax,[rax+40]
 call      qword ptr [rax+28]
 mov       [rbp-8],rax
+mov       rcx,[rbp-8]
+mov       rdx,7FFB0E39B5F8
+call      CORINFO_HELP_CLASSPROFILE32
 mov       rcx,[rbp-8]
 mov       rax,[rbp-8]
 mov       rax,[rax]
 mov       rax,[rax+50]
 call      qword ptr [rax]
 nop
-add       rsp,30
+add       rsp,40
 pop       rbp
 ret
 
@@ -727,12 +831,12 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       [rbp+18],edx
 mov       rcx,[rbp+10]
-call      qword ptr [7FFB4BE6D8C0]
+call      qword ptr [7FFB0DD55C98]
 mov       [rbp-8],rax
 mov       rcx,[rbp-8]
 lea       rdx,[rbp+18]
 cmp       [rcx],ecx
-call      qword ptr [7FFB4BE6D890]
+call      qword ptr [7FFB0DD55C68]
 nop
 add       rsp,30
 pop       rbp

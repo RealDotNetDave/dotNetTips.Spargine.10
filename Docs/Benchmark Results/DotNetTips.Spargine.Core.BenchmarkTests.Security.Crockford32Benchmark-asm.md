@@ -4,7 +4,7 @@
 ; DotNetTips.Spargine.Core.BenchmarkTests.Security.Crockford32Benchmark.Decode()
        sub       rsp,28
        mov       rcx,[rcx+1B0]
-       call      qword ptr [7FFD22F8E5F8]; DotNetTips.Spargine.Core.Security.Crockford32.Decode(System.String)
+       call      qword ptr [7FFD577AE100]; DotNetTips.Spargine.Core.Security.Crockford32.Decode(System.String)
        mov       eax,[rax+8]
        add       rsp,28
        ret
@@ -27,13 +27,13 @@
        vmovdqa   xmmword ptr [rbp+30],xmm4
        xor       eax,eax
        mov       [rbp+40],rax
-       mov       rax,0BCC10D228849
+       mov       rax,0B42689629C1C
        mov       [rbp+8],rax
        mov       rbx,rcx
 ; 		if (string.IsNullOrWhiteSpace(text))
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
        mov       rcx,rbx
-       call      qword ptr [7FFD22F85A58]; System.String.IsNullOrWhiteSpace(System.String)
+       call      qword ptr [7FFD577A5590]; System.String.IsNullOrWhiteSpace(System.String)
        test      eax,eax
        jne       near ptr M01_L12
 ; 		Span<char> norm = stackalloc char[text.Length];
@@ -63,7 +63,7 @@ M01_L01:
        mov       [rbp+18],esi
        lea       rdx,[rbp+10]
        mov       rcx,rbx
-       call      qword ptr [7FFD22F8E670]; DotNetTips.Spargine.Core.Security.Crockford32.NormalizeChars(System.String, System.Span`1<Char>)
+       call      qword ptr [7FFD577AE178]; DotNetTips.Spargine.Core.Security.Crockford32.NormalizeChars(System.String, System.Span`1<Char>)
        mov       ebx,eax
 ; 		int buffer = 0, bitsLeft = 0;
 ; 		^^^^^^^^^^^^^^
@@ -138,10 +138,10 @@ M01_L05:
        movzx     esi,word ptr [rdi+rcx*2]
        cmp       esi,80
        jge       near ptr M01_L02
-       test      byte ptr [7FFD22D52248],1
+       test      byte ptr [7FFD57582248],1
        je        near ptr M01_L16
 M01_L06:
-       mov       rcx,24864C01EB0
+       mov       rcx,2ADE7801EB0
        mov       r8,[rcx]
        cmp       esi,[r8+8]
        jae       near ptr M01_L26
@@ -190,10 +190,10 @@ M01_L10:
        mov       [rbp+4C],r10d
        cmp       r10d,80
        jge       near ptr M01_L07
-       test      byte ptr [7FFD22D52248],1
+       test      byte ptr [7FFD57582248],1
        je        near ptr M01_L17
 M01_L11:
-       mov       rcx,24864C01EB0
+       mov       rcx,2ADE7801EB0
        mov       r8,[rcx]
        mov       r10d,[rbp+4C]
        cmp       r10d,[r8+8]
@@ -204,8 +204,8 @@ M01_L11:
 ; 			return [];
 ; 			^^^^^^^^^^
 M01_L12:
-       mov       rax,288F9AC62A0
-       mov       r8,0BCC10D228849
+       mov       rax,2EE7C9562A0
+       mov       r8,0B42689629C1C
        cmp       [rbp+8],r8
        je        short M01_L13
        call      CORINFO_HELP_FAIL_FAST
@@ -226,7 +226,7 @@ M01_L13:
 ; 		^^^^^^^^^^^^^
 M01_L14:
        mov       rax,r12
-       mov       r8,0BCC10D228849
+       mov       r8,0B42689629C1C
        cmp       [rbp+8],r8
        je        short M01_L15
        call      CORINFO_HELP_FAIL_FAST
@@ -245,11 +245,11 @@ M01_L15:
        ret
 M01_L16:
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Security.Crockford32
-       call      qword ptr [7FFD22965728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       call      qword ptr [7FFD57195728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        jmp       near ptr M01_L06
 M01_L17:
        mov       rcx,offset MT_DotNetTips.Spargine.Core.Security.Crockford32
-       call      qword ptr [7FFD22965728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
+       call      qword ptr [7FFD57195728]; System.Runtime.CompilerServices.StaticsHelpers.GetGCStaticBase(System.Runtime.CompilerServices.MethodTable*)
        jmp       near ptr M01_L11
 M01_L18:
        mov       esi,r10d
@@ -259,7 +259,7 @@ M01_L19:
        lea       rcx,[rbp+20]
        mov       edx,1C
        mov       r8d,1
-       call      qword ptr [7FFD22B84E70]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler..ctor(Int32, Int32)
+       call      qword ptr [7FFD573B4E70]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler..ctor(Int32, Int32)
        mov       ecx,[rbp+30]
        cmp       ecx,[rbp+40]
        ja        short M01_L22
@@ -270,9 +270,9 @@ M01_L19:
        sub       eax,ecx
        cmp       eax,1A
        jb        short M01_L20
-       vmovups   ymm0,[7FFD229FC9A0]
+       vmovups   ymm0,[7FFD5722AD80]
        vmovups   [rdx],ymm0
-       vmovups   xmm0,[7FFD229FC9C0]
+       vmovups   xmm0,[7FFD5722ADA0]
        vmovups   [rdx+20],xmm0
        mov       dword ptr [rdx+30],270020
        mov       ecx,[rbp+30]
@@ -281,17 +281,17 @@ M01_L19:
        jmp       short M01_L21
 M01_L20:
        lea       rcx,[rbp+20]
-       mov       rdx,288F9AD0BC8
-       call      qword ptr [7FFD22F8C018]
+       mov       rdx,2EE7C960BC8
+       call      qword ptr [7FFD577A7B10]
 M01_L21:
        lea       rcx,[rbp+20]
        mov       edx,esi
-       call      qword ptr [7FFD22F861A8]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[[System.Char, System.Private.CoreLib]](Char)
+       call      qword ptr [7FFD577A5C98]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[[System.Char, System.Private.CoreLib]](Char)
        mov       ecx,[rbp+30]
        cmp       ecx,[rbp+40]
        jbe       short M01_L23
 M01_L22:
-       call      qword ptr [7FFD22AD7198]
+       call      qword ptr [7FFD57307198]
        int       3
 M01_L23:
        mov       rdx,[rbp+38]
@@ -308,17 +308,17 @@ M01_L23:
        jmp       short M01_L25
 M01_L24:
        lea       rcx,[rbp+20]
-       mov       rdx,288F9AD0C18
-       call      qword ptr [7FFD22F8C018]
+       mov       rdx,2EE7C960C18
+       call      qword ptr [7FFD577A7B10]
 M01_L25:
        mov       rcx,offset MT_System.FormatException
        call      CORINFO_HELP_NEWSFAST
        mov       r12,rax
        lea       rcx,[rbp+20]
-       call      qword ptr [7FFD22B84EA0]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()
+       call      qword ptr [7FFD573B4EA0]; System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.ToStringAndClear()
        mov       rdx,rax
        mov       rcx,r12
-       call      qword ptr [7FFD22F8E688]
+       call      qword ptr [7FFD577AE190]
        mov       rcx,r12
        call      CORINFO_HELP_THROW
        int       3

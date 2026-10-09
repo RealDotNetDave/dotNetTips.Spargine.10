@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20261002-054310</title>
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20261007-023649</title>
 
 <style type="text/css">
     table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <table>
 <thead>
-<tr><th colspan="3">DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20261002-054310</th></tr>
+<tr><th colspan="3">DotNetTips.Spargine.Extensions.BenchmarkTests.DirectoryInfoExtensionsBenchmark-20261007-023649</th></tr>
 <tr>
 <th>CreateTempFileThenMove .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
 <th>ReadAllTextSafe .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
@@ -33,100 +33,103 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
 mov       rcx,[rax+1A8]
-mov       rdx,29977C70C70
-mov       r8,29977C70CD0
+mov       rdx,281383D0C20
+mov       r8,281383D0C80
 xor       r9d,r9d
-call      qword ptr [7FFC62E7E7F0]
+call      qword ptr [7FFB0D1BE7C0]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFC62EDD9E0
-call      qword ptr [7FFC62E7E7C0]
+mov       rdx,7FFB0D21D6A0
+call      qword ptr [7FFB0D1BE790]
 nop
 add       rsp,30
 pop       rbp
 ret
 
 DotNetTips.Spargine.Extensions.DirectoryInfoExtensions.CreateTempFileThenMove(System.IO.DirectoryInfo, System.String, System.String, System.Text.Encoding)
+		directory = directory.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		destinationFileName = destinationFileName.ArgumentNotNullOrEmpty();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		content = content.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		directory.Create();
+		^^^^^^^^^^^^^^^^^^^
+		var destinationPath = Path.Combine(directory.FullName, destinationFileName);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		destinationFile.CreateTempFileThenMove(content, encoding);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		destinationFile.Refresh();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return destinationFile;
+		^^^^^^^^^^^^^^^^^^^^^^^
 push      rbp
-sub       rsp,40
-lea       rbp,[rsp+40]
+sub       rsp,50
+lea       rbp,[rsp+50]
 vxorps    xmm4,xmm4,xmm4
-vmovdqu   xmmword ptr [rbp-18],xmm4
-xor       eax,eax
-mov       [rbp-8],rax
+vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       [rbp+20],r8
 mov       [rbp+28],r9
-		directory = directory.ArgumentNotNull();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,29977C70D58
+mov       rax,281383D0D08
 mov       [rsp+20],rax
 mov       rdx,[rbp+10]
-mov       rcx,7FFC62EDDA78
+mov       rcx,7FFB0D21D738
 xor       r8d,r8d
-mov       r9,29977C60008
-call      qword ptr [7FFC62BCE670]
+mov       r9,281383C0008
+call      qword ptr [7FFB0CF0E670]
 mov       [rbp+10],rax
-		destinationFileName = destinationFileName.ArgumentNotNullOrEmpty();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,29977C70D80
+mov       rax,281383D0D30
 mov       [rsp+20],rax
 mov       rcx,[rbp+18]
 mov       edx,1
 xor       r8d,r8d
-mov       r9,29977C60008
-call      qword ptr [7FFC62C74C18]
+mov       r9,281383C0008
+call      qword ptr [7FFB0CFB4C18]
 mov       [rbp+18],rax
-		content = content.ArgumentNotNull();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,29977C70DC0
+mov       rax,281383D0D70
 mov       [rsp+20],rax
 mov       rdx,[rbp+20]
-mov       rcx,7FFC62C30B68
+mov       rcx,7FFB0CF70B68
 xor       r8d,r8d
-mov       r9,29977C60008
-call      qword ptr [7FFC62BCE670]
+mov       r9,281383C0008
+call      qword ptr [7FFB0CF0E670]
 mov       [rbp+20],rax
-		directory.Create();
-		^^^^^^^^^^^^^^^^^^^
 mov       rcx,[rbp+10]
 cmp       [rcx],ecx
-call      qword ptr [7FFC62BCE838]
-		var destinationPath = Path.Combine(directory.FullName, destinationFileName);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+call      qword ptr [7FFB0CF0E838]
 mov       rcx,offset MT_System.IO.FileInfo
 call      CORINFO_HELP_NEWSFAST
 mov       [rbp-8],rax
-mov       rcx,[rbp+10]
 mov       rax,[rbp+10]
+mov       [rbp-10],rax
+mov       rcx,[rbp-10]
+mov       rdx,7FFB0D3B97D0
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-10]
+mov       rax,[rbp-10]
 mov       rax,[rax]
 mov       rax,[rax+40]
 call      qword ptr [rax+30]
-mov       [rbp-10],rax
-mov       rcx,[rbp-10]
-mov       rdx,[rbp+18]
-call      qword ptr [7FFC62E7E6D0]
 mov       [rbp-18],rax
-mov       rdx,[rbp-18]
+mov       rcx,[rbp-18]
+mov       rdx,[rbp+18]
+call      qword ptr [7FFB0D1BE6A0]
+mov       [rbp-20],rax
+mov       rdx,[rbp-20]
 mov       rcx,[rbp-8]
-call      qword ptr [7FFC62E7E6E8]
-		destinationFile.CreateTempFileThenMove(content, encoding);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+call      qword ptr [7FFB0D1BE6B8]
 mov       rcx,[rbp-8]
 mov       rdx,[rbp+20]
 mov       r8,[rbp+28]
-call      qword ptr [7FFC62E7E820]
-		destinationFile.Refresh();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^
+call      qword ptr [7FFB0D1BE7F0]
 mov       rcx,[rbp-8]
 cmp       [rcx],ecx
-call      qword ptr [7FFC62E7E838]
-		return destinationFile;
-		^^^^^^^^^^^^^^^^^^^^^^^
+call      qword ptr [7FFB0D1BE808]
 mov       rax,[rbp-8]
-add       rsp,40
+add       rsp,50
 pop       rbp
 ret
 
@@ -145,22 +148,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFC628DBFE1
+je        short 00007FFB0D2B96C1
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFC628DBFF9
+jmp       short 00007FFB0D2B96D9
 mov       rcx,[rbp+18]
-mov       rdx,7FFC62EC4A28
-call      qword ptr [7FFC62A67B58]
+mov       rdx,7FFB0D204948
+call      qword ptr [7FFB0CDA7B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFC62E7EC70]
+call      qword ptr [7FFB0D1BEC40]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFC62E7EC28]
+call      qword ptr [7FFB0D1BEBF8]
 nop
 add       rsp,40
 pop       rbp
@@ -177,78 +180,81 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
 mov       rcx,[rax+1A8]
-mov       rdx,2B080140C70
-mov       r8,2B080130008
+mov       rdx,249054E0C70
+mov       r8,249054D0008
 xor       r9d,r9d
-call      qword ptr [7FFC62E5E220]
+call      qword ptr [7FFB0D1A6C40]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFC62EBC2D8
-call      qword ptr [7FFC62E5E1F0]
+mov       rdx,7FFB0D1D8A28
+call      qword ptr [7FFB0D1A6C10]
 nop
 add       rsp,30
 pop       rbp
 ret
 
 DotNetTips.Spargine.Extensions.DirectoryInfoExtensions.ReadAllTextSafe(System.IO.DirectoryInfo, System.String, System.String, System.Text.Encoding)
+		directory = directory.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		fileName = fileName.ArgumentNotNullOrEmpty();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		var file = new FileInfo(Path.Combine(directory.FullName, fileName));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		return file.ReadAllTextSafe(fallback, encoding);
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 push      rbp
-sub       rsp,40
-lea       rbp,[rsp+40]
+sub       rsp,50
+lea       rbp,[rsp+50]
 vxorps    xmm4,xmm4,xmm4
-vmovdqu   xmmword ptr [rbp-18],xmm4
-xor       eax,eax
-mov       [rbp-8],rax
+vmovdqu   ymmword ptr [rbp-20],ymm4
 mov       [rbp+10],rcx
 mov       [rbp+18],rdx
 mov       [rbp+20],r8
 mov       [rbp+28],r9
-		directory = directory.ArgumentNotNull();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,2B080140E90
+mov       rax,249054E0E90
 mov       [rsp+20],rax
 mov       rdx,[rbp+10]
-mov       rcx,7FFC62EBC370
+mov       rcx,7FFB0D1D8AC0
 xor       r8d,r8d
-mov       r9,2B080130008
-call      qword ptr [7FFC62BCE670]
+mov       r9,249054D0008
+call      qword ptr [7FFB0CF1E670]
 mov       [rbp+10],rax
-		fileName = fileName.ArgumentNotNullOrEmpty();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-mov       rax,2B080140EB8
+mov       rax,249054E0EB8
 mov       [rsp+20],rax
 mov       rcx,[rbp+18]
 mov       edx,1
 xor       r8d,r8d
-mov       r9,2B080130008
-call      qword ptr [7FFC62C74C18]
+mov       r9,249054D0008
+call      qword ptr [7FFB0CFC4C18]
 mov       [rbp+18],rax
-		var file = new FileInfo(Path.Combine(directory.FullName, fileName));
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 mov       rcx,offset MT_System.IO.FileInfo
 call      CORINFO_HELP_NEWSFAST
 mov       [rbp-8],rax
-mov       rcx,[rbp+10]
 mov       rax,[rbp+10]
+mov       [rbp-10],rax
+mov       rcx,[rbp-10]
+mov       rdx,7FFB0D3AE098
+call      CORINFO_HELP_CLASSPROFILE32
+mov       rcx,[rbp-10]
+mov       rax,[rbp-10]
 mov       rax,[rax]
 mov       rax,[rax+40]
 call      qword ptr [rax+30]
-mov       [rbp-10],rax
-mov       rcx,[rbp-10]
-mov       rdx,[rbp+18]
-call      qword ptr [7FFC62E5DF50]
 mov       [rbp-18],rax
-mov       rdx,[rbp-18]
+mov       rcx,[rbp-18]
+mov       rdx,[rbp+18]
+call      qword ptr [7FFB0D1A6970]
+mov       [rbp-20],rax
+mov       rdx,[rbp-20]
 mov       rcx,[rbp-8]
-call      qword ptr [7FFC62E5E298]
-		return file.ReadAllTextSafe(fallback, encoding);
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+call      qword ptr [7FFB0D1A6CB8]
 mov       rcx,[rbp-8]
 mov       rdx,[rbp+20]
 mov       r8,[rbp+28]
-call      qword ptr [7FFC62E5E2B0]
+call      qword ptr [7FFB0D1A6CD0]
 nop
-add       rsp,40
+add       rsp,50
 pop       rbp
 ret
 
@@ -267,22 +273,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFC628D9981
+je        short 00007FFB0D2CCC31
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFC628D9999
+jmp       short 00007FFB0D2CCC49
 mov       rcx,[rbp+18]
-mov       rdx,7FFC62EC03B0
-call      qword ptr [7FFC62A67B58]
+mov       rdx,7FFB0D1BF310
+call      qword ptr [7FFB0CDB7B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFC62E5E718]
+call      qword ptr [7FFB0D1A7138]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFC62E5E6D0]
+call      qword ptr [7FFB0D1A70F0]
 nop
 add       rsp,40
 pop       rbp
@@ -299,15 +305,15 @@ mov       [rbp-8],rax
 mov       [rbp+10],rcx
 mov       rax,[rbp+10]
 mov       rcx,[rax+1A8]
-mov       rdx,23598FF0C70
-mov       r8,23598FF0CD0
+mov       rdx,1AA725D0C70
+mov       r8,1AA725D0CD0
 xor       r9d,r9d
-call      qword ptr [7FFC62E5E2C8]
+call      qword ptr [7FFB0D1BE418]
 mov       [rbp-8],rax
 mov       rcx,[rbp+10]
 mov       r8,[rbp-8]
-mov       rdx,7FFC62EAB9B0
-call      qword ptr [7FFC62E5E298]
+mov       rdx,7FFB0D219910
+call      qword ptr [7FFB0D1BE3E8]
 nop
 add       rsp,30
 pop       rbp
@@ -327,7 +333,7 @@ mov       rcx,[rbp+10]
 mov       rdx,[rbp+18]
 mov       r8,[rbp+20]
 mov       r9,[rbp+28]
-call      qword ptr [7FFC62E5E2E0]
+call      qword ptr [7FFB0D1BE430]
 nop
 add       rsp,20
 pop       rbp
@@ -348,22 +354,22 @@ mov       rax,[rax+18]
 mov       rax,[rax+10]
 mov       [rbp-20],rax
 cmp       qword ptr [rbp-20],0
-je        short 00007FFC628CA3B1
+je        short 00007FFB0D2C5FA1
 mov       rax,[rbp-20]
 mov       [rbp-10],rax
-jmp       short 00007FFC628CA3C9
+jmp       short 00007FFB0D2C5FB9
 mov       rcx,[rbp+18]
-mov       rdx,7FFC62EB2648
-call      qword ptr [7FFC62A57B58]
+mov       rdx,7FFB0D2039E8
+call      qword ptr [7FFB0CDA7B58]
 mov       [rbp-10],rax
 mov       rcx,[rbp+10]
-call      qword ptr [7FFC62E5E760]
+call      qword ptr [7FFB0D1BE8B0]
 mov       [rbp-18],rax
 mov       rcx,[rbp-18]
 lea       r8,[rbp+20]
 mov       rdx,[rbp-10]
 cmp       [rcx],ecx
-call      qword ptr [7FFC62E5E718]
+call      qword ptr [7FFB0D1BE868]
 nop
 add       rsp,40
 pop       rbp

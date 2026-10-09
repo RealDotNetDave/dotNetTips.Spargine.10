@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Extensions.BenchmarkTests.HttpClientExtensionsBenchmark-20261003-022430</title>
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.HttpClientExtensionsBenchmark-20261008-072851</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -24,9 +24,21 @@ Categories=NETWORK
 </code></pre>
 
 <table>
-<thead><tr><th>Method                                             </th><th>Mean</th><th>Error</th><th>StdErr</th><th>StdDev</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th>
+<thead><tr><th>Method                                             </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min </th><th>Q1  </th><th>Q3  </th><th>Max </th><th>Op/s </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetAndDeserializeFromStreamAsync: JsonSerializerOptions&#39;</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>No</td>
+</thead><tbody><tr><td>&#39;GetAndDeserializeFromStreamAsync: JsonSerializerOptions&#39;</td><td>947.3 ns</td><td>11.95 ns</td><td>10.59 ns</td><td>2.83 ns</td><td>945.9 ns</td><td>930.1 ns</td><td>938.5 ns</td><td>955.5 ns</td><td>963.7 ns</td><td>1,055,615.7</td><td>5.585 ns</td><td>14.00</td><td>No</td><td>0.0477</td><td>1,542 B</td><td>-</td><td>0.0010</td><td>0.0010</td><td>-</td>
+</tr><tr><td>&#39;GetAndDeserializeFromStreamAsync: JsonTypeInfo&#39;</td><td>937.6 ns</td><td>17.09 ns</td><td>15.15 ns</td><td>4.05 ns</td><td>935.7 ns</td><td>912.1 ns</td><td>932.5 ns</td><td>944.4 ns</td><td>974.7 ns</td><td>1,066,555.8</td><td>4.975 ns</td><td>14.00</td><td>No</td><td>0.0448</td><td>1,542 B</td><td>-</td><td>0.0019</td><td>0.0019</td><td>1312 B</td>
+</tr><tr><td>&#39;PostAndDeserializeAsync: JsonSerializerOptions&#39;</td><td>1,260.0 ns</td><td>24.65 ns</td><td>27.40 ns</td><td>6.29 ns</td><td>1,255.8 ns</td><td>1,206.8 ns</td><td>1,246.9 ns</td><td>1,278.1 ns</td><td>1,318.3 ns</td><td>793,643.5</td><td>6.357 ns</td><td>19.00</td><td>No</td><td>0.0553</td><td>1,903 B</td><td>-</td><td>-</td><td>-</td><td>1712 B</td>
+</tr><tr><td>&#39;PostAndDeserializeAsync: JsonTypeInfo&#39;</td><td>1,249.0 ns</td><td>24.38 ns</td><td>43.96 ns</td><td>6.86 ns</td><td>1,248.6 ns</td><td>1,166.9 ns</td><td>1,230.0 ns</td><td>1,276.2 ns</td><td>1,338.2 ns</td><td>800,664.2</td><td>17.068 ns</td><td>41.00</td><td>No</td><td>0.0591</td><td>1,917 B</td><td>-</td><td>0.0019</td><td>0.0019</td><td>-</td>
+</tr><tr><td>&#39;PostAndEnsureSuccessAsync: JsonSerializerOptions&#39;</td><td>704.8 ns</td><td>10.69 ns</td><td>8.92 ns</td><td>2.48 ns</td><td>707.3 ns</td><td>681.3 ns</td><td>702.0 ns</td><td>709.4 ns</td><td>715.9 ns</td><td>1,418,810.0</td><td>5.262 ns</td><td>13.00</td><td>No</td><td>0.0143</td><td>1,501 B</td><td>-</td><td>-</td><td>-</td><td>1400 B</td>
+</tr><tr><td>&#39;PostAndEnsureSuccessAsync: JsonTypeInfo&#39;</td><td>729.6 ns</td><td>14.58 ns</td><td>29.78 ns</td><td>4.17 ns</td><td>719.1 ns</td><td>679.0 ns</td><td>712.4 ns</td><td>751.8 ns</td><td>792.9 ns</td><td>1,370,615.2</td><td>23.415 ns</td><td>51.00</td><td>No</td><td>0.0143</td><td>1,501 B</td><td>-</td><td>-</td><td>-</td><td>1400 B</td>
+</tr><tr><td>DeleteAndDeserializeAsync</td><td>951.4 ns</td><td>18.97 ns</td><td>45.82 ns</td><td>5.52 ns</td><td>931.7 ns</td><td>898.2 ns</td><td>917.6 ns</td><td>979.5 ns</td><td>1,072.9 ns</td><td>1,051,084.6</td><td>31.742 ns</td><td>69.00</td><td>No</td><td>0.0134</td><td>1,549 B</td><td>-</td><td>-</td><td>-</td><td>1312 B</td>
+</tr><tr><td>DownloadToStreamAsync</td><td>524.5 ns</td><td>9.84 ns</td><td>12.44 ns</td><td>2.59 ns</td><td>524.9 ns</td><td>501.4 ns</td><td>515.1 ns</td><td>532.1 ns</td><td>549.6 ns</td><td>1,906,590.1</td><td>10.203 ns</td><td>23.00</td><td>No</td><td>0.0262</td><td>1,760 B</td><td>-</td><td>0.0010</td><td>0.0010</td><td>1408 B</td>
+</tr><tr><td>GetAndDeserializeAsync</td><td>979.2 ns</td><td>19.17 ns</td><td>32.03 ns</td><td>5.34 ns</td><td>977.0 ns</td><td>922.2 ns</td><td>967.3 ns</td><td>987.6 ns</td><td>1,085.2 ns</td><td>1,021,278.9</td><td>15.331 ns</td><td>36.00</td><td>No</td><td>0.0515</td><td>1,529 B</td><td>-</td><td>0.0019</td><td>0.0019</td><td>-</td>
+</tr><tr><td>GetStreamAsync</td><td>451.1 ns</td><td>9.00 ns</td><td>20.68 ns</td><td>2.61 ns</td><td>444.5 ns</td><td>425.1 ns</td><td>434.7 ns</td><td>463.6 ns</td><td>505.7 ns</td><td>2,217,005.7</td><td>30.197 ns</td><td>63.00</td><td>No</td><td>0.0105</td><td>1,682 B</td><td>-</td><td>-</td><td>-</td><td>1136 B</td>
+</tr><tr><td>HeadersAsync</td><td>373.7 ns</td><td>7.44 ns</td><td>16.17 ns</td><td>2.14 ns</td><td>369.4 ns</td><td>349.0 ns</td><td>360.4 ns</td><td>386.9 ns</td><td>412.2 ns</td><td>2,675,658.1</td><td>27.429 ns</td><td>57.00</td><td>No</td><td>0.0081</td><td>1,965 B</td><td>-</td><td>-</td><td>-</td><td>784 B</td>
+</tr><tr><td>PatchAndDeserializeAsync</td><td>1,287.3 ns</td><td>26.13 ns</td><td>76.62 ns</td><td>7.70 ns</td><td>1,263.6 ns</td><td>1,194.0 ns</td><td>1,222.5 ns</td><td>1,343.4 ns</td><td>1,496.9 ns</td><td>776,827.8</td><td>45.650 ns</td><td>99.00</td><td>No</td><td>0.0553</td><td>1,903 B</td><td>-</td><td>-</td><td>-</td><td>1712 B</td>
+</tr><tr><td>PutAndDeserializeAsync</td><td>1,300.1 ns</td><td>26.96 ns</td><td>78.64 ns</td><td>7.94 ns</td><td>1,280.7 ns</td><td>1,192.4 ns</td><td>1,235.4 ns</td><td>1,349.6 ns</td><td>1,515.5 ns</td><td>769,199.2</td><td>45.028 ns</td><td>98.00</td><td>No</td><td>0.0553</td><td>1,903 B</td><td>-</td><td>-</td><td>-</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

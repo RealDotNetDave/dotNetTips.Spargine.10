@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.BenchmarkTests.IO.FileHelperCopyFileBenchmark-20261003-134041</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method </th><th>Mean    </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min     </th><th>Q1      </th><th>Median  </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>CopyFile</td><td>1,123,310.0 ns</td><td>26,308.7 ns</td><td>71,127.1 ns</td><td>7,714.8 ns</td><td>983,850.0 ns</td><td>1,079,650.0 ns</td><td>1,109,350.0 ns</td><td>1,161,950.0 ns</td><td>1,309,850.0 ns</td><td>890.2</td><td>-3,814.9 ns</td><td>85.00</td><td>No</td><td>-</td><td>-</td><td>-</td><td>NA</td><td>81.35 KB</td>
+</tr><tr><td>CopyFileAsync</td><td>1,247,867.6 ns</td><td>33,829.6 ns</td><td>91,460.3 ns</td><td>9,920.3 ns</td><td>1,093,450.0 ns</td><td>1,190,750.0 ns</td><td>1,231,750.0 ns</td><td>1,285,450.0 ns</td><td>1,552,850.0 ns</td><td>801.4</td><td>-4,917.6 ns</td><td>85.00</td><td>No</td><td>3.0000</td><td>-</td><td>-</td><td>296 B</td><td>83.02 KB</td>
+</tr></tbody></table>
+</body>
+</html>

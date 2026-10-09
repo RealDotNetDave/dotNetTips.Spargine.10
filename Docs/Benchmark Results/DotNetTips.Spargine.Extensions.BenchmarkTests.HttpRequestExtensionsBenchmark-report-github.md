@@ -10,9 +10,10 @@ EvaluateOverhead=True  Runtime=.NET 10.0  Server=True
 InvocationCount=1  UnrollFactor=1  Categories=NETWORK  
 
 ```
-| Method                     | Mean | Error | StdErr | StdDev | Min | Q1 | Median | Q3 | Max | Op/s | CI99.9% Margin | Iterations | Baseline |
-|--------------------------- |-----:|------:|-------:|-------:|----:|---:|-------:|---:|----:|-----:|---------------:|-----------:|--------- |
-| &#39;TryGetBody: JsonTypeInfo&#39; |   NA |    NA |     NA |     NA |  NA | NA |     NA | NA |  NA |   NA |             NA |         NA | No       |
-
-Benchmarks with issues:
-  HttpRequestExtensionsBenchmark.'TryGetBody: JsonTypeInfo': Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1)
+| Method                     | Mean        | Error      | StdDev      | StdErr     | Median      | Min         | Q1          | Q3           | Max          | Op/s     | CI99.9% Margin | Iterations | Baseline | Exceptions | Code Size | Allocated |
+|--------------------------- |------------:|-----------:|------------:|-----------:|------------:|------------:|------------:|-------------:|-------------:|---------:|---------------:|-----------:|--------- |-----------:|----------:|----------:|
+| **&#39;TryGetBody: bytes&#39;**        | **35,724.7 ns** | **3,173.5 ns** |  **8,898.7 ns** |   **932.8 ns** | **33,250.0 ns** | **16,250.0 ns** | **30,000.0 ns** |  **39,800.0 ns** |  **60,350.0 ns** | **27,991.8** |      **-420.9 ns** |      **91.00** | **No**       |          **-** |     **533 B** |     **400 B** |
+| **&#39;TryGetBody: generic&#39;**      | **82,111.8 ns** | **5,522.1 ns** | **15,301.6 ns** | **1,622.0 ns** | **79,350.0 ns** | **44,150.0 ns** | **72,550.0 ns** |  **90,750.0 ns** | **123,050.0 ns** | **12,178.5** |      **-766.5 ns** |      **89.00** | **No**       |          **-** |     **678 B** |     **616 B** |
+| **&#39;TryGetBody: JsonTypeInfo&#39;** | **88,881.9 ns** | **9,297.3 ns** | **26,070.6 ns** | **2,732.9 ns** | **83,350.0 ns** | **40,950.0 ns** | **71,600.0 ns** | **102,100.0 ns** | **169,450.0 ns** | **11,250.9** |    **-1,321.0 ns** |      **91.00** | **No**       |          **-** |     **815 B** |     **616 B** |
+| **GetRawBodyBytesAsync**       | **44,517.3 ns** | **3,179.2 ns** |  **9,274.0 ns** |   **936.8 ns** | **43,150.0 ns** | **28,200.0 ns** | **38,600.0 ns** |  **50,300.0 ns** |  **67,300.0 ns** | **22,463.2** |      **-419.4 ns** |      **98.00** | **No**       |          **-** |     **296 B** |    **2264 B** |
+| **GetRawBodyStringAsync**      | **60,857.9 ns** | **4,554.3 ns** | **12,620.0 ns** | **1,337.7 ns** | **57,950.0 ns** | **36,250.0 ns** | **53,150.0 ns** |  **67,650.0 ns** |  **98,250.0 ns** | **16,431.7** |      **-624.4 ns** |      **89.00** | **No**       |          **-** |     **296 B** |    **3712 B** |

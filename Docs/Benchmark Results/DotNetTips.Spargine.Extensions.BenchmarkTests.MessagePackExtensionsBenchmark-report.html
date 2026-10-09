@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.MessagePackExtensionsBenchmark-20261009-060217</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Serialization  
+</code></pre>
+
+<table>
+<thead><tr><th>Method      </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>FromMessagePack</td><td>95.98 ns</td><td>1.059 ns</td><td>0.991 ns</td><td>0.256 ns</td><td>94.57 ns</td><td>95.32 ns</td><td>95.60 ns</td><td>96.84 ns</td><td>97.65 ns</td><td>10,419,253.2</td><td>7.372 ns</td><td>15.00</td><td>No</td><td>-</td><td>0.0006</td><td>5,522 B</td><td>72 B</td>
+</tr><tr><td>ToMessagePackBytes</td><td>60.66 ns</td><td>0.540 ns</td><td>0.422 ns</td><td>0.122 ns</td><td>59.69 ns</td><td>60.49 ns</td><td>60.79 ns</td><td>60.91 ns</td><td>61.14 ns</td><td>16,485,005.8</td><td>5.939 ns</td><td>12.00</td><td>No</td><td>-</td><td>0.0013</td><td>5,013 B</td><td>40 B</td>
+</tr></tbody></table>
+</body>
+</html>

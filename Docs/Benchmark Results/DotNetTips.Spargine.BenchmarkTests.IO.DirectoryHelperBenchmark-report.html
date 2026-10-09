@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.BenchmarkTests.IO.DirectoryHelperBenchmark-20261003-133336</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=IO  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                              </th><th>Mean   </th><th>Error </th><th>StdDev</th><th>StdErr</th><th>Median </th><th>Min    </th><th>Q1     </th><th>Q3     </th><th>Max    </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>LoadFilesAsync</td><td>641,063.94 ns</td><td>7,993.550 ns</td><td>7,477.172 ns</td><td>1,930.597 ns</td><td>637,791.50 ns</td><td>632,649.32 ns</td><td>635,445.90 ns</td><td>644,736.91 ns</td><td>658,594.63 ns</td><td>1,559.9</td><td>-957.80 ns</td><td>15.00</td><td>No</td><td>1.0000</td><td>-</td><td>3.9063</td><td>-</td><td>3,118 B</td><td>130626 B</td>
+</tr><tr><td>LoadOneDriveFolders</td><td>56,708.77 ns</td><td>166.853 ns</td><td>139.330 ns</td><td>38.643 ns</td><td>56,771.44 ns</td><td>56,362.14 ns</td><td>56,616.94 ns</td><td>56,795.82 ns</td><td>56,875.84 ns</td><td>17,634.0</td><td>-12.82 ns</td><td>13.00</td><td>No</td><td>-</td><td>-</td><td>0.0610</td><td>-</td><td>NA</td><td>2400 B</td>
+</tr><tr><td>SafeDirectorySearch</td><td>15.39 ns</td><td>0.572 ns</td><td>1.685 ns</td><td>0.169 ns</td><td>16.39 ns</td><td>13.41 ns</td><td>13.51 ns</td><td>16.97 ns</td><td>17.99 ns</td><td>64,973,464.3</td><td>49.92 ns</td><td>100.00</td><td>No</td><td>-</td><td>-</td><td>0.0053</td><td>-</td><td>132 B</td><td>96 B</td>
+</tr><tr><td>SafeFileSearch(DirectoryInfo)</td><td>503,155.35 ns</td><td>2,471.403 ns</td><td>2,190.835 ns</td><td>585.525 ns</td><td>502,918.85 ns</td><td>499,108.89 ns</td><td>502,641.58 ns</td><td>504,865.16 ns</td><td>506,211.33 ns</td><td>1,987.5</td><td>-285.76 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>3.9063</td><td>-</td><td>15,119 B</td><td>129586 B</td>
+</tr><tr><td>SafeFileSearch(IEnumerable&lt;DirectoryInfo&gt;)</td><td>503,543.16 ns</td><td>2,457.701 ns</td><td>2,178.688 ns</td><td>582.279 ns</td><td>503,061.96 ns</td><td>500,228.27 ns</td><td>502,189.21 ns</td><td>504,600.00 ns</td><td>508,232.96 ns</td><td>1,985.9</td><td>-284.14 ns</td><td>14.00</td><td>No</td><td>-</td><td>-</td><td>3.9063</td><td>-</td><td>NA</td><td>129842 B</td>
+</tr><tr><td>SetFileAttributesToNormal</td><td>290,796.90 ns</td><td>1,396.308 ns</td><td>1,165.981 ns</td><td>323.385 ns</td><td>291,141.04 ns</td><td>289,207.74 ns</td><td>289,814.18 ns</td><td>291,567.70 ns</td><td>293,125.51 ns</td><td>3,438.8</td><td>-155.19 ns</td><td>13.00</td><td>No</td><td>-</td><td>-</td><td>3.9063</td><td>-</td><td>11,746 B</td><td>123200 B</td>
+</tr></tbody></table>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Core.BenchmarkTests.FastStringBuilderBenchmark-20261001-173210</title>
+<title>DotNetTips.Spargine.Core.BenchmarkTests.FastStringBuilderBenchmark-20261004-172226</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -23,14 +23,14 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 </code></pre>
 
 <table>
-<thead><tr><th>Method                                           </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
+<thead><tr><th>Method                                           </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Median</th><th>Min</th><th>Q1 </th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Code Size</th><th>Exceptions</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;Format: SB.AppendFormat() for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>135.15 ns</td><td>2.735 ns</td><td>7.010 ns</td><td>0.799 ns</td><td>125.90 ns</td><td>128.06 ns</td><td>136.48 ns</td><td>141.45 ns</td><td>149.13 ns</td><td>7,399,437.7</td><td>38.101 ns</td><td>77.00</td><td>No</td><td>-</td><td>4,188 B</td><td>0.0155</td><td>-</td><td>-</td><td>472 B</td>
-</tr><tr><td>&#39;Remove: SB.Replace() with string.Empty for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>570.16 ns</td><td>6.427 ns</td><td>5.697 ns</td><td>1.523 ns</td><td>557.25 ns</td><td>568.04 ns</td><td>569.28 ns</td><td>572.30 ns</td><td>580.01 ns</td><td>1,753,881.3</td><td>6.239 ns</td><td>14.00</td><td>No</td><td>-</td><td>4,374 B</td><td>0.1316</td><td>-</td><td>-</td><td>3968 B</td>
-</tr><tr><td>Format</td><td>Strings</td><td>89.62 ns</td><td>0.360 ns</td><td>0.337 ns</td><td>0.087 ns</td><td>89.02 ns</td><td>89.33 ns</td><td>89.62 ns</td><td>89.87 ns</td><td>90.25 ns</td><td>11,157,687.2</td><td>7.456 ns</td><td>15.00</td><td>No</td><td>-</td><td>5,561 B</td><td>0.0042</td><td>-</td><td>-</td><td>128 B</td>
-</tr><tr><td>FormatCurrentCulture</td><td>Strings,Globalization</td><td>88.61 ns</td><td>0.888 ns</td><td>0.787 ns</td><td>0.210 ns</td><td>87.04 ns</td><td>88.27 ns</td><td>88.81 ns</td><td>89.00 ns</td><td>89.68 ns</td><td>11,285,973.5</td><td>6.895 ns</td><td>14.00</td><td>No</td><td>-</td><td>5,088 B</td><td>0.0044</td><td>0.0002</td><td>0.0002</td><td>128 B</td>
-</tr><tr><td>FormatInvariant</td><td>Strings,Globalization</td><td>84.25 ns</td><td>0.980 ns</td><td>0.916 ns</td><td>0.237 ns</td><td>82.76 ns</td><td>83.55 ns</td><td>84.16 ns</td><td>84.73 ns</td><td>86.30 ns</td><td>11,870,084.0</td><td>7.382 ns</td><td>15.00</td><td>No</td><td>-</td><td>4,799 B</td><td>0.0046</td><td>0.0001</td><td>0.0001</td><td>-</td>
-</tr><tr><td>Remove</td><td>Strings</td><td>360.28 ns</td><td>7.122 ns</td><td>10.214 ns</td><td>1.930 ns</td><td>331.63 ns</td><td>357.45 ns</td><td>362.63 ns</td><td>365.79 ns</td><td>374.04 ns</td><td>2,775,614.5</td><td>13.035 ns</td><td>28.00</td><td>No</td><td>-</td><td>4,563 B</td><td>0.0639</td><td>-</td><td>-</td><td>1952 B</td>
+</thead><tbody><tr><td>&#39;Format: SB.AppendFormat() for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>135.58 ns</td><td>2.723 ns</td><td>6.256 ns</td><td>0.788 ns</td><td>133.09 ns</td><td>127.83 ns</td><td>129.43 ns</td><td>141.26 ns</td><td>146.92 ns</td><td>7,375,742.2</td><td>31.106 ns</td><td>63.00</td><td>No</td><td>0.0055</td><td>4,188 B</td><td>-</td><td>0.0002</td><td>0.0002</td><td>-</td>
+</tr><tr><td>&#39;Remove: SB.Replace() with string.Empty for Comparison&#39;</td><td>Strings,**FOR COMPARISON**</td><td>579.89 ns</td><td>3.481 ns</td><td>3.256 ns</td><td>0.841 ns</td><td>579.02 ns</td><td>576.08 ns</td><td>577.02 ns</td><td>581.70 ns</td><td>585.34 ns</td><td>1,724,470.7</td><td>7.080 ns</td><td>15.00</td><td>No</td><td>0.1297</td><td>4,379 B</td><td>-</td><td>-</td><td>-</td><td>3968 B</td>
+</tr><tr><td>Format</td><td>Strings</td><td>93.36 ns</td><td>1.653 ns</td><td>1.465 ns</td><td>0.392 ns</td><td>92.99 ns</td><td>91.54 ns</td><td>92.48 ns</td><td>93.97 ns</td><td>96.32 ns</td><td>10,711,664.9</td><td>6.804 ns</td><td>14.00</td><td>No</td><td>0.0045</td><td>5,561 B</td><td>-</td><td>0.0002</td><td>0.0002</td><td>128 B</td>
+</tr><tr><td>FormatCurrentCulture</td><td>Strings,Globalization</td><td>85.73 ns</td><td>0.442 ns</td><td>0.369 ns</td><td>0.102 ns</td><td>85.71 ns</td><td>85.11 ns</td><td>85.49 ns</td><td>85.98 ns</td><td>86.53 ns</td><td>11,664,537.2</td><td>6.449 ns</td><td>13.00</td><td>No</td><td>0.0041</td><td>5,088 B</td><td>-</td><td>0.0002</td><td>0.0002</td><td>128 B</td>
+</tr><tr><td>FormatInvariant</td><td>Strings,Globalization</td><td>83.10 ns</td><td>0.700 ns</td><td>0.655 ns</td><td>0.169 ns</td><td>83.24 ns</td><td>81.59 ns</td><td>82.76 ns</td><td>83.50 ns</td><td>84.10 ns</td><td>12,033,849.0</td><td>7.415 ns</td><td>15.00</td><td>No</td><td>0.0044</td><td>4,799 B</td><td>-</td><td>0.0002</td><td>0.0002</td><td>128 B</td>
+</tr><tr><td>Remove</td><td>Strings</td><td>373.30 ns</td><td>7.156 ns</td><td>8.518 ns</td><td>1.859 ns</td><td>374.44 ns</td><td>341.61 ns</td><td>371.64 ns</td><td>375.94 ns</td><td>385.08 ns</td><td>2,678,809.3</td><td>9.571 ns</td><td>21.00</td><td>No</td><td>0.0396</td><td>4,519 B</td><td>-</td><td>0.0005</td><td>0.0005</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

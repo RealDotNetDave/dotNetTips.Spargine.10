@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Extensions.BenchmarkTests.CharacterExtensionsBenchmark-20261006-224338</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+</code></pre>
+
+<table>
+<thead><tr><th>Method              </th><th>Categories          </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s      </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;To Lower: char.ToLower()&#39;</td><td>Strings,**FOR COMPARISON**</td><td>1.7112 ns</td><td>0.0202 ns</td><td>0.0189 ns</td><td>0.0049 ns</td><td>1.6726 ns</td><td>1.7015 ns</td><td>1.7076 ns</td><td>1.7225 ns</td><td>1.7437 ns</td><td>584,370,391.9</td><td>7.498 ns</td><td>15.00</td><td>No</td><td>688 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;To Lower: ToAsciiLower&#39;</td><td>Strings</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>14 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;To Upper: char.ToUpper()&#39;</td><td>Strings,**FOR COMPARISON**</td><td>1.6071 ns</td><td>0.0102 ns</td><td>0.0085 ns</td><td>0.0024 ns</td><td>1.5915 ns</td><td>1.6045 ns</td><td>1.6062 ns</td><td>1.6091 ns</td><td>1.6268 ns</td><td>622,237,980.6</td><td>6.499 ns</td><td>13.00</td><td>No</td><td>689 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;To Upper: ToAsciiUpper&#39;</td><td>Strings</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>14 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsAsciiControl</td><td>Strings</td><td>0.0196 ns</td><td>0.0081 ns</td><td>0.0076 ns</td><td>0.0020 ns</td><td>0.0000 ns</td><td>0.0179 ns</td><td>0.0201 ns</td><td>0.0239 ns</td><td>0.0296 ns</td><td>51,039,016,874.5</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsAsciiPunctuation</td><td>Strings</td><td>0.0175 ns</td><td>0.0100 ns</td><td>0.0094 ns</td><td>0.0024 ns</td><td>0.0000 ns</td><td>0.0142 ns</td><td>0.0173 ns</td><td>0.0230 ns</td><td>0.0328 ns</td><td>57,118,342,339.9</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsAsciiUpper</td><td>Strings</td><td>0.0125 ns</td><td>0.0066 ns</td><td>0.0062 ns</td><td>0.0016 ns</td><td>0.0000 ns</td><td>0.0085 ns</td><td>0.0124 ns</td><td>0.0165 ns</td><td>0.0242 ns</td><td>80,151,041,467.6</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsAsciiWhitespace</td><td>Strings</td><td>0.0138 ns</td><td>0.0060 ns</td><td>0.0056 ns</td><td>0.0015 ns</td><td>0.0000 ns</td><td>0.0116 ns</td><td>0.0136 ns</td><td>0.0182 ns</td><td>0.0208 ns</td><td>72,371,151,342.0</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsHexDigit</td><td>Strings</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsNewLine</td><td>Strings</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>get_IsUnicodeDigit</td><td>Strings</td><td>0.0137 ns</td><td>0.0083 ns</td><td>0.0077 ns</td><td>0.0020 ns</td><td>0.0004 ns</td><td>0.0090 ns</td><td>0.0143 ns</td><td>0.0193 ns</td><td>0.0250 ns</td><td>73,173,083,276.5</td><td>7.499 ns</td><td>15.00</td><td>No</td><td>12 B</td><td>-</td><td>-</td>
+</tr><tr><td>GetDigitValue</td><td>Strings</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>0.0000 ns</td><td>Infinity</td><td>7.500 ns</td><td>15.00</td><td>No</td><td>15 B</td><td>-</td><td>-</td>
+</tr></tbody></table>
+</body>
+</html>

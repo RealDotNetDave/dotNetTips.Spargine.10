@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DisassemblyDiagnoser Output DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDownloadFileFromWebAsyncBenchmark-20261003-134223</title>
+
+<style type="text/css">
+    table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+    td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: left; }
+    tr { background-color: #fff; border-top: 1px solid #ccc; }
+    tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th colspan="1">DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDownloadFileFromWebAsyncBenchmark-20261003-134223</th></tr>
+<tr>
+<th>DownloadFileFromWebAsync .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="vertical-align:top;"><pre><code>
+DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDownloadFileFromWebAsyncBenchmark.DownloadFileFromWebAsync()
+push      rbp
+sub       rsp,50
+lea       rbp,[rsp+50]
+xor       eax,eax
+mov       [rbp-28],rax
+vxorps    xmm4,xmm4,xmm4
+vmovdqu   ymmword ptr [rbp-20],ymm4
+mov       [rbp+10],rcx
+call      qword ptr [7FFD97FCEA90]
+mov       [rbp-18],rax
+mov       rax,[rbp+10]
+mov       [rbp-28],rax
+mov       dword ptr [rbp-20],0FFFFFFFF
+lea       rdx,[rbp-28]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD98076DF0]
+lea       rcx,[rbp-18]
+call      qword ptr [7FFD97FCEAA8]
+nop
+add       rsp,50
+pop       rbp
+ret
+
+BenchmarkDotNet.Helpers.AwaitHelper.GetResult(System.Threading.Tasks.Task)
+push      rbp
+sub       rsp,30
+lea       rbp,[rsp+30]
+xor       eax,eax
+mov       [rbp-8],rax
+mov       [rbp+10],rcx
+mov       rcx,[rbp+10]
+cmp       [rcx],ecx
+call      qword ptr [7FFD97FCE400]
+mov       [rbp-8],rax
+lea       rcx,[rbp-8]
+call      qword ptr [7FFD97FCE418]
+nop
+add       rsp,30
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+xor       eax,eax
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.BenchmarkTests.IO.FileHelperDownloadFileFromWebAsyncBenchmark+<DownloadFileFromWebAsync>d__11, DotNetTips.Spargine.BenchmarkTests]](<DownloadFileFromWebAsync>d__11 ByRef)
+push      rbp
+sub       rsp,20
+lea       rbp,[rsp+20]
+mov       [rbp+10],rcx
+mov       [rbp+18],rdx
+mov       rcx,[rbp+18]
+call      qword ptr [7FFD98076E08]
+nop
+add       rsp,20
+pop       rbp
+ret
+
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+mov       rax,[rcx]
+test      rax,rax
+je        short 00007FFDD1ECAF39
+ret
+lea       rax,[System.Threading.Tasks.TaskFactory`1[[System.Threading.Tasks.VoidTaskResult, System.Private.CoreLib]].FromAsyncTrim[[System.__Canon, System.Private.CoreLib],[System.IO.Stream+ReadWriteParameters, System.Private.CoreLib]](System.__Canon, ReadWriteParameters, System.Func`5<System.__Canon,ReadWriteParameters,System.AsyncCallback,System.Object,System.IAsyncResult>, System.Func`3<System.__Canon,System.IAsyncResult,System.Threading.Tasks.VoidTaskResult>)]
+jmp       qword ptr [rax]
+
+System.Threading.Tasks.Task.GetAwaiter()
+mov       rax,rcx
+ret
+
+System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+mov       rcx,[rcx]
+mov       eax,[rcx+34]
+and       eax,11000000
+cmp       eax,1000000
+jne       short 00007FFDD1ECDC03
+ret
+lea       rax,[System.Threading.Tasks.TaskFactory`1[[System.Threading.Tasks.VoidTaskResult, System.Private.CoreLib]].FromAsyncTrim[[System.__Canon, System.Private.CoreLib],[System.IO.Stream+ReadWriteParameters, System.Private.CoreLib]](System.__Canon, ReadWriteParameters, System.Func`5<System.__Canon,ReadWriteParameters,System.AsyncCallback,System.Object,System.IAsyncResult>, System.Func`3<System.__Canon,System.IAsyncResult,System.Threading.Tasks.VoidTaskResult>)]
+xor       edx,edx
+jmp       qword ptr [rax]
+
+</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

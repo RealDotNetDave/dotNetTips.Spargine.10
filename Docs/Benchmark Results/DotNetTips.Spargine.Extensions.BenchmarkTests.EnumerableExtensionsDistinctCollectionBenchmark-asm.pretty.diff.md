@@ -1,4 +1,4 @@
-## DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark-20261003-001148
+## DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark-20261008-042433
 **Diff for Distinct_LINQ_Distinct_Ref_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
@@ -204,397 +204,7 @@
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03E2D020]
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 +       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
@@ -625,15 +235,15 @@
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E919EF70]
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -673,7 +283,7 @@
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036657A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 +       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
@@ -704,93 +314,15 @@
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E4CD50]
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -801,8 +333,8 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -842,8 +374,8 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
         mov       rsi,rax
@@ -872,15 +404,15 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -920,8 +452,8 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
         mov       rsi,rax
@@ -950,15 +482,15 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -998,7 +530,7 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 +       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
@@ -1029,15 +561,15 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -1077,7 +609,7 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 +       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
@@ -1108,1115 +640,15 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E2D020]
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D14B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036557A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D34B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 255
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036257A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D04B40]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbx
-        sub       rsp,80
-        xor       eax,eax
-        mov       [rsp+28],rax
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+30],ymm4
-        vmovdqu   ymmword ptr [rsp+50],ymm4
-        vmovdqa   xmmword ptr [rsp+70],xmm4
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+30],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+50],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+70],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+30]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rsi+8],eax
-        lea       rcx,[rsi+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       ecx,ecx
-        mov       [rsi+68],rcx
-        mov       [rsp+28],rsi
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+28]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,80
-        pop       rbx
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 255
-+; Total bytes of code 254
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D37F18]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E939CD38]
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
@@ -2227,179 +659,248 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03BFF5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C669D0]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
-
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 254
++; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
-
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 254
++; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
-
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 254
++; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
@@ -2407,1025 +908,11 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03E0CA80]
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CF00]
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
- ; Total bytes of code 275
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036357A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03E0CA80]
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
@@ -3433,34 +920,33 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
         push      rdi
         push      rsi
-        push      rbp
         push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
+        sub       rsp,80
         xor       eax,eax
-        mov       [rsp+70],rax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
         mov       rbx,rcx
         mov       rsi,[rbx+2F0]
         vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymmword ptr [rsp+30],ymm0
         vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   ymmword ptr [rsp+50],ymm0
         vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
+        vmovdqu   xmmword ptr [rsp+70],xmm0
         mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
         mov       rdi,rax
@@ -3472,57 +958,210 @@ call      CORINFO_HELP_POLL_GC
         call      CORINFO_HELP_ASSIGN_REF
         lea       rcx,[rdi+0C8]
         cmp       [rcx],cl
-        lea       rdx,[rsp+28]
+        lea       rdx,[rsp+30]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
         call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
+        mov       rsi,rax
         call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
         mov       rdx,rdi
         call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
         mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
+        mov       rdx,[rsp+28]
         lea       rcx,[rbx+8]
         call      CORINFO_HELP_ASSIGN_REF
         xor       eax,eax
         mov       [rbx+8],rax
         vzeroupper
-        add       rsp,78
+        add       rsp,80
         pop       rbx
-        pop       rbp
         pop       rsi
         pop       rdi
         ret
--; Total bytes of code 275
-+; Total bytes of code 274
+-; Total bytes of code 254
++; Total bytes of code 255
  ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 254
++; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 254
++; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
@@ -3530,266 +1169,11 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D24B70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
 ```diff
@@ -3797,9 +1181,897 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E917EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 255
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BA57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9284B58]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbx
+        sub       rsp,80
+        xor       eax,eax
+        mov       [rsp+28],rax
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+30],ymm4
+        vmovdqu   ymmword ptr [rsp+50],ymm4
+        vmovdqa   xmmword ptr [rsp+70],xmm4
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+30],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+50],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+70],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+30]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BD57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rsi+8],eax
+        lea       rcx,[rsi+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       ecx,ecx
+        mov       [rsi+68],rcx
+        mov       [rsp+28],rsi
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+28]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,80
+        pop       rbx
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 255
++; Total bytes of code 254
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92B4B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919F5B8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Ref_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
 .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
@@ -3839,8 +2111,8 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+28]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
         call      CORINFO_HELP_NEWSFAST
         mov       rsi,rax
@@ -3869,106 +2141,21 @@ call      CORINFO_HELP_POLL_GC
         pop       rsi
         pop       rdi
         ret
--; Total bytes of code 275
-+; Total bytes of code 274
+-; Total bytes of code 274
++; Total bytes of code 275
  ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
-        push      rdi
-        push      rsi
-        push      rbp
-        push      rbx
-        sub       rsp,78
-        vxorps    xmm4,xmm4,xmm4
-        vmovdqu   ymmword ptr [rsp+20],ymm4
-        vmovdqu   ymmword ptr [rsp+40],ymm4
-        vmovdqa   xmmword ptr [rsp+60],xmm4
-        xor       eax,eax
-        mov       [rsp+70],rax
-        mov       rbx,rcx
-        mov       rsi,[rbx+2F0]
-        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
-        vmovdqu   ymmword ptr [rsp+28],ymm0
-        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
-        vmovdqu   ymmword ptr [rsp+48],ymm0
-        vmovdqu   xmm0,xmmword ptr [rbx+100]
-        vmovdqu   xmmword ptr [rsp+68],xmm0
-        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rdi,rax
-        mov       dword ptr [rdi+20],0FFFFFFFE
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rdi+24],eax
-        lea       rcx,[rdi+10]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rdi+0C8]
-        cmp       [rcx],cl
-        lea       rdx,[rsp+28]
-        mov       r8d,50
-        vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
-        call      CORINFO_HELP_NEWSFAST
-        mov       rsi,rax
-        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
-        call      CORINFO_HELP_NEWSFAST
-        mov       rbp,rax
-        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
-        mov       [rbp+8],eax
-        lea       rcx,[rbp+60]
-        mov       rdx,rdi
-        call      CORINFO_HELP_ASSIGN_REF
-        lea       rcx,[rbp+68]
-        mov       rdx,rsi
-        call      CORINFO_HELP_ASSIGN_REF
-        mov       [rsp+20],rbp
-        mov       rbx,[rbx+90]
-        mov       rdx,[rsp+20]
-        lea       rcx,[rbx+8]
-        call      CORINFO_HELP_ASSIGN_REF
-        xor       eax,eax
-        mov       [rbx+8],rax
-        vzeroupper
-        add       rsp,78
-        pop       rbx
-        pop       rbp
-        pop       rsi
-        pop       rdi
-        ret
--; Total bytes of code 275
-+; Total bytes of code 274
- ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-        sub       rsp,28
-        cmp       r8,4000
-        ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
-        jne       short M01_L01
-        call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03D37EE8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E93CCD80]
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
@@ -4010,7 +2197,7 @@ call      CORINFO_HELP_POLL_GC
         mov       r8d,50
         vzeroupper
 -       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
         call      CORINFO_HELP_NEWSFAST
         mov       rsi,rax
@@ -4045,15 +2232,15 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
@@ -4064,20 +2251,8 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
- ; Total bytes of code 49
-```
-**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
-```diff
-call      CORINFO_HELP_POLL_GC
-        jmp       short M01_L00
- M01_L02:
-        add       rsp,28
--       jmp       qword ptr [7FFC03BDEF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
@@ -4118,8 +2293,8 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+28]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
-+       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
         call      CORINFO_HELP_NEWSFAST
         mov       rsi,rax
@@ -4148,21 +2323,21 @@ call      CORINFO_HELP_POLL_GC
         pop       rsi
         pop       rdi
         ret
--; Total bytes of code 275
-+; Total bytes of code 274
+-; Total bytes of code 274
++; Total bytes of code 275
  ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
@@ -4203,7 +2378,200 @@ call      CORINFO_HELP_POLL_GC
         lea       rdx,[rsp+28]
         mov       r8d,50
         vzeroupper
--       call      qword ptr [7FFC036457A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 274
++; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E919EF70]
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
 +       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
         mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
         call      CORINFO_HELP_NEWSFAST
@@ -4239,15 +2607,522 @@ call      CORINFO_HELP_POLL_GC
         sub       rsp,28
         cmp       r8,4000
         ja        short M01_L02
-        call      00007FFC632537A0
-        cmp       dword ptr [7FFC63593A90],0
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
         jne       short M01_L01
         call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03D3C288]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BE57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E93CCD80]
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```
 **Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
@@ -4258,7 +3133,807 @@ call      CORINFO_HELP_POLL_GC
         jmp       short M01_L00
  M01_L02:
         add       rsp,28
--       jmp       qword ptr [7FFC03C0EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
-+       jmp       qword ptr [7FFC03BFF600]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+-       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E9294B88]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 274
++; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 274
++; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E918EF70]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+ ; Total bytes of code 275
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BC57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92B7F30]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+; DotNetTips.Spargine.Extensions.BenchmarkTests.EnumerableExtensionsDistinctCollectionBenchmark.Distinct_LINQ_Distinct_Comparer_Val_ForComparison()
+        push      rdi
+        push      rsi
+        push      rbp
+        push      rbx
+        sub       rsp,78
+        vxorps    xmm4,xmm4,xmm4
+        vmovdqu   ymmword ptr [rsp+20],ymm4
+        vmovdqu   ymmword ptr [rsp+40],ymm4
+        vmovdqa   xmmword ptr [rsp+60],xmm4
+        xor       eax,eax
+        mov       [rsp+70],rax
+        mov       rbx,rcx
+        mov       rsi,[rbx+2F0]
+        vmovdqu   ymm0,ymmword ptr [rbx+0C0]
+        vmovdqu   ymmword ptr [rsp+28],ymm0
+        vmovdqu   ymm0,ymmword ptr [rbx+0E0]
+        vmovdqu   ymmword ptr [rsp+48],ymm0
+        vmovdqu   xmm0,xmmword ptr [rbx+100]
+        vmovdqu   xmmword ptr [rsp+68],xmm0
+        mov       rcx,offset MT_DotNetTips.Spargine.Extensions.EnumerableExtensions+<AddLast>d__51<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rdi,rax
+        mov       dword ptr [rdi+20],0FFFFFFFE
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rdi+24],eax
+        lea       rcx,[rdi+10]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rdi+0C8]
+        cmp       [rcx],cl
+        lea       rdx,[rsp+28]
+        mov       r8d,50
+        vzeroupper
+-       call      qword ptr [7FF7E8BB57A0]; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
++       call      System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        mov       rcx,offset MT_DotNetTips.Spargine.Tester.Models.ValueTypes.Comparers.PersonEqualityComparer
+        call      CORINFO_HELP_NEWSFAST
+        mov       rsi,rax
+        mov       rcx,offset MT_System.Linq.Enumerable+DistinctIterator<DotNetTips.Spargine.Tester.Models.ValueTypes.Person>
+        call      CORINFO_HELP_NEWSFAST
+        mov       rbp,rax
+        call      CORINFO_HELP_GETCURRENTMANAGEDTHREADID
+        mov       [rbp+8],eax
+        lea       rcx,[rbp+60]
+        mov       rdx,rdi
+        call      CORINFO_HELP_ASSIGN_REF
+        lea       rcx,[rbp+68]
+        mov       rdx,rsi
+        call      CORINFO_HELP_ASSIGN_REF
+        mov       [rsp+20],rbp
+        mov       rbx,[rbx+90]
+        mov       rdx,[rsp+20]
+        lea       rcx,[rbx+8]
+        call      CORINFO_HELP_ASSIGN_REF
+        xor       eax,eax
+        mov       [rbx+8],rax
+        vzeroupper
+        add       rsp,78
+        pop       rbx
+        pop       rbp
+        pop       rsi
+        pop       rdi
+        ret
+-; Total bytes of code 275
++; Total bytes of code 274
+ ; System.Buffer.BulkMoveWithWriteBarrier(Byte ByRef, Byte ByRef, UIntPtr)
+        sub       rsp,28
+        cmp       r8,4000
+        ja        short M01_L02
+        call      00007FF8487D37A0
+        cmp       dword ptr [7FF848B13A90],0
+        jne       short M01_L01
+        call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E92AC318]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
+ ; Total bytes of code 49
+```
+**Diff for Distinct_LINQ_Distinct_Comparer_Val_ForComparison method between:**
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-PSYKRA(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True))
+```diff
+call      CORINFO_HELP_POLL_GC
+        jmp       short M01_L00
+ M01_L02:
+        add       rsp,28
+-       jmp       qword ptr [7FF7E918F5E8]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
++       jmp       qword ptr [7FF7E919F018]; System.Buffer.BulkMoveWithWriteBarrierBatch(Byte ByRef, Byte ByRef, UIntPtr)
  ; Total bytes of code 49
 ```

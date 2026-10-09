@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Threading.ThreadPoolHelperBenchmark-20261004-195436</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Threading  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                   </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Gen1</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;RunAsync: Action&#39;</td><td>1,110.56 ns</td><td>5.998 ns</td><td>5.610 ns</td><td>1.449 ns</td><td>1,097.53 ns</td><td>1,107.82 ns</td><td>1,109.86 ns</td><td>1,114.00 ns</td><td>1,119.05 ns</td><td>900,450.3</td><td>6.776 ns</td><td>15.00</td><td>No</td><td>0.0229</td><td>-</td><td>1,731 B</td><td>-</td><td>674 B</td>
+</tr><tr><td>&#39;RunAsync: Bounded Parallelism&#39;</td><td>3,146.98 ns</td><td>7.126 ns</td><td>6.666 ns</td><td>1.721 ns</td><td>3,135.92 ns</td><td>3,141.21 ns</td><td>3,147.19 ns</td><td>3,152.96 ns</td><td>3,156.03 ns</td><td>317,764.9</td><td>6.639 ns</td><td>15.00</td><td>No</td><td>0.0687</td><td>-</td><td>2,020 B</td><td>-</td><td>2165 B</td>
+</tr><tr><td>&#39;RunAsync: Func&lt;Task&lt;TResult&gt;&gt;&#39;</td><td>1,100.28 ns</td><td>6.539 ns</td><td>5.796 ns</td><td>1.549 ns</td><td>1,091.54 ns</td><td>1,095.81 ns</td><td>1,100.32 ns</td><td>1,103.30 ns</td><td>1,114.98 ns</td><td>908,862.5</td><td>6.225 ns</td><td>14.00</td><td>No</td><td>0.0229</td><td>-</td><td>1,877 B</td><td>-</td><td>668 B</td>
+</tr><tr><td>&#39;RunAsync: Func&lt;TResult&gt;&#39;</td><td>1,037.47 ns</td><td>4.110 ns</td><td>3.844 ns</td><td>0.993 ns</td><td>1,031.95 ns</td><td>1,034.01 ns</td><td>1,038.19 ns</td><td>1,040.14 ns</td><td>1,042.92 ns</td><td>963,881.9</td><td>7.004 ns</td><td>15.00</td><td>No</td><td>0.0191</td><td>-</td><td>1,879 B</td><td>-</td><td>597 B</td>
+</tr><tr><td>&#39;RunAsync: Multiple Results&#39;</td><td>1,712.83 ns</td><td>6.169 ns</td><td>5.771 ns</td><td>1.490 ns</td><td>1,700.52 ns</td><td>1,709.77 ns</td><td>1,712.26 ns</td><td>1,717.01 ns</td><td>1,721.07 ns</td><td>583,828.2</td><td>6.755 ns</td><td>15.00</td><td>No</td><td>0.0420</td><td>-</td><td>1,943 B</td><td>-</td><td>1201 B</td>
+</tr><tr><td>GetStatistics</td><td>22.41 ns</td><td>0.047 ns</td><td>0.039 ns</td><td>0.011 ns</td><td>22.33 ns</td><td>22.38 ns</td><td>22.41 ns</td><td>22.44 ns</td><td>22.48 ns</td><td>44,626,654.9</td><td>6.495 ns</td><td>13.00</td><td>No</td><td>-</td><td>-</td><td>234 B</td><td>-</td><td>-</td>
+</tr><tr><td>RunWhenAnyAsync</td><td>1,322.48 ns</td><td>11.295 ns</td><td>10.013 ns</td><td>2.676 ns</td><td>1,312.10 ns</td><td>1,315.36 ns</td><td>1,317.55 ns</td><td>1,326.76 ns</td><td>1,343.69 ns</td><td>756,156.5</td><td>5.662 ns</td><td>14.00</td><td>No</td><td>0.0076</td><td>-</td><td>1,593 B</td><td>-</td><td>883 B</td>
+</tr><tr><td>TryRunAsync</td><td>2,040.58 ns</td><td>14.966 ns</td><td>13.999 ns</td><td>3.615 ns</td><td>2,020.92 ns</td><td>2,029.24 ns</td><td>2,040.59 ns</td><td>2,049.24 ns</td><td>2,064.71 ns</td><td>490,057.3</td><td>5.693 ns</td><td>15.00</td><td>No</td><td>0.0916</td><td>-</td><td>1,949 B</td><td>0.0305</td><td>2762 B</td>
+</tr></tbody></table>
+</body>
+</html>

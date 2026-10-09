@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Security.BarCodeGeneratorBenchmark-20261004-201235</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+</code></pre>
+
+<table>
+<thead><tr><th>Method       </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min </th><th>Q1  </th><th>Median</th><th>Q3  </th><th>Max </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Return Value                                                                                    </th><th>Baseline</th><th>Exceptions</th><th>Gen0</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>BuildHmacBarcode</td><td>2,356.3 ns</td><td>8.47 ns</td><td>7.07 ns</td><td>1.96 ns</td><td>2,347.6 ns</td><td>2,350.8 ns</td><td>2,353.3 ns</td><td>2,360.3 ns</td><td>2,369.1 ns</td><td>424,396.4</td><td>5.519 ns</td><td>13.00</td><td>v=1|tid=TICKET-123456|pid=PERF-123456|e=1791164607|iss=dotNetTips|alg=H256|kid=k1|sig=F3KQEHKSQA66HD2C</td><td>No</td><td>-</td><td>0.0381</td><td>1.19 KB</td>
+</tr><tr><td>ValidateHmacBarcode</td><td>2,976.4 ns</td><td>8.85 ns</td><td>7.39 ns</td><td>2.05 ns</td><td>2,966.6 ns</td><td>2,971.6 ns</td><td>2,972.9 ns</td><td>2,983.8 ns</td><td>2,989.8 ns</td><td>335,981.5</td><td>5.476 ns</td><td>13.00</td><td>True</td><td>No</td><td>-</td><td>0.0801</td><td>2.5 KB</td>
+</tr></tbody></table>
+</body>
+</html>

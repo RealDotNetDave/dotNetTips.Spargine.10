@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Core.BenchmarkTests.Threading.TaskTrackerBenchmark-20261004-195022</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.401
+  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  Job-JZFTPE : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+InvocationCount=1  UnrollFactor=1  Categories=Threading  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                                          </th><th>Mean </th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min  </th><th>Q1   </th><th>Median</th><th>Q3   </th><th>Max  </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>&#39;Register: duplicate pending task&#39;</td><td>23,269.2 ns</td><td>2,883.2 ns</td><td>8,084.7 ns</td><td>847.5 ns</td><td>7,000.0 ns</td><td>17,250.0 ns</td><td>22,900.0 ns</td><td>29,050.0 ns</td><td>45,700.0 ns</td><td>42,975.2</td><td>-378.3 ns</td><td>91.00</td><td>No</td><td>-</td><td>93 B</td><td>96 B</td>
+</tr><tr><td>&#39;Register: fresh pending task with callback&#39;</td><td>57,941.5 ns</td><td>2,392.4 ns</td><td>6,344.4 ns</td><td>700.6 ns</td><td>42,350.0 ns</td><td>54,400.0 ns</td><td>57,800.0 ns</td><td>61,600.0 ns</td><td>79,150.0 ns</td><td>17,258.8</td><td>-309.3 ns</td><td>82.00</td><td>No</td><td>-</td><td>343 B</td><td>520 B</td>
+</tr><tr><td>&#39;Register: fresh pending task&#39;</td><td>58,018.6 ns</td><td>2,800.4 ns</td><td>7,618.8 ns</td><td>821.6 ns</td><td>40,350.0 ns</td><td>53,750.0 ns</td><td>58,450.0 ns</td><td>62,525.0 ns</td><td>78,550.0 ns</td><td>17,235.9</td><td>-367.8 ns</td><td>86.00</td><td>No</td><td>-</td><td>93 B</td><td>520 B</td>
+</tr><tr><td>&#39;Unregister(Task): existing pending task&#39;</td><td>35,424.7 ns</td><td>3,002.2 ns</td><td>8,218.6 ns</td><td>881.1 ns</td><td>14,950.0 ns</td><td>30,000.0 ns</td><td>35,350.0 ns</td><td>38,800.0 ns</td><td>57,850.0 ns</td><td>28,228.9</td><td>-397.1 ns</td><td>87.00</td><td>No</td><td>-</td><td>90 B</td><td>64 B</td>
+</tr><tr><td>&#39;Unregister(Ulid): existing pending task&#39;</td><td>16,064.0 ns</td><td>1,274.8 ns</td><td>3,468.3 ns</td><td>374.0 ns</td><td>7,450.0 ns</td><td>13,775.0 ns</td><td>15,650.0 ns</td><td>17,425.0 ns</td><td>25,750.0 ns</td><td>62,251.2</td><td>-144.0 ns</td><td>86.00</td><td>No</td><td>-</td><td>51 B</td><td>-</td>
+</tr><tr><td>&#39;WaitForCompletionAsync: empty tracker&#39;</td><td>27,498.9 ns</td><td>2,207.5 ns</td><td>6,226.3 ns</td><td>649.1 ns</td><td>12,900.0 ns</td><td>23,500.0 ns</td><td>26,050.0 ns</td><td>31,225.0 ns</td><td>44,200.0 ns</td><td>36,365.1</td><td>-278.6 ns</td><td>92.00</td><td>No</td><td>-</td><td>318 B</td><td>-</td>
+</tr><tr><td>&#39;WaitForCompletionAsync: pending task signaled inline&#39;</td><td>72,262.2 ns</td><td>3,058.8 ns</td><td>8,111.4 ns</td><td>895.8 ns</td><td>56,500.0 ns</td><td>67,075.0 ns</td><td>72,000.0 ns</td><td>76,100.0 ns</td><td>99,800.0 ns</td><td>13,838.5</td><td>-406.9 ns</td><td>82.00</td><td>No</td><td>-</td><td>318 B</td><td>528 B</td>
+</tr><tr><td>&#39;WaitForCompletionAsync: pending task, zero timeout&#39;</td><td>46,631.5 ns</td><td>3,136.1 ns</td><td>8,690.2 ns</td><td>921.2 ns</td><td>20,200.0 ns</td><td>40,900.0 ns</td><td>46,200.0 ns</td><td>51,200.0 ns</td><td>73,400.0 ns</td><td>21,444.7</td><td>-416.1 ns</td><td>89.00</td><td>No</td><td>-</td><td>318 B</td><td>160 B</td>
+</tr></tbody></table>
+</body>
+</html>

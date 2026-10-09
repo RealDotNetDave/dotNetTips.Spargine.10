@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang='en'><head><meta charset='utf-8' /><head>
-<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261003-094600</title>
+<title>Pretty Output of DisassemblyDiagnoser for DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark-20261007-011532</title>
 
 <style type="text/css">
     pre { margin: 0px; }
@@ -69,7 +69,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF2EA18]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE0E5B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -83,11 +83,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF2EA00]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE0E598]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF2EA30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE0E5C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -115,13 +115,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2FCF60]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C75A0]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2FCF78]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C75B8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -151,7 +151,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF2EA48]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE0E5E0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -163,20 +163,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="5" class="reference" data-reference="5_M04_L00"><a href="#5_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E6F09B0</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="5_M04_L00" class="label" data-label="5_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E6F09B4</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E6F09B0</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E5C7108]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -188,11 +222,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="7" class="reference" data-reference="7_M06_L00"><a href="#7_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -201,11 +235,9 @@
 <td id="7_M06_L00" class="label" data-label="7_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E42EFE8]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -229,7 +261,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF173D8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD3FF48]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -243,11 +275,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF173C0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD3FF30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF173F0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD3FF60]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -275,13 +307,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2B6430]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D11EFA0]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2B6448]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D11EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -311,7 +343,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF17408]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD3FF78]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -323,20 +355,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="12" class="reference" data-reference="12_M04_L00"><a href="#12_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E7A3338</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="12_M04_L00" class="label" data-label="12_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E7A333C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E7A3338</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E5BF528]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -348,11 +414,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="14" class="reference" data-reference="14_M06_L00"><a href="#14_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -361,11 +427,9 @@
 <td id="14_M06_L00" class="label" data-label="14_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E475FF8]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -389,7 +453,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF374C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD5FF48]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -403,11 +467,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF374B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD5FF30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF374E0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD5FF60]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -435,13 +499,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2D6550]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D13EFA0]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2D6568]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D13EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -471,7 +535,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BF374F8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD5FF78]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -483,20 +547,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="19" class="reference" data-reference="19_M04_L00"><a href="#19_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E745C38</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="19_M04_L00" class="label" data-label="19_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E745C3C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E745C38</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E695ED8]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -508,11 +606,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="21" class="reference" data-reference="21_M06_L00"><a href="#21_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -521,11 +619,9 @@
 <td id="21_M06_L00" class="label" data-label="21_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E3DD638]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -549,7 +645,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE5FE70]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE27330]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -563,11 +659,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE5FE58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE27318]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE5FE88]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE27348]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -595,13 +691,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B23EFA0]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C6460]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B23EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C6478]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -631,7 +727,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE5FEA0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DE27360]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -643,20 +739,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="26" class="reference" data-reference="26_M04_L00"><a href="#26_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E7BB738</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="26_M04_L00" class="label" data-label="26_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E7BB73C</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E7BB738</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E56F270]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -668,11 +798,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="28" class="reference" data-reference="28_M06_L00"><a href="#28_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -681,11 +811,9 @@
 <td id="28_M06_L00" class="label" data-label="28_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E564DE0]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -709,7 +837,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BD36598]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC25D40]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -723,11 +851,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BD36580]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC25D28]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BD365B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC25D58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -755,13 +883,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2B6C88]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D196418]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2B6CA0]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D196430]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -791,7 +919,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BD365C8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC25D70]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -803,20 +931,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="33" class="reference" data-reference="33_M04_L00"><a href="#33_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E309A10</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="33_M04_L00" class="label" data-label="33_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E309A14</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E309A10</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E097A38]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -828,11 +990,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="35" class="reference" data-reference="35_M06_L00"><a href="#35_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -841,11 +1003,9 @@
 <td id="35_M06_L00" class="label" data-label="35_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0DD3F060]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -869,7 +1029,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4C156898]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0E01DC08]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -883,11 +1043,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4C156880]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0E01DBF0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4C1568B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0E01DC20]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -915,13 +1075,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B24EFE8]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D196358]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B24F000]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D196370]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -951,7 +1111,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4C1568C8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0E01DC38]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -977,7 +1137,7 @@
 </tr><tr class="">
 <td></td><td id="40" class="reference" data-reference="40_M04_L00"><a href="#40_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,7FFB4C5DAE28</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E55E830</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="">
@@ -994,11 +1154,11 @@
 <td id="40_M04_L00" class="label" data-label="40_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,7FFB4C5DAE2C</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E55E834</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>mov       rcx,7FFB4C5DAE28</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E55E830</pre></code></td>
 </tr><tr class="evenMap">
 <td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
 </tr><tr class="evenMap">
@@ -1010,7 +1170,7 @@
 </tr><tr class="evenMap">
 <td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [7FFB4C535D70]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E514708]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -1022,11 +1182,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="42" class="reference" data-reference="42_M06_L00"><a href="#42_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -1035,11 +1195,9 @@
 <td id="42_M06_L00" class="label" data-label="42_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E01E928]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -1063,7 +1221,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BC5E8B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC55D40]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-18],rax</pre></code></td>
 </tr><tr class="">
@@ -1077,11 +1235,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BC5E898]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC55D28]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BC5E8C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC55D58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -1109,13 +1267,13 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B22EFA0]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C6400]; System.Threading.Tasks.Task.GetAwaiter()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>lea       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B22EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1C6418]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -1145,7 +1303,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BC5E8E0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DC55D70]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -1157,20 +1315,54 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()</th><th></th></tr>
 <tr class="">
-<td></td><td><pre><code>mov       rax,[rcx]</pre></code></td>
+<td></td><td><pre><code>push      rsi</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>test      rax,rax</pre></code></td>
+<td></td><td><pre><code>push      rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>sub       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rbx,rcx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rsi,[rbx]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>test      rsi,rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td id="47" class="reference" data-reference="47_M04_L00"><a href="#47_M04_L00"><pre><code>je        short M04_L00</pre></code></a></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,7FFB0E354980</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,rsi</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>ret</pre></code></td>
 </tr><tr class="evenMap">
 <td id="47_M04_L00" class="label" data-label="47_M04_L00"><pre><code>M04_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0E354984</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,7FFB0E354980</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>call      CORINFO_HELP_COUNTPROFILE32</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>mov       rcx,rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>add       rsp,28</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rbx</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>pop       rsi</pre></code></td>
+</tr><tr class="evenMap">
+<td></td><td><pre><code>jmp       qword ptr [7FFB0E09CD08]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">System.Threading.Tasks.Task.GetAwaiter()</th><th></th></tr>
 <tr class="">
@@ -1182,11 +1374,11 @@
 <tr class="">
 <td></td><td><pre><code>mov       rcx,[rcx]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       eax,[rcx+34]</pre></code></td>
+<td></td><td><pre><code>mov       edx,[rcx+34]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>and       eax,11000000</pre></code></td>
+<td></td><td><pre><code>and       edx,11000000</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>cmp       eax,1000000</pre></code></td>
+<td></td><td><pre><code>cmp       edx,1000000</pre></code></td>
 </tr><tr class="">
 <td></td><td id="49" class="reference" data-reference="49_M06_L00"><a href="#49_M06_L00"><pre><code>jne       short M06_L00</pre></code></a></td>
 </tr><tr class="">
@@ -1195,11 +1387,9 @@
 <td id="49_M06_L00" class="label" data-label="49_M06_L00"><pre><code>M06_L00</pre></code></td>
 <td>&nbsp;</td></tr>
 <tr class="evenMap">
-<td></td><td><pre><code>lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]</pre></code></td>
-</tr><tr class="evenMap">
 <td></td><td><pre><code>xor       edx,edx</pre></code></td>
 </tr><tr class="evenMap">
-<td></td><td><pre><code>jmp       qword ptr [rax]</pre></code></td>
+<td></td><td><pre><code>jmp       qword ptr [7FFB0DD6F570]</pre></code></td>
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 </tbody></table>
 <h2>.NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3</h2>
@@ -1221,11 +1411,11 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B2CE9E8]; DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.get_Context()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D1A6D90]; DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.get_Context()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE6CEA0]; DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD55278]; DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-4],eax</pre></code></td>
 </tr><tr class="">
@@ -1233,7 +1423,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       edx,[rbp-4]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE6CE88]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Boolean, System.Private.CoreLib]](Boolean)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD55260]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Boolean, System.Private.CoreLib]](Boolean)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
@@ -1283,7 +1473,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B43C060]</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0D394408]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp-18]</pre></code></td>
 </tr><tr class="">
@@ -1304,43 +1494,55 @@
 </tr><tr><td colspan="{2}">&nbsp;</td></tr>
 <tr><th colspan="2" style="text-align: left;">DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)</th><th></th></tr>
 <tr class="">
+<td></td><td><pre><code>		context = context.ArgumentNotNull();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>		return context.ChangeTracker.HasChanges();
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>push      rbp</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>sub       rsp,30</pre></code></td>
+<td></td><td><pre><code>sub       rsp,40</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>lea       rbp,[rsp+30]</pre></code></td>
+<td></td><td><pre><code>lea       rbp,[rsp+40]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>xor       eax,eax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rcx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		context = context.ArgumentNotNull();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rax,1C233C93088</pre></code></td>
+<td></td><td><pre><code>mov       rax,2C4E83E3088</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rsp+20],rax</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rdx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       rcx,7FFB4BECB5F8</pre></code></td>
+<td></td><td><pre><code>mov       rcx,7FFB0DD7B5F8</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>xor       r8d,r8d</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>mov       r9,1C233C70008</pre></code></td>
+<td></td><td><pre><code>mov       r9,2C4E83C0008</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4B01E670]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0CF1E670]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp+10],rax</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>		return context.ChangeTracker.HasChanges();
-		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></code></td>
-</tr><tr class="">
-<td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
-</tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rbp+10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       [rbp-10],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,7FFB0E39B700</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-10]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rax,[rbp-10]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rax,[rax]</pre></code></td>
 </tr><tr class="">
@@ -1349,6 +1551,12 @@
 <td></td><td><pre><code>call      qword ptr [rax+28]</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>mov       rdx,7FFB0E39B5F8</pre></code></td>
+</tr><tr class="">
+<td></td><td><pre><code>call      CORINFO_HELP_CLASSPROFILE32</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp-8]</pre></code></td>
 </tr><tr class="">
@@ -1362,7 +1570,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>add       rsp,30</pre></code></td>
+<td></td><td><pre><code>add       rsp,40</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>pop       rbp</pre></code></td>
 </tr><tr class="">
@@ -1386,7 +1594,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>mov       rcx,[rbp+10]</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE6D8C0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD55C98]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>mov       [rbp-8],rax</pre></code></td>
 </tr><tr class="">
@@ -1396,7 +1604,7 @@
 </tr><tr class="">
 <td></td><td><pre><code>cmp       [rcx],ecx</pre></code></td>
 </tr><tr class="">
-<td></td><td><pre><code>call      qword ptr [7FFB4BE6D890]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)</pre></code></td>
+<td></td><td><pre><code>call      qword ptr [7FFB0DD55C68]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)</pre></code></td>
 </tr><tr class="">
 <td></td><td><pre><code>nop</pre></code></td>
 </tr><tr class="">

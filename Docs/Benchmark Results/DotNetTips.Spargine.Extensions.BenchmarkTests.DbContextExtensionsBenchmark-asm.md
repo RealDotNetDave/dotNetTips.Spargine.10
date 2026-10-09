@@ -10,16 +10,16 @@
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BF2EA18]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DE0E5B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF2EA00]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)
+       call      qword ptr [7FFB0DE0E598]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF2EA30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DE0E5C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -36,10 +36,10 @@
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B2FCF60]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D1C75A0]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B2FCF78]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D1C75B8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -60,7 +60,7 @@
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BF2EA48]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)
+       call      qword ptr [7FFB0DE0E5E0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountAsync>d__12, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountAsync>d__12 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -69,14 +69,31 @@
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E6F09B0
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E6F09B4
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E6F09B0
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E5C7108]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -87,16 +104,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0E42EFE8]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -111,16 +127,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BF173D8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DD3FF48]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF173C0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)
+       call      qword ptr [7FFB0DD3FF30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF173F0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DD3FF60]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -137,10 +153,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B2B6430]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D11EFA0]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B2B6448]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D11EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -161,7 +177,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BF17408]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)
+       call      qword ptr [7FFB0DD3FF78]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<GetRecordCountWithPredicateAsync>d__13, DotNetTips.Spargine.Extensions.BenchmarkTests]](<GetRecordCountWithPredicateAsync>d__13 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -170,14 +186,31 @@ M06_L00:
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E7A3338
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E7A333C
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E7A3338
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E5BF528]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -188,16 +221,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0E475FF8]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -212,16 +244,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BF374C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DD5FF48]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF374B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)
+       call      qword ptr [7FFB0DD5FF30]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BF374E0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DD5FF60]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -238,10 +270,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B2D6550]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D13EFA0]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B2D6568]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D13EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -262,7 +294,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BF374F8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)
+       call      qword ptr [7FFB0DD5FF78]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsAsync>d__15, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsAsync>d__15 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -271,14 +303,31 @@ M06_L00:
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E745C38
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E745C3C
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E745C38
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E695ED8]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -289,16 +338,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0E3DD638]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -313,16 +361,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BE5FE70]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DE27330]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BE5FE58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)
+       call      qword ptr [7FFB0DE27318]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BE5FE88]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DE27348]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -339,10 +387,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B23EFA0]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D1C6460]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B23EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D1C6478]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -363,7 +411,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BE5FEA0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)
+       call      qword ptr [7FFB0DE27360]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<HasRecordsWithPredicateAsync>d__16, DotNetTips.Spargine.Extensions.BenchmarkTests]](<HasRecordsWithPredicateAsync>d__16 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -372,14 +420,31 @@ M06_L00:
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E7BB738
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E7BB73C
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E7BB738
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E56F270]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -390,16 +455,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0E564DE0]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -414,16 +478,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BD36598]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DC25D40]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BD36580]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)
+       call      qword ptr [7FFB0DC25D28]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BD365B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DC25D58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -440,10 +504,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B2B6C88]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D196418]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B2B6CA0]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D196430]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -464,7 +528,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BD365C8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)
+       call      qword ptr [7FFB0DC25D70]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<AddAndSaveAsync>d__7, DotNetTips.Spargine.Extensions.BenchmarkTests]](<AddAndSaveAsync>d__7 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -473,14 +537,31 @@ M06_L00:
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E309A10
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E309A14
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E309A10
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E097A38]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -491,16 +572,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0DD3F060]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -515,16 +595,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4C156898]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0E01DC08]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4C156880]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)
+       call      qword ptr [7FFB0E01DBF0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4C1568B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0E01DC20]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -541,10 +621,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B24EFE8]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D196358]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B24F000]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D196370]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -565,7 +645,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4C1568C8]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)
+       call      qword ptr [7FFB0E01DC38]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<DeleteAndSaveAsync>d__9, DotNetTips.Spargine.Extensions.BenchmarkTests]](<DeleteAndSaveAsync>d__9 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -581,7 +661,7 @@ M06_L00:
        mov       rsi,[rbx]
        test      rsi,rsi
        je        short M04_L00
-       mov       rcx,7FFB4C5DAE28
+       mov       rcx,7FFB0E55E830
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rax,rsi
        add       rsp,28
@@ -589,15 +669,15 @@ M06_L00:
        pop       rsi
        ret
 M04_L00:
-       mov       rcx,7FFB4C5DAE2C
+       mov       rcx,7FFB0E55E834
        call      CORINFO_HELP_COUNTPROFILE32
-       mov       rcx,7FFB4C5DAE28
+       mov       rcx,7FFB0E55E830
        call      CORINFO_HELP_COUNTPROFILE32
        mov       rcx,rbx
        add       rsp,28
        pop       rbx
        pop       rsi
-       jmp       qword ptr [7FFB4C535D70]
+       jmp       qword ptr [7FFB0E514708]
 ; Total bytes of code 87
 ```
 ```assembly
@@ -609,16 +689,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0E01E928]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -633,16 +712,16 @@ M06_L00:
        vxorps    xmm4,xmm4,xmm4
        vmovdqu   ymmword ptr [rbp-20],ymm4
        mov       [rbp+10],rcx
-       call      qword ptr [7FFB4BC5E8B0]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
+       call      qword ptr [7FFB0DC55D40]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Create()
        mov       [rbp-18],rax
        mov       rax,[rbp+10]
        mov       [rbp-28],rax
        mov       dword ptr [rbp-20],0FFFFFFFF
        lea       rdx,[rbp-28]
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BC5E898]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)
+       call      qword ptr [7FFB0DC55D28]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)
        lea       rcx,[rbp-18]
-       call      qword ptr [7FFB4BC5E8C8]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
+       call      qword ptr [7FFB0DC55D58]; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
        nop
        add       rsp,50
        pop       rbp
@@ -659,10 +738,10 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4B22EFA0]; System.Threading.Tasks.Task.GetAwaiter()
+       call      qword ptr [7FFB0D1C6400]; System.Threading.Tasks.Task.GetAwaiter()
        mov       [rbp-8],rax
        lea       rcx,[rbp-8]
-       call      qword ptr [7FFB4B22EFB8]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+       call      qword ptr [7FFB0D1C6418]; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        nop
        add       rsp,30
        pop       rbp
@@ -683,7 +762,7 @@ M06_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],rdx
        mov       rcx,[rbp+18]
-       call      qword ptr [7FFB4BC5E8E0]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)
+       call      qword ptr [7FFB0DC55D70]; System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark+<ExecuteInTransactionAsync>d__10, DotNetTips.Spargine.Extensions.BenchmarkTests]](<ExecuteInTransactionAsync>d__10 ByRef)
        nop
        add       rsp,20
        pop       rbp
@@ -692,14 +771,31 @@ M06_L00:
 ```
 ```assembly
 ; System.Runtime.CompilerServices.AsyncTaskMethodBuilder.get_Task()
-       mov       rax,[rcx]
-       test      rax,rax
+       push      rsi
+       push      rbx
+       sub       rsp,28
+       mov       rbx,rcx
+       mov       rsi,[rbx]
+       test      rsi,rsi
        je        short M04_L00
+       mov       rcx,7FFB0E354980
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rax,rsi
+       add       rsp,28
+       pop       rbx
+       pop       rsi
        ret
 M04_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
-       jmp       qword ptr [rax]
-; Total bytes of code 19
+       mov       rcx,7FFB0E354984
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,7FFB0E354980
+       call      CORINFO_HELP_COUNTPROFILE32
+       mov       rcx,rbx
+       add       rsp,28
+       pop       rbx
+       pop       rsi
+       jmp       qword ptr [7FFB0E09CD08]
+; Total bytes of code 87
 ```
 ```assembly
 ; System.Threading.Tasks.Task.GetAwaiter()
@@ -710,16 +806,15 @@ M04_L00:
 ```assembly
 ; System.Runtime.CompilerServices.TaskAwaiter.GetResult()
        mov       rcx,[rcx]
-       mov       eax,[rcx+34]
-       and       eax,11000000
-       cmp       eax,1000000
+       mov       edx,[rcx+34]
+       and       edx,11000000
+       cmp       edx,1000000
        jne       short M06_L00
        ret
 M06_L00:
-       lea       rax,[System.Collections.Generic.CollectionExtensions.Remove[[System.__Canon, System.Private.CoreLib],[System.__Canon, System.Private.CoreLib]](System.Collections.Generic.IDictionary`2<System.__Canon,System.__Canon>, System.__Canon, System.__Canon ByRef)]
        xor       edx,edx
-       jmp       qword ptr [rax]
-; Total bytes of code 31
+       jmp       qword ptr [7FFB0DD6F570]
+; Total bytes of code 29
 ```
 
 ## .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3 (Job: Job-JZFTPE(EvaluateOverhead=True, Runtime=.NET 10.0, Server=True, InvocationCount=1, UnrollFactor=1))
@@ -733,13 +828,13 @@ M06_L00:
        mov       [rbp-4],eax
        mov       [rbp+10],rcx
        mov       rcx,[rbp+10]
-       call      qword ptr [7FFB4B2CE9E8]; DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.get_Context()
+       call      qword ptr [7FFB0D1A6D90]; DotNetTips.Spargine.Extensions.BenchmarkTests.DbContextExtensionsBenchmark.get_Context()
        mov       rcx,rax
-       call      qword ptr [7FFB4BE6CEA0]; DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)
+       call      qword ptr [7FFB0DD55278]; DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)
        mov       [rbp-4],eax
        mov       rcx,[rbp+10]
        mov       edx,[rbp-4]
-       call      qword ptr [7FFB4BE6CE88]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Boolean, System.Private.CoreLib]](Boolean)
+       call      qword ptr [7FFB0DD55260]; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Boolean, System.Private.CoreLib]](Boolean)
        nop
        add       rsp,30
        pop       rbp
@@ -767,7 +862,7 @@ M06_L00:
        call      CORINFO_HELP_NEWSFAST
        mov       [rbp-18],rax
        mov       rcx,[rbp-18]
-       call      qword ptr [7FFB4B43C060]
+       call      qword ptr [7FFB0D394408]
        mov       rcx,[rbp-18]
        call      CORINFO_HELP_THROW
        int       3
@@ -780,40 +875,49 @@ M01_L00:
 ```
 ```assembly
 ; DotNetTips.Spargine.Extensions.DbContextExtensions.HasChanges(Microsoft.EntityFrameworkCore.DbContext)
-       push      rbp
-       sub       rsp,30
-       lea       rbp,[rsp+30]
-       xor       eax,eax
-       mov       [rbp-8],rax
-       mov       [rbp+10],rcx
 ; 		context = context.ArgumentNotNull();
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       mov       rax,1C233C93088
-       mov       [rsp+20],rax
-       mov       rdx,[rbp+10]
-       mov       rcx,7FFB4BECB5F8
-       xor       r8d,r8d
-       mov       r9,1C233C70008
-       call      qword ptr [7FFB4B01E670]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)
-       mov       [rbp+10],rax
 ; 		return context.ChangeTracker.HasChanges();
 ; 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       mov       rcx,[rbp+10]
+       push      rbp
+       sub       rsp,40
+       lea       rbp,[rsp+40]
+       xor       eax,eax
+       mov       [rbp-8],rax
+       mov       [rbp-10],rax
+       mov       [rbp+10],rcx
+       mov       rax,2C4E83E3088
+       mov       [rsp+20],rax
+       mov       rdx,[rbp+10]
+       mov       rcx,7FFB0DD7B5F8
+       xor       r8d,r8d
+       mov       r9,2C4E83C0008
+       call      qword ptr [7FFB0CF1E670]; DotNetTips.Spargine.Core.Validator.ArgumentNotNull[[System.__Canon, System.Private.CoreLib]](System.__Canon, System.__Canon, System.String, System.String)
+       mov       [rbp+10],rax
        mov       rax,[rbp+10]
+       mov       [rbp-10],rax
+       mov       rcx,[rbp-10]
+       mov       rdx,7FFB0E39B700
+       call      CORINFO_HELP_CLASSPROFILE32
+       mov       rcx,[rbp-10]
+       mov       rax,[rbp-10]
        mov       rax,[rax]
        mov       rax,[rax+40]
        call      qword ptr [rax+28]
        mov       [rbp-8],rax
+       mov       rcx,[rbp-8]
+       mov       rdx,7FFB0E39B5F8
+       call      CORINFO_HELP_CLASSPROFILE32
        mov       rcx,[rbp-8]
        mov       rax,[rbp-8]
        mov       rax,[rax]
        mov       rax,[rax+50]
        call      qword ptr [rax]
        nop
-       add       rsp,30
+       add       rsp,40
        pop       rbp
        ret
-; Total bytes of code 118
+; Total bytes of code 168
 ```
 ```assembly
 ; DotNetTips.Spargine.Benchmarking.Benchmark.Consume[[System.Boolean, System.Private.CoreLib]](Boolean)
@@ -825,12 +929,12 @@ M01_L00:
        mov       [rbp+10],rcx
        mov       [rbp+18],edx
        mov       rcx,[rbp+10]
-       call      qword ptr [7FFB4BE6D8C0]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
+       call      qword ptr [7FFB0DD55C98]; DotNetTips.Spargine.Benchmarking.Benchmark.get_Consumer()
        mov       [rbp-8],rax
        mov       rcx,[rbp-8]
        lea       rdx,[rbp+18]
        cmp       [rcx],ecx
-       call      qword ptr [7FFB4BE6D890]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)
+       call      qword ptr [7FFB0DD55C68]; BenchmarkDotNet.Engines.Consumer.Consume[[System.Boolean, System.Private.CoreLib]](Boolean ByRef)
        nop
        add       rsp,30
        pop       rbp
