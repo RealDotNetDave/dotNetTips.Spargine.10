@@ -53,6 +53,8 @@ public class MessagePackExtensionsBenchmark : Benchmark
 		this.Consume(result);
 	}
 
-	[MessagePackObject]
-	private sealed record TestMessagePackModel([property: Key(0)] int Id, [property: Key(1)] string Name);
+
 }
+
+[MessagePackObject(AllowPrivate = true)]
+internal sealed record TestMessagePackModel([property: Key(0)] int Id, [property: Key(1)] string Name);
