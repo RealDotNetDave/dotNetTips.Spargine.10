@@ -85,6 +85,8 @@ namespace DotNetTips.Spargine.Benchmarking;
 [Information(description: nameof(BenchmarkHelper), Status = Status.Available, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public static class BenchmarkHelper
 {
+	//TODO: TRY TO FIGURE OUT WHY THE GITHUB PROFILER CAN'T RUN BENCHMARKS WITH THIS CLASS. 
+
 	/// <summary>
 	/// Plays an error beep sequence using system beep tones.
 	/// Produces two beeps to indicate an error, failure, or problematic benchmark result.
