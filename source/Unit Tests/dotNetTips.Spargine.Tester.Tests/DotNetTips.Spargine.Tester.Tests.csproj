@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AnalysisLevel>none</AnalysisLevel>
     <AssemblyVersion>2026.10.4.17</AssemblyVersion>
@@ -29,20 +29,20 @@
     <Compile Remove="Data\CountriesTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.8">
+    <PackageReference Include="IDisposableAnalyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.13" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.5.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.5.1" />
-    <PackageReference Include="coverlet.collector" Version="10.1.0">
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.13" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
+    <PackageReference Include="System.Security.Cryptography.Xml" />
+    <PackageReference Include="System.ServiceModel.Primitives" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
