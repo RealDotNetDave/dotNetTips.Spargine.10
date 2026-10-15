@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<AnalysisLevel>latest-recommended</AnalysisLevel>
@@ -30,11 +30,11 @@
 	<OutputPath>..\..\..\AppBin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.13" />
+	<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
 	<!-- Direct reference to a fixed SQLitePCLRaw bundle to override a transitive vulnerable version -->
-	<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
-	<PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" Version="18.7.37220.1" />
+	<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+	<PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" />
   </ItemGroup>
   <ItemGroup>
 	<ProjectReference Include="..\..\dotNetTips.Spargine.10.Core\DotNetTips.Spargine.10.Core.csproj" />
