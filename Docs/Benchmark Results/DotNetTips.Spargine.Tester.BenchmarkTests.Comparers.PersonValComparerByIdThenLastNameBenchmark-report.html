@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.Comparers.PersonValComparerByIdThenLastNameBenchmark-20261015-063907</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7807/22H2/2022Update)
+Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.402
+  [Host]     : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
+Categories=Collections,Value Type  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                               </th><th>Count</th><th>Mean    </th><th>Error </th><th>StdDev </th><th>StdErr</th><th>Median  </th><th>Min     </th><th>Q1      </th><th>Q3      </th><th>Max     </th><th>Op/s</th><th>CI99.9% Margin</th><th>Iterations</th><th>Ratio</th><th>RatioSD</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>64</td><td>5,335.3 ns</td><td>103.68 ns</td><td>170.35 ns</td><td>28.79 ns</td><td>5,301.9 ns</td><td>5,109.6 ns</td><td>5,188.6 ns</td><td>5,490.4 ns</td><td>5,633.0 ns</td><td>187,430.5</td><td>3.1026 ns</td><td>35.00</td><td>1.00</td><td>0.04</td><td>Yes</td><td>4,272 B</td><td>-</td><td>0.5417</td><td>-</td><td>-</td><td>15.62 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>64</td><td>4,084.1 ns</td><td>47.23 ns</td><td>36.87 ns</td><td>10.64 ns</td><td>4,075.2 ns</td><td>4,022.5 ns</td><td>4,065.2 ns</td><td>4,108.3 ns</td><td>4,156.3 ns</td><td>244,853.7</td><td>0.6776 ns</td><td>12.00</td><td>0.77</td><td>0.02</td><td>No</td><td>7,433 B</td><td>-</td><td>0.1221</td><td>-</td><td>-</td><td>11.85 KB</td><td>0.76</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>128</td><td>11,530.8 ns</td><td>212.00 ns</td><td>310.75 ns</td><td>57.70 ns</td><td>11,360.3 ns</td><td>11,128.3 ns</td><td>11,300.7 ns</td><td>11,813.4 ns</td><td>12,073.0 ns</td><td>86,724.2</td><td>-14.3523 ns</td><td>29.00</td><td>1.00</td><td>0.04</td><td>Yes</td><td>4,283 B</td><td>-</td><td>1.0681</td><td>0.0305</td><td>0.0305</td><td>30.87 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>128</td><td>9,098.9 ns</td><td>51.41 ns</td><td>48.09 ns</td><td>12.42 ns</td><td>9,102.3 ns</td><td>9,022.3 ns</td><td>9,061.6 ns</td><td>9,134.0 ns</td><td>9,179.9 ns</td><td>109,903.1</td><td>1.2917 ns</td><td>15.00</td><td>0.79</td><td>0.02</td><td>No</td><td>7,451 B</td><td>-</td><td>0.8240</td><td>0.0305</td><td>0.0305</td><td>23.1 KB</td><td>0.75</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>256</td><td>25,383.7 ns</td><td>495.51 ns</td><td>661.49 ns</td><td>132.30 ns</td><td>25,072.6 ns</td><td>24,554.7 ns</td><td>24,889.6 ns</td><td>25,875.6 ns</td><td>26,561.9 ns</td><td>39,395.4</td><td>-53.6493 ns</td><td>25.00</td><td>1.00</td><td>0.04</td><td>Yes</td><td>4,283 B</td><td>-</td><td>2.0447</td><td>0.0916</td><td>-</td><td>61.37 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>256</td><td>20,673.5 ns</td><td>90.50 ns</td><td>80.23 ns</td><td>21.44 ns</td><td>20,656.6 ns</td><td>20,558.1 ns</td><td>20,623.3 ns</td><td>20,721.5 ns</td><td>20,854.9 ns</td><td>48,371.0</td><td>-3.7208 ns</td><td>14.00</td><td>0.81</td><td>0.02</td><td>No</td><td>7,620 B</td><td>-</td><td>1.6479</td><td>0.0610</td><td>0.0610</td><td>45.6 KB</td><td>0.74</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>512</td><td>65,792.3 ns</td><td>706.17 ns</td><td>660.55 ns</td><td>170.55 ns</td><td>65,678.8 ns</td><td>64,869.1 ns</td><td>65,356.3 ns</td><td>66,154.0 ns</td><td>67,070.2 ns</td><td>15,199.4</td><td>-77.7771 ns</td><td>15.00</td><td>1.00</td><td>0.01</td><td>Yes</td><td>4,287 B</td><td>-</td><td>1.0986</td><td>-</td><td>-</td><td>122.37 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>512</td><td>61,047.9 ns</td><td>1,217.46 ns</td><td>1,449.30 ns</td><td>316.26 ns</td><td>61,121.4 ns</td><td>58,702.7 ns</td><td>60,174.0 ns</td><td>62,065.1 ns</td><td>64,640.7 ns</td><td>16,380.6</td><td>-147.6315 ns</td><td>21.00</td><td>0.93</td><td>0.02</td><td>No</td><td>7,763 B</td><td>-</td><td>0.9155</td><td>-</td><td>-</td><td>90.6 KB</td><td>0.74</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>1024</td><td>179,676.8 ns</td><td>3,505.46 ns</td><td>4,173.01 ns</td><td>910.62 ns</td><td>177,649.9 ns</td><td>175,351.0 ns</td><td>176,913.3 ns</td><td>180,894.7 ns</td><td>189,364.3 ns</td><td>5,565.5</td><td>-444.8123 ns</td><td>21.00</td><td>1.00</td><td>0.03</td><td>Yes</td><td>4,297 B</td><td>-</td><td>2.1973</td><td>0.2441</td><td>-</td><td>244.37 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>1024</td><td>161,020.5 ns</td><td>3,124.00 ns</td><td>3,718.90 ns</td><td>811.53 ns</td><td>160,307.5 ns</td><td>154,387.4 ns</td><td>158,694.3 ns</td><td>161,658.5 ns</td><td>168,563.0 ns</td><td>6,210.4</td><td>-395.2657 ns</td><td>21.00</td><td>0.90</td><td>0.03</td><td>No</td><td>7,796 B</td><td>-</td><td>1.4648</td><td>-</td><td>-</td><td>180.6 KB</td><td>0.74</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>2048</td><td>704,112.4 ns</td><td>9,366.22 ns</td><td>8,302.91 ns</td><td>2,219.05 ns</td><td>700,326.3 ns</td><td>692,907.5 ns</td><td>698,679.9 ns</td><td>710,557.8 ns</td><td>720,846.2 ns</td><td>1,420.2</td><td>-1,102.5231 ns</td><td>14.00</td><td>1.00</td><td>0.02</td><td>Yes</td><td>4,290 B</td><td>-</td><td>11.7188</td><td>11.7188</td><td>11.7188</td><td>488.44 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>2048</td><td>555,031.5 ns</td><td>10,136.15 ns</td><td>9,481.37 ns</td><td>2,448.08 ns</td><td>552,369.0 ns</td><td>541,415.0 ns</td><td>547,708.1 ns</td><td>562,983.5 ns</td><td>572,940.8 ns</td><td>1,801.7</td><td>-1,216.5390 ns</td><td>15.00</td><td>0.79</td><td>0.02</td><td>No</td><td>7,790 B</td><td>-</td><td>7.8125</td><td>6.8359</td><td>6.8359</td><td>360.65 KB</td><td>0.74</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>4096</td><td>1,425,757.0 ns</td><td>17,721.10 ns</td><td>16,576.33 ns</td><td>4,279.99 ns</td><td>1,421,752.1 ns</td><td>1,406,835.4 ns</td><td>1,414,268.9 ns</td><td>1,437,435.8 ns</td><td>1,452,694.7 ns</td><td>701.4</td><td>-2,132.4952 ns</td><td>15.00</td><td>1.00</td><td>0.02</td><td>Yes</td><td>4,290 B</td><td>-</td><td>15.6250</td><td>15.6250</td><td>15.6250</td><td>976.47 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>4096</td><td>1,368,098.1 ns</td><td>55,965.47 ns</td><td>162,366.00 ns</td><td>16,485.77 ns</td><td>1,351,496.8 ns</td><td>1,128,547.2 ns</td><td>1,248,620.4 ns</td><td>1,449,964.6 ns</td><td>1,767,056.2 ns</td><td>730.9</td><td>-8,194.3846 ns</td><td>97.00</td><td>0.96</td><td>0.11</td><td>No</td><td>7,784 B</td><td>-</td><td>17.5781</td><td>15.6250</td><td>15.6250</td><td>720.72 KB</td><td>0.74</td>
+</tr><tr><td>&#39;OrderBy(): Comparer: Val: Id, LastName&#39;</td><td>8192</td><td>3,253,935.5 ns</td><td>64,232.79 ns</td><td>161,147.53 ns</td><td>18,733.02 ns</td><td>3,244,986.9 ns</td><td>2,863,523.0 ns</td><td>3,160,903.8 ns</td><td>3,340,137.0 ns</td><td>3,669,442.2 ns</td><td>307.3</td><td>-9,329.5097 ns</td><td>74.00</td><td>1.00</td><td>0.07</td><td>Yes</td><td>4,268 B</td><td>-</td><td>31.2500</td><td>31.2500</td><td>31.2500</td><td>1952.59 KB</td><td>1.00</td>
+</tr><tr><td>&#39;OrderBy(): No Comparer: Val: Id, LastName&#39;</td><td>8192</td><td>2,913,668.5 ns</td><td>76,290.87 ns</td><td>213,927.78 ns</td><td>22,425.73 ns</td><td>2,922,613.7 ns</td><td>2,444,481.6 ns</td><td>2,766,854.9 ns</td><td>3,053,142.2 ns</td><td>3,515,874.2 ns</td><td>343.2</td><td>-11,167.3625 ns</td><td>91.00</td><td>0.90</td><td>0.08</td><td>No</td><td>7,586 B</td><td>-</td><td>27.3438</td><td>23.4375</td><td>23.4375</td><td>1440.79 KB</td><td>0.74</td>
+</tr></tbody></table>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20261004-152801</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.Data.CountryRepositoryBenchmark-20261014-194400</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,22 +13,22 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7807/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.401
-  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.402
+  [Host]     : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 Categories=Real World  
 </code></pre>
 
 <table>
-<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Gen0</th><th>Allocated</th>
+<thead><tr><th>Method                </th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1 </th><th>Median</th><th>Q3 </th><th>Max</th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Gen0</th><th>Exceptions</th><th>Code Size</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>835.07 ns</td><td>4.139 ns</td><td>3.871 ns</td><td>1.000 ns</td><td>830.27 ns</td><td>831.82 ns</td><td>835.33 ns</td><td>837.05 ns</td><td>842.31 ns</td><td>1,197,511.4</td><td>7.000 ns</td><td>15.00</td><td>No</td><td>1,769 B</td><td>-</td><td>0.0010</td><td>32 B</td>
-</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>617.44 ns</td><td>2.623 ns</td><td>2.190 ns</td><td>0.607 ns</td><td>613.24 ns</td><td>616.00 ns</td><td>617.60 ns</td><td>618.53 ns</td><td>622.35 ns</td><td>1,619,580.3</td><td>6.196 ns</td><td>13.00</td><td>No</td><td>6,160 B</td><td>-</td><td>0.0029</td><td>104 B</td>
-</tr><tr><td>GetCountries</td><td>18.85 ns</td><td>0.130 ns</td><td>0.115 ns</td><td>0.031 ns</td><td>18.73 ns</td><td>18.78 ns</td><td>18.80 ns</td><td>18.91 ns</td><td>19.13 ns</td><td>53,046,979.1</td><td>6.985 ns</td><td>14.00</td><td>No</td><td>194 B</td><td>-</td><td>-</td><td>-</td>
+</thead><tbody><tr><td>&#39;GetCountry: By CountryCode&#39;</td><td>856.12 ns</td><td>4.921 ns</td><td>4.109 ns</td><td>1.140 ns</td><td>847.69 ns</td><td>854.01 ns</td><td>857.56 ns</td><td>858.57 ns</td><td>861.51 ns</td><td>1,168,062.1</td><td>5.930 ns</td><td>13.00</td><td>No</td><td>0.0010</td><td>-</td><td>1,765 B</td><td>32 B</td>
+</tr><tr><td>&#39;GetCountry: By CountryName&#39;</td><td>620.25 ns</td><td>9.683 ns</td><td>9.057 ns</td><td>2.339 ns</td><td>608.12 ns</td><td>612.83 ns</td><td>619.98 ns</td><td>624.20 ns</td><td>640.50 ns</td><td>1,612,264.9</td><td>6.331 ns</td><td>15.00</td><td>No</td><td>0.0029</td><td>-</td><td>6,169 B</td><td>104 B</td>
+</tr><tr><td>GetCountries</td><td>19.42 ns</td><td>0.333 ns</td><td>0.311 ns</td><td>0.080 ns</td><td>18.96 ns</td><td>19.20 ns</td><td>19.42 ns</td><td>19.62 ns</td><td>19.89 ns</td><td>51,487,188.9</td><td>7.460 ns</td><td>15.00</td><td>No</td><td>-</td><td>-</td><td>194 B</td><td>-</td>
 </tr></tbody></table>
 </body>
 </html>

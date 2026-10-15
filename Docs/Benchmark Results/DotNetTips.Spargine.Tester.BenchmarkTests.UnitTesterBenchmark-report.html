@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>DotNetTips.Spargine.Tester.BenchmarkTests.UnitTesterBenchmark-20261004-152210</title>
+<title>DotNetTips.Spargine.Tester.BenchmarkTests.UnitTesterBenchmark-20261014-193804</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,11 +13,11 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7725/22H2/2022Update)
+BenchmarkDotNet v0.15.8, Windows 10 (10.0.19045.7807/22H2/2022Update)
 Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.401
-  [Host]     : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
-  Job-PSYKRA : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.402
+  [Host]     : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
+  Job-PSYKRA : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code>EvaluateOverhead=True  Runtime=.NET 10.0  Server=True  
 </code></pre>
@@ -25,11 +25,11 @@ Intel Core i5-10400 CPU 2.90GHz, 1 CPU, 12 logical and 6 physical cores
 <table>
 <thead><tr><th>Method                                            </th><th>Categories   </th><th>Mean   </th><th>Error  </th><th>StdDev </th><th>StdErr</th><th>Median </th><th>Min    </th><th>Q1     </th><th>Q3     </th><th>Max    </th><th>Op/s  </th><th>CI99.9% Margin</th><th>Iterations</th><th>Baseline</th><th>Code Size</th><th>Exceptions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>&#39;MeasureAction: printResult=false (no debug output)&#39;</td><td>MeasureAction,IO</td><td>30.83 ns</td><td>0.209 ns</td><td>0.175 ns</td><td>0.048 ns</td><td>30.81 ns</td><td>30.54 ns</td><td>30.78 ns</td><td>30.96 ns</td><td>31.14 ns</td><td>32,439,722.8</td><td>6.476 ns</td><td>13.00</td><td>No</td><td>349 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;MeasureAction: printResult=true (separator allocation)&#39;</td><td>MeasureAction,IO</td><td>30.14 ns</td><td>0.124 ns</td><td>0.110 ns</td><td>0.029 ns</td><td>30.12 ns</td><td>30.01 ns</td><td>30.04 ns</td><td>30.19 ns</td><td>30.36 ns</td><td>33,182,900.6</td><td>6.985 ns</td><td>14.00</td><td>No</td><td>349 B</td><td>-</td><td>-</td>
-</tr><tr><td>&#39;SaveAsJsonToFile: empty method name (random key)&#39;</td><td>SaveAsJsonToFile,IO</td><td>423,339.94 ns</td><td>12,912.915 ns</td><td>37,871.348 ns</td><td>3,806.214 ns</td><td>405,478.10 ns</td><td>383,532.40 ns</td><td>391,891.65 ns</td><td>457,046.83 ns</td><td>534,065.01 ns</td><td>2,362.2</td><td>-1,853.607 ns</td><td>99.00</td><td>No</td><td>10,043 B</td><td>-</td><td>2984 B</td>
-</tr><tr><td>&#39;SaveAsJsonToFile: with method name&#39;</td><td>SaveAsJsonToFile,IO</td><td>347,633.15 ns</td><td>5,951.901 ns</td><td>6,615.523 ns</td><td>1,517.705 ns</td><td>346,139.40 ns</td><td>337,720.51 ns</td><td>343,431.64 ns</td><td>349,489.99 ns</td><td>365,363.33 ns</td><td>2,876.6</td><td>-749.353 ns</td><td>19.00</td><td>No</td><td>18,087 B</td><td>-</td><td>2848 B</td>
-</tr><tr><td>&#39;SaveToFile&lt;T&gt;(IEnumerable&lt;T&gt;): 100 items&#39;</td><td>SaveToFile,IO</td><td>307,306.29 ns</td><td>6,076.221 ns</td><td>9,811.966 ns</td><td>1,682.738 ns</td><td>302,499.93 ns</td><td>295,902.08 ns</td><td>300,430.13 ns</td><td>316,066.36 ns</td><td>333,764.92 ns</td><td>3,254.1</td><td>-824.369 ns</td><td>34.00</td><td>No</td><td>10,801 B</td><td>-</td><td>1688 B</td>
+</thead><tbody><tr><td>&#39;MeasureAction: printResult=false (no debug output)&#39;</td><td>MeasureAction,IO</td><td>30.85 ns</td><td>0.130 ns</td><td>0.115 ns</td><td>0.031 ns</td><td>30.87 ns</td><td>30.64 ns</td><td>30.75 ns</td><td>30.92 ns</td><td>30.99 ns</td><td>32,417,245.2</td><td>6.985 ns</td><td>14.00</td><td>No</td><td>349 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;MeasureAction: printResult=true (separator allocation)&#39;</td><td>MeasureAction,IO</td><td>30.06 ns</td><td>0.194 ns</td><td>0.182 ns</td><td>0.047 ns</td><td>30.01 ns</td><td>29.86 ns</td><td>29.94 ns</td><td>30.17 ns</td><td>30.40 ns</td><td>33,263,477.7</td><td>7.477 ns</td><td>15.00</td><td>No</td><td>349 B</td><td>-</td><td>-</td>
+</tr><tr><td>&#39;SaveAsJsonToFile: empty method name (random key)&#39;</td><td>SaveAsJsonToFile,IO</td><td>420,388.39 ns</td><td>12,385.291 ns</td><td>36,323.919 ns</td><td>3,650.691 ns</td><td>401,508.57 ns</td><td>379,911.21 ns</td><td>391,922.75 ns</td><td>450,078.08 ns</td><td>518,419.17 ns</td><td>2,378.8</td><td>-1,775.846 ns</td><td>99.00</td><td>No</td><td>10,045 B</td><td>-</td><td>3024 B</td>
+</tr><tr><td>&#39;SaveAsJsonToFile: with method name&#39;</td><td>SaveAsJsonToFile,IO</td><td>337,060.35 ns</td><td>6,498.725 ns</td><td>9,320.278 ns</td><td>1,761.367 ns</td><td>334,913.70 ns</td><td>325,705.83 ns</td><td>331,220.59 ns</td><td>339,349.23 ns</td><td>360,917.85 ns</td><td>2,966.8</td><td>-866.683 ns</td><td>28.00</td><td>No</td><td>18,009 B</td><td>-</td><td>2832 B</td>
+</tr><tr><td>&#39;SaveToFile&lt;T&gt;(IEnumerable&lt;T&gt;): 100 items&#39;</td><td>SaveToFile,IO</td><td>296,925.40 ns</td><td>5,935.209 ns</td><td>9,584.256 ns</td><td>1,643.686 ns</td><td>296,277.39 ns</td><td>283,670.80 ns</td><td>288,652.59 ns</td><td>303,158.33 ns</td><td>315,604.05 ns</td><td>3,367.8</td><td>-804.843 ns</td><td>34.00</td><td>No</td><td>10,898 B</td><td>-</td><td>1688 B</td>
 </tr></tbody></table>
 </body>
 </html>
