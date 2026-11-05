@@ -10,15 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk">
+      <VersionOverride>18.11.0</VersionOverride>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="MSTest.TestAdapter" />
+    <PackageReference Update="MSTest.TestAdapter">
+      <VersionOverride>4.5.2</VersionOverride>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="MSTest.TestFramework" />
+    <PackageReference Update="MSTest.TestFramework">
+      <VersionOverride>4.5.2</VersionOverride>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
