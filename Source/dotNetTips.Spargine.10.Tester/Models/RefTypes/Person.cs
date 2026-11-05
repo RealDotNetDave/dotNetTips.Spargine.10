@@ -134,7 +134,10 @@ public sealed class Person : IPerson<Person, Address>
 	[Information(nameof(AddressesSerialization), UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public Collection<Address> AddressesSerialization
 	{
-		get { return new Collection<Address>([.. this._addresses]); }
+		get
+		{
+			return new Collection<Address>([.. this._addresses]);
+		}
 	}
 
 	/// <summary>
