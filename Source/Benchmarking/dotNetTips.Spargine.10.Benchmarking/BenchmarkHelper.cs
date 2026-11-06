@@ -4,7 +4,7 @@
 // Created          : 01-01-2026
 //
 // Last Modified By : David McCarter
-// Last Modified On : 09-15-2026
+// Last Modified On : 11-06-2026
 // ***********************************************************************
 // <copyright file="BenchmarkHelper.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -82,11 +82,9 @@ namespace DotNetTips.Spargine.Benchmarking;
 /// </code>
 /// </example>
 /// <seealso cref="Benchmark"/>
-[Information(description: nameof(BenchmarkHelper), Status = Status.Available, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
+[Information(description: nameof(BenchmarkHelper), Status = Status.UpdateDocumentation, Documentation = "https://bit.ly/BenchmarkLikeDotNetDave")]
 public static class BenchmarkHelper
 {
-	//TODO: TRY TO FIGURE OUT WHY THE GITHUB PROFILER CAN'T RUN BENCHMARKS WITH THIS CLASS. 
-
 	/// <summary>
 	/// Plays an error beep sequence using system beep tones.
 	/// Produces two beeps to indicate an error, failure, or problematic benchmark result.
@@ -221,6 +219,40 @@ public static class BenchmarkHelper
 	}
 
 	/// <summary>
+	/// Runs all benchmarks in the entry (or calling) assembly via <see cref="BenchmarkSwitcher"/>, honoring
+	/// BenchmarkDotNet command-line arguments so profilers and CI can filter and configure runs.
+	/// </summary>
+	/// <param name="config">The BenchmarkDotNet configuration. Must not be <c>null</c>.</param>
+	/// <param name="args">The command-line arguments from <c>Program.cs</c>. Must not be <c>null</c>.</param>
+	/// <exception cref="ArgumentNullException">Thrown when <paramref name="config"/> or <paramref name="args"/> is <c>null</c>.</exception>
+	[Information(description: nameof(RunAllBenchmarks), Status = Status.New)]
+	public static void RunAllBenchmarks([DisallowNull] IConfig config, [DisallowNull] string[] args)
+	{
+		config = config.ArgumentNotNull();
+		args = args.ArgumentNotNull();
+
+		var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+		var benchmarkBaseType = typeof(Benchmark);
+		var benchmarkTypes = new List<Type>(capacity: 16);
+
+		foreach (var type in assembly.GetTypes())
+		{
+			if (type.IsClass && !type.IsAbstract && benchmarkBaseType.IsAssignableFrom(type))
+			{
+				benchmarkTypes.Add(type);
+			}
+		}
+
+		if (benchmarkTypes.Count == 0)
+		{
+			ConsoleLogger.Default.WriteLineInfo($"No {nameof(Benchmark)}-derived benchmark classes found in assembly: {assembly.GetName().Name}");
+			return;
+		}
+
+		RunWithArguments(config, args, [.. benchmarkTypes]);
+	}
+
+	/// <summary>
 	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration.
 	/// Optionally saves a human-readable timing summary report to the BenchmarkDotNet artifacts directory.
 	/// </summary>
@@ -289,6 +321,24 @@ public static class BenchmarkHelper
 	}
 
 	/// <summary>
+	/// Runs the specified benchmark types via <see cref="BenchmarkSwitcher"/>, honoring BenchmarkDotNet
+	/// command-line arguments so profilers and CI can filter and configure runs.
+	/// </summary>
+	/// <param name="config">The BenchmarkDotNet configuration. Must not be <c>null</c>.</param>
+	/// <param name="args">The command-line arguments from <c>Program.cs</c>. Must not be <c>null</c>.</param>
+	/// <param name="benchmarks">One or more benchmark types to run.</param>
+	/// <exception cref="ArgumentNullException">Thrown when an argument is <c>null</c>.</exception>
+	[Information(description: nameof(RunBenchmarks), Status = Status.New)]
+	public static void RunBenchmarks([DisallowNull] IConfig config, [DisallowNull] string[] args, [DisallowNull] params Type[] benchmarks)
+	{
+		config = config.ArgumentNotNull();
+		args = args.ArgumentNotNull();
+		benchmarks = benchmarks.ArgumentItemsExists();
+
+		RunWithArguments(config, args, benchmarks);
+	}
+
+	/// <summary>
 	/// Runs the specified benchmark types using the provided BenchmarkDotNet configuration,
 	/// prepending a custom prefix to the timing summary file name.
 	/// </summary>
@@ -319,6 +369,41 @@ public static class BenchmarkHelper
 		benchmarks = benchmarks.ArgumentItemsExists();
 
 		Run(config, saveResults, benchmarks, Assembly.GetCallingAssembly(), filePrefix);
+	}
+
+	/// <summary>
+	/// Determines whether the process is running under a profiler, CI system, or with BenchmarkDotNet
+	/// command-line arguments, in which case audio feedback and custom reporting should be skipped.
+	/// </summary>
+	/// <param name="args">The command-line arguments, or <c>null</c> when unavailable.</param>
+	/// <returns><c>true</c> when running in an automated or profiler context; otherwise <c>false</c>.</returns>
+	private static bool IsAutomatedRun(string[]? args = null)
+	{
+		if (Environment.GetEnvironmentVariable("CI") is not null
+			|| Environment.GetEnvironmentVariable("GITHUB_ACTIONS") is not null
+			|| Environment.GetEnvironmentVariable("TF_BUILD") is not null)
+		{
+			return true;
+		}
+
+		if (args is null)
+		{
+			return false;
+		}
+
+		for (var argIndex = 0; argIndex < args.Length; argIndex++)
+		{
+			var arg = args[argIndex];
+
+			if (arg.StartsWith("--filter", StringComparison.OrdinalIgnoreCase)
+				|| arg.StartsWith("--inProcess", StringComparison.OrdinalIgnoreCase)
+				|| arg.StartsWith("-f", StringComparison.Ordinal))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/// <summary>
@@ -508,14 +593,13 @@ public static class BenchmarkHelper
 					ConsoleLogger.Default.WriteLineError($"  - {failedBenchmarks[failureIndex]}");
 				}
 
-				if (OperatingSystem.IsWindows())
-				{
-					PlayErrorBeep();
-				}
+				Environment.ExitCode = 1;
+
+				TryPlayBeep(success: false);
 			}
-			else if (OperatingSystem.IsWindows())
+			else
 			{
-				PlaySuccessBeep();
+				TryPlayBeep(success: true);
 			}
 		}
 		catch (Exception ex)
@@ -523,10 +607,57 @@ public static class BenchmarkHelper
 			ConsoleLogger.Default.WriteLineError(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
 			ConsoleLogger.Default.WriteLineError(ex.ToString());
 
-			if (OperatingSystem.IsWindows())
+			Environment.ExitCode = 1;
+
+			TryPlayBeep(success: false);
+		}
+	}
+
+	/// <summary>
+	/// Runs the specified benchmark types through <see cref="BenchmarkSwitcher"/> so that command-line
+	/// arguments (for example <c>--filter</c>, <c>--job</c>, <c>--inProcess</c>) supplied by a profiler or CI are honored.
+	/// Sets <see cref="Environment.ExitCode"/> to 1 when any benchmark case fails.
+	/// </summary>
+	private static void RunWithArguments(IConfig config, string[] args, Type[] benchmarks)
+	{
+		config = config.AddLogger(ConsoleLogger.Default);
+
+		try
+		{
+			var summaries = BenchmarkSwitcher.FromTypes(benchmarks).Run(args, config);
+			var failed = false;
+
+			foreach (var summary in summaries)
 			{
-				PlayErrorBeep();
+				if (summary.HasCriticalValidationErrors)
+				{
+					failed = true;
+					continue;
+				}
+
+				foreach (var report in summary.Reports)
+				{
+					if (!report.Success || report.ResultStatistics is null)
+					{
+						failed = true;
+						ConsoleLogger.Default.WriteLineError($"Benchmark failed: {report.BenchmarkCase.DisplayInfo}");
+					}
+				}
 			}
+
+			if (failed)
+			{
+				Environment.ExitCode = 1;
+			}
+
+			TryPlayBeep(success: !failed);
+		}
+		catch (InvalidOperationException ex)
+		{
+			ConsoleLogger.Default.WriteLineError(Resources.DangerThereHasBeenAnErrorRunningBenchmarkT);
+			ConsoleLogger.Default.WriteLineError(ex.ToString());
+
+			Environment.ExitCode = 1;
 		}
 	}
 
@@ -594,6 +725,35 @@ public static class BenchmarkHelper
 		catch (Exception saveEx)
 		{
 			ConsoleLogger.Default.WriteLineError($"Warning: Could not save timing summary: {saveEx.Message}");
+		}
+	}
+
+	/// <summary>
+	/// Plays the success or error beep on Windows unless running in an automated context.
+	/// Failures to play audio are ignored because audio hardware may be unavailable.
+	/// </summary>
+	/// <param name="success"><c>true</c> to play the success beep; otherwise the error beep.</param>
+	private static void TryPlayBeep(bool success)
+	{
+		if (!OperatingSystem.IsWindows() || IsAutomatedRun())
+		{
+			return;
+		}
+
+		try
+		{
+			if (success)
+			{
+				PlaySuccessBeep();
+			}
+			else
+			{
+				PlayErrorBeep();
+			}
+		}
+		catch (IOException ex)
+		{
+			ConsoleLogger.Default.WriteLineInfo(ex.Message);
 		}
 	}
 }

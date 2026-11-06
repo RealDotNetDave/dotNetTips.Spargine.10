@@ -30,7 +30,7 @@ public static class Program
 	/// <summary>
 	/// Defines the entry point of the application.
 	/// </summary>
-	public static void Main()
+	public static void Main(string[] args)
 	{
 		var config = DefaultConfig.Instance
 			.AddJob(Job.Default.WithRuntime(CoreRuntime.Latest))
@@ -39,7 +39,7 @@ public static class Program
 		config = config.WithOption(ConfigOptions.DisableOptimizationsValidator, true);
 
 		// Run All Tests
-		BenchmarkHelper.RunAllBenchmarks(config);
+		BenchmarkHelper.RunAllBenchmarks(config, args);
 
 		// Run Selected Tests
 		//BenchmarkHelper.RunBenchmarks(config, true,
