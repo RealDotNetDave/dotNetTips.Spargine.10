@@ -4,7 +4,7 @@
 // Created          : 07-12-2024
 //
 // Last Modified By : Copilot Agent
-// Last Modified On : 04-06-2026
+// Last Modified On : 11-09-2026
 // ***********************************************************************
 // <copyright file="MathExtensionsTests.cs" company="dotNetTips.com - McCarter Consulting">
 //     Copyright (c) McCarter Consulting. All rights reserved.
@@ -15,7 +15,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using DotNetTips.Spargine.Tester;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 //'![](7050BB9CE02F97B17501B57A581147A7.png;https://bit.ly/Spargine ;;0.01188,0.01188)
 
 namespace DotNetTips.Spargine.Extensions.Tests;
@@ -67,6 +66,39 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "Adding zero should return the original value.");
+	}
+
+	[TestMethod]
+	public void Average_Doubles_ReturnsAverage()
+	{
+		// Arrange
+		double[] values = [1.0, 2.0, 3.0, 4.0];
+
+		// Act
+		var result = ((ReadOnlySpan<double>)values).Average();
+
+		// Assert
+		Assert.AreEqual(2.5, result);
+	}
+
+	[TestMethod]
+	public void Average_EmptySpan_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(static () => ReadOnlySpan<int>.Empty.Average());
+	}
+
+	[TestMethod]
+	public void Average_Integers_UsesIntegerDivision()
+	{
+		// Arrange
+		int[] values = [1, 2];
+
+		// Act
+		var result = ((ReadOnlySpan<int>)values).Average();
+
+		// Assert
+		Assert.AreEqual(1, result);
 	}
 
 	[TestMethod]
@@ -198,6 +230,23 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void CalculatePercent_LongNegativeDifference_ReturnsExpectedPercentage()
+	{
+		// Arrange
+		long first = 200L;
+		long second = 100L;
+
+		// Long integer division truncates: (100 - 200) / 200 * 100 = -100 / 200 * 100 = 0 * 100 = 0
+		double expectedPercentage = 0.0;
+
+		// Act
+		double result = first.CalculatePercent(second);
+
+		// Assert
+		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should reflect long integer division behavior.");
+	}
+
+	[TestMethod]
 	public void CalculatePercent_LongPositiveDifference_ReturnsExpectedPercentage()
 	{
 		// Arrange
@@ -229,23 +278,6 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should be zero when both values are the same.");
-	}
-
-	[TestMethod]
-	public void CalculatePercent_LongNegativeDifference_ReturnsExpectedPercentage()
-	{
-		// Arrange
-		long first = 200L;
-		long second = 100L;
-
-		// Long integer division truncates: (100 - 200) / 200 * 100 = -100 / 200 * 100 = 0 * 100 = 0
-		double expectedPercentage = 0.0;
-
-		// Act
-		double result = first.CalculatePercent(second);
-
-		// Assert
-		Assert.AreEqual(expectedPercentage, result, "The calculated percentage should reflect long integer division behavior.");
 	}
 
 	[TestMethod]
@@ -325,6 +357,111 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void FindMax_ContainsNaN_ReturnsNaN()
+	{
+		// Arrange
+		double[] values = [1.0, double.NaN, 3.0];
+
+		// Act
+		var result = ((ReadOnlySpan<double>)values).FindMax();
+
+		// Assert
+		Assert.IsTrue(double.IsNaN(result));
+	}
+
+	[TestMethod]
+	public void FindMax_EmptySpan_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(static () => ReadOnlySpan<int>.Empty.FindMax());
+	}
+
+	[TestMethod]
+	public void FindMax_NegativeNumbers_ReturnsLargest()
+	{
+		// Arrange
+		int[] values = [-5, -1, -10];
+
+		// Act
+		var result = ((ReadOnlySpan<int>)values).FindMax();
+
+		// Assert
+		Assert.AreEqual(-1, result);
+	}
+
+	[TestMethod]
+	public void FindMax_SingleElement_ReturnsElement()
+	{
+		// Arrange
+		int[] values = [7];
+
+		// Act
+		var result = ((ReadOnlySpan<int>)values).FindMax();
+
+		// Assert
+		Assert.AreEqual(7, result);
+	}
+
+	[TestMethod]
+	public void FindMin_ContainsNaN_ReturnsNaN()
+	{
+		// Arrange
+		double[] values = [1.0, double.NaN, 3.0];
+
+		// Act
+		var result = ((ReadOnlySpan<double>)values).FindMin();
+
+		// Assert
+		Assert.IsTrue(double.IsNaN(result));
+	}
+
+	[TestMethod]
+	public void FindMin_EmptySpan_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(static () => ReadOnlySpan<int>.Empty.FindMin());
+	}
+
+	[TestMethod]
+	public void FindMin_NegativeNumbers_ReturnsSmallest()
+	{
+		// Arrange
+		int[] values = [-5, -1, -10];
+
+		// Act
+		var result = ((ReadOnlySpan<int>)values).FindMin();
+
+		// Assert
+		Assert.AreEqual(-10, result);
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenEvenNumberGreaterThanThree_ReturnsFalse()
+	{
+		// Arrange - 6 is even and greater than 3
+		int number = 6;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsFalse(result, "The method should return false for 6, which is even and greater than 3.");
+	}
+
+	[TestMethod]
+	public void IsPrime_GivenLargePrimePassingLoop_ReturnsTrue()
+	{
+		// Arrange - 29 is prime and requires the loop to verify
+		int number = 29;
+
+		// Act
+		bool result = number.IsPrime();
+
+		// Assert
+		Assert.IsTrue(result, "The method should return true for 29, a prime number that requires loop verification.");
+	}
+
+	[TestMethod]
 	public void IsPrime_GivenNegativeNumber_ReturnsFalse()
 	{
 		// Arrange
@@ -387,32 +524,6 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.IsFalse(result, "The method should return false for 9, which is divisible by 3.");
-	}
-
-	[TestMethod]
-	public void IsPrime_GivenEvenNumberGreaterThanThree_ReturnsFalse()
-	{
-		// Arrange - 6 is even and greater than 3
-		int number = 6;
-
-		// Act
-		bool result = number.IsPrime();
-
-		// Assert
-		Assert.IsFalse(result, "The method should return false for 6, which is even and greater than 3.");
-	}
-
-	[TestMethod]
-	public void IsPrime_GivenLargePrimePassingLoop_ReturnsTrue()
-	{
-		// Arrange - 29 is prime and requires the loop to verify
-		int number = 29;
-
-		// Act
-		bool result = number.IsPrime();
-
-		// Assert
-		Assert.IsTrue(result, "The method should return true for 29, a prime number that requires loop verification.");
 	}
 
 	[TestMethod]
@@ -481,6 +592,41 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
+	public void MinMax_Decimals_ReturnsMinAndMax()
+	{
+		// Arrange
+		decimal[] values = [3.5m, -2.5m, 10m];
+
+		// Act
+		var (min, max) = ((ReadOnlySpan<decimal>)values).MinMax();
+
+		// Assert
+		Assert.AreEqual(-2.5m, min);
+		Assert.AreEqual(10m, max);
+	}
+
+	[TestMethod]
+	public void MinMax_EmptySpan_ThrowsArgumentNullException()
+	{
+		// Act & Assert
+		Assert.ThrowsExactly<ArgumentNullException>(static () => ReadOnlySpan<int>.Empty.MinMax());
+	}
+
+	[TestMethod]
+	public void MinMax_SingleElement_ReturnsSameValueForBoth()
+	{
+		// Arrange
+		int[] values = [4];
+
+		// Act
+		var (min, max) = ((ReadOnlySpan<int>)values).MinMax();
+
+		// Assert
+		Assert.AreEqual(4, min);
+		Assert.AreEqual(4, max);
+	}
+
+	[TestMethod]
 	public void Round_DecimalValueLessThanHalfway_ReturnsRoundedDownInteger()
 	{
 		// Arrange
@@ -524,6 +670,22 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "Rounding 2.5 with AwayFromZero should result in 3.");
+	}
+
+	[TestMethod]
+	public void Round_DecimalValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
+	{
+		// Arrange
+		decimal value = 2.85m;
+		int digits = 1;
+		MidpointRounding mode = MidpointRounding.ToZero;
+		int expectedResult = 3;
+
+		// Act
+		int result = MathExtensions.Round(value, digits, mode);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
 	}
 
 	[TestMethod]
@@ -738,6 +900,22 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "Rounding 2.55 to 1 decimal place with ToEven should result in 3.");
+	}
+
+	[TestMethod]
+	public void Round_DoubleValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
+	{
+		// Arrange
+		double value = 2.85;
+		int digits = 1;
+		MidpointRounding mode = MidpointRounding.ToZero;
+		int expectedResult = 3;
+
+		// Act
+		int result = MathExtensions.Round(value, digits, mode);
+
+		// Assert
+		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
 	}
 
 	[TestMethod]
@@ -1049,38 +1227,6 @@ public class MathExtensionsTests
 	}
 
 	[TestMethod]
-	public void Round_DecimalValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
-	{
-		// Arrange
-		decimal value = 2.85m;
-		int digits = 1;
-		MidpointRounding mode = MidpointRounding.ToZero;
-		int expectedResult = 3;
-
-		// Act
-		int result = MathExtensions.Round(value, digits, mode);
-
-		// Assert
-		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
-	}
-
-	[TestMethod]
-	public void Round_DoubleValueWithDigitsAndToZeroRounding_ReturnsRoundedValue()
-	{
-		// Arrange
-		double value = 2.85;
-		int digits = 1;
-		MidpointRounding mode = MidpointRounding.ToZero;
-		int expectedResult = 3;
-
-		// Act
-		int result = MathExtensions.Round(value, digits, mode);
-
-		// Assert
-		Assert.AreEqual(expectedResult, result, "Rounding 2.85 to 1 decimal place with ToZero should result in 3.");
-	}
-
-	[TestMethod]
 	public void Subtract_NegativeNumbers_ReturnsDifference()
 	{
 		// Arrange
@@ -1137,6 +1283,29 @@ public class MathExtensionsTests
 
 		// Assert
 		Assert.AreEqual(expectedResult, result, "Subtracting zero should return the original value.");
+	}
+
+	[TestMethod]
+	public void Sum_EmptySpan_ReturnsZero()
+	{
+		// Act
+		var result = ReadOnlySpan<int>.Empty.Sum();
+
+		// Assert
+		Assert.AreEqual(0, result);
+	}
+
+	[TestMethod]
+	public void Sum_Integers_ReturnsSum()
+	{
+		// Arrange
+		int[] values = [1, 2, 3, 4];
+
+		// Act
+		var result = ((ReadOnlySpan<int>)values).Sum();
+
+		// Assert
+		Assert.AreEqual(10, result);
 	}
 
 }

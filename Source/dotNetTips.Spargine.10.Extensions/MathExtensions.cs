@@ -3,20 +3,21 @@
 // Author           : David McCarter
 // Created          : 09-15-2017
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 11-09-2026
 // ***********************************************************************
 // <copyright file="MathExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     David McCarter - dotNetTips.com
 // </copyright>
 // <summary>
 // Extension methods for numeric types providing mathematical utilities. Includes <c>Add</c>,
-// <c>Subtract</c>, <c>CalculatePercent</c> (for <c>int</c>, <c>long</c>, <c>double</c>, and
+// <c>Subtract</c>, <c>Average</c>, <c>FindMax</c>, <c>FindMin</c>, <c>MinMax</c>, <c>Sum</c>, <c>CalculatePercent</c>
 // <c>TimeSpan</c>), <c>IsPrime</c>, and multiple <c>Round</c> overloads for <c>double</c> and
 // <c>decimal</c> with optional digit count and <c>MidpointRounding</c> mode.
 // </summary>
 // ***********************************************************************
 using System.Diagnostics.Contracts;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using DotNetTips.Spargine.Core;
 
@@ -45,8 +46,26 @@ public static class MathExtensions
 	/// <returns>The sum of the input value and the specified number.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Add), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
+	[Information(nameof(Add), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static double Add(this int input, int add) => input + add;
+
+	/// <summary>
+	/// Calculates the average of the values. Integer types use integer division.
+	/// </summary>
+	/// <typeparam name="T">The numeric type.</typeparam>
+	/// <param name="values">The values.</param>
+	/// <returns>The average of the values.</returns>
+	/// <remarks>The sum is computed in <typeparamref name="T"/>, so narrow integer types can overflow.</remarks>
+	/// <exception cref="ArgumentNullException">values is empty.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Average), "David McCarter", "11/09/2026", "11/09/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public static T Average<T>(this ReadOnlySpan<T> values) where T : INumber<T>
+	{
+		values = values.ArgumentNotEmpty();
+
+		return values.Sum() / T.CreateChecked(values.Length);
+	}
 
 	/// <summary>
 	/// Calculates the percentage difference between two <see cref="TimeSpan" /> values.
@@ -105,6 +124,56 @@ public static class MathExtensions
 	}
 
 	/// <summary>
+	/// Finds the largest value.
+	/// </summary>
+	/// <typeparam name="T">The numeric type.</typeparam>
+	/// <param name="values">The values.</param>
+	/// <returns>The largest value.</returns>
+	/// <remarks>For floating-point types, a NaN element yields NaN.</remarks>
+	/// <exception cref="ArgumentNullException">values is empty.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FindMax), "David McCarter", "11/09/2026", "11/09/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public static T FindMax<T>(this ReadOnlySpan<T> values) where T : INumber<T>
+	{
+		values = values.ArgumentNotEmpty();
+
+		var max = values[0];
+
+		for (var index = 1; index < values.Length; index++)
+		{
+			max = T.Max(max, values[index]);
+		}
+
+		return max;
+	}
+
+	/// <summary>
+	/// Finds the smallest value.
+	/// </summary>
+	/// <typeparam name="T">The numeric type.</typeparam>
+	/// <param name="values">The values.</param>
+	/// <returns>The smallest value.</returns>
+	/// <remarks>For floating-point types, a NaN element yields NaN.</remarks>
+	/// <exception cref="ArgumentNullException">values is empty.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(FindMin), "David McCarter", "11/09/2026", "11/09/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public static T FindMin<T>(this ReadOnlySpan<T> values) where T : INumber<T>
+	{
+		values = values.ArgumentNotEmpty();
+
+		var min = values[0];
+
+		for (var index = 1; index < values.Length; index++)
+		{
+			min = T.Min(min, values[index]);
+		}
+
+		return min;
+	}
+
+	/// <summary>
 	/// Determines whether the specified number is prime.
 	/// </summary>
 	/// <param name="number">The number to check for primality.</param>
@@ -142,6 +211,34 @@ public static class MathExtensions
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Finds the smallest and largest values in a single pass.
+	/// </summary>
+	/// <typeparam name="T">The numeric type.</typeparam>
+	/// <param name="values">The values.</param>
+	/// <returns>A tuple containing the minimum and maximum values.</returns>
+	/// <remarks>For floating-point types, a NaN element yields NaN.</remarks>
+	/// <exception cref="ArgumentNullException">values is empty.</exception>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(MinMax), "David McCarter", "11/09/2026", "11/09/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public static (T Min, T Max) MinMax<T>(this ReadOnlySpan<T> values) where T : INumber<T>
+	{
+		values = values.ArgumentNotEmpty();
+
+		var min = values[0];
+		var max = values[0];
+
+		for (var index = 1; index < values.Length; index++)
+		{
+			var value = values[index];
+			min = T.Min(min, value);
+			max = T.Max(max, value);
+		}
+
+		return (min, max);
 	}
 
 	/// <summary>
@@ -270,7 +367,29 @@ public static class MathExtensions
 	/// <returns>The difference between the input value and the specified number.</returns>
 	[Pure]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	[Information(nameof(Subtract), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "https://bit.ly/SpargineNov2022")]
+	[Information(nameof(Subtract), author: "David McCarter", createdOn: "7/19/2022", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available)]
 	public static double Subtract(this int input, int subtract) => input - subtract;
+
+	/// <summary>
+	/// Calculates the sum of the values.
+	/// </summary>
+	/// <typeparam name="T">The numeric type.</typeparam>
+	/// <param name="values">The values.</param>
+	/// <returns>The sum of the values, or the additive identity if empty.</returns>
+	/// <remarks>The sum is computed in <typeparamref name="T"/>, so narrow integer types can overflow.</remarks>
+	[Pure]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[Information(nameof(Sum), "David McCarter", "11/09/2026", "11/09/2026", UnitTestStatus = UnitTestStatus.Completed, OptimizationStatus = OptimizationStatus.Optimize, Status = Status.New)]
+	public static T Sum<T>(this ReadOnlySpan<T> values) where T : IAdditionOperators<T, T, T>, IAdditiveIdentity<T, T>
+	{
+		var sum = T.AdditiveIdentity;
+
+		for (var index = 0; index < values.Length; index++)
+		{
+			sum += values[index];
+		}
+
+		return sum;
+	}
 
 }
