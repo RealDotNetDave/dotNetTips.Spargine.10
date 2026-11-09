@@ -3,8 +3,8 @@
 // Author           : David McCarter
 // Created          : 07-17-2020
 //
-// Last Modified By : Copilot Agent
-// Last Modified On : 05-21-2026
+// Last Modified By : David McCarter
+// Last Modified On : 11-09-2026
 // ***********************************************************************
 // <copyright file="HttpResponseHeaderExtensions.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -29,18 +29,18 @@ using DotNetTips.Spargine.Core;
 namespace DotNetTips.Spargine.Extensions;
 
 /// <summary>
-/// Provides extension methods for working with <see cref="HttpResponseHeader"/>, enhancing its functionality by allowing easy retrieval of header names.
+/// Provides extension methods for working with <see cref="HttpResponseHeader"/> and <see cref="HttpResponseHeaders"/>, allowing easy retrieval of header names, values, ETag, request identifiers, and retry delays.
 /// </summary>
 /// <remarks>
-/// This class simplifies the process of converting <see cref="HttpResponseHeader"/> enumeration values to their corresponding string names.
-/// It is particularly useful for logging, debugging, or any scenario where the string representation of an HTTP response header is needed.
+/// The <see cref="HttpResponseHeader"/> extension converts enumeration values to their corresponding string names, which is useful for logging and debugging.
+/// The <see cref="HttpResponseHeaders"/> extensions add, read, and inspect headers such as X-Request-UUID, ETag, and Retry-After.
 /// </remarks>
-[Information("From .NET Core source.", author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.NeedsDocumentation)]
+[Information(nameof(HttpResponseHeaderExtensions), author: "David McCarter", createdOn: "7/15/2020", UnitTestStatus = UnitTestStatus.Completed, Status = Status.Available, Documentation = "ADD URL")]
 public static class HttpResponseHeaderExtensions
 {
 
 	/// <summary>
-	/// The header names
+	/// The HTTP response header names, indexed by the <see cref="HttpResponseHeader"/> enumeration value.
 	/// </summary>
 	private static readonly string[] _headerNames = [
 		"Cache-Control",
@@ -152,9 +152,10 @@ public static class HttpResponseHeaderExtensions
 	}
 
 	/// <summary>
-	/// Retrieves the request identifier from the HTTP headers.
+	/// Retrieves the request identifier (X-Request-UUID header) from the HTTP response headers.
+	/// Validates that <paramref name="headers"/> is not null.
 	/// </summary>
-	/// <param name="headers">The HTTP headers from which the request identifier will be retrieved.</param>
+	/// <param name="headers">The <see cref="HttpResponseHeaders"/> from which the request identifier will be retrieved.</param>
 	/// <returns>The request identifier if found; otherwise, an empty string.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="headers"/> is null.</exception>
 	[Pure]
@@ -188,7 +189,7 @@ public static class HttpResponseHeaderExtensions
 
 	/// <summary>
 	/// Attempts to compute the retry delay from the Retry-After response header.
-	/// Handles both delta-seconds and HTTP-date formats.
+	/// Handles both delta-seconds and HTTP-date formats; a date in the past yields <see cref="TimeSpan.Zero"/>.
 	/// Returns <see langword="false"/> if the Retry-After header is not present.
 	/// Validates that <paramref name="headers"/> is not null.
 	/// </summary>

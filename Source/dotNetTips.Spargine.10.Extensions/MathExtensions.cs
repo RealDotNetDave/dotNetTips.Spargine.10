@@ -34,7 +34,7 @@ namespace DotNetTips.Spargine.Extensions;
 /// (<c>IsPrime</c>), and a family of <c>Round</c> overloads for <c>double</c> and <c>decimal</c>
 /// that accept an optional digit count and/or a <c>MidpointRounding</c> mode.
 /// </remarks>
-[Information(Status = Status.NeedsDocumentation)]
+[Information(Status = Status.Available, Documentation = "ADD URL")]
 public static class MathExtensions
 {
 
