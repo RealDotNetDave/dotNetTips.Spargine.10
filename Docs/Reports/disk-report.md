@@ -2,23 +2,23 @@
 
 ```text
 
-               NuGet Package Cache                
-╭──────────────────────────────────────┬─────────╮
-│ NuGet Package Cache                  │ Size    │
-├──────────────────────────────────────┼─────────┤
-│ azure.core                           │ 0 Bytes │
-│ azure.identity                       │ 0 Bytes │
-│ azure.monitor.opentelemetry.exporter │ 0 Bytes │
-│ benchmarkdotnet                      │ 0 Bytes │
-│ benchmarkdotnet.annotations          │ 0 Bytes │
-│ benchmarkdotnet.diagnostics.windows  │ 0 Bytes │
-│ bouncycastle.cryptography            │ 0 Bytes │
-│ castle.core                          │ 0 Bytes │
-│ commandlineparser                    │ 0 Bytes │
-│ coverlet.collector                   │ 0 Bytes │
-╰──────────────────────────────────────┴─────────╯
+                   NuGet Package Cache                   
+╭─────────────────────────────────────────────┬─────────╮
+│ NuGet Package Cache                         │ Size    │
+├─────────────────────────────────────────────┼─────────┤
+│ aspire.apphost.sdk                          │ 0 Bytes │
+│ aspire.hosting                              │ 0 Bytes │
+│ aspire.hosting.apphost                      │ 0 Bytes │
+│ aspire.hosting.azure                        │ 0 Bytes │
+│ aspire.hosting.azure.cosmosdb               │ 0 Bytes │
+│ aspire.hosting.azure.keyvault               │ 0 Bytes │
+│ aspire.hosting.redis                        │ 0 Bytes │
+│ aspire.hosting.testing                      │ 0 Bytes │
+│ aspire.microsoft.entityframeworkcore.cosmos │ 0 Bytes │
+│ aspire.stackexchange.redis                  │ 0 Bytes │
+╰─────────────────────────────────────────────┴─────────╯
 
-Total NuGet cache: 0 Bytes across 151 package(s)
+Total NuGet cache: 0 Bytes across 253 package(s)
 
           Global .NET Tools          
 ╭───────────────────────┬───────────╮
@@ -34,30 +34,51 @@ Total NuGet cache: 0 Bytes across 151 package(s)
 
 Total global tools: 935.38 KB
 
-                                                   bin / obj Folders                                                    
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────┬───────────╮
-│ Folder                                                                                                   │ Size      │
-├──────────────────────────────────────────────────────────────────────────────────────────────────────────┼───────────┤
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\DotNetTips.Spargine.10.Benchmarking.Tests\obj     │ 614.88 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetTips.Spargine.10.Benchmarking\obj         │ 451.6 KB  │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetTips.Spargine.BenchmarkTests\obj          │ 401.68 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\TaskTrackerValidation\Smoke\obj                              │ 390.57 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetTips.Spargine.Extensions.BenchmarkTests\o │ 390.19 KB │
-│ bj                                                                                                       │           │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\dotNetTips.Spargine.Tests\obj                     │ 370.43 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetTips.Spargine.Tester.Benchmarking\obj     │ 370.4 KB  │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetTips.Spargine.Core.BenchmarkTests\obj     │ 370.38 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\dotNetTips.Spargine.Extensions.Tests\obj          │ 354.42 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\dotNetTips.Spargine.Tester.Tests\obj              │ 334.43 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\dotNetTips.Spargine.Core.Tests\obj                │ 301.56 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine.10.Tester\obj                            │ 232.14 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine.10\obj                                   │ 229.98 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine.10.Extensions\obj                        │ 211.66 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine.10.Core\obj                              │ 131.33 KB │
-│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\TaskTrackerValidation\Smoke\bin                              │ 0 Bytes   │
-│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit Tests\DotNetTips.Spargine.10.Benchmarking.Tests\bin     │ 0 Bytes   │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────┴───────────╯
+                               bin / obj Folders                                
+╭──────────────────────────────────────────────────────────────────┬───────────╮
+│ Folder                                                           │ Size      │
+├──────────────────────────────────────────────────────────────────┼───────────┤
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 633.46 KB │
+│ Tests\DotNetTips.Spargine.10.Benchmarking.Tests\obj              │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetT │ 468.21 KB │
+│ ips.Spargine.10.Benchmarking\obj                                 │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetT │ 422.29 KB │
+│ ips.Spargine.BenchmarkTests\obj                                  │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetT │ 409.01 KB │
+│ ips.Spargine.Extensions.BenchmarkTests\obj                       │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\TaskTrackerValidatio │ 390.57 KB │
+│ n\Smoke\obj                                                      │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 390.01 KB │
+│ Tests\dotNetTips.Spargine.Tests\obj                              │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetT │ 389.04 KB │
+│ ips.Spargine.Tester.Benchmarking\obj                             │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Benchmarking\dotNetT │ 389.02 KB │
+│ ips.Spargine.Core.BenchmarkTests\obj                             │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 377.17 KB │
+│ Tests\dotNetTips.Spargine.Extensions.Tests\obj                   │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 351.39 KB │
+│ Tests\dotNetTips.Spargine.Tester.Tests\obj                       │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 315.49 KB │
+│ Tests\dotNetTips.Spargine.Core.Tests\obj                         │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine. │ 246.08 KB │
+│ 10.Tester\obj                                                    │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine. │ 244.01 KB │
+│ 10\obj                                                           │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine. │ 223.13 KB │
+│ 10.Extensions\obj                                                │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\dotNetTips.Spargine. │ 136.9 KB  │
+│ 10.Core\obj                                                      │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\net10.0\Job-PSYKRA-7 │ 0 Bytes   │
+│ \bin                                                             │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\TaskTrackerValidatio │ 0 Bytes   │
+│ n\Smoke\bin                                                      │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\Source\Unit                 │ 0 Bytes   │
+│ Tests\DotNetTips.Spargine.10.Benchmarking.Tests\bin              │           │
+│ D:\src\GitHub\dotNetTips.Spargine.10\AppBin\net10.0\Job-PSYKRA-7 │ 0 Bytes   │
+│ \obj                                                             │           │
+╰──────────────────────────────────────────────────────────────────┴───────────╯
 
-Total across 17 bin/obj folder(s): 5.03 MB
-Docker's asleep backstage — the engine isn't running. Fire up Docker Desktop and try again.
+Total across 19 bin/obj folder(s): 5.26 MB
+Docker's asleep backstage — the engine isn't running. Fire up Docker Desktop and
+try again.
 ```

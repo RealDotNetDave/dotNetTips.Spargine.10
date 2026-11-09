@@ -480,3 +480,8 @@ MSBuild_Logs/
 # VS Code files for those working on multiple tools
 !.vscode/*.code-snippets
 
+
+# ── Added by Spargine Dev Tool (GitHub VisualStudio template) ──────────────────
+# Files built by Visual Studio
+*_i.h
+
