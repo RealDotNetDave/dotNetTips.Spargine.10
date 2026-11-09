@@ -5,7 +5,7 @@
 // Created          : 07-01-2024
 //
 // Last Modified By : David McCarter
-// Last Modified On : 03-23-2025
+// Last Modified On : 11-09-2026
 // ***********************************************************************
 // <copyright file="UnitTestStatus.cs" company="dotNetTips.com - McCarter Consulting">
 //     McCarter Consulting (David McCarter)
@@ -41,6 +41,7 @@ public enum UnitTestStatus
 	/// <summary>
 	/// Indicates the unit tests need to be updated.
 	/// </summary>
+	[Obsolete("Use Update instead. This method will be removed at the end of 2026")]
 	[EnumMember(Value = "Needs Update")]
 	NeedsUpdate,
 
